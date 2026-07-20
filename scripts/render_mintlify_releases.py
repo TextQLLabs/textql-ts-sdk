@@ -53,12 +53,21 @@ def parse_releases(markdown: str) -> list[Release]:
         raise ValueError("RELEASES.md does not contain any timestamped releases")
 
     releases: list[Release] = []
+    seen_versions: set[str] = set()
     for index, match in enumerate(matches):
         end = matches[index + 1].start() if index + 1 < len(matches) else len(markdown)
         body = markdown[match.end() : end]
         npm = NPM_LINK.search(body)
         if npm is None:
-            raise ValueError(f"release {match.group('timestamp')} has no NPM link")
+            # Speakeasy records successful generations before a package is
+            # necessarily published. Those entries do not belong in the npm
+            # release log yet.
+            continue
+
+        version = npm.group("version")
+        if version in seen_versions:
+            continue
+        seen_versions.add(version)
 
         speakeasy = SPEAKEASY.search(body)
         releases.append(
@@ -66,13 +75,15 @@ def parse_releases(markdown: str) -> list[Release]:
                 published_at=datetime.strptime(
                     match.group("timestamp"), "%Y-%m-%d %H:%M:%S"
                 ),
-                version=npm.group("version"),
+                version=version,
                 npm_url=npm.group("link_url") or npm.group("plain_url"),
                 speakeasy_cli=speakeasy.group("cli") if speakeasy else None,
                 generator_version=speakeasy.group("generator") if speakeasy else None,
                 speakeasy_url=speakeasy.group("url") if speakeasy else None,
             )
         )
+    if not releases:
+        raise ValueError("RELEASES.md does not contain any published NPM releases")
     return releases
 
 

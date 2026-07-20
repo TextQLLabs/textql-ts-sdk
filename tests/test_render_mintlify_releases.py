@@ -43,8 +43,21 @@ class RenderMintlifyReleasesTest(unittest.TestCase):
         self.assertIn("npm install @textql/sdk@1.0.3", output)
         self.assertIn("[Speakeasy CLI 1.790.3 (generator 2.918.4)]", output)
 
-    def test_rejects_release_without_npm_link(self) -> None:
-        with self.assertRaisesRegex(ValueError, "no NPM link"):
+    def test_skips_unpublished_generation_record(self) -> None:
+        unpublished = """
+## 2026-07-20 23:03:28
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.790.3 (2.918.4) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.0.4] .
+"""
+        releases = parse_releases(RELEASE + unpublished)
+        self.assertEqual([release.version for release in releases], ["1.0.3"])
+
+    def test_rejects_log_without_published_releases(self) -> None:
+        with self.assertRaisesRegex(ValueError, "published NPM releases"):
             parse_releases(RELEASE.replace("NPM", "Package"))
 
 
