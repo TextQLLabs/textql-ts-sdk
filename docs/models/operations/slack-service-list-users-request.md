@@ -6,7 +6,6 @@
 import { SlackServiceListUsersRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceListUsersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

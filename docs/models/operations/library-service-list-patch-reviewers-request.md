@@ -6,7 +6,6 @@
 import { LibraryServiceListPatchReviewersRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListPatchReviewersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

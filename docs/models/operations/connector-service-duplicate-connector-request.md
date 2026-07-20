@@ -6,7 +6,6 @@
 import { ConnectorServiceDuplicateConnectorRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceDuplicateConnectorRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

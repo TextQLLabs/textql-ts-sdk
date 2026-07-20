@@ -39,7 +39,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.heartbeat({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -65,7 +64,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsHeartbeat(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -114,7 +112,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.createApp({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -140,7 +137,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsCreateApp(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -189,7 +185,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.deleteApp({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -215,7 +210,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsDeleteApp(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -266,7 +260,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.duplicate({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -292,7 +285,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsDuplicate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -341,7 +333,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -367,7 +358,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -416,7 +406,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.getAppVersion({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -442,7 +431,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsGetAppVersion(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -491,7 +479,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.getAppViewStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -517,7 +504,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsGetAppViewStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -566,7 +552,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.getMembersWithApps({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -592,7 +577,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsGetMembersWithApps(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -641,7 +625,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.invokeComputeFunction({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -667,7 +650,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsInvokeComputeFunction(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -716,7 +698,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.listVersions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -742,7 +723,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsListVersions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -791,7 +771,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -817,7 +796,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -866,7 +844,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.moveAppToFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -892,7 +869,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsMoveAppToFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -941,7 +917,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.refresh({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -967,7 +942,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsRefresh(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1016,7 +990,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.restoreAppVersion({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1042,7 +1015,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsRestoreAppVersion(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1093,7 +1065,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.setFavorite({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1119,7 +1090,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsSetFavorite(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1168,7 +1138,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.apps.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1194,7 +1163,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await appsUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

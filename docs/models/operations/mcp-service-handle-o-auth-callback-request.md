@@ -6,7 +6,6 @@
 import { MCPServiceHandleOAuthCallbackRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceHandleOAuthCallbackRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

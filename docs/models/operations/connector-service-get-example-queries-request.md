@@ -6,7 +6,6 @@
 import { ConnectorServiceGetExampleQueriesRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceGetExampleQueriesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

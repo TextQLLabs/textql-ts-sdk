@@ -69,7 +69,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.addGroupMember({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -95,7 +94,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacAddGroupMember(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -144,7 +142,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.approveAccessRequest({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -170,7 +167,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacApproveAccessRequest(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -219,7 +215,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.assignPermissionToRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -245,7 +240,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacAssignPermissionToRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -294,7 +288,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.assignRoleToMember({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -320,7 +313,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacAssignRoleToMember(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -369,7 +361,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.convertRoleToGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -395,7 +386,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacConvertRoleToGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -444,7 +434,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.createApiKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -470,7 +459,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacCreateApiKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -519,7 +507,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.createGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -545,7 +532,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacCreateGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -594,7 +580,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.createRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -620,7 +605,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacCreateRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -669,7 +653,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.createServiceAccount({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -695,7 +678,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacCreateServiceAccount(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -744,7 +726,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.deleteGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -770,7 +751,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacDeleteGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -819,7 +799,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.deleteRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -845,7 +824,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacDeleteRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -894,7 +872,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.deleteServiceAccount({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -920,7 +897,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacDeleteServiceAccount(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -969,7 +945,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.generateShareLink({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -995,7 +970,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGenerateShareLink(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1044,7 +1018,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getCurrentMemberRolesAndPermissions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1070,7 +1043,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetCurrentMemberRolesAndPermissions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1119,7 +1091,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getEmbedUserApiKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1145,7 +1116,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetEmbedUserApiKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1194,7 +1164,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1220,7 +1189,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1269,7 +1237,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getMemberGroups({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1295,7 +1262,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetMemberGroups(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1344,7 +1310,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getMemberRoles({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1370,7 +1335,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetMemberRoles(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1419,7 +1383,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getObjectAccess({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1445,7 +1408,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetObjectAccess(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1494,7 +1456,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1520,7 +1481,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1569,7 +1529,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.getRolePermissions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1595,7 +1554,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacGetRolePermissions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1644,7 +1602,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.hasObjectAccess({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1670,7 +1627,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacHasObjectAccess(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1719,7 +1675,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listAccessRequests({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1745,7 +1700,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListAccessRequests(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1794,7 +1748,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listApiKeys({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1820,7 +1773,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListApiKeys(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1869,7 +1821,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listGroupConnectors({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1895,7 +1846,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListGroupConnectors(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1944,7 +1894,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listGroups({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1970,7 +1919,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListGroups(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2019,7 +1967,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listPermissions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2045,7 +1992,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListPermissions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2094,7 +2040,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listRoles({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2120,7 +2065,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListRoles(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2169,7 +2113,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listScimGroupMappings({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2195,7 +2138,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListScimGroupMappings(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2244,7 +2186,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.listServiceAccounts({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2270,7 +2211,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacListServiceAccounts(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2319,7 +2259,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.migrateAllScimGroupMappings({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2345,7 +2284,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacMigrateAllScimGroupMappings(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2394,7 +2332,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.migrateScimGroupMappingToGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2420,7 +2357,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacMigrateScimGroupMappingToGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2469,7 +2405,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.rejectAccessRequest({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2495,7 +2430,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRejectAccessRequest(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2544,7 +2478,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.removeGroupMember({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2570,7 +2503,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRemoveGroupMember(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2619,7 +2551,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.removePermissionFromRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2645,7 +2576,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRemovePermissionFromRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2694,7 +2624,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.removeRoleFromMember({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2720,7 +2649,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRemoveRoleFromMember(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2769,7 +2697,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.requestAccess({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2795,7 +2722,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRequestAccess(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2844,7 +2770,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.revertScimGroupMappingToRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2870,7 +2795,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRevertScimGroupMappingToRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2919,7 +2843,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.revokeApiKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2945,7 +2868,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRevokeApiKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2994,7 +2916,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.revokeObjectAccess({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3020,7 +2941,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRevokeObjectAccess(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3069,7 +2989,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.rotateApiKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3095,7 +3014,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacRotateApiKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3144,7 +3062,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.shareObject({
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3172,7 +3089,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacShareObject(textql, {
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3223,7 +3139,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.shareWithGroup({
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3251,7 +3166,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacShareWithGroup(textql, {
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3302,7 +3216,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.shareObjectWithRole({
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3330,7 +3243,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacShareObjectWithRole(textql, {
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3381,7 +3293,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.updateGroup({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3407,7 +3318,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacUpdateGroup(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3456,7 +3366,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.updateObjectAccess({
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3484,7 +3393,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacUpdateObjectAccess(textql, {
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -3535,7 +3443,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.updateObjectVisibility({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3561,7 +3468,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacUpdateObjectVisibility(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3610,7 +3516,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.updateRole({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3636,7 +3541,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacUpdateRole(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

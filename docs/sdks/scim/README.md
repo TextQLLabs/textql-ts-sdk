@@ -27,7 +27,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.createOAuthClient({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -53,7 +52,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimCreateOAuthClient(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -102,7 +100,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.createScimToken({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -128,7 +125,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimCreateScimToken(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -177,7 +173,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.listScimOAuthClients({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -203,7 +198,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimListScimOAuthClients(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -252,7 +246,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -278,7 +271,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -327,7 +319,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.revokeOAuthClient({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -353,7 +344,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimRevokeOAuthClient(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -402,7 +392,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.scim.revokeScimToken({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -428,7 +417,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await scimRevokeScimToken(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

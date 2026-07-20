@@ -35,7 +35,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.createApiRevision({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -61,7 +60,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsCreateApiRevision(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -110,7 +108,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.deleteApiAccessKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -136,7 +133,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsDeleteApiAccessKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -185,7 +181,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.deleteApiRevision({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -211,7 +206,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsDeleteApiRevision(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -260,7 +254,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.deleteSecret({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -286,7 +279,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsDeleteSecret(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -335,7 +327,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.getApiAccessKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -361,7 +352,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsGetApiAccessKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -410,7 +400,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.getMembersWithSecrets({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -436,7 +425,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsGetMembersWithSecrets(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -485,7 +473,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.listApiAccessKeys({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -511,7 +498,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsListApiAccessKeys(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -560,7 +546,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.listApiProviders({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -586,7 +571,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsListApiProviders(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -635,7 +619,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.listSecrets({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -661,7 +644,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsListSecrets(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -710,7 +692,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.migrateSecretToApiConnector({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -736,7 +717,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsMigrateSecretToApiConnector(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -785,7 +765,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.putSecret({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -811,7 +790,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsPutSecret(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -860,7 +838,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.testApiAccessKey({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -886,7 +863,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsTestApiAccessKey(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -935,7 +911,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -961,7 +936,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1010,7 +984,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.secrets.upsertApiAccessKey({
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -1038,7 +1011,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await secretsUpsertApiAccessKey(textql, {
-    connectProtocolVersion: 1,
     body: {
       expiresAt: new Date("2023-01-15T01:30:15.01Z"),
     },

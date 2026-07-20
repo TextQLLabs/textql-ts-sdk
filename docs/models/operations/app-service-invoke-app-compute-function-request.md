@@ -6,7 +6,6 @@
 import { AppServiceInvokeAppComputeFunctionRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceInvokeAppComputeFunctionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

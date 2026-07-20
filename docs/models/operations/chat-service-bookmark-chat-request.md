@@ -6,7 +6,6 @@
 import { ChatServiceBookmarkChatRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceBookmarkChatRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

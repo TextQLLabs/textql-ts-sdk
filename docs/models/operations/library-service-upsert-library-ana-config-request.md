@@ -6,7 +6,6 @@
 import { LibraryServiceUpsertLibraryAnaConfigRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceUpsertLibraryAnaConfigRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

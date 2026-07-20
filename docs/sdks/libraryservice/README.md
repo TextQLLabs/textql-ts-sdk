@@ -23,7 +23,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraryService.libraryServiceListGoldenFiles({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -49,7 +48,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await libraryServiceLibraryServiceListGoldenFiles(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -98,7 +96,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraryService.libraryServiceSetLibraryFileGolden({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -124,7 +121,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await libraryServiceLibraryServiceSetLibraryFileGolden(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

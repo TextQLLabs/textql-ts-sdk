@@ -6,7 +6,6 @@
 import { MCPServiceGetMCPServersRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceGetMCPServersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { LibraryServiceExchangeLibraryGithubCodeRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceExchangeLibraryGithubCodeRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

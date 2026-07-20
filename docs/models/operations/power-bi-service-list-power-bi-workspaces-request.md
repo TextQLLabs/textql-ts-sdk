@@ -6,7 +6,6 @@
 import { PowerBIServiceListPowerBIWorkspacesRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceListPowerBIWorkspacesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

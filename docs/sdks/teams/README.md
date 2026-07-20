@@ -29,7 +29,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.createUuid({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -55,7 +54,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsCreateUuid(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -104,7 +102,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.deleteInstallation({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -130,7 +127,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsDeleteInstallation(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -179,7 +175,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.getCurrentUser({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -205,7 +200,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsGetCurrentUser(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -254,7 +248,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.handleOAuthCallback({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -280,7 +273,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsHandleOAuthCallback(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -329,7 +321,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -355,7 +346,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -404,7 +394,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.listInstallations({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -430,7 +419,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsListInstallations(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -479,7 +467,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.listUsers({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -505,7 +492,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsListUsers(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -554,7 +540,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.teams.syncWorkspace({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -580,7 +565,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await teamsSyncWorkspace(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

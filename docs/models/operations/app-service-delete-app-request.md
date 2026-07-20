@@ -6,7 +6,6 @@
 import { AppServiceDeleteAppRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceDeleteAppRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

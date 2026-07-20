@@ -6,7 +6,6 @@
 import { LibraryServiceGetLibraryHistoryFileDiffRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetLibraryHistoryFileDiffRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

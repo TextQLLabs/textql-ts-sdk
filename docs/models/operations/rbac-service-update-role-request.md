@@ -6,7 +6,6 @@
 import { RBACServiceUpdateRoleRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceUpdateRoleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

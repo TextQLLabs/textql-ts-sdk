@@ -6,7 +6,6 @@
 import { AppServiceSetFavoriteRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceSetFavoriteRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

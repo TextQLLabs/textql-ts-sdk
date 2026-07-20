@@ -6,7 +6,6 @@
 import { LibraryServiceGetFileUsageTimelineRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetFileUsageTimelineRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

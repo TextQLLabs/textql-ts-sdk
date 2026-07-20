@@ -32,7 +32,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.configureOtlpExport({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -58,7 +57,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsConfigureOtlpExport(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -107,7 +105,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.configureS3Export({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -133,7 +130,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsConfigureS3Export(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -182,7 +178,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.deleteOtlpExportConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -208,7 +203,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsDeleteOtlpExportConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -257,7 +251,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.deleteS3ExportConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -283,7 +276,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsDeleteS3ExportConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -332,7 +324,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.getOtlpExportConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -358,7 +349,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsGetOtlpExportConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -407,7 +397,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.getS3ExportConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -433,7 +422,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsGetS3ExportConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -482,7 +470,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.list({
-    connectProtocolVersion: 1,
     body: {
       after: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -510,7 +497,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsList(textql, {
-    connectProtocolVersion: 1,
     body: {
       after: new Date("2023-01-15T01:30:15.01Z"),
     },
@@ -561,7 +547,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.testOtlpExportConnection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -587,7 +572,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsTestOtlpExportConnection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -636,7 +620,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.testS3ExportConnection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -662,7 +645,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsTestS3ExportConnection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -711,7 +693,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.triggerOtlpExport({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -737,7 +718,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsTriggerOtlpExport(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -786,7 +766,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.auditLogs.triggerS3Export({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -812,7 +791,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await auditLogsTriggerS3Export(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

@@ -6,7 +6,6 @@
 import { LibraryServiceFinalizeLibraryFileUploadRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceFinalizeLibraryFileUploadRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

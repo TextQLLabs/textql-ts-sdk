@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetBackfillStatusRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetBackfillStatusRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

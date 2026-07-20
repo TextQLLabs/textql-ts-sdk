@@ -6,7 +6,6 @@
 import { ChatServiceGetLlmUsageRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetLlmUsageRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

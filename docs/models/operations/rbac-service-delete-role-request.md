@@ -6,7 +6,6 @@
 import { RBACServiceDeleteRoleRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceDeleteRoleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

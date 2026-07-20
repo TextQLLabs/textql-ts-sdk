@@ -6,7 +6,6 @@
 import { PlaybookServiceGetReportByIdRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceGetReportByIdRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

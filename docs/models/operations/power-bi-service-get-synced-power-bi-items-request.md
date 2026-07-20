@@ -6,7 +6,6 @@
 import { PowerBIServiceGetSyncedPowerBIItemsRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceGetSyncedPowerBIItemsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

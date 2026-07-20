@@ -6,7 +6,6 @@
 import { LibraryServiceGetLibraryMigrationStatusRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetLibraryMigrationStatusRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

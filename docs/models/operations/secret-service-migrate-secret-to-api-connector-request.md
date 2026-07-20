@@ -6,7 +6,6 @@
 import { SecretServiceMigrateSecretToApiConnectorRequest } from "textql-sdk/models/operations";
 
 let value: SecretServiceMigrateSecretToApiConnectorRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

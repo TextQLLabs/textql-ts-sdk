@@ -6,7 +6,6 @@
 import { LibraryServiceListLibraryImportsRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListLibraryImportsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

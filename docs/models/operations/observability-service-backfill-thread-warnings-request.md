@@ -6,7 +6,6 @@
 import { ObservabilityServiceBackfillThreadWarningsRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceBackfillThreadWarningsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

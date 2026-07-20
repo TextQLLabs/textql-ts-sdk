@@ -6,7 +6,6 @@
 import { ChatServiceAttachDatasetRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceAttachDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

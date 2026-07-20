@@ -6,7 +6,6 @@
 import { RBACServiceRevokeObjectAccessRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceRevokeObjectAccessRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

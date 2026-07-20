@@ -6,7 +6,6 @@
 import { TableauServiceListTableauDatasourcesRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceListTableauDatasourcesRequest = {
-  connectProtocolVersion: 1,
   body: {
     workbookId: "<id>",
   },

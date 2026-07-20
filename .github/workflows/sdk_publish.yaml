@@ -8,11 +8,6 @@ permissions:
   id-token: write
 
 "on":
-  push:
-    branches:
-      - main
-    paths:
-      - .speakeasy/gen.lock
   workflow_dispatch: {}
 
 jobs:

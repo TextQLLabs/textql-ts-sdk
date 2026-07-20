@@ -6,7 +6,6 @@
 import { ObservabilityServiceRefineTopicDraftRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceRefineTopicDraftRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

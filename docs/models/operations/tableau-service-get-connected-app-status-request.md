@@ -6,7 +6,6 @@
 import { TableauServiceGetConnectedAppStatusRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceGetConnectedAppStatusRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

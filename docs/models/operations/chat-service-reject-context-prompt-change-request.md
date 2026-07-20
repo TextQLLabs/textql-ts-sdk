@@ -6,7 +6,6 @@
 import { ChatServiceRejectContextPromptChangeRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceRejectContextPromptChangeRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

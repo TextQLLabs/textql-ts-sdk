@@ -6,7 +6,6 @@
 import { LibraryServiceDenyPatchRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceDenyPatchRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { AuditLogServiceDeleteOtlpExportConfigRequest } from "textql-sdk/models/operations";
 
 let value: AuditLogServiceDeleteOtlpExportConfigRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

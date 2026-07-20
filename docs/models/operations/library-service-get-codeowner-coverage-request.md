@@ -6,7 +6,6 @@
 import { LibraryServiceGetCodeownerCoverageRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetCodeownerCoverageRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

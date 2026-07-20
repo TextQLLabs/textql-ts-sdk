@@ -6,7 +6,6 @@
 import { AppServiceGetAppVersionRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceGetAppVersionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

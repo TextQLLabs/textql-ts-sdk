@@ -6,7 +6,6 @@
 import { DatasetServiceCreatePowerBIDatasetRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceCreatePowerBIDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {
     reports: [
       {

@@ -6,7 +6,6 @@
 import { LibraryServicePushLibraryToRemoteRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServicePushLibraryToRemoteRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -30,7 +30,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.getSandbox({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -56,7 +55,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminGetSandbox(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -106,7 +104,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.listSandboxEgress({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -132,7 +129,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminListSandboxEgress(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -181,7 +177,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.listExecutions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -207,7 +202,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminListExecutions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -257,7 +251,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.listSandboxFiles({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -283,7 +276,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminListSandboxFiles(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -334,7 +326,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.listSandboxSpend({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -360,7 +351,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminListSandboxSpend(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -409,7 +399,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -435,7 +424,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -484,7 +472,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.readFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -510,7 +497,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminReadFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -561,7 +547,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.restartSandbox({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -587,7 +572,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminRestartSandbox(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -636,7 +620,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandboxAdmin.stop({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -662,7 +645,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxAdminStop(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

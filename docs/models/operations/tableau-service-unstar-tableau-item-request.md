@@ -6,7 +6,6 @@
 import { TableauServiceUnstarTableauItemRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceUnstarTableauItemRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

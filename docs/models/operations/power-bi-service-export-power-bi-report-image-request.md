@@ -6,7 +6,6 @@
 import { PowerBIServiceExportPowerBIReportImageRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceExportPowerBIReportImageRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

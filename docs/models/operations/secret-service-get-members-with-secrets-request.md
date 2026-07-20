@@ -6,7 +6,6 @@
 import { SecretServiceGetMembersWithSecretsRequest } from "textql-sdk/models/operations";
 
 let value: SecretServiceGetMembersWithSecretsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

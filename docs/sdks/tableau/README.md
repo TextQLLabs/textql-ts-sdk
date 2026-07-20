@@ -34,7 +34,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.generateEmbedToken({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -60,7 +59,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauGenerateEmbedToken(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -109,7 +107,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.getCollectionThumbnail({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -135,7 +132,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauGetCollectionThumbnail(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -184,7 +180,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.getConnectedAppStatus({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -210,7 +205,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauGetConnectedAppStatus(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -259,7 +253,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.getStarredItems({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -285,7 +278,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauGetStarredItems(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -334,7 +326,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.listTableauDatasources({
-    connectProtocolVersion: 1,
     body: {
       projectId: "<id>",
     },
@@ -362,7 +353,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauListTableauDatasources(textql, {
-    connectProtocolVersion: 1,
     body: {
       projectId: "<id>",
     },
@@ -413,7 +403,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.listProjects({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -439,7 +428,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauListProjects(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -488,7 +476,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.listViews({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -514,7 +501,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauListViews(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -563,7 +549,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.listWorkbooks({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -589,7 +574,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauListWorkbooks(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -638,7 +622,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.refreshCollection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -664,7 +647,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauRefreshCollection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -713,7 +695,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.resetConnectedApp({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -739,7 +720,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauResetConnectedApp(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -788,7 +768,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.starItem({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -814,7 +793,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauStarItem(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -863,7 +841,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.testTableauConnection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -889,7 +866,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauTestTableauConnection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -938,7 +914,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.tableau.unstarTableauItem({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -964,7 +939,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await tableauUnstarTableauItem(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

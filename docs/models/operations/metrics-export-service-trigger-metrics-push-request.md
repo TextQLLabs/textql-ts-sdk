@@ -6,7 +6,6 @@
 import { MetricsExportServiceTriggerMetricsPushRequest } from "textql-sdk/models/operations";
 
 let value: MetricsExportServiceTriggerMetricsPushRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

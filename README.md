@@ -80,7 +80,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -113,7 +112,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1034,7 +1032,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   }, {
     retries: {
@@ -1076,7 +1073,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1113,7 +1109,6 @@ const textql = new Textql({
 async function run() {
   try {
     const result = await textql.agents.create({
-      connectProtocolVersion: 1,
       body: {},
     });
 
@@ -1170,7 +1165,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 

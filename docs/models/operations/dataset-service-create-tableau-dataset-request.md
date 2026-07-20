@@ -6,7 +6,6 @@
 import { DatasetServiceCreateTableauDatasetRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceCreateTableauDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {
     views: [
       {

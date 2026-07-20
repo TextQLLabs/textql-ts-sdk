@@ -6,7 +6,6 @@
 import { ObservabilityServiceSetTopicTagFeedbackRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceSetTopicTagFeedbackRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

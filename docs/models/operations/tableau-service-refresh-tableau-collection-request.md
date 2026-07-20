@@ -6,7 +6,6 @@
 import { TableauServiceRefreshTableauCollectionRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceRefreshTableauCollectionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

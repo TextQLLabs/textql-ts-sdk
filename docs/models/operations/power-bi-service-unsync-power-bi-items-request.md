@@ -6,7 +6,6 @@
 import { PowerBIServiceUnsyncPowerBIItemsRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceUnsyncPowerBIItemsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

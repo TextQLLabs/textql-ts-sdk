@@ -6,7 +6,6 @@
 import { LibraryServiceGetLibraryFileRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetLibraryFileRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

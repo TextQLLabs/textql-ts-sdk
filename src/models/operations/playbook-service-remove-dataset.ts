@@ -11,7 +11,7 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type PlaybookServiceRemoveDatasetRequest = {
-  connectProtocolVersion: 1;
+  connectProtocolVersion?: 1 | undefined;
   connectTimeoutMs?: number | undefined;
   body: models.TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest;
 };
@@ -33,7 +33,7 @@ export const PlaybookServiceRemoveDatasetRequest$outboundSchema: z.ZodMiniType<
   PlaybookServiceRemoveDatasetRequest
 > = z.pipe(
   z.object({
-    connectProtocolVersion: z.literal(1),
+    connectProtocolVersion: z._default(z.literal(1), 1 as const),
     connectTimeoutMs: z.optional(z.number()),
     body:
       models.TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest$outboundSchema,

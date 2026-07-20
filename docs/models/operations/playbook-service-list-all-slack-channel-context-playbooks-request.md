@@ -6,7 +6,6 @@
 import { PlaybookServiceListAllSlackChannelContextPlaybooksRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceListAllSlackChannelContextPlaybooksRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

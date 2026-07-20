@@ -6,7 +6,6 @@
 import { DashboardServiceDuplicateDashboardRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceDuplicateDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

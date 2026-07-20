@@ -6,7 +6,6 @@
 import { TeamsServiceSyncWorkspaceRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceSyncWorkspaceRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

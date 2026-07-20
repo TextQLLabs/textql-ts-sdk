@@ -6,7 +6,6 @@
 import { LibraryServiceRenameLibraryFileRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceRenameLibraryFileRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

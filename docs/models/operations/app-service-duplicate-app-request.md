@@ -6,7 +6,6 @@
 import { AppServiceDuplicateAppRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceDuplicateAppRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

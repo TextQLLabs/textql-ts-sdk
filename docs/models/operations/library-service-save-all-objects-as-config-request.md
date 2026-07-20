@@ -6,7 +6,6 @@
 import { LibraryServiceSaveAllObjectsAsConfigRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceSaveAllObjectsAsConfigRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

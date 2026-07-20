@@ -6,7 +6,6 @@
 import { SlackServiceHandleSlackOAuthCallbackRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceHandleSlackOAuthCallbackRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

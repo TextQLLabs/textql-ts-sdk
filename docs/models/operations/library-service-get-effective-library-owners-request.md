@@ -6,7 +6,6 @@
 import { LibraryServiceGetEffectiveLibraryOwnersRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetEffectiveLibraryOwnersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

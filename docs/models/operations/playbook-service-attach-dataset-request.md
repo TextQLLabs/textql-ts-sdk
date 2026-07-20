@@ -6,7 +6,6 @@
 import { PlaybookServiceAttachDatasetRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceAttachDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

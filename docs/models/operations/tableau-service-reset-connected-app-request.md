@@ -6,7 +6,6 @@
 import { TableauServiceResetConnectedAppRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceResetConnectedAppRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

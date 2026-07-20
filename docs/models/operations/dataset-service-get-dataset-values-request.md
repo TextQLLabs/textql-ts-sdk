@@ -6,7 +6,6 @@
 import { DatasetServiceGetDatasetValuesRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceGetDatasetValuesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

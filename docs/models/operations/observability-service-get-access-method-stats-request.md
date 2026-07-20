@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetAccessMethodStatsRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetAccessMethodStatsRequest = {
-  connectProtocolVersion: 1,
   body: {
     startDate: new Date("2023-01-15T01:30:15.01Z"),
     endDate: new Date("2023-01-15T01:30:15.01Z"),

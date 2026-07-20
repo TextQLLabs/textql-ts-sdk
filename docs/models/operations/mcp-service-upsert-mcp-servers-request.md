@@ -6,7 +6,6 @@
 import { MCPServiceUpsertMCPServersRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceUpsertMCPServersRequest = {
-  connectProtocolVersion: 1,
   body: {
     mcpServers: [
       {

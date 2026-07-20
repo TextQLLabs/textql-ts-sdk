@@ -6,7 +6,6 @@
 import { LibraryServicePreviewLibraryPullFromRemoteRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServicePreviewLibraryPullFromRemoteRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

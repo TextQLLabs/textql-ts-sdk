@@ -6,7 +6,6 @@
 import { MCPServiceToggleMCPServerRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceToggleMCPServerRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -14925,6 +14925,7 @@ components:
         - 1
       description: Define the version of the Connect protocol
       const: 1
+      default: 1
     connect-timeout-header:
       type: number
       title: Connect-Timeout-Ms

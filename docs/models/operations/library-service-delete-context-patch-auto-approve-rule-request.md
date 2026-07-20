@@ -6,7 +6,6 @@
 import { LibraryServiceDeleteContextPatchAutoApproveRuleRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceDeleteContextPatchAutoApproveRuleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

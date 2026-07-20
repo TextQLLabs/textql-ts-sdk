@@ -6,7 +6,6 @@
 import { AppServiceGetMembersWithAppsRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceGetMembersWithAppsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

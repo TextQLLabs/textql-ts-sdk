@@ -6,7 +6,6 @@
 import { ChatServicePollChatEventsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServicePollChatEventsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

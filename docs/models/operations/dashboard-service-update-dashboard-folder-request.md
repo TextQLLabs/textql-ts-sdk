@@ -6,7 +6,6 @@
 import { DashboardServiceUpdateDashboardFolderRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceUpdateDashboardFolderRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { SecretServiceDeleteApiAccessKeyRequest } from "textql-sdk/models/operations";
 
 let value: SecretServiceDeleteApiAccessKeyRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

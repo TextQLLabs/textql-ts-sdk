@@ -6,7 +6,6 @@
 import { AuditLogServiceTestS3ExportConnectionRequest } from "textql-sdk/models/operations";
 
 let value: AuditLogServiceTestS3ExportConnectionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetCustomTopicThreadsRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetCustomTopicThreadsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

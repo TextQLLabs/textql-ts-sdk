@@ -6,7 +6,6 @@
 import { PlaybookServiceUpdatePlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceUpdatePlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

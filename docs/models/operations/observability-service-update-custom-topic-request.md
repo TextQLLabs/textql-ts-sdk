@@ -6,7 +6,6 @@
 import { ObservabilityServiceUpdateCustomTopicRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceUpdateCustomTopicRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

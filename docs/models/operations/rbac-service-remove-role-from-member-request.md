@@ -6,7 +6,6 @@
 import { RBACServiceRemoveRoleFromMemberRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceRemoveRoleFromMemberRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

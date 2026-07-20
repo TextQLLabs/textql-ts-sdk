@@ -6,7 +6,6 @@
 import { AuditLogServiceListAuditLogsRequest } from "textql-sdk/models/operations";
 
 let value: AuditLogServiceListAuditLogsRequest = {
-  connectProtocolVersion: 1,
   body: {
     after: new Date("2023-01-15T01:30:15.01Z"),
   },

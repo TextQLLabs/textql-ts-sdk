@@ -6,7 +6,6 @@
 import { DatasetServiceUpdateDatasetRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceUpdateDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

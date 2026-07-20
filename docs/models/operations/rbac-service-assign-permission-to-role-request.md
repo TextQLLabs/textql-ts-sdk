@@ -6,7 +6,6 @@
 import { RBACServiceAssignPermissionToRoleRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceAssignPermissionToRoleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

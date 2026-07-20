@@ -6,7 +6,6 @@
 import { DashboardServiceGetDashboardRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceGetDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

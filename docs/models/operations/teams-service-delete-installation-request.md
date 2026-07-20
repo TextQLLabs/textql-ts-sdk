@@ -6,7 +6,6 @@
 import { TeamsServiceDeleteInstallationRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceDeleteInstallationRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { ChatServiceGetCompletionParametersRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetCompletionParametersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

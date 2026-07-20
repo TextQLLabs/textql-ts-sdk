@@ -6,7 +6,6 @@
 import { ConnectorServiceListQueryTemplatesRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceListQueryTemplatesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

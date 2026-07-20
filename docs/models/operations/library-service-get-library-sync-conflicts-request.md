@@ -6,7 +6,6 @@
 import { LibraryServiceGetLibrarySyncConflictsRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetLibrarySyncConflictsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { ChatServiceUnbookmarkChatRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceUnbookmarkChatRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

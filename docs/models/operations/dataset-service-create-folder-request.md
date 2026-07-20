@@ -6,7 +6,6 @@
 import { DatasetServiceCreateFolderRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceCreateFolderRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { LibraryServiceCreateLibraryDirectoryRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceCreateLibraryDirectoryRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

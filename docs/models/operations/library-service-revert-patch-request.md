@@ -6,7 +6,6 @@
 import { LibraryServiceRevertPatchRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceRevertPatchRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

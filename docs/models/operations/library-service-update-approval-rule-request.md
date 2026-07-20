@@ -6,7 +6,6 @@
 import { LibraryServiceUpdateApprovalRuleRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceUpdateApprovalRuleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

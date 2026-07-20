@@ -6,7 +6,6 @@
 import { SlackServiceCreateSlackUuidRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceCreateSlackUuidRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

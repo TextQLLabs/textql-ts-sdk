@@ -6,7 +6,6 @@
 import { LibraryServiceDeleteLibraryFileRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceDeleteLibraryFileRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

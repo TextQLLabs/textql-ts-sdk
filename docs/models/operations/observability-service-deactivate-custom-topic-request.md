@@ -6,7 +6,6 @@
 import { ObservabilityServiceDeactivateCustomTopicRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceDeactivateCustomTopicRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

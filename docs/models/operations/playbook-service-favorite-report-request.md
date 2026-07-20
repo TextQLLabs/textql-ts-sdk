@@ -6,7 +6,6 @@
 import { PlaybookServiceFavoriteReportRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceFavoriteReportRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

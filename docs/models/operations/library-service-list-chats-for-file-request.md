@@ -6,7 +6,6 @@
 import { LibraryServiceListChatsForFileRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListChatsForFileRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

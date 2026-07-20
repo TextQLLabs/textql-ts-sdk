@@ -6,7 +6,6 @@
 import { DatasetServiceDeleteDatasetRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceDeleteDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

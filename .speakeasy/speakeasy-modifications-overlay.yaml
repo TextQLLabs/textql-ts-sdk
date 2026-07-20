@@ -8,6 +8,9 @@ info:
     before: ""
     type: speakeasy-modifications
 actions:
+  - target: $["components"]["schemas"]["connect-protocol-version"]
+    update:
+      default: 1
   - target: $["paths"]["/textql.rpc.public.chat.ChatService/StreamChat"]
     remove: true
   - target: $["paths"]["/textql.rpc.public.chat.ChatService/WatchChat"]

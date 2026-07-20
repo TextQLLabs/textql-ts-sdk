@@ -6,7 +6,6 @@
 import { PlaybookServicePreviewSlackReportRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServicePreviewSlackReportRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

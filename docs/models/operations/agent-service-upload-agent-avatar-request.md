@@ -6,7 +6,6 @@
 import { AgentServiceUploadAgentAvatarRequest } from "textql-sdk/models/operations";
 
 let value: AgentServiceUploadAgentAvatarRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

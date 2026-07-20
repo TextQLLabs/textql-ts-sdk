@@ -6,7 +6,6 @@
 import { TeamsServiceCreateTeamsUuidRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceCreateTeamsUuidRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

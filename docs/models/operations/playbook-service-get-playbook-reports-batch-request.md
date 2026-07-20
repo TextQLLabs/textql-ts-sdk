@@ -6,7 +6,6 @@
 import { PlaybookServiceGetPlaybookReportsBatchRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceGetPlaybookReportsBatchRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

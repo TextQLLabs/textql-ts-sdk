@@ -6,7 +6,6 @@
 import { SlackServiceDeleteInstallationRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceDeleteInstallationRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

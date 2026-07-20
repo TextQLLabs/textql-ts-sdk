@@ -6,7 +6,6 @@
 import { ConnectorServiceDeleteConnectorRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceDeleteConnectorRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

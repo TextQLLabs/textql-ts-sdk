@@ -6,7 +6,6 @@
 import { ObservabilityServiceDeleteCustomTopicRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceDeleteCustomTopicRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

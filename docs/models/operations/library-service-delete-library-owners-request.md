@@ -6,7 +6,6 @@
 import { LibraryServiceDeleteLibraryOwnersRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceDeleteLibraryOwnersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

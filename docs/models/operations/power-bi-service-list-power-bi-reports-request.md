@@ -6,7 +6,6 @@
 import { PowerBIServiceListPowerBIReportsRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceListPowerBIReportsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

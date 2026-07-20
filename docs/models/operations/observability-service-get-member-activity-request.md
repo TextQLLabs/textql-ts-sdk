@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetMemberActivityRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetMemberActivityRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

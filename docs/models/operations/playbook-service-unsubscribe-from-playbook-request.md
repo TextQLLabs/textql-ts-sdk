@@ -6,7 +6,6 @@
 import { PlaybookServiceUnsubscribeFromPlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceUnsubscribeFromPlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

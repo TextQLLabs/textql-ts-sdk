@@ -6,7 +6,6 @@
 import { ObservabilityServiceExportObservabilityCsvRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceExportObservabilityCsvRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

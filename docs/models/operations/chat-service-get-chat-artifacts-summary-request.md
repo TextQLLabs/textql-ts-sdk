@@ -6,7 +6,6 @@
 import { ChatServiceGetChatArtifactsSummaryRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetChatArtifactsSummaryRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

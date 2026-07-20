@@ -6,7 +6,6 @@
 import { RBACServiceDeleteServiceAccountRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceDeleteServiceAccountRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { MCPServiceDeleteMCPServerRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceDeleteMCPServerRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

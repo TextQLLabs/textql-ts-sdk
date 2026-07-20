@@ -6,7 +6,6 @@
 import { ChatServiceAttachDashboardRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceAttachDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

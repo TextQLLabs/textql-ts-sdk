@@ -6,7 +6,6 @@
 import { PowerBIServiceGetPowerBIDatasetPreviewRequest } from "textql-sdk/models/operations";
 
 let value: PowerBIServiceGetPowerBIDatasetPreviewRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

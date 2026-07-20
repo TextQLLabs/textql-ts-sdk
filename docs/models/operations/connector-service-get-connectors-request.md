@@ -6,7 +6,6 @@
 import { ConnectorServiceGetConnectorsRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceGetConnectorsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

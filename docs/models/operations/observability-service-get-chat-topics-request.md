@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetChatTopicsRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetChatTopicsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

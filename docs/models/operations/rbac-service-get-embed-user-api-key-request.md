@@ -6,7 +6,6 @@
 import { RBACServiceGetEmbedUserApiKeyRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceGetEmbedUserApiKeyRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

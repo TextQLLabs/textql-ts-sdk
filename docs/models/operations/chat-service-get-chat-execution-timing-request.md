@@ -6,7 +6,6 @@
 import { ChatServiceGetChatExecutionTimingRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetChatExecutionTimingRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

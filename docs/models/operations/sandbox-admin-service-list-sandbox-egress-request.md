@@ -6,7 +6,6 @@
 import { SandboxAdminServiceListSandboxEgressRequest } from "textql-sdk/models/operations";
 
 let value: SandboxAdminServiceListSandboxEgressRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

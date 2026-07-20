@@ -6,7 +6,6 @@
 import { PlaybookServiceRemoveDashboardRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceRemoveDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

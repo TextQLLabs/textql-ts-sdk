@@ -6,7 +6,6 @@
 import { SandboxAdminServiceGetSandboxRequest } from "textql-sdk/models/operations";
 
 let value: SandboxAdminServiceGetSandboxRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

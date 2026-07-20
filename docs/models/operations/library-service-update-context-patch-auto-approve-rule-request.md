@@ -6,7 +6,6 @@
 import { LibraryServiceUpdateContextPatchAutoApproveRuleRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceUpdateContextPatchAutoApproveRuleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

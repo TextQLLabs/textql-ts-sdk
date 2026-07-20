@@ -60,7 +60,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.attachDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -86,7 +85,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksAttachDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -135,7 +133,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.attachDataset({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -161,7 +158,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksAttachDataset(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -210,7 +206,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.cancelTemplateExecution({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -236,7 +231,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksCancelTemplateExecution(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -285,7 +279,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.createPlaybook({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -311,7 +304,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksCreatePlaybook(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -360,7 +352,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.deactivate({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -386,7 +377,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksDeactivate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -435,7 +425,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -461,7 +450,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -510,7 +498,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.demoPlaybook({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -536,7 +523,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksDemoPlaybook(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -585,7 +571,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.deploy({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -611,7 +596,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksDeploy(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -660,7 +644,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.duplicate({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -686,7 +669,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksDuplicate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -735,7 +717,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.favoriteReport({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -761,7 +742,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksFavoriteReport(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -810,7 +790,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getActiveSubscribedCount({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -836,7 +815,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetActiveSubscribedCount(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -885,7 +863,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getChatReportsSummary({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -911,7 +888,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetChatReportsSummary(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -960,7 +936,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getMembersWith({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -986,7 +961,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetMembersWith(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1035,7 +1009,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.fetch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1061,7 +1034,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksFetch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1110,7 +1082,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getBatchRun({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1136,7 +1107,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetBatchRun(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1185,7 +1155,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getPlaybookLineage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1211,7 +1180,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetPlaybookLineage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1260,7 +1228,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getReports({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1286,7 +1253,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetReports(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1335,7 +1301,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getPlaybookReportsBatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1361,7 +1326,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetPlaybookReportsBatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1410,7 +1374,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1436,7 +1399,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1485,7 +1447,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getPlaybooksPreviews({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1511,7 +1472,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetPlaybooksPreviews(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1560,7 +1520,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getReportById({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1586,7 +1545,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetReportById(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1635,7 +1593,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.getReportsWithFilters({
-    connectProtocolVersion: 1,
     body: {
       filters: {
         startTime: new Date("2023-01-15T01:30:15.01Z"),
@@ -1666,7 +1623,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksGetReportsWithFilters(textql, {
-    connectProtocolVersion: 1,
     body: {
       filters: {
         startTime: new Date("2023-01-15T01:30:15.01Z"),
@@ -1720,7 +1676,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.listSlackChannelContextPlaybooks({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1746,7 +1701,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksListSlackChannelContextPlaybooks(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1795,7 +1749,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.listAllTeamsChannelContextPlaybooks({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1821,7 +1774,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksListAllTeamsChannelContextPlaybooks(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1870,7 +1822,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.listBatchRuns({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1896,7 +1847,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksListBatchRuns(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1945,7 +1895,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.listSlackChannelsForContext({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1971,7 +1920,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksListSlackChannelsForContext(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2020,7 +1968,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.listTeamsChannelsForContextPlaybook({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2046,7 +1993,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksListTeamsChannelsForContextPlaybook(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2095,7 +2041,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.markReportAsRead({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2121,7 +2066,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksMarkReportAsRead(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2170,7 +2114,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.previewSlackReport({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2196,7 +2139,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksPreviewSlackReport(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2245,7 +2187,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.removeDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2271,7 +2212,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksRemoveDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2320,7 +2260,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.removeDataset({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2346,7 +2285,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksRemoveDataset(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2395,7 +2333,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.run({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2421,7 +2358,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksRun(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2472,7 +2408,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.setSlackChannelContextPlaybook({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2498,7 +2433,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksSetSlackChannelContextPlaybook(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2547,7 +2481,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.setTeamsChannelContext({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2573,7 +2506,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksSetTeamsChannelContext(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2622,7 +2554,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.subscribe({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2648,7 +2579,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksSubscribe(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2698,7 +2628,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.unsetSlackChannelContextPlaybook({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2724,7 +2653,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksUnsetSlackChannelContextPlaybook(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2773,7 +2701,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.unsetTeamsChannelContext({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2799,7 +2726,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksUnsetTeamsChannelContext(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2848,7 +2774,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.unsubscribe({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2874,7 +2799,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksUnsubscribe(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2923,7 +2847,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.playbooks.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2949,7 +2872,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await playbooksUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

@@ -6,7 +6,6 @@
 import { TeamsServiceGetCurrentUserRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceGetCurrentUserRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { DatasetServiceCreateUploadPresignUrlRequest } from "textql-sdk/models/operations";
 
 let value: DatasetServiceCreateUploadPresignUrlRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { LibraryServiceListGoldenFilesRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListGoldenFilesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

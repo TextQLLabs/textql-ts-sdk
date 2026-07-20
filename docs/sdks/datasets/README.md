@@ -35,7 +35,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.createFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -61,7 +60,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsCreateFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -110,7 +108,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.createPowerBIDataset({
-    connectProtocolVersion: 1,
     body: {
       reports: [
         {
@@ -147,7 +144,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsCreatePowerBIDataset(textql, {
-    connectProtocolVersion: 1,
     body: {
       reports: [
         {
@@ -207,7 +203,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.createTableauDataset({
-    connectProtocolVersion: 1,
     body: {
       views: [
         {
@@ -246,7 +241,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsCreateTableauDataset(textql, {
-    connectProtocolVersion: 1,
     body: {
       views: [
         {
@@ -308,7 +302,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.createUploadPresignUrl({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -334,7 +327,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsCreateUploadPresignUrl(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -383,7 +375,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -409,7 +400,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -458,7 +448,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.export({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -484,7 +473,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsExport(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -533,7 +521,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.fetch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -559,7 +546,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsFetch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -608,7 +594,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.getStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -634,7 +619,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsGetStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -683,7 +667,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.getDatasetValues({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -709,7 +692,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsGetDatasetValues(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -758,7 +740,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -784,7 +765,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -833,7 +813,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.getByIds({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -859,7 +838,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsGetByIds(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -908,7 +886,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.getFolders({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -934,7 +911,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsGetFolders(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -983,7 +959,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.processUploadPresignUrl({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1009,7 +984,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsProcessUploadPresignUrl(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1058,7 +1032,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.datasets.updateDataset({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1084,7 +1057,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await datasetsUpdateDataset(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

@@ -6,7 +6,6 @@
 import { PlaybookServiceCancelTemplateExecutionRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceCancelTemplateExecutionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

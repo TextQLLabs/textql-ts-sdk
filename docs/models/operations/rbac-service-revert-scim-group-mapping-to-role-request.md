@@ -6,7 +6,6 @@
 import { RBACServiceRevertScimGroupMappingToRoleRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceRevertScimGroupMappingToRoleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

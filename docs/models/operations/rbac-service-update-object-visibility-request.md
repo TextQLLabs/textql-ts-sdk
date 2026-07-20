@@ -6,7 +6,6 @@
 import { RBACServiceUpdateObjectVisibilityRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceUpdateObjectVisibilityRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

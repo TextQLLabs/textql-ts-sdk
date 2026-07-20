@@ -6,7 +6,6 @@
 import { SecretServiceCreateApiRevisionRequest } from "textql-sdk/models/operations";
 
 let value: SecretServiceCreateApiRevisionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { PlaybookServiceGetPlaybooksPreviewsRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceGetPlaybooksPreviewsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

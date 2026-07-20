@@ -6,7 +6,6 @@
 import { ConnectorServiceGetConnectorCellDurationsRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceGetConnectorCellDurationsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

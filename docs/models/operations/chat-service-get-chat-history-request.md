@@ -6,7 +6,6 @@
 import { ChatServiceGetChatHistoryRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetChatHistoryRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

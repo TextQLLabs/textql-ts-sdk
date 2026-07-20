@@ -6,7 +6,6 @@
 import { MCPServiceInitiateOAuthFlowRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceInitiateOAuthFlowRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

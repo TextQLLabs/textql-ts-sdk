@@ -32,7 +32,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -58,7 +57,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsCreate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -107,7 +105,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -133,7 +130,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -182,7 +178,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.duplicate({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -208,7 +203,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsDuplicate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -257,7 +251,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.getAgent({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -283,7 +276,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsGetAgent(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -332,7 +324,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.getRun({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -358,7 +349,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsGetRun(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -407,7 +397,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.listRuns({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -433,7 +422,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsListRuns(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -482,7 +470,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -508,7 +495,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -557,7 +543,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.resetAgentAvatar({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -583,7 +568,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsResetAgentAvatar(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -632,7 +616,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.triggerAgent({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -658,7 +641,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsTriggerAgent(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -707,7 +689,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -733,7 +714,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -782,7 +762,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.agents.uploadAgentAvatar({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -808,7 +787,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsUploadAgentAvatar(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

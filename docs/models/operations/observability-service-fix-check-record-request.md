@@ -6,7 +6,6 @@
 import { ObservabilityServiceFixCheckRecordRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceFixCheckRecordRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

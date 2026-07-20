@@ -91,7 +91,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.addSubmodule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -117,7 +116,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesAddSubmodule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -166,7 +164,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.approvePatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -192,7 +189,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesApprovePatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -241,7 +237,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.configureLibraryRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -267,7 +262,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesConfigureLibraryRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -316,7 +310,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.createApprovalRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -342,7 +335,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesCreateApprovalRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -391,7 +383,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.createContextPatchAutoApproveRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -417,7 +408,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesCreateContextPatchAutoApproveRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -466,7 +456,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.createLibraryDirectory({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -492,7 +481,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesCreateLibraryDirectory(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -541,7 +529,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.createFileUploadUrl({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -567,7 +554,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesCreateFileUploadUrl(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -616,7 +602,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.deleteApprovalRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -642,7 +627,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDeleteApprovalRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -691,7 +675,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.deleteContextPatchAutoApproveRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -717,7 +700,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDeleteContextPatchAutoApproveRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -766,7 +748,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.deleteLibraryDirectory({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -792,7 +773,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDeleteLibraryDirectory(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -841,7 +821,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.deleteLibraryFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -867,7 +846,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDeleteLibraryFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -916,7 +894,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.deleteOwners({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -942,7 +919,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDeleteOwners(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -991,7 +967,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.denyPatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1017,7 +992,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesDenyPatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1066,7 +1040,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.exchangeGithubCode({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1092,7 +1065,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesExchangeGithubCode(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1141,7 +1113,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.finalizeFileUpload({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1167,7 +1138,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesFinalizeFileUpload(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1216,7 +1186,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getCodeownerCoverage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1242,7 +1211,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetCodeownerCoverage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1291,7 +1259,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getConfigExportCapabilities({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1317,7 +1284,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetConfigExportCapabilities(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1366,7 +1332,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getEffectiveOwners({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1392,7 +1357,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetEffectiveOwners(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1441,7 +1405,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getFileUsage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1467,7 +1430,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetFileUsage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1516,7 +1478,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getFileUsageTimeline({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1542,7 +1503,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetFileUsageTimeline(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1591,7 +1551,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getAnaConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1617,7 +1576,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetAnaConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1666,7 +1624,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1692,7 +1649,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1741,7 +1697,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getLibraryGithubOAuthURL({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1767,7 +1722,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetLibraryGithubOAuthURL(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1816,7 +1770,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getHistoryFileDiff({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1842,7 +1795,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetHistoryFileDiff(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1891,7 +1843,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getMigrationStatus({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1917,7 +1868,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetMigrationStatus(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1966,7 +1916,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getLibraryOwners({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1992,7 +1941,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetLibraryOwners(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2041,7 +1989,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2067,7 +2014,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2116,7 +2062,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getSizeTimeline({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2142,7 +2087,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetSizeTimeline(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2191,7 +2135,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getLibrarySyncConflicts({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2217,7 +2160,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetLibrarySyncConflicts(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2266,7 +2208,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getOntologyUsageSummary({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2292,7 +2233,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetOntologyUsageSummary(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2341,7 +2281,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getPatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2367,7 +2306,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetPatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2416,7 +2354,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getPatchByNumber({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2442,7 +2379,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetPatchByNumber(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2491,7 +2427,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getPatchCapabilities({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2517,7 +2452,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetPatchCapabilities(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2566,7 +2500,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getRawPatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2592,7 +2525,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetRawPatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2641,7 +2573,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.getUsageDetailsForFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2667,7 +2598,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesGetUsageDetailsForFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2716,7 +2646,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listApprovalRules({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2742,7 +2671,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListApprovalRules(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2791,7 +2719,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listChatsForFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2817,7 +2744,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListChatsForFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2866,7 +2792,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listContextPatchAutoApproveRules({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2892,7 +2817,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListContextPatchAutoApproveRules(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2941,7 +2865,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listLibraryEntries({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2967,7 +2890,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListLibraryEntries(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3016,7 +2938,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listLibraryHistory({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3042,7 +2963,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListLibraryHistory(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3091,7 +3011,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listImports({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3117,7 +3036,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListImports(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3166,7 +3084,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listLibrarySubmodules({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3192,7 +3109,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListLibrarySubmodules(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3241,7 +3157,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listLibrarySyncRuns({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3267,7 +3182,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListLibrarySyncRuns(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3316,7 +3230,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listPatchReviewers({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3342,7 +3255,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListPatchReviewers(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3391,7 +3303,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listPatches({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3417,7 +3328,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListPatches(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3468,7 +3378,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.listSkills({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3494,7 +3403,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesListSkills(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3543,7 +3451,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.migrateLegacyContext({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3569,7 +3476,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesMigrateLegacyContext(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3618,7 +3524,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.migrateOntology({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3644,7 +3549,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesMigrateOntology(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3693,7 +3597,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.planMerge({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3719,7 +3622,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesPlanMerge(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3768,7 +3670,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.previewLibraryPullFromRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3794,7 +3695,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesPreviewLibraryPullFromRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3843,7 +3743,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.pullFromRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3869,7 +3768,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesPullFromRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3918,7 +3816,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.pushLibraryToRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -3944,7 +3841,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesPushLibraryToRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -3993,7 +3889,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.recover({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4019,7 +3914,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRecover(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4068,7 +3962,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.removeRemote({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4094,7 +3987,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRemoveRemote(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4143,7 +4035,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.removeLibrarySubmodule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4169,7 +4060,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRemoveLibrarySubmodule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4218,7 +4108,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.renameFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4244,7 +4133,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRenameFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4293,7 +4181,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.requestPatchReview({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4319,7 +4206,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRequestPatchReview(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4368,7 +4254,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.resolveSyncConflict({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4394,7 +4279,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesResolveSyncConflict(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4443,7 +4327,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.restorePatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4469,7 +4352,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRestorePatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4518,7 +4400,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.revertPatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4544,7 +4425,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesRevertPatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4593,7 +4473,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.saveAllObjectsAsConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4619,7 +4498,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesSaveAllObjectsAsConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4668,7 +4546,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.saveAsConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4694,7 +4571,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesSaveAsConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4746,7 +4622,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.triggerConfigDriftReconcile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4772,7 +4647,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesTriggerConfigDriftReconcile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4821,7 +4695,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.updateApprovalRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4847,7 +4720,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpdateApprovalRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4896,7 +4768,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.updateContextPatchAutoApproveRule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4922,7 +4793,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpdateContextPatchAutoApproveRule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -4971,7 +4841,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.updateLibrarySyncConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -4997,7 +4866,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpdateLibrarySyncConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -5046,7 +4914,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.upsertAnaConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -5072,7 +4939,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpsertAnaConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -5121,7 +4987,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.upsertLibraryFile({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -5147,7 +5012,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpsertLibraryFile(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -5196,7 +5060,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.upsertOwners({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -5222,7 +5085,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesUpsertOwners(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -5274,7 +5136,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.libraries.validateConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -5300,7 +5161,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await librariesValidateConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

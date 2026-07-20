@@ -22,7 +22,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.sandbox.executeQuery({
-    connectProtocolVersion: 1,
     body: {
       sqlQuery: {},
     },
@@ -50,7 +49,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await sandboxExecuteQuery(textql, {
-    connectProtocolVersion: 1,
     body: {
       sqlQuery: {},
     },

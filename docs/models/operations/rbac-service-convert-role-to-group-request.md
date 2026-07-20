@@ -6,7 +6,6 @@
 import { RBACServiceConvertRoleToGroupRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceConvertRoleToGroupRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

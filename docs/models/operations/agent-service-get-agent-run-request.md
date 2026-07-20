@@ -6,7 +6,6 @@
 import { AgentServiceGetAgentRunRequest } from "textql-sdk/models/operations";
 
 let value: AgentServiceGetAgentRunRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

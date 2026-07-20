@@ -6,7 +6,6 @@
 import { ChatServiceGetChatsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetChatsRequest = {
-  connectProtocolVersion: 1,
   body: {
     createdAfter: new Date("2023-01-15T01:30:15.01Z"),
     createdBefore: new Date("2023-01-15T01:30:15.01Z"),

@@ -6,7 +6,6 @@
 import { ChatServiceDuplicateChatRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceDuplicateChatRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

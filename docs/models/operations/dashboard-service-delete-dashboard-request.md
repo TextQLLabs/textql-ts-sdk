@@ -6,7 +6,6 @@
 import { DashboardServiceDeleteDashboardRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceDeleteDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { SandboxAdminServiceRestartSandboxRequest } from "textql-sdk/models/operations";
 
 let value: SandboxAdminServiceRestartSandboxRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

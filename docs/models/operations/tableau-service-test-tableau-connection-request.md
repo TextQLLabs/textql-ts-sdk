@@ -6,7 +6,6 @@
 import { TableauServiceTestTableauConnectionRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceTestTableauConnectionRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { AgentServiceDuplicateAgentRequest } from "textql-sdk/models/operations";
 
 let value: AgentServiceDuplicateAgentRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

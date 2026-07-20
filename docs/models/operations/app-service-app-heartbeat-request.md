@@ -6,7 +6,6 @@
 import { AppServiceAppHeartbeatRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceAppHeartbeatRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

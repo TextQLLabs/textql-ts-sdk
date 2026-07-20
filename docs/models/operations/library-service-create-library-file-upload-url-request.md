@@ -6,7 +6,6 @@
 import { LibraryServiceCreateLibraryFileUploadUrlRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceCreateLibraryFileUploadUrlRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

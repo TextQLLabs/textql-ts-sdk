@@ -6,7 +6,6 @@
 import { LibraryServiceGetLibrarySizeTimelineRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetLibrarySizeTimelineRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

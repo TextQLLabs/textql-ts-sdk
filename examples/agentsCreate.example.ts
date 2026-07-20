@@ -19,7 +19,6 @@ const textql = new Textql({
 
 async function main() {
   const result = await textql.agents.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 

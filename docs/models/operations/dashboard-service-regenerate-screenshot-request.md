@@ -6,7 +6,6 @@
 import { DashboardServiceRegenerateScreenshotRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceRegenerateScreenshotRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -59,7 +59,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.approveContextPromptChange({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -85,7 +84,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsApproveContextPromptChange(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -137,7 +135,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.approveOntologyChange({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -163,7 +160,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsApproveOntologyChange(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -212,7 +208,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachAgent({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -238,7 +233,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachAgent(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -287,7 +281,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachApp({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -313,7 +306,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachApp(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -362,7 +354,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -388,7 +379,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -437,7 +427,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachDataset({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -463,7 +452,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachDataset(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -512,7 +500,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.bookmark({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -538,7 +525,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsBookmark(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -587,7 +573,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.cancelStream({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -613,7 +598,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCancelStream(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -662,7 +646,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.checkPermissions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -688,7 +671,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCheckPermissions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -737,7 +719,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.checkHealth({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -763,7 +744,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCheckHealth(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -812,7 +792,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.checkStreamlitHealth({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -838,7 +817,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCheckStreamlitHealth(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -887,7 +865,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.createChat({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -913,7 +890,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCreateChat(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -962,7 +938,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -988,7 +963,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1037,7 +1011,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.dismissQuestions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1063,7 +1036,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDismissQuestions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1112,7 +1084,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.duplicateChat({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1138,7 +1109,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDuplicateChat(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1187,7 +1157,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getApiAnswer({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1213,7 +1182,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetApiAnswer(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1262,7 +1230,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getArtifact({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1288,7 +1255,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetArtifact(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1337,7 +1303,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1363,7 +1328,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1412,7 +1376,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getArtifactsSummary({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1438,7 +1401,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetArtifactsSummary(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1487,7 +1449,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getChatExecutionTiming({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1513,7 +1474,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetChatExecutionTiming(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1562,7 +1522,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getHistory({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1588,7 +1547,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetHistory(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1637,7 +1595,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getAll({
-    connectProtocolVersion: 1,
     body: {
       createdAfter: new Date("2023-01-15T01:30:15.01Z"),
       createdBefore: new Date("2023-01-15T01:30:15.01Z"),
@@ -1666,7 +1623,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetAll(textql, {
-    connectProtocolVersion: 1,
     body: {
       createdAfter: new Date("2023-01-15T01:30:15.01Z"),
       createdBefore: new Date("2023-01-15T01:30:15.01Z"),
@@ -1718,7 +1674,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getCompletionParameters({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1744,7 +1699,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetCompletionParameters(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1793,7 +1747,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getCompletionParametersBatch({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1819,7 +1772,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetCompletionParametersBatch(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1868,7 +1820,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getLlmUsage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1894,7 +1845,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetLlmUsage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1943,7 +1893,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getMembersWithChats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1969,7 +1918,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetMembersWithChats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2018,7 +1966,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getPlaybookChats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2044,7 +1991,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetPlaybookChats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2093,7 +2039,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.pollEvents({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2119,7 +2064,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsPollEvents(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2168,7 +2112,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.queryOneShot({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2194,7 +2137,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsQueryOneShot(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2243,7 +2185,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rateCell({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2269,7 +2210,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRateCell(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2318,7 +2258,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rejectContextPromptChange({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2344,7 +2283,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRejectContextPromptChange(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2393,7 +2331,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rejectOntologyChange({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2419,7 +2356,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRejectOntologyChange(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2468,7 +2404,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.run({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2494,7 +2429,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRun(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2543,7 +2477,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.send({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2569,7 +2502,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSend(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2618,7 +2550,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.submitContextPromptChange({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2644,7 +2575,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSubmitContextPromptChange(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2695,7 +2625,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.submitQuestions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2721,7 +2650,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSubmitQuestions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2770,7 +2698,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.unbookmark({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2796,7 +2723,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsUnbookmark(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2845,7 +2771,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2871,7 +2796,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

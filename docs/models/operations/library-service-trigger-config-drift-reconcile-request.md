@@ -6,7 +6,6 @@
 import { LibraryServiceTriggerConfigDriftReconcileRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceTriggerConfigDriftReconcileRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

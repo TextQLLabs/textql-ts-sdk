@@ -6,7 +6,6 @@
 import { AgentServiceResetAgentAvatarRequest } from "textql-sdk/models/operations";
 
 let value: AgentServiceResetAgentAvatarRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

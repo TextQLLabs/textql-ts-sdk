@@ -6,7 +6,6 @@
 import { LibraryServiceApprovePatchRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceApprovePatchRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

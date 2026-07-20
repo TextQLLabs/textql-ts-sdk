@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetActivePeopleStatsRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetActivePeopleStatsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

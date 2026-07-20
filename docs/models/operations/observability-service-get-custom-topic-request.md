@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetCustomTopicRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetCustomTopicRequest = {
-  connectProtocolVersion: 1,
   body: {
     trendStart: new Date("2023-01-15T01:30:15.01Z"),
     trendEnd: new Date("2023-01-15T01:30:15.01Z"),

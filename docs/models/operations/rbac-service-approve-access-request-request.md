@@ -6,7 +6,6 @@
 import { RBACServiceApproveAccessRequestRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceApproveAccessRequestRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { LibraryServiceMigrateOntologyToLibraryRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceMigrateOntologyToLibraryRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { ChatServiceGetCompletionParametersBatchRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetCompletionParametersBatchRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

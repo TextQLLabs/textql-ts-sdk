@@ -6,7 +6,6 @@
 import { RBACServiceMigrateScimGroupMappingToGroupRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceMigrateScimGroupMappingToGroupRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

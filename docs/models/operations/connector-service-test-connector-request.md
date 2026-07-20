@@ -6,7 +6,6 @@
 import { ConnectorServiceTestConnectorRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceTestConnectorRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

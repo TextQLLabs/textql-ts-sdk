@@ -6,7 +6,6 @@
 import { TeamsServiceListUsersRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceListUsersRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

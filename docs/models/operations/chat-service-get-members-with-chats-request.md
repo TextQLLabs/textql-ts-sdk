@@ -6,7 +6,6 @@
 import { ChatServiceGetMembersWithChatsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetMembersWithChatsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

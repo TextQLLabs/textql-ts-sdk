@@ -6,7 +6,6 @@
 import { ChatServiceSubmitQuestionsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceSubmitQuestionsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

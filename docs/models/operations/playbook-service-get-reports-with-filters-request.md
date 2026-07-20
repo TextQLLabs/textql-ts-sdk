@@ -6,7 +6,6 @@
 import { PlaybookServiceGetReportsWithFiltersRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceGetReportsWithFiltersRequest = {
-  connectProtocolVersion: 1,
   body: {
     filters: {
       startTime: new Date("2023-01-15T01:30:15.01Z"),

@@ -6,7 +6,6 @@
 import { TableauServiceListTableauViewsRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceListTableauViewsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

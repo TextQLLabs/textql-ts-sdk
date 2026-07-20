@@ -6,7 +6,6 @@
 import { PlaybookServiceRemoveDatasetRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceRemoveDatasetRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { RBACServiceRemoveGroupMemberRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceRemoveGroupMemberRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

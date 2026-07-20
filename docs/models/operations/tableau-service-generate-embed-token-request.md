@@ -6,7 +6,6 @@
 import { TableauServiceGenerateEmbedTokenRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceGenerateEmbedTokenRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

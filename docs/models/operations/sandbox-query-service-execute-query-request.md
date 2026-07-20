@@ -6,7 +6,6 @@
 import { SandboxQueryServiceExecuteQueryRequest } from "textql-sdk/models/operations";
 
 let value: SandboxQueryServiceExecuteQueryRequest = {
-  connectProtocolVersion: 1,
   body: {
     sqlQuery: {},
   },

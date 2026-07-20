@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetEngagementSpectrumRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetEngagementSpectrumRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -50,7 +50,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.activateCustomTopic({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -76,7 +75,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityActivateCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -125,7 +123,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.backfillCustomTopic({
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -154,7 +151,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityBackfillCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -206,7 +202,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.backfillThreadWarnings({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -232,7 +227,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityBackfillThreadWarnings(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -281,7 +275,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.createCustomTopic({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -307,7 +300,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityCreateCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -356,7 +348,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.deactivateCustomTopic({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -382,7 +373,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityDeactivateCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -431,7 +421,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.deleteCustomTopic({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -457,7 +446,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityDeleteCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -506,7 +494,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.exportCsv({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -532,7 +519,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityExportCsv(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -581,7 +567,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.fixCheckRecord({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -607,7 +592,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityFixCheckRecord(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -656,7 +640,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.fixWarning({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -682,7 +665,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityFixWarning(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -731,7 +713,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getAccessMethodStats({
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -760,7 +741,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetAccessMethodStats(textql, {
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -812,7 +792,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getActivePeopleStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -838,7 +817,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetActivePeopleStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -887,7 +865,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getActivePeopleTrend({
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -916,7 +893,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetActivePeopleTrend(textql, {
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -968,7 +944,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getBackfillPreview({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -994,7 +969,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetBackfillPreview(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1043,7 +1017,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getBackfillStatus({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1069,7 +1042,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetBackfillStatus(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1118,7 +1090,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getBillingStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1144,7 +1115,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetBillingStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1193,7 +1163,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getChatSourceStats({
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -1222,7 +1191,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetChatSourceStats(textql, {
-    connectProtocolVersion: 1,
     body: {
       startDate: new Date("2023-01-15T01:30:15.01Z"),
       endDate: new Date("2023-01-15T01:30:15.01Z"),
@@ -1274,7 +1242,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getChatTopics({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1300,7 +1267,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetChatTopics(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1349,7 +1315,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getCheckRecordFix({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1375,7 +1340,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetCheckRecordFix(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1424,7 +1388,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getCustomTopic({
-    connectProtocolVersion: 1,
     body: {
       trendStart: new Date("2023-01-15T01:30:15.01Z"),
       trendEnd: new Date("2023-01-15T01:30:15.01Z"),
@@ -1453,7 +1416,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {
       trendStart: new Date("2023-01-15T01:30:15.01Z"),
       trendEnd: new Date("2023-01-15T01:30:15.01Z"),
@@ -1505,7 +1467,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getCustomTopicPeople({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1531,7 +1492,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetCustomTopicPeople(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1580,7 +1540,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getCustomTopicThreads({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1606,7 +1565,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetCustomTopicThreads(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1655,7 +1613,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getEngagementSpectrum({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1681,7 +1638,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetEngagementSpectrum(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1730,7 +1686,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getMemberActivity({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1756,7 +1711,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetMemberActivity(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1805,7 +1759,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getObservabilityStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1831,7 +1784,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetObservabilityStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1880,7 +1832,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.getThreadWarnings({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1906,7 +1857,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityGetThreadWarnings(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1955,7 +1905,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.listCustomTopics({
-    connectProtocolVersion: 1,
     body: {
       trendStart: new Date("2023-01-15T01:30:15.01Z"),
       trendEnd: new Date("2023-01-15T01:30:15.01Z"),
@@ -1984,7 +1933,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityListCustomTopics(textql, {
-    connectProtocolVersion: 1,
     body: {
       trendStart: new Date("2023-01-15T01:30:15.01Z"),
       trendEnd: new Date("2023-01-15T01:30:15.01Z"),
@@ -2036,7 +1984,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.refineDraft({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2062,7 +2009,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityRefineDraft(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2111,7 +2057,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.setTopicTagFeedback({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2137,7 +2082,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilitySetTopicTagFeedback(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -2186,7 +2130,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.observability.updateCustomTopic({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -2212,7 +2155,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await observabilityUpdateCustomTopic(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

@@ -6,7 +6,6 @@
 import { TeamsServiceHandleTeamsOAuthCallbackRequest } from "textql-sdk/models/operations";
 
 let value: TeamsServiceHandleTeamsOAuthCallbackRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

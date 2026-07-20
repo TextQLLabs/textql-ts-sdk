@@ -6,7 +6,6 @@
 import { LibraryServiceListLibrarySubmodulesRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListLibrarySubmodulesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

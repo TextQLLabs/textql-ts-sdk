@@ -6,7 +6,6 @@
 import { LibraryServiceListLibrarySyncRunsRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceListLibrarySyncRunsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

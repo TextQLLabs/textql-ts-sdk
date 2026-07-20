@@ -6,7 +6,6 @@
 import { ChatServiceGetPlaybookChatsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceGetPlaybookChatsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

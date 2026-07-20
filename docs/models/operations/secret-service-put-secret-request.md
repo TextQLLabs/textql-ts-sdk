@@ -6,7 +6,6 @@
 import { SecretServicePutSecretRequest } from "textql-sdk/models/operations";
 
 let value: SecretServicePutSecretRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

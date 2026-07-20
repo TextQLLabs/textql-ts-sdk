@@ -31,7 +31,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.exportReportImage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -57,7 +56,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiExportReportImage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -106,7 +104,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.generateEmbedToken({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -132,7 +129,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiGenerateEmbedToken(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -181,7 +177,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.getDatasetPreview({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -207,7 +202,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiGetDatasetPreview(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -256,7 +250,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.getSyncedItems({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -282,7 +275,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiGetSyncedItems(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -331,7 +323,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -357,7 +348,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -406,7 +396,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.listReports({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -432,7 +421,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiListReports(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -481,7 +469,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.listWorkspaces({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -507,7 +494,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiListWorkspaces(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -556,7 +542,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.syncPowerBIItems({
-    connectProtocolVersion: 1,
     body: {
       reports: [
         {
@@ -593,7 +578,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiSyncPowerBIItems(textql, {
-    connectProtocolVersion: 1,
     body: {
       reports: [
         {
@@ -653,7 +637,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.testConnection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -679,7 +662,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiTestConnection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -728,7 +710,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.powerbi.unsyncItems({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -754,7 +735,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await powerbiUnsyncItems(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

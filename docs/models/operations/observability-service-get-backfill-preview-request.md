@@ -6,7 +6,6 @@
 import { ObservabilityServiceGetBackfillPreviewRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceGetBackfillPreviewRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

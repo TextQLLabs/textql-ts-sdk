@@ -6,7 +6,6 @@
 import { ChatServiceCheckStreamlitHealthRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceCheckStreamlitHealthRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { DashboardServiceCheckDashboardHealthRequest } from "textql-sdk/models/operations";
 
 let value: DashboardServiceCheckDashboardHealthRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

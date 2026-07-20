@@ -6,7 +6,6 @@
 import { PlaybookServiceUnsetTeamsChannelContextPlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceUnsetTeamsChannelContextPlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

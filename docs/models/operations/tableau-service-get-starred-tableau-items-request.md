@@ -6,7 +6,6 @@
 import { TableauServiceGetStarredTableauItemsRequest } from "textql-sdk/models/operations";
 
 let value: TableauServiceGetStarredTableauItemsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

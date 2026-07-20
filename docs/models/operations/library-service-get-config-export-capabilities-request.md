@@ -6,7 +6,6 @@
 import { LibraryServiceGetConfigExportCapabilitiesRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceGetConfigExportCapabilitiesRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

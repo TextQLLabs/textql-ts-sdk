@@ -6,7 +6,6 @@
 import { RBACServiceCreateServiceAccountRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceCreateServiceAccountRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

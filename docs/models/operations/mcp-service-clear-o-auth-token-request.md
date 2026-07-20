@@ -6,7 +6,6 @@
 import { MCPServiceClearOAuthTokenRequest } from "textql-sdk/models/operations";
 
 let value: MCPServiceClearOAuthTokenRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

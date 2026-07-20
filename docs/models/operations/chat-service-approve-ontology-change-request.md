@@ -6,7 +6,6 @@
 import { ChatServiceApproveOntologyChangeRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceApproveOntologyChangeRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

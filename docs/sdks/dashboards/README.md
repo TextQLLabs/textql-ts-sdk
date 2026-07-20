@@ -45,7 +45,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.checkHealth({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -71,7 +70,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsCheckHealth(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -120,7 +118,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.createDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -146,7 +143,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsCreateDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -195,7 +191,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.createFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -221,7 +216,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsCreateFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -270,7 +264,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -296,7 +289,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -345,7 +337,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.deleteFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -371,7 +362,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsDeleteFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -420,7 +410,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.discardChanges({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -446,7 +435,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsDiscardChanges(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -495,7 +483,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.duplicate({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -521,7 +508,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsDuplicate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -570,7 +556,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -596,7 +581,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -645,7 +629,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.getVersion({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -671,7 +654,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsGetVersion(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -720,7 +702,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.getDashboardViewStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -746,7 +727,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsGetDashboardViewStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -795,7 +775,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.getMembersWithDashboards({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -821,7 +800,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsGetMembersWithDashboards(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -870,7 +848,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.listFolders({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -896,7 +873,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsListFolders(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -945,7 +921,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.listVersions({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -971,7 +946,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsListVersions(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1020,7 +994,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.list({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1046,7 +1019,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsList(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1095,7 +1067,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.moveToFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1121,7 +1092,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsMoveToFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1172,7 +1142,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.previewConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1198,7 +1167,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsPreviewConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1247,7 +1215,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.publish({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1273,7 +1240,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsPublish(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1322,7 +1288,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.regenerateScreenshot({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1348,7 +1313,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsRegenerateScreenshot(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1397,7 +1361,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.restoreDashboardVersion({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1423,7 +1386,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsRestoreDashboardVersion(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1472,7 +1434,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.runScheduledDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1498,7 +1459,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsRunScheduledDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1547,7 +1507,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.spawn({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1573,7 +1532,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsSpawn(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1622,7 +1580,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.updateDashboard({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1648,7 +1605,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsUpdateDashboard(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1697,7 +1653,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.updateDashboardFolder({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1723,7 +1678,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsUpdateDashboardFolder(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1772,7 +1726,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.dashboards.updateDashboardSchedule({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1798,7 +1751,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await dashboardsUpdateDashboardSchedule(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

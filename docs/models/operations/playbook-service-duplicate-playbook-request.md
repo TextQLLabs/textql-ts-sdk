@@ -6,7 +6,6 @@
 import { PlaybookServiceDuplicatePlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceDuplicatePlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

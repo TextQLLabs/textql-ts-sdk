@@ -6,7 +6,6 @@
 import { ScimServiceCreateScimTokenRequest } from "textql-sdk/models/operations";
 
 let value: ScimServiceCreateScimTokenRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

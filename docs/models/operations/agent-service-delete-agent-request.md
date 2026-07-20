@@ -6,7 +6,6 @@
 import { AgentServiceDeleteAgentRequest } from "textql-sdk/models/operations";
 
 let value: AgentServiceDeleteAgentRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

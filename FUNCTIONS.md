@@ -30,7 +30,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await agentsCreate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

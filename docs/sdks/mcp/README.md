@@ -28,7 +28,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.clearOAuthToken({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -54,7 +53,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpClearOAuthToken(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -103,7 +101,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -129,7 +126,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -178,7 +174,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.getServers({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -204,7 +199,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpGetServers(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -253,7 +247,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.handleOAuthCallback({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -279,7 +272,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpHandleOAuthCallback(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -328,7 +320,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.initiateOAuthFlow({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -354,7 +345,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpInitiateOAuthFlow(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -403,7 +393,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.toggleServer({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -429,7 +418,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpToggleServer(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -478,7 +466,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.mcp.upsertMCPServers({
-    connectProtocolVersion: 1,
     body: {
       mcpServers: [
         {
@@ -512,7 +499,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await mcpUpsertMCPServers(textql, {
-    connectProtocolVersion: 1,
     body: {
       mcpServers: [
         {

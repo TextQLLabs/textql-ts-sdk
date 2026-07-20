@@ -6,7 +6,6 @@
 import { LibraryServicePlanLibraryMergeRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServicePlanLibraryMergeRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

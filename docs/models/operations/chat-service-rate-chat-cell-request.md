@@ -6,7 +6,6 @@
 import { ChatServiceRateChatCellRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceRateChatCellRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

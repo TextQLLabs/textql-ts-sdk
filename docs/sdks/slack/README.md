@@ -29,7 +29,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.createUuid({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -55,7 +54,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackCreateUuid(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -104,7 +102,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.deleteInstallation({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -130,7 +127,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackDeleteInstallation(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -179,7 +175,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.getCurrentUser({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -205,7 +200,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackGetCurrentUser(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -254,7 +248,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.handleOAuthCallback({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -280,7 +273,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackHandleOAuthCallback(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -329,7 +321,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.listChannels({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -355,7 +346,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackListChannels(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -404,7 +394,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.listInstallations({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -430,7 +419,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackListInstallations(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -479,7 +467,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.listUsers({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -505,7 +492,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackListUsers(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -554,7 +540,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.slack.syncWorkspace({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -580,7 +565,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await slackSyncWorkspace(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

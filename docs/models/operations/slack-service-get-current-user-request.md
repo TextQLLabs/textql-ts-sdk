@@ -6,7 +6,6 @@
 import { SlackServiceGetCurrentUserRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceGetCurrentUserRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

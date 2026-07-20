@@ -6,7 +6,6 @@
 import { PlaybookServiceUnsetSlackChannelContextPlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceUnsetSlackChannelContextPlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

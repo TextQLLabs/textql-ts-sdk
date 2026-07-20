@@ -6,7 +6,6 @@
 import { ChatServiceCheckChatPermissionsRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceCheckChatPermissionsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

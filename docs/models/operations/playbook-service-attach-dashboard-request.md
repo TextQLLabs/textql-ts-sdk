@@ -6,7 +6,6 @@
 import { PlaybookServiceAttachDashboardRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceAttachDashboardRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

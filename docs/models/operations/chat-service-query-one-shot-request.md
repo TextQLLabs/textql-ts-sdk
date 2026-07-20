@@ -6,7 +6,6 @@
 import { ChatServiceQueryOneShotRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceQueryOneShotRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

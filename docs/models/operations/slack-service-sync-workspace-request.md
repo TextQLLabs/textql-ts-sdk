@@ -6,7 +6,6 @@
 import { SlackServiceSyncWorkspaceRequest } from "textql-sdk/models/operations";
 
 let value: SlackServiceSyncWorkspaceRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

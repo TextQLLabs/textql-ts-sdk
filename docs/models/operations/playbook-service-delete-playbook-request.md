@@ -6,7 +6,6 @@
 import { PlaybookServiceDeletePlaybookRequest } from "textql-sdk/models/operations";
 
 let value: PlaybookServiceDeletePlaybookRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

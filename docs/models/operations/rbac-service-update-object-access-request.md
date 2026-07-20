@@ -6,7 +6,6 @@
 import { RBACServiceUpdateObjectAccessRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceUpdateObjectAccessRequest = {
-  connectProtocolVersion: 1,
   body: {
     expiresAt: new Date("2023-01-15T01:30:15.01Z"),
   },

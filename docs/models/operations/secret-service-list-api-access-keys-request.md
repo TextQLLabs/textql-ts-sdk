@@ -6,7 +6,6 @@
 import { SecretServiceListApiAccessKeysRequest } from "textql-sdk/models/operations";
 
 let value: SecretServiceListApiAccessKeysRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

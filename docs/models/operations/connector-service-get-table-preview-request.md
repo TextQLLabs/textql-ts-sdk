@@ -6,7 +6,6 @@
 import { ConnectorServiceGetTablePreviewRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceGetTablePreviewRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

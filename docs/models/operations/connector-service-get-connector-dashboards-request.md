@@ -6,7 +6,6 @@
 import { ConnectorServiceGetConnectorDashboardsRequest } from "textql-sdk/models/operations";
 
 let value: ConnectorServiceGetConnectorDashboardsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

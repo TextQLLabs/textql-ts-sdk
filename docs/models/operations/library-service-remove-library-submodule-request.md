@@ -6,7 +6,6 @@
 import { LibraryServiceRemoveLibrarySubmoduleRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceRemoveLibrarySubmoduleRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

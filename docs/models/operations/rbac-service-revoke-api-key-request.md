@@ -6,7 +6,6 @@
 import { RBACServiceRevokeApiKeyRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceRevokeApiKeyRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

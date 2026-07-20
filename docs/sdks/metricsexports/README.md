@@ -26,7 +26,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.metricsExports.configure({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -52,7 +51,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await metricsExportsConfigure(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -101,7 +99,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.metricsExports.deleteConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -127,7 +124,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await metricsExportsDeleteConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -176,7 +172,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.metricsExports.getMetricsExportConfig({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -202,7 +197,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await metricsExportsGetMetricsExportConfig(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -251,7 +245,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.metricsExports.testConnection({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -277,7 +270,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await metricsExportsTestConnection(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -326,7 +318,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.metricsExports.triggerPush({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -352,7 +343,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await metricsExportsTriggerPush(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

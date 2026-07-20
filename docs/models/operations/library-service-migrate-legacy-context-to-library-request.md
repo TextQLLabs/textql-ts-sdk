@@ -6,7 +6,6 @@
 import { LibraryServiceMigrateLegacyContextToLibraryRequest } from "textql-sdk/models/operations";
 
 let value: LibraryServiceMigrateLegacyContextToLibraryRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

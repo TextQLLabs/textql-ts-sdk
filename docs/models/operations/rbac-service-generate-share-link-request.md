@@ -6,7 +6,6 @@
 import { RBACServiceGenerateShareLinkRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceGenerateShareLinkRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

@@ -6,7 +6,6 @@
 import { RBACServiceListScimGroupMappingsRequest } from "textql-sdk/models/operations";
 
 let value: RBACServiceListScimGroupMappingsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

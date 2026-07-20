@@ -6,7 +6,6 @@
 import { ObservabilityServiceFixWarningRequest } from "textql-sdk/models/operations";
 
 let value: ObservabilityServiceFixWarningRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

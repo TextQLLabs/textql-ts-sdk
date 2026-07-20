@@ -38,7 +38,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.create({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -64,7 +63,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsCreate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -113,7 +111,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.delete({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -139,7 +136,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsDelete(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -188,7 +184,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.duplicateConnector({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -214,7 +209,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsDuplicateConnector(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -263,7 +257,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.executeQuery({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -289,7 +282,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsExecuteQuery(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -338,7 +330,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.get({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -364,7 +355,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGet(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -413,7 +403,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getConnectorCellDurations({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -439,7 +428,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetConnectorCellDurations(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -488,7 +476,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getChats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -514,7 +501,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetChats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -563,7 +549,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getDashboards({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -589,7 +574,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetDashboards(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -638,7 +622,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getConnectorStats({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -664,7 +647,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetConnectorStats(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -713,7 +695,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getUsage({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -739,7 +720,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetUsage(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -788,7 +768,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getConnectors({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -814,7 +793,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetConnectors(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -863,7 +841,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getExampleQueries({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -889,7 +866,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetExampleQueries(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -938,7 +914,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.getTablePreview({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -964,7 +939,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsGetTablePreview(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1013,7 +987,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.listTables({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1039,7 +1012,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsListTables(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1088,7 +1060,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.listQueryTemplates({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1114,7 +1085,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsListQueryTemplates(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1163,7 +1133,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.test({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1189,7 +1158,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsTest(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {
@@ -1238,7 +1206,6 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.connectors.update({
-    connectProtocolVersion: 1,
     body: {},
   });
 
@@ -1264,7 +1231,6 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await connectorsUpdate(textql, {
-    connectProtocolVersion: 1,
     body: {},
   });
   if (res.ok) {

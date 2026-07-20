@@ -6,7 +6,6 @@
 import { ChatServiceDeleteChatRequest } from "textql-sdk/models/operations";
 
 let value: ChatServiceDeleteChatRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```

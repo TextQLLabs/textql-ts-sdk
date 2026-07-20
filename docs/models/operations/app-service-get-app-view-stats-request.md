@@ -6,7 +6,6 @@
 import { AppServiceGetAppViewStatsRequest } from "textql-sdk/models/operations";
 
 let value: AppServiceGetAppViewStatsRequest = {
-  connectProtocolVersion: 1,
   body: {},
 };
 ```
