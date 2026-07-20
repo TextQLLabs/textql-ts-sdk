@@ -28,6 +28,11 @@ jobs:
     needs: [publish]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout TypeScript SDK
+        uses: actions/checkout@v4
+        with:
+          path: sdk
+
       - name: Checkout TextQL docs
         uses: actions/checkout@v4
         with:
@@ -86,6 +91,12 @@ jobs:
           python3 -m pip install --disable-pip-version-check PyYAML==6.0.3
           python3 demo2/scripts/render_sdk_api_reference.py
 
+      - name: Render Mintlify release log
+        run: |
+          python3 sdk/scripts/render_mintlify_releases.py \
+            sdk/RELEASES.md \
+            demo2/docs/public/api-reference/sdk/typescript.mdx
+
       - name: Create or update docs pull request
         id: docs-pr
         uses: peter-evans/create-pull-request@v7
@@ -101,6 +112,7 @@ jobs:
 
             - Snapshots the combined Speakeasy OpenAPI document and SDK code samples.
             - Regenerates stable Mintlify API-reference wrappers and navigation.
+            - Updates the TypeScript SDK release log from `TextQLLabs/textql-ts-sdk/RELEASES.md`.
 
       - name: Auto-merge docs pull request after checks pass
         if: steps.docs-pr.outputs.pull-request-number != ''
