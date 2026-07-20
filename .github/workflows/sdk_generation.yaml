@@ -39,5 +39,4 @@ jobs:
       set_version: ${{ inputs.set_version }}
     secrets:
       github_access_token: ${{ secrets.GH_PAT }}
-      npm_token: ${{ secrets.NPM_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}

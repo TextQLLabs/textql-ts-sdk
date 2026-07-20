@@ -14,8 +14,7 @@ targets:
         target: typescript
         source: TextQL API
         publish:
-            npm:
-                token: $npm_token
+            npm: {}
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/textql/home/textql-api-typescript-code-samples
