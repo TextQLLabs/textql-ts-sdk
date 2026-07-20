@@ -13,44 +13,16 @@ permissions:
       - main
     paths:
       - .speakeasy/gen.lock
-  workflow_dispatch:
-    inputs:
-      bootstrap_npm:
-        description: Publish the initial manually generated SDK directly to npm
-        type: boolean
-        default: false
+  workflow_dispatch: {}
 
 jobs:
   publish:
-    if: ${{ !inputs.bootstrap_npm }}
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
     with:
       target: textql
     secrets:
       github_access_token: ${{ secrets.GH_PAT }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
-
-  bootstrap-npm:
-    if: ${{ inputs.bootstrap_npm }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Publish initial SDK with npm trusted publishing
-        run: |
-          npm install --global npm@latest
-          npm publish --access public
 
   sync-typescript-sdk-docs:
     needs: [publish]
