@@ -36,6 +36,8 @@ jobs:
           private-key: ${{ secrets.SDK_DISPATCH_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
           repositories: demo2
+          permission-contents: write
+          permission-pull-requests: write
 
       - name: Checkout TypeScript SDK
         uses: actions/checkout@v4
