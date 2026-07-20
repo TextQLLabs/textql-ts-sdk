@@ -47,6 +47,39 @@ jobs:
             https://spec.speakeasy.com/textql/home/textql-api-with-code-samples \
             --output demo2/docs/public/api-reference/speakeasy/textql-api-with-code-samples.yaml
 
+      - name: Install Speakeasy CLI
+        env:
+          SPEAKEASY_VERSION: 1.790.3
+        run: |
+          export VERSION="$SPEAKEASY_VERSION"
+          curl --fail --silent --show-error --location \
+            https://raw.githubusercontent.com/speakeasy-api/speakeasy/v1.790.3/install.sh \
+            --output "$RUNNER_TEMP/speakeasy-install.sh"
+          sh "$RUNNER_TEMP/speakeasy-install.sh"
+
+      - name: Merge TypeScript SDK code samples
+        env:
+          SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
+        run: |
+          set -euo pipefail
+          samples_dir="$RUNNER_TEMP/typescript-code-samples"
+          spec="demo2/docs/public/api-reference/speakeasy/textql-api-with-code-samples.yaml"
+          mkdir -p "$samples_dir"
+          speakeasy pull \
+            --spec textql-api-typescript-code-samples \
+            --revision latest \
+            --output-dir "$samples_dir"
+          if grep -q 'label: TypeScript (SDK)' "$spec"; then
+            echo "Combined snapshot already contains TypeScript SDK samples."
+          else
+            speakeasy overlay apply \
+              --strict \
+              --schema "$spec" \
+              --overlay "$samples_dir/overlay.yaml" \
+              --out "$spec.tmp"
+            mv "$spec.tmp" "$spec"
+          fi
+
       - name: Render Mintlify API reference
         run: |
           python3 -m pip install --disable-pip-version-check PyYAML==6.0.3
