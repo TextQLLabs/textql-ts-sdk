@@ -63,6 +63,7 @@ jobs:
         run: |
           set -euo pipefail
           samples_dir="$RUNNER_TEMP/typescript-code-samples"
+          merged_spec="$RUNNER_TEMP/textql-api-with-typescript-code-samples.yaml"
           spec="demo2/docs/public/api-reference/speakeasy/textql-api-with-code-samples.yaml"
           mkdir -p "$samples_dir"
           speakeasy pull \
@@ -76,8 +77,8 @@ jobs:
               --strict \
               --schema "$spec" \
               --overlay "$samples_dir/overlay.yaml" \
-              --out "$spec.tmp"
-            mv "$spec.tmp" "$spec"
+              --out "$merged_spec"
+            mv "$merged_spec" "$spec"
           fi
 
       - name: Render Mintlify API reference
