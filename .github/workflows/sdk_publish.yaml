@@ -28,6 +28,15 @@ jobs:
     needs: [publish]
     runs-on: ubuntu-latest
     steps:
+      - name: Generate docs dispatch bot token
+        id: docs-app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.SDK_DISPATCH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: demo2
+
       - name: Checkout TypeScript SDK
         uses: actions/checkout@v4
         with:
@@ -37,7 +46,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: TextQLLabs/demo2
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ steps.docs-app-token.outputs.token }}
           path: demo2
 
       - uses: actions/setup-python@v5
@@ -101,7 +110,7 @@ jobs:
         id: docs-pr
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ steps.docs-app-token.outputs.token }}
           path: demo2
           branch: automation/typescript-sdk-docs
           delete-branch: true
@@ -117,7 +126,7 @@ jobs:
       - name: Auto-merge docs pull request after checks pass
         if: steps.docs-pr.outputs.pull-request-number != ''
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ steps.docs-app-token.outputs.token }}
           DOCS_PR_NUMBER: ${{ steps.docs-pr.outputs.pull-request-number }}
         run: |
           gh pr merge "$DOCS_PR_NUMBER" \
