@@ -23,3 +23,58 @@ jobs:
     secrets:
       github_access_token: ${{ secrets.GH_PAT }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  sync-typescript-sdk-docs:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout TextQL docs
+        uses: actions/checkout@v4
+        with:
+          repository: TextQLLabs/demo2
+          token: ${{ secrets.GH_PAT }}
+          path: demo2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Snapshot combined OpenAPI with SDK samples
+        run: |
+          curl --fail --silent --show-error --location \
+            --header 'Cache-Control: no-cache' \
+            --retry 10 --retry-all-errors --retry-delay 10 \
+            https://spec.speakeasy.com/textql/home/textql-api-with-code-samples \
+            --output demo2/docs/public/api-reference/speakeasy/textql-api-with-code-samples.yaml
+
+      - name: Render Mintlify API reference
+        run: |
+          python3 -m pip install --disable-pip-version-check PyYAML==6.0.3
+          python3 demo2/scripts/render_sdk_api_reference.py
+
+      - name: Create or update docs pull request
+        id: docs-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GH_PAT }}
+          path: demo2
+          branch: automation/typescript-sdk-docs
+          delete-branch: true
+          commit-message: "docs: sync TypeScript SDK reference"
+          title: "docs: sync TypeScript SDK reference"
+          body: |
+            Automated after a successful TypeScript SDK publish.
+
+            - Snapshots the combined Speakeasy OpenAPI document and SDK code samples.
+            - Regenerates stable Mintlify API-reference wrappers and navigation.
+
+      - name: Auto-merge docs pull request after checks pass
+        if: steps.docs-pr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          DOCS_PR_NUMBER: ${{ steps.docs-pr.outputs.pull-request-number }}
+        run: |
+          gh pr merge "$DOCS_PR_NUMBER" \
+            --repo TextQLLabs/demo2 \
+            --auto \
+            --squash
