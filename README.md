@@ -1,21 +1,28 @@
-# textql-sdk
+# TextQL TypeScript SDK
 
-Developer-friendly & type-safe Typescript SDK specifically catered to leverage *textql-sdk* API.
+The official, type-safe TypeScript client for the TextQL API.
 
-[![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=textql-sdk&utm_campaign=typescript)
-[![License: Apache 2.0](https://img.shields.io/badge/LICENSE_//_APACHE_2.0-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://www.apache.org/licenses/LICENSE-2.0)
+[![npm](https://img.shields.io/npm/v/%40textql%2Fsdk)](https://www.npmjs.com/package/@textql/sdk)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Built by Speakeasy](https://img.shields.io/badge/Built%20by-Speakeasy-6B46C1)](https://www.speakeasy.com/)
 
-<!-- Start Summary [summary] -->
 ## Summary
 
-TextQL API: TextQL public API. Generated from protobuf service definitions; internal
-endpoints are excluded via google.api.visibility / file_visibility.
-<!-- End Summary [summary] -->
+Use `@textql/sdk` to access TextQL agents, apps, chats, connectors, dashboards,
+datasets, and the rest of the public API from Node.js, Bun, or modern edge
+runtimes. The SDK includes generated request and response types, authentication,
+retries, error handling, and per-operation examples.
+
+- [TextQL documentation](https://docs.textql.com/)
+- [API reference](https://docs.textql.com/api-reference/introduction)
+- [TypeScript SDK release log](https://docs.textql.com/api-reference/sdk/typescript)
+- [Report an issue](https://github.com/TextQLLabs/textql-ts-sdk/issues)
+<!-- No Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [textql-sdk](#textql-sdk)
+* [TextQL TypeScript SDK](#textql-typescript-sdk)
   * [SDK Installation](#sdk-installation)
   * [Requirements](#requirements)
   * [SDK Example Usage](#sdk-example-usage)
