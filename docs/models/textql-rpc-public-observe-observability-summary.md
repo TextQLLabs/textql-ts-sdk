@@ -1,0 +1,36 @@
+# TextqlRpcPublicObserveObservabilitySummary
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicObserveObservabilitySummary } from "textql-sdk/models";
+
+let value: TextqlRpcPublicObserveObservabilitySummary = {};
+```
+
+## Fields
+
+| Field                                         | Type                                          | Required                                      | Description                                   |
+| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| `totalRuns`                                   | *number*                                      | :heavy_minus_sign:                            | Totals                                        |
+| `totalThreads`                                | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `totalPlaybooks`                              | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `totalWarnings`                               | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `warnRatePct`                                 | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `runsDeltaPct`                                | *number*                                      | :heavy_minus_sign:                            | Deltas (percentage change vs previous period) |
+| `threadsDeltaPct`                             | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `playbooksDeltaPct`                           | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `warningsDeltaPct`                            | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `runsSparkline`                               | *number*[]                                    | :heavy_minus_sign:                            | Sparklines (14 daily values, oldest first)    |
+| `threadsSparkline`                            | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |
+| `playbooksSparkline`                          | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |
+| `warningsSparkline`                           | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |
+| `totalFeedAgents`                             | *number*                                      | :heavy_minus_sign:                            | Feed agents                                   |
+| `feedAgentsDeltaPct`                          | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `feedAgentsSparkline`                         | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |
+| `totalSlack`                                  | *number*                                      | :heavy_minus_sign:                            | Slack chats                                   |
+| `slackDeltaPct`                               | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `slackSparkline`                              | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |
+| `totalTeams`                                  | *number*                                      | :heavy_minus_sign:                            | Teams chats                                   |
+| `teamsDeltaPct`                               | *number*                                      | :heavy_minus_sign:                            | N/A                                           |
+| `teamsSparkline`                              | *number*[]                                    | :heavy_minus_sign:                            | N/A                                           |

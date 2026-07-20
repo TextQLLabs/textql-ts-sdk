@@ -1,0 +1,22 @@
+# TextqlRpcPublicDatasetGetDatasetsRequest
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicDatasetGetDatasetsRequest } from "textql-sdk/models";
+
+let value: TextqlRpcPublicDatasetGetDatasetsRequest = {};
+```
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `types`                                                                                           | [models.TextqlRpcPublicDatasetDatasetType](../models/textql-rpc-public-dataset-dataset-type.md)[] | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `ownerOnly`                                                                                       | *boolean*                                                                                         | :heavy_minus_sign:                                                                                | only include datasets where the user is the owner                                                 |
+| `includeSubfolders`                                                                               | *boolean*                                                                                         | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `path`                                                                                            | *string*                                                                                          | :heavy_minus_sign:                                                                                | defaults to path /                                                                                |
+| `searchParam`                                                                                     | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `sort`                                                                                            | [models.TextqlRpcPublicDatasetDatasetsSort](../models/textql-rpc-public-dataset-datasets-sort.md) | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `limit`                                                                                           | *number*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `cursor`                                                                                          | *string*                                                                                          | :heavy_minus_sign:                                                                                | cursor-based pagination. cursor is the id of the last record returned                             |

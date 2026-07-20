@@ -1,0 +1,20 @@
+# PlaybookServiceDeactivatePlaybookRequest
+
+## Example Usage
+
+```typescript
+import { PlaybookServiceDeactivatePlaybookRequest } from "textql-sdk/models/operations";
+
+let value: PlaybookServiceDeactivatePlaybookRequest = {
+  connectProtocolVersion: 1,
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                             | Type                                                                                                                              | Required                                                                                                                          | Description                                                                                                                       |
+| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                          | *1*                                                                                                                               | :heavy_check_mark:                                                                                                                | N/A                                                                                                                               |
+| `connectTimeoutMs`                                                                                                                | *number*                                                                                                                          | :heavy_minus_sign:                                                                                                                | N/A                                                                                                                               |
+| `body`                                                                                                                            | [models.TextqlRpcPublicPlaybookDeactivatePlaybookRequest](../../models/textql-rpc-public-playbook-deactivate-playbook-request.md) | :heavy_check_mark:                                                                                                                | N/A                                                                                                                               |

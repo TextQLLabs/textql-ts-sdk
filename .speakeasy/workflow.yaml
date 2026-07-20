@@ -1,0 +1,24 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    TextQL API:
+        inputs:
+            - location: registry.speakeasyapi.dev/textql/home/textql-api
+        overlays:
+            - location: .speakeasy/speakeasy-modifications-overlay.yaml
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/textql/home/textql-api
+targets:
+    textql:
+        target: typescript
+        source: TextQL API
+        publish:
+            npm:
+                token: $npm_token
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/textql/home/textql-api-typescript-code-samples
+            labelOverride:
+                fixedValue: TypeScript (SDK)
+            blocking: true

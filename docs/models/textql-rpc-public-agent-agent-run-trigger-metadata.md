@@ -1,0 +1,21 @@
+# TextqlRpcPublicAgentAgentRunTriggerMetadata
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicAgentAgentRunTriggerMetadata } from "textql-sdk/models";
+
+let value: TextqlRpcPublicAgentAgentRunTriggerMetadata = {};
+```
+
+## Fields
+
+| Field                                                                                                       | Type                                                                                                        | Required                                                                                                    | Description                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `authMethod`                                                                                                | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `memberId`                                                                                                  | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `apiKeyId`                                                                                                  | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `clientId`                                                                                                  | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `userAgent`                                                                                                 | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `ip`                                                                                                        | *string*                                                                                                    | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |
+| `geo`                                                                                                       | [models.TextqlRpcPublicAgentAgentRunTriggerGeo](../models/textql-rpc-public-agent-agent-run-trigger-geo.md) | :heavy_minus_sign:                                                                                          | N/A                                                                                                         |

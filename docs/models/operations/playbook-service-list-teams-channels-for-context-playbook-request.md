@@ -1,0 +1,20 @@
+# PlaybookServiceListTeamsChannelsForContextPlaybookRequest
+
+## Example Usage
+
+```typescript
+import { PlaybookServiceListTeamsChannelsForContextPlaybookRequest } from "textql-sdk/models/operations";
+
+let value: PlaybookServiceListTeamsChannelsForContextPlaybookRequest = {
+  connectProtocolVersion: 1,
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                                   | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                                                | *1*                                                                                                                                                                     | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `connectTimeoutMs`                                                                                                                                                      | *number*                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `body`                                                                                                                                                                  | [models.TextqlRpcPublicPlaybookListTeamsChannelsForContextPlaybookRequest](../../models/textql-rpc-public-playbook-list-teams-channels-for-context-playbook-request.md) | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |

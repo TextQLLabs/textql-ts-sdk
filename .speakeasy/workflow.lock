@@ -1,0 +1,42 @@
+speakeasyVersion: 1.790.3
+sources:
+    TextQL API:
+        sourceNamespace: textql-api
+        sourceRevisionDigest: sha256:4396f79faecd1cccbf0adca15bbe79791c3370bfaaedeecfa45324c629916bf8
+        sourceBlobDigest: sha256:fa54e1335583276c5ae5acfd5542a7d45e340f36b9abb35645bbab18542f6e40
+        tags:
+            - latest
+            - 1.0.0
+targets:
+    textql:
+        source: TextQL API
+        sourceNamespace: textql-api
+        sourceRevisionDigest: sha256:4396f79faecd1cccbf0adca15bbe79791c3370bfaaedeecfa45324c629916bf8
+        sourceBlobDigest: sha256:fa54e1335583276c5ae5acfd5542a7d45e340f36b9abb35645bbab18542f6e40
+        codeSamplesNamespace: textql-api-typescript-code-samples
+        codeSamplesRevisionDigest: sha256:8d91e5e92a409074b9eca994186cffa776d949fbeefb7bcc569377b2d734b944
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        TextQL API:
+            inputs:
+                - location: registry.speakeasyapi.dev/textql/home/textql-api
+            overlays:
+                - location: .speakeasy/speakeasy-modifications-overlay.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/textql/home/textql-api
+    targets:
+        textql:
+            target: typescript
+            source: TextQL API
+            publish:
+                npm:
+                    token: $npm_token
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/textql/home/textql-api-typescript-code-samples
+                labelOverride:
+                    fixedValue: TypeScript (SDK)
+                blocking: true

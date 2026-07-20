@@ -1,0 +1,21 @@
+# TextqlRpcPublicChatGetChatExecutionTimingResponse
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicChatGetChatExecutionTimingResponse } from "textql-sdk/models";
+
+let value: TextqlRpcPublicChatGetChatExecutionTimingResponse = {};
+```
+
+## Fields
+
+| Field                                                                                                        | Type                                                                                                         | Required                                                                                                     | Description                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `byType`                                                                                                     | [models.TextqlRpcPublicChatChatExecutionTiming](../models/textql-rpc-public-chat-chat-execution-timing.md)[] | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `totalExecutionMs`                                                                                           | *models.TotalExecutionMs*                                                                                    | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `totalWarehouseMs`                                                                                           | *models.TotalWarehouseMs*                                                                                    | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `totalEgressMs`                                                                                              | *models.TotalEgressMs*                                                                                       | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `totalOverheadMs`                                                                                            | *models.TotalOverheadMs*                                                                                     | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `byCell`                                                                                                     | [models.TextqlRpcPublicChatCellExecutionTiming](../models/textql-rpc-public-chat-cell-execution-timing.md)[] | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |
+| `sandboxMountMs`                                                                                             | *models.TextqlRpcPublicChatGetChatExecutionTimingResponseSandboxMountMs*                                     | :heavy_minus_sign:                                                                                           | N/A                                                                                                          |

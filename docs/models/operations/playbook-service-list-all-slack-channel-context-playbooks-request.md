@@ -1,0 +1,20 @@
+# PlaybookServiceListAllSlackChannelContextPlaybooksRequest
+
+## Example Usage
+
+```typescript
+import { PlaybookServiceListAllSlackChannelContextPlaybooksRequest } from "textql-sdk/models/operations";
+
+let value: PlaybookServiceListAllSlackChannelContextPlaybooksRequest = {
+  connectProtocolVersion: 1,
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                                   | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                                                | *1*                                                                                                                                                                     | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `connectTimeoutMs`                                                                                                                                                      | *number*                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                      | N/A                                                                                                                                                                     |
+| `body`                                                                                                                                                                  | [models.TextqlRpcPublicPlaybookListAllSlackChannelContextPlaybooksRequest](../../models/textql-rpc-public-playbook-list-all-slack-channel-context-playbooks-request.md) | :heavy_check_mark:                                                                                                                                                      | N/A                                                                                                                                                                     |

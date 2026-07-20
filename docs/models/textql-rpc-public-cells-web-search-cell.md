@@ -1,0 +1,21 @@
+# TextqlRpcPublicCellsWebSearchCell
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicCellsWebSearchCell } from "textql-sdk/models";
+
+let value: TextqlRpcPublicCellsWebSearchCell = {};
+```
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `query`                                                                                                | *string*                                                                                               | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `searchType`                                                                                           | [models.TextqlRpcPublicCellsWebSearchType](../models/textql-rpc-public-cells-web-search-type.md)       | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `dateRange`                                                                                            | [models.TextqlRpcPublicCellsDateRange](../models/textql-rpc-public-cells-date-range.md)                | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `answer`                                                                                               | *string*                                                                                               | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `exaResults`                                                                                           | [models.TextqlRpcPublicCellsExaSearchResult](../models/textql-rpc-public-cells-exa-search-result.md)[] | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `costDollars`                                                                                          | *number*                                                                                               | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `executionTimeMs`                                                                                      | *models.TextqlRpcPublicCellsWebSearchCellExecutionTimeMs*                                              | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

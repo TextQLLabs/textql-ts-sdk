@@ -1,0 +1,20 @@
+# TextqlRpcPublicConnectorConnectorTable
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicConnectorConnectorTable } from "textql-sdk/models";
+
+let value: TextqlRpcPublicConnectorConnectorTable = {};
+```
+
+## Fields
+
+| Field                                                                                                                | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `tableDatabase`                                                                                                      | *string*                                                                                                             | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `tableSchema`                                                                                                        | *string*                                                                                                             | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `tableName`                                                                                                          | *string*                                                                                                             | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `preview`                                                                                                            | [models.TextqlRpcPublicConnectorQueryResult](../models/textql-rpc-public-connector-query-result.md)                  | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `primaryKeys`                                                                                                        | [models.TextqlRpcPublicConnectorPrimaryKeyMetadata](../models/textql-rpc-public-connector-primary-key-metadata.md)[] | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `tableType`                                                                                                          | *string*                                                                                                             | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |

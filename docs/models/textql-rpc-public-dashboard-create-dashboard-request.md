@@ -1,0 +1,22 @@
+# TextqlRpcPublicDashboardCreateDashboardRequest
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicDashboardCreateDashboardRequest } from "textql-sdk/models";
+
+let value: TextqlRpcPublicDashboardCreateDashboardRequest = {};
+```
+
+## Fields
+
+| Field                                                                                                   | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                  | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `description`                                                                                           | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `code`                                                                                                  | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `type`                                                                                                  | [models.TextqlRpcPublicDashboardDashboardType](../models/textql-rpc-public-dashboard-dashboard-type.md) | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `htmlUrl`                                                                                               | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `chatId`                                                                                                | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `cellId`                                                                                                | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |
+| `folderId`                                                                                              | *string*                                                                                                | :heavy_minus_sign:                                                                                      | N/A                                                                                                     |

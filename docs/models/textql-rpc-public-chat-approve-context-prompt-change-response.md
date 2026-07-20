@@ -1,0 +1,19 @@
+# TextqlRpcPublicChatApproveContextPromptChangeResponse
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicChatApproveContextPromptChangeResponse } from "textql-sdk/models";
+
+let value: TextqlRpcPublicChatApproveContextPromptChangeResponse = {};
+```
+
+## Fields
+
+| Field                                                                                                                     | Type                                                                                                                      | Required                                                                                                                  | Description                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `success`                                                                                                                 | *boolean*                                                                                                                 | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `message`                                                                                                                 | *string*                                                                                                                  | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `status`                                                                                                                  | [models.TextqlRpcPublicCellsContextPromptChangeStatus](../models/textql-rpc-public-cells-context-prompt-change-status.md) | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `resumed`                                                                                                                 | *boolean*                                                                                                                 | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `resumeError`                                                                                                             | *string*                                                                                                                  | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |

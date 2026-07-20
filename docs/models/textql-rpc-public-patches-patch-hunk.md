@@ -1,0 +1,24 @@
+# TextqlRpcPublicPatchesPatchHunk
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicPatchesPatchHunk } from "textql-sdk/models";
+
+let value: TextqlRpcPublicPatchesPatchHunk = {};
+```
+
+## Fields
+
+| Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `comment`                                                                                     | *string*                                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `oldPosition`                                                                                 | *models.OldPosition*                                                                          | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `oldLines`                                                                                    | *models.OldLines*                                                                             | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `newPosition`                                                                                 | *models.NewPosition*                                                                          | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `newLines`                                                                                    | *models.NewLines*                                                                             | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `linesAdded`                                                                                  | *models.LinesAdded*                                                                           | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `linesDeleted`                                                                                | *models.LinesDeleted*                                                                         | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `leadingContext`                                                                              | *models.LeadingContext*                                                                       | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `trailingContext`                                                                             | *models.TrailingContext*                                                                      | :heavy_minus_sign:                                                                            | N/A                                                                                           |
+| `lines`                                                                                       | [models.TextqlRpcPublicPatchesPatchLine](../models/textql-rpc-public-patches-patch-line.md)[] | :heavy_minus_sign:                                                                            | N/A                                                                                           |

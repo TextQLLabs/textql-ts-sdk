@@ -1,0 +1,21 @@
+# TextqlRpcPublicDashboardUpdateDashboardRequest
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicDashboardUpdateDashboardRequest } from "textql-sdk/models";
+
+let value: TextqlRpcPublicDashboardUpdateDashboardRequest = {};
+```
+
+## Fields
+
+| Field                                                                                                          | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `dashboardId`                                                                                                  | *string*                                                                                                       | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `name`                                                                                                         | *string*                                                                                                       | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `description`                                                                                                  | *string*                                                                                                       | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `code`                                                                                                         | *string*                                                                                                       | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `type`                                                                                                         | [models.TextqlRpcPublicDashboardDashboardType](../models/textql-rpc-public-dashboard-dashboard-type.md)        | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `htmlUrl`                                                                                                      | *string*                                                                                                       | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |
+| `dataSources`                                                                                                  | [models.TextqlRpcPublicDashboardDataSourcesPatch](../models/textql-rpc-public-dashboard-data-sources-patch.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |

@@ -1,0 +1,22 @@
+# TextqlRpcPublicRbacListApiKeysRequest
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicRbacListApiKeysRequest } from "textql-sdk/models";
+
+let value: TextqlRpcPublicRbacListApiKeysRequest = {};
+```
+
+## Fields
+
+| Field                                                                                               | Type                                                                                                | Required                                                                                            | Description                                                                                         |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `scope`                                                                                             | [models.TextqlRpcPublicRbacApiKeyScope](../models/textql-rpc-public-rbac-api-key-scope.md)          | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `serviceAccountMemberId`                                                                            | *string*                                                                                            | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `includeRevoked`                                                                                    | *boolean*                                                                                           | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `searchTerm`                                                                                        | *string*                                                                                            | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `sortBy`                                                                                            | [models.TextqlRpcPublicRbacApiKeySortField](../models/textql-rpc-public-rbac-api-key-sort-field.md) | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `sortDirection`                                                                                     | [models.TextqlRpcPublicCommonSortDirection](../models/textql-rpc-public-common-sort-direction.md)   | :heavy_minus_sign:                                                                                  | Common enum for sort direction used across multiple services                                        |
+| `pageSize`                                                                                          | *number*                                                                                            | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |
+| `pageToken`                                                                                         | *string*                                                                                            | :heavy_minus_sign:                                                                                  | N/A                                                                                                 |

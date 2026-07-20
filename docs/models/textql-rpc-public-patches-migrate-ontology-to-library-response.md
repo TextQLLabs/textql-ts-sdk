@@ -1,0 +1,18 @@
+# TextqlRpcPublicPatchesMigrateOntologyToLibraryResponse
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicPatchesMigrateOntologyToLibraryResponse } from "textql-sdk/models";
+
+let value: TextqlRpcPublicPatchesMigrateOntologyToLibraryResponse = {};
+```
+
+## Fields
+
+| Field                                                                                                                                      | Type                                                                                                                                       | Required                                                                                                                                   | Description                                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `results`                                                                                                                                  | [models.TextqlRpcPublicPatchesMigrateOntologyToLibraryResult](../models/textql-rpc-public-patches-migrate-ontology-to-library-result.md)[] | :heavy_minus_sign:                                                                                                                         | N/A                                                                                                                                        |
+| `totalCreated`                                                                                                                             | *number*                                                                                                                                   | :heavy_minus_sign:                                                                                                                         | N/A                                                                                                                                        |
+| `totalSkipped`                                                                                                                             | *number*                                                                                                                                   | :heavy_minus_sign:                                                                                                                         | N/A                                                                                                                                        |
+| `dryRun`                                                                                                                                   | *boolean*                                                                                                                                  | :heavy_minus_sign:                                                                                                                         | N/A                                                                                                                                        |

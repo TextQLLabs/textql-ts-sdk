@@ -1,0 +1,20 @@
+# DatasetServiceGetDatasetRequest
+
+## Example Usage
+
+```typescript
+import { DatasetServiceGetDatasetRequest } from "textql-sdk/models/operations";
+
+let value: DatasetServiceGetDatasetRequest = {
+  connectProtocolVersion: 1,
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                           | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                        | *1*                                                                                                             | :heavy_check_mark:                                                                                              | N/A                                                                                                             |
+| `connectTimeoutMs`                                                                                              | *number*                                                                                                        | :heavy_minus_sign:                                                                                              | N/A                                                                                                             |
+| `body`                                                                                                          | [models.TextqlRpcPublicDatasetGetDatasetRequest](../../models/textql-rpc-public-dataset-get-dataset-request.md) | :heavy_check_mark:                                                                                              | N/A                                                                                                             |

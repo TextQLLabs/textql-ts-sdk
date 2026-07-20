@@ -1,0 +1,4027 @@
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Speakeasy Modifications
+  version: 0.0.2
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/StreamChat"]
+    remove: true
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/WatchChat"]
+    remove: true
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/StreamAgentStatus"]
+    remove: true
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/WatchDashboardHealth"]
+    remove: true
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/StreamTemplateDataStatus"]
+    remove: true
+  - target: $["components"]
+    update:
+      securitySchemes:
+        apiKey:
+          type: apiKey
+          in: header
+          name: tql_api_key
+  # Clear any existing top-level security before setting exactly one entry.
+  # Speakeasy pushes the overlaid spec back to the registry, so a plain add
+  # would compound (security: [apiKey, apiKey]) on the next run and break the
+  # hoisted api_key constructor arg. remove-then-add keeps it idempotent.
+  - target: $["security"]
+    remove: true
+  - target: $
+    update:
+      security:
+        - apiKey: []
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RemoveLibrarySubmodule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: removeLibrarySubmodule
+    x-speakeasy-metadata:
+      after: sdk.libraries.removeLibrarySubmodule()
+      before: sdk.LibraryService.LibraryService_RemoveLibrarySubmodule()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetMembersWithChats"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getMembersWithChats
+    x-speakeasy-metadata:
+      after: sdk.chats.getMembersWithChats()
+      before: sdk.ChatService.ChatService_GetMembersWithChats()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetEffectiveLibraryOwners"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getEffectiveOwners
+    x-speakeasy-metadata:
+      after: sdk.libraries.getEffectiveOwners()
+      before: sdk.LibraryService.LibraryService_GetEffectiveLibraryOwners()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/SyncPowerBIItems"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: syncPowerBIItems
+    x-speakeasy-metadata:
+      after: sdk.powerBIServices.syncPowerBIItems()
+      before: sdk.PowerBIService.PowerBIService_SyncPowerBIItems()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/TestTableauConnection"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: testTableauConnection
+    x-speakeasy-metadata:
+      after: sdk.tableauService.testTableauConnection()
+      before: sdk.TableauService.TableauService_TestTableauConnection()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/AppHeartbeat"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: heartbeat
+    x-speakeasy-metadata:
+      after: sdk.appService.heartbeat()
+      before: sdk.AppService.AppService_AppHeartbeat()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/UpdateApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.appServices.update()
+      before: sdk.AppService.AppService_UpdateApp()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DeleteContextPatchAutoApproveRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: deleteContextPatchAutoApproveRule
+    x-speakeasy-metadata:
+      after: sdk.libraryService.deleteContextPatchAutoApproveRule()
+      before: sdk.LibraryService.LibraryService_DeleteContextPatchAutoApproveRule()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/UnstarTableauItem"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: unstarTableauItem
+    x-speakeasy-metadata:
+      after: sdk.tableauServices.unstarTableauItem()
+      before: sdk.TableauService.TableauService_UnstarTableauItem()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/DeleteOtlpExportConfig"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: deleteOtlpExportConfig
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.deleteOtlpExportConfig()
+      before: sdk.AuditLogService.AuditLogService_DeleteOtlpExportConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/TestS3ExportConnection"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: testS3ExportConnection
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.testS3ExportConnection()
+      before: sdk.AuditLogService.AuditLogService_TestS3ExportConnection()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DenyPatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: denyPatch
+    x-speakeasy-metadata:
+      after: sdk.libraryService.denyPatch()
+      before: sdk.LibraryService.LibraryService_DenyPatch()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/DeleteRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: deleteRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.deleteRole()
+      before: sdk.RBACService.RBACService_DeleteRole()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryOwners"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getLibraryOwners
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getLibraryOwners()
+      before: sdk.LibraryService.LibraryService_GetLibraryOwners()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/UpdateCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: updateCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observability.updateCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_UpdateCustomTopic()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/ListConnectorTables"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: listTables
+    x-speakeasy-metadata:
+      after: sdk.connectors.listTables()
+      before: sdk.ConnectorService.ConnectorService_ListConnectorTables()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibrarySyncConflicts"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getLibrarySyncConflicts
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getLibrarySyncConflicts()
+      before: sdk.LibraryService.LibraryService_GetLibrarySyncConflicts()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/GetMembersWithSecrets"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: getMembersWithSecrets
+    x-speakeasy-metadata:
+      after: sdk.secrets.getMembersWithSecrets()
+      before: sdk.SecretService.SecretService_GetMembersWithSecrets()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/GetOtlpExportConfig"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: getOtlpExportConfig
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.getOtlpExportConfig()
+      before: sdk.AuditLogService.AuditLogService_GetOtlpExportConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/ListAuditLogs"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.list()
+      before: sdk.AuditLogService.AuditLogService_ListAuditLogs()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/PutSecret"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: putSecret
+    x-speakeasy-metadata:
+      after: sdk.secretServices.putSecret()
+      before: sdk.SecretService.SecretService_PutSecret()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/AttachAgentToChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: attachAgent
+    x-speakeasy-metadata:
+      after: sdk.chats.attachAgent()
+      before: sdk.ChatService.ChatService_AttachAgentToChat()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetCustomTopicPeople"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getCustomTopicPeople
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.getCustomTopicPeople()
+      before: sdk.ObservabilityService.ObservabilityService_GetCustomTopicPeople()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/PreviewSlackReport"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: previewSlackReport
+    x-speakeasy-metadata:
+      after: sdk.playbooks.previewSlackReport()
+      before: sdk.PlaybookService.PlaybookService_PreviewSlackReport()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectorChats"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getChats
+    x-speakeasy-metadata:
+      after: sdk.connectors.getChats()
+      before: sdk.ConnectorService.ConnectorService_GetConnectorChats()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/CreateApprovalRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: createApprovalRule
+    x-speakeasy-metadata:
+      after: sdk.libraryService.createApprovalRule()
+      before: sdk.LibraryService.LibraryService_CreateApprovalRule()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/UpdateSecret"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.secrets.update()
+      before: sdk.SecretService.SecretService_UpdateSecret()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/GetComponentGalleryUrl"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: getComponentGalleryUrl
+    x-speakeasy-metadata:
+      after: sdk.apps.getComponentGalleryUrl()
+      before: sdk.AppService.AppService_GetComponentGalleryUrl()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListGroups"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listGroups
+    x-speakeasy-metadata:
+      after: sdk.rbacService.listGroups()
+      before: sdk.RBACService.RBACService_ListGroups()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/CreateDashboardFolder"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: createFolder
+    x-speakeasy-metadata:
+      after: sdk.dashboards.createFolder()
+      before: sdk.DashboardService.DashboardService_CreateDashboardFolder()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxFiles"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: listSandboxFiles
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdminService.listSandboxFiles()
+      before: sdk.SandboxAdminService.SandboxAdminService_ListSandboxFiles()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListPatches"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listPatches
+    x-speakeasy-metadata:
+      after: sdk.libraryService.listPatches()
+      before: sdk.LibraryService.LibraryService_ListPatches()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/DeleteInstallation"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: deleteInstallation
+    x-speakeasy-metadata:
+      after: sdk.slack.deleteInstallation()
+      before: sdk.SlackService.SlackService_DeleteInstallation()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/CreateUploadPresignUrl"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: createUploadPresignUrl
+    x-speakeasy-metadata:
+      after: sdk.datasets.createUploadPresignUrl()
+      before: sdk.DatasetService.DatasetService_CreateUploadPresignUrl()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/GetMembersWithApps"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: getMembersWithApps
+    x-speakeasy-metadata:
+      after: sdk.apps.getMembersWithApps()
+      before: sdk.AppService.AppService_GetMembersWithApps()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/ListQueryTemplates"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: listQueryTemplates
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.listQueryTemplates()
+      before: sdk.ConnectorService.ConnectorService_ListQueryTemplates()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetCompletionParametersBatch"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getCompletionParametersBatch
+    x-speakeasy-metadata:
+      after: sdk.chats.getCompletionParametersBatch()
+      before: sdk.ChatService.ChatService_GetCompletionParametersBatch()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListScimGroupMappings"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listScimGroupMappings
+    x-speakeasy-metadata:
+      after: sdk.rbacServices.listScimGroupMappings()
+      before: sdk.RBACService.RBACService_ListScimGroupMappings()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/UploadAgentAvatar"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: uploadAgentAvatar
+    x-speakeasy-metadata:
+      after: sdk.agents.uploadAgentAvatar()
+      before: sdk.AgentService.AgentService_UploadAgentAvatar()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/BackfillThreadWarnings"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: backfillThreadWarnings
+    x-speakeasy-metadata:
+      after: sdk.observability.backfillThreadWarnings()
+      before: sdk.ObservabilityService.ObservabilityService_BackfillThreadWarnings()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybooks"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.playbooks.get()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybooks()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/DeleteDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.datasets.delete()
+      before: sdk.DatasetService.DatasetService_DeleteDataset()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/ListPowerBIDatasets"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.powerbiDatasets.list()
+      before: sdk.PowerBIService.PowerBIService_ListPowerBIDatasets()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/DeleteAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.agents.delete()
+      before: sdk.AgentService.AgentService_DeleteAgent()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetMembersWithPlaybooks"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getMembersWith
+    x-speakeasy-metadata:
+      after: sdk.playbooks.getMembersWith()
+      before: sdk.PlaybookService.PlaybookService_GetMembersWithPlaybooks()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/DismissQuestions"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: dismissQuestions
+    x-speakeasy-metadata:
+      after: sdk.chats.dismissQuestions()
+      before: sdk.ChatService.ChatService_DismissQuestions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/HandleOAuthCallback"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: handleOAuthCallback
+    x-speakeasy-metadata:
+      after: sdk.mcpService.handleOAuthCallback()
+      before: sdk.MCPService.MCPService_HandleOAuthCallback()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RejectAccessRequest"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: rejectAccessRequest
+    x-speakeasy-metadata:
+      after: sdk.rbac.rejectAccessRequest()
+      before: sdk.RBACService.RBACService_RejectAccessRequest()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpdateContextPatchAutoApproveRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: updateContextPatchAutoApproveRule
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.updateContextPatchAutoApproveRule()
+      before: sdk.LibraryService.LibraryService_UpdateContextPatchAutoApproveRule()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/GetAppViewStats"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: getAppViewStats
+    x-speakeasy-metadata:
+      after: sdk.appService.getAppViewStats()
+      before: sdk.AppService.AppService_GetAppViewStats()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/FixWarning"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: fixWarning
+    x-speakeasy-metadata:
+      after: sdk.observability.fixWarning()
+      before: sdk.ObservabilityService.ObservabilityService_FixWarning()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpsertLibraryAnaConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: upsertAnaConfig
+    x-speakeasy-metadata:
+      after: sdk.libraries.upsertAnaConfig()
+      before: sdk.LibraryService.LibraryService_UpsertLibraryAnaConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListApiKeys"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listApiKeys
+    x-speakeasy-metadata:
+      after: sdk.rbacService.listApiKeys()
+      before: sdk.RBACService.RBACService_ListApiKeys()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/HandleTeamsOAuthCallback"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: handleOAuthCallback
+    x-speakeasy-metadata:
+      after: sdk.teams.handleOAuthCallback()
+      before: sdk.TeamsService.TeamsService_HandleTeamsOAuthCallback()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpdateApprovalRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: updateApprovalRule
+    x-speakeasy-metadata:
+      after: sdk.libraries.updateApprovalRule()
+      before: sdk.LibraryService.LibraryService_UpdateApprovalRule()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ConvertRoleToGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: convertRoleToGroup
+    x-speakeasy-metadata:
+      after: sdk.rbacService.convertRoleToGroup()
+      before: sdk.RBACService.RBACService_ConvertRoleToGroup()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetRawPatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getRawPatch
+    x-speakeasy-metadata:
+      after: sdk.libraries.getRawPatch()
+      before: sdk.LibraryService.LibraryService_GetRawPatch()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetAccessMethodStats"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getAccessMethodStats
+    x-speakeasy-metadata:
+      after: sdk.observabilities.getAccessMethodStats()
+      before: sdk.ObservabilityService.ObservabilityService_GetAccessMethodStats()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/UpsertMCPServers"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: upsertMCPServers
+    x-speakeasy-metadata:
+      after: sdk.mcpServices.upsertMCPServers()
+      before: sdk.MCPService.MCPService_UpsertMCPServers()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GenerateShareLink"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: generateShareLink
+    x-speakeasy-metadata:
+      after: sdk.rbac.generateShareLink()
+      before: sdk.RBACService.RBACService_GenerateShareLink()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/ListPowerBIReports"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: listReports
+    x-speakeasy-metadata:
+      after: sdk.powerBi.listReports()
+      before: sdk.PowerBIService.PowerBIService_ListPowerBIReports()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetReportsWithFilters"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getReportsWithFilters
+    x-speakeasy-metadata:
+      after: sdk.playbooks.getReportsWithFilters()
+      before: sdk.PlaybookService.PlaybookService_GetReportsWithFilters()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/MoveAppToFolder"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: moveAppToFolder
+    x-speakeasy-metadata:
+      after: sdk.appService.moveAppToFolder()
+      before: sdk.AppService.AppService_MoveAppToFolder()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/DeleteServiceAccount"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: deleteServiceAccount
+    x-speakeasy-metadata:
+      after: sdk.rbac.deleteServiceAccount()
+      before: sdk.RBACService.RBACService_DeleteServiceAccount()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetActivePeopleTrend"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getActivePeopleTrend
+    x-speakeasy-metadata:
+      after: sdk.observability.getActivePeopleTrend()
+      before: sdk.ObservabilityService.ObservabilityService_GetActivePeopleTrend()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectors"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getConnectors
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.getConnectors()
+      before: sdk.ConnectorService.ConnectorService_GetConnectors()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpsertLibraryOwners"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: upsertOwners
+    x-speakeasy-metadata:
+      after: sdk.libraries.upsertOwners()
+      before: sdk.LibraryService.LibraryService_UpsertLibraryOwners()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/CancelStream"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: cancelStream
+    x-speakeasy-metadata:
+      after: sdk.chat.cancelStream()
+      before: sdk.ChatService.ChatService_CancelStream()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetChatHistory"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getHistory
+    x-speakeasy-metadata:
+      after: sdk.chat.getHistory()
+      before: sdk.ChatService.ChatService_GetChatHistory()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/GetAgentRun"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: getRun
+    x-speakeasy-metadata:
+      after: sdk.agents.getRun()
+      before: sdk.AgentService.AgentService_GetAgentRun()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/DeleteApiAccessKey"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: deleteApiAccessKey
+    x-speakeasy-metadata:
+      after: sdk.secretServices.deleteApiAccessKey()
+      before: sdk.SecretService.SecretService_DeleteApiAccessKey()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/ActivateCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: activateCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observabilityService.activateCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_ActivateCustomTopic()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/UpdateDashboardFolder"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: updateDashboardFolder
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.updateDashboardFolder()
+      before: sdk.DashboardService.DashboardService_UpdateDashboardFolder()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/GetStarredTableauItems"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: getStarredItems
+    x-speakeasy-metadata:
+      after: sdk.tableau.getStarredItems()
+      before: sdk.TableauService.TableauService_GetStarredTableauItems()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxSpend"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: listSandboxSpend
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdminServices.listSandboxSpend()
+      before: sdk.SandboxAdminService.SandboxAdminService_ListSandboxSpend()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/SetFavorite"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: setFavorite
+    x-speakeasy-metadata:
+      after: sdk.apps.setFavorite()
+      before: sdk.AppService.AppService_SetFavorite()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/ListSlackChannelsForContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: listSlackChannelsForContext
+    x-speakeasy-metadata:
+      after: sdk.playbooks.listSlackChannelsForContext()
+      before: sdk.PlaybookService.PlaybookService_ListSlackChannelsForContextPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/FinalizeLibraryFileUpload"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: finalizeFileUpload
+    x-speakeasy-metadata:
+      after: sdk.library.finalizeFileUpload()
+      before: sdk.LibraryService.LibraryService_FinalizeLibraryFileUpload()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/UpdateObjectVisibility"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateObjectVisibility
+    x-speakeasy-metadata:
+      after: sdk.rbac.updateObjectVisibility()
+      before: sdk.RBACService.RBACService_UpdateObjectVisibility()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/GetMCPServers"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: getServers
+    x-speakeasy-metadata:
+      after: sdk.mcps.getServers()
+      before: sdk.MCPService.MCPService_GetMCPServers()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/DeleteS3ExportConfig"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: deleteS3ExportConfig
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.deleteS3ExportConfig()
+      before: sdk.AuditLogService.AuditLogService_DeleteS3ExportConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/ListInstallations"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: listInstallations
+    x-speakeasy-metadata:
+      after: sdk.teams.listInstallations()
+      before: sdk.TeamsService.TeamsService_ListInstallations()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/UnbookmarkChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: unbookmark
+    x-speakeasy-metadata:
+      after: sdk.chats.unbookmark()
+      before: sdk.ChatService.ChatService_UnbookmarkChat()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/DeleteApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: deleteApp
+    x-speakeasy-metadata:
+      after: sdk.appServices.deleteApp()
+      before: sdk.AppService.AppService_DeleteApp()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetThreadWarnings"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getThreadWarnings
+    x-speakeasy-metadata:
+      after: sdk.observabilityService.getThreadWarnings()
+      before: sdk.ObservabilityService.ObservabilityService_GetThreadWarnings()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetLlmUsage"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getLlmUsage
+    x-speakeasy-metadata:
+      after: sdk.chats.getLlmUsage()
+      before: sdk.ChatService.ChatService_GetLlmUsage()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/SyncWorkspace"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: syncWorkspace
+    x-speakeasy-metadata:
+      after: sdk.teams.syncWorkspace()
+      before: sdk.TeamsService.TeamsService_SyncWorkspace()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/DuplicateAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: duplicate
+    x-speakeasy-metadata:
+      after: sdk.agentService.duplicate()
+      before: sdk.AgentService.AgentService_DuplicateAgent()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/UpsertApiAccessKey"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: upsertApiAccessKey
+    x-speakeasy-metadata:
+      after: sdk.secrets.upsertApiAccessKey()
+      before: sdk.SecretService.SecretService_UpsertApiAccessKey()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/UnsetSlackChannelContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: unsetSlackChannelContextPlaybook
+    x-speakeasy-metadata:
+      after: sdk.playbookService.unsetSlackChannelContextPlaybook()
+      before: sdk.PlaybookService.PlaybookService_UnsetSlackChannelContextPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/InvokeAppComputeFunction"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: invokeComputeFunction
+    x-speakeasy-metadata:
+      after: sdk.apps.invokeComputeFunction()
+      before: sdk.AppService.AppService_InvokeAppComputeFunction()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RevertScimGroupMappingToRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: revertScimGroupMappingToRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.revertScimGroupMappingToRole()
+      before: sdk.RBACService.RBACService_RevertScimGroupMappingToRole()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ShareObject"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: shareObject
+    x-speakeasy-metadata:
+      after: sdk.rbacService.shareObject()
+      before: sdk.RBACService.RBACService_ShareObject()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RemoveLibraryRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: removeRemote
+    x-speakeasy-metadata:
+      after: sdk.libraryService.removeRemote()
+      before: sdk.LibraryService.LibraryService_RemoveLibraryRemote()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/SaveAllObjectsAsConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: saveAllObjectsAsConfig
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.saveAllObjectsAsConfig()
+      before: sdk.LibraryService.LibraryService_SaveAllObjectsAsConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/GetCurrentUser"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: getCurrentUser
+    x-speakeasy-metadata:
+      after: sdk.slackServices.getCurrentUser()
+      before: sdk.SlackService.SlackService_GetCurrentUser()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getRole
+    x-speakeasy-metadata:
+      after: sdk.rbacs.getRole()
+      before: sdk.RBACService.RBACService_GetRole()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListPermissions"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listPermissions
+    x-speakeasy-metadata:
+      after: sdk.rbac.listPermissions()
+      before: sdk.RBACService.RBACService_ListPermissions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/UpdatePlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.playbookService.update()
+      before: sdk.PlaybookService.PlaybookService_UpdatePlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/GetApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.apps.get()
+      before: sdk.AppService.AppService_GetApp()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/ListSecrets"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: listSecrets
+    x-speakeasy-metadata:
+      after: sdk.secretServices.listSecrets()
+      before: sdk.SecretService.SecretService_ListSecrets()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RecoverLibrary"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: recover
+    x-speakeasy-metadata:
+      after: sdk.libraries.recover()
+      before: sdk.LibraryService.LibraryService_RecoverLibrary()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.metrics_export.MetricsExportService/TestMetricsExportConnection"]["post"]
+    update:
+      x-speakeasy-group: metricsExports
+      x-speakeasy-name-override: testConnection
+    x-speakeasy-metadata:
+      after: sdk.metricsExports.testConnection()
+      before: sdk.MetricsExportService.MetricsExportService_TestMetricsExportConnection()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/ListChannels"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.channels.list()
+      before: sdk.TeamsService.TeamsService_ListChannels()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetCheckRecordFix"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getCheckRecordFix
+    x-speakeasy-metadata:
+      after: sdk.observability.getCheckRecordFix()
+      before: sdk.ObservabilityService.ObservabilityService_GetCheckRecordFix()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetArtifact"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getArtifact
+    x-speakeasy-metadata:
+      after: sdk.chatServices.getArtifact()
+      before: sdk.ChatService.ChatService_GetArtifact()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/MigrateOntologyToLibrary"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: migrateOntology
+    x-speakeasy-metadata:
+      after: sdk.libraryService.migrateOntology()
+      before: sdk.LibraryService.LibraryService_MigrateOntologyToLibrary()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxes"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.sandboxes.list()
+      before: sdk.SandboxAdminService.SandboxAdminService_ListSandboxes()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetActiveSubscribedPlaybooksCount"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getActiveSubscribedCount
+    x-speakeasy-metadata:
+      after: sdk.playbookService.getActiveSubscribedCount()
+      before: sdk.PlaybookService.PlaybookService_GetActiveSubscribedPlaybooksCount()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/PreviewLibraryPullFromRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: previewLibraryPullFromRemote
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.previewLibraryPullFromRemote()
+      before: sdk.LibraryService.LibraryService_PreviewLibraryPullFromRemote()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpsertLibraryFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: upsertLibraryFile
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.upsertLibraryFile()
+      before: sdk.LibraryService.LibraryService_UpsertLibraryFile()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RenameLibraryFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: renameFile
+    x-speakeasy-metadata:
+      after: sdk.library.renameFile()
+      before: sdk.LibraryService.LibraryService_RenameLibraryFile()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/AttachApp"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: attachApp
+    x-speakeasy-metadata:
+      after: sdk.chatServices.attachApp()
+      before: sdk.ChatService.ChatService_AttachApp()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/BackfillCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: backfillCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observability.backfillCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_BackfillCustomTopic()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/DeleteDashboardFolder"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: deleteFolder
+    x-speakeasy-metadata:
+      after: sdk.dashboards.deleteFolder()
+      before: sdk.DashboardService.DashboardService_DeleteDashboardFolder()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListAccessRequests"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listAccessRequests
+    x-speakeasy-metadata:
+      after: sdk.rbacService.listAccessRequests()
+      before: sdk.RBACService.RBACService_ListAccessRequests()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/GetSyncedPowerBIItems"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: getSyncedItems
+    x-speakeasy-metadata:
+      after: sdk.powerBi.getSyncedItems()
+      before: sdk.PowerBIService.PowerBIService_GetSyncedPowerBIItems()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListLibraryImports"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listImports
+    x-speakeasy-metadata:
+      after: sdk.libraries.listImports()
+      before: sdk.LibraryService.LibraryService_ListLibraryImports()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetCustomTopicThreads"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getCustomTopicThreads
+    x-speakeasy-metadata:
+      after: sdk.observability.getCustomTopicThreads()
+      before: sdk.ObservabilityService.ObservabilityService_GetCustomTopicThreads()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/GetAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: getAgent
+    x-speakeasy-metadata:
+      after: sdk.agents.getAgent()
+      before: sdk.AgentService.AgentService_GetAgent()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/CreateGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.createGroup()
+      before: sdk.RBACService.RBACService_CreateGroup()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/SaveObjectAsConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: saveAsConfig
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.saveAsConfig()
+      before: sdk.LibraryService.LibraryService_SaveObjectAsConfig()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/ListPlaybookBatchRuns"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: listBatchRuns
+    x-speakeasy-metadata:
+      after: sdk.playbooks.listBatchRuns()
+      before: sdk.PlaybookService.PlaybookService_ListPlaybookBatchRuns()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/DuplicateChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: duplicateChat
+    x-speakeasy-metadata:
+      after: sdk.chatServices.duplicateChat()
+      before: sdk.ChatService.ChatService_DuplicateChat()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetPatchCapabilities"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getPatchCapabilities
+    x-speakeasy-metadata:
+      after: sdk.libraryService.getPatchCapabilities()
+      before: sdk.LibraryService.LibraryService_GetPatchCapabilities()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetDatasetValues"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: getDatasetValues
+    x-speakeasy-metadata:
+      after: sdk.datasetServices.getDatasetValues()
+      before: sdk.DatasetService.DatasetService_GetDatasetValues()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/GetApiAccessKey"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: getApiAccessKey
+    x-speakeasy-metadata:
+      after: sdk.secretService.getApiAccessKey()
+      before: sdk.SecretService.SecretService_GetApiAccessKey()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/CreateApiKey"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createApiKey
+    x-speakeasy-metadata:
+      after: sdk.rbacService.createApiKey()
+      before: sdk.RBACService.RBACService_CreateApiKey()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListLibraryHistory"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listLibraryHistory
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.listLibraryHistory()
+      before: sdk.LibraryService.LibraryService_ListLibraryHistory()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/FavoriteReport"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: favoriteReport
+    x-speakeasy-metadata:
+      after: sdk.playbooks.favoriteReport()
+      before: sdk.PlaybookService.PlaybookService_FavoriteReport()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/CreatePlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: createPlaybook
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.createPlaybook()
+      before: sdk.PlaybookService.PlaybookService_CreatePlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ApprovePatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: approvePatch
+    x-speakeasy-metadata:
+      after: sdk.libraryService.approvePatch()
+      before: sdk.LibraryService.LibraryService_ApprovePatch()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/DuplicatePlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: duplicate
+    x-speakeasy-metadata:
+      after: sdk.playbookService.duplicate()
+      before: sdk.PlaybookService.PlaybookService_DuplicatePlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RevokeObjectAccess"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: revokeObjectAccess
+    x-speakeasy-metadata:
+      after: sdk.rbacServices.revokeObjectAccess()
+      before: sdk.RBACService.RBACService_RevokeObjectAccess()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetBackfillPreview"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getBackfillPreview
+    x-speakeasy-metadata:
+      after: sdk.observabilityService.getBackfillPreview()
+      before: sdk.ObservabilityService.ObservabilityService_GetBackfillPreview()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/GetConnectedAppStatus"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: getConnectedAppStatus
+    x-speakeasy-metadata:
+      after: sdk.tableauServices.getConnectedAppStatus()
+      before: sdk.TableauService.TableauService_GetConnectedAppStatus()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: fetch
+    x-speakeasy-metadata:
+      after: sdk.playbooks.fetch()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/CheckChatPermissions"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: checkPermissions
+    x-speakeasy-metadata:
+      after: sdk.chatServices.checkPermissions()
+      before: sdk.ChatService.ChatService_CheckChatPermissions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetAPIChatAnswer"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getApiAnswer
+    x-speakeasy-metadata:
+      after: sdk.chats.getApiAnswer()
+      before: sdk.ChatService.ChatService_GetAPIChatAnswer()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/ClearOAuthToken"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: clearOAuthToken
+    x-speakeasy-metadata:
+      after: sdk.mcps.clearOAuthToken()
+      before: sdk.MCPService.MCPService_ClearOAuthToken()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/StarTableauItem"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: starItem
+    x-speakeasy-metadata:
+      after: sdk.tableau.starItem()
+      before: sdk.TableauService.TableauService_StarTableauItem()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListServiceAccounts"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listServiceAccounts
+    x-speakeasy-metadata:
+      after: sdk.rbacService.listServiceAccounts()
+      before: sdk.RBACService.RBACService_ListServiceAccounts()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/ListDashboards"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.dashboards.list()
+      before: sdk.DashboardService.DashboardService_ListDashboards()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/RateChatCell"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: rateCell
+    x-speakeasy-metadata:
+      after: sdk.chat.rateCell()
+      before: sdk.ChatService.ChatService_RateChatCell()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/ListAllTeamsChannelContextPlaybooks"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: listAllTeamsChannelContextPlaybooks
+    x-speakeasy-metadata:
+      after: sdk.playbooks.listAllTeamsChannelContextPlaybooks()
+      before: sdk.PlaybookService.PlaybookService_ListAllTeamsChannelContextPlaybooks()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/UpdateRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.updateRole()
+      before: sdk.RBACService.RBACService_UpdateRole()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/ListPowerBIWorkspaces"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: listWorkspaces
+    x-speakeasy-metadata:
+      after: sdk.powerbi.listWorkspaces()
+      before: sdk.PowerBIService.PowerBIService_ListPowerBIWorkspaces()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ApproveAccessRequest"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: approveAccessRequest
+    x-speakeasy-metadata:
+      after: sdk.rbac.approveAccessRequest()
+      before: sdk.RBACService.RBACService_ApproveAccessRequest()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/UpdateConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.update()
+      before: sdk.ConnectorService.ConnectorService_UpdateConnector()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/AttachDataset"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: attachDataset
+    x-speakeasy-metadata:
+      after: sdk.playbooks.attachDataset()
+      before: sdk.PlaybookService.PlaybookService_AttachDataset()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetEmbedUserApiKey"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getEmbedUserApiKey
+    x-speakeasy-metadata:
+      after: sdk.rbac.getEmbedUserApiKey()
+      before: sdk.RBACService.RBACService_GetEmbedUserApiKey()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/GetDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.get()
+      before: sdk.DashboardService.DashboardService_GetDashboard()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/PullLibraryFromRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: pullFromRemote
+    x-speakeasy-metadata:
+      after: sdk.libraryService.pullFromRemote()
+      before: sdk.LibraryService.LibraryService_PullLibraryFromRemote()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RemoveRoleFromMember"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: removeRoleFromMember
+    x-speakeasy-metadata:
+      after: sdk.rbacService.removeRoleFromMember()
+      before: sdk.RBACService.RBACService_RemoveRoleFromMember()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ConfigureLibraryRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: configureLibraryRemote
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.configureLibraryRemote()
+      before: sdk.LibraryService.LibraryService_ConfigureLibraryRemote()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListLibrarySubmodules"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listLibrarySubmodules
+    x-speakeasy-metadata:
+      after: sdk.libraryService.listLibrarySubmodules()
+      before: sdk.LibraryService.LibraryService_ListLibrarySubmodules()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetChatExecutionTiming"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getChatExecutionTiming
+    x-speakeasy-metadata:
+      after: sdk.chats.getChatExecutionTiming()
+      before: sdk.ChatService.ChatService_GetChatExecutionTiming()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/ListDashboardVersions"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: listVersions
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.listVersions()
+      before: sdk.DashboardService.DashboardService_ListDashboardVersions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/FixCheckRecord"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: fixCheckRecord
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.fixCheckRecord()
+      before: sdk.ObservabilityService.ObservabilityService_FixCheckRecord()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectorCellDurations"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getConnectorCellDurations
+    x-speakeasy-metadata:
+      after: sdk.connectorService.getConnectorCellDurations()
+      before: sdk.ConnectorService.ConnectorService_GetConnectorCellDurations()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/RunPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: run
+    x-speakeasy-metadata:
+      after: sdk.playbooks.run()
+      before: sdk.PlaybookService.PlaybookService_RunPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/SpawnDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: spawn
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.spawn()
+      before: sdk.DashboardService.DashboardService_SpawnDashboard()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/SubscribeToPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: subscribe
+    x-speakeasy-metadata:
+      after: sdk.playbooks.subscribe()
+      before: sdk.PlaybookService.PlaybookService_SubscribeToPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetTablePreview"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getTablePreview
+    x-speakeasy-metadata:
+      after: sdk.connectorService.getTablePreview()
+      before: sdk.ConnectorService.ConnectorService_GetTablePreview()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/DeleteInstallation"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: deleteInstallation
+    x-speakeasy-metadata:
+      after: sdk.teams.deleteInstallation()
+      before: sdk.TeamsService.TeamsService_DeleteInstallation()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/DeactivateCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: deactivateCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observability.deactivateCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_DeactivateCustomTopic()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/GetPowerBIDatasetPreview"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: getDatasetPreview
+    x-speakeasy-metadata:
+      after: sdk.powerbi.getDatasetPreview()
+      before: sdk.PowerBIService.PowerBIService_GetPowerBIDatasetPreview()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/MarkReportAsRead"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: markReportAsRead
+    x-speakeasy-metadata:
+      after: sdk.playbooks.markReportAsRead()
+      before: sdk.PlaybookService.PlaybookService_MarkReportAsRead()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/SubmitContextPromptChange"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: submitContextPromptChange
+    x-speakeasy-metadata:
+      after: sdk.chats.submitContextPromptChange()
+      before: sdk.ChatService.ChatService_SubmitContextPromptChange()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/TestOtlpExportConnection"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: testOtlpExportConnection
+    x-speakeasy-metadata:
+      after: sdk.auditLogService.testOtlpExportConnection()
+      before: sdk.AuditLogService.AuditLogService_TestOtlpExportConnection()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/ListApiProviders"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: listApiProviders
+    x-speakeasy-metadata:
+      after: sdk.secrets.listApiProviders()
+      before: sdk.SecretService.SecretService_ListApiProviders()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryMigrationStatus"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getMigrationStatus
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getMigrationStatus()
+      before: sdk.LibraryService.LibraryService_GetLibraryMigrationStatus()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/UnsubscribeFromPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: unsubscribe
+    x-speakeasy-metadata:
+      after: sdk.playbooks.unsubscribe()
+      before: sdk.PlaybookService.PlaybookService_UnsubscribeFromPlaybook()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetRolePermissions"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getRolePermissions
+    x-speakeasy-metadata:
+      after: sdk.rbacServices.getRolePermissions()
+      before: sdk.RBACService.RBACService_GetRolePermissions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/StopSandbox"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: stop
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdmin.stop()
+      before: sdk.SandboxAdminService.SandboxAdminService_StopSandbox()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/DeleteMCPServer"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.mcpServers.delete()
+      before: sdk.MCPService.MCPService_DeleteMCPServer()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/TriggerOtlpExport"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: triggerOtlpExport
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.triggerOtlpExport()
+      before: sdk.AuditLogService.AuditLogService_TriggerOtlpExport()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.getGroup()
+      before: sdk.RBACService.RBACService_GetGroup()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/SubmitQuestions"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: submitQuestions
+    x-speakeasy-metadata:
+      after: sdk.chats.submitQuestions()
+      before: sdk.ChatService.ChatService_SubmitQuestions()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetDatasetsByIds"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: getByIds
+    x-speakeasy-metadata:
+      after: sdk.datasets.getByIds()
+      before: sdk.DatasetService.DatasetService_GetDatasetsByIds()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/CancelTemplateExecution"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: cancelTemplateExecution
+    x-speakeasy-metadata:
+      after: sdk.playbookService.cancelTemplateExecution()
+      before: sdk.PlaybookService.PlaybookService_CancelTemplateExecution()
+      created_at: 1784134047110
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetFileUsage"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getFileUsage
+    x-speakeasy-metadata:
+      after: sdk.libraries.getFileUsage()
+      before: sdk.LibraryService.LibraryService_GetFileUsage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListChatsForFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listChatsForFile
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.listChatsForFile()
+      before: sdk.LibraryService.LibraryService_ListChatsForFile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/UpdateGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.updateGroup()
+      before: sdk.RBACService.RBACService_UpdateGroup()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getRemote
+    x-speakeasy-metadata:
+      after: sdk.libraries.getRemote()
+      before: sdk.LibraryService.LibraryService_GetLibraryRemote()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryHistoryFileDiff"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getHistoryFileDiff
+    x-speakeasy-metadata:
+      after: sdk.libraries.getHistoryFileDiff()
+      before: sdk.LibraryService.LibraryService_GetLibraryHistoryFileDiff()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/DeleteDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.delete()
+      before: sdk.DashboardService.DashboardService_DeleteDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/GetDashboardVersion"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: getVersion
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.getVersion()
+      before: sdk.DashboardService.DashboardService_GetDashboardVersion()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/DeployPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: deploy
+    x-speakeasy-metadata:
+      after: sdk.playbooks.deploy()
+      before: sdk.PlaybookService.PlaybookService_DeployPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/ListDashboardFolders"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: listFolders
+    x-speakeasy-metadata:
+      after: sdk.dashboards.listFolders()
+      before: sdk.DashboardService.DashboardService_ListDashboardFolders()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybookBatchRun"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getBatchRun
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.getBatchRun()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybookBatchRun()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/MoveDashboardToFolder"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: moveToFolder
+    x-speakeasy-metadata:
+      after: sdk.dashboards.moveToFolder()
+      before: sdk.DashboardService.DashboardService_MoveDashboardToFolder()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/CreateContextPatchAutoApproveRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: createContextPatchAutoApproveRule
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.createContextPatchAutoApproveRule()
+      before: sdk.LibraryService.LibraryService_CreateContextPatchAutoApproveRule()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/CreateLibraryDirectory"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: createLibraryDirectory
+    x-speakeasy-metadata:
+      after: sdk.libraryService.createLibraryDirectory()
+      before: sdk.LibraryService.LibraryService_CreateLibraryDirectory()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/RestoreAppVersion"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: restoreAppVersion
+    x-speakeasy-metadata:
+      after: sdk.appService.restoreAppVersion()
+      before: sdk.AppService.AppService_RestoreAppVersion()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetConfigExportCapabilities"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getConfigExportCapabilities
+    x-speakeasy-metadata:
+      after: sdk.libraryService.getConfigExportCapabilities()
+      before: sdk.LibraryService.LibraryService_GetConfigExportCapabilities()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/ConfigureS3Export"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: configureS3Export
+    x-speakeasy-metadata:
+      after: sdk.auditLogService.configureS3Export()
+      before: sdk.AuditLogService.AuditLogService_ConfigureS3Export()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/PreviewConfigDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: previewConfig
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.previewConfig()
+      before: sdk.DashboardService.DashboardService_PreviewConfigDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/RevokeScimOAuthClient"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: revokeOAuthClient
+    x-speakeasy-metadata:
+      after: sdk.scimService.revokeOAuthClient()
+      before: sdk.ScimService.ScimService_RevokeScimOAuthClient()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ExchangeLibraryGithubCode"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: exchangeGithubCode
+    x-speakeasy-metadata:
+      after: sdk.library.exchangeGithubCode()
+      before: sdk.LibraryService.LibraryService_ExchangeLibraryGithubCode()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/DeactivatePlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: deactivate
+    x-speakeasy-metadata:
+      after: sdk.playbooks.deactivate()
+      before: sdk.PlaybookService.PlaybookService_DeactivatePlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybookReports"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getReports
+    x-speakeasy-metadata:
+      after: sdk.playbooks.getReports()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybookReports()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetReportById"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getReportById
+    x-speakeasy-metadata:
+      after: sdk.playbookService.getReportById()
+      before: sdk.PlaybookService.PlaybookService_GetReportById()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/ListAppVersions"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: listVersions
+    x-speakeasy-metadata:
+      after: sdk.apps.listVersions()
+      before: sdk.AppService.AppService_ListAppVersions()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetChatArtifactsSummary"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getArtifactsSummary
+    x-speakeasy-metadata:
+      after: sdk.chats.getArtifactsSummary()
+      before: sdk.ChatService.ChatService_GetChatArtifactsSummary()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/TestConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: test
+    x-speakeasy-metadata:
+      after: sdk.connectors.test()
+      before: sdk.ConnectorService.ConnectorService_TestConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/CreateCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: createCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observability.createCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_CreateCustomTopic()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/UnsetTeamsChannelContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: unsetTeamsChannelContext
+    x-speakeasy-metadata:
+      after: sdk.playbooks.unsetTeamsChannelContext()
+      before: sdk.PlaybookService.PlaybookService_UnsetTeamsChannelContextPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/GetMembersWithDashboards"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: getMembersWithDashboards
+    x-speakeasy-metadata:
+      after: sdk.dashboardService.getMembersWithDashboards()
+      before: sdk.DashboardService.DashboardService_GetMembersWithDashboards()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/DemoPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: demoPlaybook
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.demoPlaybook()
+      before: sdk.PlaybookService.PlaybookService_DemoPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/PublishDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: publish
+    x-speakeasy-metadata:
+      after: sdk.dashboards.publish()
+      before: sdk.DashboardService.DashboardService_PublishDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/GenerateEmbedToken"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: generateEmbedToken
+    x-speakeasy-metadata:
+      after: sdk.tableau.generateEmbedToken()
+      before: sdk.TableauService.TableauService_GenerateEmbedToken()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetBackfillStatus"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getBackfillStatus
+    x-speakeasy-metadata:
+      after: sdk.observability.getBackfillStatus()
+      before: sdk.ObservabilityService.ObservabilityService_GetBackfillStatus()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxExecutions"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: listExecutions
+    x-speakeasy-metadata:
+      after: sdk.sandboxes.listExecutions()
+      before: sdk.SandboxAdminService.SandboxAdminService_ListSandboxExecutions()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/BookmarkChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: bookmark
+    x-speakeasy-metadata:
+      after: sdk.chats.bookmark()
+      before: sdk.ChatService.ChatService_BookmarkChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListSkills"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listSkills
+    x-speakeasy-metadata:
+      after: sdk.libraries.listSkills()
+      before: sdk.LibraryService.LibraryService_ListSkills()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/ListUsers"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: listUsers
+    x-speakeasy-metadata:
+      after: sdk.slackServices.listUsers()
+      before: sdk.SlackService.SlackService_ListUsers()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListPatchReviewers"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listPatchReviewers
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.listPatchReviewers()
+      before: sdk.LibraryService.LibraryService_ListPatchReviewers()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/CreateApiRevision"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: createApiRevision
+    x-speakeasy-metadata:
+      after: sdk.secrets.createApiRevision()
+      before: sdk.SecretService.SecretService_CreateApiRevision()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/ListTableauProjects"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: listProjects
+    x-speakeasy-metadata:
+      after: sdk.tableau.listProjects()
+      before: sdk.TableauService.TableauService_ListTableauProjects()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/DeleteConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.connectors.delete()
+      before: sdk.ConnectorService.ConnectorService_DeleteConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectorStats"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getConnectorStats
+    x-speakeasy-metadata:
+      after: sdk.connectorService.getConnectorStats()
+      before: sdk.ConnectorService.ConnectorService_GetConnectorStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/GetSandbox"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: getSandbox
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdmins.getSandbox()
+      before: sdk.SandboxAdminService.SandboxAdminService_GetSandbox()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/TriggerAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: triggerAgent
+    x-speakeasy-metadata:
+      after: sdk.agentService.triggerAgent()
+      before: sdk.AgentService.AgentService_TriggerAgent()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DeleteLibraryDirectory"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: deleteLibraryDirectory
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.deleteLibraryDirectory()
+      before: sdk.LibraryService.LibraryService_DeleteLibraryDirectory()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RevokeApiKey"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: revokeApiKey
+    x-speakeasy-metadata:
+      after: sdk.rbac.revokeApiKey()
+      before: sdk.RBACService.RBACService_RevokeApiKey()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/ListTableauDatasources"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: listTableauDatasources
+    x-speakeasy-metadata:
+      after: sdk.tableauServices.listTableauDatasources()
+      before: sdk.TableauService.TableauService_ListTableauDatasources()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/SyncWorkspace"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: syncWorkspace
+    x-speakeasy-metadata:
+      after: sdk.slack.syncWorkspace()
+      before: sdk.SlackService.SlackService_SyncWorkspace()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/TriggerS3Export"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: triggerS3Export
+    x-speakeasy-metadata:
+      after: sdk.auditLogService.triggerS3Export()
+      before: sdk.AuditLogService.AuditLogService_TriggerS3Export()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/DuplicateDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: duplicate
+    x-speakeasy-metadata:
+      after: sdk.dashboards.duplicate()
+      before: sdk.DashboardService.DashboardService_DuplicateDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ShareObjectWithRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: shareObjectWithRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.shareObjectWithRole()
+      before: sdk.RBACService.RBACService_ShareObjectWithRole()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/DuplicateConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: duplicateConnector
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.duplicateConnector()
+      before: sdk.ConnectorService.ConnectorService_DuplicateConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/DeleteCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: deleteCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.deleteCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_DeleteCustomTopic()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/CreateSlackUuid"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: createUuid
+    x-speakeasy-metadata:
+      after: sdk.slack.createUuid()
+      before: sdk.SlackService.SlackService_CreateSlackUuid()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RestorePatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: restorePatch
+    x-speakeasy-metadata:
+      after: sdk.libraries.restorePatch()
+      before: sdk.LibraryService.LibraryService_RestorePatch()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.metrics_export.MetricsExportService/GetMetricsExportConfig"]["post"]
+    update:
+      x-speakeasy-group: metricsExports
+      x-speakeasy-name-override: getMetricsExportConfig
+    x-speakeasy-metadata:
+      after: sdk.metricsExportServices.getMetricsExportConfig()
+      before: sdk.MetricsExportService.MetricsExportService_GetMetricsExportConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/DuplicateApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: duplicate
+    x-speakeasy-metadata:
+      after: sdk.apps.duplicate()
+      before: sdk.AppService.AppService_DuplicateApp()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetPatchByNumber"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getPatchByNumber
+    x-speakeasy-metadata:
+      after: sdk.libraryService.getPatchByNumber()
+      before: sdk.LibraryService.LibraryService_GetPatchByNumber()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListLibrarySyncRuns"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listLibrarySyncRuns
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.listLibrarySyncRuns()
+      before: sdk.LibraryService.LibraryService_ListLibrarySyncRuns()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/SetTopicTagFeedback"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: setTopicTagFeedback
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.setTopicTagFeedback()
+      before: sdk.ObservabilityService.ObservabilityService_SetTopicTagFeedback()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListContextPatchAutoApproveRules"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listContextPatchAutoApproveRules
+    x-speakeasy-metadata:
+      after: sdk.libraries.listContextPatchAutoApproveRules()
+      before: sdk.LibraryService.LibraryService_ListContextPatchAutoApproveRules()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/CheckHealth"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: checkHealth
+    x-speakeasy-metadata:
+      after: sdk.chats.checkHealth()
+      before: sdk.ChatService.ChatService_CheckHealth()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetUsageDetailsForFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getUsageDetailsForFile
+    x-speakeasy-metadata:
+      after: sdk.library.getUsageDetailsForFile()
+      before: sdk.LibraryService.LibraryService_GetUsageDetailsForFile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/RunChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: run
+    x-speakeasy-metadata:
+      after: sdk.chats.run()
+      before: sdk.ChatService.ChatService_RunChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetCustomTopic"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getCustomTopic
+    x-speakeasy-metadata:
+      after: sdk.observability.getCustomTopic()
+      before: sdk.ObservabilityService.ObservabilityService_GetCustomTopic()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetExampleQueries"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getExampleQueries
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.getExampleQueries()
+      before: sdk.ConnectorService.ConnectorService_GetExampleQueries()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/CreateTeamsUuid"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: createUuid
+    x-speakeasy-metadata:
+      after: sdk.teams.createUuid()
+      before: sdk.TeamsService.TeamsService_CreateTeamsUuid()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/GetCurrentUser"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: getCurrentUser
+    x-speakeasy-metadata:
+      after: sdk.teams.getCurrentUser()
+      before: sdk.TeamsService.TeamsService_GetCurrentUser()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/DeleteApiRevision"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: deleteApiRevision
+    x-speakeasy-metadata:
+      after: sdk.secrets.deleteApiRevision()
+      before: sdk.SecretService.SecretService_DeleteApiRevision()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/UpdateDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: updateDataset
+    x-speakeasy-metadata:
+      after: sdk.datasetService.updateDataset()
+      before: sdk.DatasetService.DatasetService_UpdateDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetCurrentMemberRolesAndPermissions"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getCurrentMemberRolesAndPermissions
+    x-speakeasy-metadata:
+      after: sdk.rbac.getCurrentMemberRolesAndPermissions()
+      before: sdk.RBACService.RBACService_GetCurrentMemberRolesAndPermissions()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/CreateServiceAccount"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createServiceAccount
+    x-speakeasy-metadata:
+      after: sdk.rbac.createServiceAccount()
+      before: sdk.RBACService.RBACService_CreateServiceAccount()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetChatReportsSummary"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getChatReportsSummary
+    x-speakeasy-metadata:
+      after: sdk.playbooks.getChatReportsSummary()
+      before: sdk.PlaybookService.PlaybookService_GetChatReportsSummary()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxEgress"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: listSandboxEgress
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdminServices.listSandboxEgress()
+      before: sdk.SandboxAdminService.SandboxAdminService_ListSandboxEgress()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/CreatePowerBIDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: createPowerBIDataset
+    x-speakeasy-metadata:
+      after: sdk.datasetServices.createPowerBIDataset()
+      before: sdk.DatasetService.DatasetService_CreatePowerBIDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/CreateAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.agents.create()
+      before: sdk.AgentService.AgentService_CreateAgent()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/SetSlackChannelContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: setSlackChannelContextPlaybook
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.setSlackChannelContextPlaybook()
+      before: sdk.PlaybookService.PlaybookService_SetSlackChannelContextPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/ListAgents"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.agents.list()
+      before: sdk.AgentService.AgentService_ListAgents()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/ConfigureOtlpExport"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: configureOtlpExport
+    x-speakeasy-metadata:
+      after: sdk.auditLogs.configureOtlpExport()
+      before: sdk.AuditLogService.AuditLogService_ConfigureOtlpExport()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/ListInstallations"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: listInstallations
+    x-speakeasy-metadata:
+      after: sdk.slackService.listInstallations()
+      before: sdk.SlackService.SlackService_ListInstallations()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetMemberGroups"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getMemberGroups
+    x-speakeasy-metadata:
+      after: sdk.rbac.getMemberGroups()
+      before: sdk.RBACService.RBACService_GetMemberGroups()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetPlaybookChats"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getPlaybookChats
+    x-speakeasy-metadata:
+      after: sdk.chatServices.getPlaybookChats()
+      before: sdk.ChatService.ChatService_GetPlaybookChats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryAnaConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getAnaConfig
+    x-speakeasy-metadata:
+      after: sdk.libraries.getAnaConfig()
+      before: sdk.LibraryService.LibraryService_GetLibraryAnaConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/RevokeScimToken"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: revokeScimToken
+    x-speakeasy-metadata:
+      after: sdk.scimService.revokeScimToken()
+      before: sdk.ScimService.ScimService_RevokeScimToken()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/RegenerateScreenshot"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: regenerateScreenshot
+    x-speakeasy-metadata:
+      after: sdk.dashboards.regenerateScreenshot()
+      before: sdk.DashboardService.DashboardService_RegenerateScreenshot()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/RejectContextPromptChange"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: rejectContextPromptChange
+    x-speakeasy-metadata:
+      after: sdk.chatServices.rejectContextPromptChange()
+      before: sdk.ChatService.ChatService_RejectContextPromptChange()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/ApproveOntologyChange"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: approveOntologyChange
+    x-speakeasy-metadata:
+      after: sdk.chatServices.approveOntologyChange()
+      before: sdk.ChatService.ChatService_ApproveOntologyChange()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/RestartSandbox"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: restartSandbox
+    x-speakeasy-metadata:
+      after: sdk.sandboxAdminService.restartSandbox()
+      before: sdk.SandboxAdminService.SandboxAdminService_RestartSandbox()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/UnsyncPowerBIItems"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: unsyncItems
+    x-speakeasy-metadata:
+      after: sdk.powerBiServices.unsyncItems()
+      before: sdk.PowerBIService.PowerBIService_UnsyncPowerBIItems()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/AssignRoleToMember"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: assignRoleToMember
+    x-speakeasy-metadata:
+      after: sdk.rbacServices.assignRoleToMember()
+      before: sdk.RBACService.RBACService_AssignRoleToMember()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetEngagementSpectrum"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getEngagementSpectrum
+    x-speakeasy-metadata:
+      after: sdk.observabilityService.getEngagementSpectrum()
+      before: sdk.ObservabilityService.ObservabilityService_GetEngagementSpectrum()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/CreateLibraryFileUploadUrl"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: createFileUploadUrl
+    x-speakeasy-metadata:
+      after: sdk.libraries.createFileUploadUrl()
+      before: sdk.LibraryService.LibraryService_CreateLibraryFileUploadUrl()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/RefineTopicDraft"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: refineDraft
+    x-speakeasy-metadata:
+      after: sdk.topics.refineDraft()
+      before: sdk.ObservabilityService.ObservabilityService_RefineTopicDraft()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/UpdateChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.chats.update()
+      before: sdk.ChatService.ChatService_UpdateChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/CreateFolder"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: createFolder
+    x-speakeasy-metadata:
+      after: sdk.datasetService.createFolder()
+      before: sdk.DatasetService.DatasetService_CreateFolder()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/CreateDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: createDashboard
+    x-speakeasy-metadata:
+      after: sdk.dashboardService.createDashboard()
+      before: sdk.DashboardService.DashboardService_CreateDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/UpdateAgent"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: update
+    x-speakeasy-metadata:
+      after: sdk.agents.update()
+      before: sdk.AgentService.AgentService_UpdateAgent()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/GetCollectionThumbnail"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: getCollectionThumbnail
+    x-speakeasy-metadata:
+      after: sdk.tableauServices.getCollectionThumbnail()
+      before: sdk.TableauService.TableauService_GetCollectionThumbnail()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetObservabilityStats"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getObservabilityStats
+    x-speakeasy-metadata:
+      after: sdk.observabilityService.getObservabilityStats()
+      before: sdk.ObservabilityService.ObservabilityService_GetObservabilityStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/CreateScimOAuthClient"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: createOAuthClient
+    x-speakeasy-metadata:
+      after: sdk.scimServices.createOAuthClient()
+      before: sdk.ScimService.ScimService_CreateScimOAuthClient()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/AttachDataset"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: attachDataset
+    x-speakeasy-metadata:
+      after: sdk.chatService.attachDataset()
+      before: sdk.ChatService.ChatService_AttachDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/ExportPowerBIReportImage"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: exportReportImage
+    x-speakeasy-metadata:
+      after: sdk.powerBiServices.exportReportImage()
+      before: sdk.PowerBIService.PowerBIService_ExportPowerBIReportImage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.teams.TeamsService/ListUsers"]["post"]
+    update:
+      x-speakeasy-group: teams
+      x-speakeasy-name-override: listUsers
+    x-speakeasy-metadata:
+      after: sdk.teamsService.listUsers()
+      before: sdk.TeamsService.TeamsService_ListUsers()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/ListAgentRuns"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: listRuns
+    x-speakeasy-metadata:
+      after: sdk.agents.listRuns()
+      before: sdk.AgentService.AgentService_ListAgentRuns()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetFileUsageTimeline"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getFileUsageTimeline
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getFileUsageTimeline()
+      before: sdk.LibraryService.LibraryService_GetFileUsageTimeline()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.chats.get()
+      before: sdk.ChatService.ChatService_GetChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/MigrateLegacyContextToLibrary"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: migrateLegacyContext
+    x-speakeasy-metadata:
+      after: sdk.libraryService.migrateLegacyContext()
+      before: sdk.LibraryService.LibraryService_MigrateLegacyContextToLibrary()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/CheckDashboardHealth"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: checkHealth
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.checkHealth()
+      before: sdk.DashboardService.DashboardService_CheckDashboardHealth()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybookLineage"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getPlaybookLineage
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.getPlaybookLineage()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybookLineage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/ResetConnectedApp"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: resetConnectedApp
+    x-speakeasy-metadata:
+      after: sdk.tableauServices.resetConnectedApp()
+      before: sdk.TableauService.TableauService_ResetConnectedApp()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/AttachDashboard"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: attachDashboard
+    x-speakeasy-metadata:
+      after: sdk.chatServices.attachDashboard()
+      before: sdk.ChatService.ChatService_AttachDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListApprovalRules"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listApprovalRules
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.listApprovalRules()
+      before: sdk.LibraryService.LibraryService_ListApprovalRules()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.agent.AgentService/ResetAgentAvatar"]["post"]
+    update:
+      x-speakeasy-group: agents
+      x-speakeasy-name-override: resetAgentAvatar
+    x-speakeasy-metadata:
+      after: sdk.agents.resetAgentAvatar()
+      before: sdk.AgentService.AgentService_ResetAgentAvatar()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/UpdateLibrarySyncConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: updateLibrarySyncConfig
+    x-speakeasy-metadata:
+      after: sdk.libraryService.updateLibrarySyncConfig()
+      before: sdk.LibraryService.LibraryService_UpdateLibrarySyncConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/ListAllSlackChannelContextPlaybooks"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: listSlackChannelContextPlaybooks
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.listSlackChannelContextPlaybooks()
+      before: sdk.PlaybookService.PlaybookService_ListAllSlackChannelContextPlaybooks()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.metrics_export.MetricsExportService/TriggerMetricsPush"]["post"]
+    update:
+      x-speakeasy-group: metricsExports
+      x-speakeasy-name-override: triggerPush
+    x-speakeasy-metadata:
+      after: sdk.metricsExportServices.triggerPush()
+      before: sdk.MetricsExportService.MetricsExportService_TriggerMetricsPush()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetDatasetStats"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: getStats
+    x-speakeasy-metadata:
+      after: sdk.datasets.getStats()
+      before: sdk.DatasetService.DatasetService_GetDatasetStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/GeneratePowerBIEmbedToken"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: generateEmbedToken
+    x-speakeasy-metadata:
+      after: sdk.powerbi.generateEmbedToken()
+      before: sdk.PowerBIService.PowerBIService_GeneratePowerBIEmbedToken()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetChatTopics"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getChatTopics
+    x-speakeasy-metadata:
+      after: sdk.observability.getChatTopics()
+      before: sdk.ObservabilityService.ObservabilityService_GetChatTopics()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetBillingStats"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getBillingStats
+    x-speakeasy-metadata:
+      after: sdk.observability.getBillingStats()
+      before: sdk.ObservabilityService.ObservabilityService_GetBillingStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/DeleteGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: deleteGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.deleteGroup()
+      before: sdk.RBACService.RBACService_DeleteGroup()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/AddLibrarySubmodule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: addSubmodule
+    x-speakeasy-metadata:
+      after: sdk.libraries.addSubmodule()
+      before: sdk.LibraryService.LibraryService_AddLibrarySubmodule()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteQuery"]["post"]
+    update:
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: executeQuery
+    x-speakeasy-metadata:
+      after: sdk.sandboxQueryService.executeQuery()
+      before: sdk.SandboxQueryService.SandboxQueryService_ExecuteQuery()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/PollChatEvents"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: pollEvents
+    x-speakeasy-metadata:
+      after: sdk.chatService.pollEvents()
+      before: sdk.ChatService.ChatService_PollChatEvents()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/ProcessUploadPresignUrl"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: processUploadPresignUrl
+    x-speakeasy-metadata:
+      after: sdk.datasets.processUploadPresignUrl()
+      before: sdk.DatasetService.DatasetService_ProcessUploadPresignUrl()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectorUsage"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getUsage
+    x-speakeasy-metadata:
+      after: sdk.connectors.getUsage()
+      before: sdk.ConnectorService.ConnectorService_GetConnectorUsage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.metrics_export.MetricsExportService/DeleteMetricsExportConfig"]["post"]
+    update:
+      x-speakeasy-group: metricsExports
+      x-speakeasy-name-override: deleteConfig
+    x-speakeasy-metadata:
+      after: sdk.metricsExportService.deleteConfig()
+      before: sdk.MetricsExportService.MetricsExportService_DeleteMetricsExportConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/ListScimTokens"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.scimTokens.list()
+      before: sdk.ScimService.ScimService_ListScimTokens()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DeleteLibraryOwners"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: deleteOwners
+    x-speakeasy-metadata:
+      after: sdk.libraries.deleteOwners()
+      before: sdk.LibraryService.LibraryService_DeleteLibraryOwners()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/ExecuteQuery"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: executeQuery
+    x-speakeasy-metadata:
+      after: sdk.connectorServices.executeQuery()
+      before: sdk.ConnectorService.ConnectorService_ExecuteQuery()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/AssignPermissionToRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: assignPermissionToRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.assignPermissionToRole()
+      before: sdk.RBACService.RBACService_AssignPermissionToRole()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ShareObjectWithGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: shareWithGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.shareWithGroup()
+      before: sdk.RBACService.RBACService_ShareObjectWithGroup()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RotateApiKey"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: rotateApiKey
+    x-speakeasy-metadata:
+      after: sdk.rbacService.rotateApiKey()
+      before: sdk.RBACService.RBACService_RotateApiKey()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DeleteLibraryFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: deleteLibraryFile
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.deleteLibraryFile()
+      before: sdk.LibraryService.LibraryService_DeleteLibraryFile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/DiscardDashboardChanges"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: discardChanges
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.discardChanges()
+      before: sdk.DashboardService.DashboardService_DiscardDashboardChanges()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/CreateTableauDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: createTableauDataset
+    x-speakeasy-metadata:
+      after: sdk.datasetServices.createTableauDataset()
+      before: sdk.DatasetService.DatasetService_CreateTableauDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/RefreshTableauCollection"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: refreshCollection
+    x-speakeasy-metadata:
+      after: sdk.tableauService.refreshCollection()
+      before: sdk.TableauService.TableauService_RefreshTableauCollection()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/DeleteApprovalRule"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: deleteApprovalRule
+    x-speakeasy-metadata:
+      after: sdk.libraries.deleteApprovalRule()
+      before: sdk.LibraryService.LibraryService_DeleteApprovalRule()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/ExportDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: export
+    x-speakeasy-metadata:
+      after: sdk.datasets.export()
+      before: sdk.DatasetService.DatasetService_ExportDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RequestAccess"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: requestAccess
+    x-speakeasy-metadata:
+      after: sdk.rbac.requestAccess()
+      before: sdk.RBACService.RBACService_RequestAccess()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/RestoreDashboardVersion"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: restoreDashboardVersion
+    x-speakeasy-metadata:
+      after: sdk.dashboardService.restoreDashboardVersion()
+      before: sdk.DashboardService.DashboardService_RestoreDashboardVersion()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnectorDashboards"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: getDashboards
+    x-speakeasy-metadata:
+      after: sdk.connector.getDashboards()
+      before: sdk.ConnectorService.ConnectorService_GetConnectorDashboards()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/GetDashboardViewStats"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: getDashboardViewStats
+    x-speakeasy-metadata:
+      after: sdk.dashboardServices.getDashboardViewStats()
+      before: sdk.DashboardService.DashboardService_GetDashboardViewStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/TriggerConfigDriftReconcile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: triggerConfigDriftReconcile
+    x-speakeasy-metadata:
+      after: sdk.libraryService.triggerConfigDriftReconcile()
+      before: sdk.LibraryService.LibraryService_TriggerConfigDriftReconcile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/DeleteSecret"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: deleteSecret
+    x-speakeasy-metadata:
+      after: sdk.secretServices.deleteSecret()
+      before: sdk.SecretService.SecretService_DeleteSecret()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetPatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getPatch
+    x-speakeasy-metadata:
+      after: sdk.libraryService.getPatch()
+      before: sdk.LibraryService.LibraryService_GetPatch()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RemovePermissionFromRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: removePermissionFromRole
+    x-speakeasy-metadata:
+      after: sdk.rbac.removePermissionFromRole()
+      before: sdk.RBACService.RBACService_RemovePermissionFromRole()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/HasObjectAccess"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: hasObjectAccess
+    x-speakeasy-metadata:
+      after: sdk.rbac.hasObjectAccess()
+      before: sdk.RBACService.RBACService_HasObjectAccess()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/ListApps"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      after: sdk.apps.list()
+      before: sdk.AppService.AppService_ListApps()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetCompletionParameters"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getCompletionParameters
+    x-speakeasy-metadata:
+      after: sdk.chatService.getCompletionParameters()
+      before: sdk.ChatService.ChatService_GetCompletionParameters()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/DeleteChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.chats.delete()
+      before: sdk.ChatService.ChatService_DeleteChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/PushLibraryToRemote"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: pushLibraryToRemote
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.pushLibraryToRemote()
+      before: sdk.LibraryService.LibraryService_PushLibraryToRemote()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ValidateConfig"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: validateConfig
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.validateConfig()
+      before: sdk.LibraryService.LibraryService_ValidateConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/UpdateDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: updateDashboard
+    x-speakeasy-metadata:
+      after: sdk.dashboardService.updateDashboard()
+      before: sdk.DashboardService.DashboardService_UpdateDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/ListChannels"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: listChannels
+    x-speakeasy-metadata:
+      after: sdk.slackService.listChannels()
+      before: sdk.SlackService.SlackService_ListChannels()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/RunScheduledDashboard"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: runScheduledDashboard
+    x-speakeasy-metadata:
+      after: sdk.dashboards.runScheduledDashboard()
+      before: sdk.DashboardService.DashboardService_RunScheduledDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.metrics_export.MetricsExportService/ConfigureMetricsExport"]["post"]
+    update:
+      x-speakeasy-group: metricsExports
+      x-speakeasy-name-override: configure
+    x-speakeasy-metadata:
+      after: sdk.metricsExports.configure()
+      before: sdk.MetricsExportService.MetricsExportService_ConfigureMetricsExport()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.powerbi.PowerBIService/TestPowerBIConnection"]["post"]
+    update:
+      x-speakeasy-group: powerbi
+      x-speakeasy-name-override: testConnection
+    x-speakeasy-metadata:
+      after: sdk.powerBiService.testConnection()
+      before: sdk.PowerBIService.PowerBIService_TestPowerBIConnection()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.sandbox_admin.SandboxAdminService/ReadSandboxFile"]["post"]
+    update:
+      x-speakeasy-group: sandboxAdmin
+      x-speakeasy-name-override: readFile
+    x-speakeasy-metadata:
+      after: sdk.sandboxes.readFile()
+      before: sdk.SandboxAdminService.SandboxAdminService_ReadSandboxFile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/ListTableauViews"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: listViews
+    x-speakeasy-metadata:
+      after: sdk.tableau.listViews()
+      before: sdk.TableauService.TableauService_ListTableauViews()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetObjectAccess"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getObjectAccess
+    x-speakeasy-metadata:
+      after: sdk.rbac.getObjectAccess()
+      before: sdk.RBACService.RBACService_GetObjectAccess()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/CreateApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: createApp
+    x-speakeasy-metadata:
+      after: sdk.appServices.createApp()
+      before: sdk.AppService.AppService_CreateApp()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibrarySizeTimeline"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getSizeTimeline
+    x-speakeasy-metadata:
+      after: sdk.libraries.getSizeTimeline()
+      before: sdk.LibraryService.LibraryService_GetLibrarySizeTimeline()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/TestApiAccessKey"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: testApiAccessKey
+    x-speakeasy-metadata:
+      after: sdk.secretServices.testApiAccessKey()
+      before: sdk.SecretService.SecretService_TestApiAccessKey()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/GetMemberRoles"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getMemberRoles
+    x-speakeasy-metadata:
+      after: sdk.rbac.getMemberRoles()
+      before: sdk.RBACService.RBACService_GetMemberRoles()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/CreateScimToken"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: createScimToken
+    x-speakeasy-metadata:
+      after: sdk.scimService.createScimToken()
+      before: sdk.ScimService.ScimService_CreateScimToken()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/MigrateSecretToApiConnector"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: migrateSecretToApiConnector
+    x-speakeasy-metadata:
+      after: sdk.secretService.migrateSecretToApiConnector()
+      before: sdk.SecretService.SecretService_MigrateSecretToApiConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/AttachDashboard"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: attachDashboard
+    x-speakeasy-metadata:
+      after: sdk.playbooks.attachDashboard()
+      before: sdk.PlaybookService.PlaybookService_AttachDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/ApproveContextPromptChange"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: approveContextPromptChange
+    x-speakeasy-metadata:
+      after: sdk.chat.approveContextPromptChange()
+      before: sdk.ChatService.ChatService_ApproveContextPromptChange()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/RemoveDashboard"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: removeDashboard
+    x-speakeasy-metadata:
+      after: sdk.playbookServices.removeDashboard()
+      before: sdk.PlaybookService.PlaybookService_RemoveDashboard()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/InitiateOAuthFlow"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: initiateOAuthFlow
+    x-speakeasy-metadata:
+      after: sdk.mcp.initiateOAuthFlow()
+      before: sdk.MCPService.MCPService_InitiateOAuthFlow()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/UpdateObjectAccess"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateObjectAccess
+    x-speakeasy-metadata:
+      after: sdk.rbacService.updateObjectAccess()
+      before: sdk.RBACService.RBACService_UpdateObjectAccess()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetFolders"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: getFolders
+    x-speakeasy-metadata:
+      after: sdk.datasetService.getFolders()
+      before: sdk.DatasetService.DatasetService_GetFolders()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/CheckStreamlitHealth"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: checkStreamlitHealth
+    x-speakeasy-metadata:
+      after: sdk.chatService.checkStreamlitHealth()
+      before: sdk.ChatService.ChatService_CheckStreamlitHealth()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/GetChats"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getAll
+    x-speakeasy-metadata:
+      after: sdk.chats.getAll()
+      before: sdk.ChatService.ChatService_GetChats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetActivePeopleStats"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getActivePeopleStats
+    x-speakeasy-metadata:
+      after: sdk.observability.getActivePeopleStats()
+      before: sdk.ObservabilityService.ObservabilityService_GetActivePeopleStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/CreateConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      after: sdk.connectorService.create()
+      before: sdk.ConnectorService.ConnectorService_CreateConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListGroupConnectors"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listGroupConnectors
+    x-speakeasy-metadata:
+      after: sdk.rbac.listGroupConnectors()
+      before: sdk.RBACService.RBACService_ListGroupConnectors()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.tableau.TableauService/ListTableauWorkbooks"]["post"]
+    update:
+      x-speakeasy-group: tableau
+      x-speakeasy-name-override: listWorkbooks
+    x-speakeasy-metadata:
+      after: sdk.tableaus.listWorkbooks()
+      before: sdk.TableauService.TableauService_ListTableauWorkbooks()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.mcp.MCPService/ToggleMCPServer"]["post"]
+    update:
+      x-speakeasy-group: mcp
+      x-speakeasy-name-override: toggleServer
+    x-speakeasy-metadata:
+      after: sdk.mcp.toggleServer()
+      before: sdk.MCPService.MCPService_ToggleMCPServer()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dashboard.DashboardService/UpdateDashboardSchedule"]["post"]
+    update:
+      x-speakeasy-group: dashboards
+      x-speakeasy-name-override: updateDashboardSchedule
+    x-speakeasy-metadata:
+      after: sdk.dashboardService.updateDashboardSchedule()
+      before: sdk.DashboardService.DashboardService_UpdateDashboardSchedule()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/CreateRole"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createRole
+    x-speakeasy-metadata:
+      after: sdk.rbacService.createRole()
+      before: sdk.RBACService.RBACService_CreateRole()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetMemberActivity"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getMemberActivity
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.getMemberActivity()
+      before: sdk.ObservabilityService.ObservabilityService_GetMemberActivity()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/GetChatSourceStats"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: getChatSourceStats
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.getChatSourceStats()
+      before: sdk.ObservabilityService.ObservabilityService_GetChatSourceStats()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/QueryOneShot"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: queryOneShot
+    x-speakeasy-metadata:
+      after: sdk.chats.queryOneShot()
+      before: sdk.ChatService.ChatService_QueryOneShot()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/AddGroupMember"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: addGroupMember
+    x-speakeasy-metadata:
+      after: sdk.rbac.addGroupMember()
+      before: sdk.RBACService.RBACService_AddGroupMember()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/RemoveDataset"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: removeDataset
+    x-speakeasy-metadata:
+      after: sdk.playbookService.removeDataset()
+      before: sdk.PlaybookService.PlaybookService_RemoveDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybooksPreviews"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getPlaybooksPreviews
+    x-speakeasy-metadata:
+      after: sdk.playbookService.getPlaybooksPreviews()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybooksPreviews()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/ListTeamsChannelsForContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: listTeamsChannelsForContextPlaybook
+    x-speakeasy-metadata:
+      after: sdk.playbookService.listTeamsChannelsForContextPlaybook()
+      before: sdk.PlaybookService.PlaybookService_ListTeamsChannelsForContextPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/GetAppVersion"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: getAppVersion
+    x-speakeasy-metadata:
+      after: sdk.appService.getAppVersion()
+      before: sdk.AppService.AppService_GetAppVersion()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ListLibraryEntries"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: listLibraryEntries
+    x-speakeasy-metadata:
+      after: sdk.libraryService.listLibraryEntries()
+      before: sdk.LibraryService.LibraryService_ListLibraryEntries()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetDataset"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: fetch
+    x-speakeasy-metadata:
+      after: sdk.datasets.fetch()
+      before: sdk.DatasetService.DatasetService_GetDataset()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.app.AppService/RefreshApp"]["post"]
+    update:
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: refresh
+    x-speakeasy-metadata:
+      after: sdk.appServices.refresh()
+      before: sdk.AppService.AppService_RefreshApp()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetCodeownerCoverage"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getCodeownerCoverage
+    x-speakeasy-metadata:
+      after: sdk.libraries.getCodeownerCoverage()
+      before: sdk.LibraryService.LibraryService_GetCodeownerCoverage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.dataset.DatasetService/GetDatasets"]["post"]
+    update:
+      x-speakeasy-group: datasets
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.datasets.get()
+      before: sdk.DatasetService.DatasetService_GetDatasets()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetOntologyUsageSummary"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getOntologyUsageSummary
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getOntologyUsageSummary()
+      before: sdk.LibraryService.LibraryService_GetOntologyUsageSummary()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/CreateChat"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: createChat
+    x-speakeasy-metadata:
+      after: sdk.chatService.createChat()
+      before: sdk.ChatService.ChatService_CreateChat()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryFile"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getFile
+    x-speakeasy-metadata:
+      after: sdk.libraries.getFile()
+      before: sdk.LibraryService.LibraryService_GetLibraryFile()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RevertPatch"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: revertPatch
+    x-speakeasy-metadata:
+      after: sdk.libraries.revertPatch()
+      before: sdk.LibraryService.LibraryService_RevertPatch()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/SendMessage"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: send
+    x-speakeasy-metadata:
+      after: sdk.chatServices.send()
+      before: sdk.ChatService.ChatService_SendMessage()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/PlanLibraryMerge"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: planMerge
+    x-speakeasy-metadata:
+      after: sdk.library.planMerge()
+      before: sdk.LibraryService.LibraryService_PlanLibraryMerge()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/RequestPatchReview"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: requestPatchReview
+    x-speakeasy-metadata:
+      after: sdk.libraries.requestPatchReview()
+      before: sdk.LibraryService.LibraryService_RequestPatchReview()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.scim.ScimService/ListScimOAuthClients"]["post"]
+    update:
+      x-speakeasy-group: scim
+      x-speakeasy-name-override: listScimOAuthClients
+    x-speakeasy-metadata:
+      after: sdk.scimService.listScimOAuthClients()
+      before: sdk.ScimService.ScimService_ListScimOAuthClients()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.connector.ConnectorService/GetConnector"]["post"]
+    update:
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: get
+    x-speakeasy-metadata:
+      after: sdk.connectors.get()
+      before: sdk.ConnectorService.ConnectorService_GetConnector()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/MigrateScimGroupMappingToGroup"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: migrateScimGroupMappingToGroup
+    x-speakeasy-metadata:
+      after: sdk.rbac.migrateScimGroupMappingToGroup()
+      before: sdk.RBACService.RBACService_MigrateScimGroupMappingToGroup()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.slack.SlackService/HandleSlackOAuthCallback"]["post"]
+    update:
+      x-speakeasy-group: slack
+      x-speakeasy-name-override: handleOAuthCallback
+    x-speakeasy-metadata:
+      after: sdk.slack.handleOAuthCallback()
+      before: sdk.SlackService.SlackService_HandleSlackOAuthCallback()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/RemoveGroupMember"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: removeGroupMember
+    x-speakeasy-metadata:
+      after: sdk.rbac.removeGroupMember()
+      before: sdk.RBACService.RBACService_RemoveGroupMember()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/ResolveLibrarySyncConflict"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: resolveSyncConflict
+    x-speakeasy-metadata:
+      after: sdk.libraryService.resolveSyncConflict()
+      before: sdk.LibraryService.LibraryService_ResolveLibrarySyncConflict()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/ListRoles"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listRoles
+    x-speakeasy-metadata:
+      after: sdk.rbac.listRoles()
+      before: sdk.RBACService.RBACService_ListRoles()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.chat.ChatService/RejectOntologyChange"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: rejectOntologyChange
+    x-speakeasy-metadata:
+      after: sdk.chats.rejectOntologyChange()
+      before: sdk.ChatService.ChatService_RejectOntologyChange()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/ListCustomTopics"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: listCustomTopics
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.listCustomTopics()
+      before: sdk.ObservabilityService.ObservabilityService_ListCustomTopics()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.secret.SecretService/ListApiAccessKeys"]["post"]
+    update:
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: listApiAccessKeys
+    x-speakeasy-metadata:
+      after: sdk.secretServices.listApiAccessKeys()
+      before: sdk.SecretService.SecretService_ListApiAccessKeys()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.observe.ObservabilityService/ExportObservabilityCsv"]["post"]
+    update:
+      x-speakeasy-group: observability
+      x-speakeasy-name-override: exportCsv
+    x-speakeasy-metadata:
+      after: sdk.observabilityServices.exportCsv()
+      before: sdk.ObservabilityService.ObservabilityService_ExportObservabilityCsv()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.rbac.RBACService/MigrateAllScimGroupMappings"]["post"]
+    update:
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: migrateAllScimGroupMappings
+    x-speakeasy-metadata:
+      after: sdk.rbacServices.migrateAllScimGroupMappings()
+      before: sdk.RBACService.RBACService_MigrateAllScimGroupMappings()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.patches.LibraryService/GetLibraryGithubOAuthURL"]["post"]
+    update:
+      x-speakeasy-group: libraries
+      x-speakeasy-name-override: getLibraryGithubOAuthURL
+    x-speakeasy-metadata:
+      after: sdk.libraryServices.getLibraryGithubOAuthURL()
+      before: sdk.LibraryService.LibraryService_GetLibraryGithubOAuthURL()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/DeletePlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: delete
+    x-speakeasy-metadata:
+      after: sdk.playbooks.delete()
+      before: sdk.PlaybookService.PlaybookService_DeletePlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/SetTeamsChannelContextPlaybook"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: setTeamsChannelContext
+    x-speakeasy-metadata:
+      after: sdk.playbooks.setTeamsChannelContext()
+      before: sdk.PlaybookService.PlaybookService_SetTeamsChannelContextPlaybook()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.audit_log.AuditLogService/GetS3ExportConfig"]["post"]
+    update:
+      x-speakeasy-group: auditLogs
+      x-speakeasy-name-override: getS3ExportConfig
+    x-speakeasy-metadata:
+      after: sdk.auditLogService.getS3ExportConfig()
+      before: sdk.AuditLogService.AuditLogService_GetS3ExportConfig()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
+  - target: $["paths"]["/textql.rpc.public.playbook.PlaybookService/GetPlaybookReportsBatch"]["post"]
+    update:
+      x-speakeasy-group: playbooks
+      x-speakeasy-name-override: getPlaybookReportsBatch
+    x-speakeasy-metadata:
+      after: sdk.playbookService.getPlaybookReportsBatch()
+      before: sdk.PlaybookService.PlaybookService_GetPlaybookReportsBatch()
+      created_at: 1784134047111
+      reviewed_at: 1784134060143
+      type: method-name
