@@ -48,6 +48,7 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
     | Array<TextqlRpcPowerbiSelectionPowerBISelection>
     | undefined;
   smsMode?: boolean | undefined;
+  apiAccessKeyIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -83,6 +84,7 @@ export const TextqlRpcPublicParadigmUniversalOptions$inboundSchema:
       z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
     ),
     smsMode: types.optional(types.boolean()),
+    apiAccessKeyIds: types.optional(z.array(types.string())),
   });
 /** @internal */
 export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
@@ -116,6 +118,7 @@ export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
     | Array<TextqlRpcPowerbiSelectionPowerBISelection$Outbound>
     | undefined;
   smsMode?: boolean | undefined;
+  apiAccessKeyIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -154,6 +157,7 @@ export const TextqlRpcPublicParadigmUniversalOptions$outboundSchema:
       z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
     ),
     smsMode: z.optional(z.boolean()),
+    apiAccessKeyIds: z.optional(z.array(z.string())),
   });
 
 export function textqlRpcPublicParadigmUniversalOptionsToJSON(

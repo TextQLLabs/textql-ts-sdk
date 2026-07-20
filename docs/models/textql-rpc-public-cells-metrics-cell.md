@@ -12,7 +12,7 @@ let value: TextqlRpcPublicCellsMetricsCell = {
         {
           columns: [
             {
-              doubles: {},
+              int32: {},
             },
           ],
         },

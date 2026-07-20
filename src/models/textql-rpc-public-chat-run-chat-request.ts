@@ -14,6 +14,7 @@ export type TextqlRpcPublicChatRunChatRequest = {
   research?: boolean | null | undefined;
   model?: TextqlRpcPublicChatLlmModel | undefined;
   fastMode?: boolean | null | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -23,6 +24,7 @@ export type TextqlRpcPublicChatRunChatRequest$Outbound = {
   research?: boolean | null | undefined;
   model?: string | undefined;
   fastMode?: boolean | null | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -35,6 +37,7 @@ export const TextqlRpcPublicChatRunChatRequest$outboundSchema: z.ZodMiniType<
   research: z.optional(z.nullable(z.boolean())),
   model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
   fastMode: z.optional(z.nullable(z.boolean())),
+  maxThinking: z.optional(z.nullable(z.boolean())),
 });
 
 export function textqlRpcPublicChatRunChatRequestToJSON(

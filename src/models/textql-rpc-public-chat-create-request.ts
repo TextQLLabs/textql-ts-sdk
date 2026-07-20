@@ -54,6 +54,13 @@ export type TextqlRpcPublicChatCreateRequest = {
    *  Currently supported on Opus 4.6 only. Pricing is 6x standard rates.
    */
   fastMode?: boolean | null | undefined;
+  /**
+   * max_thinking runs extended thinking at max effort with visible reasoning.
+   *
+   * @remarks
+   *  Supported on Sonnet 5, Fable 5, and Opus 4.8.
+   */
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -67,6 +74,7 @@ export type TextqlRpcPublicChatCreateRequest$Outbound = {
   methodology?: string | undefined;
   vllmModelId?: string | null | undefined;
   fastMode?: boolean | null | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -83,6 +91,7 @@ export const TextqlRpcPublicChatCreateRequest$outboundSchema: z.ZodMiniType<
   methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
   vllmModelId: z.optional(z.nullable(z.string())),
   fastMode: z.optional(z.nullable(z.boolean())),
+  maxThinking: z.optional(z.nullable(z.boolean())),
 });
 
 export function textqlRpcPublicChatCreateRequestToJSON(

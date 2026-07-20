@@ -1,0 +1,19 @@
+# OntologyManagementServiceCreateContextPatchAutoApproveRuleRequest
+
+## Example Usage
+
+```typescript
+import { OntologyManagementServiceCreateContextPatchAutoApproveRuleRequest } from "@textql/sdk/models/operations";
+
+let value: OntologyManagementServiceCreateContextPatchAutoApproveRuleRequest = {
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                             | Type                                                                                                                                                              | Required                                                                                                                                                          | Description                                                                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                                          | *1*                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                | N/A                                                                                                                                                               |
+| `connectTimeoutMs`                                                                                                                                                | *number*                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                | N/A                                                                                                                                                               |
+| `body`                                                                                                                                                            | [models.TextqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequest](../../models/textql-rpc-public-patches-create-context-patch-auto-approve-rule-request.md) | :heavy_check_mark:                                                                                                                                                | N/A                                                                                                                                                               |

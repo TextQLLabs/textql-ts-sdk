@@ -1,0 +1,19 @@
+# OntologyManagementServiceGetOntologyUsageSummaryRequest
+
+## Example Usage
+
+```typescript
+import { OntologyManagementServiceGetOntologyUsageSummaryRequest } from "@textql/sdk/models/operations";
+
+let value: OntologyManagementServiceGetOntologyUsageSummaryRequest = {
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                       | Type                                                                                                                                        | Required                                                                                                                                    | Description                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                    | *1*                                                                                                                                         | :heavy_check_mark:                                                                                                                          | N/A                                                                                                                                         |
+| `connectTimeoutMs`                                                                                                                          | *number*                                                                                                                                    | :heavy_minus_sign:                                                                                                                          | N/A                                                                                                                                         |
+| `body`                                                                                                                                      | [models.TextqlRpcPublicPatchesGetOntologyUsageSummaryRequest](../../models/textql-rpc-public-patches-get-ontology-usage-summary-request.md) | :heavy_check_mark:                                                                                                                          | N/A                                                                                                                                         |

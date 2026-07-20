@@ -90,6 +90,7 @@ export type TextqlRpcPublicPlaybookUpdatePlaybookRequest = {
   recipientEmailColumn?: string | null | undefined;
   teamsChannelId?: string | null | undefined;
   taggedTeamsUserAadIds?: TextqlRpcPublicPlaybookStringList | undefined;
+  apiAccessKeyIds?: TextqlRpcPublicPlaybookStringList | undefined;
 };
 
 /** @internal */
@@ -131,6 +132,7 @@ export type TextqlRpcPublicPlaybookUpdatePlaybookRequest$Outbound = {
   taggedTeamsUserAadIds?:
     | TextqlRpcPublicPlaybookStringList$Outbound
     | undefined;
+  apiAccessKeyIds?: TextqlRpcPublicPlaybookStringList$Outbound | undefined;
 };
 
 /** @internal */
@@ -188,6 +190,9 @@ export const TextqlRpcPublicPlaybookUpdatePlaybookRequest$outboundSchema:
     recipientEmailColumn: z.optional(z.nullable(z.string())),
     teamsChannelId: z.optional(z.nullable(z.string())),
     taggedTeamsUserAadIds: z.optional(
+      TextqlRpcPublicPlaybookStringList$outboundSchema,
+    ),
+    apiAccessKeyIds: z.optional(
       TextqlRpcPublicPlaybookStringList$outboundSchema,
     ),
   });

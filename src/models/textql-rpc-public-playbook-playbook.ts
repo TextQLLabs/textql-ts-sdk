@@ -417,6 +417,7 @@ export type TextqlRpcPublicPlaybookPlaybook = {
    *  object. Presence on an object ⇒ the object is config-managed.
    */
   configSource?: TextqlRpcPublicConfigSourceConfigSource | undefined;
+  apiAccessKeyIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -483,6 +484,7 @@ export const TextqlRpcPublicPlaybookPlaybook$inboundSchema: z.ZodMiniType<
   configSource: types.optional(
     TextqlRpcPublicConfigSourceConfigSource$inboundSchema,
   ),
+  apiAccessKeyIds: types.optional(z.array(types.string())),
 });
 
 export function textqlRpcPublicPlaybookPlaybookFromJSON(

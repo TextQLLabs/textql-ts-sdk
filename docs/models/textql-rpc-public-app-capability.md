@@ -1,0 +1,22 @@
+# TextqlRpcPublicAppCapability
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicAppCapability } from "@textql/sdk/models";
+
+let value: TextqlRpcPublicAppCapability = {};
+```
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `type`                                                                                            | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `name`                                                                                            | *string*                                                                                          | :heavy_minus_sign:                                                                                | string \| number \| boolean \| object \| array                                                    |
+| `connectorId`                                                                                     | *number*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `statement`                                                                                       | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `scope`                                                                                           | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `subject`                                                                                         | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `body`                                                                                            | *string*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+| `parameters`                                                                                      | [models.TextqlRpcPublicAppCapabilityParam](../models/textql-rpc-public-app-capability-param.md)[] | :heavy_minus_sign:                                                                                | N/A                                                                                               |

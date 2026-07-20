@@ -13,7 +13,7 @@ let value: OntologyQueryCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },

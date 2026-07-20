@@ -26,7 +26,13 @@ import {
 
 export type TextqlRpcPublicAppAppVersion = {
   id?: string | undefined;
+  /**
+   * Routing observability: warm | warm_fallback | tql | sql.
+   */
   appId?: string | undefined;
+  /**
+   * Whether this invoke paid phase-1 module definition (cold imports).
+   */
   versionNumber?: number | undefined;
   code?: string | undefined;
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
@@ -35,7 +41,6 @@ export type TextqlRpcPublicAppAppVersion = {
   name?: string | undefined;
   description?: string | null | undefined;
   publishedHtmlUrl?: string | null | undefined;
-  stalenessSeconds?: number | null | undefined;
   publishedBy?: string | undefined;
   label?: string | null | undefined;
   /**
@@ -154,7 +159,6 @@ export const TextqlRpcPublicAppAppVersion$inboundSchema: z.ZodMiniType<
   name: types.optional(types.string()),
   description: z.optional(z.nullable(types.string())),
   publishedHtmlUrl: z.optional(z.nullable(types.string())),
-  stalenessSeconds: z.optional(z.nullable(types.number())),
   publishedBy: types.optional(types.string()),
   label: z.optional(z.nullable(types.string())),
   publishedAt: types.optional(types.date()),

@@ -8,21 +8,7 @@ import { TextqlRpcPublicChatRunChatResponse } from "@textql/sdk/models";
 let value: TextqlRpcPublicChatRunChatResponse = {
   cells: [
     {
-      tableauSqlCell: {
-        dataframe: {
-          df: {
-            records: [
-              {
-                columns: [
-                  {
-                    doubles: {},
-                  },
-                ],
-              },
-            ],
-          },
-        },
-      },
+      tabularFileCell: {},
       timestamp: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],

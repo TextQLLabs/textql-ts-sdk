@@ -107,9 +107,6 @@ export type TextqlRpcPublicPatchesGetUsageDetailsForFileResponse = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastUsed?: Date | undefined;
-  /**
-   * one entry per UTC day in the window, oldest first; idle days zero-filled
-   */
   days?: Array<TextqlRpcPublicPatchesDailyFileUsage> | undefined;
 };
 

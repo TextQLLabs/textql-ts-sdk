@@ -1,0 +1,19 @@
+# TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest } from "@textql/sdk/models";
+
+let value: TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest = {};
+```
+
+## Fields
+
+| Field                                                                                                                     | Type                                                                                                                      | Required                                                                                                                  | Description                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `name`                                                                                                                    | *string*                                                                                                                  | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `connectorId`                                                                                                             | *number*                                                                                                                  | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `statement`                                                                                                               | *string*                                                                                                                  | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `parameters`                                                                                                              | [models.TextqlRpcPublicSandboxQuerySandboxQueryParam](../models/textql-rpc-public-sandbox-query-sandbox-query-param.md)[] | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |
+| `maxRows`                                                                                                                 | *models.TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRows*                                                | :heavy_minus_sign:                                                                                                        | N/A                                                                                                                       |

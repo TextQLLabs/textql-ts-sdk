@@ -11,6 +11,10 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicDashboardSqlQuerySource = {
   query?: string | undefined;
   connectorId?: number | undefined;
+  /**
+   * Optional viewer row-filter appended server-side at live-query time; binds :viewer_member_id / :viewer_email. Presence forces the source out of the published snapshot.
+   */
+  predicate?: string | undefined;
 };
 
 /** @internal */
@@ -18,11 +22,13 @@ export const TextqlRpcPublicDashboardSqlQuerySource$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDashboardSqlQuerySource, unknown> = z.object({
     query: types.optional(types.string()),
     connectorId: types.optional(types.number()),
+    predicate: types.optional(types.string()),
   });
 /** @internal */
 export type TextqlRpcPublicDashboardSqlQuerySource$Outbound = {
   query?: string | undefined;
   connectorId?: number | undefined;
+  predicate?: string | undefined;
 };
 
 /** @internal */
@@ -33,6 +39,7 @@ export const TextqlRpcPublicDashboardSqlQuerySource$outboundSchema:
   > = z.object({
     query: z.optional(z.string()),
     connectorId: z.optional(z.int()),
+    predicate: z.optional(z.string()),
   });
 
 export function textqlRpcPublicDashboardSqlQuerySourceToJSON(

@@ -10,7 +10,7 @@ let value: TextqlRpcPublicDataframeDataFrame = {
     {
       columns: [
         {
-          doubles: {},
+          int32: {},
         },
       ],
     },

@@ -14,6 +14,15 @@ import {
 
 export type TextqlRpcPublicRbacCreateApiKeyResponse = {
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
+  apiKeySecret?: string | undefined;
+  /**
+   * Deprecated compatibility alias for api_key_secret. This field contains
+   *
+   * @remarks
+   *  the same one-time bearer credential; it is not the hash stored at rest.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   apiKeyHash?: string | undefined;
 };
 
@@ -21,6 +30,7 @@ export type TextqlRpcPublicRbacCreateApiKeyResponse = {
 export const TextqlRpcPublicRbacCreateApiKeyResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicRbacCreateApiKeyResponse, unknown> = z.object({
     apiKey: types.optional(TextqlRpcPublicRbacApiKey$inboundSchema),
+    apiKeySecret: types.optional(types.string()),
     apiKeyHash: types.optional(types.string()),
   });
 

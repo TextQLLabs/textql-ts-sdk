@@ -9,7 +9,7 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * Skill is the display metadata for one library skill. Intentionally carries no
+ * Skill is the display metadata for one ontology skill. Intentionally carries no
  *
  * @remarks
  *  instruction body: bodies are inlined server-side at chat time and never sent
@@ -29,7 +29,7 @@ export type TextqlRpcPublicPatchesSkill = {
    */
   description?: string | undefined;
   /**
-   * library-relative path, e.g. "skills/forecast"
+   * ontology-relative path, e.g. "skills/forecast"
    */
   path?: string | undefined;
 };

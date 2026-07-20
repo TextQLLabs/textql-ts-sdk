@@ -7,7 +7,7 @@ import { TextqlRpcPublicChatCheckStreamlitHealthResponse } from "@textql/sdk/mod
 
 let value: TextqlRpcPublicChatCheckStreamlitHealthResponse = {
   cell: {
-    microsoft365EmailContentCell: {},
+    microsoft365EmailSearchCell: {},
     timestamp: new Date("2023-01-15T01:30:15.01Z"),
   },
 };

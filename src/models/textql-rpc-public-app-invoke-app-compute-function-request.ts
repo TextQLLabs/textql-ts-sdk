@@ -6,9 +6,6 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppInvokeAppComputeFunctionRequest = {
   appId?: string | undefined;
-  /**
-   * string | number | boolean | object | array
-   */
   functionName?: string | undefined;
   paramsJson?: string | undefined;
 };

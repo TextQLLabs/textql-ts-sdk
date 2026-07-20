@@ -9,7 +9,7 @@
 const value: models.TextqlRpcPublicChatHistoryResponse = {
   cells: [
     {
-      statusCell: {},
+      streamlitCell: {},
       timestamp: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],

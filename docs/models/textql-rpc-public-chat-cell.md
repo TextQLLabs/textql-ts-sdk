@@ -298,7 +298,7 @@ const value: models.MetricsCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
@@ -418,7 +418,7 @@ const value: models.OntologyQueryCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
@@ -492,7 +492,7 @@ const value: models.PowerbiDaxCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
@@ -567,7 +567,7 @@ const value: models.SqlCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
@@ -635,7 +635,7 @@ const value: models.TableauSqlCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
@@ -661,6 +661,15 @@ const value: models.TabularFileCell = {
 ```typescript
 const value: models.TextCell = {
   textCell: {},
+  timestamp: new Date("2023-01-15T01:30:15.01Z"),
+};
+```
+
+### `models.ThinkingCell`
+
+```typescript
+const value: models.ThinkingCell = {
+  thinkingCell: {},
   timestamp: new Date("2023-01-15T01:30:15.01Z"),
 };
 ```

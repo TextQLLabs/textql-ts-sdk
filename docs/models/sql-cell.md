@@ -13,7 +13,7 @@ let value: SqlCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },
