@@ -15,6 +15,12 @@ import {
   TextqlRpcPublicDashboardFileSource$outboundSchema,
 } from "./textql-rpc-public-dashboard-file-source.js";
 import {
+  TextqlRpcPublicDashboardGrant,
+  TextqlRpcPublicDashboardGrant$inboundSchema,
+  TextqlRpcPublicDashboardGrant$Outbound,
+  TextqlRpcPublicDashboardGrant$outboundSchema,
+} from "./textql-rpc-public-dashboard-grant.js";
+import {
   TextqlRpcPublicDashboardLibraryTQLSource,
   TextqlRpcPublicDashboardLibraryTQLSource$inboundSchema,
   TextqlRpcPublicDashboardLibraryTQLSource$Outbound,
@@ -56,6 +62,14 @@ export type TextqlRpcPublicDashboardDataSourceSqlQuery = {
    * Parameters for live parameterized queries (sql_query type only)
    */
   parameters?: Array<TextqlRpcPublicDashboardQueryParameter> | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 export type PythonCode = {
@@ -69,6 +83,14 @@ export type PythonCode = {
    * Parameters for live parameterized queries (sql_query type only)
    */
   parameters?: Array<TextqlRpcPublicDashboardQueryParameter> | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 export type OntologySql = {
@@ -82,6 +104,14 @@ export type OntologySql = {
    * Parameters for live parameterized queries (sql_query type only)
    */
   parameters?: Array<TextqlRpcPublicDashboardQueryParameter> | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 export type TextqlRpcPublicDashboardDataSourceLibraryTql = {
@@ -102,6 +132,14 @@ export type TextqlRpcPublicDashboardDataSourceLibraryTql = {
    * Parameters for live parameterized queries (sql_query type only)
    */
   parameters?: Array<TextqlRpcPublicDashboardQueryParameter> | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 export type TextqlRpcPublicDashboardDataSourceFile = {
@@ -115,6 +153,14 @@ export type TextqlRpcPublicDashboardDataSourceFile = {
    * Parameters for live parameterized queries (sql_query type only)
    */
   parameters?: Array<TextqlRpcPublicDashboardQueryParameter> | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 /**
@@ -137,6 +183,7 @@ export const TextqlRpcPublicDashboardDataSourceSqlQuery$inboundSchema:
       parameters: types.optional(
         z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
       ),
+      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
     },
   );
 /** @internal */
@@ -147,6 +194,7 @@ export type TextqlRpcPublicDashboardDataSourceSqlQuery$Outbound = {
   parameters?:
     | Array<TextqlRpcPublicDashboardQueryParameter$Outbound>
     | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -161,6 +209,7 @@ export const TextqlRpcPublicDashboardDataSourceSqlQuery$outboundSchema:
     parameters: z.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
     ),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
   });
 
 export function textqlRpcPublicDashboardDataSourceSqlQueryToJSON(
@@ -198,6 +247,7 @@ export const PythonCode$inboundSchema: z.ZodMiniType<PythonCode, unknown> = z
     parameters: types.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
     ),
+    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
   });
 /** @internal */
 export type PythonCode$Outbound = {
@@ -207,6 +257,7 @@ export type PythonCode$Outbound = {
   parameters?:
     | Array<TextqlRpcPublicDashboardQueryParameter$Outbound>
     | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -220,6 +271,7 @@ export const PythonCode$outboundSchema: z.ZodMiniType<
   parameters: z.optional(
     z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
   ),
+  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
 });
 
 export function pythonCodeToJSON(pythonCode: PythonCode): string {
@@ -244,6 +296,7 @@ export const OntologySql$inboundSchema: z.ZodMiniType<OntologySql, unknown> = z
     parameters: types.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
     ),
+    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
   });
 /** @internal */
 export type OntologySql$Outbound = {
@@ -253,6 +306,7 @@ export type OntologySql$Outbound = {
   parameters?:
     | Array<TextqlRpcPublicDashboardQueryParameter$Outbound>
     | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -266,6 +320,7 @@ export const OntologySql$outboundSchema: z.ZodMiniType<
   parameters: z.optional(
     z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
   ),
+  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
 });
 
 export function ontologySqlToJSON(ontologySql: OntologySql): string {
@@ -291,6 +346,7 @@ export const TextqlRpcPublicDashboardDataSourceLibraryTql$inboundSchema:
       parameters: types.optional(
         z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
       ),
+      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
     });
 /** @internal */
 export type TextqlRpcPublicDashboardDataSourceLibraryTql$Outbound = {
@@ -300,6 +356,7 @@ export type TextqlRpcPublicDashboardDataSourceLibraryTql$Outbound = {
   parameters?:
     | Array<TextqlRpcPublicDashboardQueryParameter$Outbound>
     | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -314,6 +371,7 @@ export const TextqlRpcPublicDashboardDataSourceLibraryTql$outboundSchema:
     parameters: z.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
     ),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
   });
 
 export function textqlRpcPublicDashboardDataSourceLibraryTqlToJSON(
@@ -351,6 +409,7 @@ export const TextqlRpcPublicDashboardDataSourceFile$inboundSchema:
     parameters: types.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
     ),
+    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
   });
 /** @internal */
 export type TextqlRpcPublicDashboardDataSourceFile$Outbound = {
@@ -360,6 +419,7 @@ export type TextqlRpcPublicDashboardDataSourceFile$Outbound = {
   parameters?:
     | Array<TextqlRpcPublicDashboardQueryParameter$Outbound>
     | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -374,6 +434,7 @@ export const TextqlRpcPublicDashboardDataSourceFile$outboundSchema:
     parameters: z.optional(
       z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
     ),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
   });
 
 export function textqlRpcPublicDashboardDataSourceFileToJSON(

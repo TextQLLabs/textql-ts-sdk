@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-patches-date.js";
 
 export type TextqlRpcPublicPatchesDailyFileUsage = {
-  /**
-   * copied from google.type.Date; not available in buf's google/protobuf/*
-   */
   date?: TextqlRpcPublicPatchesDate | undefined;
   averageTokens?: number | undefined;
   /**

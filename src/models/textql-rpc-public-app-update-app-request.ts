@@ -9,6 +9,11 @@ import {
   TextqlRpcPublicAppAppFile$outboundSchema,
 } from "./textql-rpc-public-app-app-file.js";
 import {
+  TextqlRpcPublicAppCapability,
+  TextqlRpcPublicAppCapability$Outbound,
+  TextqlRpcPublicAppCapability$outboundSchema,
+} from "./textql-rpc-public-app-capability.js";
+import {
   TextqlRpcPublicAppComputeFunction,
   TextqlRpcPublicAppComputeFunction$Outbound,
   TextqlRpcPublicAppComputeFunction$outboundSchema,
@@ -27,13 +32,16 @@ export type TextqlRpcPublicAppUpdateAppRequest = {
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
   replaceDataSources?: boolean | null | undefined;
   publish?: boolean | null | undefined;
-  stalenessSeconds?: number | null | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   replaceComputeFunctions?: boolean | null | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
   replaceFiles?: boolean | null | undefined;
   scheduleEnabled?: boolean | null | undefined;
   cronString?: string | null | undefined;
+  capabilities?: Array<TextqlRpcPublicAppCapability> | undefined;
+  replaceCapabilities?: boolean | null | undefined;
+  appDbSetup?: Array<string> | undefined;
+  replaceAppDbSetup?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -45,7 +53,6 @@ export type TextqlRpcPublicAppUpdateAppRequest$Outbound = {
   dataSources?: Array<TextqlRpcPublicDashboardDataSource$Outbound> | undefined;
   replaceDataSources?: boolean | null | undefined;
   publish?: boolean | null | undefined;
-  stalenessSeconds?: number | null | undefined;
   computeFunctions?:
     | Array<TextqlRpcPublicAppComputeFunction$Outbound>
     | undefined;
@@ -54,6 +61,10 @@ export type TextqlRpcPublicAppUpdateAppRequest$Outbound = {
   replaceFiles?: boolean | null | undefined;
   scheduleEnabled?: boolean | null | undefined;
   cronString?: string | null | undefined;
+  capabilities?: Array<TextqlRpcPublicAppCapability$Outbound> | undefined;
+  replaceCapabilities?: boolean | null | undefined;
+  appDbSetup?: Array<string> | undefined;
+  replaceAppDbSetup?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -70,7 +81,6 @@ export const TextqlRpcPublicAppUpdateAppRequest$outboundSchema: z.ZodMiniType<
   ),
   replaceDataSources: z.optional(z.nullable(z.boolean())),
   publish: z.optional(z.nullable(z.boolean())),
-  stalenessSeconds: z.optional(z.nullable(z.int())),
   computeFunctions: z.optional(
     z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
   ),
@@ -79,6 +89,12 @@ export const TextqlRpcPublicAppUpdateAppRequest$outboundSchema: z.ZodMiniType<
   replaceFiles: z.optional(z.nullable(z.boolean())),
   scheduleEnabled: z.optional(z.nullable(z.boolean())),
   cronString: z.optional(z.nullable(z.string())),
+  capabilities: z.optional(
+    z.array(TextqlRpcPublicAppCapability$outboundSchema),
+  ),
+  replaceCapabilities: z.optional(z.nullable(z.boolean())),
+  appDbSetup: z.optional(z.array(z.string())),
+  replaceAppDbSetup: z.optional(z.nullable(z.boolean())),
 });
 
 export function textqlRpcPublicAppUpdateAppRequestToJSON(

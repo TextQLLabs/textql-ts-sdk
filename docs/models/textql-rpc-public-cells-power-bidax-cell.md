@@ -12,7 +12,7 @@ let value: TextqlRpcPublicCellsPowerBIDAXCell = {
         {
           columns: [
             {
-              doubles: {},
+              int32: {},
             },
           ],
         },

@@ -12,7 +12,7 @@ const value: models.TextqlRpcPublicDatasetGetDatasetValuesResponse = {
       {
         columns: [
           {
-            doubles: {},
+            int32: {},
           },
         ],
       },

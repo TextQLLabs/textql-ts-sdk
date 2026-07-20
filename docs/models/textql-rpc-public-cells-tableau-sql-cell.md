@@ -12,7 +12,7 @@ let value: TextqlRpcPublicCellsTableauSQLCell = {
         {
           columns: [
             {
-              doubles: {},
+              int32: {},
             },
           ],
         },

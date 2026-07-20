@@ -14,7 +14,7 @@ import {
 
 export type TextqlRpcPublicPatchesGetFileUsageTimelineResponse = {
   /**
-   * one entry per UTC day in the window, oldest first; idle days zero-filled
+   * most recent pull first
    */
   days?: Array<TextqlRpcPublicPatchesDailyFileUsage> | undefined;
 };

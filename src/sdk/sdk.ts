@@ -4,21 +4,23 @@
 
 import { ClientSDK } from "../lib/sdks.js";
 import { Agents } from "./agents.js";
+import { AppService } from "./app-service.js";
 import { Apps } from "./apps.js";
 import { AuditLogs } from "./audit-logs.js";
 import { Chats } from "./chats.js";
 import { Connectors } from "./connectors.js";
 import { Dashboards } from "./dashboards.js";
 import { Datasets } from "./datasets.js";
-import { Libraries } from "./libraries.js";
-import { LibraryService } from "./library-service.js";
 import { Mcp } from "./mcp.js";
 import { MetricsExports } from "./metrics-exports.js";
 import { Observability } from "./observability.js";
+import { OntologyManagementService } from "./ontology-management-service.js";
 import { Playbooks } from "./playbooks.js";
 import { Powerbi } from "./powerbi.js";
+import { RBACService } from "./rbac-service.js";
 import { Rbac } from "./rbac.js";
 import { SandboxAdmin } from "./sandbox-admin.js";
+import { SandboxCapabilityService } from "./sandbox-capability-service.js";
 import { Sandbox } from "./sandbox.js";
 import { Scim } from "./scim.js";
 import { Secrets } from "./secrets.js";
@@ -35,6 +37,11 @@ export class Textql extends ClientSDK {
   private _apps?: Apps;
   get apps(): Apps {
     return (this._apps ??= new Apps(this._options));
+  }
+
+  private _appService?: AppService;
+  get appService(): AppService {
+    return (this._appService ??= new AppService(this._options));
   }
 
   private _auditLogs?: AuditLogs;
@@ -77,14 +84,11 @@ export class Textql extends ClientSDK {
     return (this._observability ??= new Observability(this._options));
   }
 
-  private _libraries?: Libraries;
-  get libraries(): Libraries {
-    return (this._libraries ??= new Libraries(this._options));
-  }
-
-  private _libraryService?: LibraryService;
-  get libraryService(): LibraryService {
-    return (this._libraryService ??= new LibraryService(this._options));
+  private _ontologyManagementService?: OntologyManagementService;
+  get ontologyManagementService(): OntologyManagementService {
+    return (this._ontologyManagementService ??= new OntologyManagementService(
+      this._options,
+    ));
   }
 
   private _playbooks?: Playbooks;
@@ -102,9 +106,21 @@ export class Textql extends ClientSDK {
     return (this._rbac ??= new Rbac(this._options));
   }
 
+  private _rbacService?: RBACService;
+  get rbacService(): RBACService {
+    return (this._rbacService ??= new RBACService(this._options));
+  }
+
   private _sandboxAdmin?: SandboxAdmin;
   get sandboxAdmin(): SandboxAdmin {
     return (this._sandboxAdmin ??= new SandboxAdmin(this._options));
+  }
+
+  private _sandboxCapabilityService?: SandboxCapabilityService;
+  get sandboxCapabilityService(): SandboxCapabilityService {
+    return (this._sandboxCapabilityService ??= new SandboxCapabilityService(
+      this._options,
+    ));
   }
 
   private _sandbox?: Sandbox;

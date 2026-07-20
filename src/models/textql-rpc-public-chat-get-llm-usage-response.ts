@@ -18,7 +18,35 @@ export type TextqlRpcPublicChatGetLlmUsageResponse = {
    * range: [0, 1]
    */
   contextWindowUsed?: number | undefined;
+  /**
+   * Estimated LLM-token cost (USD, list model prices). LLM only.
+   */
   estimatedCost?: number | null | undefined;
+  /**
+   * Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
+   *
+   * @remarks
+   *  ACUs → USD at the org's effective rate. Add to estimated_cost for the
+   *  thread's total cost. Requires the console rate (0/omitted if unavailable).
+   */
+  estimatedComputeCost?: number | null | undefined;
+  /**
+   * The chat's sandbox id ({orgID}-{chatID}), set when the thread used any
+   *
+   * @remarks
+   *  sandbox compute. Lets the UI deep-link to the sandbox detail. Empty/omitted
+   *  when the thread had no sandbox usage.
+   */
+  sandboxId?: string | null | undefined;
+  /**
+   * Sandbox compute usage for this chat in ACUs (sandbox-seconds / 3600 × ACUs
+   *
+   * @remarks
+   *  per instance-hour). The metered unit behind estimated_compute_cost; shown
+   *  alongside the dollars. Independent of the console $ rate, so present whenever
+   *  the thread used a sandbox.
+   */
+  estimatedComputeAcus?: number | null | undefined;
 };
 
 /** @internal */
@@ -27,6 +55,9 @@ export const TextqlRpcPublicChatGetLlmUsageResponse$inboundSchema:
     usage: types.optional(z.array(TextqlRpcPublicChatLlmUsage$inboundSchema)),
     contextWindowUsed: types.optional(types.number()),
     estimatedCost: z.optional(z.nullable(types.number())),
+    estimatedComputeCost: z.optional(z.nullable(types.number())),
+    sandboxId: z.optional(z.nullable(types.string())),
+    estimatedComputeAcus: z.optional(z.nullable(types.number())),
   });
 
 export function textqlRpcPublicChatGetLlmUsageResponseFromJSON(

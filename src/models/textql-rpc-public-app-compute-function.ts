@@ -13,6 +13,12 @@ import {
   TextqlRpcPublicAppComputeFunctionParam$Outbound,
   TextqlRpcPublicAppComputeFunctionParam$outboundSchema,
 } from "./textql-rpc-public-app-compute-function-param.js";
+import {
+  TextqlRpcPublicDashboardGrant,
+  TextqlRpcPublicDashboardGrant$inboundSchema,
+  TextqlRpcPublicDashboardGrant$Outbound,
+  TextqlRpcPublicDashboardGrant$outboundSchema,
+} from "./textql-rpc-public-dashboard-grant.js";
 
 export type TextqlRpcPublicAppComputeFunction = {
   name?: string | undefined;
@@ -20,6 +26,16 @@ export type TextqlRpcPublicAppComputeFunction = {
   params?: Array<TextqlRpcPublicAppComputeFunctionParam> | undefined;
   returns?: string | null | undefined;
   code?: string | undefined;
+  tqlPath?: string | null | undefined;
+  tql?: string | null | undefined;
+  /**
+   * Grant is an author allowlist gating a data source or compute function. A viewer whose
+   *
+   * @remarks
+   *  effective role names intersect roles, or whose member id is listed in members, may call it.
+   *  Absent grant = org-visible (today's behavior); an empty grant object is invalid.
+   */
+  grant?: TextqlRpcPublicDashboardGrant | undefined;
 };
 
 /** @internal */
@@ -34,6 +50,9 @@ export const TextqlRpcPublicAppComputeFunction$inboundSchema: z.ZodMiniType<
   ),
   returns: z.optional(z.nullable(types.string())),
   code: types.optional(types.string()),
+  tqlPath: z.optional(z.nullable(types.string())),
+  tql: z.optional(z.nullable(types.string())),
+  grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
 });
 /** @internal */
 export type TextqlRpcPublicAppComputeFunction$Outbound = {
@@ -42,6 +61,9 @@ export type TextqlRpcPublicAppComputeFunction$Outbound = {
   params?: Array<TextqlRpcPublicAppComputeFunctionParam$Outbound> | undefined;
   returns?: string | null | undefined;
   code?: string | undefined;
+  tqlPath?: string | null | undefined;
+  tql?: string | null | undefined;
+  grant?: TextqlRpcPublicDashboardGrant$Outbound | undefined;
 };
 
 /** @internal */
@@ -56,6 +78,9 @@ export const TextqlRpcPublicAppComputeFunction$outboundSchema: z.ZodMiniType<
   ),
   returns: z.optional(z.nullable(z.string())),
   code: z.optional(z.string()),
+  tqlPath: z.optional(z.nullable(z.string())),
+  tql: z.optional(z.nullable(z.string())),
+  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
 });
 
 export function textqlRpcPublicAppComputeFunctionToJSON(

@@ -13,7 +13,7 @@ let value: TableauSqlCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },

@@ -76,7 +76,7 @@ export type TextqlRpcPublicPatchesGetFileUsageRequest = {
   observationPeriod?: string | undefined;
   pageCursor?: string | null | undefined;
   /**
-   * default 100, capped at 100
+   * default 1000, capped at 1000
    */
   pageSize?: number | null | undefined;
 };

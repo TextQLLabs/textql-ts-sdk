@@ -47,6 +47,14 @@ export type TextqlRpcPublicObserveGetBillingStatsResponse = {
   totalAppAcu?: number | undefined;
   unattributedAppAcu?: number | undefined;
   totalAppCount?: number | undefined;
+  /**
+   * Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
+   *
+   * @remarks
+   *  the tenant's pricing tier / active override). Multiply any ACU figure by
+   *  (rate / 1000) to show dollars. 0 means unknown/unpriced (e.g. trial).
+   */
+  acuRatePer1000Usd?: number | undefined;
 };
 
 /** @internal */
@@ -79,6 +87,7 @@ export const TextqlRpcPublicObserveGetBillingStatsResponse$inboundSchema:
       totalAppAcu: types.optional(types.number()),
       unattributedAppAcu: types.optional(types.number()),
       totalAppCount: types.optional(types.number()),
+      acuRatePer1000Usd: types.optional(types.number()),
     });
 
 export function textqlRpcPublicObserveGetBillingStatsResponseFromJSON(

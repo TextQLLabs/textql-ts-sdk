@@ -19,7 +19,7 @@ import {
 export type TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse = {
   patch?: TextqlRpcPublicPatchesPatch | undefined;
   /**
-   * Library-relative paths of the config files in the patch.
+   * Ontology-relative paths of the config files in the patch.
    */
   filePaths?: Array<string> | undefined;
   skipped?: Array<TextqlRpcPublicPatchesSkippedConfigExport> | undefined;

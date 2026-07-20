@@ -11,7 +11,7 @@ let value: TextqlRpcPublicDataframeDataFrameWithInfo = {
       {
         columns: [
           {
-            doubles: {},
+            int32: {},
           },
         ],
       },

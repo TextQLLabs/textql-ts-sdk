@@ -27,12 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Viewer heartbeat: keeps a warm compute worker alive while the app is open so its  billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op  when the app has no warm worker; never spawns one.
+ * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
  *
  * @remarks
- * Viewer heartbeat: keeps a warm compute worker alive while the app is open so its
- *  billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op
- *  when the app has no warm worker; never spawns one.
+ * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
  */
 export function appsHeartbeat(
   client: TextqlCore,

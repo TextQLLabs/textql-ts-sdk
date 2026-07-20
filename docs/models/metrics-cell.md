@@ -13,7 +13,7 @@ let value: MetricsCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },

@@ -12,6 +12,10 @@ import {
   TextqlRpcPublicAppAppFile$inboundSchema,
 } from "./textql-rpc-public-app-app-file.js";
 import {
+  TextqlRpcPublicAppCapability,
+  TextqlRpcPublicAppCapability$inboundSchema,
+} from "./textql-rpc-public-app-capability.js";
+import {
   TextqlRpcPublicAppComputeFunction,
   TextqlRpcPublicAppComputeFunction$inboundSchema,
 } from "./textql-rpc-public-app-compute-function.js";
@@ -34,13 +38,17 @@ export type TextqlRpcPublicAppApp = {
   chatId?: string | null | undefined;
   publishedHtmlUrl?: string | null | undefined;
   hasUnpublishedChanges?: boolean | undefined;
-  stalenessSeconds?: number | null | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
   scheduleEnabled?: boolean | undefined;
   cronString?: string | null | undefined;
   folderId?: string | null | undefined;
   isFavorited?: boolean | undefined;
+  capabilities?: Array<TextqlRpcPublicAppCapability> | undefined;
+  appDbSetup?: Array<string> | undefined;
+  memberFeaturesEnabled?: boolean | undefined;
+  usesMemberFeatures?: boolean | undefined;
+  viewerGrants?: Array<string> | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
    *
@@ -439,7 +447,6 @@ export const TextqlRpcPublicAppApp$inboundSchema: z.ZodMiniType<
   chatId: z.optional(z.nullable(types.string())),
   publishedHtmlUrl: z.optional(z.nullable(types.string())),
   hasUnpublishedChanges: types.optional(types.boolean()),
-  stalenessSeconds: z.optional(z.nullable(types.number())),
   computeFunctions: types.optional(
     z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
   ),
@@ -448,6 +455,13 @@ export const TextqlRpcPublicAppApp$inboundSchema: z.ZodMiniType<
   cronString: z.optional(z.nullable(types.string())),
   folderId: z.optional(z.nullable(types.string())),
   isFavorited: types.optional(types.boolean()),
+  capabilities: types.optional(
+    z.array(TextqlRpcPublicAppCapability$inboundSchema),
+  ),
+  appDbSetup: types.optional(z.array(types.string())),
+  memberFeaturesEnabled: types.optional(types.boolean()),
+  usesMemberFeatures: types.optional(types.boolean()),
+  viewerGrants: types.optional(z.array(types.string())),
   createdAt: types.optional(types.date()),
   updatedAt: types.optional(types.date()),
   refreshedAt: types.optional(types.date()),

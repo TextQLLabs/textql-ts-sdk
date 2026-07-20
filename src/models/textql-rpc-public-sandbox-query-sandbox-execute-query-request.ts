@@ -5,6 +5,11 @@
 import * as z from "zod/v4-mini";
 import { smartUnion } from "../types/smart-union.js";
 import {
+  TextqlRpcPublicSandboxQueryAppDBTemplate,
+  TextqlRpcPublicSandboxQueryAppDBTemplate$Outbound,
+  TextqlRpcPublicSandboxQueryAppDBTemplate$outboundSchema,
+} from "./textql-rpc-public-sandbox-query-app-db-template.js";
+import {
   TextqlRpcPublicSandboxQueryLibraryTQLTemplate,
   TextqlRpcPublicSandboxQueryLibraryTQLTemplate$Outbound,
   TextqlRpcPublicSandboxQueryLibraryTQLTemplate$outboundSchema,
@@ -20,7 +25,9 @@ import {
   TextqlRpcPublicSandboxQuerySqlQueryTemplate$outboundSchema,
 } from "./textql-rpc-public-sandbox-query-sql-query-template.js";
 
-export type MaxRows2 = number | string;
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3 =
+  | number
+  | string;
 
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery = {
   sqlQuery: TextqlRpcPublicSandboxQuerySqlQueryTemplate;
@@ -30,7 +37,9 @@ export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery = {
   maxRows?: number | string | undefined;
 };
 
-export type MaxRows1 = number | string;
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2 =
+  | number
+  | string;
 
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql = {
   libraryTql: TextqlRpcPublicSandboxQueryLibraryTQLTemplate;
@@ -40,21 +49,43 @@ export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql = {
   maxRows?: number | string | undefined;
 };
 
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1 =
+  | number
+  | string;
+
+export type AppDb = {
+  appDb: TextqlRpcPublicSandboxQueryAppDBTemplate;
+  sourceName?: string | undefined;
+  connectorId?: number | undefined;
+  parameters?: Array<TextqlRpcPublicSandboxQuerySandboxQueryParam> | undefined;
+  maxRows?: number | string | undefined;
+};
+
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest =
+  | AppDb
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery;
 
 /** @internal */
-export type MaxRows2$Outbound = number | string;
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound =
+  | number
+  | string;
 
 /** @internal */
-export const MaxRows2$outboundSchema: z.ZodMiniType<
-  MaxRows2$Outbound,
-  MaxRows2
-> = smartUnion([z.int(), z.string()]);
+export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema:
+  z.ZodMiniType<
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound,
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3
+  > = smartUnion([z.int(), z.string()]);
 
-export function maxRows2ToJSON(maxRows2: MaxRows2): string {
-  return JSON.stringify(MaxRows2$outboundSchema.parse(maxRows2));
+export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3ToJSON(
+  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3:
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3,
+): string {
+  return JSON.stringify(
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema
+      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3),
+  );
 }
 
 /** @internal */
@@ -95,16 +126,25 @@ export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQueryToJ
 }
 
 /** @internal */
-export type MaxRows1$Outbound = number | string;
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$Outbound =
+  | number
+  | string;
 
 /** @internal */
-export const MaxRows1$outboundSchema: z.ZodMiniType<
-  MaxRows1$Outbound,
-  MaxRows1
-> = smartUnion([z.int(), z.string()]);
+export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$outboundSchema:
+  z.ZodMiniType<
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$Outbound,
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2
+  > = smartUnion([z.int(), z.string()]);
 
-export function maxRows1ToJSON(maxRows1: MaxRows1): string {
-  return JSON.stringify(MaxRows1$outboundSchema.parse(maxRows1));
+export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2ToJSON(
+  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2:
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2,
+): string {
+  return JSON.stringify(
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$outboundSchema
+      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2),
+  );
 }
 
 /** @internal */
@@ -145,7 +185,57 @@ export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTqlT
 }
 
 /** @internal */
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$Outbound =
+  | number
+  | string;
+
+/** @internal */
+export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$outboundSchema:
+  z.ZodMiniType<
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$Outbound,
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1
+  > = smartUnion([z.int(), z.string()]);
+
+export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1ToJSON(
+  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1:
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1,
+): string {
+  return JSON.stringify(
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$outboundSchema
+      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1),
+  );
+}
+
+/** @internal */
+export type AppDb$Outbound = {
+  appDb: TextqlRpcPublicSandboxQueryAppDBTemplate$Outbound;
+  sourceName?: string | undefined;
+  connectorId?: number | undefined;
+  parameters?:
+    | Array<TextqlRpcPublicSandboxQuerySandboxQueryParam$Outbound>
+    | undefined;
+  maxRows?: number | string | undefined;
+};
+
+/** @internal */
+export const AppDb$outboundSchema: z.ZodMiniType<AppDb$Outbound, AppDb> = z
+  .object({
+    appDb: TextqlRpcPublicSandboxQueryAppDBTemplate$outboundSchema,
+    sourceName: z.optional(z.string()),
+    connectorId: z.optional(z.int()),
+    parameters: z.optional(
+      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+    ),
+    maxRows: z.optional(smartUnion([z.int(), z.string()])),
+  });
+
+export function appDbToJSON(appDb: AppDb): string {
+  return JSON.stringify(AppDb$outboundSchema.parse(appDb));
+}
+
+/** @internal */
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$Outbound =
+  | AppDb$Outbound
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$Outbound
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$Outbound;
 
@@ -155,6 +245,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$outboundSchem
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest
   > = smartUnion([
+    z.lazy(() => AppDb$outboundSchema),
     z.lazy(() =>
       TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$outboundSchema
     ),

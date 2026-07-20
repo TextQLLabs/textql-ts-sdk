@@ -4,7 +4,7 @@
 
 ### Available Operations
 
-* [heartbeat](#heartbeat) - Viewer heartbeat: keeps a warm compute worker alive while the app is open so its  billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op  when the app has no warm worker; never spawns one.
+* [heartbeat](#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [createApp](#createapp) - CreateApp
 * [deleteApp](#deleteapp) - DeleteApp
 * [duplicate](#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
@@ -23,9 +23,7 @@
 
 ## heartbeat
 
-Viewer heartbeat: keeps a warm compute worker alive while the app is open so its
- billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op
- when the app has no warm worker; never spawns one.
+Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 
 ### Example Usage
 

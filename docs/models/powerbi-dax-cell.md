@@ -13,7 +13,7 @@ let value: PowerbiDaxCell = {
           {
             columns: [
               {
-                doubles: {},
+                int32: {},
               },
             ],
           },

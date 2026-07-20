@@ -8,7 +8,7 @@
 ```typescript
 const value: models.TextqlRpcPublicChatAttachAppResponse = {
   cell: {
-    gmailEmailSearchCell: {},
+    googleCalendarSearchCell: {},
     timestamp: new Date("2023-01-15T01:30:15.01Z"),
   },
   app: {

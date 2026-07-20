@@ -27,6 +27,13 @@ export type TextqlRpcPublicSandboxAdminListSandboxSpendResponse = {
    * Sum of acus across all returned intervals.
    */
   totalAcus?: number | undefined;
+  /**
+   * Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
+   *
+   * @remarks
+   *  the tenant's pricing tier / active override). 0 means unknown/unpriced.
+   */
+  acuRatePer1000Usd?: number | undefined;
 };
 
 /** @internal */
@@ -38,6 +45,7 @@ export const TextqlRpcPublicSandboxAdminListSandboxSpendResponse$inboundSchema:
       ),
       acusPerHour: types.optional(types.number()),
       totalAcus: types.optional(types.number()),
+      acuRatePer1000Usd: types.optional(types.number()),
     });
 
 export function textqlRpcPublicSandboxAdminListSandboxSpendResponseFromJSON(

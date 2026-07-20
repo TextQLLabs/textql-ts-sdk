@@ -11,7 +11,7 @@ let value: TextqlRpcPublicDatasetGetDatasetValuesResponse = {
       {
         columns: [
           {
-            doubles: {},
+            int32: {},
           },
         ],
       },

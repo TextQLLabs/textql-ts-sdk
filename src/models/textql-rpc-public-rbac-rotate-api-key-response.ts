@@ -14,7 +14,7 @@ import {
 
 export type TextqlRpcPublicRbacRotateApiKeyResponse = {
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
-  apiKeyHash?: string | undefined;
+  apiKeySecret?: string | undefined;
   revokedApiKeyId?: string | undefined;
 };
 
@@ -22,7 +22,7 @@ export type TextqlRpcPublicRbacRotateApiKeyResponse = {
 export const TextqlRpcPublicRbacRotateApiKeyResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicRbacRotateApiKeyResponse, unknown> = z.object({
     apiKey: types.optional(TextqlRpcPublicRbacApiKey$inboundSchema),
-    apiKeyHash: types.optional(types.string()),
+    apiKeySecret: types.optional(types.string()),
     revokedApiKeyId: types.optional(types.string()),
   });
 

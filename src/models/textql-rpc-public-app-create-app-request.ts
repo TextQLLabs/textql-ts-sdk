@@ -9,6 +9,11 @@ import {
   TextqlRpcPublicAppAppFile$outboundSchema,
 } from "./textql-rpc-public-app-app-file.js";
 import {
+  TextqlRpcPublicAppCapability,
+  TextqlRpcPublicAppCapability$Outbound,
+  TextqlRpcPublicAppCapability$outboundSchema,
+} from "./textql-rpc-public-app-capability.js";
+import {
   TextqlRpcPublicAppComputeFunction,
   TextqlRpcPublicAppComputeFunction$Outbound,
   TextqlRpcPublicAppComputeFunction$outboundSchema,
@@ -26,6 +31,8 @@ export type TextqlRpcPublicAppCreateAppRequest = {
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
+  capabilities?: Array<TextqlRpcPublicAppCapability> | undefined;
+  appDbSetup?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -38,6 +45,8 @@ export type TextqlRpcPublicAppCreateAppRequest$Outbound = {
     | Array<TextqlRpcPublicAppComputeFunction$Outbound>
     | undefined;
   files?: Array<TextqlRpcPublicAppAppFile$Outbound> | undefined;
+  capabilities?: Array<TextqlRpcPublicAppCapability$Outbound> | undefined;
+  appDbSetup?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -55,6 +64,10 @@ export const TextqlRpcPublicAppCreateAppRequest$outboundSchema: z.ZodMiniType<
     z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
   ),
   files: z.optional(z.array(TextqlRpcPublicAppAppFile$outboundSchema)),
+  capabilities: z.optional(
+    z.array(TextqlRpcPublicAppCapability$outboundSchema),
+  ),
+  appDbSetup: z.optional(z.array(z.string())),
 });
 
 export function textqlRpcPublicAppCreateAppRequestToJSON(

@@ -27,6 +27,10 @@ export type TextqlRpcPublicChatUpdateChatRequest = {
    * update fast inference mode
    */
   fastMode?: boolean | null | undefined;
+  /**
+   * update max thinking mode
+   */
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -37,6 +41,7 @@ export type TextqlRpcPublicChatUpdateChatRequest$Outbound = {
   dashboardMode?: boolean | null | undefined;
   methodology?: string | undefined;
   fastMode?: boolean | null | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -50,6 +55,7 @@ export const TextqlRpcPublicChatUpdateChatRequest$outboundSchema: z.ZodMiniType<
   dashboardMode: z.optional(z.nullable(z.boolean())),
   methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
   fastMode: z.optional(z.nullable(z.boolean())),
+  maxThinking: z.optional(z.nullable(z.boolean())),
 });
 
 export function textqlRpcPublicChatUpdateChatRequestToJSON(

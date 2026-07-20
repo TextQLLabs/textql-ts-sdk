@@ -8,17 +8,16 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * FileChatUsage is one chat that retrieved a library file inside the
- *
- * @remarks
- *  observation window. Only pulls attributed to a chat are listed — background
- *  or sandbox reads carry no chat id and are excluded.
- */
 export type TextqlRpcPublicPatchesFileChatUsage = {
+  /**
+   * most recent pull or run (imports included) inside the window; unset when
+   *
+   * @remarks
+   *  the file had no usage at all
+   */
   chatId?: string | undefined;
   /**
-   * empty for untitled chats
+   * one entry per UTC day in the window, oldest first; idle days zero-filled
    */
   title?: string | undefined;
   /**
@@ -115,9 +114,6 @@ export type TextqlRpcPublicPatchesFileChatUsage = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastPulled?: Date | undefined;
-  /**
-   * the chat also ran the file (directly or via imports), not just pulled it
-   */
   used?: boolean | undefined;
 };
 

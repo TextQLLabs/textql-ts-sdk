@@ -1,0 +1,19 @@
+# TextqlRpcPublicPatchesGetOntologyOwnersResponse
+
+## Example Usage
+
+```typescript
+import { TextqlRpcPublicPatchesGetOntologyOwnersResponse } from "@textql/sdk/models";
+
+let value: TextqlRpcPublicPatchesGetOntologyOwnersResponse = {
+  owners: {
+    updatedAt: new Date("2023-01-15T01:30:15.01Z"),
+  },
+};
+```
+
+## Fields
+
+| Field                                                                                                 | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `owners`                                                                                              | [models.TextqlRpcPublicPatchesOntologyOwners](../models/textql-rpc-public-patches-ontology-owners.md) | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |

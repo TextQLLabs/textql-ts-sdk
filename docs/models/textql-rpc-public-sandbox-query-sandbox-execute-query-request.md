@@ -3,6 +3,14 @@
 
 ## Supported Types
 
+### `models.AppDb`
+
+```typescript
+const value: models.AppDb = {
+  appDb: {},
+};
+```
+
 ### `models.TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql`
 
 ```typescript

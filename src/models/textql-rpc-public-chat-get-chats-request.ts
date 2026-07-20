@@ -257,6 +257,10 @@ export type TextqlRpcPublicChatGetChatsRequest = {
    *  (verdict='tagged'). Ignored when empty.
    */
   topicIds?: Array<string> | undefined;
+  /**
+   * Filter chats that have any of these connector IDs in their paradigm options (union). Ignored when empty.
+   */
+  connectorIds?: Array<number> | undefined;
 };
 
 /** @internal */
@@ -281,6 +285,7 @@ export type TextqlRpcPublicChatGetChatsRequest$Outbound = {
   sources?: Array<string> | undefined;
   threadWarningTypes?: Array<string> | undefined;
   topicIds?: Array<string> | undefined;
+  connectorIds?: Array<number> | undefined;
 };
 
 /** @internal */
@@ -314,6 +319,7 @@ export const TextqlRpcPublicChatGetChatsRequest$outboundSchema: z.ZodMiniType<
     z.array(TextqlRpcPublicChatThreadWarningType$outboundSchema),
   ),
   topicIds: z.optional(z.array(z.string())),
+  connectorIds: z.optional(z.array(z.int())),
 });
 
 export function textqlRpcPublicChatGetChatsRequestToJSON(

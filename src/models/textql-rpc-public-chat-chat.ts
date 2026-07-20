@@ -283,6 +283,13 @@ export type TextqlRpcPublicChatChat = {
   agentId?: string | null | undefined;
   agentName?: string | null | undefined;
   agentProfileImageUrl?: string | null | undefined;
+  /**
+   * max_thinking runs extended thinking at max effort with visible reasoning.
+   *
+   * @remarks
+   *  Supported on Sonnet 5, Fable 5, and Opus 4.8. Thinking tokens bill as output tokens.
+   */
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -317,6 +324,7 @@ export const TextqlRpcPublicChatChat$inboundSchema: z.ZodMiniType<
   agentId: z.optional(z.nullable(types.string())),
   agentName: z.optional(z.nullable(types.string())),
   agentProfileImageUrl: z.optional(z.nullable(types.string())),
+  maxThinking: z.optional(z.nullable(types.boolean())),
 });
 
 export function textqlRpcPublicChatChatFromJSON(

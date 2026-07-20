@@ -8,31 +8,9 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * copied from google.type.Date; not available in buf's google/protobuf/*
- */
 export type TextqlRpcPublicPatchesDate = {
-  /**
-   * Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-   *
-   * @remarks
-   *  a year.
-   */
   year?: number | undefined;
-  /**
-   * Month of a year. Must be from 1 to 12, or 0 to specify a year without a
-   *
-   * @remarks
-   *  month and day.
-   */
   month?: number | undefined;
-  /**
-   * Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
-   *
-   * @remarks
-   *  to specify a year by itself or a year and month where the day isn't
-   *  significant.
-   */
   day?: number | undefined;
 };
 

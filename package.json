@@ -12,8 +12,8 @@
     "access": "public"
   },
   "repository": {
-    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git",
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
   },
   "type": "module",
   "main": "./esm/index.js",
@@ -56,6 +56,10 @@
     }
   },
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
+  },
   "scripts": {
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tsgo",

@@ -8,19 +8,7 @@ import { OpenEnum } from "../types/enums.js";
 
 export const TextqlRpcParadigmParamsParadigmType = {
   TypeUnknown: "TYPE_UNKNOWN",
-  TypeSql: "TYPE_SQL",
-  TypeResearch: "TYPE_RESEARCH",
-  TypeOntology: "TYPE_ONTOLOGY",
-  TypeBasic: "TYPE_BASIC",
-  TypeTableau: "TYPE_TABLEAU",
-  TypeExperimental: "TYPE_EXPERIMENTAL",
   TypeUniversal: "TYPE_UNIVERSAL",
-  TypePublicDemo: "TYPE_PUBLIC_DEMO",
-  TypeSummary: "TYPE_SUMMARY",
-  TypeObservability: "TYPE_OBSERVABILITY",
-  TypeTemplate: "TYPE_TEMPLATE",
-  TypeMinimalist: "TYPE_MINIMALIST",
-  TypeTopics: "TYPE_TOPICS",
 } as const;
 export type TextqlRpcParadigmParamsParadigmType = OpenEnum<
   typeof TextqlRpcParadigmParamsParadigmType

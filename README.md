@@ -159,7 +159,7 @@ run();
 
 ### [Apps](docs/sdks/apps/README.md)
 
-* [heartbeat](docs/sdks/apps/README.md#heartbeat) - Viewer heartbeat: keeps a warm compute worker alive while the app is open so its  billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op  when the app has no warm worker; never spawns one.
+* [heartbeat](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [createApp](docs/sdks/apps/README.md#createapp) - CreateApp
 * [deleteApp](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 * [duplicate](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
@@ -175,6 +175,15 @@ run();
 * [restoreAppVersion](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
 * [setFavorite](docs/sdks/apps/README.md#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [update](docs/sdks/apps/README.md#update) - UpdateApp
+
+### [AppService](docs/sdks/appservice/README.md)
+
+* [appServiceGetAppMemberState](docs/sdks/appservice/README.md#appservicegetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [appServiceListAppActivitySince](docs/sdks/appservice/README.md#appservicelistappactivitysince) - ListAppActivitySince
+* [appServiceListMyAppMemberActivity](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [appServicePresenceHeartbeat](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+* [appServiceRecordAppMemberActivity](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - RecordAppMemberActivity
+* [appServiceSetAppMemberState](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
 
 ### [AuditLogs](docs/sdks/auditlogs/README.md)
 
@@ -295,84 +304,6 @@ run();
 * [processUploadPresignUrl](docs/sdks/datasets/README.md#processuploadpresignurl) - ProcessUploadPresignUrl
 * [updateDataset](docs/sdks/datasets/README.md#updatedataset) - Update dataset metadata
 
-### [Libraries](docs/sdks/libraries/README.md)
-
-* [addSubmodule](docs/sdks/libraries/README.md#addsubmodule) - AddLibrarySubmodule
-* [approvePatch](docs/sdks/libraries/README.md#approvepatch) - ApprovePatch
-* [configureLibraryRemote](docs/sdks/libraries/README.md#configurelibraryremote) - ConfigureLibraryRemote
-* [createApprovalRule](docs/sdks/libraries/README.md#createapprovalrule) - CreateApprovalRule
-* [createContextPatchAutoApproveRule](docs/sdks/libraries/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
-* [createLibraryDirectory](docs/sdks/libraries/README.md#createlibrarydirectory) - CreateLibraryDirectory
-* [createFileUploadUrl](docs/sdks/libraries/README.md#createfileuploadurl) - CreateLibraryFileUploadUrl
-* [deleteApprovalRule](docs/sdks/libraries/README.md#deleteapprovalrule) - DeleteApprovalRule
-* [deleteContextPatchAutoApproveRule](docs/sdks/libraries/README.md#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
-* [deleteLibraryDirectory](docs/sdks/libraries/README.md#deletelibrarydirectory) - DeleteLibraryDirectory
-* [deleteLibraryFile](docs/sdks/libraries/README.md#deletelibraryfile) - DeleteLibraryFile
-* [deleteOwners](docs/sdks/libraries/README.md#deleteowners) - DeleteLibraryOwners
-* [denyPatch](docs/sdks/libraries/README.md#denypatch) - DenyPatch
-* [exchangeGithubCode](docs/sdks/libraries/README.md#exchangegithubcode) - ExchangeLibraryGithubCode
-* [finalizeFileUpload](docs/sdks/libraries/README.md#finalizefileupload) - FinalizeLibraryFileUpload
-* [getCodeownerCoverage](docs/sdks/libraries/README.md#getcodeownercoverage) - GetCodeownerCoverage
-* [getConfigExportCapabilities](docs/sdks/libraries/README.md#getconfigexportcapabilities) - GetConfigExportCapabilities
-* [getEffectiveOwners](docs/sdks/libraries/README.md#geteffectiveowners) - GetEffectiveLibraryOwners
-* [getFileUsage](docs/sdks/libraries/README.md#getfileusage) - GetFileUsage
-* [getFileUsageTimeline](docs/sdks/libraries/README.md#getfileusagetimeline) - GetFileUsageTimeline
-* [getAnaConfig](docs/sdks/libraries/README.md#getanaconfig) - GetLibraryAnaConfig
-* [getFile](docs/sdks/libraries/README.md#getfile) - GetLibraryFile
-* [getLibraryGithubOAuthURL](docs/sdks/libraries/README.md#getlibrarygithuboauthurl) - GetLibraryGithubOAuthURL
-* [getHistoryFileDiff](docs/sdks/libraries/README.md#gethistoryfilediff) - GetLibraryHistoryFileDiff
-* [getMigrationStatus](docs/sdks/libraries/README.md#getmigrationstatus) - GetLibraryMigrationStatus
-* [getLibraryOwners](docs/sdks/libraries/README.md#getlibraryowners) - GetLibraryOwners
-* [getRemote](docs/sdks/libraries/README.md#getremote) - GetLibraryRemote
-* [getSizeTimeline](docs/sdks/libraries/README.md#getsizetimeline) - GetLibrarySizeTimeline
-* [getLibrarySyncConflicts](docs/sdks/libraries/README.md#getlibrarysyncconflicts) - GetLibrarySyncConflicts
-* [getOntologyUsageSummary](docs/sdks/libraries/README.md#getontologyusagesummary) - GetOntologyUsageSummary
-* [getPatch](docs/sdks/libraries/README.md#getpatch) - GetPatch
-* [getPatchByNumber](docs/sdks/libraries/README.md#getpatchbynumber) - GetPatchByNumber
-* [getPatchCapabilities](docs/sdks/libraries/README.md#getpatchcapabilities) - GetPatchCapabilities
-* [getRawPatch](docs/sdks/libraries/README.md#getrawpatch) - GetRawPatch
-* [getUsageDetailsForFile](docs/sdks/libraries/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
-* [listApprovalRules](docs/sdks/libraries/README.md#listapprovalrules) - ListApprovalRules
-* [listChatsForFile](docs/sdks/libraries/README.md#listchatsforfile) - ListChatsForFile
-* [listContextPatchAutoApproveRules](docs/sdks/libraries/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listLibraryEntries](docs/sdks/libraries/README.md#listlibraryentries) - ListLibraryEntries
-* [listLibraryHistory](docs/sdks/libraries/README.md#listlibraryhistory) - ListLibraryHistory
-* [listImports](docs/sdks/libraries/README.md#listimports) - ListLibraryImports
-* [listLibrarySubmodules](docs/sdks/libraries/README.md#listlibrarysubmodules) - ListLibrarySubmodules
-* [listLibrarySyncRuns](docs/sdks/libraries/README.md#listlibrarysyncruns) - ListLibrarySyncRuns
-* [listPatchReviewers](docs/sdks/libraries/README.md#listpatchreviewers) - ListPatchReviewers
-* [listPatches](docs/sdks/libraries/README.md#listpatches) - ListPatches
-* [listSkills](docs/sdks/libraries/README.md#listskills) - Lists the skills under the library's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-* [migrateLegacyContext](docs/sdks/libraries/README.md#migratelegacycontext) - MigrateLegacyContextToLibrary
-* [migrateOntology](docs/sdks/libraries/README.md#migrateontology) - MigrateOntologyToLibrary
-* [planMerge](docs/sdks/libraries/README.md#planmerge) - PlanLibraryMerge
-* [previewLibraryPullFromRemote](docs/sdks/libraries/README.md#previewlibrarypullfromremote) - PreviewLibraryPullFromRemote
-* [pullFromRemote](docs/sdks/libraries/README.md#pullfromremote) - PullLibraryFromRemote
-* [pushLibraryToRemote](docs/sdks/libraries/README.md#pushlibrarytoremote) - PushLibraryToRemote
-* [recover](docs/sdks/libraries/README.md#recover) - RecoverLibrary
-* [removeRemote](docs/sdks/libraries/README.md#removeremote) - RemoveLibraryRemote
-* [removeLibrarySubmodule](docs/sdks/libraries/README.md#removelibrarysubmodule) - RemoveLibrarySubmodule
-* [renameFile](docs/sdks/libraries/README.md#renamefile) - RenameLibraryFile
-* [requestPatchReview](docs/sdks/libraries/README.md#requestpatchreview) - RequestPatchReview
-* [resolveSyncConflict](docs/sdks/libraries/README.md#resolvesyncconflict) - ResolveLibrarySyncConflict
-* [restorePatch](docs/sdks/libraries/README.md#restorepatch) - RestorePatch
-* [revertPatch](docs/sdks/libraries/README.md#revertpatch) - RevertPatch
-* [saveAllObjectsAsConfig](docs/sdks/libraries/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
-* [saveAsConfig](docs/sdks/libraries/README.md#saveasconfig) - SaveObjectAsConfig
-* [triggerConfigDriftReconcile](docs/sdks/libraries/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Library repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-* [updateApprovalRule](docs/sdks/libraries/README.md#updateapprovalrule) - UpdateApprovalRule
-* [updateContextPatchAutoApproveRule](docs/sdks/libraries/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-* [updateLibrarySyncConfig](docs/sdks/libraries/README.md#updatelibrarysyncconfig) - UpdateLibrarySyncConfig
-* [upsertAnaConfig](docs/sdks/libraries/README.md#upsertanaconfig) - UpsertLibraryAnaConfig
-* [upsertLibraryFile](docs/sdks/libraries/README.md#upsertlibraryfile) - UpsertLibraryFile
-* [upsertOwners](docs/sdks/libraries/README.md#upsertowners) - UpsertLibraryOwners
-* [validateConfig](docs/sdks/libraries/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
-
-### [LibraryService](docs/sdks/libraryservice/README.md)
-
-* [libraryServiceListGoldenFiles](docs/sdks/libraryservice/README.md#libraryservicelistgoldenfiles) - ListGoldenFiles
-* [libraryServiceSetLibraryFileGolden](docs/sdks/libraryservice/README.md#libraryservicesetlibraryfilegolden) - SetLibraryFileGolden
-
 ### [Mcp](docs/sdks/mcp/README.md)
 
 * [clearOAuthToken](docs/sdks/mcp/README.md#clearoauthtoken) - ClearOAuthToken
@@ -422,6 +353,78 @@ run();
 * [refineDraft](docs/sdks/observability/README.md#refinedraft) - Custom topics
 * [setTopicTagFeedback](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 * [updateCustomTopic](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
+
+### [OntologyManagementService](docs/sdks/ontologymanagementservice/README.md)
+
+* [ontologyManagementServiceAddOntologySubmodule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceaddontologysubmodule) - AddOntologySubmodule
+* [ontologyManagementServiceApprovePatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceapprovepatch) - ApprovePatch
+* [ontologyManagementServiceConfigureOntologyRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceconfigureontologyremote) - ConfigureOntologyRemote
+* [ontologyManagementServiceCreateApprovalRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateapprovalrule) - CreateApprovalRule
+* [ontologyManagementServiceCreateContextPatchAutoApproveRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreatecontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
+* [ontologyManagementServiceCreateOntologyDirectory](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateontologydirectory) - CreateOntologyDirectory
+* [ontologyManagementServiceCreateOntologyFileUploadUrl](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateontologyfileuploadurl) - CreateOntologyFileUploadUrl
+* [ontologyManagementServiceDeleteApprovalRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteapprovalrule) - DeleteApprovalRule
+* [ontologyManagementServiceDeleteContextPatchAutoApproveRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
+* [ontologyManagementServiceDeleteOntologyDirectory](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologydirectory) - DeleteOntologyDirectory
+* [ontologyManagementServiceDeleteOntologyFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologyfile) - DeleteOntologyFile
+* [ontologyManagementServiceDeleteOntologyOwners](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologyowners) - DeleteOntologyOwners
+* [ontologyManagementServiceDenyPatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedenypatch) - DenyPatch
+* [ontologyManagementServiceExchangeOntologyGithubCode](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceexchangeontologygithubcode) - ExchangeOntologyGithubCode
+* [ontologyManagementServiceFinalizeOntologyFileUpload](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicefinalizeontologyfileupload) - FinalizeOntologyFileUpload
+* [ontologyManagementServiceGetCodeownerCoverage](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetcodeownercoverage) - GetCodeownerCoverage
+* [ontologyManagementServiceGetConfigExportCapabilities](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetconfigexportcapabilities) - GetConfigExportCapabilities
+* [ontologyManagementServiceGetEffectiveOntologyOwners](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegeteffectiveontologyowners) - GetEffectiveOntologyOwners
+* [ontologyManagementServiceGetFileUsage](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetfileusage) - GetFileUsage
+* [ontologyManagementServiceGetFileUsageTimeline](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetfileusagetimeline) - GetFileUsageTimeline
+* [ontologyManagementServiceGetOntologyAnaConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyanaconfig) - GetOntologyAnaConfig
+* [ontologyManagementServiceGetOntologyFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyfile) - GetOntologyFile
+* [ontologyManagementServiceGetOntologyGithubOAuthURL](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologygithuboauthurl) - GetOntologyGithubOAuthURL
+* [ontologyManagementServiceGetOntologyHistoryFileDiff](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyhistoryfilediff) - GetOntologyHistoryFileDiff
+* [ontologyManagementServiceGetOntologyOwners](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyowners) - GetOntologyOwners
+* [ontologyManagementServiceGetOntologyRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyremote) - GetOntologyRemote
+* [ontologyManagementServiceGetOntologySizeTimeline](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologysizetimeline) - GetOntologySizeTimeline
+* [ontologyManagementServiceGetOntologySyncConflicts](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologysyncconflicts) - GetOntologySyncConflicts
+* [ontologyManagementServiceGetOntologyUsageSummary](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyusagesummary) - GetOntologyUsageSummary
+* [ontologyManagementServiceGetPatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatch) - GetPatch
+* [ontologyManagementServiceGetPatchByNumber](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatchbynumber) - GetPatchByNumber
+* [ontologyManagementServiceGetPatchCapabilities](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatchcapabilities) - GetPatchCapabilities
+* [ontologyManagementServiceGetRawPatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetrawpatch) - GetRawPatch
+* [ontologyManagementServiceGetUsageDetailsForFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetusagedetailsforfile) - GetUsageDetailsForFile
+* [ontologyManagementServiceListApprovalRules](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistapprovalrules) - ListApprovalRules
+* [ontologyManagementServiceListChatsForFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistchatsforfile) - ListChatsForFile
+* [ontologyManagementServiceListContextPatchAutoApproveRules](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
+* [ontologyManagementServiceListGoldenFiles](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistgoldenfiles) - ListGoldenFiles
+* [ontologyManagementServiceListOntologyEntries](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyentries) - ListOntologyEntries
+* [ontologyManagementServiceListOntologyHistory](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyhistory) - ListOntologyHistory
+* [ontologyManagementServiceListOntologyImports](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyimports) - ListOntologyImports
+* [ontologyManagementServiceListOntologySubmodules](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologysubmodules) - ListOntologySubmodules
+* [ontologyManagementServiceListOntologySyncRuns](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologysyncruns) - ListOntologySyncRuns
+* [ontologyManagementServiceListPatchReviewers](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistpatchreviewers) - ListPatchReviewers
+* [ontologyManagementServiceListPatches](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistpatches) - ListPatches
+* [ontologyManagementServiceListSkills](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+* [ontologyManagementServicePlanOntologyMerge](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceplanontologymerge) - PlanOntologyMerge
+* [ontologyManagementServicePreviewOntologyPullFromRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepreviewontologypullfromremote) - PreviewOntologyPullFromRemote
+* [ontologyManagementServicePullOntologyFromRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepullontologyfromremote) - PullOntologyFromRemote
+* [ontologyManagementServicePushOntologyToRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepushontologytoremote) - PushOntologyToRemote
+* [ontologyManagementServiceRecoverOntology](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerecoverontology) - RecoverOntology
+* [ontologyManagementServiceRemoveOntologyRemote](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceremoveontologyremote) - RemoveOntologyRemote
+* [ontologyManagementServiceRemoveOntologySubmodule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceremoveontologysubmodule) - RemoveOntologySubmodule
+* [ontologyManagementServiceRenameOntologyFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerenameontologyfile) - RenameOntologyFile
+* [ontologyManagementServiceRequestPatchReview](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerequestpatchreview) - RequestPatchReview
+* [ontologyManagementServiceResolveOntologySyncConflict](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceresolveontologysyncconflict) - ResolveOntologySyncConflict
+* [ontologyManagementServiceRestorePatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerestorepatch) - RestorePatch
+* [ontologyManagementServiceRevertPatch](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerevertpatch) - RevertPatch
+* [ontologyManagementServiceSaveAllObjectsAsConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesaveallobjectsasconfig) - SaveAllObjectsAsConfig
+* [ontologyManagementServiceSaveObjectAsConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesaveobjectasconfig) - SaveObjectAsConfig
+* [ontologyManagementServiceSetOntologyFileGolden](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesetontologyfilegolden) - SetOntologyFileGolden
+* [ontologyManagementServiceTriggerConfigDriftReconcile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicetriggerconfigdriftreconcile) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [ontologyManagementServiceUpdateApprovalRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdateapprovalrule) - UpdateApprovalRule
+* [ontologyManagementServiceUpdateContextPatchAutoApproveRule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
+* [ontologyManagementServiceUpdateOntologySyncConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdateontologysyncconfig) - UpdateOntologySyncConfig
+* [ontologyManagementServiceUpsertOntologyAnaConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyanaconfig) - UpsertOntologyAnaConfig
+* [ontologyManagementServiceUpsertOntologyFile](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyfile) - UpsertOntologyFile
+* [ontologyManagementServiceUpsertOntologyOwners](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyowners) - UpsertOntologyOwners
+* [ontologyManagementServiceValidateConfig](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicevalidateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 
 ### [Playbooks](docs/sdks/playbooks/README.md)
 
@@ -529,6 +532,10 @@ run();
 * [updateObjectVisibility](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](docs/sdks/rbac/README.md#updaterole) - UpdateRole
 
+### [RBACService](docs/sdks/rbacservice/README.md)
+
+* [rbacServiceSetRolePermissions](docs/sdks/rbacservice/README.md#rbacservicesetrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+
 ### [Sandbox](docs/sdks/sandbox/README.md)
 
 * [executeQuery](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
@@ -545,6 +552,13 @@ run();
 * [restartSandbox](docs/sdks/sandboxadmin/README.md#restartsandbox) - Restart a stopped/reaped sandbox by re-acquiring a worker for the same  sandbox_id, preserving the original owner. Same scoping as StopSandbox  (owner, or sandbox:write_private for org-wide).
 * [stop](docs/sdks/sandboxadmin/README.md#stop) - StopSandbox
 
+### [SandboxCapabilityService](docs/sdks/sandboxcapabilityservice/README.md)
+
+* [sandboxCapabilityServiceExecuteWrite](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceexecutewrite) - ExecuteWrite
+* [sandboxCapabilityServicePutAsset](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceputasset) - PutAsset
+* [sandboxCapabilityServiceSendNotify](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicesendnotify) - SendNotify
+* [sandboxCapabilityServiceStateOp](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestateop) - StateOp
+
 ### [Scim](docs/sdks/scim/README.md)
 
 * [createOAuthClient](docs/sdks/scim/README.md#createoauthclient) - CreateScimOAuthClient
@@ -556,20 +570,11 @@ run();
 
 ### [Secrets](docs/sdks/secrets/README.md)
 
-* [createApiRevision](docs/sdks/secrets/README.md#createapirevision) - CreateApiRevision
-* [deleteApiAccessKey](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
-* [deleteApiRevision](docs/sdks/secrets/README.md#deleteapirevision) - DeleteApiRevision
 * [deleteSecret](docs/sdks/secrets/README.md#deletesecret) - DeleteSecret
-* [getApiAccessKey](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 * [getMembersWithSecrets](docs/sdks/secrets/README.md#getmemberswithsecrets) - GetMembersWithSecrets
-* [listApiAccessKeys](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
-* [listApiProviders](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders
 * [listSecrets](docs/sdks/secrets/README.md#listsecrets) - ListSecrets
-* [migrateSecretToApiConnector](docs/sdks/secrets/README.md#migratesecrettoapiconnector) - MigrateSecretToApiConnector
 * [putSecret](docs/sdks/secrets/README.md#putsecret) - PutSecret
-* [testApiAccessKey](docs/sdks/secrets/README.md#testapiaccesskey) - TestApiAccessKey
 * [update](docs/sdks/secrets/README.md#update) - UpdateSecret
-* [upsertApiAccessKey](docs/sdks/secrets/README.md#upsertapiaccesskey) - UpsertApiAccessKey
 
 ### [Slack](docs/sdks/slack/README.md)
 
@@ -641,11 +646,17 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsCreateApp`](docs/sdks/apps/README.md#createapp) - CreateApp
 - [`appsDeleteApp`](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 - [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+- [`appServiceAppServiceGetAppMemberState`](docs/sdks/appservice/README.md#appservicegetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+- [`appServiceAppServiceListAppActivitySince`](docs/sdks/appservice/README.md#appservicelistappactivitysince) - ListAppActivitySince
+- [`appServiceAppServiceListMyAppMemberActivity`](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+- [`appServiceAppServicePresenceHeartbeat`](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+- [`appServiceAppServiceRecordAppMemberActivity`](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - RecordAppMemberActivity
+- [`appServiceAppServiceSetAppMemberState`](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
 - [`appsGet`](docs/sdks/apps/README.md#get) - GetApp
 - [`appsGetAppVersion`](docs/sdks/apps/README.md#getappversion) - GetAppVersion
 - [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - View analytics: reads the engagement views recorded on app page load.
 - [`appsGetMembersWithApps`](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
-- [`appsHeartbeat`](docs/sdks/apps/README.md#heartbeat) - Viewer heartbeat: keeps a warm compute worker alive while the app is open so its  billed lifetime tracks the view session (mirrors a dashboard's viewer TTL). No-op  when the app has no warm worker; never spawns one.
+- [`appsHeartbeat`](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 - [`appsInvokeComputeFunction`](docs/sdks/apps/README.md#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 - [`appsList`](docs/sdks/apps/README.md#list) - ListApps
 - [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Version history: a snapshot is recorded on each publish; authors can list and restore.
@@ -758,78 +769,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`datasetsGetStats`](docs/sdks/datasets/README.md#getstats) - GetDatasetStats
 - [`datasetsProcessUploadPresignUrl`](docs/sdks/datasets/README.md#processuploadpresignurl) - ProcessUploadPresignUrl
 - [`datasetsUpdateDataset`](docs/sdks/datasets/README.md#updatedataset) - Update dataset metadata
-- [`librariesAddSubmodule`](docs/sdks/libraries/README.md#addsubmodule) - AddLibrarySubmodule
-- [`librariesApprovePatch`](docs/sdks/libraries/README.md#approvepatch) - ApprovePatch
-- [`librariesConfigureLibraryRemote`](docs/sdks/libraries/README.md#configurelibraryremote) - ConfigureLibraryRemote
-- [`librariesCreateApprovalRule`](docs/sdks/libraries/README.md#createapprovalrule) - CreateApprovalRule
-- [`librariesCreateContextPatchAutoApproveRule`](docs/sdks/libraries/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
-- [`librariesCreateFileUploadUrl`](docs/sdks/libraries/README.md#createfileuploadurl) - CreateLibraryFileUploadUrl
-- [`librariesCreateLibraryDirectory`](docs/sdks/libraries/README.md#createlibrarydirectory) - CreateLibraryDirectory
-- [`librariesDeleteApprovalRule`](docs/sdks/libraries/README.md#deleteapprovalrule) - DeleteApprovalRule
-- [`librariesDeleteContextPatchAutoApproveRule`](docs/sdks/libraries/README.md#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
-- [`librariesDeleteLibraryDirectory`](docs/sdks/libraries/README.md#deletelibrarydirectory) - DeleteLibraryDirectory
-- [`librariesDeleteLibraryFile`](docs/sdks/libraries/README.md#deletelibraryfile) - DeleteLibraryFile
-- [`librariesDeleteOwners`](docs/sdks/libraries/README.md#deleteowners) - DeleteLibraryOwners
-- [`librariesDenyPatch`](docs/sdks/libraries/README.md#denypatch) - DenyPatch
-- [`librariesExchangeGithubCode`](docs/sdks/libraries/README.md#exchangegithubcode) - ExchangeLibraryGithubCode
-- [`librariesFinalizeFileUpload`](docs/sdks/libraries/README.md#finalizefileupload) - FinalizeLibraryFileUpload
-- [`librariesGetAnaConfig`](docs/sdks/libraries/README.md#getanaconfig) - GetLibraryAnaConfig
-- [`librariesGetCodeownerCoverage`](docs/sdks/libraries/README.md#getcodeownercoverage) - GetCodeownerCoverage
-- [`librariesGetConfigExportCapabilities`](docs/sdks/libraries/README.md#getconfigexportcapabilities) - GetConfigExportCapabilities
-- [`librariesGetEffectiveOwners`](docs/sdks/libraries/README.md#geteffectiveowners) - GetEffectiveLibraryOwners
-- [`librariesGetFile`](docs/sdks/libraries/README.md#getfile) - GetLibraryFile
-- [`librariesGetFileUsage`](docs/sdks/libraries/README.md#getfileusage) - GetFileUsage
-- [`librariesGetFileUsageTimeline`](docs/sdks/libraries/README.md#getfileusagetimeline) - GetFileUsageTimeline
-- [`librariesGetHistoryFileDiff`](docs/sdks/libraries/README.md#gethistoryfilediff) - GetLibraryHistoryFileDiff
-- [`librariesGetLibraryGithubOAuthURL`](docs/sdks/libraries/README.md#getlibrarygithuboauthurl) - GetLibraryGithubOAuthURL
-- [`librariesGetLibraryOwners`](docs/sdks/libraries/README.md#getlibraryowners) - GetLibraryOwners
-- [`librariesGetLibrarySyncConflicts`](docs/sdks/libraries/README.md#getlibrarysyncconflicts) - GetLibrarySyncConflicts
-- [`librariesGetMigrationStatus`](docs/sdks/libraries/README.md#getmigrationstatus) - GetLibraryMigrationStatus
-- [`librariesGetOntologyUsageSummary`](docs/sdks/libraries/README.md#getontologyusagesummary) - GetOntologyUsageSummary
-- [`librariesGetPatch`](docs/sdks/libraries/README.md#getpatch) - GetPatch
-- [`librariesGetPatchByNumber`](docs/sdks/libraries/README.md#getpatchbynumber) - GetPatchByNumber
-- [`librariesGetPatchCapabilities`](docs/sdks/libraries/README.md#getpatchcapabilities) - GetPatchCapabilities
-- [`librariesGetRawPatch`](docs/sdks/libraries/README.md#getrawpatch) - GetRawPatch
-- [`librariesGetRemote`](docs/sdks/libraries/README.md#getremote) - GetLibraryRemote
-- [`librariesGetSizeTimeline`](docs/sdks/libraries/README.md#getsizetimeline) - GetLibrarySizeTimeline
-- [`librariesGetUsageDetailsForFile`](docs/sdks/libraries/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
-- [`librariesListApprovalRules`](docs/sdks/libraries/README.md#listapprovalrules) - ListApprovalRules
-- [`librariesListChatsForFile`](docs/sdks/libraries/README.md#listchatsforfile) - ListChatsForFile
-- [`librariesListContextPatchAutoApproveRules`](docs/sdks/libraries/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-- [`librariesListImports`](docs/sdks/libraries/README.md#listimports) - ListLibraryImports
-- [`librariesListLibraryEntries`](docs/sdks/libraries/README.md#listlibraryentries) - ListLibraryEntries
-- [`librariesListLibraryHistory`](docs/sdks/libraries/README.md#listlibraryhistory) - ListLibraryHistory
-- [`librariesListLibrarySubmodules`](docs/sdks/libraries/README.md#listlibrarysubmodules) - ListLibrarySubmodules
-- [`librariesListLibrarySyncRuns`](docs/sdks/libraries/README.md#listlibrarysyncruns) - ListLibrarySyncRuns
-- [`librariesListPatches`](docs/sdks/libraries/README.md#listpatches) - ListPatches
-- [`librariesListPatchReviewers`](docs/sdks/libraries/README.md#listpatchreviewers) - ListPatchReviewers
-- [`librariesListSkills`](docs/sdks/libraries/README.md#listskills) - Lists the skills under the library's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-- [`librariesMigrateLegacyContext`](docs/sdks/libraries/README.md#migratelegacycontext) - MigrateLegacyContextToLibrary
-- [`librariesMigrateOntology`](docs/sdks/libraries/README.md#migrateontology) - MigrateOntologyToLibrary
-- [`librariesPlanMerge`](docs/sdks/libraries/README.md#planmerge) - PlanLibraryMerge
-- [`librariesPreviewLibraryPullFromRemote`](docs/sdks/libraries/README.md#previewlibrarypullfromremote) - PreviewLibraryPullFromRemote
-- [`librariesPullFromRemote`](docs/sdks/libraries/README.md#pullfromremote) - PullLibraryFromRemote
-- [`librariesPushLibraryToRemote`](docs/sdks/libraries/README.md#pushlibrarytoremote) - PushLibraryToRemote
-- [`librariesRecover`](docs/sdks/libraries/README.md#recover) - RecoverLibrary
-- [`librariesRemoveLibrarySubmodule`](docs/sdks/libraries/README.md#removelibrarysubmodule) - RemoveLibrarySubmodule
-- [`librariesRemoveRemote`](docs/sdks/libraries/README.md#removeremote) - RemoveLibraryRemote
-- [`librariesRenameFile`](docs/sdks/libraries/README.md#renamefile) - RenameLibraryFile
-- [`librariesRequestPatchReview`](docs/sdks/libraries/README.md#requestpatchreview) - RequestPatchReview
-- [`librariesResolveSyncConflict`](docs/sdks/libraries/README.md#resolvesyncconflict) - ResolveLibrarySyncConflict
-- [`librariesRestorePatch`](docs/sdks/libraries/README.md#restorepatch) - RestorePatch
-- [`librariesRevertPatch`](docs/sdks/libraries/README.md#revertpatch) - RevertPatch
-- [`librariesSaveAllObjectsAsConfig`](docs/sdks/libraries/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
-- [`librariesSaveAsConfig`](docs/sdks/libraries/README.md#saveasconfig) - SaveObjectAsConfig
-- [`librariesTriggerConfigDriftReconcile`](docs/sdks/libraries/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Library repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-- [`librariesUpdateApprovalRule`](docs/sdks/libraries/README.md#updateapprovalrule) - UpdateApprovalRule
-- [`librariesUpdateContextPatchAutoApproveRule`](docs/sdks/libraries/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-- [`librariesUpdateLibrarySyncConfig`](docs/sdks/libraries/README.md#updatelibrarysyncconfig) - UpdateLibrarySyncConfig
-- [`librariesUpsertAnaConfig`](docs/sdks/libraries/README.md#upsertanaconfig) - UpsertLibraryAnaConfig
-- [`librariesUpsertLibraryFile`](docs/sdks/libraries/README.md#upsertlibraryfile) - UpsertLibraryFile
-- [`librariesUpsertOwners`](docs/sdks/libraries/README.md#upsertowners) - UpsertLibraryOwners
-- [`librariesValidateConfig`](docs/sdks/libraries/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
-- [`libraryServiceLibraryServiceListGoldenFiles`](docs/sdks/libraryservice/README.md#libraryservicelistgoldenfiles) - ListGoldenFiles
-- [`libraryServiceLibraryServiceSetLibraryFileGolden`](docs/sdks/libraryservice/README.md#libraryservicesetlibraryfilegolden) - SetLibraryFileGolden
 - [`mcpClearOAuthToken`](docs/sdks/mcp/README.md#clearoauthtoken) - ClearOAuthToken
 - [`mcpDelete`](docs/sdks/mcp/README.md#delete) - DeleteMCPServer
 - [`mcpGetServers`](docs/sdks/mcp/README.md#getservers) - GetMCPServers
@@ -871,6 +810,75 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityRefineDraft`](docs/sdks/observability/README.md#refinedraft) - Custom topics
 - [`observabilitySetTopicTagFeedback`](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 - [`observabilityUpdateCustomTopic`](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
+- [`ontologyManagementServiceOntologyManagementServiceAddOntologySubmodule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceaddontologysubmodule) - AddOntologySubmodule
+- [`ontologyManagementServiceOntologyManagementServiceApprovePatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceapprovepatch) - ApprovePatch
+- [`ontologyManagementServiceOntologyManagementServiceConfigureOntologyRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceconfigureontologyremote) - ConfigureOntologyRemote
+- [`ontologyManagementServiceOntologyManagementServiceCreateApprovalRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateapprovalrule) - CreateApprovalRule
+- [`ontologyManagementServiceOntologyManagementServiceCreateContextPatchAutoApproveRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreatecontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
+- [`ontologyManagementServiceOntologyManagementServiceCreateOntologyDirectory`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateontologydirectory) - CreateOntologyDirectory
+- [`ontologyManagementServiceOntologyManagementServiceCreateOntologyFileUploadUrl`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicecreateontologyfileuploadurl) - CreateOntologyFileUploadUrl
+- [`ontologyManagementServiceOntologyManagementServiceDeleteApprovalRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteapprovalrule) - DeleteApprovalRule
+- [`ontologyManagementServiceOntologyManagementServiceDeleteContextPatchAutoApproveRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
+- [`ontologyManagementServiceOntologyManagementServiceDeleteOntologyDirectory`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologydirectory) - DeleteOntologyDirectory
+- [`ontologyManagementServiceOntologyManagementServiceDeleteOntologyFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologyfile) - DeleteOntologyFile
+- [`ontologyManagementServiceOntologyManagementServiceDeleteOntologyOwners`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedeleteontologyowners) - DeleteOntologyOwners
+- [`ontologyManagementServiceOntologyManagementServiceDenyPatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicedenypatch) - DenyPatch
+- [`ontologyManagementServiceOntologyManagementServiceExchangeOntologyGithubCode`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceexchangeontologygithubcode) - ExchangeOntologyGithubCode
+- [`ontologyManagementServiceOntologyManagementServiceFinalizeOntologyFileUpload`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicefinalizeontologyfileupload) - FinalizeOntologyFileUpload
+- [`ontologyManagementServiceOntologyManagementServiceGetCodeownerCoverage`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetcodeownercoverage) - GetCodeownerCoverage
+- [`ontologyManagementServiceOntologyManagementServiceGetConfigExportCapabilities`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetconfigexportcapabilities) - GetConfigExportCapabilities
+- [`ontologyManagementServiceOntologyManagementServiceGetEffectiveOntologyOwners`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegeteffectiveontologyowners) - GetEffectiveOntologyOwners
+- [`ontologyManagementServiceOntologyManagementServiceGetFileUsage`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetfileusage) - GetFileUsage
+- [`ontologyManagementServiceOntologyManagementServiceGetFileUsageTimeline`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetfileusagetimeline) - GetFileUsageTimeline
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyAnaConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyanaconfig) - GetOntologyAnaConfig
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyfile) - GetOntologyFile
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyGithubOAuthURL`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologygithuboauthurl) - GetOntologyGithubOAuthURL
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyHistoryFileDiff`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyhistoryfilediff) - GetOntologyHistoryFileDiff
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyOwners`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyowners) - GetOntologyOwners
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyremote) - GetOntologyRemote
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologySizeTimeline`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologysizetimeline) - GetOntologySizeTimeline
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologySyncConflicts`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologysyncconflicts) - GetOntologySyncConflicts
+- [`ontologyManagementServiceOntologyManagementServiceGetOntologyUsageSummary`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetontologyusagesummary) - GetOntologyUsageSummary
+- [`ontologyManagementServiceOntologyManagementServiceGetPatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatch) - GetPatch
+- [`ontologyManagementServiceOntologyManagementServiceGetPatchByNumber`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatchbynumber) - GetPatchByNumber
+- [`ontologyManagementServiceOntologyManagementServiceGetPatchCapabilities`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetpatchcapabilities) - GetPatchCapabilities
+- [`ontologyManagementServiceOntologyManagementServiceGetRawPatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetrawpatch) - GetRawPatch
+- [`ontologyManagementServiceOntologyManagementServiceGetUsageDetailsForFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicegetusagedetailsforfile) - GetUsageDetailsForFile
+- [`ontologyManagementServiceOntologyManagementServiceListApprovalRules`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistapprovalrules) - ListApprovalRules
+- [`ontologyManagementServiceOntologyManagementServiceListChatsForFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistchatsforfile) - ListChatsForFile
+- [`ontologyManagementServiceOntologyManagementServiceListContextPatchAutoApproveRules`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
+- [`ontologyManagementServiceOntologyManagementServiceListGoldenFiles`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistgoldenfiles) - ListGoldenFiles
+- [`ontologyManagementServiceOntologyManagementServiceListOntologyEntries`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyentries) - ListOntologyEntries
+- [`ontologyManagementServiceOntologyManagementServiceListOntologyHistory`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyhistory) - ListOntologyHistory
+- [`ontologyManagementServiceOntologyManagementServiceListOntologyImports`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologyimports) - ListOntologyImports
+- [`ontologyManagementServiceOntologyManagementServiceListOntologySubmodules`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologysubmodules) - ListOntologySubmodules
+- [`ontologyManagementServiceOntologyManagementServiceListOntologySyncRuns`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistontologysyncruns) - ListOntologySyncRuns
+- [`ontologyManagementServiceOntologyManagementServiceListPatches`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistpatches) - ListPatches
+- [`ontologyManagementServiceOntologyManagementServiceListPatchReviewers`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistpatchreviewers) - ListPatchReviewers
+- [`ontologyManagementServiceOntologyManagementServiceListSkills`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicelistskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+- [`ontologyManagementServiceOntologyManagementServicePlanOntologyMerge`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceplanontologymerge) - PlanOntologyMerge
+- [`ontologyManagementServiceOntologyManagementServicePreviewOntologyPullFromRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepreviewontologypullfromremote) - PreviewOntologyPullFromRemote
+- [`ontologyManagementServiceOntologyManagementServicePullOntologyFromRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepullontologyfromremote) - PullOntologyFromRemote
+- [`ontologyManagementServiceOntologyManagementServicePushOntologyToRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicepushontologytoremote) - PushOntologyToRemote
+- [`ontologyManagementServiceOntologyManagementServiceRecoverOntology`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerecoverontology) - RecoverOntology
+- [`ontologyManagementServiceOntologyManagementServiceRemoveOntologyRemote`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceremoveontologyremote) - RemoveOntologyRemote
+- [`ontologyManagementServiceOntologyManagementServiceRemoveOntologySubmodule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceremoveontologysubmodule) - RemoveOntologySubmodule
+- [`ontologyManagementServiceOntologyManagementServiceRenameOntologyFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerenameontologyfile) - RenameOntologyFile
+- [`ontologyManagementServiceOntologyManagementServiceRequestPatchReview`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerequestpatchreview) - RequestPatchReview
+- [`ontologyManagementServiceOntologyManagementServiceResolveOntologySyncConflict`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceresolveontologysyncconflict) - ResolveOntologySyncConflict
+- [`ontologyManagementServiceOntologyManagementServiceRestorePatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerestorepatch) - RestorePatch
+- [`ontologyManagementServiceOntologyManagementServiceRevertPatch`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicerevertpatch) - RevertPatch
+- [`ontologyManagementServiceOntologyManagementServiceSaveAllObjectsAsConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesaveallobjectsasconfig) - SaveAllObjectsAsConfig
+- [`ontologyManagementServiceOntologyManagementServiceSaveObjectAsConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesaveobjectasconfig) - SaveObjectAsConfig
+- [`ontologyManagementServiceOntologyManagementServiceSetOntologyFileGolden`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicesetontologyfilegolden) - SetOntologyFileGolden
+- [`ontologyManagementServiceOntologyManagementServiceTriggerConfigDriftReconcile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicetriggerconfigdriftreconcile) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+- [`ontologyManagementServiceOntologyManagementServiceUpdateApprovalRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdateapprovalrule) - UpdateApprovalRule
+- [`ontologyManagementServiceOntologyManagementServiceUpdateContextPatchAutoApproveRule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
+- [`ontologyManagementServiceOntologyManagementServiceUpdateOntologySyncConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupdateontologysyncconfig) - UpdateOntologySyncConfig
+- [`ontologyManagementServiceOntologyManagementServiceUpsertOntologyAnaConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyanaconfig) - UpsertOntologyAnaConfig
+- [`ontologyManagementServiceOntologyManagementServiceUpsertOntologyFile`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyfile) - UpsertOntologyFile
+- [`ontologyManagementServiceOntologyManagementServiceUpsertOntologyOwners`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceupsertontologyowners) - UpsertOntologyOwners
+- [`ontologyManagementServiceOntologyManagementServiceValidateConfig`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementservicevalidateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 - [`playbooksAttachDashboard`](docs/sdks/playbooks/README.md#attachdashboard) - AttachDashboard
 - [`playbooksAttachDataset`](docs/sdks/playbooks/README.md#attachdataset) - AttachDataset
 - [`playbooksCancelTemplateExecution`](docs/sdks/playbooks/README.md#canceltemplateexecution) - Cancel template execution for a specific template header
@@ -961,6 +969,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
 - [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
 - [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
+- [`rbacServiceRBACServiceSetRolePermissions`](docs/sdks/rbacservice/README.md#rbacservicesetrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
 - [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Object sharing and access control
 - [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
 - [`rbacShareWithGroup`](docs/sdks/rbac/README.md#sharewithgroup) - ShareObjectWithGroup
@@ -977,6 +986,10 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`sandboxAdminReadFile`](docs/sdks/sandboxadmin/README.md#readfile) - ReadSandboxFile
 - [`sandboxAdminRestartSandbox`](docs/sdks/sandboxadmin/README.md#restartsandbox) - Restart a stopped/reaped sandbox by re-acquiring a worker for the same  sandbox_id, preserving the original owner. Same scoping as StopSandbox  (owner, or sandbox:write_private for org-wide).
 - [`sandboxAdminStop`](docs/sdks/sandboxadmin/README.md#stop) - StopSandbox
+- [`sandboxCapabilityServiceSandboxCapabilityServiceExecuteWrite`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceexecutewrite) - ExecuteWrite
+- [`sandboxCapabilityServiceSandboxCapabilityServicePutAsset`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceputasset) - PutAsset
+- [`sandboxCapabilityServiceSandboxCapabilityServiceSendNotify`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicesendnotify) - SendNotify
+- [`sandboxCapabilityServiceSandboxCapabilityServiceStateOp`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestateop) - StateOp
 - [`sandboxExecuteQuery`](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 - [`scimCreateOAuthClient`](docs/sdks/scim/README.md#createoauthclient) - CreateScimOAuthClient
 - [`scimCreateScimToken`](docs/sdks/scim/README.md#createscimtoken) - CreateScimToken
@@ -984,20 +997,11 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`scimListScimOAuthClients`](docs/sdks/scim/README.md#listscimoauthclients) - ListScimOAuthClients
 - [`scimRevokeOAuthClient`](docs/sdks/scim/README.md#revokeoauthclient) - RevokeScimOAuthClient
 - [`scimRevokeScimToken`](docs/sdks/scim/README.md#revokescimtoken) - RevokeScimToken
-- [`secretsCreateApiRevision`](docs/sdks/secrets/README.md#createapirevision) - CreateApiRevision
-- [`secretsDeleteApiAccessKey`](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
-- [`secretsDeleteApiRevision`](docs/sdks/secrets/README.md#deleteapirevision) - DeleteApiRevision
 - [`secretsDeleteSecret`](docs/sdks/secrets/README.md#deletesecret) - DeleteSecret
-- [`secretsGetApiAccessKey`](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 - [`secretsGetMembersWithSecrets`](docs/sdks/secrets/README.md#getmemberswithsecrets) - GetMembersWithSecrets
-- [`secretsListApiAccessKeys`](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
-- [`secretsListApiProviders`](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders
 - [`secretsListSecrets`](docs/sdks/secrets/README.md#listsecrets) - ListSecrets
-- [`secretsMigrateSecretToApiConnector`](docs/sdks/secrets/README.md#migratesecrettoapiconnector) - MigrateSecretToApiConnector
 - [`secretsPutSecret`](docs/sdks/secrets/README.md#putsecret) - PutSecret
-- [`secretsTestApiAccessKey`](docs/sdks/secrets/README.md#testapiaccesskey) - TestApiAccessKey
 - [`secretsUpdate`](docs/sdks/secrets/README.md#update) - UpdateSecret
-- [`secretsUpsertApiAccessKey`](docs/sdks/secrets/README.md#upsertapiaccesskey) - UpsertApiAccessKey
 - [`slackCreateUuid`](docs/sdks/slack/README.md#createuuid) - CreateSlackUuid
 - [`slackDeleteInstallation`](docs/sdks/slack/README.md#deleteinstallation) - DeleteInstallation
 - [`slackGetCurrentUser`](docs/sdks/slack/README.md#getcurrentuser) - GetCurrentUser

@@ -12,7 +12,7 @@ let value: TextqlRpcPublicCellsOntologyQueryCell = {
         {
           columns: [
             {
-              doubles: {},
+              int32: {},
             },
           ],
         },
