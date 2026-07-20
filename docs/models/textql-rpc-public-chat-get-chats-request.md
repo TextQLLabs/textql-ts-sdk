@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatGetChatsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatGetChatsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatGetChatsRequest = {
   createdAfter: new Date("2023-01-15T01:30:15.01Z"),

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ChatServiceAttachDashboardRequest } from "textql-sdk/models/operations";
+import { ChatServiceAttachDashboardRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceAttachDashboardRequest = {
   body: {},

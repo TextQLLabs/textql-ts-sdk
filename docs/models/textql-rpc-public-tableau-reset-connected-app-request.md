@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicTableauResetConnectedAppRequest } from "textql-sdk/models";
+import { TextqlRpcPublicTableauResetConnectedAppRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicTableauResetConnectedAppRequest = {};
 ```

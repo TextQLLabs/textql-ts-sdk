@@ -11,7 +11,7 @@ A generic empty message that you can re-use to avoid defining duplicated
 ## Example Usage
 
 ```typescript
-import { GoogleProtobufEmpty } from "textql-sdk/models";
+import { GoogleProtobufEmpty } from "@textql/sdk/models";
 
 let value: GoogleProtobufEmpty = {};
 ```

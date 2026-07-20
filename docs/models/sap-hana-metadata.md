@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SapHanaMetadata } from "textql-sdk/models";
+import { SapHanaMetadata } from "@textql/sdk/models";
 
 let value: SapHanaMetadata = {
   sapHanaMetadata: {},

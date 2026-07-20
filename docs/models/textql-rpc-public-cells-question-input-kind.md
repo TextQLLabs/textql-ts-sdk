@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsQuestionInputKind } from "textql-sdk/models";
+import { TextqlRpcPublicCellsQuestionInputKind } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsQuestionInputKind =
   "QUESTION_INPUT_KIND_FORMFIELD";

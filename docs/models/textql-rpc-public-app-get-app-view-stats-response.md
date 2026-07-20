@@ -5,7 +5,7 @@ View analytics
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppGetAppViewStatsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicAppGetAppViewStatsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppGetAppViewStatsResponse = {
   recentViewers: [

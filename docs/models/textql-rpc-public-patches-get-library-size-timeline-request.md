@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetLibrarySizeTimelineRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetLibrarySizeTimelineRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetLibrarySizeTimelineRequest = {};
 ```

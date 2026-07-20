@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookPlaybookTriggerType } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookPlaybookTriggerType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookPlaybookTriggerType = "TRIGGER_TYPE_WEBHOOK";
 

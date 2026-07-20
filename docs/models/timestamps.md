@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Timestamps } from "textql-sdk/models";
+import { Timestamps } from "@textql/sdk/models";
 
 let value: Timestamps = {
   timestamps: {

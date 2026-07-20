@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyOntologyMetric } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyOntologyMetric } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyOntologyMetric = {
   accessTime: new Date("2023-01-15T01:30:15.01Z"),

@@ -5,7 +5,7 @@ View analytics
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardGetDashboardViewStatsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardGetDashboardViewStatsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardGetDashboardViewStatsRequest = {};
 ```

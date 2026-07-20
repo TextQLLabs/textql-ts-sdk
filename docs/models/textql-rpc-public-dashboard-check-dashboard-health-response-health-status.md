@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardCheckDashboardHealthResponseHealthStatus } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardCheckDashboardHealthResponseHealthStatus } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardCheckDashboardHealthResponseHealthStatus =
   "HEALTH_STATUS_NOT_RUNNING";

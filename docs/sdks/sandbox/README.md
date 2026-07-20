@@ -14,7 +14,7 @@ ExecuteQuery
 
 <!-- UsageSnippet language="typescript" operationID="SandboxQueryService_ExecuteQuery" method="post" path="/textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteQuery" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -38,8 +38,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxExecuteQuery } from "textql-sdk/funcs/sandbox-execute-query.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxExecuteQuery } from "@textql/sdk/funcs/sandbox-execute-query.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

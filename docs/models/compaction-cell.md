@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { CompactionCell } from "textql-sdk/models";
+import { CompactionCell } from "@textql/sdk/models";
 
 let value: CompactionCell = {
   compactionCell: {},

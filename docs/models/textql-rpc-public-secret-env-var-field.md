@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSecretEnvVarField } from "textql-sdk/models";
+import { TextqlRpcPublicSecretEnvVarField } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSecretEnvVarField = {};
 ```

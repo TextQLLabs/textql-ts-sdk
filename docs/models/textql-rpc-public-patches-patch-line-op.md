@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesPatchLineOp } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesPatchLineOp } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesPatchLineOp = "PATCH_LINE_OP_CONTEXT";
 

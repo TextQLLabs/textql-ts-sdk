@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsGoogleDriveSearchCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsGoogleDriveSearchCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsGoogleDriveSearchCell = {};
 ```

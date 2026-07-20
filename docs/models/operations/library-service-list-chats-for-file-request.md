@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceListChatsForFileRequest } from "textql-sdk/models/operations";
+import { LibraryServiceListChatsForFileRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceListChatsForFileRequest = {
   body: {},

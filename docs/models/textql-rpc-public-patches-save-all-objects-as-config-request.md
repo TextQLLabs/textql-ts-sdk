@@ -8,7 +8,7 @@ SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest = {};
 ```

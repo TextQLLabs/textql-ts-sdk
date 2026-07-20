@@ -5,6 +5,13 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 [![Built by Speakeasy](https://img.shields.io/badge/Built_by-SPEAKEASY-374151?style=for-the-badge&labelColor=f3f4f6)](https://www.speakeasy.com/?utm_source=textql-sdk&utm_campaign=typescript)
 [![License: Apache 2.0](https://img.shields.io/badge/LICENSE_//_APACHE_2.0-3b5bdb?style=for-the-badge&labelColor=eff6ff)](https://www.apache.org/licenses/LICENSE-2.0)
 
+<!-- Start Summary [summary] -->
+## Summary
+
+TextQL API: TextQL public API. Generated from protobuf service definitions; internal
+endpoints are excluded via google.api.visibility / file_visibility.
+<!-- End Summary [summary] -->
+
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
@@ -34,30 +41,30 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add textql-sdk
+npm add @textql/sdk
 ```
 
 ### PNPM
 
 ```bash
-pnpm add textql-sdk
+pnpm add @textql/sdk
 ```
 
 ### Bun
 
 ```bash
-bun add textql-sdk
+bun add @textql/sdk
 ```
 
 ### Yarn
 
 ```bash
-yarn add textql-sdk
+yarn add @textql/sdk
 ```
 
 > [!NOTE]
 > This package is published as an ES Module (ESM) only. For applications using
-> CommonJS, use `await import("textql-sdk")` to import and use this package.
+> CommonJS, use `await import("@textql/sdk")` to import and use this package.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start Requirements [requirements] -->
@@ -72,7 +79,7 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 ### Example
 
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -104,7 +111,7 @@ This SDK supports the following security scheme globally:
 
 To authenticate with the API the `apiKey` parameter must be set when initializing the SDK client instance. For example:
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1024,7 +1031,7 @@ Some of the endpoints in this SDK support retries.  If you use the SDK without a
 
 To change the default retry strategy for a single API call, simply provide a retryConfig object to the call:
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1055,7 +1062,7 @@ run();
 
 If you'd like to override the default retry strategy for all operations that support retries, you can provide a retryConfig at SDK initialization:
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   retryConfig: {
@@ -1099,8 +1106,8 @@ run();
 
 ### Example
 ```typescript
-import { Textql } from "textql-sdk";
-import * as errors from "textql-sdk/models/errors";
+import { Textql } from "@textql/sdk";
+import * as errors from "@textql/sdk/models/errors";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1156,7 +1163,7 @@ run();
 
 The default server can be overridden globally by passing a URL to the `serverURL: string` optional parameter when initializing the SDK client instance. For example:
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   serverURL: "https://app.textql.com",
@@ -1195,9 +1202,9 @@ The following example shows how to:
 - use the `"requestError"` hook to log errors
 
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 import { ProxyAgent } from "undici";
-import { HTTPClient } from "textql-sdk/lib/http";
+import { HTTPClient } from "@textql/sdk/lib/http";
 
 const dispatcher = new ProxyAgent("http://proxy.example.com:8080");
 
@@ -1240,7 +1247,7 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 > Beware that debug logging will reveal secrets, like API tokens in headers, in log messages printed to a console or files. It's recommended to use this feature only during local development and not in production.
 
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const sdk = new Textql({ debugLogger: console });
 ```

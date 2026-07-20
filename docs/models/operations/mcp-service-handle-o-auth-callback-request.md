@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MCPServiceHandleOAuthCallbackRequest } from "textql-sdk/models/operations";
+import { MCPServiceHandleOAuthCallbackRequest } from "@textql/sdk/models/operations";
 
 let value: MCPServiceHandleOAuthCallbackRequest = {
   body: {},

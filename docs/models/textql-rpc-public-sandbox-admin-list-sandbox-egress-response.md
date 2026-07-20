@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminListSandboxEgressResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminListSandboxEgressResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminListSandboxEgressResponse = {
   calls: [

@@ -5,7 +5,7 @@ Artifact types for drawer items
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatArtifactType } from "textql-sdk/models";
+import { TextqlRpcPublicChatArtifactType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatArtifactType = "ARTIFACT_TYPE_TEXT";
 

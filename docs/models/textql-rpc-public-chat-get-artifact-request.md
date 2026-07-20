@@ -5,7 +5,7 @@ Request full artifact data when item is selected
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatGetArtifactRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatGetArtifactRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatGetArtifactRequest = {};
 ```

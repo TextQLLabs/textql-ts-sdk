@@ -7,7 +7,7 @@ ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsConnectorsCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsConnectorsCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsConnectorsCell = {};
 ```

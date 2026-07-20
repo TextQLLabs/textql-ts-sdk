@@ -5,7 +5,7 @@ Dashboard folder for hierarchical organization
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardDashboardFolder } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardDashboardFolder } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardDashboardFolder = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

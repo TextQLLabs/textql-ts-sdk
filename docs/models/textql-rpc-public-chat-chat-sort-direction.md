@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatChatSortDirection } from "textql-sdk/models";
+import { TextqlRpcPublicChatChatSortDirection } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatChatSortDirection = "CHAT_SORT_DIRECTION_UNKNOWN";
 ```

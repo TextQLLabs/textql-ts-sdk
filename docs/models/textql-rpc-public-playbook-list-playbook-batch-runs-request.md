@@ -5,7 +5,7 @@ Request to list batch runs for a playbook
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookListPlaybookBatchRunsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookListPlaybookBatchRunsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookListPlaybookBatchRunsRequest = {};
 ```

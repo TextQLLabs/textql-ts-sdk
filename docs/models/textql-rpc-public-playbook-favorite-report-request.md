@@ -5,7 +5,7 @@ Favorite report messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookFavoriteReportRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookFavoriteReportRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookFavoriteReportRequest = {};
 ```

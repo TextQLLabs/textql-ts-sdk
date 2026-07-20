@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMcpClearOAuthTokenResponse } from "textql-sdk/models";
+import { TextqlRpcPublicMcpClearOAuthTokenResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMcpClearOAuthTokenResponse = {};
 ```

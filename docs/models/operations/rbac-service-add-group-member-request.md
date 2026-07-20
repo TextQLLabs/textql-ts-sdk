@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RBACServiceAddGroupMemberRequest } from "textql-sdk/models/operations";
+import { RBACServiceAddGroupMemberRequest } from "@textql/sdk/models/operations";
 
 let value: RBACServiceAddGroupMemberRequest = {
   body: {},

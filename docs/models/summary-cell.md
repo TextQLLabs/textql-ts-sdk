@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SummaryCell } from "textql-sdk/models";
+import { SummaryCell } from "@textql/sdk/models";
 
 let value: SummaryCell = {
   summaryCell: {},

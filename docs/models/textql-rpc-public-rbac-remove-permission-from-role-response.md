@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacRemovePermissionFromRoleResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacRemovePermissionFromRoleResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacRemovePermissionFromRoleResponse = {};
 ```

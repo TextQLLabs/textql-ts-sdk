@@ -5,7 +5,7 @@ AppCell records an agent action on a data app (the generative app execution prim
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsAppCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsAppCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsAppCell = {};
 ```

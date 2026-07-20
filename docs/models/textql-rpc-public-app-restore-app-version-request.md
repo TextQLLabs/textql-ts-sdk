@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppRestoreAppVersionRequest } from "textql-sdk/models";
+import { TextqlRpcPublicAppRestoreAppVersionRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppRestoreAppVersionRequest = {};
 ```

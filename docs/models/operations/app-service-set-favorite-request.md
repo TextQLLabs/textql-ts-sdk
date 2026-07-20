@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AppServiceSetFavoriteRequest } from "textql-sdk/models/operations";
+import { AppServiceSetFavoriteRequest } from "@textql/sdk/models/operations";
 
 let value: AppServiceSetFavoriteRequest = {
   body: {},

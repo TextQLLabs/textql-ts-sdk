@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConfigSourceConfigSyncStatus } from "textql-sdk/models";
+import { TextqlRpcPublicConfigSourceConfigSyncStatus } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConfigSourceConfigSyncStatus =
   "CONFIG_SYNC_STATUS_UNSPECIFIED";

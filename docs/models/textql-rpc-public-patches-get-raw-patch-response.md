@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetRawPatchResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetRawPatchResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetRawPatchResponse = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorSupabaseMetadata } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorSupabaseMetadata } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorSupabaseMetadata = {};
 ```

@@ -6,7 +6,7 @@ ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesValidateConfigRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesValidateConfigRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesValidateConfigRequest = {};
 ```

@@ -9,7 +9,7 @@ SaveObjectAsConfig renders an existing DB object (object_type keyed like
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesSaveObjectAsConfigRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesSaveObjectAsConfigRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesSaveObjectAsConfigRequest = {};
 ```

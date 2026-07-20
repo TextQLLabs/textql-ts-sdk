@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatWatchHandoffPendingEvent } from "textql-sdk/models";
+import { TextqlRpcPublicChatWatchHandoffPendingEvent } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatWatchHandoffPendingEvent = {};
 ```

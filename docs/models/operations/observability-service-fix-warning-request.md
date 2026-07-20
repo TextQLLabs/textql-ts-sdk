@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceFixWarningRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceFixWarningRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceFixWarningRequest = {
   body: {},

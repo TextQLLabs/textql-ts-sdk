@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardSpawnDashboardResponse } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardSpawnDashboardResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardSpawnDashboardResponse = {
   refreshedAt: new Date("2023-01-15T01:30:15.01Z"),

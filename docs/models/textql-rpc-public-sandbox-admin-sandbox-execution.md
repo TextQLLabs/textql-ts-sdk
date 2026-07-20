@@ -6,7 +6,7 @@ One recorded execution in a sandbox's Activity feed. output_preview is
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminSandboxExecution } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminSandboxExecution } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminSandboxExecution = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

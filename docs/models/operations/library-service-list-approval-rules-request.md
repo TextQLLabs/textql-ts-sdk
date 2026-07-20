@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceListApprovalRulesRequest } from "textql-sdk/models/operations";
+import { LibraryServiceListApprovalRulesRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceListApprovalRulesRequest = {
   body: {},

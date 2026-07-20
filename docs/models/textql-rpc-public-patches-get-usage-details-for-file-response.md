@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetUsageDetailsForFileResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetUsageDetailsForFileResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetUsageDetailsForFileResponse = {
   lastUsed: new Date("2023-01-15T01:30:15.01Z"),

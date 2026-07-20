@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MCPServiceInitiateOAuthFlowRequest } from "textql-sdk/models/operations";
+import { MCPServiceInitiateOAuthFlowRequest } from "@textql/sdk/models/operations";
 
 let value: MCPServiceInitiateOAuthFlowRequest = {
   body: {},

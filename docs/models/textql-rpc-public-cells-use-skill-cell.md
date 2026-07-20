@@ -8,7 +8,7 @@ UseSkillCell is the client projection of a `use_skill` auto-invoke. It
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsUseSkillCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsUseSkillCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsUseSkillCell = {};
 ```

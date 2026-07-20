@@ -8,7 +8,7 @@ Playbook report output style - matches parseReportStyle in playbook_helpers.go
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsPlaybookReportStyleLight } from "textql-sdk/models";
+import { TextqlRpcPublicCellsPlaybookReportStyleLight } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsPlaybookReportStyleLight =
   "REPORT_STYLE_LIGHT_CONCISE";

@@ -5,7 +5,7 @@ order is "most recent first"
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatHistoryRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatHistoryRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatHistoryRequest = {};
 ```

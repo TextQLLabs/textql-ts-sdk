@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsMetricsCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsMetricsCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsMetricsCell = {
   dataframe: {

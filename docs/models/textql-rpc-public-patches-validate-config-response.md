@@ -6,7 +6,7 @@ ValidateConfigResponse: ok == true with no diagnostics means functionally valid
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesValidateConfigResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesValidateConfigResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesValidateConfigResponse = {};
 ```

@@ -5,7 +5,7 @@ Get current member roles and permissions messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest = {};
 ```

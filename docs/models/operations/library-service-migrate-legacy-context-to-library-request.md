@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceMigrateLegacyContextToLibraryRequest } from "textql-sdk/models/operations";
+import { LibraryServiceMigrateLegacyContextToLibraryRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceMigrateLegacyContextToLibraryRequest = {
   body: {},

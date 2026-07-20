@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPowerbiGeneratePowerBIEmbedTokenResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPowerbiGeneratePowerBIEmbedTokenResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPowerbiGeneratePowerBIEmbedTokenResponse = {
   expiration: new Date("2023-01-15T01:30:15.01Z"),

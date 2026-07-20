@@ -19,7 +19,7 @@ CreateScimOAuthClient
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_CreateScimOAuthClient" method="post" path="/textql.rpc.public.scim.ScimService/CreateScimOAuthClient" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -41,8 +41,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimCreateOAuthClient } from "textql-sdk/funcs/scim-create-o-auth-client.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimCreateOAuthClient } from "@textql/sdk/funcs/scim-create-o-auth-client.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -92,7 +92,7 @@ CreateScimToken
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_CreateScimToken" method="post" path="/textql.rpc.public.scim.ScimService/CreateScimToken" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -114,8 +114,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimCreateScimToken } from "textql-sdk/funcs/scim-create-scim-token.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimCreateScimToken } from "@textql/sdk/funcs/scim-create-scim-token.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -165,7 +165,7 @@ ListScimOAuthClients
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_ListScimOAuthClients" method="post" path="/textql.rpc.public.scim.ScimService/ListScimOAuthClients" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -187,8 +187,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimListScimOAuthClients } from "textql-sdk/funcs/scim-list-scim-o-auth-clients.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimListScimOAuthClients } from "@textql/sdk/funcs/scim-list-scim-o-auth-clients.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -238,7 +238,7 @@ ListScimTokens
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_ListScimTokens" method="post" path="/textql.rpc.public.scim.ScimService/ListScimTokens" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -260,8 +260,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimList } from "textql-sdk/funcs/scim-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimList } from "@textql/sdk/funcs/scim-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -311,7 +311,7 @@ RevokeScimOAuthClient
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_RevokeScimOAuthClient" method="post" path="/textql.rpc.public.scim.ScimService/RevokeScimOAuthClient" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -333,8 +333,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimRevokeOAuthClient } from "textql-sdk/funcs/scim-revoke-o-auth-client.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimRevokeOAuthClient } from "@textql/sdk/funcs/scim-revoke-o-auth-client.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -384,7 +384,7 @@ RevokeScimToken
 
 <!-- UsageSnippet language="typescript" operationID="ScimService_RevokeScimToken" method="post" path="/textql.rpc.public.scim.ScimService/RevokeScimToken" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -406,8 +406,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { scimRevokeScimToken } from "textql-sdk/funcs/scim-revoke-scim-token.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { scimRevokeScimToken } from "@textql/sdk/funcs/scim-revoke-scim-token.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

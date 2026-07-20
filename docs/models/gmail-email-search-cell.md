@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { GmailEmailSearchCell } from "textql-sdk/models";
+import { GmailEmailSearchCell } from "@textql/sdk/models";
 
 let value: GmailEmailSearchCell = {
   gmailEmailSearchCell: {},

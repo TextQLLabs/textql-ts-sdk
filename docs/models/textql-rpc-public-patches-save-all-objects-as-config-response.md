@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse = {
   patch: {

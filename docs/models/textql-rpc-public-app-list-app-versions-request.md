@@ -5,7 +5,7 @@ AppFile is one non-entry file of a multi-file app tree; code remains the entry i
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppListAppVersionsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicAppListAppVersionsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppListAppVersionsRequest = {};
 ```

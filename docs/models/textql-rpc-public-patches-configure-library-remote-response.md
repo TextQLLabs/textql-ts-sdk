@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesConfigureLibraryRemoteResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesConfigureLibraryRemoteResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesConfigureLibraryRemoteResponse = {
   remote: {

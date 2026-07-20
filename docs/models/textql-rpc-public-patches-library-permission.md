@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesLibraryPermission } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesLibraryPermission } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesLibraryPermission =
   "LIBRARY_PERMISSION_READ_WRITE";

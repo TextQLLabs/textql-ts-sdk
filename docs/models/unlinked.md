@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Unlinked } from "textql-sdk/models";
+import { Unlinked } from "@textql/sdk/models";
 
 let value: Unlinked = {
   unlinked: {},

@@ -6,7 +6,7 @@ ConfigDiagnosticClass partitions a finding by who can fix it, so an authoring lo
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesConfigDiagnosticClass } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesConfigDiagnosticClass } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesConfigDiagnosticClass =
   "CONFIG_DIAGNOSTIC_CLASS_EDIT_FIXABLE";

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceTriggerConfigDriftReconcileRequest } from "textql-sdk/models/operations";
+import { LibraryServiceTriggerConfigDriftReconcileRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceTriggerConfigDriftReconcileRequest = {
   body: {},

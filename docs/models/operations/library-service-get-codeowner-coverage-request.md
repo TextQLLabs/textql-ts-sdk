@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetCodeownerCoverageRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetCodeownerCoverageRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetCodeownerCoverageRequest = {
   body: {},

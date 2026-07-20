@@ -5,7 +5,7 @@ never change the names or numbers of existing tabular file categories!
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetTabularFileCategory } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetTabularFileCategory } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetTabularFileCategory = "CATEGORY_ODS";
 

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesLibraryFileKind } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesLibraryFileKind } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesLibraryFileKind = "LIBRARY_FILE_KIND_TEXT";
 

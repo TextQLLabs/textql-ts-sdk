@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AppServiceInvokeAppComputeFunctionRequest } from "textql-sdk/models/operations";
+import { AppServiceInvokeAppComputeFunctionRequest } from "@textql/sdk/models/operations";
 
 let value: AppServiceInvokeAppComputeFunctionRequest = {
   body: {},

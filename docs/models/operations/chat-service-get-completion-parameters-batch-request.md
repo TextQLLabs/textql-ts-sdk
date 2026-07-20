@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ChatServiceGetCompletionParametersBatchRequest } from "textql-sdk/models/operations";
+import { ChatServiceGetCompletionParametersBatchRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetCompletionParametersBatchRequest = {
   body: {},

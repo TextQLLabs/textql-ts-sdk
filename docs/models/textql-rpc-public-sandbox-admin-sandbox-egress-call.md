@@ -7,7 +7,7 @@ One recorded outbound HTTP(S) call made by a sandbox (the egress ledger).
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminSandboxEgressCall } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminSandboxEgressCall } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminSandboxEgressCall = {
   occurredAt: new Date("2023-01-15T01:30:15.01Z"),

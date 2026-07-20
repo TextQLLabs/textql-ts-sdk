@@ -1,6 +1,6 @@
-# textql-sdk Examples
+# @textql/sdk Examples
 
-This directory contains example scripts demonstrating how to use the textql-sdk SDK.
+This directory contains example scripts demonstrating how to use the @textql/sdk SDK.
 
 ## Prerequisites
 

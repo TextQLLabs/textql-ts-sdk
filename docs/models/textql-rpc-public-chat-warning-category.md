@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatWarningCategory } from "textql-sdk/models";
+import { TextqlRpcPublicChatWarningCategory } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatWarningCategory = "WARNING_CATEGORY_SYMPTOM";
 

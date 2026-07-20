@@ -6,7 +6,7 @@ Version history (mirrors dashboard.DashboardVersion). A snapshot of the
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppListAppVersionsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicAppListAppVersionsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppListAppVersionsResponse = {
   versions: [

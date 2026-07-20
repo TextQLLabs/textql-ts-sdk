@@ -5,7 +5,7 @@ TemplateOptions configures the one-shot TYPE_TEMPLATE paradigm.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicParadigmTemplateOptions } from "textql-sdk/models";
+import { TextqlRpcPublicParadigmTemplateOptions } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicParadigmTemplateOptions = {};
 ```

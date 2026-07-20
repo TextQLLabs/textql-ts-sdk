@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { BackingQuery } from "textql-sdk/models";
+import { BackingQuery } from "@textql/sdk/models";
 
 let value: BackingQuery = {
   backingQuery: "<value>",

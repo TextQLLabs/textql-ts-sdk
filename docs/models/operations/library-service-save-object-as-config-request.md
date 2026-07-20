@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceSaveObjectAsConfigRequest } from "textql-sdk/models/operations";
+import { LibraryServiceSaveObjectAsConfigRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceSaveObjectAsConfigRequest = {
   body: {},

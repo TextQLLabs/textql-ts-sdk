@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesApprovalRule } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesApprovalRule } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesApprovalRule = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

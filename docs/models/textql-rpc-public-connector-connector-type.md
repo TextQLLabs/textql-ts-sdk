@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorConnectorType } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorConnectorType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorConnectorType = "DATABRICKS";
 

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Microsoft365CalendarCell } from "textql-sdk/models";
+import { Microsoft365CalendarCell } from "@textql/sdk/models";
 
 let value: Microsoft365CalendarCell = {
   microsoft365CalendarCell: {},

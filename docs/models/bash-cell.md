@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { BashCell } from "textql-sdk/models";
+import { BashCell } from "@textql/sdk/models";
 
 let value: BashCell = {
   bashCell: {},

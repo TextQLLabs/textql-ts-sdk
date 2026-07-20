@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { DashboardServiceDuplicateDashboardRequest } from "textql-sdk/models/operations";
+import { DashboardServiceDuplicateDashboardRequest } from "@textql/sdk/models/operations";
 
 let value: DashboardServiceDuplicateDashboardRequest = {
   body: {},

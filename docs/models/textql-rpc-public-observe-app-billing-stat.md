@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveAppBillingStat } from "textql-sdk/models";
+import { TextqlRpcPublicObserveAppBillingStat } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveAppBillingStat = {
   lastViewedAt: new Date("2023-01-15T01:30:15.01Z"),

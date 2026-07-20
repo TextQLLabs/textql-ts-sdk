@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacMigrateAllScimGroupMappingsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacMigrateAllScimGroupMappingsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacMigrateAllScimGroupMappingsResponse = {};
 ```

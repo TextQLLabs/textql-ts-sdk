@@ -8,7 +8,7 @@ QuestionsCell is the agent's "ask the user structured questions" tool. It is a
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsQuestionsCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsQuestionsCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsQuestionsCell = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxQuerySqlQueryTemplate } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxQuerySqlQueryTemplate } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxQuerySqlQueryTemplate = {};
 ```

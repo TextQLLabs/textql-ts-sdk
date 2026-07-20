@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacDeleteGroupResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacDeleteGroupResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacDeleteGroupResponse = {};
 ```

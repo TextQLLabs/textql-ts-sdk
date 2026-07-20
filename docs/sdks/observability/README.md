@@ -42,7 +42,7 @@ ActivateCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_ActivateCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/ActivateCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -64,8 +64,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityActivateCustomTopic } from "textql-sdk/funcs/observability-activate-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityActivateCustomTopic } from "@textql/sdk/funcs/observability-activate-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -115,7 +115,7 @@ BackfillCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_BackfillCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/BackfillCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -140,8 +140,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityBackfillCustomTopic } from "textql-sdk/funcs/observability-backfill-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityBackfillCustomTopic } from "@textql/sdk/funcs/observability-backfill-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -194,7 +194,7 @@ BackfillThreadWarnings
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_BackfillThreadWarnings" method="post" path="/textql.rpc.public.observe.ObservabilityService/BackfillThreadWarnings" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -216,8 +216,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityBackfillThreadWarnings } from "textql-sdk/funcs/observability-backfill-thread-warnings.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityBackfillThreadWarnings } from "@textql/sdk/funcs/observability-backfill-thread-warnings.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -267,7 +267,7 @@ CreateCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_CreateCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/CreateCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -289,8 +289,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityCreateCustomTopic } from "textql-sdk/funcs/observability-create-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityCreateCustomTopic } from "@textql/sdk/funcs/observability-create-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -340,7 +340,7 @@ DeactivateCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_DeactivateCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/DeactivateCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -362,8 +362,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityDeactivateCustomTopic } from "textql-sdk/funcs/observability-deactivate-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityDeactivateCustomTopic } from "@textql/sdk/funcs/observability-deactivate-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -413,7 +413,7 @@ DeleteCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_DeleteCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/DeleteCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -435,8 +435,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityDeleteCustomTopic } from "textql-sdk/funcs/observability-delete-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityDeleteCustomTopic } from "@textql/sdk/funcs/observability-delete-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -486,7 +486,7 @@ ExportObservabilityCsv
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_ExportObservabilityCsv" method="post" path="/textql.rpc.public.observe.ObservabilityService/ExportObservabilityCsv" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -508,8 +508,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityExportCsv } from "textql-sdk/funcs/observability-export-csv.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityExportCsv } from "@textql/sdk/funcs/observability-export-csv.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -559,7 +559,7 @@ FixCheckRecord
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_FixCheckRecord" method="post" path="/textql.rpc.public.observe.ObservabilityService/FixCheckRecord" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -581,8 +581,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityFixCheckRecord } from "textql-sdk/funcs/observability-fix-check-record.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityFixCheckRecord } from "@textql/sdk/funcs/observability-fix-check-record.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -632,7 +632,7 @@ FixWarning
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_FixWarning" method="post" path="/textql.rpc.public.observe.ObservabilityService/FixWarning" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -654,8 +654,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityFixWarning } from "textql-sdk/funcs/observability-fix-warning.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityFixWarning } from "@textql/sdk/funcs/observability-fix-warning.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -705,7 +705,7 @@ GetAccessMethodStats
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetAccessMethodStats" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetAccessMethodStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -730,8 +730,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetAccessMethodStats } from "textql-sdk/funcs/observability-get-access-method-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetAccessMethodStats } from "@textql/sdk/funcs/observability-get-access-method-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -784,7 +784,7 @@ GetActivePeopleStats
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetActivePeopleStats" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetActivePeopleStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -806,8 +806,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetActivePeopleStats } from "textql-sdk/funcs/observability-get-active-people-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetActivePeopleStats } from "@textql/sdk/funcs/observability-get-active-people-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -857,7 +857,7 @@ GetActivePeopleTrend
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetActivePeopleTrend" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetActivePeopleTrend" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -882,8 +882,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetActivePeopleTrend } from "textql-sdk/funcs/observability-get-active-people-trend.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetActivePeopleTrend } from "@textql/sdk/funcs/observability-get-active-people-trend.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -936,7 +936,7 @@ GetBackfillPreview
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetBackfillPreview" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetBackfillPreview" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -958,8 +958,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetBackfillPreview } from "textql-sdk/funcs/observability-get-backfill-preview.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetBackfillPreview } from "@textql/sdk/funcs/observability-get-backfill-preview.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1009,7 +1009,7 @@ GetBackfillStatus
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetBackfillStatus" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetBackfillStatus" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1031,8 +1031,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetBackfillStatus } from "textql-sdk/funcs/observability-get-backfill-status.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetBackfillStatus } from "@textql/sdk/funcs/observability-get-backfill-status.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1082,7 +1082,7 @@ GetBillingStats
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetBillingStats" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetBillingStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1104,8 +1104,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetBillingStats } from "textql-sdk/funcs/observability-get-billing-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetBillingStats } from "@textql/sdk/funcs/observability-get-billing-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1155,7 +1155,7 @@ GetChatSourceStats
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetChatSourceStats" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetChatSourceStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1180,8 +1180,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetChatSourceStats } from "textql-sdk/funcs/observability-get-chat-source-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetChatSourceStats } from "@textql/sdk/funcs/observability-get-chat-source-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1234,7 +1234,7 @@ GetChatTopics
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetChatTopics" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetChatTopics" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1256,8 +1256,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetChatTopics } from "textql-sdk/funcs/observability-get-chat-topics.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetChatTopics } from "@textql/sdk/funcs/observability-get-chat-topics.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1307,7 +1307,7 @@ GetCheckRecordFix
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetCheckRecordFix" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetCheckRecordFix" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1329,8 +1329,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetCheckRecordFix } from "textql-sdk/funcs/observability-get-check-record-fix.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetCheckRecordFix } from "@textql/sdk/funcs/observability-get-check-record-fix.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1380,7 +1380,7 @@ GetCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1405,8 +1405,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetCustomTopic } from "textql-sdk/funcs/observability-get-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetCustomTopic } from "@textql/sdk/funcs/observability-get-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1459,7 +1459,7 @@ GetCustomTopicPeople
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetCustomTopicPeople" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetCustomTopicPeople" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1481,8 +1481,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetCustomTopicPeople } from "textql-sdk/funcs/observability-get-custom-topic-people.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetCustomTopicPeople } from "@textql/sdk/funcs/observability-get-custom-topic-people.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1532,7 +1532,7 @@ GetCustomTopicThreads
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetCustomTopicThreads" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetCustomTopicThreads" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1554,8 +1554,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetCustomTopicThreads } from "textql-sdk/funcs/observability-get-custom-topic-threads.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetCustomTopicThreads } from "@textql/sdk/funcs/observability-get-custom-topic-threads.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1605,7 +1605,7 @@ GetEngagementSpectrum
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetEngagementSpectrum" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetEngagementSpectrum" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1627,8 +1627,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetEngagementSpectrum } from "textql-sdk/funcs/observability-get-engagement-spectrum.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetEngagementSpectrum } from "@textql/sdk/funcs/observability-get-engagement-spectrum.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1678,7 +1678,7 @@ GetMemberActivity
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetMemberActivity" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetMemberActivity" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1700,8 +1700,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetMemberActivity } from "textql-sdk/funcs/observability-get-member-activity.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetMemberActivity } from "@textql/sdk/funcs/observability-get-member-activity.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1751,7 +1751,7 @@ GetObservabilityStats
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetObservabilityStats" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetObservabilityStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1773,8 +1773,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetObservabilityStats } from "textql-sdk/funcs/observability-get-observability-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetObservabilityStats } from "@textql/sdk/funcs/observability-get-observability-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1824,7 +1824,7 @@ GetThreadWarnings
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_GetThreadWarnings" method="post" path="/textql.rpc.public.observe.ObservabilityService/GetThreadWarnings" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1846,8 +1846,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityGetThreadWarnings } from "textql-sdk/funcs/observability-get-thread-warnings.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityGetThreadWarnings } from "@textql/sdk/funcs/observability-get-thread-warnings.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1897,7 +1897,7 @@ ListCustomTopics
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_ListCustomTopics" method="post" path="/textql.rpc.public.observe.ObservabilityService/ListCustomTopics" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1922,8 +1922,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityListCustomTopics } from "textql-sdk/funcs/observability-list-custom-topics.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityListCustomTopics } from "@textql/sdk/funcs/observability-list-custom-topics.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1976,7 +1976,7 @@ Custom topics
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_RefineTopicDraft" method="post" path="/textql.rpc.public.observe.ObservabilityService/RefineTopicDraft" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1998,8 +1998,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityRefineDraft } from "textql-sdk/funcs/observability-refine-draft.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityRefineDraft } from "@textql/sdk/funcs/observability-refine-draft.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2049,7 +2049,7 @@ SetTopicTagFeedback
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_SetTopicTagFeedback" method="post" path="/textql.rpc.public.observe.ObservabilityService/SetTopicTagFeedback" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2071,8 +2071,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilitySetTopicTagFeedback } from "textql-sdk/funcs/observability-set-topic-tag-feedback.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilitySetTopicTagFeedback } from "@textql/sdk/funcs/observability-set-topic-tag-feedback.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2122,7 +2122,7 @@ UpdateCustomTopic
 
 <!-- UsageSnippet language="typescript" operationID="ObservabilityService_UpdateCustomTopic" method="post" path="/textql.rpc.public.observe.ObservabilityService/UpdateCustomTopic" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2144,8 +2144,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { observabilityUpdateCustomTopic } from "textql-sdk/funcs/observability-update-custom-topic.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { observabilityUpdateCustomTopic } from "@textql/sdk/funcs/observability-update-custom-topic.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

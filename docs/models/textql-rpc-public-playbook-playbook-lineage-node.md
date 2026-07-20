@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookPlaybookLineageNode } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookPlaybookLineageNode } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookPlaybookLineageNode = {
   duplicatedAt: new Date("2023-01-15T01:30:15.01Z"),

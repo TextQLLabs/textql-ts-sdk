@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveCustomTopicResponse } from "textql-sdk/models";
+import { TextqlRpcPublicObserveCustomTopicResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveCustomTopicResponse = {
   topic: {

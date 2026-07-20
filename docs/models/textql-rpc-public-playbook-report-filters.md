@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookReportFilters } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookReportFilters } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookReportFilters = {
   startTime: new Date("2023-01-15T01:30:15.01Z"),

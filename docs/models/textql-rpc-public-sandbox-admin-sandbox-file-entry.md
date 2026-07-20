@@ -5,7 +5,7 @@ One entry in a sandbox directory listing.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminSandboxFileEntry } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminSandboxFileEntry } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminSandboxFileEntry = {
   modifiedAt: new Date("2023-01-15T01:30:15.01Z"),

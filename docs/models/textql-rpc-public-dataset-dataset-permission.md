@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetDatasetPermission } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetDatasetPermission } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetDatasetPermission = "PERMISSION_ADMIN";
 

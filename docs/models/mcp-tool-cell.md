@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { McpToolCell } from "textql-sdk/models";
+import { McpToolCell } from "@textql/sdk/models";
 
 let value: McpToolCell = {
   mcpToolCell: {},

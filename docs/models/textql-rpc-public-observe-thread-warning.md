@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveThreadWarning } from "textql-sdk/models";
+import { TextqlRpcPublicObserveThreadWarning } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveThreadWarning = {
   fixPatchCell: {

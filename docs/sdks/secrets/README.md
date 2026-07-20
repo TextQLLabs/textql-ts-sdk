@@ -27,7 +27,7 @@ CreateApiRevision
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_CreateApiRevision" method="post" path="/textql.rpc.public.secret.SecretService/CreateApiRevision" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -49,8 +49,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsCreateApiRevision } from "textql-sdk/funcs/secrets-create-api-revision.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsCreateApiRevision } from "@textql/sdk/funcs/secrets-create-api-revision.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -100,7 +100,7 @@ DeleteApiAccessKey
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_DeleteApiAccessKey" method="post" path="/textql.rpc.public.secret.SecretService/DeleteApiAccessKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -122,8 +122,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsDeleteApiAccessKey } from "textql-sdk/funcs/secrets-delete-api-access-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsDeleteApiAccessKey } from "@textql/sdk/funcs/secrets-delete-api-access-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -173,7 +173,7 @@ DeleteApiRevision
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_DeleteApiRevision" method="post" path="/textql.rpc.public.secret.SecretService/DeleteApiRevision" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -195,8 +195,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsDeleteApiRevision } from "textql-sdk/funcs/secrets-delete-api-revision.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsDeleteApiRevision } from "@textql/sdk/funcs/secrets-delete-api-revision.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -246,7 +246,7 @@ DeleteSecret
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_DeleteSecret" method="post" path="/textql.rpc.public.secret.SecretService/DeleteSecret" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -268,8 +268,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsDeleteSecret } from "textql-sdk/funcs/secrets-delete-secret.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsDeleteSecret } from "@textql/sdk/funcs/secrets-delete-secret.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -319,7 +319,7 @@ GetApiAccessKey
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_GetApiAccessKey" method="post" path="/textql.rpc.public.secret.SecretService/GetApiAccessKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -341,8 +341,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsGetApiAccessKey } from "textql-sdk/funcs/secrets-get-api-access-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsGetApiAccessKey } from "@textql/sdk/funcs/secrets-get-api-access-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -392,7 +392,7 @@ GetMembersWithSecrets
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_GetMembersWithSecrets" method="post" path="/textql.rpc.public.secret.SecretService/GetMembersWithSecrets" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -414,8 +414,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsGetMembersWithSecrets } from "textql-sdk/funcs/secrets-get-members-with-secrets.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsGetMembersWithSecrets } from "@textql/sdk/funcs/secrets-get-members-with-secrets.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -465,7 +465,7 @@ ListApiAccessKeys
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_ListApiAccessKeys" method="post" path="/textql.rpc.public.secret.SecretService/ListApiAccessKeys" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -487,8 +487,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsListApiAccessKeys } from "textql-sdk/funcs/secrets-list-api-access-keys.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsListApiAccessKeys } from "@textql/sdk/funcs/secrets-list-api-access-keys.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -538,7 +538,7 @@ ListApiProviders
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_ListApiProviders" method="post" path="/textql.rpc.public.secret.SecretService/ListApiProviders" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -560,8 +560,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsListApiProviders } from "textql-sdk/funcs/secrets-list-api-providers.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsListApiProviders } from "@textql/sdk/funcs/secrets-list-api-providers.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -611,7 +611,7 @@ ListSecrets
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_ListSecrets" method="post" path="/textql.rpc.public.secret.SecretService/ListSecrets" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -633,8 +633,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsListSecrets } from "textql-sdk/funcs/secrets-list-secrets.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsListSecrets } from "@textql/sdk/funcs/secrets-list-secrets.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -684,7 +684,7 @@ MigrateSecretToApiConnector
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_MigrateSecretToApiConnector" method="post" path="/textql.rpc.public.secret.SecretService/MigrateSecretToApiConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -706,8 +706,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsMigrateSecretToApiConnector } from "textql-sdk/funcs/secrets-migrate-secret-to-api-connector.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsMigrateSecretToApiConnector } from "@textql/sdk/funcs/secrets-migrate-secret-to-api-connector.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -757,7 +757,7 @@ PutSecret
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_PutSecret" method="post" path="/textql.rpc.public.secret.SecretService/PutSecret" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -779,8 +779,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsPutSecret } from "textql-sdk/funcs/secrets-put-secret.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsPutSecret } from "@textql/sdk/funcs/secrets-put-secret.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -830,7 +830,7 @@ TestApiAccessKey
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_TestApiAccessKey" method="post" path="/textql.rpc.public.secret.SecretService/TestApiAccessKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -852,8 +852,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsTestApiAccessKey } from "textql-sdk/funcs/secrets-test-api-access-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsTestApiAccessKey } from "@textql/sdk/funcs/secrets-test-api-access-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -903,7 +903,7 @@ UpdateSecret
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_UpdateSecret" method="post" path="/textql.rpc.public.secret.SecretService/UpdateSecret" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -925,8 +925,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsUpdate } from "textql-sdk/funcs/secrets-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsUpdate } from "@textql/sdk/funcs/secrets-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -976,7 +976,7 @@ UpsertApiAccessKey
 
 <!-- UsageSnippet language="typescript" operationID="SecretService_UpsertApiAccessKey" method="post" path="/textql.rpc.public.secret.SecretService/UpsertApiAccessKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1000,8 +1000,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { secretsUpsertApiAccessKey } from "textql-sdk/funcs/secrets-upsert-api-access-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { secretsUpsertApiAccessKey } from "@textql/sdk/funcs/secrets-upsert-api-access-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

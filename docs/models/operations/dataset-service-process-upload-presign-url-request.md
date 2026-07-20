@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { DatasetServiceProcessUploadPresignUrlRequest } from "textql-sdk/models/operations";
+import { DatasetServiceProcessUploadPresignUrlRequest } from "@textql/sdk/models/operations";
 
 let value: DatasetServiceProcessUploadPresignUrlRequest = {
   body: {},

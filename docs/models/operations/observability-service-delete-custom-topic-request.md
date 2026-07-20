@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceDeleteCustomTopicRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceDeleteCustomTopicRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceDeleteCustomTopicRequest = {
   body: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RBACServiceCreateApiKeyRequest } from "textql-sdk/models/operations";
+import { RBACServiceCreateApiKeyRequest } from "@textql/sdk/models/operations";
 
 let value: RBACServiceCreateApiKeyRequest = {
   body: {},

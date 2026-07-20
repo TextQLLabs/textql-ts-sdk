@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveAccessMethodCount } from "textql-sdk/models";
+import { TextqlRpcPublicObserveAccessMethodCount } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveAccessMethodCount = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyMetricAggregation } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyMetricAggregation } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyMetricAggregation = "METRIC_AGGREGATION_MAX";
 

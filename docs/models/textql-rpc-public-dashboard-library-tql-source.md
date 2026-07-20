@@ -7,7 +7,7 @@ References a .tql file stored in the Context Library. The file is rendered
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardLibraryTQLSource } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardLibraryTQLSource } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardLibraryTQLSource = {};
 ```

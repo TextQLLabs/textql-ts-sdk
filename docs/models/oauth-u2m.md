@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { OauthU2m } from "textql-sdk/models";
+import { OauthU2m } from "@textql/sdk/models";
 
 let value: OauthU2m = {
   oauthU2m: {},

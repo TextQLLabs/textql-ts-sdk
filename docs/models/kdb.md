@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Kdb } from "textql-sdk/models";
+import { Kdb } from "@textql/sdk/models";
 
 let value: Kdb = {
   kdb: {},

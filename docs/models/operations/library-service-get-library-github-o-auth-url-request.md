@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetLibraryGithubOAuthURLRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetLibraryGithubOAuthURLRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetLibraryGithubOAuthURLRequest = {
   body: {},

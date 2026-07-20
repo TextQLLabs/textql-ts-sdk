@@ -5,7 +5,7 @@ ChatParadigm includes paradigm options
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicParadigmParadigm } from "textql-sdk/models";
+import { TextqlRpcPublicParadigmParadigm } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicParadigmParadigm = {};
 ```

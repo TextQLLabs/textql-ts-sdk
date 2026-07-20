@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ScimServiceCreateScimOAuthClientRequest } from "textql-sdk/models/operations";
+import { ScimServiceCreateScimOAuthClientRequest } from "@textql/sdk/models/operations";
 
 let value: ScimServiceCreateScimOAuthClientRequest = {
   body: {},

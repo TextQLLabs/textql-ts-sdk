@@ -22,7 +22,7 @@ GetSandbox
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_GetSandbox" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/GetSandbox" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -44,8 +44,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminGetSandbox } from "textql-sdk/funcs/sandbox-admin-get-sandbox.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminGetSandbox } from "@textql/sdk/funcs/sandbox-admin-get-sandbox.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -96,7 +96,7 @@ Outbound HTTP(S) calls a sandbox made (the egress ledger). Durable — reads
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ListSandboxEgress" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxEgress" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -118,8 +118,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminListSandboxEgress } from "textql-sdk/funcs/sandbox-admin-list-sandbox-egress.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminListSandboxEgress } from "@textql/sdk/funcs/sandbox-admin-list-sandbox-egress.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -169,7 +169,7 @@ ListSandboxExecutions
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ListSandboxExecutions" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxExecutions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -191,8 +191,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminListExecutions } from "textql-sdk/funcs/sandbox-admin-list-executions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminListExecutions } from "@textql/sdk/funcs/sandbox-admin-list-executions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -243,7 +243,7 @@ Live filesystem of a running sandbox. Both are NO-OP (read-only) and only
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ListSandboxFiles" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxFiles" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -265,8 +265,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminListSandboxFiles } from "textql-sdk/funcs/sandbox-admin-list-sandbox-files.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminListSandboxFiles } from "@textql/sdk/funcs/sandbox-admin-list-sandbox-files.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -318,7 +318,7 @@ Per-lease compute usage for a sandbox, computed from lease durations × the
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ListSandboxSpend" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxSpend" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -340,8 +340,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminListSandboxSpend } from "textql-sdk/funcs/sandbox-admin-list-sandbox-spend.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminListSandboxSpend } from "@textql/sdk/funcs/sandbox-admin-list-sandbox-spend.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -391,7 +391,7 @@ ListSandboxes
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ListSandboxes" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ListSandboxes" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -413,8 +413,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminList } from "textql-sdk/funcs/sandbox-admin-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminList } from "@textql/sdk/funcs/sandbox-admin-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -464,7 +464,7 @@ ReadSandboxFile
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_ReadSandboxFile" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/ReadSandboxFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -486,8 +486,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminReadFile } from "textql-sdk/funcs/sandbox-admin-read-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminReadFile } from "@textql/sdk/funcs/sandbox-admin-read-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -539,7 +539,7 @@ Restart a stopped/reaped sandbox by re-acquiring a worker for the same
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_RestartSandbox" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/RestartSandbox" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -561,8 +561,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminRestartSandbox } from "textql-sdk/funcs/sandbox-admin-restart-sandbox.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminRestartSandbox } from "@textql/sdk/funcs/sandbox-admin-restart-sandbox.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -612,7 +612,7 @@ StopSandbox
 
 <!-- UsageSnippet language="typescript" operationID="SandboxAdminService_StopSandbox" method="post" path="/textql.rpc.public.sandbox_admin.SandboxAdminService/StopSandbox" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -634,8 +634,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { sandboxAdminStop } from "textql-sdk/funcs/sandbox-admin-stop.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxAdminStop } from "@textql/sdk/funcs/sandbox-admin-stop.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

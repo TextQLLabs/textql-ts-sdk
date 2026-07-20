@@ -5,7 +5,7 @@ Simplified query response for external API users
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatQueryOneShotResponse } from "textql-sdk/models";
+import { TextqlRpcPublicChatQueryOneShotResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatQueryOneShotResponse = {
   cells: [

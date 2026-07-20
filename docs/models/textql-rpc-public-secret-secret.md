@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSecretSecret } from "textql-sdk/models";
+import { TextqlRpcPublicSecretSecret } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSecretSecret = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

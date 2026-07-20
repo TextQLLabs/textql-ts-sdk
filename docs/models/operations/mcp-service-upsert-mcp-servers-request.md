@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MCPServiceUpsertMCPServersRequest } from "textql-sdk/models/operations";
+import { MCPServiceUpsertMCPServersRequest } from "@textql/sdk/models/operations";
 
 let value: MCPServiceUpsertMCPServersRequest = {
   body: {

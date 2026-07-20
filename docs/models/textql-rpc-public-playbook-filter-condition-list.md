@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookFilterConditionList } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookFilterConditionList } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookFilterConditionList = {};
 ```

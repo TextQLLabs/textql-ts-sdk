@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookDeletePlaybookResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookDeletePlaybookResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookDeletePlaybookResponse = {
   deletedAt: new Date("2023-01-15T01:30:15.01Z"),

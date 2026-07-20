@@ -10,7 +10,7 @@ Aggregate ontology-usage health for the window — the roll-ups the Ontology
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse = {};
 ```

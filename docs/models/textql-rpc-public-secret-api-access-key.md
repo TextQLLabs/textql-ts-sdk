@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSecretApiAccessKey } from "textql-sdk/models";
+import { TextqlRpcPublicSecretApiAccessKey } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSecretApiAccessKey = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

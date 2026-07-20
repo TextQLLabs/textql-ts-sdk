@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsContextPromptChangeStatus } from "textql-sdk/models";
+import { TextqlRpcPublicCellsContextPromptChangeStatus } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsContextPromptChangeStatus = "STATUS_PENDING";
 

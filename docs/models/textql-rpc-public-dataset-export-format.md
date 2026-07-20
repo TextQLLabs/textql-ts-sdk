@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetExportFormat } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetExportFormat } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetExportFormat = "FORMAT_CSV";
 ```

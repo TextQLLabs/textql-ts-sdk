@@ -52,7 +52,7 @@ AttachDashboard
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_AttachDashboard" method="post" path="/textql.rpc.public.playbook.PlaybookService/AttachDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -74,8 +74,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksAttachDashboard } from "textql-sdk/funcs/playbooks-attach-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksAttachDashboard } from "@textql/sdk/funcs/playbooks-attach-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -125,7 +125,7 @@ AttachDataset
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_AttachDataset" method="post" path="/textql.rpc.public.playbook.PlaybookService/AttachDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -147,8 +147,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksAttachDataset } from "textql-sdk/funcs/playbooks-attach-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksAttachDataset } from "@textql/sdk/funcs/playbooks-attach-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -198,7 +198,7 @@ Cancel template execution for a specific template header
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_CancelTemplateExecution" method="post" path="/textql.rpc.public.playbook.PlaybookService/CancelTemplateExecution" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -220,8 +220,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksCancelTemplateExecution } from "textql-sdk/funcs/playbooks-cancel-template-execution.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksCancelTemplateExecution } from "@textql/sdk/funcs/playbooks-cancel-template-execution.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -271,7 +271,7 @@ CreatePlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_CreatePlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/CreatePlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -293,8 +293,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksCreatePlaybook } from "textql-sdk/funcs/playbooks-create-playbook.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksCreatePlaybook } from "@textql/sdk/funcs/playbooks-create-playbook.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -344,7 +344,7 @@ DeactivatePlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_DeactivatePlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/DeactivatePlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -366,8 +366,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksDeactivate } from "textql-sdk/funcs/playbooks-deactivate.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksDeactivate } from "@textql/sdk/funcs/playbooks-deactivate.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -417,7 +417,7 @@ DeletePlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_DeletePlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/DeletePlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -439,8 +439,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksDelete } from "textql-sdk/funcs/playbooks-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksDelete } from "@textql/sdk/funcs/playbooks-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -490,7 +490,7 @@ DemoPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_DemoPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/DemoPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -512,8 +512,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksDemoPlaybook } from "textql-sdk/funcs/playbooks-demo-playbook.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksDemoPlaybook } from "@textql/sdk/funcs/playbooks-demo-playbook.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -563,7 +563,7 @@ DeployPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_DeployPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/DeployPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -585,8 +585,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksDeploy } from "textql-sdk/funcs/playbooks-deploy.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksDeploy } from "@textql/sdk/funcs/playbooks-deploy.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -636,7 +636,7 @@ DuplicatePlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_DuplicatePlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/DuplicatePlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -658,8 +658,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksDuplicate } from "textql-sdk/funcs/playbooks-duplicate.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksDuplicate } from "@textql/sdk/funcs/playbooks-duplicate.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -709,7 +709,7 @@ Favorite report management
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_FavoriteReport" method="post" path="/textql.rpc.public.playbook.PlaybookService/FavoriteReport" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -731,8 +731,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksFavoriteReport } from "textql-sdk/funcs/playbooks-favorite-report.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksFavoriteReport } from "@textql/sdk/funcs/playbooks-favorite-report.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -782,7 +782,7 @@ GetActiveSubscribedPlaybooksCount
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetActiveSubscribedPlaybooksCount" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetActiveSubscribedPlaybooksCount" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -804,8 +804,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetActiveSubscribedCount } from "textql-sdk/funcs/playbooks-get-active-subscribed-count.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetActiveSubscribedCount } from "@textql/sdk/funcs/playbooks-get-active-subscribed-count.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -855,7 +855,7 @@ Lightweight endpoint for chat report drawer - returns summaries without full blo
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetChatReportsSummary" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetChatReportsSummary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -877,8 +877,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetChatReportsSummary } from "textql-sdk/funcs/playbooks-get-chat-reports-summary.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetChatReportsSummary } from "@textql/sdk/funcs/playbooks-get-chat-reports-summary.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -928,7 +928,7 @@ GetMembersWithPlaybooks
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetMembersWithPlaybooks" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetMembersWithPlaybooks" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -950,8 +950,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetMembersWith } from "textql-sdk/funcs/playbooks-get-members-with.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetMembersWith } from "@textql/sdk/funcs/playbooks-get-members-with.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1001,7 +1001,7 @@ GetPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1023,8 +1023,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksFetch } from "textql-sdk/funcs/playbooks-fetch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksFetch } from "@textql/sdk/funcs/playbooks-fetch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1074,7 +1074,7 @@ Get a specific batch run
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybookBatchRun" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybookBatchRun" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1096,8 +1096,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetBatchRun } from "textql-sdk/funcs/playbooks-get-batch-run.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetBatchRun } from "@textql/sdk/funcs/playbooks-get-batch-run.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1147,7 +1147,7 @@ GetPlaybookLineage
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybookLineage" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybookLineage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1169,8 +1169,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetPlaybookLineage } from "textql-sdk/funcs/playbooks-get-playbook-lineage.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetPlaybookLineage } from "@textql/sdk/funcs/playbooks-get-playbook-lineage.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1220,7 +1220,7 @@ GetPlaybookReports
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybookReports" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybookReports" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1242,8 +1242,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetReports } from "textql-sdk/funcs/playbooks-get-reports.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetReports } from "@textql/sdk/funcs/playbooks-get-reports.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1293,7 +1293,7 @@ Get reports for multiple template data IDs in a single batch request
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybookReportsBatch" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybookReportsBatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1315,8 +1315,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetPlaybookReportsBatch } from "textql-sdk/funcs/playbooks-get-playbook-reports-batch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetPlaybookReportsBatch } from "@textql/sdk/funcs/playbooks-get-playbook-reports-batch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1366,7 +1366,7 @@ GetPlaybooks
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybooks" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybooks" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1388,8 +1388,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGet } from "textql-sdk/funcs/playbooks-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGet } from "@textql/sdk/funcs/playbooks-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1439,7 +1439,7 @@ GetPlaybooksPreviews
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetPlaybooksPreviews" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetPlaybooksPreviews" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1461,8 +1461,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetPlaybooksPreviews } from "textql-sdk/funcs/playbooks-get-playbooks-previews.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetPlaybooksPreviews } from "@textql/sdk/funcs/playbooks-get-playbooks-previews.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1512,7 +1512,7 @@ Get a single report by ID
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetReportById" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetReportById" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1534,8 +1534,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetReportById } from "textql-sdk/funcs/playbooks-get-report-by-id.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetReportById } from "@textql/sdk/funcs/playbooks-get-report-by-id.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1585,7 +1585,7 @@ GetReportsWithFilters
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_GetReportsWithFilters" method="post" path="/textql.rpc.public.playbook.PlaybookService/GetReportsWithFilters" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1612,8 +1612,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksGetReportsWithFilters } from "textql-sdk/funcs/playbooks-get-reports-with-filters.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksGetReportsWithFilters } from "@textql/sdk/funcs/playbooks-get-reports-with-filters.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1668,7 +1668,7 @@ List all Slack channels context playbook mappings for the organization
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_ListAllSlackChannelContextPlaybooks" method="post" path="/textql.rpc.public.playbook.PlaybookService/ListAllSlackChannelContextPlaybooks" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1690,8 +1690,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksListSlackChannelContextPlaybooks } from "textql-sdk/funcs/playbooks-list-slack-channel-context-playbooks.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksListSlackChannelContextPlaybooks } from "@textql/sdk/funcs/playbooks-list-slack-channel-context-playbooks.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1741,7 +1741,7 @@ ListAllTeamsChannelContextPlaybooks
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_ListAllTeamsChannelContextPlaybooks" method="post" path="/textql.rpc.public.playbook.PlaybookService/ListAllTeamsChannelContextPlaybooks" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1763,8 +1763,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksListAllTeamsChannelContextPlaybooks } from "textql-sdk/funcs/playbooks-list-all-teams-channel-context-playbooks.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksListAllTeamsChannelContextPlaybooks } from "@textql/sdk/funcs/playbooks-list-all-teams-channel-context-playbooks.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1814,7 +1814,7 @@ List batch runs for a playbook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_ListPlaybookBatchRuns" method="post" path="/textql.rpc.public.playbook.PlaybookService/ListPlaybookBatchRuns" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1836,8 +1836,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksListBatchRuns } from "textql-sdk/funcs/playbooks-list-batch-runs.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksListBatchRuns } from "@textql/sdk/funcs/playbooks-list-batch-runs.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1887,7 +1887,7 @@ List Slack channel IDs where the given playbook is set as the context
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_ListSlackChannelsForContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/ListSlackChannelsForContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1909,8 +1909,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksListSlackChannelsForContext } from "textql-sdk/funcs/playbooks-list-slack-channels-for-context.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksListSlackChannelsForContext } from "@textql/sdk/funcs/playbooks-list-slack-channels-for-context.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1960,7 +1960,7 @@ ListTeamsChannelsForContextPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_ListTeamsChannelsForContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/ListTeamsChannelsForContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1982,8 +1982,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksListTeamsChannelsForContextPlaybook } from "textql-sdk/funcs/playbooks-list-teams-channels-for-context-playbook.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksListTeamsChannelsForContextPlaybook } from "@textql/sdk/funcs/playbooks-list-teams-channels-for-context-playbook.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2033,7 +2033,7 @@ Report read tracking
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_MarkReportAsRead" method="post" path="/textql.rpc.public.playbook.PlaybookService/MarkReportAsRead" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2055,8 +2055,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksMarkReportAsRead } from "textql-sdk/funcs/playbooks-mark-report-as-read.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksMarkReportAsRead } from "@textql/sdk/funcs/playbooks-mark-report-as-read.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2106,7 +2106,7 @@ PreviewSlackReport
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_PreviewSlackReport" method="post" path="/textql.rpc.public.playbook.PlaybookService/PreviewSlackReport" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2128,8 +2128,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksPreviewSlackReport } from "textql-sdk/funcs/playbooks-preview-slack-report.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksPreviewSlackReport } from "@textql/sdk/funcs/playbooks-preview-slack-report.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2179,7 +2179,7 @@ RemoveDashboard
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_RemoveDashboard" method="post" path="/textql.rpc.public.playbook.PlaybookService/RemoveDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2201,8 +2201,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksRemoveDashboard } from "textql-sdk/funcs/playbooks-remove-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksRemoveDashboard } from "@textql/sdk/funcs/playbooks-remove-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2252,7 +2252,7 @@ RemoveDataset
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_RemoveDataset" method="post" path="/textql.rpc.public.playbook.PlaybookService/RemoveDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2274,8 +2274,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksRemoveDataset } from "textql-sdk/funcs/playbooks-remove-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksRemoveDataset } from "@textql/sdk/funcs/playbooks-remove-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2325,7 +2325,7 @@ RunPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_RunPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/RunPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2347,8 +2347,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksRun } from "textql-sdk/funcs/playbooks-run.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksRun } from "@textql/sdk/funcs/playbooks-run.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2400,7 +2400,7 @@ Set the context playbook for a Slack channel. This associates the given
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_SetSlackChannelContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/SetSlackChannelContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2422,8 +2422,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksSetSlackChannelContextPlaybook } from "textql-sdk/funcs/playbooks-set-slack-channel-context-playbook.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksSetSlackChannelContextPlaybook } from "@textql/sdk/funcs/playbooks-set-slack-channel-context-playbook.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2473,7 +2473,7 @@ SetTeamsChannelContextPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_SetTeamsChannelContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/SetTeamsChannelContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2495,8 +2495,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksSetTeamsChannelContext } from "textql-sdk/funcs/playbooks-set-teams-channel-context.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksSetTeamsChannelContext } from "@textql/sdk/funcs/playbooks-set-teams-channel-context.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2546,7 +2546,7 @@ SubscribeToPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_SubscribeToPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/SubscribeToPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2568,8 +2568,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksSubscribe } from "textql-sdk/funcs/playbooks-subscribe.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksSubscribe } from "@textql/sdk/funcs/playbooks-subscribe.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2620,7 +2620,7 @@ Unset the context playbook for a Slack channel. This clears any association
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_UnsetSlackChannelContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/UnsetSlackChannelContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2642,8 +2642,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksUnsetSlackChannelContextPlaybook } from "textql-sdk/funcs/playbooks-unset-slack-channel-context-playbook.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksUnsetSlackChannelContextPlaybook } from "@textql/sdk/funcs/playbooks-unset-slack-channel-context-playbook.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2693,7 +2693,7 @@ UnsetTeamsChannelContextPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_UnsetTeamsChannelContextPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/UnsetTeamsChannelContextPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2715,8 +2715,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksUnsetTeamsChannelContext } from "textql-sdk/funcs/playbooks-unset-teams-channel-context.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksUnsetTeamsChannelContext } from "@textql/sdk/funcs/playbooks-unset-teams-channel-context.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2766,7 +2766,7 @@ UnsubscribeFromPlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_UnsubscribeFromPlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/UnsubscribeFromPlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2788,8 +2788,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksUnsubscribe } from "textql-sdk/funcs/playbooks-unsubscribe.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksUnsubscribe } from "@textql/sdk/funcs/playbooks-unsubscribe.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2839,7 +2839,7 @@ UpdatePlaybook
 
 <!-- UsageSnippet language="typescript" operationID="PlaybookService_UpdatePlaybook" method="post" path="/textql.rpc.public.playbook.PlaybookService/UpdatePlaybook" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2861,8 +2861,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { playbooksUpdate } from "textql-sdk/funcs/playbooks-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { playbooksUpdate } from "@textql/sdk/funcs/playbooks-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

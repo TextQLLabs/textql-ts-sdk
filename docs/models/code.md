@@ -5,7 +5,7 @@ The status code, which should be an enum value of [google.rpc.Code][google.rpc.C
 ## Example Usage
 
 ```typescript
-import { Code } from "textql-sdk/models";
+import { Code } from "@textql/sdk/models";
 
 let value: Code = "not_found";
 

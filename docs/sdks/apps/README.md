@@ -31,7 +31,7 @@ Viewer heartbeat: keeps a warm compute worker alive while the app is open so its
 
 <!-- UsageSnippet language="typescript" operationID="AppService_AppHeartbeat" method="post" path="/textql.rpc.public.app.AppService/AppHeartbeat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -53,8 +53,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsHeartbeat } from "textql-sdk/funcs/apps-heartbeat.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsHeartbeat } from "@textql/sdk/funcs/apps-heartbeat.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -104,7 +104,7 @@ CreateApp
 
 <!-- UsageSnippet language="typescript" operationID="AppService_CreateApp" method="post" path="/textql.rpc.public.app.AppService/CreateApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -126,8 +126,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsCreateApp } from "textql-sdk/funcs/apps-create-app.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsCreateApp } from "@textql/sdk/funcs/apps-create-app.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -177,7 +177,7 @@ DeleteApp
 
 <!-- UsageSnippet language="typescript" operationID="AppService_DeleteApp" method="post" path="/textql.rpc.public.app.AppService/DeleteApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -199,8 +199,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsDeleteApp } from "textql-sdk/funcs/apps-delete-app.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsDeleteApp } from "@textql/sdk/funcs/apps-delete-app.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -252,7 +252,7 @@ Duplicates an app the caller can view into a new draft app they own,
 
 <!-- UsageSnippet language="typescript" operationID="AppService_DuplicateApp" method="post" path="/textql.rpc.public.app.AppService/DuplicateApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -274,8 +274,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsDuplicate } from "textql-sdk/funcs/apps-duplicate.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsDuplicate } from "@textql/sdk/funcs/apps-duplicate.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -325,7 +325,7 @@ GetApp
 
 <!-- UsageSnippet language="typescript" operationID="AppService_GetApp" method="post" path="/textql.rpc.public.app.AppService/GetApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -347,8 +347,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsGet } from "textql-sdk/funcs/apps-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsGet } from "@textql/sdk/funcs/apps-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -398,7 +398,7 @@ GetAppVersion
 
 <!-- UsageSnippet language="typescript" operationID="AppService_GetAppVersion" method="post" path="/textql.rpc.public.app.AppService/GetAppVersion" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -420,8 +420,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsGetAppVersion } from "textql-sdk/funcs/apps-get-app-version.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsGetAppVersion } from "@textql/sdk/funcs/apps-get-app-version.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -471,7 +471,7 @@ View analytics: reads the engagement views recorded on app page load.
 
 <!-- UsageSnippet language="typescript" operationID="AppService_GetAppViewStats" method="post" path="/textql.rpc.public.app.AppService/GetAppViewStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -493,8 +493,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsGetAppViewStats } from "textql-sdk/funcs/apps-get-app-view-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsGetAppViewStats } from "@textql/sdk/funcs/apps-get-app-view-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -544,7 +544,7 @@ GetMembersWithApps
 
 <!-- UsageSnippet language="typescript" operationID="AppService_GetMembersWithApps" method="post" path="/textql.rpc.public.app.AppService/GetMembersWithApps" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -566,8 +566,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsGetMembersWithApps } from "textql-sdk/funcs/apps-get-members-with-apps.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsGetMembersWithApps } from "@textql/sdk/funcs/apps-get-members-with-apps.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -617,7 +617,7 @@ Executes a declared compute function on a pooled sandbox worker; gated, org-scop
 
 <!-- UsageSnippet language="typescript" operationID="AppService_InvokeAppComputeFunction" method="post" path="/textql.rpc.public.app.AppService/InvokeAppComputeFunction" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -639,8 +639,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsInvokeComputeFunction } from "textql-sdk/funcs/apps-invoke-compute-function.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsInvokeComputeFunction } from "@textql/sdk/funcs/apps-invoke-compute-function.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -690,7 +690,7 @@ Version history: a snapshot is recorded on each publish; authors can list and re
 
 <!-- UsageSnippet language="typescript" operationID="AppService_ListAppVersions" method="post" path="/textql.rpc.public.app.AppService/ListAppVersions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -712,8 +712,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsListVersions } from "textql-sdk/funcs/apps-list-versions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsListVersions } from "@textql/sdk/funcs/apps-list-versions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -763,7 +763,7 @@ ListApps
 
 <!-- UsageSnippet language="typescript" operationID="AppService_ListApps" method="post" path="/textql.rpc.public.app.AppService/ListApps" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -785,8 +785,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsList } from "textql-sdk/funcs/apps-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsList } from "@textql/sdk/funcs/apps-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -836,7 +836,7 @@ Moves an app into a library folder (or to root when folder_id is empty).
 
 <!-- UsageSnippet language="typescript" operationID="AppService_MoveAppToFolder" method="post" path="/textql.rpc.public.app.AppService/MoveAppToFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -858,8 +858,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsMoveAppToFolder } from "textql-sdk/funcs/apps-move-app-to-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsMoveAppToFolder } from "@textql/sdk/funcs/apps-move-app-to-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -909,7 +909,7 @@ Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads
 
 <!-- UsageSnippet language="typescript" operationID="AppService_RefreshApp" method="post" path="/textql.rpc.public.app.AppService/RefreshApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -931,8 +931,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsRefresh } from "textql-sdk/funcs/apps-refresh.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsRefresh } from "@textql/sdk/funcs/apps-refresh.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -982,7 +982,7 @@ RestoreAppVersion
 
 <!-- UsageSnippet language="typescript" operationID="AppService_RestoreAppVersion" method="post" path="/textql.rpc.public.app.AppService/RestoreAppVersion" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1004,8 +1004,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsRestoreAppVersion } from "textql-sdk/funcs/apps-restore-app-version.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsRestoreAppVersion } from "@textql/sdk/funcs/apps-restore-app-version.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1057,7 +1057,7 @@ Favorite/unfavorite a library item (app or dashboard) for the calling member.
 
 <!-- UsageSnippet language="typescript" operationID="AppService_SetFavorite" method="post" path="/textql.rpc.public.app.AppService/SetFavorite" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1079,8 +1079,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsSetFavorite } from "textql-sdk/funcs/apps-set-favorite.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsSetFavorite } from "@textql/sdk/funcs/apps-set-favorite.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1130,7 +1130,7 @@ UpdateApp
 
 <!-- UsageSnippet language="typescript" operationID="AppService_UpdateApp" method="post" path="/textql.rpc.public.app.AppService/UpdateApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1152,8 +1152,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { appsUpdate } from "textql-sdk/funcs/apps-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsUpdate } from "@textql/sdk/funcs/apps-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

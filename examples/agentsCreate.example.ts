@@ -5,13 +5,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 /**
- * Example usage of the textql-sdk SDK
+ * Example usage of the @textql/sdk SDK
  *
  * To run this example from the examples directory:
  * npm run build && npx tsx agentsCreate.example.ts
  */
 
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",

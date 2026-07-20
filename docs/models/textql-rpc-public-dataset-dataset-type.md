@@ -5,7 +5,7 @@ never change the names or numbers of existing dataset types!
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetDatasetType } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetDatasetType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetDatasetType = "TYPE_TABLEAU";
 

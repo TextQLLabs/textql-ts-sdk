@@ -5,7 +5,7 @@ Member role management messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacAssignRoleToMemberRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacAssignRoleToMemberRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacAssignRoleToMemberRequest = {};
 ```

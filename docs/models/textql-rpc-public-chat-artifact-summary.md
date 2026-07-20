@@ -5,7 +5,7 @@ Lightweight summary for drawer item list (minimal data transfer)
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatArtifactSummary } from "textql-sdk/models";
+import { TextqlRpcPublicChatArtifactSummary } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatArtifactSummary = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

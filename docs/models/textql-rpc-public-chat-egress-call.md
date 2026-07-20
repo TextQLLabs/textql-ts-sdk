@@ -5,7 +5,7 @@ EgressCall is a single outbound HTTP(S) request a chat's sandbox made,
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatEgressCall } from "textql-sdk/models";
+import { TextqlRpcPublicChatEgressCall } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatEgressCall = {
   occurredAt: new Date("2023-01-15T01:30:15.01Z"),

@@ -5,7 +5,7 @@ Version history
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardDashboardVersion } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardDashboardVersion } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardDashboardVersion = {
   publishedAt: new Date("2023-01-15T01:30:15.01Z"),

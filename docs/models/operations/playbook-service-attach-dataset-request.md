@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PlaybookServiceAttachDatasetRequest } from "textql-sdk/models/operations";
+import { PlaybookServiceAttachDatasetRequest } from "@textql/sdk/models/operations";
 
 let value: PlaybookServiceAttachDatasetRequest = {
   body: {},

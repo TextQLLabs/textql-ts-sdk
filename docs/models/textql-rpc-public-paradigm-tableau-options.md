@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicParadigmTableauOptions } from "textql-sdk/models";
+import { TextqlRpcPublicParadigmTableauOptions } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicParadigmTableauOptions = {};
 ```

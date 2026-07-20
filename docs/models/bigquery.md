@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Bigquery } from "textql-sdk/models";
+import { Bigquery } from "@textql/sdk/models";
 
 let value: Bigquery = {
   bigquery: {},

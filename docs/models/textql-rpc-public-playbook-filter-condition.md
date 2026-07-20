@@ -5,7 +5,7 @@ Filter condition for template data searches
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookFilterCondition } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookFilterCondition } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookFilterCondition = {};
 ```

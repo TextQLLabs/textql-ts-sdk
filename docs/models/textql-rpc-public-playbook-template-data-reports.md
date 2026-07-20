@@ -5,7 +5,7 @@ Grouped reports by template_data_id
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookTemplateDataReports } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookTemplateDataReports } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookTemplateDataReports = {
   reports: [

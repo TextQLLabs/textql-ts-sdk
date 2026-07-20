@@ -19,8 +19,8 @@ specific category of applications.
 ## Example
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsCreate } from "textql-sdk/funcs/agents-create.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsCreate } from "@textql/sdk/funcs/agents-create.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyRelationType } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyRelationType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyRelationType = "RELATION_TYPE_MANY_TO_MANY";
 

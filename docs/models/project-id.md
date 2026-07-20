@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ProjectId } from "textql-sdk/models";
+import { ProjectId } from "@textql/sdk/models";
 
 let value: ProjectId = {
   projectId: "<id>",

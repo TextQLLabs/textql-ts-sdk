@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAuditLogS3AuthMode } from "textql-sdk/models";
+import { TextqlRpcPublicAuditLogS3AuthMode } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAuditLogS3AuthMode = "S3_AUTH_MODE_ACCESS_KEY";
 

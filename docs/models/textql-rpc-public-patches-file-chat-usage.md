@@ -7,7 +7,7 @@ FileChatUsage is one chat that retrieved a library file inside the
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesFileChatUsage } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesFileChatUsage } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesFileChatUsage = {
   lastPulled: new Date("2023-01-15T01:30:15.01Z"),

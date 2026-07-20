@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetEffectiveLibraryOwnersRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetEffectiveLibraryOwnersRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetEffectiveLibraryOwnersRequest = {
   body: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesRecoverLibraryLevel } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesRecoverLibraryLevel } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesRecoverLibraryLevel =
   "RECOVER_LIBRARY_LEVEL_RECLONE";

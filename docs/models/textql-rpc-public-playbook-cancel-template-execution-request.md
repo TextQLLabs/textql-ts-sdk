@@ -5,7 +5,7 @@ Request to cancel template execution
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookCancelTemplateExecutionRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookCancelTemplateExecutionRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookCancelTemplateExecutionRequest = {};
 ```

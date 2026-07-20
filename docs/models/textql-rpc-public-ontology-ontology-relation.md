@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyOntologyRelation } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyOntologyRelation } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyOntologyRelation = {};
 ```

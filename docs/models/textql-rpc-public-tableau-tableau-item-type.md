@@ -5,7 +5,7 @@ Starred items
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicTableauTableauItemType } from "textql-sdk/models";
+import { TextqlRpcPublicTableauTableauItemType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicTableauTableauItemType = "ITEM_TYPE_VIEW";
 

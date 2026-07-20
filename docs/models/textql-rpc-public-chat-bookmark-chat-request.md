@@ -5,7 +5,7 @@ Bookmark management
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatBookmarkChatRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatBookmarkChatRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatBookmarkChatRequest = {};
 ```

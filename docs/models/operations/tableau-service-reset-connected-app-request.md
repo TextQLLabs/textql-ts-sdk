@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauServiceResetConnectedAppRequest } from "textql-sdk/models/operations";
+import { TableauServiceResetConnectedAppRequest } from "@textql/sdk/models/operations";
 
 let value: TableauServiceResetConnectedAppRequest = {
   body: {},

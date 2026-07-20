@@ -26,7 +26,7 @@ Generate JWT token for embedding views
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_GenerateEmbedToken" method="post" path="/textql.rpc.public.tableau.TableauService/GenerateEmbedToken" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -48,8 +48,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauGenerateEmbedToken } from "textql-sdk/funcs/tableau-generate-embed-token.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauGenerateEmbedToken } from "@textql/sdk/funcs/tableau-generate-embed-token.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -99,7 +99,7 @@ Get collection thumbnail (first view image)
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_GetCollectionThumbnail" method="post" path="/textql.rpc.public.tableau.TableauService/GetCollectionThumbnail" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -121,8 +121,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauGetCollectionThumbnail } from "textql-sdk/funcs/tableau-get-collection-thumbnail.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauGetCollectionThumbnail } from "@textql/sdk/funcs/tableau-get-collection-thumbnail.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -172,7 +172,7 @@ GetConnectedAppStatus
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_GetConnectedAppStatus" method="post" path="/textql.rpc.public.tableau.TableauService/GetConnectedAppStatus" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -194,8 +194,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauGetConnectedAppStatus } from "textql-sdk/funcs/tableau-get-connected-app-status.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauGetConnectedAppStatus } from "@textql/sdk/funcs/tableau-get-connected-app-status.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -245,7 +245,7 @@ GetStarredTableauItems
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_GetStarredTableauItems" method="post" path="/textql.rpc.public.tableau.TableauService/GetStarredTableauItems" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -267,8 +267,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauGetStarredItems } from "textql-sdk/funcs/tableau-get-starred-items.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauGetStarredItems } from "@textql/sdk/funcs/tableau-get-starred-items.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -318,7 +318,7 @@ List Tableau datasources
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_ListTableauDatasources" method="post" path="/textql.rpc.public.tableau.TableauService/ListTableauDatasources" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -342,8 +342,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauListTableauDatasources } from "textql-sdk/funcs/tableau-list-tableau-datasources.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauListTableauDatasources } from "@textql/sdk/funcs/tableau-list-tableau-datasources.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -395,7 +395,7 @@ List Tableau projects
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_ListTableauProjects" method="post" path="/textql.rpc.public.tableau.TableauService/ListTableauProjects" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -417,8 +417,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauListProjects } from "textql-sdk/funcs/tableau-list-projects.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauListProjects } from "@textql/sdk/funcs/tableau-list-projects.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -468,7 +468,7 @@ List Tableau views
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_ListTableauViews" method="post" path="/textql.rpc.public.tableau.TableauService/ListTableauViews" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -490,8 +490,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauListViews } from "textql-sdk/funcs/tableau-list-views.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauListViews } from "@textql/sdk/funcs/tableau-list-views.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -541,7 +541,7 @@ List Tableau workbooks
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_ListTableauWorkbooks" method="post" path="/textql.rpc.public.tableau.TableauService/ListTableauWorkbooks" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -563,8 +563,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauListWorkbooks } from "textql-sdk/funcs/tableau-list-workbooks.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauListWorkbooks } from "@textql/sdk/funcs/tableau-list-workbooks.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -614,7 +614,7 @@ RefreshTableauCollection
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_RefreshTableauCollection" method="post" path="/textql.rpc.public.tableau.TableauService/RefreshTableauCollection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -636,8 +636,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauRefreshCollection } from "textql-sdk/funcs/tableau-refresh-collection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauRefreshCollection } from "@textql/sdk/funcs/tableau-refresh-collection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -687,7 +687,7 @@ ResetConnectedApp
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_ResetConnectedApp" method="post" path="/textql.rpc.public.tableau.TableauService/ResetConnectedApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -709,8 +709,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauResetConnectedApp } from "textql-sdk/funcs/tableau-reset-connected-app.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauResetConnectedApp } from "@textql/sdk/funcs/tableau-reset-connected-app.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -760,7 +760,7 @@ Star/unstar items
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_StarTableauItem" method="post" path="/textql.rpc.public.tableau.TableauService/StarTableauItem" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -782,8 +782,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauStarItem } from "textql-sdk/funcs/tableau-star-item.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauStarItem } from "@textql/sdk/funcs/tableau-star-item.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -833,7 +833,7 @@ Test a Tableau connection
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_TestTableauConnection" method="post" path="/textql.rpc.public.tableau.TableauService/TestTableauConnection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -855,8 +855,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauTestTableauConnection } from "textql-sdk/funcs/tableau-test-tableau-connection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauTestTableauConnection } from "@textql/sdk/funcs/tableau-test-tableau-connection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -906,7 +906,7 @@ UnstarTableauItem
 
 <!-- UsageSnippet language="typescript" operationID="TableauService_UnstarTableauItem" method="post" path="/textql.rpc.public.tableau.TableauService/UnstarTableauItem" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -928,8 +928,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { tableauUnstarTableauItem } from "textql-sdk/funcs/tableau-unstar-tableau-item.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { tableauUnstarTableauItem } from "@textql/sdk/funcs/tableau-unstar-tableau-item.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

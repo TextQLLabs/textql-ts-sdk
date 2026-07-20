@@ -5,7 +5,7 @@ primary interface for ana to render sandbox assets client side
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsPreviewCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsPreviewCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsPreviewCell = {};
 ```

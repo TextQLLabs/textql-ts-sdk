@@ -5,7 +5,7 @@ Handle Slack OAuth callback
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest } from "textql-sdk/models";
+import { TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest = {};
 ```

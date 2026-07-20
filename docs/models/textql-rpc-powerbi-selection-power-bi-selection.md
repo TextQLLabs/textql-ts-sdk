@@ -9,7 +9,7 @@ PowerBISelection captures a chosen PowerBI workspace (and optionally the
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPowerbiSelectionPowerBISelection } from "textql-sdk/models";
+import { TextqlRpcPowerbiSelectionPowerBISelection } from "@textql/sdk/models";
 
 let value: TextqlRpcPowerbiSelectionPowerBISelection = {};
 ```

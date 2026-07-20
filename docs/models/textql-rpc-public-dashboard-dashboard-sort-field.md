@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardDashboardSortField } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardDashboardSortField } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardDashboardSortField =
   "DASHBOARD_SORT_FIELD_NAME";

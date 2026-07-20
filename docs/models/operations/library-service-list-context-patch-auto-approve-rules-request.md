@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceListContextPatchAutoApproveRulesRequest } from "textql-sdk/models/operations";
+import { LibraryServiceListContextPatchAutoApproveRulesRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceListContextPatchAutoApproveRulesRequest = {
   body: {},

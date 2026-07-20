@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PatchCell } from "textql-sdk/models";
+import { PatchCell } from "@textql/sdk/models";
 
 let value: PatchCell = {
   patchCell: {},

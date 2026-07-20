@@ -5,7 +5,7 @@ A segment of an example query message - either plain text or a styled feature wo
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorMessageSegment } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorMessageSegment } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorMessageSegment = {};
 ```

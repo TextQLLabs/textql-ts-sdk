@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PowerBIServiceSyncPowerBIItemsRequest } from "textql-sdk/models/operations";
+import { PowerBIServiceSyncPowerBIItemsRequest } from "@textql/sdk/models/operations";
 
 let value: PowerBIServiceSyncPowerBIItemsRequest = {
   body: {

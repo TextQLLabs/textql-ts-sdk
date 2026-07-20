@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceSetTopicTagFeedbackRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceSetTopicTagFeedbackRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceSetTopicTagFeedbackRequest = {
   body: {},

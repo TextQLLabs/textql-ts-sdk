@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesUpdateContextPatchAutoApproveRuleRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesUpdateContextPatchAutoApproveRuleRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesUpdateContextPatchAutoApproveRuleRequest = {};
 ```

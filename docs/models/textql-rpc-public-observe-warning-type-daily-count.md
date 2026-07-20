@@ -7,7 +7,7 @@ WarningTypeDailyCount is one (day, warning type) bucket for the warning
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveWarningTypeDailyCount } from "textql-sdk/models";
+import { TextqlRpcPublicObserveWarningTypeDailyCount } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveWarningTypeDailyCount = {};
 ```

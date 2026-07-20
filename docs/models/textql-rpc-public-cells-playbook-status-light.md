@@ -5,7 +5,7 @@ TODO(joseph): Clean up base enums // messages etc.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsPlaybookStatusLight } from "textql-sdk/models";
+import { TextqlRpcPublicCellsPlaybookStatusLight } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsPlaybookStatusLight = "PLAYBOOK_STATUS_ACTIVE";
 

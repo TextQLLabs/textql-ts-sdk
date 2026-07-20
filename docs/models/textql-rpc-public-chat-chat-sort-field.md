@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatChatSortField } from "textql-sdk/models";
+import { TextqlRpcPublicChatChatSortField } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatChatSortField = "CHAT_SORT_FIELD_CREATED_AT";
 ```

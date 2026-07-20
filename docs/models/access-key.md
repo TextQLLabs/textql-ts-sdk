@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AccessKey } from "textql-sdk/models";
+import { AccessKey } from "@textql/sdk/models";
 
 let value: AccessKey = {
   accessKey: {},

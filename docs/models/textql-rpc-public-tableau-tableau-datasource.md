@@ -5,7 +5,7 @@ TODO: Add datasources support
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicTableauTableauDatasource } from "textql-sdk/models";
+import { TextqlRpcPublicTableauTableauDatasource } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicTableauTableauDatasource = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

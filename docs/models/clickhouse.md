@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Clickhouse } from "textql-sdk/models";
+import { Clickhouse } from "@textql/sdk/models";
 
 let value: Clickhouse = {
   clickhouse: {},

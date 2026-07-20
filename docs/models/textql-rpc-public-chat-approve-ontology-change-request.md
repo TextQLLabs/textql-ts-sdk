@@ -5,7 +5,7 @@ Ontology change management
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatApproveOntologyChangeRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatApproveOntologyChangeRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatApproveOntologyChangeRequest = {};
 ```

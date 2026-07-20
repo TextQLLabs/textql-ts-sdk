@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsWebSearchType } from "textql-sdk/models";
+import { TextqlRpcPublicCellsWebSearchType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsWebSearchType = "TYPE_CONTENTS";
 

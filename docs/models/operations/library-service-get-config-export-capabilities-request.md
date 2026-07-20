@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetConfigExportCapabilitiesRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetConfigExportCapabilitiesRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetConfigExportCapabilitiesRequest = {
   body: {},

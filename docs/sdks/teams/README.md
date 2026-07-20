@@ -21,7 +21,7 @@ CreateTeamsUuid
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_CreateTeamsUuid" method="post" path="/textql.rpc.public.teams.TeamsService/CreateTeamsUuid" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -43,8 +43,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsCreateUuid } from "textql-sdk/funcs/teams-create-uuid.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsCreateUuid } from "@textql/sdk/funcs/teams-create-uuid.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -94,7 +94,7 @@ DeleteInstallation
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_DeleteInstallation" method="post" path="/textql.rpc.public.teams.TeamsService/DeleteInstallation" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -116,8 +116,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsDeleteInstallation } from "textql-sdk/funcs/teams-delete-installation.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsDeleteInstallation } from "@textql/sdk/funcs/teams-delete-installation.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -167,7 +167,7 @@ GetCurrentUser
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_GetCurrentUser" method="post" path="/textql.rpc.public.teams.TeamsService/GetCurrentUser" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -189,8 +189,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsGetCurrentUser } from "textql-sdk/funcs/teams-get-current-user.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsGetCurrentUser } from "@textql/sdk/funcs/teams-get-current-user.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -240,7 +240,7 @@ HandleTeamsOAuthCallback
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_HandleTeamsOAuthCallback" method="post" path="/textql.rpc.public.teams.TeamsService/HandleTeamsOAuthCallback" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -262,8 +262,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsHandleOAuthCallback } from "textql-sdk/funcs/teams-handle-o-auth-callback.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsHandleOAuthCallback } from "@textql/sdk/funcs/teams-handle-o-auth-callback.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -313,7 +313,7 @@ ListChannels
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_ListChannels" method="post" path="/textql.rpc.public.teams.TeamsService/ListChannels" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -335,8 +335,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsList } from "textql-sdk/funcs/teams-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsList } from "@textql/sdk/funcs/teams-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -386,7 +386,7 @@ ListInstallations
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_ListInstallations" method="post" path="/textql.rpc.public.teams.TeamsService/ListInstallations" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -408,8 +408,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsListInstallations } from "textql-sdk/funcs/teams-list-installations.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsListInstallations } from "@textql/sdk/funcs/teams-list-installations.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -459,7 +459,7 @@ ListUsers
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_ListUsers" method="post" path="/textql.rpc.public.teams.TeamsService/ListUsers" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -481,8 +481,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsListUsers } from "textql-sdk/funcs/teams-list-users.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsListUsers } from "@textql/sdk/funcs/teams-list-users.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -532,7 +532,7 @@ SyncWorkspace
 
 <!-- UsageSnippet language="typescript" operationID="TeamsService_SyncWorkspace" method="post" path="/textql.rpc.public.teams.TeamsService/SyncWorkspace" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -554,8 +554,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { teamsSyncWorkspace } from "textql-sdk/funcs/teams-sync-workspace.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { teamsSyncWorkspace } from "@textql/sdk/funcs/teams-sync-workspace.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

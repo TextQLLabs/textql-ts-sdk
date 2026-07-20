@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetSandboxDataFrame } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetSandboxDataFrame } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetSandboxDataFrame = {};
 ```

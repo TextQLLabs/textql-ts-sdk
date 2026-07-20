@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AzureSynapseMetadata } from "textql-sdk/models";
+import { AzureSynapseMetadata } from "@textql/sdk/models";
 
 let value: AzureSynapseMetadata = {
   azureSynapseMetadata: {},

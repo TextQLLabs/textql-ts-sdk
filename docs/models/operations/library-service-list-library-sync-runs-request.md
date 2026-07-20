@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceListLibrarySyncRunsRequest } from "textql-sdk/models/operations";
+import { LibraryServiceListLibrarySyncRunsRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceListLibrarySyncRunsRequest = {
   body: {},

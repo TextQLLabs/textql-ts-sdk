@@ -5,7 +5,7 @@ Sync slack workspaces
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackSyncWorkspaceRequest } from "textql-sdk/models";
+import { TextqlRpcPublicSlackSyncWorkspaceRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackSyncWorkspaceRequest = {};
 ```

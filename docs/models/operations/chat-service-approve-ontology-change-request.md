@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ChatServiceApproveOntologyChangeRequest } from "textql-sdk/models/operations";
+import { ChatServiceApproveOntologyChangeRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceApproveOntologyChangeRequest = {
   body: {},

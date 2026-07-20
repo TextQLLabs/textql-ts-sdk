@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAuditLogConfigureS3ExportResponse } from "textql-sdk/models";
+import { TextqlRpcPublicAuditLogConfigureS3ExportResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAuditLogConfigureS3ExportResponse = {
   config: {

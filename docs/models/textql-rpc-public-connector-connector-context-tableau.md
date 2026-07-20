@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorConnectorContextTableau } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorConnectorContextTableau } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorConnectorContextTableau = {
   tableau: {},

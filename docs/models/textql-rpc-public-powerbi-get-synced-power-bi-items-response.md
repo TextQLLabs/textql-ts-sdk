@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPowerbiGetSyncedPowerBIItemsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPowerbiGetSyncedPowerBIItemsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPowerbiGetSyncedPowerBIItemsResponse = {
   reports: [

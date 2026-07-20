@@ -6,7 +6,7 @@ LibrarySizeDay is the library's total content size as of the end of one UTC
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesLibrarySizeDay } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesLibrarySizeDay } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesLibrarySizeDay = {};
 ```

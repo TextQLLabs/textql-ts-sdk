@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Divider } from "textql-sdk/models";
+import { Divider } from "@textql/sdk/models";
 
 let value: Divider = {
   divider: {},

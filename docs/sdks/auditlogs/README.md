@@ -24,7 +24,7 @@ ConfigureOtlpExport
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_ConfigureOtlpExport" method="post" path="/textql.rpc.public.audit_log.AuditLogService/ConfigureOtlpExport" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -46,8 +46,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsConfigureOtlpExport } from "textql-sdk/funcs/audit-logs-configure-otlp-export.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsConfigureOtlpExport } from "@textql/sdk/funcs/audit-logs-configure-otlp-export.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -97,7 +97,7 @@ ConfigureS3Export
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_ConfigureS3Export" method="post" path="/textql.rpc.public.audit_log.AuditLogService/ConfigureS3Export" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -119,8 +119,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsConfigureS3Export } from "textql-sdk/funcs/audit-logs-configure-s3-export.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsConfigureS3Export } from "@textql/sdk/funcs/audit-logs-configure-s3-export.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -170,7 +170,7 @@ DeleteOtlpExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_DeleteOtlpExportConfig" method="post" path="/textql.rpc.public.audit_log.AuditLogService/DeleteOtlpExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -192,8 +192,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsDeleteOtlpExportConfig } from "textql-sdk/funcs/audit-logs-delete-otlp-export-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsDeleteOtlpExportConfig } from "@textql/sdk/funcs/audit-logs-delete-otlp-export-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -243,7 +243,7 @@ DeleteS3ExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_DeleteS3ExportConfig" method="post" path="/textql.rpc.public.audit_log.AuditLogService/DeleteS3ExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -265,8 +265,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsDeleteS3ExportConfig } from "textql-sdk/funcs/audit-logs-delete-s3-export-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsDeleteS3ExportConfig } from "@textql/sdk/funcs/audit-logs-delete-s3-export-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -316,7 +316,7 @@ GetOtlpExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_GetOtlpExportConfig" method="post" path="/textql.rpc.public.audit_log.AuditLogService/GetOtlpExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -338,8 +338,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsGetOtlpExportConfig } from "textql-sdk/funcs/audit-logs-get-otlp-export-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsGetOtlpExportConfig } from "@textql/sdk/funcs/audit-logs-get-otlp-export-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -389,7 +389,7 @@ GetS3ExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_GetS3ExportConfig" method="post" path="/textql.rpc.public.audit_log.AuditLogService/GetS3ExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -411,8 +411,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsGetS3ExportConfig } from "textql-sdk/funcs/audit-logs-get-s3-export-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsGetS3ExportConfig } from "@textql/sdk/funcs/audit-logs-get-s3-export-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -462,7 +462,7 @@ ListAuditLogs
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_ListAuditLogs" method="post" path="/textql.rpc.public.audit_log.AuditLogService/ListAuditLogs" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -486,8 +486,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsList } from "textql-sdk/funcs/audit-logs-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsList } from "@textql/sdk/funcs/audit-logs-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -539,7 +539,7 @@ TestOtlpExportConnection
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_TestOtlpExportConnection" method="post" path="/textql.rpc.public.audit_log.AuditLogService/TestOtlpExportConnection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -561,8 +561,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsTestOtlpExportConnection } from "textql-sdk/funcs/audit-logs-test-otlp-export-connection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsTestOtlpExportConnection } from "@textql/sdk/funcs/audit-logs-test-otlp-export-connection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -612,7 +612,7 @@ TestS3ExportConnection
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_TestS3ExportConnection" method="post" path="/textql.rpc.public.audit_log.AuditLogService/TestS3ExportConnection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -634,8 +634,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsTestS3ExportConnection } from "textql-sdk/funcs/audit-logs-test-s3-export-connection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsTestS3ExportConnection } from "@textql/sdk/funcs/audit-logs-test-s3-export-connection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -685,7 +685,7 @@ TriggerOtlpExport
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_TriggerOtlpExport" method="post" path="/textql.rpc.public.audit_log.AuditLogService/TriggerOtlpExport" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -707,8 +707,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsTriggerOtlpExport } from "textql-sdk/funcs/audit-logs-trigger-otlp-export.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsTriggerOtlpExport } from "@textql/sdk/funcs/audit-logs-trigger-otlp-export.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -758,7 +758,7 @@ TriggerS3Export
 
 <!-- UsageSnippet language="typescript" operationID="AuditLogService_TriggerS3Export" method="post" path="/textql.rpc.public.audit_log.AuditLogService/TriggerS3Export" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -780,8 +780,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { auditLogsTriggerS3Export } from "textql-sdk/funcs/audit-logs-trigger-s3-export.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { auditLogsTriggerS3Export } from "@textql/sdk/funcs/audit-logs-trigger-s3-export.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

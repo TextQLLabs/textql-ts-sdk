@@ -5,7 +5,7 @@ Batch request to get reports for multiple template data IDs efficiently
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest = {};
 ```

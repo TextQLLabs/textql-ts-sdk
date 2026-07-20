@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetOntologyUsageSummaryRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetOntologyUsageSummaryRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetOntologyUsageSummaryRequest = {
   body: {},

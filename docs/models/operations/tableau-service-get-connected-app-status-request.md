@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauServiceGetConnectedAppStatusRequest } from "textql-sdk/models/operations";
+import { TableauServiceGetConnectedAppStatusRequest } from "@textql/sdk/models/operations";
 
 let value: TableauServiceGetConnectedAppStatusRequest = {
   body: {},

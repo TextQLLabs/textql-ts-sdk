@@ -5,7 +5,7 @@ Reference types for context data
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsConnectorRef } from "textql-sdk/models";
+import { TextqlRpcPublicCellsConnectorRef } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsConnectorRef = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { HandoffPending } from "textql-sdk/models";
+import { HandoffPending } from "@textql/sdk/models";
 
 let value: HandoffPending = {
   handoffPending: {},

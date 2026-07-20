@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsImageReference } from "textql-sdk/models";
+import { TextqlRpcPublicCellsImageReference } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsImageReference = {};
 ```

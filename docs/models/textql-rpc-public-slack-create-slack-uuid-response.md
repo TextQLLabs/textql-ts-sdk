@@ -5,7 +5,7 @@ Create a Slack UUID for OAuth flow
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackCreateSlackUuidResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSlackCreateSlackUuidResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackCreateSlackUuidResponse = {};
 ```

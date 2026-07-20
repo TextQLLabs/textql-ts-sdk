@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Trino } from "textql-sdk/models";
+import { Trino } from "@textql/sdk/models";
 
 let value: Trino = {
   trino: {},

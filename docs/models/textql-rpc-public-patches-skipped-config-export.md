@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesSkippedConfigExport } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesSkippedConfigExport } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesSkippedConfigExport = {};
 ```

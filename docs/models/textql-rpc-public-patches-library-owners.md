@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesLibraryOwners } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesLibraryOwners } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesLibraryOwners = {
   updatedAt: new Date("2023-01-15T01:30:15.01Z"),

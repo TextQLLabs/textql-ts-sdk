@@ -7,7 +7,7 @@ Note: spelled "Dataframe" (not "DataFrame") to avoid a Go type collision
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminSandboxDataframe } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminSandboxDataframe } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminSandboxDataframe = {};
 ```

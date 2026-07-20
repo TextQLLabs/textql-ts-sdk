@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RBACServiceDeleteServiceAccountRequest } from "textql-sdk/models/operations";
+import { RBACServiceDeleteServiceAccountRequest } from "@textql/sdk/models/operations";
 
 let value: RBACServiceDeleteServiceAccountRequest = {
   body: {},

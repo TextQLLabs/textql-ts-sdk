@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Oracle } from "textql-sdk/models";
+import { Oracle } from "@textql/sdk/models";
 
 let value: Oracle = {
   oracle: {},

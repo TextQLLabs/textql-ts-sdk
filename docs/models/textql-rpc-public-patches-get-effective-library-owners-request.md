@@ -10,7 +10,7 @@ Returns the *effective* owners for a directory after walking ancestor
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetEffectiveLibraryOwnersRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetEffectiveLibraryOwnersRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetEffectiveLibraryOwnersRequest = {};
 ```

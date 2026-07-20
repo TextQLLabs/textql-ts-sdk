@@ -8,7 +8,7 @@ PatchCapabilities describes which patch actions the calling member is
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesPatchCapabilities } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesPatchCapabilities } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesPatchCapabilities = {};
 ```

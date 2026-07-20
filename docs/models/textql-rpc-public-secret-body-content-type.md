@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSecretBodyContentType } from "textql-sdk/models";
+import { TextqlRpcPublicSecretBodyContentType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSecretBodyContentType = "BODY_CONTENT_TYPE_FORM";
 

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Spacer } from "textql-sdk/models";
+import { Spacer } from "@textql/sdk/models";
 
 let value: Spacer = {
   spacer: {},

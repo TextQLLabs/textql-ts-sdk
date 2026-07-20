@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SandboxAdminServiceListSandboxesRequest } from "textql-sdk/models/operations";
+import { SandboxAdminServiceListSandboxesRequest } from "@textql/sdk/models/operations";
 
 let value: SandboxAdminServiceListSandboxesRequest = {
   body: {},

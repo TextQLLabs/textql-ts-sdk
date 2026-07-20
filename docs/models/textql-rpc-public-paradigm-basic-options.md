@@ -6,7 +6,7 @@ This is a placeholder for future basic options.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicParadigmBasicOptions } from "textql-sdk/models";
+import { TextqlRpcPublicParadigmBasicOptions } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicParadigmBasicOptions = {};
 ```

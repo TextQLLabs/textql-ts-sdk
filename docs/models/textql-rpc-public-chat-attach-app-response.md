@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatAttachAppResponse } from "textql-sdk/models";
+import { TextqlRpcPublicChatAttachAppResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatAttachAppResponse = {
   cell: {

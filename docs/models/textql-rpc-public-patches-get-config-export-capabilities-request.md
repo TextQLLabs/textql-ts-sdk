@@ -9,7 +9,7 @@ GetConfigExportCapabilities tells the UI whether to offer "Save as config":
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest = {};
 ```

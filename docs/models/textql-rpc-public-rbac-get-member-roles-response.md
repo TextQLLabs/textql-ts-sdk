@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacGetMemberRolesResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacGetMemberRolesResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacGetMemberRolesResponse = {
   memberRoles: {

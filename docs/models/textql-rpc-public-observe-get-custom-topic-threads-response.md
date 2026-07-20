@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveGetCustomTopicThreadsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicObserveGetCustomTopicThreadsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveGetCustomTopicThreadsResponse = {
   threads: [

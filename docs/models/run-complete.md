@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RunComplete } from "textql-sdk/models";
+import { RunComplete } from "@textql/sdk/models";
 
 let value: RunComplete = {
   runComplete: {},

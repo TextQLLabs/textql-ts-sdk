@@ -6,7 +6,7 @@ Represents a before/after change to a field during an update.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsFieldChange } from "textql-sdk/models";
+import { TextqlRpcPublicCellsFieldChange } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsFieldChange = {};
 ```

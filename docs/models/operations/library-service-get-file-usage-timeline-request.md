@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetFileUsageTimelineRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetFileUsageTimelineRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetFileUsageTimelineRequest = {
   body: {},

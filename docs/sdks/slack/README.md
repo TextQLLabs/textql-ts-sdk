@@ -21,7 +21,7 @@ CreateSlackUuid
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_CreateSlackUuid" method="post" path="/textql.rpc.public.slack.SlackService/CreateSlackUuid" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -43,8 +43,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackCreateUuid } from "textql-sdk/funcs/slack-create-uuid.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackCreateUuid } from "@textql/sdk/funcs/slack-create-uuid.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -94,7 +94,7 @@ DeleteInstallation
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_DeleteInstallation" method="post" path="/textql.rpc.public.slack.SlackService/DeleteInstallation" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -116,8 +116,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackDeleteInstallation } from "textql-sdk/funcs/slack-delete-installation.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackDeleteInstallation } from "@textql/sdk/funcs/slack-delete-installation.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -167,7 +167,7 @@ GetCurrentUser
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_GetCurrentUser" method="post" path="/textql.rpc.public.slack.SlackService/GetCurrentUser" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -189,8 +189,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackGetCurrentUser } from "textql-sdk/funcs/slack-get-current-user.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackGetCurrentUser } from "@textql/sdk/funcs/slack-get-current-user.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -240,7 +240,7 @@ HandleSlackOAuthCallback
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_HandleSlackOAuthCallback" method="post" path="/textql.rpc.public.slack.SlackService/HandleSlackOAuthCallback" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -262,8 +262,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackHandleOAuthCallback } from "textql-sdk/funcs/slack-handle-o-auth-callback.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackHandleOAuthCallback } from "@textql/sdk/funcs/slack-handle-o-auth-callback.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -313,7 +313,7 @@ ListChannels
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_ListChannels" method="post" path="/textql.rpc.public.slack.SlackService/ListChannels" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -335,8 +335,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackListChannels } from "textql-sdk/funcs/slack-list-channels.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackListChannels } from "@textql/sdk/funcs/slack-list-channels.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -386,7 +386,7 @@ ListInstallations
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_ListInstallations" method="post" path="/textql.rpc.public.slack.SlackService/ListInstallations" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -408,8 +408,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackListInstallations } from "textql-sdk/funcs/slack-list-installations.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackListInstallations } from "@textql/sdk/funcs/slack-list-installations.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -459,7 +459,7 @@ ListUsers
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_ListUsers" method="post" path="/textql.rpc.public.slack.SlackService/ListUsers" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -481,8 +481,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackListUsers } from "textql-sdk/funcs/slack-list-users.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackListUsers } from "@textql/sdk/funcs/slack-list-users.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -532,7 +532,7 @@ SyncWorkspace
 
 <!-- UsageSnippet language="typescript" operationID="SlackService_SyncWorkspace" method="post" path="/textql.rpc.public.slack.SlackService/SyncWorkspace" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -554,8 +554,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { slackSyncWorkspace } from "textql-sdk/funcs/slack-sync-workspace.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { slackSyncWorkspace } from "@textql/sdk/funcs/slack-sync-workspace.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

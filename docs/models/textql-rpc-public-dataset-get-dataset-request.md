@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetGetDatasetRequest } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetGetDatasetRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetGetDatasetRequest = {};
 ```

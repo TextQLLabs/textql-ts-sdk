@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsFormEditorAction } from "textql-sdk/models";
+import { TextqlRpcPublicCellsFormEditorAction } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsFormEditorAction = "FORM_EDITOR_ACTION_VIEW";
 

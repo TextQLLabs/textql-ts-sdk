@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MCPServiceClearOAuthTokenRequest } from "textql-sdk/models/operations";
+import { MCPServiceClearOAuthTokenRequest } from "@textql/sdk/models/operations";
 
 let value: MCPServiceClearOAuthTokenRequest = {
   body: {},

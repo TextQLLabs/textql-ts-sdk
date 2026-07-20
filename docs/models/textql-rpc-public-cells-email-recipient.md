@@ -7,7 +7,7 @@ EmailRecipient is one resolved recipient of an EmailCell. The frontend
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsEmailRecipient } from "textql-sdk/models";
+import { TextqlRpcPublicCellsEmailRecipient } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsEmailRecipient = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatGetCompletionParametersBatchResponse } from "textql-sdk/models";
+import { TextqlRpcPublicChatGetCompletionParametersBatchResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatGetCompletionParametersBatchResponse = {
   paramsByCellId: {

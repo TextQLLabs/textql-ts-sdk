@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMcpHandleOAuthCallbackResponse } from "textql-sdk/models";
+import { TextqlRpcPublicMcpHandleOAuthCallbackResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMcpHandleOAuthCallbackResponse = {};
 ```

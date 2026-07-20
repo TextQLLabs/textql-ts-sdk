@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveThreadWarningList } from "textql-sdk/models";
+import { TextqlRpcPublicObserveThreadWarningList } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveThreadWarningList = {
   warnings: [

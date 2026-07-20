@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { DatasetServiceGetDatasetValuesRequest } from "textql-sdk/models/operations";
+import { DatasetServiceGetDatasetValuesRequest } from "@textql/sdk/models/operations";
 
 let value: DatasetServiceGetDatasetValuesRequest = {
   body: {},

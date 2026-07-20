@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MCPServiceDeleteMCPServerRequest } from "textql-sdk/models/operations";
+import { MCPServiceDeleteMCPServerRequest } from "@textql/sdk/models/operations";
 
 let value: MCPServiceDeleteMCPServerRequest = {
   body: {},

@@ -15,7 +15,7 @@ ListGoldenFiles
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListGoldenFiles" method="post" path="/textql.rpc.public.patches.LibraryService/ListGoldenFiles" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -37,8 +37,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { libraryServiceLibraryServiceListGoldenFiles } from "textql-sdk/funcs/library-service-library-service-list-golden-files.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { libraryServiceLibraryServiceListGoldenFiles } from "@textql/sdk/funcs/library-service-library-service-list-golden-files.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -88,7 +88,7 @@ SetLibraryFileGolden
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_SetLibraryFileGolden" method="post" path="/textql.rpc.public.patches.LibraryService/SetLibraryFileGolden" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -110,8 +110,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { libraryServiceLibraryServiceSetLibraryFileGolden } from "textql-sdk/funcs/library-service-library-service-set-library-file-golden.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { libraryServiceLibraryServiceSetLibraryFileGolden } from "@textql/sdk/funcs/library-service-library-service-set-library-file-golden.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

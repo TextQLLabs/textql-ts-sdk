@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TabularFileCell } from "textql-sdk/models";
+import { TabularFileCell } from "@textql/sdk/models";
 
 let value: TabularFileCell = {
   tabularFileCell: {},

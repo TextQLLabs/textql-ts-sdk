@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorConnectorDashboard } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorConnectorDashboard } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorConnectorDashboard = {
   lastActivity: new Date("2023-01-15T01:30:15.01Z"),

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAgentCreateAgentResponse } from "textql-sdk/models";
+import { TextqlRpcPublicAgentCreateAgentResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAgentCreateAgentResponse = {
   agent: {

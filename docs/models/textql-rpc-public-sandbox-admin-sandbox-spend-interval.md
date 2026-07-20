@@ -8,7 +8,7 @@ One billable lease interval: the worker was held from started_at to ended_at
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSandboxAdminSandboxSpendInterval } from "textql-sdk/models";
+import { TextqlRpcPublicSandboxAdminSandboxSpendInterval } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSandboxAdminSandboxSpendInterval = {
   startedAt: new Date("2023-01-15T01:30:15.01Z"),

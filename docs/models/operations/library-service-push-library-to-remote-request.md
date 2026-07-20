@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServicePushLibraryToRemoteRequest } from "textql-sdk/models/operations";
+import { LibraryServicePushLibraryToRemoteRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServicePushLibraryToRemoteRequest = {
   body: {},

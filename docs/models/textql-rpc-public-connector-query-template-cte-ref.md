@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorQueryTemplateCteRef } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorQueryTemplateCteRef } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorQueryTemplateCteRef = {};
 ```

@@ -5,7 +5,7 @@ Simplified query request for external API users
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatQueryOneShotRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatQueryOneShotRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatQueryOneShotRequest = {};
 ```

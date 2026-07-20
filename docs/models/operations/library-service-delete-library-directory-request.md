@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceDeleteLibraryDirectoryRequest } from "textql-sdk/models/operations";
+import { LibraryServiceDeleteLibraryDirectoryRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceDeleteLibraryDirectoryRequest = {
   body: {},

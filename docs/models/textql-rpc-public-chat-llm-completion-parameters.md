@@ -5,7 +5,7 @@ LLM completion parameters used to create a cell
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatLlmCompletionParameters } from "textql-sdk/models";
+import { TextqlRpcPublicChatLlmCompletionParameters } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatLlmCompletionParameters = {
   startedAt: new Date("2023-01-15T01:30:15.01Z"),

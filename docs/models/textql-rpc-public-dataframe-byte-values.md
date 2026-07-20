@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDataframeByteValues } from "textql-sdk/models";
+import { TextqlRpcPublicDataframeByteValues } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDataframeByteValues = {};
 ```

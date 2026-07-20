@@ -5,7 +5,7 @@ Folder management messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardCreateDashboardFolderRequest } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardCreateDashboardFolderRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardCreateDashboardFolderRequest = {};
 ```

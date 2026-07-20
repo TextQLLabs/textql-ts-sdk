@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SecretServiceDeleteApiRevisionRequest } from "textql-sdk/models/operations";
+import { SecretServiceDeleteApiRevisionRequest } from "@textql/sdk/models/operations";
 
 let value: SecretServiceDeleteApiRevisionRequest = {
   body: {},

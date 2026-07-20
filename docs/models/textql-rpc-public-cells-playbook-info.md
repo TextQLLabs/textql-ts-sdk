@@ -5,7 +5,7 @@ Simplified playbook info for display in cells
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsPlaybookInfo } from "textql-sdk/models";
+import { TextqlRpcPublicCellsPlaybookInfo } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsPlaybookInfo = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

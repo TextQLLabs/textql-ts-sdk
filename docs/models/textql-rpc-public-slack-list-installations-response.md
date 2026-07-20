@@ -5,7 +5,7 @@ List all Slack workspace installations for the organization
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackListInstallationsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSlackListInstallationsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackListInstallationsResponse = {
   installations: [

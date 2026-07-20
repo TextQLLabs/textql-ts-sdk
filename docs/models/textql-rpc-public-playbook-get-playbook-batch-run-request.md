@@ -5,7 +5,7 @@ Request to get a specific batch run
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest = {};
 ```

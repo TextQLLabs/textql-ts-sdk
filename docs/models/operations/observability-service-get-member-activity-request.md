@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceGetMemberActivityRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceGetMemberActivityRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceGetMemberActivityRequest = {
   body: {},

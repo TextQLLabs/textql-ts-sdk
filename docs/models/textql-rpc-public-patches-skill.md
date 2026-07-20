@@ -7,7 +7,7 @@ Skill is the display metadata for one library skill. Intentionally carries no
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesSkill } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesSkill } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesSkill = {};
 ```

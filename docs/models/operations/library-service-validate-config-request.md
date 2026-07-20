@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceValidateConfigRequest } from "textql-sdk/models/operations";
+import { LibraryServiceValidateConfigRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceValidateConfigRequest = {
   body: {},

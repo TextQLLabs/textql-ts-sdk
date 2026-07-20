@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMCPMCPTransportType } from "textql-sdk/models";
+import { TextqlRpcPublicMCPMCPTransportType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMCPMCPTransportType = "SSE";
 

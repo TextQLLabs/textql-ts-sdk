@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacApiKeyScope } from "textql-sdk/models";
+import { TextqlRpcPublicRbacApiKeyScope } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacApiKeyScope = "API_KEY_SCOPE_PERSONAL";
 ```

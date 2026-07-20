@@ -6,7 +6,7 @@ Chat → topics decoration (which live topics tag each chat), mirroring the
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveGetChatTopicsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicObserveGetChatTopicsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveGetChatTopicsRequest = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacCreateApiKeyResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacCreateApiKeyResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacCreateApiKeyResponse = {
   apiKey: {

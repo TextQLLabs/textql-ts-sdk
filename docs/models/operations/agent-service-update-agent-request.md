@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AgentServiceUpdateAgentRequest } from "textql-sdk/models/operations";
+import { AgentServiceUpdateAgentRequest } from "@textql/sdk/models/operations";
 
 let value: AgentServiceUpdateAgentRequest = {
   body: {},

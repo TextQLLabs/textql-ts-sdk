@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacShareObjectWithRoleRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacShareObjectWithRoleRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacShareObjectWithRoleRequest = {
   expiresAt: new Date("2023-01-15T01:30:15.01Z"),

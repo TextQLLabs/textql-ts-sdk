@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { MetricsExportServiceConfigureMetricsExportRequest } from "textql-sdk/models/operations";
+import { MetricsExportServiceConfigureMetricsExportRequest } from "@textql/sdk/models/operations";
 
 let value: MetricsExportServiceConfigureMetricsExportRequest = {
   body: {},

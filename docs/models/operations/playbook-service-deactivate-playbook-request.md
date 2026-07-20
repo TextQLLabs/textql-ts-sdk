@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PlaybookServiceDeactivatePlaybookRequest } from "textql-sdk/models/operations";
+import { PlaybookServiceDeactivatePlaybookRequest } from "@textql/sdk/models/operations";
 
 let value: PlaybookServiceDeactivatePlaybookRequest = {
   body: {},

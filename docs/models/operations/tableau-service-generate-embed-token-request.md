@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauServiceGenerateEmbedTokenRequest } from "textql-sdk/models/operations";
+import { TableauServiceGenerateEmbedTokenRequest } from "@textql/sdk/models/operations";
 
 let value: TableauServiceGenerateEmbedTokenRequest = {
   body: {},

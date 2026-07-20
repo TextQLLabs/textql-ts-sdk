@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RBACServiceAssignPermissionToRoleRequest } from "textql-sdk/models/operations";
+import { RBACServiceAssignPermissionToRoleRequest } from "@textql/sdk/models/operations";
 
 let value: RBACServiceAssignPermissionToRoleRequest = {
   body: {},

@@ -5,7 +5,7 @@ Unsets the context playbook for a Slack channel by channel ID only.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest = {};
 ```

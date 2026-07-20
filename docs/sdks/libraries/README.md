@@ -83,7 +83,7 @@ AddLibrarySubmodule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_AddLibrarySubmodule" method="post" path="/textql.rpc.public.patches.LibraryService/AddLibrarySubmodule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -105,8 +105,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesAddSubmodule } from "textql-sdk/funcs/libraries-add-submodule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesAddSubmodule } from "@textql/sdk/funcs/libraries-add-submodule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -156,7 +156,7 @@ ApprovePatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ApprovePatch" method="post" path="/textql.rpc.public.patches.LibraryService/ApprovePatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -178,8 +178,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesApprovePatch } from "textql-sdk/funcs/libraries-approve-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesApprovePatch } from "@textql/sdk/funcs/libraries-approve-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -229,7 +229,7 @@ ConfigureLibraryRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ConfigureLibraryRemote" method="post" path="/textql.rpc.public.patches.LibraryService/ConfigureLibraryRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -251,8 +251,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesConfigureLibraryRemote } from "textql-sdk/funcs/libraries-configure-library-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesConfigureLibraryRemote } from "@textql/sdk/funcs/libraries-configure-library-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -302,7 +302,7 @@ CreateApprovalRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_CreateApprovalRule" method="post" path="/textql.rpc.public.patches.LibraryService/CreateApprovalRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -324,8 +324,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesCreateApprovalRule } from "textql-sdk/funcs/libraries-create-approval-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesCreateApprovalRule } from "@textql/sdk/funcs/libraries-create-approval-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -375,7 +375,7 @@ CreateContextPatchAutoApproveRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_CreateContextPatchAutoApproveRule" method="post" path="/textql.rpc.public.patches.LibraryService/CreateContextPatchAutoApproveRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -397,8 +397,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesCreateContextPatchAutoApproveRule } from "textql-sdk/funcs/libraries-create-context-patch-auto-approve-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesCreateContextPatchAutoApproveRule } from "@textql/sdk/funcs/libraries-create-context-patch-auto-approve-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -448,7 +448,7 @@ CreateLibraryDirectory
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_CreateLibraryDirectory" method="post" path="/textql.rpc.public.patches.LibraryService/CreateLibraryDirectory" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -470,8 +470,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesCreateLibraryDirectory } from "textql-sdk/funcs/libraries-create-library-directory.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesCreateLibraryDirectory } from "@textql/sdk/funcs/libraries-create-library-directory.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -521,7 +521,7 @@ CreateLibraryFileUploadUrl
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_CreateLibraryFileUploadUrl" method="post" path="/textql.rpc.public.patches.LibraryService/CreateLibraryFileUploadUrl" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -543,8 +543,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesCreateFileUploadUrl } from "textql-sdk/funcs/libraries-create-file-upload-url.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesCreateFileUploadUrl } from "@textql/sdk/funcs/libraries-create-file-upload-url.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -594,7 +594,7 @@ DeleteApprovalRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DeleteApprovalRule" method="post" path="/textql.rpc.public.patches.LibraryService/DeleteApprovalRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -616,8 +616,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDeleteApprovalRule } from "textql-sdk/funcs/libraries-delete-approval-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDeleteApprovalRule } from "@textql/sdk/funcs/libraries-delete-approval-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -667,7 +667,7 @@ DeleteContextPatchAutoApproveRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DeleteContextPatchAutoApproveRule" method="post" path="/textql.rpc.public.patches.LibraryService/DeleteContextPatchAutoApproveRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -689,8 +689,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDeleteContextPatchAutoApproveRule } from "textql-sdk/funcs/libraries-delete-context-patch-auto-approve-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDeleteContextPatchAutoApproveRule } from "@textql/sdk/funcs/libraries-delete-context-patch-auto-approve-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -740,7 +740,7 @@ DeleteLibraryDirectory
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DeleteLibraryDirectory" method="post" path="/textql.rpc.public.patches.LibraryService/DeleteLibraryDirectory" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -762,8 +762,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDeleteLibraryDirectory } from "textql-sdk/funcs/libraries-delete-library-directory.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDeleteLibraryDirectory } from "@textql/sdk/funcs/libraries-delete-library-directory.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -813,7 +813,7 @@ DeleteLibraryFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DeleteLibraryFile" method="post" path="/textql.rpc.public.patches.LibraryService/DeleteLibraryFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -835,8 +835,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDeleteLibraryFile } from "textql-sdk/funcs/libraries-delete-library-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDeleteLibraryFile } from "@textql/sdk/funcs/libraries-delete-library-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -886,7 +886,7 @@ DeleteLibraryOwners
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DeleteLibraryOwners" method="post" path="/textql.rpc.public.patches.LibraryService/DeleteLibraryOwners" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -908,8 +908,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDeleteOwners } from "textql-sdk/funcs/libraries-delete-owners.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDeleteOwners } from "@textql/sdk/funcs/libraries-delete-owners.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -959,7 +959,7 @@ DenyPatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_DenyPatch" method="post" path="/textql.rpc.public.patches.LibraryService/DenyPatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -981,8 +981,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesDenyPatch } from "textql-sdk/funcs/libraries-deny-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesDenyPatch } from "@textql/sdk/funcs/libraries-deny-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1032,7 +1032,7 @@ ExchangeLibraryGithubCode
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ExchangeLibraryGithubCode" method="post" path="/textql.rpc.public.patches.LibraryService/ExchangeLibraryGithubCode" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1054,8 +1054,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesExchangeGithubCode } from "textql-sdk/funcs/libraries-exchange-github-code.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesExchangeGithubCode } from "@textql/sdk/funcs/libraries-exchange-github-code.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1105,7 +1105,7 @@ FinalizeLibraryFileUpload
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_FinalizeLibraryFileUpload" method="post" path="/textql.rpc.public.patches.LibraryService/FinalizeLibraryFileUpload" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1127,8 +1127,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesFinalizeFileUpload } from "textql-sdk/funcs/libraries-finalize-file-upload.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesFinalizeFileUpload } from "@textql/sdk/funcs/libraries-finalize-file-upload.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1178,7 +1178,7 @@ GetCodeownerCoverage
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetCodeownerCoverage" method="post" path="/textql.rpc.public.patches.LibraryService/GetCodeownerCoverage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1200,8 +1200,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetCodeownerCoverage } from "textql-sdk/funcs/libraries-get-codeowner-coverage.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetCodeownerCoverage } from "@textql/sdk/funcs/libraries-get-codeowner-coverage.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1251,7 +1251,7 @@ GetConfigExportCapabilities
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetConfigExportCapabilities" method="post" path="/textql.rpc.public.patches.LibraryService/GetConfigExportCapabilities" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1273,8 +1273,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetConfigExportCapabilities } from "textql-sdk/funcs/libraries-get-config-export-capabilities.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetConfigExportCapabilities } from "@textql/sdk/funcs/libraries-get-config-export-capabilities.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1324,7 +1324,7 @@ GetEffectiveLibraryOwners
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetEffectiveLibraryOwners" method="post" path="/textql.rpc.public.patches.LibraryService/GetEffectiveLibraryOwners" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1346,8 +1346,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetEffectiveOwners } from "textql-sdk/funcs/libraries-get-effective-owners.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetEffectiveOwners } from "@textql/sdk/funcs/libraries-get-effective-owners.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1397,7 +1397,7 @@ GetFileUsage
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetFileUsage" method="post" path="/textql.rpc.public.patches.LibraryService/GetFileUsage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1419,8 +1419,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetFileUsage } from "textql-sdk/funcs/libraries-get-file-usage.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetFileUsage } from "@textql/sdk/funcs/libraries-get-file-usage.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1470,7 +1470,7 @@ GetFileUsageTimeline
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetFileUsageTimeline" method="post" path="/textql.rpc.public.patches.LibraryService/GetFileUsageTimeline" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1492,8 +1492,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetFileUsageTimeline } from "textql-sdk/funcs/libraries-get-file-usage-timeline.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetFileUsageTimeline } from "@textql/sdk/funcs/libraries-get-file-usage-timeline.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1543,7 +1543,7 @@ GetLibraryAnaConfig
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryAnaConfig" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryAnaConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1565,8 +1565,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetAnaConfig } from "textql-sdk/funcs/libraries-get-ana-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetAnaConfig } from "@textql/sdk/funcs/libraries-get-ana-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1616,7 +1616,7 @@ GetLibraryFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryFile" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1638,8 +1638,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetFile } from "textql-sdk/funcs/libraries-get-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetFile } from "@textql/sdk/funcs/libraries-get-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1689,7 +1689,7 @@ GetLibraryGithubOAuthURL
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryGithubOAuthURL" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryGithubOAuthURL" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1711,8 +1711,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetLibraryGithubOAuthURL } from "textql-sdk/funcs/libraries-get-library-github-o-auth-url.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetLibraryGithubOAuthURL } from "@textql/sdk/funcs/libraries-get-library-github-o-auth-url.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1762,7 +1762,7 @@ GetLibraryHistoryFileDiff
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryHistoryFileDiff" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryHistoryFileDiff" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1784,8 +1784,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetHistoryFileDiff } from "textql-sdk/funcs/libraries-get-history-file-diff.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetHistoryFileDiff } from "@textql/sdk/funcs/libraries-get-history-file-diff.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1835,7 +1835,7 @@ GetLibraryMigrationStatus
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryMigrationStatus" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryMigrationStatus" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1857,8 +1857,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetMigrationStatus } from "textql-sdk/funcs/libraries-get-migration-status.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetMigrationStatus } from "@textql/sdk/funcs/libraries-get-migration-status.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1908,7 +1908,7 @@ GetLibraryOwners
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryOwners" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryOwners" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1930,8 +1930,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetLibraryOwners } from "textql-sdk/funcs/libraries-get-library-owners.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetLibraryOwners } from "@textql/sdk/funcs/libraries-get-library-owners.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1981,7 +1981,7 @@ GetLibraryRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibraryRemote" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibraryRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2003,8 +2003,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetRemote } from "textql-sdk/funcs/libraries-get-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetRemote } from "@textql/sdk/funcs/libraries-get-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2054,7 +2054,7 @@ GetLibrarySizeTimeline
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibrarySizeTimeline" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibrarySizeTimeline" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2076,8 +2076,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetSizeTimeline } from "textql-sdk/funcs/libraries-get-size-timeline.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetSizeTimeline } from "@textql/sdk/funcs/libraries-get-size-timeline.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2127,7 +2127,7 @@ GetLibrarySyncConflicts
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetLibrarySyncConflicts" method="post" path="/textql.rpc.public.patches.LibraryService/GetLibrarySyncConflicts" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2149,8 +2149,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetLibrarySyncConflicts } from "textql-sdk/funcs/libraries-get-library-sync-conflicts.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetLibrarySyncConflicts } from "@textql/sdk/funcs/libraries-get-library-sync-conflicts.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2200,7 +2200,7 @@ GetOntologyUsageSummary
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetOntologyUsageSummary" method="post" path="/textql.rpc.public.patches.LibraryService/GetOntologyUsageSummary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2222,8 +2222,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetOntologyUsageSummary } from "textql-sdk/funcs/libraries-get-ontology-usage-summary.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetOntologyUsageSummary } from "@textql/sdk/funcs/libraries-get-ontology-usage-summary.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2273,7 +2273,7 @@ GetPatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetPatch" method="post" path="/textql.rpc.public.patches.LibraryService/GetPatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2295,8 +2295,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetPatch } from "textql-sdk/funcs/libraries-get-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetPatch } from "@textql/sdk/funcs/libraries-get-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2346,7 +2346,7 @@ GetPatchByNumber
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetPatchByNumber" method="post" path="/textql.rpc.public.patches.LibraryService/GetPatchByNumber" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2368,8 +2368,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetPatchByNumber } from "textql-sdk/funcs/libraries-get-patch-by-number.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetPatchByNumber } from "@textql/sdk/funcs/libraries-get-patch-by-number.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2419,7 +2419,7 @@ GetPatchCapabilities
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetPatchCapabilities" method="post" path="/textql.rpc.public.patches.LibraryService/GetPatchCapabilities" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2441,8 +2441,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetPatchCapabilities } from "textql-sdk/funcs/libraries-get-patch-capabilities.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetPatchCapabilities } from "@textql/sdk/funcs/libraries-get-patch-capabilities.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2492,7 +2492,7 @@ GetRawPatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetRawPatch" method="post" path="/textql.rpc.public.patches.LibraryService/GetRawPatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2514,8 +2514,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetRawPatch } from "textql-sdk/funcs/libraries-get-raw-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetRawPatch } from "@textql/sdk/funcs/libraries-get-raw-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2565,7 +2565,7 @@ GetUsageDetailsForFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_GetUsageDetailsForFile" method="post" path="/textql.rpc.public.patches.LibraryService/GetUsageDetailsForFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2587,8 +2587,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesGetUsageDetailsForFile } from "textql-sdk/funcs/libraries-get-usage-details-for-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesGetUsageDetailsForFile } from "@textql/sdk/funcs/libraries-get-usage-details-for-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2638,7 +2638,7 @@ ListApprovalRules
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListApprovalRules" method="post" path="/textql.rpc.public.patches.LibraryService/ListApprovalRules" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2660,8 +2660,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListApprovalRules } from "textql-sdk/funcs/libraries-list-approval-rules.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListApprovalRules } from "@textql/sdk/funcs/libraries-list-approval-rules.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2711,7 +2711,7 @@ ListChatsForFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListChatsForFile" method="post" path="/textql.rpc.public.patches.LibraryService/ListChatsForFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2733,8 +2733,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListChatsForFile } from "textql-sdk/funcs/libraries-list-chats-for-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListChatsForFile } from "@textql/sdk/funcs/libraries-list-chats-for-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2784,7 +2784,7 @@ ListContextPatchAutoApproveRules
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListContextPatchAutoApproveRules" method="post" path="/textql.rpc.public.patches.LibraryService/ListContextPatchAutoApproveRules" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2806,8 +2806,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListContextPatchAutoApproveRules } from "textql-sdk/funcs/libraries-list-context-patch-auto-approve-rules.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListContextPatchAutoApproveRules } from "@textql/sdk/funcs/libraries-list-context-patch-auto-approve-rules.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2857,7 +2857,7 @@ ListLibraryEntries
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListLibraryEntries" method="post" path="/textql.rpc.public.patches.LibraryService/ListLibraryEntries" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2879,8 +2879,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListLibraryEntries } from "textql-sdk/funcs/libraries-list-library-entries.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListLibraryEntries } from "@textql/sdk/funcs/libraries-list-library-entries.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2930,7 +2930,7 @@ ListLibraryHistory
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListLibraryHistory" method="post" path="/textql.rpc.public.patches.LibraryService/ListLibraryHistory" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2952,8 +2952,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListLibraryHistory } from "textql-sdk/funcs/libraries-list-library-history.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListLibraryHistory } from "@textql/sdk/funcs/libraries-list-library-history.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3003,7 +3003,7 @@ ListLibraryImports
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListLibraryImports" method="post" path="/textql.rpc.public.patches.LibraryService/ListLibraryImports" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3025,8 +3025,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListImports } from "textql-sdk/funcs/libraries-list-imports.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListImports } from "@textql/sdk/funcs/libraries-list-imports.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3076,7 +3076,7 @@ ListLibrarySubmodules
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListLibrarySubmodules" method="post" path="/textql.rpc.public.patches.LibraryService/ListLibrarySubmodules" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3098,8 +3098,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListLibrarySubmodules } from "textql-sdk/funcs/libraries-list-library-submodules.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListLibrarySubmodules } from "@textql/sdk/funcs/libraries-list-library-submodules.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3149,7 +3149,7 @@ ListLibrarySyncRuns
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListLibrarySyncRuns" method="post" path="/textql.rpc.public.patches.LibraryService/ListLibrarySyncRuns" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3171,8 +3171,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListLibrarySyncRuns } from "textql-sdk/funcs/libraries-list-library-sync-runs.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListLibrarySyncRuns } from "@textql/sdk/funcs/libraries-list-library-sync-runs.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3222,7 +3222,7 @@ ListPatchReviewers
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListPatchReviewers" method="post" path="/textql.rpc.public.patches.LibraryService/ListPatchReviewers" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3244,8 +3244,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListPatchReviewers } from "textql-sdk/funcs/libraries-list-patch-reviewers.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListPatchReviewers } from "@textql/sdk/funcs/libraries-list-patch-reviewers.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3295,7 +3295,7 @@ ListPatches
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListPatches" method="post" path="/textql.rpc.public.patches.LibraryService/ListPatches" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3317,8 +3317,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListPatches } from "textql-sdk/funcs/libraries-list-patches.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListPatches } from "@textql/sdk/funcs/libraries-list-patches.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3370,7 +3370,7 @@ Lists the skills under the library's flat skills/ root that the caller can
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ListSkills" method="post" path="/textql.rpc.public.patches.LibraryService/ListSkills" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3392,8 +3392,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesListSkills } from "textql-sdk/funcs/libraries-list-skills.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesListSkills } from "@textql/sdk/funcs/libraries-list-skills.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3443,7 +3443,7 @@ MigrateLegacyContextToLibrary
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_MigrateLegacyContextToLibrary" method="post" path="/textql.rpc.public.patches.LibraryService/MigrateLegacyContextToLibrary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3465,8 +3465,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesMigrateLegacyContext } from "textql-sdk/funcs/libraries-migrate-legacy-context.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesMigrateLegacyContext } from "@textql/sdk/funcs/libraries-migrate-legacy-context.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3516,7 +3516,7 @@ MigrateOntologyToLibrary
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_MigrateOntologyToLibrary" method="post" path="/textql.rpc.public.patches.LibraryService/MigrateOntologyToLibrary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3538,8 +3538,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesMigrateOntology } from "textql-sdk/funcs/libraries-migrate-ontology.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesMigrateOntology } from "@textql/sdk/funcs/libraries-migrate-ontology.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3589,7 +3589,7 @@ PlanLibraryMerge
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_PlanLibraryMerge" method="post" path="/textql.rpc.public.patches.LibraryService/PlanLibraryMerge" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3611,8 +3611,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesPlanMerge } from "textql-sdk/funcs/libraries-plan-merge.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesPlanMerge } from "@textql/sdk/funcs/libraries-plan-merge.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3662,7 +3662,7 @@ PreviewLibraryPullFromRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_PreviewLibraryPullFromRemote" method="post" path="/textql.rpc.public.patches.LibraryService/PreviewLibraryPullFromRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3684,8 +3684,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesPreviewLibraryPullFromRemote } from "textql-sdk/funcs/libraries-preview-library-pull-from-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesPreviewLibraryPullFromRemote } from "@textql/sdk/funcs/libraries-preview-library-pull-from-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3735,7 +3735,7 @@ PullLibraryFromRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_PullLibraryFromRemote" method="post" path="/textql.rpc.public.patches.LibraryService/PullLibraryFromRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3757,8 +3757,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesPullFromRemote } from "textql-sdk/funcs/libraries-pull-from-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesPullFromRemote } from "@textql/sdk/funcs/libraries-pull-from-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3808,7 +3808,7 @@ PushLibraryToRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_PushLibraryToRemote" method="post" path="/textql.rpc.public.patches.LibraryService/PushLibraryToRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3830,8 +3830,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesPushLibraryToRemote } from "textql-sdk/funcs/libraries-push-library-to-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesPushLibraryToRemote } from "@textql/sdk/funcs/libraries-push-library-to-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3881,7 +3881,7 @@ RecoverLibrary
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RecoverLibrary" method="post" path="/textql.rpc.public.patches.LibraryService/RecoverLibrary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3903,8 +3903,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRecover } from "textql-sdk/funcs/libraries-recover.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRecover } from "@textql/sdk/funcs/libraries-recover.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3954,7 +3954,7 @@ RemoveLibraryRemote
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RemoveLibraryRemote" method="post" path="/textql.rpc.public.patches.LibraryService/RemoveLibraryRemote" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3976,8 +3976,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRemoveRemote } from "textql-sdk/funcs/libraries-remove-remote.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRemoveRemote } from "@textql/sdk/funcs/libraries-remove-remote.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4027,7 +4027,7 @@ RemoveLibrarySubmodule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RemoveLibrarySubmodule" method="post" path="/textql.rpc.public.patches.LibraryService/RemoveLibrarySubmodule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4049,8 +4049,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRemoveLibrarySubmodule } from "textql-sdk/funcs/libraries-remove-library-submodule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRemoveLibrarySubmodule } from "@textql/sdk/funcs/libraries-remove-library-submodule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4100,7 +4100,7 @@ RenameLibraryFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RenameLibraryFile" method="post" path="/textql.rpc.public.patches.LibraryService/RenameLibraryFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4122,8 +4122,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRenameFile } from "textql-sdk/funcs/libraries-rename-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRenameFile } from "@textql/sdk/funcs/libraries-rename-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4173,7 +4173,7 @@ RequestPatchReview
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RequestPatchReview" method="post" path="/textql.rpc.public.patches.LibraryService/RequestPatchReview" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4195,8 +4195,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRequestPatchReview } from "textql-sdk/funcs/libraries-request-patch-review.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRequestPatchReview } from "@textql/sdk/funcs/libraries-request-patch-review.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4246,7 +4246,7 @@ ResolveLibrarySyncConflict
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ResolveLibrarySyncConflict" method="post" path="/textql.rpc.public.patches.LibraryService/ResolveLibrarySyncConflict" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4268,8 +4268,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesResolveSyncConflict } from "textql-sdk/funcs/libraries-resolve-sync-conflict.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesResolveSyncConflict } from "@textql/sdk/funcs/libraries-resolve-sync-conflict.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4319,7 +4319,7 @@ RestorePatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RestorePatch" method="post" path="/textql.rpc.public.patches.LibraryService/RestorePatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4341,8 +4341,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRestorePatch } from "textql-sdk/funcs/libraries-restore-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRestorePatch } from "@textql/sdk/funcs/libraries-restore-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4392,7 +4392,7 @@ RevertPatch
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_RevertPatch" method="post" path="/textql.rpc.public.patches.LibraryService/RevertPatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4414,8 +4414,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesRevertPatch } from "textql-sdk/funcs/libraries-revert-patch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesRevertPatch } from "@textql/sdk/funcs/libraries-revert-patch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4465,7 +4465,7 @@ SaveAllObjectsAsConfig
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_SaveAllObjectsAsConfig" method="post" path="/textql.rpc.public.patches.LibraryService/SaveAllObjectsAsConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4487,8 +4487,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesSaveAllObjectsAsConfig } from "textql-sdk/funcs/libraries-save-all-objects-as-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesSaveAllObjectsAsConfig } from "@textql/sdk/funcs/libraries-save-all-objects-as-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4538,7 +4538,7 @@ SaveObjectAsConfig
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_SaveObjectAsConfig" method="post" path="/textql.rpc.public.patches.LibraryService/SaveObjectAsConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4560,8 +4560,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesSaveAsConfig } from "textql-sdk/funcs/libraries-save-as-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesSaveAsConfig } from "@textql/sdk/funcs/libraries-save-as-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4614,7 +4614,7 @@ TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_TriggerConfigDriftReconcile" method="post" path="/textql.rpc.public.patches.LibraryService/TriggerConfigDriftReconcile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4636,8 +4636,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesTriggerConfigDriftReconcile } from "textql-sdk/funcs/libraries-trigger-config-drift-reconcile.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesTriggerConfigDriftReconcile } from "@textql/sdk/funcs/libraries-trigger-config-drift-reconcile.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4687,7 +4687,7 @@ UpdateApprovalRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpdateApprovalRule" method="post" path="/textql.rpc.public.patches.LibraryService/UpdateApprovalRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4709,8 +4709,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpdateApprovalRule } from "textql-sdk/funcs/libraries-update-approval-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpdateApprovalRule } from "@textql/sdk/funcs/libraries-update-approval-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4760,7 +4760,7 @@ UpdateContextPatchAutoApproveRule
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpdateContextPatchAutoApproveRule" method="post" path="/textql.rpc.public.patches.LibraryService/UpdateContextPatchAutoApproveRule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4782,8 +4782,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpdateContextPatchAutoApproveRule } from "textql-sdk/funcs/libraries-update-context-patch-auto-approve-rule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpdateContextPatchAutoApproveRule } from "@textql/sdk/funcs/libraries-update-context-patch-auto-approve-rule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4833,7 +4833,7 @@ UpdateLibrarySyncConfig
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpdateLibrarySyncConfig" method="post" path="/textql.rpc.public.patches.LibraryService/UpdateLibrarySyncConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4855,8 +4855,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpdateLibrarySyncConfig } from "textql-sdk/funcs/libraries-update-library-sync-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpdateLibrarySyncConfig } from "@textql/sdk/funcs/libraries-update-library-sync-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4906,7 +4906,7 @@ UpsertLibraryAnaConfig
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpsertLibraryAnaConfig" method="post" path="/textql.rpc.public.patches.LibraryService/UpsertLibraryAnaConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -4928,8 +4928,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpsertAnaConfig } from "textql-sdk/funcs/libraries-upsert-ana-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpsertAnaConfig } from "@textql/sdk/funcs/libraries-upsert-ana-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -4979,7 +4979,7 @@ UpsertLibraryFile
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpsertLibraryFile" method="post" path="/textql.rpc.public.patches.LibraryService/UpsertLibraryFile" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -5001,8 +5001,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpsertLibraryFile } from "textql-sdk/funcs/libraries-upsert-library-file.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpsertLibraryFile } from "@textql/sdk/funcs/libraries-upsert-library-file.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -5052,7 +5052,7 @@ UpsertLibraryOwners
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_UpsertLibraryOwners" method="post" path="/textql.rpc.public.patches.LibraryService/UpsertLibraryOwners" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -5074,8 +5074,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesUpsertOwners } from "textql-sdk/funcs/libraries-upsert-owners.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesUpsertOwners } from "@textql/sdk/funcs/libraries-upsert-owners.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -5128,7 +5128,7 @@ Read-only functional validation of a proposed config: parse + dependency
 
 <!-- UsageSnippet language="typescript" operationID="LibraryService_ValidateConfig" method="post" path="/textql.rpc.public.patches.LibraryService/ValidateConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -5150,8 +5150,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { librariesValidateConfig } from "textql-sdk/funcs/libraries-validate-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { librariesValidateConfig } from "@textql/sdk/funcs/libraries-validate-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceResolveLibrarySyncConflictRequest } from "textql-sdk/models/operations";
+import { LibraryServiceResolveLibrarySyncConflictRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceResolveLibrarySyncConflictRequest = {
   body: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesMigrateOntologyToLibraryResult } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesMigrateOntologyToLibraryResult } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesMigrateOntologyToLibraryResult = {};
 ```

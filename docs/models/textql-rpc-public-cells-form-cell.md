@@ -7,7 +7,7 @@ FormCell is the v2 form editor cell. It only references a form_v5 row by id;
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsFormCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsFormCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsFormCell = {};
 ```

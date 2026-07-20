@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAgentAgentRun } from "textql-sdk/models";
+import { TextqlRpcPublicAgentAgentRun } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAgentAgentRun = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

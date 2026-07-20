@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatGetCompletionParametersResponse } from "textql-sdk/models";
+import { TextqlRpcPublicChatGetCompletionParametersResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatGetCompletionParametersResponse = {
   params: {

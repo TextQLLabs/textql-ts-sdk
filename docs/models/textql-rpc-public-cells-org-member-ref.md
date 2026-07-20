@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsOrgMemberRef } from "textql-sdk/models";
+import { TextqlRpcPublicCellsOrgMemberRef } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsOrgMemberRef = {};
 ```

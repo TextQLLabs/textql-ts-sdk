@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Uint64 } from "textql-sdk/models";
+import { Uint64 } from "@textql/sdk/models";
 
 let value: Uint64 = {
   uint64: {},

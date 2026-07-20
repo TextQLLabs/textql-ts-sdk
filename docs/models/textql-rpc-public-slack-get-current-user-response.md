@@ -5,7 +5,7 @@ Get current user's Slack info
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackGetCurrentUserResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSlackGetCurrentUserResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackGetCurrentUserResponse = {};
 ```

@@ -5,7 +5,7 @@ Report read tracking messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookMarkReportAsReadRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookMarkReportAsReadRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookMarkReportAsReadRequest = {};
 ```

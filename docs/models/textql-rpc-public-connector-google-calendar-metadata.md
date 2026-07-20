@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorGoogleCalendarMetadata } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorGoogleCalendarMetadata } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorGoogleCalendarMetadata = {};
 ```

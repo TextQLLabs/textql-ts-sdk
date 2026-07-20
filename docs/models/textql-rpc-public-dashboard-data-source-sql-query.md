@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardDataSourceSqlQuery } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardDataSourceSqlQuery } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardDataSourceSqlQuery = {
   sqlQuery: {},

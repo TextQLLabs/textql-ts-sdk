@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMCPMCPTool } from "textql-sdk/models";
+import { TextqlRpcPublicMCPMCPTool } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMCPMCPTool = {};
 ```

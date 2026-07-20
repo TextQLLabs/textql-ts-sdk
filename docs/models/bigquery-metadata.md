@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { BigqueryMetadata } from "textql-sdk/models";
+import { BigqueryMetadata } from "@textql/sdk/models";
 
 let value: BigqueryMetadata = {
   bigqueryMetadata: {},

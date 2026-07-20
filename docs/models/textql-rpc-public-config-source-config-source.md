@@ -6,7 +6,7 @@ Config-management metadata (provenance + reconcile state) for any file-based
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConfigSourceConfigSource } from "textql-sdk/models";
+import { TextqlRpcPublicConfigSourceConfigSource } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConfigSourceConfigSource = {};
 ```

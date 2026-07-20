@@ -6,7 +6,7 @@ MemberActivity is one member's activity over the window: a daily event-count
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveMemberActivity } from "textql-sdk/models";
+import { TextqlRpcPublicObserveMemberActivity } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveMemberActivity = {
   lastActive: new Date("2023-01-15T01:30:15.01Z"),

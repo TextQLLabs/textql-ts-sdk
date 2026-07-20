@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesMigratedLegacyContextPrompt } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesMigratedLegacyContextPrompt } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesMigratedLegacyContextPrompt = {};
 ```

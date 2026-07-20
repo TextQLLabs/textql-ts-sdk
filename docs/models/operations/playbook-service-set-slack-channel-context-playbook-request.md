@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PlaybookServiceSetSlackChannelContextPlaybookRequest } from "textql-sdk/models/operations";
+import { PlaybookServiceSetSlackChannelContextPlaybookRequest } from "@textql/sdk/models/operations";
 
 let value: PlaybookServiceSetSlackChannelContextPlaybookRequest = {
   body: {},

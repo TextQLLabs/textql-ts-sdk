@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicReportsImageVariant } from "textql-sdk/models";
+import { TextqlRpcPublicReportsImageVariant } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicReportsImageVariant = "IMAGE_VARIANT_NONE";
 

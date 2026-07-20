@@ -11,7 +11,7 @@ ChartReference points to an interactive HTML chart produced by sandbox
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsChartReference } from "textql-sdk/models";
+import { TextqlRpcPublicCellsChartReference } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsChartReference = {};
 ```

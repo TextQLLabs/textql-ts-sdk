@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ConnectorServiceCreateConnectorRequest } from "textql-sdk/models/operations";
+import { ConnectorServiceCreateConnectorRequest } from "@textql/sdk/models/operations";
 
 let value: ConnectorServiceCreateConnectorRequest = {
   body: {},

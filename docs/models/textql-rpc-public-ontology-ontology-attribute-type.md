@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyOntologyAttributeType } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyOntologyAttributeType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyOntologyAttributeType =
   "ONTOLOGY_ATTRIBUTE_TYPE_NUMBER";

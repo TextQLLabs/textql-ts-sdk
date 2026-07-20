@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatWatchRunStartedEvent } from "textql-sdk/models";
+import { TextqlRpcPublicChatWatchRunStartedEvent } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatWatchRunStartedEvent = {};
 ```

@@ -5,7 +5,7 @@ Associates a playbook to a Slack channel as its context playbook.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookSetSlackChannelContextPlaybookRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookSetSlackChannelContextPlaybookRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookSetSlackChannelContextPlaybookRequest = {};
 ```

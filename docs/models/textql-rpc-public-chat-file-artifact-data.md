@@ -5,7 +5,7 @@ File-based artifacts (images, PDFs, CSVs, HTML, text files)
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatFileArtifactData } from "textql-sdk/models";
+import { TextqlRpcPublicChatFileArtifactData } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatFileArtifactData = {};
 ```

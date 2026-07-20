@@ -5,7 +5,7 @@ Access request management messages
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacRequestAccessRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacRequestAccessRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacRequestAccessRequest = {};
 ```

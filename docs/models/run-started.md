@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RunStarted } from "textql-sdk/models";
+import { RunStarted } from "@textql/sdk/models";
 
 let value: RunStarted = {
   runStarted: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesUsageOrderBy } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesUsageOrderBy } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesUsageOrderBy =
   "ORDER_BY_LEAST_FREQUENTLY_USED";

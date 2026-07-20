@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ContextPromptEditorCell } from "textql-sdk/models";
+import { ContextPromptEditorCell } from "@textql/sdk/models";
 
 let value: ContextPromptEditorCell = {
   contextPromptEditorCell: {},

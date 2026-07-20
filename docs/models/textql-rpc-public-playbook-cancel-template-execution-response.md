@@ -5,7 +5,7 @@ Response from canceling template execution
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookCancelTemplateExecutionResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookCancelTemplateExecutionResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookCancelTemplateExecutionResponse = {};
 ```

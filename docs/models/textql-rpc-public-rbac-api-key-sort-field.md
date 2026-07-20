@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacApiKeySortField } from "textql-sdk/models";
+import { TextqlRpcPublicRbacApiKeySortField } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacApiKeySortField = "API_KEY_SORT_FIELD_NAME";
 ```

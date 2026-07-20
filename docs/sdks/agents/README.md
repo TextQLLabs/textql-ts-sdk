@@ -24,7 +24,7 @@ CreateAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_CreateAgent" method="post" path="/textql.rpc.public.agent.AgentService/CreateAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -46,8 +46,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsCreate } from "textql-sdk/funcs/agents-create.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsCreate } from "@textql/sdk/funcs/agents-create.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -97,7 +97,7 @@ DeleteAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_DeleteAgent" method="post" path="/textql.rpc.public.agent.AgentService/DeleteAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -119,8 +119,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsDelete } from "textql-sdk/funcs/agents-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsDelete } from "@textql/sdk/funcs/agents-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -170,7 +170,7 @@ DuplicateAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_DuplicateAgent" method="post" path="/textql.rpc.public.agent.AgentService/DuplicateAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -192,8 +192,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsDuplicate } from "textql-sdk/funcs/agents-duplicate.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsDuplicate } from "@textql/sdk/funcs/agents-duplicate.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -243,7 +243,7 @@ GetAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_GetAgent" method="post" path="/textql.rpc.public.agent.AgentService/GetAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -265,8 +265,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsGetAgent } from "textql-sdk/funcs/agents-get-agent.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsGetAgent } from "@textql/sdk/funcs/agents-get-agent.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -316,7 +316,7 @@ GetAgentRun
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_GetAgentRun" method="post" path="/textql.rpc.public.agent.AgentService/GetAgentRun" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -338,8 +338,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsGetRun } from "textql-sdk/funcs/agents-get-run.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsGetRun } from "@textql/sdk/funcs/agents-get-run.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -389,7 +389,7 @@ ListAgentRuns
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_ListAgentRuns" method="post" path="/textql.rpc.public.agent.AgentService/ListAgentRuns" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -411,8 +411,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsListRuns } from "textql-sdk/funcs/agents-list-runs.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsListRuns } from "@textql/sdk/funcs/agents-list-runs.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -462,7 +462,7 @@ ListAgents
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_ListAgents" method="post" path="/textql.rpc.public.agent.AgentService/ListAgents" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -484,8 +484,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsList } from "textql-sdk/funcs/agents-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsList } from "@textql/sdk/funcs/agents-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -535,7 +535,7 @@ ResetAgentAvatar
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_ResetAgentAvatar" method="post" path="/textql.rpc.public.agent.AgentService/ResetAgentAvatar" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -557,8 +557,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsResetAgentAvatar } from "textql-sdk/funcs/agents-reset-agent-avatar.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsResetAgentAvatar } from "@textql/sdk/funcs/agents-reset-agent-avatar.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -608,7 +608,7 @@ TriggerAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_TriggerAgent" method="post" path="/textql.rpc.public.agent.AgentService/TriggerAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -630,8 +630,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsTriggerAgent } from "textql-sdk/funcs/agents-trigger-agent.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsTriggerAgent } from "@textql/sdk/funcs/agents-trigger-agent.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -681,7 +681,7 @@ UpdateAgent
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_UpdateAgent" method="post" path="/textql.rpc.public.agent.AgentService/UpdateAgent" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -703,8 +703,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsUpdate } from "textql-sdk/funcs/agents-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsUpdate } from "@textql/sdk/funcs/agents-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -754,7 +754,7 @@ UploadAgentAvatar
 
 <!-- UsageSnippet language="typescript" operationID="AgentService_UploadAgentAvatar" method="post" path="/textql.rpc.public.agent.AgentService/UploadAgentAvatar" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -776,8 +776,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { agentsUploadAgentAvatar } from "textql-sdk/funcs/agents-upload-agent-avatar.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { agentsUploadAgentAvatar } from "@textql/sdk/funcs/agents-upload-agent-avatar.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

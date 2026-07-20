@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookPlaybookRemoveDashboardRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookPlaybookRemoveDashboardRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookPlaybookRemoveDashboardRequest = {};
 ```

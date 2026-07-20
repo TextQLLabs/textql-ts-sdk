@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPowerbiPowerBIDataset } from "textql-sdk/models";
+import { TextqlRpcPublicPowerbiPowerBIDataset } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPowerbiPowerBIDataset = {
   createdDate: new Date("2023-01-15T01:30:15.01Z"),

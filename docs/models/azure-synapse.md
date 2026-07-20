@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AzureSynapse } from "textql-sdk/models";
+import { AzureSynapse } from "@textql/sdk/models";
 
 let value: AzureSynapse = {
   azureSynapse: {},

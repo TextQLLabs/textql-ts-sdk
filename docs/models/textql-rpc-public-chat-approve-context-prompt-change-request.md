@@ -5,7 +5,7 @@ context prompt change management
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatApproveContextPromptChangeRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatApproveContextPromptChangeRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatApproveContextPromptChangeRequest = {};
 ```

@@ -5,7 +5,7 @@ Preview cell reference for report history
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsPreviewCellRef } from "textql-sdk/models";
+import { TextqlRpcPublicCellsPreviewCellRef } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsPreviewCellRef = {};
 ```

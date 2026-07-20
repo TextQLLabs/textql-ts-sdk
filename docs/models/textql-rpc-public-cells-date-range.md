@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsDateRange } from "textql-sdk/models";
+import { TextqlRpcPublicCellsDateRange } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsDateRange = "RANGE_PAST_WEEK";
 

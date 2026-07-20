@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesLibraryHistoryChangeType } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesLibraryHistoryChangeType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesLibraryHistoryChangeType =
   "LIBRARY_HISTORY_CHANGE_TYPE_ADDED";

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAuditLogListAuditLogsRequest } from "textql-sdk/models";
+import { TextqlRpcPublicAuditLogListAuditLogsRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAuditLogListAuditLogsRequest = {
   after: new Date("2023-01-15T01:30:15.01Z"),

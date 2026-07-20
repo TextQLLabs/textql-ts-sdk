@@ -5,7 +5,7 @@ Delete a Slack workspace installation
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackDeleteInstallationRequest } from "textql-sdk/models";
+import { TextqlRpcPublicSlackDeleteInstallationRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackDeleteInstallationRequest = {};
 ```

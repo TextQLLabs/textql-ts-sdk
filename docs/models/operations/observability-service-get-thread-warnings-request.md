@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceGetThreadWarningsRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceGetThreadWarningsRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceGetThreadWarningsRequest = {
   body: {},

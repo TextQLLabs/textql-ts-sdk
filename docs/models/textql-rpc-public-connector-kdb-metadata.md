@@ -6,7 +6,7 @@ KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorKdbMetadata } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorKdbMetadata } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorKdbMetadata = {};
 ```

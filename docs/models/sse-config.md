@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SseConfig } from "textql-sdk/models";
+import { SseConfig } from "@textql/sdk/models";
 
 let value: SseConfig = {
   sseConfig: {},

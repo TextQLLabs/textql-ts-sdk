@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookUpdatePlaybookResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookUpdatePlaybookResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookUpdatePlaybookResponse = {
   playbook: {

@@ -37,7 +37,7 @@ CheckDashboardHealth
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_CheckDashboardHealth" method="post" path="/textql.rpc.public.dashboard.DashboardService/CheckDashboardHealth" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -59,8 +59,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsCheckHealth } from "textql-sdk/funcs/dashboards-check-health.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsCheckHealth } from "@textql/sdk/funcs/dashboards-check-health.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -110,7 +110,7 @@ CRUD operations
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_CreateDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/CreateDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -132,8 +132,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsCreateDashboard } from "textql-sdk/funcs/dashboards-create-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsCreateDashboard } from "@textql/sdk/funcs/dashboards-create-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -183,7 +183,7 @@ Folder management
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_CreateDashboardFolder" method="post" path="/textql.rpc.public.dashboard.DashboardService/CreateDashboardFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -205,8 +205,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsCreateFolder } from "textql-sdk/funcs/dashboards-create-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsCreateFolder } from "@textql/sdk/funcs/dashboards-create-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -256,7 +256,7 @@ DeleteDashboard
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_DeleteDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/DeleteDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -278,8 +278,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsDelete } from "textql-sdk/funcs/dashboards-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsDelete } from "@textql/sdk/funcs/dashboards-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -329,7 +329,7 @@ DeleteDashboardFolder
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_DeleteDashboardFolder" method="post" path="/textql.rpc.public.dashboard.DashboardService/DeleteDashboardFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -351,8 +351,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsDeleteFolder } from "textql-sdk/funcs/dashboards-delete-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsDeleteFolder } from "@textql/sdk/funcs/dashboards-delete-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -402,7 +402,7 @@ DiscardDashboardChanges
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_DiscardDashboardChanges" method="post" path="/textql.rpc.public.dashboard.DashboardService/DiscardDashboardChanges" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -424,8 +424,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsDiscardChanges } from "textql-sdk/funcs/dashboards-discard-changes.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsDiscardChanges } from "@textql/sdk/funcs/dashboards-discard-changes.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -475,7 +475,7 @@ DuplicateDashboard
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_DuplicateDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/DuplicateDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -497,8 +497,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsDuplicate } from "textql-sdk/funcs/dashboards-duplicate.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsDuplicate } from "@textql/sdk/funcs/dashboards-duplicate.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -548,7 +548,7 @@ GetDashboard
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_GetDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/GetDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -570,8 +570,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsGet } from "textql-sdk/funcs/dashboards-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsGet } from "@textql/sdk/funcs/dashboards-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -621,7 +621,7 @@ GetDashboardVersion
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_GetDashboardVersion" method="post" path="/textql.rpc.public.dashboard.DashboardService/GetDashboardVersion" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -643,8 +643,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsGetVersion } from "textql-sdk/funcs/dashboards-get-version.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsGetVersion } from "@textql/sdk/funcs/dashboards-get-version.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -694,7 +694,7 @@ View analytics
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_GetDashboardViewStats" method="post" path="/textql.rpc.public.dashboard.DashboardService/GetDashboardViewStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -716,8 +716,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsGetDashboardViewStats } from "textql-sdk/funcs/dashboards-get-dashboard-view-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsGetDashboardViewStats } from "@textql/sdk/funcs/dashboards-get-dashboard-view-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -767,7 +767,7 @@ Member management
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_GetMembersWithDashboards" method="post" path="/textql.rpc.public.dashboard.DashboardService/GetMembersWithDashboards" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -789,8 +789,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsGetMembersWithDashboards } from "textql-sdk/funcs/dashboards-get-members-with-dashboards.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsGetMembersWithDashboards } from "@textql/sdk/funcs/dashboards-get-members-with-dashboards.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -840,7 +840,7 @@ ListDashboardFolders
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_ListDashboardFolders" method="post" path="/textql.rpc.public.dashboard.DashboardService/ListDashboardFolders" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -862,8 +862,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsListFolders } from "textql-sdk/funcs/dashboards-list-folders.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsListFolders } from "@textql/sdk/funcs/dashboards-list-folders.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -913,7 +913,7 @@ Version history
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_ListDashboardVersions" method="post" path="/textql.rpc.public.dashboard.DashboardService/ListDashboardVersions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -935,8 +935,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsListVersions } from "textql-sdk/funcs/dashboards-list-versions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsListVersions } from "@textql/sdk/funcs/dashboards-list-versions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -986,7 +986,7 @@ ListDashboards
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_ListDashboards" method="post" path="/textql.rpc.public.dashboard.DashboardService/ListDashboards" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1008,8 +1008,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsList } from "textql-sdk/funcs/dashboards-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsList } from "@textql/sdk/funcs/dashboards-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1059,7 +1059,7 @@ MoveDashboardToFolder
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_MoveDashboardToFolder" method="post" path="/textql.rpc.public.dashboard.DashboardService/MoveDashboardToFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1081,8 +1081,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsMoveToFolder } from "textql-sdk/funcs/dashboards-move-to-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsMoveToFolder } from "@textql/sdk/funcs/dashboards-move-to-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1134,7 +1134,7 @@ Config-managed dashboards: render a `.dashboard` straight from a patch ref befor
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_PreviewConfigDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/PreviewConfigDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1156,8 +1156,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsPreviewConfig } from "textql-sdk/funcs/dashboards-preview-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsPreviewConfig } from "@textql/sdk/funcs/dashboards-preview-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1207,7 +1207,7 @@ Publishing workflow
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_PublishDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/PublishDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1229,8 +1229,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsPublish } from "textql-sdk/funcs/dashboards-publish.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsPublish } from "@textql/sdk/funcs/dashboards-publish.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1280,7 +1280,7 @@ Screenshot management
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_RegenerateScreenshot" method="post" path="/textql.rpc.public.dashboard.DashboardService/RegenerateScreenshot" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1302,8 +1302,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsRegenerateScreenshot } from "textql-sdk/funcs/dashboards-regenerate-screenshot.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsRegenerateScreenshot } from "@textql/sdk/funcs/dashboards-regenerate-screenshot.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1353,7 +1353,7 @@ RestoreDashboardVersion
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_RestoreDashboardVersion" method="post" path="/textql.rpc.public.dashboard.DashboardService/RestoreDashboardVersion" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1375,8 +1375,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsRestoreDashboardVersion } from "textql-sdk/funcs/dashboards-restore-dashboard-version.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsRestoreDashboardVersion } from "@textql/sdk/funcs/dashboards-restore-dashboard-version.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1426,7 +1426,7 @@ RunScheduledDashboard
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_RunScheduledDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/RunScheduledDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1448,8 +1448,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsRunScheduledDashboard } from "textql-sdk/funcs/dashboards-run-scheduled-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsRunScheduledDashboard } from "@textql/sdk/funcs/dashboards-run-scheduled-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1499,7 +1499,7 @@ Dashboard execution
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_SpawnDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/SpawnDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1521,8 +1521,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsSpawn } from "textql-sdk/funcs/dashboards-spawn.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsSpawn } from "@textql/sdk/funcs/dashboards-spawn.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1572,7 +1572,7 @@ UpdateDashboard
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_UpdateDashboard" method="post" path="/textql.rpc.public.dashboard.DashboardService/UpdateDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1594,8 +1594,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsUpdateDashboard } from "textql-sdk/funcs/dashboards-update-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsUpdateDashboard } from "@textql/sdk/funcs/dashboards-update-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1645,7 +1645,7 @@ UpdateDashboardFolder
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_UpdateDashboardFolder" method="post" path="/textql.rpc.public.dashboard.DashboardService/UpdateDashboardFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1667,8 +1667,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsUpdateDashboardFolder } from "textql-sdk/funcs/dashboards-update-dashboard-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsUpdateDashboardFolder } from "@textql/sdk/funcs/dashboards-update-dashboard-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1718,7 +1718,7 @@ Scheduling
 
 <!-- UsageSnippet language="typescript" operationID="DashboardService_UpdateDashboardSchedule" method="post" path="/textql.rpc.public.dashboard.DashboardService/UpdateDashboardSchedule" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1740,8 +1740,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { dashboardsUpdateDashboardSchedule } from "textql-sdk/funcs/dashboards-update-dashboard-schedule.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { dashboardsUpdateDashboardSchedule } from "@textql/sdk/funcs/dashboards-update-dashboard-schedule.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

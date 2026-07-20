@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Firebolt } from "textql-sdk/models";
+import { Firebolt } from "@textql/sdk/models";
 
 let value: Firebolt = {
   firebolt: {},

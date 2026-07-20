@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveBackfillCustomTopicRequest } from "textql-sdk/models";
+import { TextqlRpcPublicObserveBackfillCustomTopicRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveBackfillCustomTopicRequest = {
   startDate: new Date("2023-01-15T01:30:15.01Z"),

@@ -51,7 +51,7 @@ ApproveContextPromptChange
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_ApproveContextPromptChange" method="post" path="/textql.rpc.public.chat.ChatService/ApproveContextPromptChange" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -73,8 +73,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsApproveContextPromptChange } from "textql-sdk/funcs/chats-approve-context-prompt-change.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsApproveContextPromptChange } from "@textql/sdk/funcs/chats-approve-context-prompt-change.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -127,7 +127,7 @@ Resolve a halted ask_approval form cell. Submit runs the form's submission
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_ApproveOntologyChange" method="post" path="/textql.rpc.public.chat.ChatService/ApproveOntologyChange" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -149,8 +149,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsApproveOntologyChange } from "textql-sdk/funcs/chats-approve-ontology-change.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsApproveOntologyChange } from "@textql/sdk/funcs/chats-approve-ontology-change.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -200,7 +200,7 @@ External API users
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_AttachAgentToChat" method="post" path="/textql.rpc.public.chat.ChatService/AttachAgentToChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -222,8 +222,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsAttachAgent } from "textql-sdk/funcs/chats-attach-agent.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsAttachAgent } from "@textql/sdk/funcs/chats-attach-agent.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -273,7 +273,7 @@ AttachApp
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_AttachApp" method="post" path="/textql.rpc.public.chat.ChatService/AttachApp" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -295,8 +295,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsAttachApp } from "textql-sdk/funcs/chats-attach-app.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsAttachApp } from "@textql/sdk/funcs/chats-attach-app.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -346,7 +346,7 @@ AttachDashboard
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_AttachDashboard" method="post" path="/textql.rpc.public.chat.ChatService/AttachDashboard" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -368,8 +368,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsAttachDashboard } from "textql-sdk/funcs/chats-attach-dashboard.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsAttachDashboard } from "@textql/sdk/funcs/chats-attach-dashboard.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -419,7 +419,7 @@ AttachDataset
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_AttachDataset" method="post" path="/textql.rpc.public.chat.ChatService/AttachDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -441,8 +441,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsAttachDataset } from "textql-sdk/funcs/chats-attach-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsAttachDataset } from "@textql/sdk/funcs/chats-attach-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -492,7 +492,7 @@ BookmarkChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_BookmarkChat" method="post" path="/textql.rpc.public.chat.ChatService/BookmarkChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -514,8 +514,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsBookmark } from "textql-sdk/funcs/chats-bookmark.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsBookmark } from "@textql/sdk/funcs/chats-bookmark.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -565,7 +565,7 @@ CancelStream
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_CancelStream" method="post" path="/textql.rpc.public.chat.ChatService/CancelStream" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -587,8 +587,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsCancelStream } from "textql-sdk/funcs/chats-cancel-stream.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsCancelStream } from "@textql/sdk/funcs/chats-cancel-stream.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -638,7 +638,7 @@ CheckChatPermissions
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_CheckChatPermissions" method="post" path="/textql.rpc.public.chat.ChatService/CheckChatPermissions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -660,8 +660,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsCheckPermissions } from "textql-sdk/funcs/chats-check-permissions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsCheckPermissions } from "@textql/sdk/funcs/chats-check-permissions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -711,7 +711,7 @@ CheckHealth
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_CheckHealth" method="post" path="/textql.rpc.public.chat.ChatService/CheckHealth" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -733,8 +733,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsCheckHealth } from "textql-sdk/funcs/chats-check-health.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsCheckHealth } from "@textql/sdk/funcs/chats-check-health.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -784,7 +784,7 @@ CheckStreamlitHealth
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_CheckStreamlitHealth" method="post" path="/textql.rpc.public.chat.ChatService/CheckStreamlitHealth" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -806,8 +806,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsCheckStreamlitHealth } from "textql-sdk/funcs/chats-check-streamlit-health.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsCheckStreamlitHealth } from "@textql/sdk/funcs/chats-check-streamlit-health.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -857,7 +857,7 @@ CreateChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_CreateChat" method="post" path="/textql.rpc.public.chat.ChatService/CreateChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -879,8 +879,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsCreateChat } from "textql-sdk/funcs/chats-create-chat.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsCreateChat } from "@textql/sdk/funcs/chats-create-chat.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -930,7 +930,7 @@ DeleteChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_DeleteChat" method="post" path="/textql.rpc.public.chat.ChatService/DeleteChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -952,8 +952,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsDelete } from "textql-sdk/funcs/chats-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsDelete } from "@textql/sdk/funcs/chats-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1003,7 +1003,7 @@ DismissQuestions
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_DismissQuestions" method="post" path="/textql.rpc.public.chat.ChatService/DismissQuestions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1025,8 +1025,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsDismissQuestions } from "textql-sdk/funcs/chats-dismiss-questions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsDismissQuestions } from "@textql/sdk/funcs/chats-dismiss-questions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1076,7 +1076,7 @@ DuplicateChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_DuplicateChat" method="post" path="/textql.rpc.public.chat.ChatService/DuplicateChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1098,8 +1098,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsDuplicateChat } from "textql-sdk/funcs/chats-duplicate-chat.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsDuplicateChat } from "@textql/sdk/funcs/chats-duplicate-chat.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1149,7 +1149,7 @@ GetAPIChatAnswer
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetAPIChatAnswer" method="post" path="/textql.rpc.public.chat.ChatService/GetAPIChatAnswer" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1171,8 +1171,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetApiAnswer } from "textql-sdk/funcs/chats-get-api-answer.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetApiAnswer } from "@textql/sdk/funcs/chats-get-api-answer.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1222,7 +1222,7 @@ GetArtifact
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetArtifact" method="post" path="/textql.rpc.public.chat.ChatService/GetArtifact" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1244,8 +1244,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetArtifact } from "textql-sdk/funcs/chats-get-artifact.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetArtifact } from "@textql/sdk/funcs/chats-get-artifact.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1295,7 +1295,7 @@ GetChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetChat" method="post" path="/textql.rpc.public.chat.ChatService/GetChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1317,8 +1317,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGet } from "textql-sdk/funcs/chats-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGet } from "@textql/sdk/funcs/chats-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1368,7 +1368,7 @@ GetChatArtifactsSummary
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetChatArtifactsSummary" method="post" path="/textql.rpc.public.chat.ChatService/GetChatArtifactsSummary" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1390,8 +1390,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetArtifactsSummary } from "textql-sdk/funcs/chats-get-artifacts-summary.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetArtifactsSummary } from "@textql/sdk/funcs/chats-get-artifacts-summary.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1441,7 +1441,7 @@ GetChatExecutionTiming
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetChatExecutionTiming" method="post" path="/textql.rpc.public.chat.ChatService/GetChatExecutionTiming" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1463,8 +1463,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetChatExecutionTiming } from "textql-sdk/funcs/chats-get-chat-execution-timing.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetChatExecutionTiming } from "@textql/sdk/funcs/chats-get-chat-execution-timing.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1514,7 +1514,7 @@ GetChatHistory
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetChatHistory" method="post" path="/textql.rpc.public.chat.ChatService/GetChatHistory" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1536,8 +1536,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetHistory } from "textql-sdk/funcs/chats-get-history.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetHistory } from "@textql/sdk/funcs/chats-get-history.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1587,7 +1587,7 @@ GetChats
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetChats" method="post" path="/textql.rpc.public.chat.ChatService/GetChats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1612,8 +1612,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetAll } from "textql-sdk/funcs/chats-get-all.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetAll } from "@textql/sdk/funcs/chats-get-all.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1666,7 +1666,7 @@ GetCompletionParameters
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetCompletionParameters" method="post" path="/textql.rpc.public.chat.ChatService/GetCompletionParameters" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1688,8 +1688,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetCompletionParameters } from "textql-sdk/funcs/chats-get-completion-parameters.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetCompletionParameters } from "@textql/sdk/funcs/chats-get-completion-parameters.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1739,7 +1739,7 @@ GetCompletionParametersBatch
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetCompletionParametersBatch" method="post" path="/textql.rpc.public.chat.ChatService/GetCompletionParametersBatch" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1761,8 +1761,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetCompletionParametersBatch } from "textql-sdk/funcs/chats-get-completion-parameters-batch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetCompletionParametersBatch } from "@textql/sdk/funcs/chats-get-completion-parameters-batch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1812,7 +1812,7 @@ GetLlmUsage
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetLlmUsage" method="post" path="/textql.rpc.public.chat.ChatService/GetLlmUsage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1834,8 +1834,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetLlmUsage } from "textql-sdk/funcs/chats-get-llm-usage.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetLlmUsage } from "@textql/sdk/funcs/chats-get-llm-usage.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1885,7 +1885,7 @@ List distinct chat creators the user can access
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetMembersWithChats" method="post" path="/textql.rpc.public.chat.ChatService/GetMembersWithChats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1907,8 +1907,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetMembersWithChats } from "textql-sdk/funcs/chats-get-members-with-chats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetMembersWithChats } from "@textql/sdk/funcs/chats-get-members-with-chats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1958,7 +1958,7 @@ GetPlaybookChats
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_GetPlaybookChats" method="post" path="/textql.rpc.public.chat.ChatService/GetPlaybookChats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1980,8 +1980,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsGetPlaybookChats } from "textql-sdk/funcs/chats-get-playbook-chats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsGetPlaybookChats } from "@textql/sdk/funcs/chats-get-playbook-chats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2031,7 +2031,7 @@ PollChatEvents
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_PollChatEvents" method="post" path="/textql.rpc.public.chat.ChatService/PollChatEvents" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2053,8 +2053,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsPollEvents } from "textql-sdk/funcs/chats-poll-events.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsPollEvents } from "@textql/sdk/funcs/chats-poll-events.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2104,7 +2104,7 @@ QueryOneShot
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_QueryOneShot" method="post" path="/textql.rpc.public.chat.ChatService/QueryOneShot" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2126,8 +2126,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsQueryOneShot } from "textql-sdk/funcs/chats-query-one-shot.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsQueryOneShot } from "@textql/sdk/funcs/chats-query-one-shot.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2177,7 +2177,7 @@ RateChatCell appends a row to cell_rating for every click; thumbs-down also upse
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_RateChatCell" method="post" path="/textql.rpc.public.chat.ChatService/RateChatCell" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2199,8 +2199,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsRateCell } from "textql-sdk/funcs/chats-rate-cell.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsRateCell } from "@textql/sdk/funcs/chats-rate-cell.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2250,7 +2250,7 @@ RejectContextPromptChange
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_RejectContextPromptChange" method="post" path="/textql.rpc.public.chat.ChatService/RejectContextPromptChange" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2272,8 +2272,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsRejectContextPromptChange } from "textql-sdk/funcs/chats-reject-context-prompt-change.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsRejectContextPromptChange } from "@textql/sdk/funcs/chats-reject-context-prompt-change.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2323,7 +2323,7 @@ RejectOntologyChange
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_RejectOntologyChange" method="post" path="/textql.rpc.public.chat.ChatService/RejectOntologyChange" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2345,8 +2345,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsRejectOntologyChange } from "textql-sdk/funcs/chats-reject-ontology-change.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsRejectOntologyChange } from "@textql/sdk/funcs/chats-reject-ontology-change.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2396,7 +2396,7 @@ RunChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_RunChat" method="post" path="/textql.rpc.public.chat.ChatService/RunChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2418,8 +2418,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsRun } from "textql-sdk/funcs/chats-run.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsRun } from "@textql/sdk/funcs/chats-run.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2469,7 +2469,7 @@ SendMessage
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_SendMessage" method="post" path="/textql.rpc.public.chat.ChatService/SendMessage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2491,8 +2491,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsSend } from "textql-sdk/funcs/chats-send.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsSend } from "@textql/sdk/funcs/chats-send.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2542,7 +2542,7 @@ SubmitContextPromptChange
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_SubmitContextPromptChange" method="post" path="/textql.rpc.public.chat.ChatService/SubmitContextPromptChange" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2564,8 +2564,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsSubmitContextPromptChange } from "textql-sdk/funcs/chats-submit-context-prompt-change.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsSubmitContextPromptChange } from "@textql/sdk/funcs/chats-submit-context-prompt-change.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2617,7 +2617,7 @@ Resolve a halted questions cell. Submit hands the answers to the agent and
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_SubmitQuestions" method="post" path="/textql.rpc.public.chat.ChatService/SubmitQuestions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2639,8 +2639,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsSubmitQuestions } from "textql-sdk/funcs/chats-submit-questions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsSubmitQuestions } from "@textql/sdk/funcs/chats-submit-questions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2690,7 +2690,7 @@ UnbookmarkChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_UnbookmarkChat" method="post" path="/textql.rpc.public.chat.ChatService/UnbookmarkChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2712,8 +2712,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsUnbookmark } from "textql-sdk/funcs/chats-unbookmark.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsUnbookmark } from "@textql/sdk/funcs/chats-unbookmark.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2763,7 +2763,7 @@ UpdateChat
 
 <!-- UsageSnippet language="typescript" operationID="ChatService_UpdateChat" method="post" path="/textql.rpc.public.chat.ChatService/UpdateChat" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2785,8 +2785,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { chatsUpdate } from "textql-sdk/funcs/chats-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsUpdate } from "@textql/sdk/funcs/chats-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

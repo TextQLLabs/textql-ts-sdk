@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacRevertScimGroupMappingToRoleResponse } from "textql-sdk/models";
+import { TextqlRpcPublicRbacRevertScimGroupMappingToRoleResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacRevertScimGroupMappingToRoleResponse = {};
 ```

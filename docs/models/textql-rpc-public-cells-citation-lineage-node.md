@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsCitationLineageNode } from "textql-sdk/models";
+import { TextqlRpcPublicCellsCitationLineageNode } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsCitationLineageNode = {};
 ```

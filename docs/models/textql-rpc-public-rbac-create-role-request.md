@@ -5,7 +5,7 @@ Role management requests/responses
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacCreateRoleRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacCreateRoleRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacCreateRoleRequest = {};
 ```

@@ -6,7 +6,7 @@ PreviewConfigDashboard renders a config-managed dashboard from a patch ref befor
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDashboardPreviewConfigDashboardRequest } from "textql-sdk/models";
+import { TextqlRpcPublicDashboardPreviewConfigDashboardRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDashboardPreviewConfigDashboardRequest = {};
 ```

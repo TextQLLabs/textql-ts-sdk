@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceGetCustomTopicPeopleRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceGetCustomTopicPeopleRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceGetCustomTopicPeopleRequest = {
   body: {},

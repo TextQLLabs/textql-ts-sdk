@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsFeedAgentAction } from "textql-sdk/models";
+import { TextqlRpcPublicCellsFeedAgentAction } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsFeedAgentAction = "FEED_AGENT_ACTION_CREATE";
 

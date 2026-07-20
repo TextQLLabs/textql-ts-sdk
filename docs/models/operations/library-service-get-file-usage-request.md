@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceGetFileUsageRequest } from "textql-sdk/models/operations";
+import { LibraryServiceGetFileUsageRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceGetFileUsageRequest = {
   body: {},

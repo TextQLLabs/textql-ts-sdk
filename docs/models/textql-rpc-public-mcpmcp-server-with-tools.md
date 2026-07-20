@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMCPMCPServerWithTools } from "textql-sdk/models";
+import { TextqlRpcPublicMCPMCPServerWithTools } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMCPMCPServerWithTools = {
   mcpServer: {

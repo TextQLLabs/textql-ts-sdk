@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatCellLifecycle } from "textql-sdk/models";
+import { TextqlRpcPublicChatCellLifecycle } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatCellLifecycle = "LIFECYCLE_HANDOFF_PENDING";
 

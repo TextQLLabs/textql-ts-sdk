@@ -5,7 +5,7 @@ Batch response with reports grouped by template_data_id
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookGetPlaybookReportsBatchResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookGetPlaybookReportsBatchResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookGetPlaybookReportsBatchResponse = {
   templateDataReports: [

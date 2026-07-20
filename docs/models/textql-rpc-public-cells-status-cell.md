@@ -5,7 +5,7 @@ Deprecated: use tool_summary on Cell instead.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsStatusCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsStatusCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsStatusCell = {};
 ```

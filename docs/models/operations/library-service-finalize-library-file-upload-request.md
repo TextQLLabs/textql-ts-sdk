@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceFinalizeLibraryFileUploadRequest } from "textql-sdk/models/operations";
+import { LibraryServiceFinalizeLibraryFileUploadRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceFinalizeLibraryFileUploadRequest = {
   body: {},

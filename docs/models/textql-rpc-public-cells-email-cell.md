@@ -8,7 +8,7 @@ EmailCell is the agent's "send an email" output. It is an executable cell:
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsEmailCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsEmailCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsEmailCell = {};
 ```

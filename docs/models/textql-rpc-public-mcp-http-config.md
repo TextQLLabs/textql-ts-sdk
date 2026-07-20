@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMcpHttpConfig } from "textql-sdk/models";
+import { TextqlRpcPublicMcpHttpConfig } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMcpHttpConfig = {};
 ```

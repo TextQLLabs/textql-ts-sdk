@@ -5,7 +5,7 @@ Simplified report info for report history cell
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsReportHistoryInfo } from "textql-sdk/models";
+import { TextqlRpcPublicCellsReportHistoryInfo } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsReportHistoryInfo = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

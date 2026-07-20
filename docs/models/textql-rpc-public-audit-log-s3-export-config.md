@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAuditLogS3ExportConfig } from "textql-sdk/models";
+import { TextqlRpcPublicAuditLogS3ExportConfig } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAuditLogS3ExportConfig = {
   lastExportedAt: new Date("2023-01-15T01:30:15.01Z"),

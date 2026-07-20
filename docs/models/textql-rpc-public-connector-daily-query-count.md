@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorDailyQueryCount } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorDailyQueryCount } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicConnectorDailyQueryCount = {};
 ```

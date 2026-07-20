@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Basic } from "textql-sdk/models";
+import { Basic } from "@textql/sdk/models";
 
 let value: Basic = {
   basic: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ObservabilityServiceGetEngagementSpectrumRequest } from "textql-sdk/models/operations";
+import { ObservabilityServiceGetEngagementSpectrumRequest } from "@textql/sdk/models/operations";
 
 let value: ObservabilityServiceGetEngagementSpectrumRequest = {
   body: {},

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceMigrateOntologyToLibraryRequest } from "textql-sdk/models/operations";
+import { LibraryServiceMigrateOntologyToLibraryRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceMigrateOntologyToLibraryRequest = {
   body: {},

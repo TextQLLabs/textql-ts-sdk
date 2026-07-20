@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Streamlit } from "textql-sdk/models";
+import { Streamlit } from "@textql/sdk/models";
 
 let value: Streamlit = {
   streamlit: {},

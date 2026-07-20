@@ -5,7 +5,7 @@ ThreadWarningType is the canonical set of thread warning types
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatThreadWarningType } from "textql-sdk/models";
+import { TextqlRpcPublicChatThreadWarningType } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatThreadWarningType =
   "THREAD_WARNING_TYPE_ERROR_LOOP";

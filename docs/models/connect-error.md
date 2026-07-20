@@ -5,7 +5,7 @@ Error type returned by Connect: https://connectrpc.com/docs/go/errors/#http-repr
 ## Example Usage
 
 ```typescript
-import { ConnectError } from "textql-sdk/models";
+import { ConnectError } from "@textql/sdk/models";
 
 let value: ConnectError = {
   code: "not_found",

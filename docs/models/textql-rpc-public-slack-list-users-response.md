@@ -5,7 +5,7 @@ List all Slack team members from DB for the organization
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackListUsersResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSlackListUsersResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackListUsersResponse = {};
 ```

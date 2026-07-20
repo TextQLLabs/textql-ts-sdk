@@ -5,7 +5,7 @@ Core data types
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyTableName } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyTableName } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyTableName = {};
 ```

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SlackServiceListInstallationsRequest } from "textql-sdk/models/operations";
+import { SlackServiceListInstallationsRequest } from "@textql/sdk/models/operations";
 
 let value: SlackServiceListInstallationsRequest = {
   body: {},

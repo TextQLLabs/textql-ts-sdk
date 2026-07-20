@@ -5,7 +5,7 @@ Lightweight report summary for chat drawer - excludes full blocks
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookChatReportSummary } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookChatReportSummary } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookChatReportSummary = {
   createdAt: new Date("2023-01-15T01:30:15.01Z"),

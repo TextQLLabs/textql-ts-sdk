@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauSearchFieldsCell } from "textql-sdk/models";
+import { TableauSearchFieldsCell } from "@textql/sdk/models";
 
 let value: TableauSearchFieldsCell = {
   tableauSearchFieldsCell: {},

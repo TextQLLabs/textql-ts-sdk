@@ -5,7 +5,7 @@ List responses omit code (heavyweight); fetch a single app for it.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppGetMembersWithAppsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicAppGetMembersWithAppsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppGetMembersWithAppsResponse = {};
 ```

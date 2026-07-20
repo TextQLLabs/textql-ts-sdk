@@ -5,7 +5,7 @@ Response containing batch run details
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookGetPlaybookBatchRunResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookGetPlaybookBatchRunResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookGetPlaybookBatchRunResponse = {
   batchRun: {

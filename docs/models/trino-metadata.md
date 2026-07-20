@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TrinoMetadata } from "textql-sdk/models";
+import { TrinoMetadata } from "@textql/sdk/models";
 
 let value: TrinoMetadata = {
   trinoMetadata: {},

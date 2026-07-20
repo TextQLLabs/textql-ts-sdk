@@ -30,7 +30,7 @@ CreateConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_CreateConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/CreateConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -52,8 +52,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsCreate } from "textql-sdk/funcs/connectors-create.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsCreate } from "@textql/sdk/funcs/connectors-create.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -103,7 +103,7 @@ DeleteConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_DeleteConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/DeleteConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -125,8 +125,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsDelete } from "textql-sdk/funcs/connectors-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsDelete } from "@textql/sdk/funcs/connectors-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -176,7 +176,7 @@ DuplicateConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_DuplicateConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/DuplicateConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -198,8 +198,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsDuplicateConnector } from "textql-sdk/funcs/connectors-duplicate-connector.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsDuplicateConnector } from "@textql/sdk/funcs/connectors-duplicate-connector.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -249,7 +249,7 @@ ExecuteQuery
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_ExecuteQuery" method="post" path="/textql.rpc.public.connector.ConnectorService/ExecuteQuery" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -271,8 +271,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsExecuteQuery } from "textql-sdk/funcs/connectors-execute-query.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsExecuteQuery } from "@textql/sdk/funcs/connectors-execute-query.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -322,7 +322,7 @@ GetConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -344,8 +344,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGet } from "textql-sdk/funcs/connectors-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGet } from "@textql/sdk/funcs/connectors-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -395,7 +395,7 @@ GetConnectorCellDurations
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectorCellDurations" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectorCellDurations" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -417,8 +417,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetConnectorCellDurations } from "textql-sdk/funcs/connectors-get-connector-cell-durations.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetConnectorCellDurations } from "@textql/sdk/funcs/connectors-get-connector-cell-durations.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -468,7 +468,7 @@ GetConnectorChats
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectorChats" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectorChats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -490,8 +490,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetChats } from "textql-sdk/funcs/connectors-get-chats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetChats } from "@textql/sdk/funcs/connectors-get-chats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -541,7 +541,7 @@ GetConnectorDashboards
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectorDashboards" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectorDashboards" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -563,8 +563,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetDashboards } from "textql-sdk/funcs/connectors-get-dashboards.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetDashboards } from "@textql/sdk/funcs/connectors-get-dashboards.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -614,7 +614,7 @@ GetConnectorStats
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectorStats" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectorStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -636,8 +636,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetConnectorStats } from "textql-sdk/funcs/connectors-get-connector-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetConnectorStats } from "@textql/sdk/funcs/connectors-get-connector-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -687,7 +687,7 @@ GetConnectorUsage
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectorUsage" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectorUsage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -709,8 +709,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetUsage } from "textql-sdk/funcs/connectors-get-usage.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetUsage } from "@textql/sdk/funcs/connectors-get-usage.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -760,7 +760,7 @@ GetConnectors
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetConnectors" method="post" path="/textql.rpc.public.connector.ConnectorService/GetConnectors" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -782,8 +782,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetConnectors } from "textql-sdk/funcs/connectors-get-connectors.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetConnectors } from "@textql/sdk/funcs/connectors-get-connectors.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -833,7 +833,7 @@ GetExampleQueries
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetExampleQueries" method="post" path="/textql.rpc.public.connector.ConnectorService/GetExampleQueries" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -855,8 +855,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetExampleQueries } from "textql-sdk/funcs/connectors-get-example-queries.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetExampleQueries } from "@textql/sdk/funcs/connectors-get-example-queries.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -906,7 +906,7 @@ GetTablePreview
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_GetTablePreview" method="post" path="/textql.rpc.public.connector.ConnectorService/GetTablePreview" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -928,8 +928,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsGetTablePreview } from "textql-sdk/funcs/connectors-get-table-preview.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsGetTablePreview } from "@textql/sdk/funcs/connectors-get-table-preview.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -979,7 +979,7 @@ ListConnectorTables
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_ListConnectorTables" method="post" path="/textql.rpc.public.connector.ConnectorService/ListConnectorTables" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1001,8 +1001,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsListTables } from "textql-sdk/funcs/connectors-list-tables.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsListTables } from "@textql/sdk/funcs/connectors-list-tables.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1052,7 +1052,7 @@ ListQueryTemplates
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_ListQueryTemplates" method="post" path="/textql.rpc.public.connector.ConnectorService/ListQueryTemplates" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1074,8 +1074,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsListQueryTemplates } from "textql-sdk/funcs/connectors-list-query-templates.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsListQueryTemplates } from "@textql/sdk/funcs/connectors-list-query-templates.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1125,7 +1125,7 @@ TestConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_TestConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/TestConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1147,8 +1147,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsTest } from "textql-sdk/funcs/connectors-test.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsTest } from "@textql/sdk/funcs/connectors-test.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1198,7 +1198,7 @@ UpdateConnector
 
 <!-- UsageSnippet language="typescript" operationID="ConnectorService_UpdateConnector" method="post" path="/textql.rpc.public.connector.ConnectorService/UpdateConnector" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1220,8 +1220,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { connectorsUpdate } from "textql-sdk/funcs/connectors-update.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsUpdate } from "@textql/sdk/funcs/connectors-update.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

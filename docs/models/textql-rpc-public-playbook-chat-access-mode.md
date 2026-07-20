@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookChatAccessMode } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookChatAccessMode } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookChatAccessMode = "CHAT_ACCESS_MODE_INHERIT";
 

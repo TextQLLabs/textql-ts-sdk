@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsDashboardAction } from "textql-sdk/models";
+import { TextqlRpcPublicCellsDashboardAction } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsDashboardAction = "DASHBOARD_ACTION_UNKNOWN";
 

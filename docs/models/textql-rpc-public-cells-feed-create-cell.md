@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsFeedCreateCell } from "textql-sdk/models";
+import { TextqlRpcPublicCellsFeedCreateCell } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsFeedCreateCell = {
   agent: {

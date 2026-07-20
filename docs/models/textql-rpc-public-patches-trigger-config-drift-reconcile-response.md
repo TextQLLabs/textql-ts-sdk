@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse = {};
 ```

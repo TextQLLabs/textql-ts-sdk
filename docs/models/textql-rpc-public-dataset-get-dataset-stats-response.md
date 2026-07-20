@@ -5,7 +5,7 @@ unimplemented for now
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicDatasetGetDatasetStatsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicDatasetGetDatasetStatsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicDatasetGetDatasetStatsResponse = {};
 ```

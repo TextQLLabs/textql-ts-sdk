@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { LibraryServiceAddLibrarySubmoduleRequest } from "textql-sdk/models/operations";
+import { LibraryServiceAddLibrarySubmoduleRequest } from "@textql/sdk/models/operations";
 
 let value: LibraryServiceAddLibrarySubmoduleRequest = {
   body: {},

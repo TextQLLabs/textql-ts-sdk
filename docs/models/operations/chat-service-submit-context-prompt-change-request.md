@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { ChatServiceSubmitContextPromptChangeRequest } from "textql-sdk/models/operations";
+import { ChatServiceSubmitContextPromptChangeRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceSubmitContextPromptChangeRequest = {
   body: {},

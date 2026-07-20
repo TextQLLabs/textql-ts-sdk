@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicScimRevokeScimTokenRequest } from "textql-sdk/models";
+import { TextqlRpcPublicScimRevokeScimTokenRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicScimRevokeScimTokenRequest = {};
 ```

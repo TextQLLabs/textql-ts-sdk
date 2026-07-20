@@ -5,7 +5,7 @@ Request all artifact summaries for a chat (for drawer dropdown)
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatGetChatArtifactsSummaryRequest } from "textql-sdk/models";
+import { TextqlRpcPublicChatGetChatArtifactsSummaryRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatGetChatArtifactsSummaryRequest = {};
 ```

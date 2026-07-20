@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SqlServer } from "textql-sdk/models";
+import { SqlServer } from "@textql/sdk/models";
 
 let value: SqlServer = {
   sqlServer: {},

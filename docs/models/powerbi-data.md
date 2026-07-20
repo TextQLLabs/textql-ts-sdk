@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { PowerbiData } from "textql-sdk/models";
+import { PowerbiData } from "@textql/sdk/models";
 
 let value: PowerbiData = {
   powerbiData: {},

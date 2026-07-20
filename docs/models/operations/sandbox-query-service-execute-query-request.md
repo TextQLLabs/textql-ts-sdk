@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SandboxQueryServiceExecuteQueryRequest } from "textql-sdk/models/operations";
+import { SandboxQueryServiceExecuteQueryRequest } from "@textql/sdk/models/operations";
 
 let value: SandboxQueryServiceExecuteQueryRequest = {
   body: {

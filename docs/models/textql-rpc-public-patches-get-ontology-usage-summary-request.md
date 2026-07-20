@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesGetOntologyUsageSummaryRequest } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesGetOntologyUsageSummaryRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesGetOntologyUsageSummaryRequest = {};
 ```

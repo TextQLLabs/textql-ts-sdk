@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicCellsOntologyEditorStatus } from "textql-sdk/models";
+import { TextqlRpcPublicCellsOntologyEditorStatus } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicCellsOntologyEditorStatus = "ONTOLOGY_STATUS_ERROR";
 

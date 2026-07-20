@@ -18,7 +18,7 @@ ConfigureMetricsExport
 
 <!-- UsageSnippet language="typescript" operationID="MetricsExportService_ConfigureMetricsExport" method="post" path="/textql.rpc.public.metrics_export.MetricsExportService/ConfigureMetricsExport" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -40,8 +40,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { metricsExportsConfigure } from "textql-sdk/funcs/metrics-exports-configure.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { metricsExportsConfigure } from "@textql/sdk/funcs/metrics-exports-configure.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -91,7 +91,7 @@ DeleteMetricsExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="MetricsExportService_DeleteMetricsExportConfig" method="post" path="/textql.rpc.public.metrics_export.MetricsExportService/DeleteMetricsExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -113,8 +113,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { metricsExportsDeleteConfig } from "textql-sdk/funcs/metrics-exports-delete-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { metricsExportsDeleteConfig } from "@textql/sdk/funcs/metrics-exports-delete-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -164,7 +164,7 @@ GetMetricsExportConfig
 
 <!-- UsageSnippet language="typescript" operationID="MetricsExportService_GetMetricsExportConfig" method="post" path="/textql.rpc.public.metrics_export.MetricsExportService/GetMetricsExportConfig" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -186,8 +186,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { metricsExportsGetMetricsExportConfig } from "textql-sdk/funcs/metrics-exports-get-metrics-export-config.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { metricsExportsGetMetricsExportConfig } from "@textql/sdk/funcs/metrics-exports-get-metrics-export-config.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -237,7 +237,7 @@ TestMetricsExportConnection
 
 <!-- UsageSnippet language="typescript" operationID="MetricsExportService_TestMetricsExportConnection" method="post" path="/textql.rpc.public.metrics_export.MetricsExportService/TestMetricsExportConnection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -259,8 +259,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { metricsExportsTestConnection } from "textql-sdk/funcs/metrics-exports-test-connection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { metricsExportsTestConnection } from "@textql/sdk/funcs/metrics-exports-test-connection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -310,7 +310,7 @@ TriggerMetricsPush
 
 <!-- UsageSnippet language="typescript" operationID="MetricsExportService_TriggerMetricsPush" method="post" path="/textql.rpc.public.metrics_export.MetricsExportService/TriggerMetricsPush" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -332,8 +332,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { metricsExportsTriggerPush } from "textql-sdk/funcs/metrics-exports-trigger-push.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { metricsExportsTriggerPush } from "@textql/sdk/funcs/metrics-exports-trigger-push.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { RBACServiceGenerateShareLinkRequest } from "textql-sdk/models/operations";
+import { RBACServiceGenerateShareLinkRequest } from "@textql/sdk/models/operations";
 
 let value: RBACServiceGenerateShareLinkRequest = {
   body: {},

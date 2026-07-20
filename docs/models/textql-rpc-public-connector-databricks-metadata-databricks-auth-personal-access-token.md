@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken } from "textql-sdk/models";
+import { TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken } from "@textql/sdk/models";
 
 let value:
   TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken =

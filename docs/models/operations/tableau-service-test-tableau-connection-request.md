@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauServiceTestTableauConnectionRequest } from "textql-sdk/models/operations";
+import { TableauServiceTestTableauConnectionRequest } from "@textql/sdk/models/operations";
 
 let value: TableauServiceTestTableauConnectionRequest = {
   body: {},

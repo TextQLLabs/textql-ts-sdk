@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicOntologyUnlinkedAttributeData } from "textql-sdk/models";
+import { TextqlRpcPublicOntologyUnlinkedAttributeData } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicOntologyUnlinkedAttributeData = {};
 ```

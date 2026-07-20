@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicScimScimOAuthClient } from "textql-sdk/models";
+import { TextqlRpcPublicScimScimOAuthClient } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicScimScimOAuthClient = {
   expiresAt: new Date("2023-01-15T01:30:15.01Z"),

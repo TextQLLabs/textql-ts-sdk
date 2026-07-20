@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppInvokeAppComputeFunctionRequest } from "textql-sdk/models";
+import { TextqlRpcPublicAppInvokeAppComputeFunctionRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppInvokeAppComputeFunctionRequest = {};
 ```

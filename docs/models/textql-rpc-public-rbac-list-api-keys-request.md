@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicRbacListApiKeysRequest } from "textql-sdk/models";
+import { TextqlRpcPublicRbacListApiKeysRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicRbacListApiKeysRequest = {};
 ```

@@ -5,7 +5,7 @@ List all Slack channels from DB for the organization
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSlackListChannelsResponse } from "textql-sdk/models";
+import { TextqlRpcPublicSlackListChannelsResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicSlackListChannelsResponse = {};
 ```

@@ -5,7 +5,7 @@ Maps playbook to its associated Slack channel
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPlaybookSlackChannelPlaybookMapping } from "textql-sdk/models";
+import { TextqlRpcPublicPlaybookSlackChannelPlaybookMapping } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPlaybookSlackChannelPlaybookMapping = {};
 ```

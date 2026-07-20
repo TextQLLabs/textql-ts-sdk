@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicAppMoveAppToFolderRequest } from "textql-sdk/models";
+import { TextqlRpcPublicAppMoveAppToFolderRequest } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicAppMoveAppToFolderRequest = {};
 ```

@@ -61,7 +61,7 @@ AddGroupMember
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_AddGroupMember" method="post" path="/textql.rpc.public.rbac.RBACService/AddGroupMember" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -83,8 +83,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacAddGroupMember } from "textql-sdk/funcs/rbac-add-group-member.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacAddGroupMember } from "@textql/sdk/funcs/rbac-add-group-member.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -134,7 +134,7 @@ ApproveAccessRequest
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ApproveAccessRequest" method="post" path="/textql.rpc.public.rbac.RBACService/ApproveAccessRequest" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -156,8 +156,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacApproveAccessRequest } from "textql-sdk/funcs/rbac-approve-access-request.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacApproveAccessRequest } from "@textql/sdk/funcs/rbac-approve-access-request.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -207,7 +207,7 @@ AssignPermissionToRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_AssignPermissionToRole" method="post" path="/textql.rpc.public.rbac.RBACService/AssignPermissionToRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -229,8 +229,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacAssignPermissionToRole } from "textql-sdk/funcs/rbac-assign-permission-to-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacAssignPermissionToRole } from "@textql/sdk/funcs/rbac-assign-permission-to-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -280,7 +280,7 @@ Member role assignment
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_AssignRoleToMember" method="post" path="/textql.rpc.public.rbac.RBACService/AssignRoleToMember" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -302,8 +302,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacAssignRoleToMember } from "textql-sdk/funcs/rbac-assign-role-to-member.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacAssignRoleToMember } from "@textql/sdk/funcs/rbac-assign-role-to-member.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -353,7 +353,7 @@ ConvertRoleToGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ConvertRoleToGroup" method="post" path="/textql.rpc.public.rbac.RBACService/ConvertRoleToGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -375,8 +375,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacConvertRoleToGroup } from "textql-sdk/funcs/rbac-convert-role-to-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacConvertRoleToGroup } from "@textql/sdk/funcs/rbac-convert-role-to-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -426,7 +426,7 @@ API Key management
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_CreateApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/CreateApiKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -448,8 +448,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacCreateApiKey } from "textql-sdk/funcs/rbac-create-api-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateApiKey } from "@textql/sdk/funcs/rbac-create-api-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -499,7 +499,7 @@ CreateGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_CreateGroup" method="post" path="/textql.rpc.public.rbac.RBACService/CreateGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -521,8 +521,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacCreateGroup } from "textql-sdk/funcs/rbac-create-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateGroup } from "@textql/sdk/funcs/rbac-create-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -572,7 +572,7 @@ Role management
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_CreateRole" method="post" path="/textql.rpc.public.rbac.RBACService/CreateRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -594,8 +594,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacCreateRole } from "textql-sdk/funcs/rbac-create-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateRole } from "@textql/sdk/funcs/rbac-create-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -645,7 +645,7 @@ Service account management
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_CreateServiceAccount" method="post" path="/textql.rpc.public.rbac.RBACService/CreateServiceAccount" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -667,8 +667,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacCreateServiceAccount } from "textql-sdk/funcs/rbac-create-service-account.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateServiceAccount } from "@textql/sdk/funcs/rbac-create-service-account.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -718,7 +718,7 @@ DeleteGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_DeleteGroup" method="post" path="/textql.rpc.public.rbac.RBACService/DeleteGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -740,8 +740,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacDeleteGroup } from "textql-sdk/funcs/rbac-delete-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacDeleteGroup } from "@textql/sdk/funcs/rbac-delete-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -791,7 +791,7 @@ DeleteRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_DeleteRole" method="post" path="/textql.rpc.public.rbac.RBACService/DeleteRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -813,8 +813,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacDeleteRole } from "textql-sdk/funcs/rbac-delete-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacDeleteRole } from "@textql/sdk/funcs/rbac-delete-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -864,7 +864,7 @@ DeleteServiceAccount
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_DeleteServiceAccount" method="post" path="/textql.rpc.public.rbac.RBACService/DeleteServiceAccount" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -886,8 +886,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacDeleteServiceAccount } from "textql-sdk/funcs/rbac-delete-service-account.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacDeleteServiceAccount } from "@textql/sdk/funcs/rbac-delete-service-account.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -937,7 +937,7 @@ GenerateShareLink
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GenerateShareLink" method="post" path="/textql.rpc.public.rbac.RBACService/GenerateShareLink" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -959,8 +959,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGenerateShareLink } from "textql-sdk/funcs/rbac-generate-share-link.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGenerateShareLink } from "@textql/sdk/funcs/rbac-generate-share-link.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1010,7 +1010,7 @@ Get current member roles and permissions
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetCurrentMemberRolesAndPermissions" method="post" path="/textql.rpc.public.rbac.RBACService/GetCurrentMemberRolesAndPermissions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1032,8 +1032,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetCurrentMemberRolesAndPermissions } from "textql-sdk/funcs/rbac-get-current-member-roles-and-permissions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetCurrentMemberRolesAndPermissions } from "@textql/sdk/funcs/rbac-get-current-member-roles-and-permissions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1083,7 +1083,7 @@ GetEmbedUserApiKey
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetEmbedUserApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/GetEmbedUserApiKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1105,8 +1105,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetEmbedUserApiKey } from "textql-sdk/funcs/rbac-get-embed-user-api-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetEmbedUserApiKey } from "@textql/sdk/funcs/rbac-get-embed-user-api-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1156,7 +1156,7 @@ GetGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetGroup" method="post" path="/textql.rpc.public.rbac.RBACService/GetGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1178,8 +1178,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetGroup } from "textql-sdk/funcs/rbac-get-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetGroup } from "@textql/sdk/funcs/rbac-get-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1229,7 +1229,7 @@ GetMemberGroups
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetMemberGroups" method="post" path="/textql.rpc.public.rbac.RBACService/GetMemberGroups" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1251,8 +1251,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetMemberGroups } from "textql-sdk/funcs/rbac-get-member-groups.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetMemberGroups } from "@textql/sdk/funcs/rbac-get-member-groups.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1302,7 +1302,7 @@ GetMemberRoles
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetMemberRoles" method="post" path="/textql.rpc.public.rbac.RBACService/GetMemberRoles" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1324,8 +1324,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetMemberRoles } from "textql-sdk/funcs/rbac-get-member-roles.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetMemberRoles } from "@textql/sdk/funcs/rbac-get-member-roles.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1375,7 +1375,7 @@ GetObjectAccess
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetObjectAccess" method="post" path="/textql.rpc.public.rbac.RBACService/GetObjectAccess" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1397,8 +1397,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetObjectAccess } from "textql-sdk/funcs/rbac-get-object-access.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetObjectAccess } from "@textql/sdk/funcs/rbac-get-object-access.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1448,7 +1448,7 @@ GetRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetRole" method="post" path="/textql.rpc.public.rbac.RBACService/GetRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1470,8 +1470,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetRole } from "textql-sdk/funcs/rbac-get-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetRole } from "@textql/sdk/funcs/rbac-get-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1521,7 +1521,7 @@ GetRolePermissions
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_GetRolePermissions" method="post" path="/textql.rpc.public.rbac.RBACService/GetRolePermissions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1543,8 +1543,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacGetRolePermissions } from "textql-sdk/funcs/rbac-get-role-permissions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacGetRolePermissions } from "@textql/sdk/funcs/rbac-get-role-permissions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1594,7 +1594,7 @@ HasObjectAccess
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_HasObjectAccess" method="post" path="/textql.rpc.public.rbac.RBACService/HasObjectAccess" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1616,8 +1616,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacHasObjectAccess } from "textql-sdk/funcs/rbac-has-object-access.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacHasObjectAccess } from "@textql/sdk/funcs/rbac-has-object-access.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1667,7 +1667,7 @@ ListAccessRequests
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListAccessRequests" method="post" path="/textql.rpc.public.rbac.RBACService/ListAccessRequests" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1689,8 +1689,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListAccessRequests } from "textql-sdk/funcs/rbac-list-access-requests.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListAccessRequests } from "@textql/sdk/funcs/rbac-list-access-requests.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1740,7 +1740,7 @@ ListApiKeys
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListApiKeys" method="post" path="/textql.rpc.public.rbac.RBACService/ListApiKeys" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1762,8 +1762,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListApiKeys } from "textql-sdk/funcs/rbac-list-api-keys.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListApiKeys } from "@textql/sdk/funcs/rbac-list-api-keys.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1813,7 +1813,7 @@ ListGroupConnectors
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListGroupConnectors" method="post" path="/textql.rpc.public.rbac.RBACService/ListGroupConnectors" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1835,8 +1835,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListGroupConnectors } from "textql-sdk/funcs/rbac-list-group-connectors.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListGroupConnectors } from "@textql/sdk/funcs/rbac-list-group-connectors.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1886,7 +1886,7 @@ ListGroups
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListGroups" method="post" path="/textql.rpc.public.rbac.RBACService/ListGroups" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1908,8 +1908,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListGroups } from "textql-sdk/funcs/rbac-list-groups.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListGroups } from "@textql/sdk/funcs/rbac-list-groups.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1959,7 +1959,7 @@ Permission management
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListPermissions" method="post" path="/textql.rpc.public.rbac.RBACService/ListPermissions" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1981,8 +1981,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListPermissions } from "textql-sdk/funcs/rbac-list-permissions.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListPermissions } from "@textql/sdk/funcs/rbac-list-permissions.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2032,7 +2032,7 @@ ListRoles
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListRoles" method="post" path="/textql.rpc.public.rbac.RBACService/ListRoles" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2054,8 +2054,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListRoles } from "textql-sdk/funcs/rbac-list-roles.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListRoles } from "@textql/sdk/funcs/rbac-list-roles.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2105,7 +2105,7 @@ ListScimGroupMappings
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListScimGroupMappings" method="post" path="/textql.rpc.public.rbac.RBACService/ListScimGroupMappings" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2127,8 +2127,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListScimGroupMappings } from "textql-sdk/funcs/rbac-list-scim-group-mappings.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListScimGroupMappings } from "@textql/sdk/funcs/rbac-list-scim-group-mappings.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2178,7 +2178,7 @@ ListServiceAccounts
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ListServiceAccounts" method="post" path="/textql.rpc.public.rbac.RBACService/ListServiceAccounts" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2200,8 +2200,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacListServiceAccounts } from "textql-sdk/funcs/rbac-list-service-accounts.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacListServiceAccounts } from "@textql/sdk/funcs/rbac-list-service-accounts.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2251,7 +2251,7 @@ MigrateAllScimGroupMappings
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_MigrateAllScimGroupMappings" method="post" path="/textql.rpc.public.rbac.RBACService/MigrateAllScimGroupMappings" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2273,8 +2273,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacMigrateAllScimGroupMappings } from "textql-sdk/funcs/rbac-migrate-all-scim-group-mappings.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacMigrateAllScimGroupMappings } from "@textql/sdk/funcs/rbac-migrate-all-scim-group-mappings.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2324,7 +2324,7 @@ MigrateScimGroupMappingToGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_MigrateScimGroupMappingToGroup" method="post" path="/textql.rpc.public.rbac.RBACService/MigrateScimGroupMappingToGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2346,8 +2346,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacMigrateScimGroupMappingToGroup } from "textql-sdk/funcs/rbac-migrate-scim-group-mapping-to-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacMigrateScimGroupMappingToGroup } from "@textql/sdk/funcs/rbac-migrate-scim-group-mapping-to-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2397,7 +2397,7 @@ RejectAccessRequest
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RejectAccessRequest" method="post" path="/textql.rpc.public.rbac.RBACService/RejectAccessRequest" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2419,8 +2419,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRejectAccessRequest } from "textql-sdk/funcs/rbac-reject-access-request.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRejectAccessRequest } from "@textql/sdk/funcs/rbac-reject-access-request.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2470,7 +2470,7 @@ RemoveGroupMember
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RemoveGroupMember" method="post" path="/textql.rpc.public.rbac.RBACService/RemoveGroupMember" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2492,8 +2492,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRemoveGroupMember } from "textql-sdk/funcs/rbac-remove-group-member.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRemoveGroupMember } from "@textql/sdk/funcs/rbac-remove-group-member.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2543,7 +2543,7 @@ RemovePermissionFromRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RemovePermissionFromRole" method="post" path="/textql.rpc.public.rbac.RBACService/RemovePermissionFromRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2565,8 +2565,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRemovePermissionFromRole } from "textql-sdk/funcs/rbac-remove-permission-from-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRemovePermissionFromRole } from "@textql/sdk/funcs/rbac-remove-permission-from-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2616,7 +2616,7 @@ RemoveRoleFromMember
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RemoveRoleFromMember" method="post" path="/textql.rpc.public.rbac.RBACService/RemoveRoleFromMember" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2638,8 +2638,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRemoveRoleFromMember } from "textql-sdk/funcs/rbac-remove-role-from-member.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRemoveRoleFromMember } from "@textql/sdk/funcs/rbac-remove-role-from-member.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2689,7 +2689,7 @@ Access request management
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RequestAccess" method="post" path="/textql.rpc.public.rbac.RBACService/RequestAccess" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2711,8 +2711,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRequestAccess } from "textql-sdk/funcs/rbac-request-access.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRequestAccess } from "@textql/sdk/funcs/rbac-request-access.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2762,7 +2762,7 @@ RevertScimGroupMappingToRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RevertScimGroupMappingToRole" method="post" path="/textql.rpc.public.rbac.RBACService/RevertScimGroupMappingToRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2784,8 +2784,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRevertScimGroupMappingToRole } from "textql-sdk/funcs/rbac-revert-scim-group-mapping-to-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRevertScimGroupMappingToRole } from "@textql/sdk/funcs/rbac-revert-scim-group-mapping-to-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2835,7 +2835,7 @@ RevokeApiKey
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RevokeApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/RevokeApiKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2857,8 +2857,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRevokeApiKey } from "textql-sdk/funcs/rbac-revoke-api-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRevokeApiKey } from "@textql/sdk/funcs/rbac-revoke-api-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2908,7 +2908,7 @@ RevokeObjectAccess
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RevokeObjectAccess" method="post" path="/textql.rpc.public.rbac.RBACService/RevokeObjectAccess" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -2930,8 +2930,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRevokeObjectAccess } from "textql-sdk/funcs/rbac-revoke-object-access.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRevokeObjectAccess } from "@textql/sdk/funcs/rbac-revoke-object-access.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -2981,7 +2981,7 @@ RotateApiKey
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_RotateApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/RotateApiKey" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3003,8 +3003,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacRotateApiKey } from "textql-sdk/funcs/rbac-rotate-api-key.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacRotateApiKey } from "@textql/sdk/funcs/rbac-rotate-api-key.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3054,7 +3054,7 @@ Object sharing and access control
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ShareObject" method="post" path="/textql.rpc.public.rbac.RBACService/ShareObject" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3078,8 +3078,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacShareObject } from "textql-sdk/funcs/rbac-share-object.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacShareObject } from "@textql/sdk/funcs/rbac-share-object.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3131,7 +3131,7 @@ ShareObjectWithGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ShareObjectWithGroup" method="post" path="/textql.rpc.public.rbac.RBACService/ShareObjectWithGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3155,8 +3155,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacShareWithGroup } from "textql-sdk/funcs/rbac-share-with-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacShareWithGroup } from "@textql/sdk/funcs/rbac-share-with-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3208,7 +3208,7 @@ ShareObjectWithRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_ShareObjectWithRole" method="post" path="/textql.rpc.public.rbac.RBACService/ShareObjectWithRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3232,8 +3232,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacShareObjectWithRole } from "textql-sdk/funcs/rbac-share-object-with-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacShareObjectWithRole } from "@textql/sdk/funcs/rbac-share-object-with-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3285,7 +3285,7 @@ UpdateGroup
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_UpdateGroup" method="post" path="/textql.rpc.public.rbac.RBACService/UpdateGroup" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3307,8 +3307,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacUpdateGroup } from "textql-sdk/funcs/rbac-update-group.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacUpdateGroup } from "@textql/sdk/funcs/rbac-update-group.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3358,7 +3358,7 @@ UpdateObjectAccess
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_UpdateObjectAccess" method="post" path="/textql.rpc.public.rbac.RBACService/UpdateObjectAccess" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3382,8 +3382,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacUpdateObjectAccess } from "textql-sdk/funcs/rbac-update-object-access.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacUpdateObjectAccess } from "@textql/sdk/funcs/rbac-update-object-access.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3435,7 +3435,7 @@ UpdateObjectVisibility
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_UpdateObjectVisibility" method="post" path="/textql.rpc.public.rbac.RBACService/UpdateObjectVisibility" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3457,8 +3457,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacUpdateObjectVisibility } from "textql-sdk/funcs/rbac-update-object-visibility.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacUpdateObjectVisibility } from "@textql/sdk/funcs/rbac-update-object-visibility.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -3508,7 +3508,7 @@ UpdateRole
 
 <!-- UsageSnippet language="typescript" operationID="RBACService_UpdateRole" method="post" path="/textql.rpc.public.rbac.RBACService/UpdateRole" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -3530,8 +3530,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { rbacUpdateRole } from "textql-sdk/funcs/rbac-update-role.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacUpdateRole } from "@textql/sdk/funcs/rbac-update-role.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

@@ -5,7 +5,7 @@ copied from google.type.Date; not available in buf's google/protobuf/*
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesDate } from "textql-sdk/models";
+import { TextqlRpcPublicPatchesDate } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicPatchesDate = {};
 ```

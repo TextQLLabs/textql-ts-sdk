@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicMCPMCPError } from "textql-sdk/models";
+import { TextqlRpcPublicMCPMCPError } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicMCPMCPError =
   "MCP_ERROR_UNSUPPORTED_PROTOCOL_VERSION";

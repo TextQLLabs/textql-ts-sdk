@@ -5,7 +5,7 @@ Contains an arbitrary serialized message along with a @type that describes the t
 ## Example Usage
 
 ```typescript
-import { ConnectErrorDetailsAny } from "textql-sdk/models";
+import { ConnectErrorDetailsAny } from "@textql/sdk/models";
 
 let value: ConnectErrorDetailsAny = {};
 ```

@@ -23,7 +23,7 @@ ExportPowerBIReportImage
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_ExportPowerBIReportImage" method="post" path="/textql.rpc.public.powerbi.PowerBIService/ExportPowerBIReportImage" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -45,8 +45,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiExportReportImage } from "textql-sdk/funcs/powerbi-export-report-image.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiExportReportImage } from "@textql/sdk/funcs/powerbi-export-report-image.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -96,7 +96,7 @@ GeneratePowerBIEmbedToken
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_GeneratePowerBIEmbedToken" method="post" path="/textql.rpc.public.powerbi.PowerBIService/GeneratePowerBIEmbedToken" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -118,8 +118,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiGenerateEmbedToken } from "textql-sdk/funcs/powerbi-generate-embed-token.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiGenerateEmbedToken } from "@textql/sdk/funcs/powerbi-generate-embed-token.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -169,7 +169,7 @@ GetPowerBIDatasetPreview
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_GetPowerBIDatasetPreview" method="post" path="/textql.rpc.public.powerbi.PowerBIService/GetPowerBIDatasetPreview" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -191,8 +191,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiGetDatasetPreview } from "textql-sdk/funcs/powerbi-get-dataset-preview.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiGetDatasetPreview } from "@textql/sdk/funcs/powerbi-get-dataset-preview.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -242,7 +242,7 @@ GetSyncedPowerBIItems
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_GetSyncedPowerBIItems" method="post" path="/textql.rpc.public.powerbi.PowerBIService/GetSyncedPowerBIItems" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -264,8 +264,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiGetSyncedItems } from "textql-sdk/funcs/powerbi-get-synced-items.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiGetSyncedItems } from "@textql/sdk/funcs/powerbi-get-synced-items.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -315,7 +315,7 @@ ListPowerBIDatasets
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_ListPowerBIDatasets" method="post" path="/textql.rpc.public.powerbi.PowerBIService/ListPowerBIDatasets" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -337,8 +337,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiList } from "textql-sdk/funcs/powerbi-list.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiList } from "@textql/sdk/funcs/powerbi-list.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -388,7 +388,7 @@ ListPowerBIReports
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_ListPowerBIReports" method="post" path="/textql.rpc.public.powerbi.PowerBIService/ListPowerBIReports" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -410,8 +410,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiListReports } from "textql-sdk/funcs/powerbi-list-reports.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiListReports } from "@textql/sdk/funcs/powerbi-list-reports.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -461,7 +461,7 @@ ListPowerBIWorkspaces
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_ListPowerBIWorkspaces" method="post" path="/textql.rpc.public.powerbi.PowerBIService/ListPowerBIWorkspaces" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -483,8 +483,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiListWorkspaces } from "textql-sdk/funcs/powerbi-list-workspaces.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiListWorkspaces } from "@textql/sdk/funcs/powerbi-list-workspaces.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -534,7 +534,7 @@ SyncPowerBIItems
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_SyncPowerBIItems" method="post" path="/textql.rpc.public.powerbi.PowerBIService/SyncPowerBIItems" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -567,8 +567,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiSyncPowerBIItems } from "textql-sdk/funcs/powerbi-sync-power-bi-items.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiSyncPowerBIItems } from "@textql/sdk/funcs/powerbi-sync-power-bi-items.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -629,7 +629,7 @@ TestPowerBIConnection
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_TestPowerBIConnection" method="post" path="/textql.rpc.public.powerbi.PowerBIService/TestPowerBIConnection" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -651,8 +651,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiTestConnection } from "textql-sdk/funcs/powerbi-test-connection.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiTestConnection } from "@textql/sdk/funcs/powerbi-test-connection.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -702,7 +702,7 @@ UnsyncPowerBIItems
 
 <!-- UsageSnippet language="typescript" operationID="PowerBIService_UnsyncPowerBIItems" method="post" path="/textql.rpc.public.powerbi.PowerBIService/UnsyncPowerBIItems" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -724,8 +724,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { powerbiUnsyncItems } from "textql-sdk/funcs/powerbi-unsync-items.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { powerbiUnsyncItems } from "@textql/sdk/funcs/powerbi-unsync-items.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

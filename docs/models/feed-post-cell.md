@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { FeedPostCell } from "textql-sdk/models";
+import { FeedPostCell } from "@textql/sdk/models";
 
 let value: FeedPostCell = {
   feedPostCell: {},

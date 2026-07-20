@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Int32 } from "textql-sdk/models";
+import { Int32 } from "@textql/sdk/models";
 
 let value: Int32 = {
   int32: {},

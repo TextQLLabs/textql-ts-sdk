@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { Universal } from "textql-sdk/models";
+import { Universal } from "@textql/sdk/models";
 
 let value: Universal = {
   universal: {},

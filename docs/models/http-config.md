@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { HttpConfig } from "textql-sdk/models";
+import { HttpConfig } from "@textql/sdk/models";
 
 let value: HttpConfig = {
   httpConfig: {},

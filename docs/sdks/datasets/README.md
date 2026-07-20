@@ -27,7 +27,7 @@ CreateFolder
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_CreateFolder" method="post" path="/textql.rpc.public.dataset.DatasetService/CreateFolder" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -49,8 +49,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsCreateFolder } from "textql-sdk/funcs/datasets-create-folder.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsCreateFolder } from "@textql/sdk/funcs/datasets-create-folder.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -100,7 +100,7 @@ CreatePowerBIDataset
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_CreatePowerBIDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/CreatePowerBIDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -133,8 +133,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsCreatePowerBIDataset } from "textql-sdk/funcs/datasets-create-power-bi-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsCreatePowerBIDataset } from "@textql/sdk/funcs/datasets-create-power-bi-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -195,7 +195,7 @@ Create Tableau dataset from views/datasources
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_CreateTableauDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/CreateTableauDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -230,8 +230,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsCreateTableauDataset } from "textql-sdk/funcs/datasets-create-tableau-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsCreateTableauDataset } from "@textql/sdk/funcs/datasets-create-tableau-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -294,7 +294,7 @@ uploads
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_CreateUploadPresignUrl" method="post" path="/textql.rpc.public.dataset.DatasetService/CreateUploadPresignUrl" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -316,8 +316,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsCreateUploadPresignUrl } from "textql-sdk/funcs/datasets-create-upload-presign-url.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsCreateUploadPresignUrl } from "@textql/sdk/funcs/datasets-create-upload-presign-url.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -367,7 +367,7 @@ Delete a dataset (soft delete)
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_DeleteDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/DeleteDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -389,8 +389,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsDelete } from "textql-sdk/funcs/datasets-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsDelete } from "@textql/sdk/funcs/datasets-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -440,7 +440,7 @@ export dataset in "raw" format – original if dataset is uploaded, converted fo
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_ExportDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/ExportDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -462,8 +462,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsExport } from "textql-sdk/funcs/datasets-export.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsExport } from "@textql/sdk/funcs/datasets-export.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -513,7 +513,7 @@ GetDataset, GetDatasets only return metadata
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/GetDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -535,8 +535,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsFetch } from "textql-sdk/funcs/datasets-fetch.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsFetch } from "@textql/sdk/funcs/datasets-fetch.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -586,7 +586,7 @@ GetDatasetStats
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetDatasetStats" method="post" path="/textql.rpc.public.dataset.DatasetService/GetDatasetStats" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -608,8 +608,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsGetStats } from "textql-sdk/funcs/datasets-get-stats.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsGetStats } from "@textql/sdk/funcs/datasets-get-stats.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -659,7 +659,7 @@ GetDatasetValues
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetDatasetValues" method="post" path="/textql.rpc.public.dataset.DatasetService/GetDatasetValues" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -681,8 +681,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsGetDatasetValues } from "textql-sdk/funcs/datasets-get-dataset-values.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsGetDatasetValues } from "@textql/sdk/funcs/datasets-get-dataset-values.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -732,7 +732,7 @@ GetDatasets
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetDatasets" method="post" path="/textql.rpc.public.dataset.DatasetService/GetDatasets" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -754,8 +754,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsGet } from "textql-sdk/funcs/datasets-get.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsGet } from "@textql/sdk/funcs/datasets-get.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -805,7 +805,7 @@ GetDatasetsByIds
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetDatasetsByIds" method="post" path="/textql.rpc.public.dataset.DatasetService/GetDatasetsByIds" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -827,8 +827,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsGetByIds } from "textql-sdk/funcs/datasets-get-by-ids.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsGetByIds } from "@textql/sdk/funcs/datasets-get-by-ids.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -878,7 +878,7 @@ for AR: CreateFolderACL, UpdateFolderACL, DeleteFolderACL
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_GetFolders" method="post" path="/textql.rpc.public.dataset.DatasetService/GetFolders" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -900,8 +900,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsGetFolders } from "textql-sdk/funcs/datasets-get-folders.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsGetFolders } from "@textql/sdk/funcs/datasets-get-folders.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -951,7 +951,7 @@ for AR: CreateDatasetACL, UpdateDatasetACL, DeleteDatasetACL
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_ProcessUploadPresignUrl" method="post" path="/textql.rpc.public.dataset.DatasetService/ProcessUploadPresignUrl" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -973,8 +973,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsProcessUploadPresignUrl } from "textql-sdk/funcs/datasets-process-upload-presign-url.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsProcessUploadPresignUrl } from "@textql/sdk/funcs/datasets-process-upload-presign-url.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -1024,7 +1024,7 @@ Update dataset metadata
 
 <!-- UsageSnippet language="typescript" operationID="DatasetService_UpdateDataset" method="post" path="/textql.rpc.public.dataset.DatasetService/UpdateDataset" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -1046,8 +1046,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { datasetsUpdateDataset } from "textql-sdk/funcs/datasets-update-dataset.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { datasetsUpdateDataset } from "@textql/sdk/funcs/datasets-update-dataset.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

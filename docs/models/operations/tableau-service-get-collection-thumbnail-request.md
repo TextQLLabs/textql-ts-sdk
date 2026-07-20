@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TableauServiceGetCollectionThumbnailRequest } from "textql-sdk/models/operations";
+import { TableauServiceGetCollectionThumbnailRequest } from "@textql/sdk/models/operations";
 
 let value: TableauServiceGetCollectionThumbnailRequest = {
   body: {},

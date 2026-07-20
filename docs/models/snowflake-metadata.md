@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { SnowflakeMetadata } from "textql-sdk/models";
+import { SnowflakeMetadata } from "@textql/sdk/models";
 
 let value: SnowflakeMetadata = {
   snowflakeMetadata: {},

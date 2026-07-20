@@ -5,7 +5,7 @@ One owner of a topic's tagged chats, ranked by how many they own.
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicObserveCustomTopicPerson } from "textql-sdk/models";
+import { TextqlRpcPublicObserveCustomTopicPerson } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicObserveCustomTopicPerson = {};
 ```

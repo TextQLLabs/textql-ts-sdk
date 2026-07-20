@@ -20,7 +20,7 @@ ClearOAuthToken
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_ClearOAuthToken" method="post" path="/textql.rpc.public.mcp.MCPService/ClearOAuthToken" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -42,8 +42,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpClearOAuthToken } from "textql-sdk/funcs/mcp-clear-o-auth-token.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpClearOAuthToken } from "@textql/sdk/funcs/mcp-clear-o-auth-token.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -93,7 +93,7 @@ DeleteMCPServer
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_DeleteMCPServer" method="post" path="/textql.rpc.public.mcp.MCPService/DeleteMCPServer" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -115,8 +115,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpDelete } from "textql-sdk/funcs/mcp-delete.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpDelete } from "@textql/sdk/funcs/mcp-delete.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -166,7 +166,7 @@ GetMCPServers
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_GetMCPServers" method="post" path="/textql.rpc.public.mcp.MCPService/GetMCPServers" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -188,8 +188,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpGetServers } from "textql-sdk/funcs/mcp-get-servers.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpGetServers } from "@textql/sdk/funcs/mcp-get-servers.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -239,7 +239,7 @@ HandleOAuthCallback
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_HandleOAuthCallback" method="post" path="/textql.rpc.public.mcp.MCPService/HandleOAuthCallback" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -261,8 +261,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpHandleOAuthCallback } from "textql-sdk/funcs/mcp-handle-o-auth-callback.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpHandleOAuthCallback } from "@textql/sdk/funcs/mcp-handle-o-auth-callback.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -312,7 +312,7 @@ InitiateOAuthFlow
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_InitiateOAuthFlow" method="post" path="/textql.rpc.public.mcp.MCPService/InitiateOAuthFlow" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -334,8 +334,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpInitiateOAuthFlow } from "textql-sdk/funcs/mcp-initiate-o-auth-flow.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpInitiateOAuthFlow } from "@textql/sdk/funcs/mcp-initiate-o-auth-flow.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -385,7 +385,7 @@ ToggleMCPServer
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_ToggleMCPServer" method="post" path="/textql.rpc.public.mcp.MCPService/ToggleMCPServer" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -407,8 +407,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpToggleServer } from "textql-sdk/funcs/mcp-toggle-server.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpToggleServer } from "@textql/sdk/funcs/mcp-toggle-server.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -458,7 +458,7 @@ UpsertMCPServers
 
 <!-- UsageSnippet language="typescript" operationID="MCPService_UpsertMCPServers" method="post" path="/textql.rpc.public.mcp.MCPService/UpsertMCPServers" -->
 ```typescript
-import { Textql } from "textql-sdk";
+import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
@@ -488,8 +488,8 @@ run();
 The standalone function version of this method:
 
 ```typescript
-import { TextqlCore } from "textql-sdk/core.js";
-import { mcpUpsertMCPServers } from "textql-sdk/funcs/mcp-upsert-mcp-servers.js";
+import { TextqlCore } from "@textql/sdk/core.js";
+import { mcpUpsertMCPServers } from "@textql/sdk/funcs/mcp-upsert-mcp-servers.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.

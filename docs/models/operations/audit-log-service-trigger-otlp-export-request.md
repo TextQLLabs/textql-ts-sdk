@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { AuditLogServiceTriggerOtlpExportRequest } from "textql-sdk/models/operations";
+import { AuditLogServiceTriggerOtlpExportRequest } from "@textql/sdk/models/operations";
 
 let value: AuditLogServiceTriggerOtlpExportRequest = {
   body: {},

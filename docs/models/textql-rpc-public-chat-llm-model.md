@@ -3,7 +3,7 @@
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicChatLlmModel } from "textql-sdk/models";
+import { TextqlRpcPublicChatLlmModel } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatLlmModel = "MODEL_GPT_OSS_SMALL";
 
