@@ -14791,21 +14791,33 @@ paths:
         "200":
           description: A successful response.(streaming responses)
           content:
-            application/x-ndjson:
+            text/event-stream:
               schema:
+                title: StreamChatEvent
                 type: object
+                required:
+                  - data
                 properties:
-                  result:
-                    $ref: '#/components/schemas/textql.rpc.public.chat.Cell'
-                  error:
-                    $ref: '#/components/schemas/google.rpc.Status'
-                title: Stream result of textql.rpc.public.chat.Cell
+                  data:
+                    title: StreamChatEventData
+                    description: >-
+                      A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
+                    type: object
+                    required:
+                      - type
+                    properties:
+                      type:
+                        type: string
+                        description: "Event type: metadata, text, cell, asset, error, or done."
+                    additionalProperties: true
         default:
           description: An unexpected error response.
           content:
-            application/x-ndjson:
+            application/json:
               schema:
-                $ref: '#/components/schemas/google.rpc.Status'
+                $ref: "#/components/schemas/google.rpc.Status"
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: streamChat
 components:
   schemas:
     connect-protocol-version:

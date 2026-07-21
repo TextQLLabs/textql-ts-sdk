@@ -29,6 +29,7 @@ retries, error handling, and per-operation examples.
   * [Authentication](#authentication)
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Standalone functions](#standalone-functions)
+  * [Server-sent event streaming](#server-sent-event-streaming)
   * [Retries](#retries)
   * [Error Handling](#error-handling)
   * [Server Selection](#server-selection)
@@ -239,6 +240,7 @@ run();
 * [submitQuestions](docs/sdks/chats/README.md#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 * [unbookmark](docs/sdks/chats/README.md#unbookmark) - UnbookmarkChat
 * [update](docs/sdks/chats/README.md#update) - UpdateChat
+* [streamChat](docs/sdks/chats/README.md#streamchat)
 
 ### [Connectors](docs/sdks/connectors/README.md)
 
@@ -714,6 +716,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsRejectOntologyChange`](docs/sdks/chats/README.md#rejectontologychange) - RejectOntologyChange
 - [`chatsRun`](docs/sdks/chats/README.md#run) - RunChat
 - [`chatsSend`](docs/sdks/chats/README.md#send) - SendMessage
+- [`chatsStreamChat`](docs/sdks/chats/README.md#streamchat)
 - [`chatsSubmitContextPromptChange`](docs/sdks/chats/README.md#submitcontextpromptchange) - SubmitContextPromptChange
 - [`chatsSubmitQuestions`](docs/sdks/chats/README.md#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 - [`chatsUnbookmark`](docs/sdks/chats/README.md#unbookmark) - UnbookmarkChat
@@ -1039,6 +1042,48 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 </details>
 <!-- End Standalone functions [standalone-funcs] -->
+
+<!-- Start Server-sent event streaming [eventstream] -->
+## Server-sent event streaming
+
+[Server-sent events][mdn-sse] are used to stream content from certain
+operations. These operations will expose the stream as an async iterable that
+can be consumed using a [`for await...of`][mdn-for-await-of] loop. The loop will
+terminate when the server no longer has any events to send and closes the
+underlying connection.
+
+```typescript
+import { Textql } from "@textql/sdk";
+import { EventStream } from "@textql/sdk/lib/event-streams.js";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.chats.streamChat({
+    chatId: "<id>",
+    body: {},
+  });
+
+  // Check if the response is a EventStream instance for union types
+  if (result instanceof EventStream) {
+    for await (const event of result) {
+      // Handle the event
+      console.log(event);
+    }
+  } else {
+    console.log(result);
+  }
+}
+
+run();
+
+```
+
+[mdn-sse]: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+[mdn-for-await-of]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of
+<!-- End Server-sent event streaming [eventstream] -->
 
 <!-- Start Retries [retries] -->
 ## Retries

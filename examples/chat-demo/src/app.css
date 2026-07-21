@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Ioskeley Mono';
+	src: url('/fonts/IoskeleyMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Ioskeley Mono';
+	src: url('/fonts/IoskeleyMono-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Pixel';
+	src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-mono: 'Ioskeley Mono', ui-monospace, monospace;
+	--font-pixel: 'Geist Pixel', 'Ioskeley Mono', ui-monospace, monospace;
+	--default-font-family: var(--font-mono);
+
+	--color-paper: #f7f6f5;
+	--color-ink: #0a0a0a;
+	--color-muted: #6b6b6b;
+	--color-line: #e3e1da;
+	--color-accent: var(--color-blue-500);
+
+	--radius-xs: 1px;
+	--radius-sm: 2px;
+	--radius-md: 3px;
+	--radius-lg: 4px;
+}
+
+@theme static {
+	--color-blue-50: #ecebff;
+	--color-blue-100: #d6d4ff;
+	--color-blue-200: #b9b4ff;
+	--color-blue-300: #8f88ff;
+	--color-blue-400: #5c4dff;
+	--color-blue-500: #2200ff;
+	--color-blue-600: #1e00e0;
+	--color-blue-700: #1a00bf;
+	--color-blue-800: #140093;
+	--color-blue-900: #0d0066;
+}
+
+:root {
+	font-family: var(--font-mono);
+	color: var(--color-ink);
+	background: var(--color-paper);
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	min-width: 320px;
+	min-height: 100%;
+	overflow-x: clip;
+	background: var(--color-paper);
+}
+
+body {
+	min-height: 100vh;
+}
+
+button,
+input,
+textarea {
+	font: inherit;
+}
+
+button,
+a,
+input,
+textarea {
+	-webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+	color: #fff;
+	background: var(--color-accent);
+}
