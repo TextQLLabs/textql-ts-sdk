@@ -14801,15 +14801,13 @@ paths:
                   data:
                     title: StreamChatEventData
                     description: >-
-                      A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
+                      One stream envelope: `result` carries the next cell, `error` reports a failure that ended the stream.
                     type: object
-                    required:
-                      - type
                     properties:
-                      type:
-                        type: string
-                        description: "Event type: metadata, text, cell, asset, error, or done."
-                    additionalProperties: true
+                      result:
+                        $ref: "#/components/schemas/textql.rpc.public.chat.Cell"
+                      error:
+                        $ref: "#/components/schemas/google.rpc.Status"
         default:
           description: An unexpected error response.
           content:

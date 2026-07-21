@@ -18,14 +18,11 @@ export type ChatServiceStreamChatRequest = {
 };
 
 /**
- * A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
+ * One stream envelope: `result` carries the next cell, `error` reports a failure that ended the stream.
  */
 export type StreamChatEventData = {
-  /**
-   * Event type: metadata, text, cell, asset, error, or done.
-   */
-  type: string;
-  [additionalProperties: string]: unknown;
+  result?: models.TextqlRpcPublicChatCell | undefined;
+  error?: models.GoogleRpcStatus | undefined;
 };
 
 /**
@@ -33,7 +30,7 @@ export type StreamChatEventData = {
  */
 export type StreamChatEvent = {
   /**
-   * A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
+   * One stream envelope: `result` carries the next cell, `error` reports a failure that ended the stream.
    */
   data: StreamChatEventData;
 };
@@ -78,12 +75,10 @@ export function chatServiceStreamChatRequestToJSON(
 export const StreamChatEventData$inboundSchema: z.ZodMiniType<
   StreamChatEventData,
   unknown
-> = z.catchall(
-  z.object({
-    type: types.string(),
-  }),
-  z.any(),
-);
+> = z.object({
+  result: types.optional(models.TextqlRpcPublicChatCell$inboundSchema),
+  error: types.optional(models.GoogleRpcStatus$inboundSchema),
+});
 
 export function streamChatEventDataFromJSON(
   jsonString: string,

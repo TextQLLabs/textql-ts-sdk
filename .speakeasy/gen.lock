@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: cfbf17dee018586499c96a3d1724ea3b
+  docChecksum: 330893ae97b9fade74fe34c6db0c6f4c
   docVersion: 1.0.0
   speakeasyVersion: 1.790.3
   generationVersion: 2.918.4
-  releaseVersion: 1.1.0
-  configChecksum: 3e5945a15ee9af87eb5f463fa676ffec
+  releaseVersion: 1.1.1
+  configChecksum: 06884f6f06be85113e676743079f98bd
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: d32c044d-1925-4252-aba1-b801dec29eba
-  pristine_commit_hash: af3c716c9dc0874e93b1bdf9712b13ff78c0ae40
-  pristine_tree_hash: a70a988e4881bfdb941027a83411bdad40d6a059
+  generation_id: 771d6ae1-112e-456b-bc70-356a4efe45b7
+  pristine_commit_hash: b16eb07567018584b3b3aa26f622783e8880f83d
+  pristine_tree_hash: 2cf950418ecf58df67be6eed7a7ca46d3d311229
 features:
   typescript:
     acceptHeaders: 2.81.2
@@ -3678,12 +3678,12 @@ trackedFiles:
     pristine_git_object: 10e8d9488e4f10a410ed646d585ca1dd97a091fd
   docs/models/operations/stream-chat-event-data.md:
     id: 834bfc220316
-    last_write_checksum: sha1:8edf17402656febb4d25b48af13eb866afb5355b
-    pristine_git_object: ce4ec7bd2882f5957e29c3bebe6e685525c59b44
+    last_write_checksum: sha1:47a4810b5c9e4f546a707898520cfd214740ebb1
+    pristine_git_object: cbc3c8c43b2be92fc4e72c11148dc3cd9fc5bb7d
   docs/models/operations/stream-chat-event.md:
     id: 4efcec8ba55b
-    last_write_checksum: sha1:e0aafd36365bbf4002946f3e5e2aca44207b7f5d
-    pristine_git_object: 20801ef2196aba8200b4238023d45881af285312
+    last_write_checksum: sha1:b51f868099cf9431d9f797ac977af0941550bbc2
+    pristine_git_object: 0dca413a7d17ac44c1d2db3b88be2c152f4cf04d
   docs/models/operations/tableau-service-generate-embed-token-request.md:
     id: e0b691f8bcb3
     last_write_checksum: sha1:19203fae1b2e5a8c1917a6d5690dc36465b089de
@@ -9646,12 +9646,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:15825f7f7439b28f9d83fcb8623de0c3a79dbedc
-    pristine_git_object: f15af08f4b86607f5a316eff47da0d2df25f5058
+    last_write_checksum: sha1:de255d057fab74e263b25d54f93b9112117e2dea
+    pristine_git_object: 912ab19ba9cd512e08bdba6586cccf2e77ce21af
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:5f81330a79377d36e5472be0328ae58a9a91cbc3
-    pristine_git_object: 32b317b11b08afd62a0f9ec7948709f93bf20201
+    last_write_checksum: sha1:64a90570bf59912ed8e3c4d728a7c9f3dfbf09db
+    pristine_git_object: e0389e0069f1b20cb1b008a346422a4b2c70f9cd
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11282,8 +11282,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:25a905cef2517a3c40a15e4b9b19c90b91ad96b7
-    pristine_git_object: deed38d123d057fd4e6a6e5ac17666db1f31e43c
+    last_write_checksum: sha1:8d0710fb9b91b4c2f87020251a50c2396f81d1bd
+    pristine_git_object: 8a1df4909c815f773294bbe7602debd090361966
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -11702,8 +11702,8 @@ trackedFiles:
     pristine_git_object: 60f25dcae5de91ecca5cb2845be85810e7379849
   src/models/operations/chat-service-stream-chat.ts:
     id: 03f436c39f43
-    last_write_checksum: sha1:3d9314dcc5dd07409b218169bec600f23c41fe82
-    pristine_git_object: 78bdd7c8ef734b5c9ccd07fa08d7d08918c6b8a5
+    last_write_checksum: sha1:fd83f223259294b11b331e79e6af85b0f84dce64
+    pristine_git_object: eed29765a798cfbb0957c140b628ac2e72e26458
   src/models/operations/chat-service-submit-context-prompt-change.ts:
     id: 2165e31a4536
     last_write_checksum: sha1:33d09cff489f1737b554f6baeeccba659def5337

@@ -4036,12 +4036,17 @@ actions:
       created_at: 1784134047111
       reviewed_at: 1784134060143
       type: method-name
-  # StreamChat: the generated spec declares application/x-ndjson, but the server
-  # (compute/pkg/platform/v2/chat.go StreamChat) emits SSE — `data: {...}\n\n`
-  # frames with Content-Type: text/event-stream. Speakeasy cannot generate the
-  # x-ndjson shape (the method was silently skipped from the SDK), so rewrite the
-  # response to the SSE shape it actually has.
+  # StreamChat: the endpoint is served by a platform v2 handler
+  # (demo2 compute/pkg/platform/v2/chat.go StreamChatCells) that emits
+  # Server-Sent Events of {result: Cell} / {error: Status} envelopes. Older
+  # registry snapshots label the response application/x-ndjson (a shape
+  # Speakeasy skips during codegen); normalize whatever is there to the SSE
+  # contract. Redundant (but harmless) once demo2 publishes the SSE spec.
   - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["200"]["content"]["application/x-ndjson"]
+    remove: true
+  - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["200"]["content"]["application/jsonl"]
+    remove: true
+  - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["200"]["content"]["text/event-stream"]
     remove: true
   - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["200"]["content"]
     update:
@@ -4055,20 +4060,17 @@ actions:
             data:
               title: StreamChatEventData
               description: >-
-                A chat stream event. `type` discriminates the payload:
-                `metadata` (id, chat_id, model, created_at, is_continuation),
-                `text` (text), `cell` (cell), `asset` (asset),
-                `error` (message), and `done`.
+                One stream envelope: `result` carries the next cell,
+                `error` reports a failure that ended the stream.
               type: object
-              required:
-                - type
               properties:
-                type:
-                  type: string
-                  description: "Event type: metadata, text, cell, asset, error, or done."
-              additionalProperties: true
-  # Errors before the stream starts are plain JSON (writeError), not x-ndjson.
+                result:
+                  $ref: "#/components/schemas/textql.rpc.public.chat.Cell"
+                error:
+                  $ref: "#/components/schemas/google.rpc.Status"
   - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["default"]["content"]["application/x-ndjson"]
+    remove: true
+  - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["default"]["content"]["text/event-stream"]
     remove: true
   - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]["responses"]["default"]["content"]
     update:

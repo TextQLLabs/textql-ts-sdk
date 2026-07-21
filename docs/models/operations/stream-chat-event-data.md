@@ -1,6 +1,6 @@
 # StreamChatEventData
 
-A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
+One stream envelope: `result` carries the next cell, `error` reports a failure that ended the stream.
 
 ## Example Usage
 
@@ -8,13 +8,16 @@ A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, 
 import { StreamChatEventData } from "@textql/sdk/models/operations";
 
 let value: StreamChatEventData = {
-  type: "<value>",
+  result: {
+    questionsCell: {},
+    timestamp: new Date("2023-01-15T01:30:15.01Z"),
+  },
 };
 ```
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `type`                                                   | *string*                                                 | :heavy_check_mark:                                       | Event type: metadata, text, cell, asset, error, or done. |
-| `additionalProperties`                                   | Record<string, *any*>                                    | :heavy_minus_sign:                                       | N/A                                                      |
+| Field                                                       | Type                                                        | Required                                                    | Description                                                 |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| `result`                                                    | *models.TextqlRpcPublicChatCell*                            | :heavy_minus_sign:                                          | N/A                                                         |
+| `error`                                                     | [models.GoogleRpcStatus](../../models/google-rpc-status.md) | :heavy_minus_sign:                                          | N/A                                                         |
