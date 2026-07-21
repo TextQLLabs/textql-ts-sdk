@@ -56,6 +56,32 @@ Based on:
         releases = parse_releases(RELEASE + unpublished)
         self.assertEqual([release.version for release in releases], ["1.0.3"])
 
+    def test_includes_generated_version_known_to_be_published(self) -> None:
+        generated = """
+## 2026-07-21 15:36:29
+### Changes
+Based on:
+- OpenAPI Doc
+- Speakeasy CLI 1.790.3 (2.918.4) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.0.5] .
+"""
+        releases = parse_releases(RELEASE + generated, {"1.0.5"})
+
+        self.assertEqual([release.version for release in releases], ["1.0.5", "1.0.3"])
+        self.assertEqual(
+            releases[0].npm_url,
+            "https://www.npmjs.com/package/@textql/sdk/v/1.0.5",
+        )
+
+    def test_sorts_releases_newest_first(self) -> None:
+        newer = RELEASE.replace("2026-07-20 17:02:04", "2026-07-21 17:02:04").replace(
+            "1.0.3", "1.0.4"
+        )
+        releases = parse_releases(RELEASE + newer)
+
+        self.assertEqual([release.version for release in releases], ["1.0.4", "1.0.3"])
+
     def test_rejects_log_without_published_releases(self) -> None:
         with self.assertRaisesRegex(ValueError, "published NPM releases"):
             parse_releases(RELEASE.replace("NPM", "Package"))

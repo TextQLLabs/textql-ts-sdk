@@ -16,18 +16,8 @@ permissions:
   workflow_dispatch: {}
 
 jobs:
-  publish:
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
-    with:
-      target: textql
-    secrets:
-      github_access_token: ${{ github.token }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
-
   publish-typescript-if-missing:
     name: Ensure TypeScript SDK is published
-    needs: [publish]
-    if: ${{ always() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,6 +32,16 @@ jobs:
           repositories: textql-ts-sdk
           permission-contents: write
           permission-pull-requests: write
+
+      - name: Create Speakeasy GitHub release
+        continue-on-error: true
+        uses: speakeasy-api/sdk-generation-action@v15
+        with:
+          github_access_token: ${{ steps.sdk-app-token.outputs.token }}
+          action: release
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+          target: textql
+          enable_sdk_changelog: true
 
       - uses: actions/setup-node@v4
         with:
@@ -170,9 +170,11 @@ jobs:
 
       - name: Render Mintlify release log
         run: |
+          published_version=$(python3 -c 'import json; print(json.load(open("sdk/package.json"))["version"])')
           python3 sdk/scripts/render_mintlify_releases.py \
             sdk/RELEASES.md \
-            demo2/docs/public/api-reference/sdk/typescript.mdx
+            demo2/docs/public/api-reference/sdk/typescript.mdx \
+            --published-version "$published_version"
 
       - name: Create or update docs pull request
         id: docs-pr
