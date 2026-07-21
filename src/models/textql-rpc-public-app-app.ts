@@ -47,6 +47,9 @@ export type TextqlRpcPublicAppApp = {
   capabilities?: Array<TextqlRpcPublicAppCapability> | undefined;
   appDbSetup?: Array<string> | undefined;
   memberFeaturesEnabled?: boolean | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   usesMemberFeatures?: boolean | undefined;
   viewerGrants?: Array<string> | undefined;
   /**

@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 15386d18135088d7bf7e712a5737deda
+  docChecksum: 51aed37d8f41fc01700ce6dcc9d5b405
   docVersion: 1.0.0
   speakeasyVersion: 1.790.3
   generationVersion: 2.918.4
-  releaseVersion: 1.0.4
-  configChecksum: e2930da5f027db77f44c7b663dabd252
+  releaseVersion: 1.0.5
+  configChecksum: b546aa44eb58565c5fa915fe6b989b2b
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 271b4c79-e719-4484-848b-f97fddb70c62
-  pristine_commit_hash: c23150b4694f1754b2f257f2cd140b289c7ebfc4
-  pristine_tree_hash: 6ee93abebcdb09ff9eb86d51e5571c1e661c137e
+  generation_id: f23ac199-b666-42bf-b142-b986c1cb7989
+  pristine_commit_hash: 6d061c99bed647cc52d5688a39b1659b4a5f8b1b
+  pristine_tree_hash: 396173de692a6f276bc88dbb55e825712fb7bdb6
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -142,10 +142,6 @@ trackedFiles:
     id: 757e0714e00a
     last_write_checksum: sha1:267903f8de60f355575476ca3abf7659fe7902a8
     pristine_git_object: 52ce89b8f0cb50e5aade32bd7d68dd3a93ac5130
-  docs/models/basic.md:
-    id: c81a8ce153f0
-    last_write_checksum: sha1:be1aefe9c1240a2b92c96c4b689afdecaff18533
-    pristine_git_object: 4a74a4b71586ddc4c6c6bcdfba78cb3065508424
   docs/models/bigquery-metadata.md:
     id: 8ce88abd93d9
     last_write_checksum: sha1:ba08b7da07bca838d58733ac42af4d10a6fb65a4
@@ -318,10 +314,6 @@ trackedFiles:
     id: a99c8fe58bfd
     last_write_checksum: sha1:e52a559f7426174ecdb7e3032bc78ab1825f8d4a
     pristine_git_object: 72285d8d3771ce752098867f548ad007dc195b90
-  docs/models/experimental.md:
-    id: 791f2d63ca0e
-    last_write_checksum: sha1:61df3c8e3423c0703c9c34dc83a053f7ef57bfaf
-    pristine_git_object: f6670faafedd6f87d2f659c4f11f321ac762bbc0
   docs/models/feed-comment-cell.md:
     id: 465b78029f51
     last_write_checksum: sha1:32059e119afc67b68a28aa4b3f9b5daf3ef67462
@@ -630,10 +622,6 @@ trackedFiles:
     id: 7ac8e1332d69
     last_write_checksum: sha1:324b6c3ed3656db100a5d4ec3699dd1b7681b7fe
     pristine_git_object: 8040ad9ec50d15dba0a2734cdfb0fa47218032f4
-  docs/models/ontology.md:
-    id: 705152addffe
-    last_write_checksum: sha1:9cd7abd21547dc971d0e036ac4d78de52297fe99
-    pristine_git_object: d50aaf0058fe7563694889281f57d51ef1d88795
   docs/models/opened.md:
     id: 60443baca4bf
     last_write_checksum: sha1:bab90ed4d17a58d9fa5361e53f7096794b7568dc
@@ -3894,10 +3882,6 @@ trackedFiles:
     id: 338622108ece
     last_write_checksum: sha1:4a5debddd6f9f83fb0fe28f732e15203c542e5be
     pristine_git_object: 103cc1ae184bfc2d63beb12be98023320a3eb338
-  docs/models/public-demo.md:
-    id: 48b91ae262af
-    last_write_checksum: sha1:b4f50ec6a6839a7038cff7ae997346b7da2d4103
-    pristine_git_object: 27d927480b22328554a46cac363656dd9bfe188b
   docs/models/py-cell.md:
     id: 6a7dbab557ec
     last_write_checksum: sha1:37f889cc9343f97a30fce6ed5e3644e4e2fe6ad8
@@ -3930,10 +3914,6 @@ trackedFiles:
     id: f9e9642033b7
     last_write_checksum: sha1:b88d3d788a472320bff8338b5f5d24b6f12529f5
     pristine_git_object: 1d7a91fa90afe79fdee00325e18e318cd1df7140
-  docs/models/research.md:
-    id: 4b8199471a7f
-    last_write_checksum: sha1:c7512bf7ae2dbf5af9f83eb694d9c5ad38569444
-    pristine_git_object: 913f85a88ceaf7b65f2d9318e63ec85fdc31d428
   docs/models/row-count.md:
     id: f620126a280b
     last_write_checksum: sha1:c7f95ffcc6c7647ef621c00b8cb11fea5fd9b732
@@ -3990,10 +3970,6 @@ trackedFiles:
     id: 979634dcf52f
     last_write_checksum: sha1:8a8c7542cb241393ebbe4bfa9565e50849d834f2
     pristine_git_object: 44bdac58872ba733b9561faf10ac4a32a91e3f72
-  docs/models/sql.md:
-    id: c447adeb4753
-    last_write_checksum: sha1:8e16979f401e413d916f7d92b0892ca10c2cf136
-    pristine_git_object: 0c09aa934e7af564842f81a5395305a9c8926295
   docs/models/sse-config.md:
     id: 902bc04e436e
     last_write_checksum: sha1:2005f2808b8a7ca2bc6c3143380a7b7b46a2f9ac
@@ -4062,10 +4038,6 @@ trackedFiles:
     id: 4798e167bc08
     last_write_checksum: sha1:fb3855e30216a14477b765e47663c68e6ddb7f0c
     pristine_git_object: 43dbe6605387108d97de3408a8f4d0dddab89e52
-  docs/models/template.md:
-    id: 52aa41ef1379
-    last_write_checksum: sha1:6b86f1c4c76004c66412e1dfffa594a1fd982faa
-    pristine_git_object: e3c5a650154074ea43ca01ce90d12fc86ba24a08
   docs/models/text-cell.md:
     id: 49af29048c3b
     last_write_checksum: sha1:5d76ed09d13afcb4aaa7df9d6bc88b9c97876adf
@@ -4248,8 +4220,8 @@ trackedFiles:
     pristine_git_object: 6e9b6830e827c051b9b571e2ccefa44805bf201f
   docs/models/textql-rpc-public-app-app.md:
     id: e6bb2cd2d2db
-    last_write_checksum: sha1:5c83fa95ba5641613b057263ae190da007c8fc37
-    pristine_git_object: 871e1ad081e44616cd2cdcfe453fee0a5a9c4e03
+    last_write_checksum: sha1:57acae746cf09f78c2a9dda4d210c105b1ad9217
+    pristine_git_object: 4e850eebc79625472d6f15eb476eca27a1e9d6a0
   docs/models/textql-rpc-public-app-capability-param.md:
     id: 661df324ef15
     last_write_checksum: sha1:64a0a004d903051e3c055c1019f562129cea59ec
@@ -5360,8 +5332,8 @@ trackedFiles:
     pristine_git_object: 75af7868c177ca4f703ec4cf80558196aa07e8b0
   docs/models/textql-rpc-public-chat-chat-source.md:
     id: 309db0c0d03b
-    last_write_checksum: sha1:965a7e80fb412b97d62856019c0570e6aed673a9
-    pristine_git_object: 9c15743fd91862e5081d1b13170850f34cff1606
+    last_write_checksum: sha1:183c759c3ddfa1a16533aa364ce8919195fe6d3e
+    pristine_git_object: 7fb10441c41637d60ff860db97c74c10270610c0
   docs/models/textql-rpc-public-chat-chat.md:
     id: 42b2d9b3025b
     last_write_checksum: sha1:ff3bc1f0dffb1029dce8a861ea6b84675b864c38
@@ -5564,8 +5536,8 @@ trackedFiles:
     pristine_git_object: e0b0ccbee14c9fead35e70a4cfc68d259cd5c616
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:5cecc75823a3004db100d54ed643eaf6a004dd6e
-    pristine_git_object: dcd30f3575513459a19bfd808c5fdf87445db62b
+    last_write_checksum: sha1:026b31dd5ace2b6584de7fef251f6155624a4aa4
+    pristine_git_object: 70c68539825827e9154f6139524dc6a9a4a32310
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:288dc03dbe2115a054c5073ff861d616fb5a62dd
@@ -7170,54 +7142,18 @@ trackedFiles:
     id: d4ea8bc9060f
     last_write_checksum: sha1:18fd5c14294f214177aa1fda47753a8ec639e5c5
     pristine_git_object: c49b8b4aae851f3dc15f948e3dbdbaba155f94dc
-  docs/models/textql-rpc-public-paradigm-basic-options.md:
-    id: 58a97f708323
-    last_write_checksum: sha1:a623539e6dc584c87f2ad49494437c8b8ee832a2
-    pristine_git_object: cb6c4c461b90a337c03e7115ab1ae4dc95fed799
-  docs/models/textql-rpc-public-paradigm-experimental-options.md:
-    id: cf4660041254
-    last_write_checksum: sha1:99bf6c2a30b57d8cc311119ab01d597ed61a16f5
-    pristine_git_object: c785b0576520bdcf41c94d07378bd96c614af640
-  docs/models/textql-rpc-public-paradigm-ontology-options.md:
-    id: bea9f7e4e10e
-    last_write_checksum: sha1:f85994081f50af3d2936755d4ef1b5685aa6325b
-    pristine_git_object: f50a1641d72a9bb3b82e6ed6fd116b4a7135a33f
-  docs/models/textql-rpc-public-paradigm-paradigm-options-tableau.md:
-    id: e7e3fefeb825
-    last_write_checksum: sha1:20342b141908dac1d3639d81ec349234742c1b11
-    pristine_git_object: f092f69a6a71aae61413f13486a91a30b2e7f427
   docs/models/textql-rpc-public-paradigm-paradigm-options.md:
     id: e5384ec8aa40
-    last_write_checksum: sha1:d2710a0ff5fd86b0212d0fcbedcd3499e468a56b
-    pristine_git_object: c640a01576e0c860467b841052760b0bb6f6b613
+    last_write_checksum: sha1:517ebc0f8f49ddf09c679f4a5d4edb032a8e4338
+    pristine_git_object: dc44e73fbf88fc20d9ee52eda282f9fa288a2265
   docs/models/textql-rpc-public-paradigm-paradigm.md:
     id: c499a8780d43
     last_write_checksum: sha1:3953f263450da0801efec58ebd5dc60b23d8180f
     pristine_git_object: 14da29faed80cf036bb95d1c2a9146d1c79797aa
-  docs/models/textql-rpc-public-paradigm-public-demo-options.md:
-    id: ae31fb81b628
-    last_write_checksum: sha1:c0bdb002e1fcb07e434a7639c73c06edfb1d5c9d
-    pristine_git_object: 26d6e2ee7db6a6f244703383920a8053cdc109a1
-  docs/models/textql-rpc-public-paradigm-research-options.md:
-    id: 133213872d1d
-    last_write_checksum: sha1:66cd244da828c3d8b7f5f84f985a22d08dde3454
-    pristine_git_object: 475fc1022d53e7282052bb80d23aa32fbf095ae9
-  docs/models/textql-rpc-public-paradigm-sql-options.md:
-    id: 04b657ad92c3
-    last_write_checksum: sha1:94e61a7dd1bb52783757fd4fc9b9f137f52d9272
-    pristine_git_object: ae574cc61ad8ec7a8c18f3be425b38e78a53295b
-  docs/models/textql-rpc-public-paradigm-tableau-options.md:
-    id: 8fe609436545
-    last_write_checksum: sha1:588573c4334c3c464da17602c8cd5bea339fa0fa
-    pristine_git_object: 85a71a8945c3ab99334789c66cc85a5faa1216ca
-  docs/models/textql-rpc-public-paradigm-template-options.md:
-    id: e9d3eee82b12
-    last_write_checksum: sha1:d1f96c6f87abcc8390452ced7f3098514e7602dc
-    pristine_git_object: 24a049430ca01e5a2fb8da3fe868097831721b77
   docs/models/textql-rpc-public-paradigm-universal-options.md:
     id: "068527758035"
-    last_write_checksum: sha1:2abf024d8ebd7d58ea599662a94430888c9a1923
-    pristine_git_object: 25bd5e0125f4059ce988fc4c2f25aa3d4f1cfeb0
+    last_write_checksum: sha1:5f8f788dc7fd734b3ce6ddaf4b2e35a4bc3033c6
+    pristine_git_object: 1c1e894fb4ba47d04affeda73ff8d6693d8e5e65
   docs/models/textql-rpc-public-patches-add-ontology-submodule-request.md:
     id: 4ac5e482b6d3
     last_write_checksum: sha1:5d600b95a557252409b70ec363f092216b53a56f
@@ -9656,12 +9592,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:45a727b275bfbb05890ebeeb6d5d6114ee66e085
-    pristine_git_object: 701cf124711be04f7210bc8232486ff108e55548
+    last_write_checksum: sha1:55f7036e58d806e5890a616eae2c2a63d8f51ead
+    pristine_git_object: 4a2f41596c3db325be9317797371a3b5ec356ba4
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:83b551a2f38a74aaf8e8957ad16269b1594ddc9f
-    pristine_git_object: f8162c28b2bed4c2add70eef2e9efc246be9df9f
+    last_write_checksum: sha1:a8cecd87ea49f7ff4e72dcb0bb448db86f131592
+    pristine_git_object: 08da3a355f3218d355659e38d7c80b584b2f856a
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11284,8 +11220,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:d755468f173daf926949e088e3f6d2c810532b7f
-    pristine_git_object: 843544fb4aa2e02844a2904c00752517d06b11d4
+    last_write_checksum: sha1:3f68b535638fd0f3d24aa21d0be074e307b167bf
+    pristine_git_object: 47b1ddbdf0db0bd9da9cd4430fc51229dac885c1
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -11376,8 +11312,8 @@ trackedFiles:
     pristine_git_object: dd5a3e5928ce11eb841d3267cd97c0da405d92d0
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:a5b3d4ac9966bbd0a6e1cb534f97be9b547e0363
-    pristine_git_object: 38919f4ef3c8560329a89a07cc6610b7f63b73d8
+    last_write_checksum: sha1:dab5b9822eec071d4d29682b1b1ce830d84f73d4
+    pristine_git_object: ac2f832e7cef199239e78eeca575ba1c917e7c32
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:e159e3a4e22d0fa5bc724eaaf0438eb903522d3f
@@ -13140,8 +13076,8 @@ trackedFiles:
     pristine_git_object: 5cbe1d692fd251aab75a5dc44964a9caa7d75cb5
   src/models/textql-rpc-public-app-app.ts:
     id: 8ee94498c649
-    last_write_checksum: sha1:19d1908503346b06436c3d445faadc40aea160f3
-    pristine_git_object: fb77eb6041c2dc5d284e8961359dc4ad625d39af
+    last_write_checksum: sha1:07514c68ddeb1f3c01e89201751ff289a855ebb7
+    pristine_git_object: e5d67636f4933f3e1616f18666f97aec605ba55d
   src/models/textql-rpc-public-app-capability-param.ts:
     id: c6eca38521be
     last_write_checksum: sha1:bc6e4d4050470caea78fba5f104d1466a94e414f
@@ -13968,8 +13904,8 @@ trackedFiles:
     pristine_git_object: e53d96d7966c3226c2153c173ff8dd9ca98925bb
   src/models/textql-rpc-public-chat-chat-source.ts:
     id: 6f74bbddc530
-    last_write_checksum: sha1:b029c80bf71f037023c165dcb4fea8f8e8d91b08
-    pristine_git_object: 97d9162e8dc59e1ef8866d25024eec60b2ad6eca
+    last_write_checksum: sha1:cb1d95e0f025428f5b709491583ad007e9f77972
+    pristine_git_object: 5eb4d5f504c1c4d9c48c160b5553f93099aa979f
   src/models/textql-rpc-public-chat-chat.ts:
     id: 3cc8b24fd546
     last_write_checksum: sha1:5b8b8663563d1ece09c92a64c82ef4e89bc0667a
@@ -14152,8 +14088,8 @@ trackedFiles:
     pristine_git_object: 69f15a5c681165af62ef10572fa3ca6c78ec9c25
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:72eb1570e45ac96cb5c9ec241d64d30af1527e91
-    pristine_git_object: 8ad187d14c1743ca6db3a1b0f98d243495f002be
+    last_write_checksum: sha1:6227e917f1185f36ca68f27b6cd9285b1b96f954
+    pristine_git_object: 1b4910dc2ebad64f97c843c5c50c413c168227cf
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:023e81bc2dd40d06c6d3d08e74c2e9a31f642419
@@ -15662,50 +15598,18 @@ trackedFiles:
     id: 72861a8531fd
     last_write_checksum: sha1:41f16158c1d3844ba0be3fc9e0f4a80ba5a5c9cc
     pristine_git_object: b3bc3897a8c0ab619f73344c14635c4310dc924c
-  src/models/textql-rpc-public-paradigm-basic-options.ts:
-    id: 53728705e0b7
-    last_write_checksum: sha1:8b07f2b2d5bae7b516e0768f53197da4bf7a9441
-    pristine_git_object: 1d3102020843960387b2cf5171ec6211b6c7a4ba
-  src/models/textql-rpc-public-paradigm-experimental-options.ts:
-    id: db6ce4e83b2c
-    last_write_checksum: sha1:20e9519d7ab05ae3ba93fa37ff8dcd579017eaa3
-    pristine_git_object: 9da08ebcda37b2d1e73b8deb2727a13566a34160
-  src/models/textql-rpc-public-paradigm-ontology-options.ts:
-    id: 22b2911a2079
-    last_write_checksum: sha1:5b7528f6cab3128a3a8afd7b91aac204a7600d94
-    pristine_git_object: 43917704ca03ebd0365e33e3f8915f5cc4987ebe
   src/models/textql-rpc-public-paradigm-paradigm-options.ts:
     id: f69dad7d8ded
-    last_write_checksum: sha1:6818fd3987b0652b1639fd6253fa94597ebedca9
-    pristine_git_object: a271046d1a07bbb003a7c0c8942d2512311986b6
+    last_write_checksum: sha1:b459e5037d5826e677c27776c7619c4c526f4b35
+    pristine_git_object: 07fe527d9de8917c5fe240c21dbcb1081cafdefa
   src/models/textql-rpc-public-paradigm-paradigm.ts:
     id: 84fe676d1b53
     last_write_checksum: sha1:b5be1209df028ca5f736992d218df7b70a953cba
     pristine_git_object: 086aa5d2eee4212065e09e46a1007bfd85135fc4
-  src/models/textql-rpc-public-paradigm-public-demo-options.ts:
-    id: a3e680d56950
-    last_write_checksum: sha1:158516c9b4779ccb7e46be04f213cd9eb58a594a
-    pristine_git_object: e3d6df8888bdeaa7a34cedeb1069ff3f7ec7227d
-  src/models/textql-rpc-public-paradigm-research-options.ts:
-    id: 3e188d351cd4
-    last_write_checksum: sha1:d183d6d67abb9a7cf41508a341de7cd7a7810089
-    pristine_git_object: 42e78cc4a8a98dad211b8841495542aaa20f98f8
-  src/models/textql-rpc-public-paradigm-sql-options.ts:
-    id: fbf90c7d7722
-    last_write_checksum: sha1:94cbbc0d05fe7bbde843101c600d0469fa9ff515
-    pristine_git_object: 3f9641433be8804406b5a99487dfafb68a1cfea0
-  src/models/textql-rpc-public-paradigm-tableau-options.ts:
-    id: 1b77f5ab86e7
-    last_write_checksum: sha1:367a505ff81f6bf631c4d23c43be837296efa4b4
-    pristine_git_object: f8a018c237031baeb66085c98cc9d73c39f84946
-  src/models/textql-rpc-public-paradigm-template-options.ts:
-    id: 6bdb9ea1f134
-    last_write_checksum: sha1:130417f6fdd498613b142251f2a464adb7c62ef7
-    pristine_git_object: dea96737e689810aed5bbfa98eb1a79fda293b03
   src/models/textql-rpc-public-paradigm-universal-options.ts:
     id: 72a9b9ab896f
-    last_write_checksum: sha1:ec50d7f5a25aa0d5a77a8bc7fdbb2d6ad7b0cd68
-    pristine_git_object: beacbcee643ef13b847ff0b75cbf70e6e0d9b93d
+    last_write_checksum: sha1:9f7e2c832e7e1b4dda4f364d5978a6c34ba10ad3
+    pristine_git_object: e2c6e10b8bae70b40ffb95d5d358202a5bdc137f
   src/models/textql-rpc-public-patches-add-ontology-submodule-request.ts:
     id: 480cb00910ce
     last_write_checksum: sha1:7589fa2540765ea71e7b9155c3035ccf5d80e382
@@ -23772,4 +23676,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.apps.createApp()`: \n  *  `request.body` **Changed**\n  *  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.duplicate()`:  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.get()`:  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.getAppVersion()`:  `response.version` **Changed** (Breaking ⚠️)\n* `textql.apps.listVersions()`:  `response.versions[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.rotateApiKey()`:  `response` **Changed** (Breaking ⚠️)\n* `textql.playbooks.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.get()`:  `response.playbooks[]` **Changed** (Breaking ⚠️)\n* `textql.playbooks.fetch()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.duplicate()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.createPlaybook()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`: \n  *  `request.body.maxThinking` **Added**\n  *  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.maxThinking` **Added**\n  *  `response.cells[]` **Changed** (Breaking ⚠️)\n* `textql.chats.queryOneShot()`: \n  *  `request.body.paradigm` **Changed** (Breaking ⚠️)\n  *  `response.cells[]` **Changed** (Breaking ⚠️)\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`:  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.getAll()`: \n  *  `request.body.connectorIds` **Added**\n  *  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`:  `response.cells[]` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`:  `response.cell` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`:  `response.cell` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`:  `response.cell` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`:  `response` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.apps.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.restoreAppVersion()`:  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.refresh()`:  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.moveAppToFolder()`:  `response.app` **Changed** (Breaking ⚠️)\n* `textql.apps.list()`:  `response.apps[]` **Changed** (Breaking ⚠️)\n* `textql.libraries.getHistoryFileDiff()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listLibrarySubmodules()`: **Removed** (Breaking ⚠️)\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyOwners()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyRemote()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologySizeTimeline()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologySyncConflicts()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyUsageSummary()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetPatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetPatchByNumber()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetPatchCapabilities()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetRawPatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetUsageDetailsForFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListApprovalRules()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListChatsForFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListContextPatchAutoApproveRules()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListGoldenFiles()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListOntologyEntries()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListOntologyHistory()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListOntologyImports()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListOntologySubmodules()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListOntologySyncRuns()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListPatchReviewers()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListPatches()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceListSkills()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServicePlanOntologyMerge()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServicePreviewOntologyPullFromRemote()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServicePullOntologyFromRemote()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServicePushOntologyToRemote()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRecoverOntology()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRemoveOntologyRemote()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRemoveOntologySubmodule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRenameOntologyFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRequestPatchReview()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceResolveOntologySyncConflict()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRestorePatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceRevertPatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceSaveAllObjectsAsConfig()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceSaveObjectAsConfig()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceSetOntologyFileGolden()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceTriggerConfigDriftReconcile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpdateApprovalRule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpdateContextPatchAutoApproveRule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpdateOntologySyncConfig()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpsertOntologyAnaConfig()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpsertOntologyFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceUpsertOntologyOwners()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceValidateConfig()`: **Added**\n* `textql.rbacService.rbacServiceSetRolePermissions()`: **Added**\n* `textql.sandboxCapabilityService.sandboxCapabilityServiceExecuteWrite()`: **Added**\n* `textql.sandboxCapabilityService.sandboxCapabilityServicePutAsset()`: **Added**\n* `textql.sandboxCapabilityService.sandboxCapabilityServiceSendNotify()`: **Added**\n* `textql.sandboxCapabilityService.sandboxCapabilityServiceStateOp()`: **Added**\n* `textql.libraries.addSubmodule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.approvePatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.configureLibraryRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.createApprovalRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.createContextPatchAutoApproveRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.createLibraryDirectory()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.createFileUploadUrl()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.deleteApprovalRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.deleteContextPatchAutoApproveRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.deleteLibraryDirectory()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.deleteLibraryFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.deleteOwners()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.denyPatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.exchangeGithubCode()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.finalizeFileUpload()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getCodeownerCoverage()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getConfigExportCapabilities()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getEffectiveOwners()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getFileUsage()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getFileUsageTimeline()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getAnaConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getLibraryGithubOAuthUrl()`: **Removed** (Breaking ⚠️)\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyGithubOAuthUrl()`: **Added**\n* `textql.libraries.getMigrationStatus()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getLibraryOwners()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getSizeTimeline()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getLibrarySyncConflicts()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getOntologyUsageSummary()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getPatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getPatchByNumber()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getPatchCapabilities()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getRawPatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.getUsageDetailsForFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listApprovalRules()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listChatsForFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listContextPatchAutoApproveRules()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listLibraryEntries()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listLibraryHistory()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listImports()`: **Removed** (Breaking ⚠️)\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyHistoryFileDiff()`: **Added**\n* `textql.libraries.listLibrarySyncRuns()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listPatchReviewers()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listPatches()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.listSkills()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.migrateLegacyContext()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.migrateOntology()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.planMerge()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.previewLibraryPullFromRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.pullFromRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.pushLibraryToRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.recover()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.removeRemote()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.removeLibrarySubmodule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.renameFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.requestPatchReview()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.resolveSyncConflict()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.restorePatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.revertPatch()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.saveAllObjectsAsConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.saveAsConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.triggerConfigDriftReconcile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.updateApprovalRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.updateContextPatchAutoApproveRule()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.updateLibrarySyncConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.upsertAnaConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.upsertLibraryFile()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.upsertOwners()`: **Removed** (Breaking ⚠️)\n* `textql.libraries.validateConfig()`: **Removed** (Breaking ⚠️)\n* `textql.libraryService.libraryServiceListGoldenFiles()`: **Removed** (Breaking ⚠️)\n* `textql.libraryService.libraryServiceSetLibraryFileGolden()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.createApiRevision()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.deleteApiAccessKey()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.deleteApiRevision()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.getApiAccessKey()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.listApiAccessKeys()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.listApiProviders()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.migrateSecretToApiConnector()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.testApiAccessKey()`: **Removed** (Breaking ⚠️)\n* `textql.secrets.upsertApiAccessKey()`: **Removed** (Breaking ⚠️)\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyAnaConfig()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetFileUsageTimeline()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetFileUsage()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetEffectiveOntologyOwners()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetConfigExportCapabilities()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceGetCodeownerCoverage()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceFinalizeOntologyFileUpload()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceExchangeOntologyGithubCode()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDenyPatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDeleteOntologyOwners()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDeleteOntologyFile()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDeleteOntologyDirectory()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDeleteContextPatchAutoApproveRule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceDeleteApprovalRule()`: **Added**\n* `textql.agents.create()`: \n  *  `request.body.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n  *  `response.agent.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n* `textql.agents.duplicate()`:  `response.agent.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n* `textql.agents.getAgent()`:  `response.agent.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n* `textql.agents.list()`:  `response.agents[].paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n* `textql.agents.update()`: \n  *  `request.body.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n  *  `response.agent.paradigmOptions.union(universal).universal.apiAccessKeyIds` **Added**\n* `textql.chats.getLlmUsage()`:  `response` **Changed**\n* `textql.ontologyManagementService.ontologyManagementServiceCreateOntologyFileUploadUrl()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceCreateOntologyDirectory()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceCreateContextPatchAutoApproveRule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceCreateApprovalRule()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceConfigureOntologyRemote()`: **Added**\n* `textql.dashboards.checkHealth()`:  `response.dashboards[].dataSources[]` **Changed**\n* `textql.dashboards.createDashboard()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.discardChanges()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.duplicate()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.get()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.getVersion()`:  `response.version.dataSources[]` **Changed**\n* `textql.dashboards.listVersions()`:  `response.versions[].dataSources[]` **Changed**\n* `textql.dashboards.list()`:  `response.dashboards[].dataSources[]` **Changed**\n* `textql.dashboards.moveToFolder()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.publish()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.restoreDashboardVersion()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.updateDashboard()`: \n  *  `request.body.dataSources.sources[]` **Changed**\n  *  `response.dashboard.dataSources[]` **Changed**\n* `textql.dashboards.updateDashboardSchedule()`: \n  *  `request.body.dataSources[]` **Changed**\n  *  `response.dashboard.dataSources[]` **Changed**\n* `textql.observability.getBillingStats()`:  `response.acuRatePer1000Usd` **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceApprovePatch()`: **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceAddOntologySubmodule()`: **Added**\n* `textql.playbooks.attachDashboard()`:  `response.dashboard.dataSources[]` **Changed**\n* `textql.appService.appServiceSetAppMemberState()`: **Added**\n* `textql.appService.appServiceRecordAppMemberActivity()`: **Added**\n* `textql.appService.appServicePresenceHeartbeat()`: **Added**\n* `textql.appService.appServiceListMyAppMemberActivity()`: **Added**\n* `textql.appService.appServiceListAppActivitySince()`: **Added**\n* `textql.rbac.createApiKey()`:  `response.apiKeySecret` **Added**\n* `textql.appService.appServiceGetAppMemberState()`: **Added**\n* `textql.sandboxAdmin.listSandboxSpend()`:  `response.acuRatePer1000Usd` **Added**\n* `textql.sandbox.executeQuery()`: \n  *  `request.body.union(app_db)` **Added**\n"
+releaseNotes: "## Typescript SDK Changes:\n* `textql.agents.create()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.duplicate()`:  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.getAgent()`:  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.list()`:  `response.agents[]` **Changed** (Breaking ⚠️)\n* `textql.agents.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.checkHealth()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.getAll()`: \n  *  `request.body.source` **Changed** (Breaking ⚠️)\n  *  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`:  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.queryOneShot()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.observability.getChatSourceStats()`:  `response.orgBySource[].source` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.playbooks.createPlaybook()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.duplicate()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.fetch()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.get()`:  `response.playbooks[]` **Changed** (Breaking ⚠️)\n* `textql.playbooks.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.playbook` **Changed** (Breaking ⚠️)\n"
