@@ -15996,6 +15996,7 @@ components:
         usesMemberFeatures:
           type: boolean
           title: uses_member_features
+          deprecated: true
         viewerGrants:
           type: array
           items:
@@ -21027,9 +21028,7 @@ components:
         - CHAT_SOURCE_UNKNOWN
         - CHAT_SOURCE_THREAD
         - CHAT_SOURCE_PLAYBOOK
-        - CHAT_SOURCE_TEMPLATE
         - CHAT_SOURCE_SLACK
-        - CHAT_SOURCE_AGENT
         - CHAT_SOURCE_FEED
         - CHAT_SOURCE_TEAMS
         - CHAT_SOURCE_SMS
@@ -21976,41 +21975,10 @@ components:
         - MODEL_DEFAULT
         - MODEL_DEFAULT_LARGE
         - MODEL_DEFAULT_REASONING
-        - MODEL_HAIKU_3
-        - MODEL_HAIKU_3_5
-        - MODEL_SONNET_3_5
-        - MODEL_SONNET_3_6
-        - MODEL_SONNET_3_7
-        - MODEL_SONNET_4
-        - MODEL_OPUS_4
-        - MODEL_SONNET_4_5
         - MODEL_HAIKU_4_5
-        - MODEL_OPUS_4_5
-        - MODEL_OPUS_4_6
-        - MODEL_SONNET_4_6
-        - MODEL_OPUS_4_7
         - MODEL_OPUS_4_8
         - MODEL_FABLE_5
         - MODEL_SONNET_5
-        - MODEL_GPT_4
-        - MODEL_GPT_4_TURBO
-        - MODEL_GPT_4O
-        - MODEL_GPT_4_1
-        - MODEL_GPT_4_1_MINI
-        - MODEL_GPT_4_1_NANO
-        - MODEL_O_1
-        - MODEL_O_1_MINI
-        - MODEL_O_3
-        - MODEL_O_3_MINI
-        - MODEL_O_4_MINI
-        - MODEL_GPT_5
-        - MODEL_GPT_5_MINI
-        - MODEL_GPT_5_NANO
-        - MODEL_GPT_5_2
-        - MODEL_GPT_5_2_PRO
-        - MODEL_GPT_5_5
-        - MODEL_GPT_5_4
-        - MODEL_GPT_5_4_MINI
         - MODEL_GPT_5_6_SOL
         - MODEL_GEMINI_3_FLASH
         - MODEL_GEMINI_3_PRO
@@ -22018,15 +21986,6 @@ components:
         - MODEL_GEMINI_3_5_FLASH
         - MODEL_GPT_5_6_TERRA
         - MODEL_GPT_5_6_LUNA
-        - MODEL_KIMI_K2_INSTRUCT
-        - MODEL_QWEN3_CODER
-        - MODEL_QWEN3_CODER_SMALL
-        - MODEL_GPT_OSS
-        - MODEL_GPT_OSS_SMALL
-        - MODEL_GLM_4_5
-        - MODEL_GLM_4_6
-        - MODEL_KIMI_K2_THINKING
-        - MODEL_KIMI_K2_5
         - MODEL_DEEPSEEK_3_2
         - MODEL_GLM_5
         - MODEL_VLLM
@@ -22034,7 +21993,6 @@ components:
         - MODEL_GLM_5_2
         - MODEL_KIMI_K2_7_CODE
         - MODEL_QWEN3_7_PLUS
-        - MODEL_CEREBRAS_GLM_4_7
         - MODEL_MUSE_SPARK_1_1
     textql.rpc.public.chat.LlmUsage:
       type: object
@@ -29469,44 +29427,6 @@ components:
           title: column_name
       title: UnlinkedAttributeData
       additionalProperties: false
-    textql.rpc.public.paradigm.BasicOptions:
-      type: object
-      title: BasicOptions
-      additionalProperties: false
-      description: |-
-        This is a placeholder for future basic options.
-         Currently, it does not contain any fields.
-    textql.rpc.public.paradigm.ExperimentalOptions:
-      type: object
-      properties:
-        connectorIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: connector_ids
-        autoApproveEnabled:
-          type: boolean
-          title: auto_approve_enabled
-      title: ExperimentalOptions
-      additionalProperties: false
-    textql.rpc.public.paradigm.OntologyOptions:
-      type: object
-      properties:
-        connectorIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: connector_ids
-        ontologyIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: ontology_ids
-      title: OntologyOptions
-      additionalProperties: false
     textql.rpc.public.paradigm.Paradigm:
       type: object
       properties:
@@ -29527,62 +29447,6 @@ components:
       type: object
       oneOf:
         - properties:
-            basic:
-              title: basic
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.BasicOptions'
-          title: basic
-          required:
-            - basic
-        - properties:
-            experimental:
-              title: experimental
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.ExperimentalOptions'
-          title: experimental
-          required:
-            - experimental
-        - properties:
-            ontology:
-              title: ontology
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.OntologyOptions'
-          title: ontology
-          required:
-            - ontology
-        - properties:
-            publicDemo:
-              title: public_demo
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.PublicDemoOptions'
-          title: public_demo
-          required:
-            - publicDemo
-        - properties:
-            research:
-              title: research
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.ResearchOptions'
-          title: research
-          required:
-            - research
-        - properties:
-            sql:
-              title: sql
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.SqlOptions'
-          title: sql
-          required:
-            - sql
-        - properties:
-            tableau:
-              title: tableau
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.TableauOptions'
-          title: tableau
-          required:
-            - tableau
-        - properties:
-            template:
-              title: template
-              $ref: '#/components/schemas/textql.rpc.public.paradigm.TemplateOptions'
-          title: template
-          required:
-            - template
-        - properties:
             universal:
               title: universal
               $ref: '#/components/schemas/textql.rpc.public.paradigm.UniversalOptions'
@@ -29591,69 +29455,6 @@ components:
             - universal
       title: ParadigmOptions
       additionalProperties: false
-    textql.rpc.public.paradigm.PublicDemoOptions:
-      type: object
-      properties:
-        connectorId:
-          type: integer
-          title: connector_id
-          format: int32
-      title: PublicDemoOptions
-      additionalProperties: false
-    textql.rpc.public.paradigm.ResearchOptions:
-      type: object
-      properties:
-        connectorIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: connector_ids
-        backgroundColor:
-          type: string
-          title: background_color
-          nullable: true
-        logo:
-          type: string
-          title: logo
-          nullable: true
-      title: ResearchOptions
-      additionalProperties: false
-    textql.rpc.public.paradigm.SqlOptions:
-      type: object
-      properties:
-        connectorIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: connector_ids
-      title: SqlOptions
-      additionalProperties: false
-    textql.rpc.public.paradigm.TableauOptions:
-      type: object
-      properties:
-        datasetId:
-          type: string
-          title: dataset_id
-          description: id of dataset_version_tableau.dataset_id to use
-      title: TableauOptions
-      additionalProperties: false
-    textql.rpc.public.paradigm.TemplateOptions:
-      type: object
-      properties:
-        captureTools:
-          type: array
-          items:
-            type: string
-          title: capture_tools
-          description: |-
-            capture_tools selects which capture-cell tool ids the paradigm exposes to
-             the model (e.g. "generate_example_queries"). Empty means expose every
-             registered capture cell.
-      title: TemplateOptions
-      additionalProperties: false
-      description: TemplateOptions configures the one-shot TYPE_TEMPLATE paradigm.
     textql.rpc.public.paradigm.UniversalOptions:
       type: object
       properties:
@@ -29727,7 +29528,6 @@ components:
         compactionDisabled:
           type: boolean
           title: compaction_disabled
-          description: compaction enabled by default
         gmailEnabled:
           type: boolean
           title: gmail_enabled

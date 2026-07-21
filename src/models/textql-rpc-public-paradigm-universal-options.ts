@@ -36,9 +36,6 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
   feedCommentEnabled?: boolean | undefined;
   feedEngageEnabled?: boolean | undefined;
   streamlitEnabled?: boolean | undefined;
-  /**
-   * compaction enabled by default
-   */
   compactionDisabled?: boolean | undefined;
   gmailEnabled?: boolean | undefined;
   chatHistorySearchEnabled?: boolean | undefined;
