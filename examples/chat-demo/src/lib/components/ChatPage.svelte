@@ -11,7 +11,9 @@
 		extractEnabledTools,
 		type ChatTools,
 	} from "$lib/chatTools";
+	import { getCellCase, type CellLike } from "$lib/cells";
 	import Composer from "$lib/components/Composer.svelte";
+	import ToolSequence from "$lib/components/ToolSequence.svelte";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
 	import { connectorsCache } from "$lib/connectorsCache.svelte";
 	import { Button, Modal, Switch } from "$lib/primitives";
@@ -20,6 +22,7 @@
 		id: number;
 		role: "you" | "assistant";
 		body: string;
+		cells?: CellLike[];
 		streaming?: boolean;
 	};
 
@@ -212,21 +215,14 @@
 		});
 	}
 
-	function cellText(cell: unknown) {
-		if (!isRecord(cell)) return "";
-
-		const candidates = [
-			cell.ansCell,
-			cell.ans_cell,
-			cell.mdCell,
-			cell.md_cell,
-		];
-		for (const candidate of candidates) {
-			if (isRecord(candidate) && typeof candidate.content === "string")
-				return candidate.content;
-		}
-
-		return "";
+	// The user's own message cell is echoed in the stream; it's already
+	// rendered optimistically, so keep it out of the assistant's cell list.
+	function isEchoedUserCell(cell: CellLike): boolean {
+		const cellCase = getCellCase(cell);
+		return (
+			(cellCase === "mdCell" || cellCase === "ansCell") &&
+			cell.generated !== true
+		);
 	}
 
 	function applyStreamLine(line: string, assistantId: number) {
@@ -241,13 +237,32 @@
 			return;
 		}
 
-		const text = cellText(event.result);
-		if (!text) return;
-
 		const assistant = messages.find(
 			(message) => message.id === assistantId,
 		);
-		if (assistant) assistant.body = text;
+		if (!assistant) return;
+
+		// grpc-gateway wraps stream messages as {result} and failures as {error}.
+		if (isRecord(event.error)) {
+			assistant.body =
+				typeof event.error.message === "string"
+					? event.error.message
+					: "The chat stream failed.";
+			return;
+		}
+
+		const cell = event.result;
+		if (!isRecord(cell) || typeof cell.id !== "string") return;
+		if (isEchoedUserCell(cell)) return;
+
+		// Each stream event is a full cell snapshot — upsert by id.
+		const cells = assistant.cells ?? (assistant.cells = []);
+		const index = cells.findIndex((existing) => existing.id === cell.id);
+		if (index === -1) {
+			cells.push(cell);
+		} else {
+			cells[index] = cell;
+		}
 	}
 
 	async function sendMessage() {
@@ -361,20 +376,20 @@
 			sending = false;
 			activeRequest = undefined;
 			chatId = id;
-			messages = payload.messages
-				.filter(
-					(
-						item,
-					): item is { role: "you" | "assistant"; body: string } =>
-						isRecord(item) &&
-						(item.role === "you" || item.role === "assistant") &&
-						typeof item.body === "string",
-				)
-				.map((item, index) => ({
-					id: index,
-					role: item.role,
-					body: item.body,
-				}));
+			messages = payload.messages.flatMap((item, index): Message[] => {
+				if (
+					!isRecord(item) ||
+					(item.role !== "you" && item.role !== "assistant")
+				) {
+					return [];
+				}
+				const body = typeof item.body === "string" ? item.body : "";
+				const cells = Array.isArray(item.cells)
+					? (item.cells.filter(isRecord) as CellLike[])
+					: undefined;
+				if (!body && (!cells || cells.length === 0)) return [];
+				return [{ id: index, role: item.role, body, cells }];
+			});
 
 			if (typeof payload.model === "string" && payload.model) {
 				selectedModel = payload.model;
@@ -592,14 +607,21 @@
 							>
 								{#if message.role === "assistant"}
 									<span class="message-role">Assistant</span>
-								{/if}
-								{#if message.body}
+									{#if message.cells && message.cells.length > 0}
+										<ToolSequence
+											cells={message.cells}
+											streaming={message.streaming ?? false}
+										/>
+									{:else if message.body}
+										<p class="message-body">{message.body}</p>
+									{:else if message.streaming}
+										<UnicodeSpinner
+											class="streaming-indicator"
+											label="Waiting for response"
+										/>
+									{/if}
+								{:else if message.body}
 									<p class="message-body">{message.body}</p>
-								{:else if message.streaming}
-									<UnicodeSpinner
-										class="streaming-indicator"
-										label="Waiting for response"
-									/>
 								{/if}
 							</article>
 						{/each}
