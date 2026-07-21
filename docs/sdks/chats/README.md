@@ -42,6 +42,7 @@
 * [submitQuestions](#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 * [unbookmark](#unbookmark) - UnbookmarkChat
 * [update](#update) - UpdateChat
+* [streamChat](#streamchat)
 
 ## approveContextPromptChange
 
@@ -2821,6 +2822,97 @@ run();
 ### Response
 
 **Promise\<[operations.ChatServiceUpdateChatResponse](../../models/operations/chat-service-update-chat-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## streamChat
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ChatService_StreamChat" method="post" path="/v2/chats/{chat_id}/cells/stream" -->
+```typescript
+import { Textql } from "@textql/sdk";
+import { EventStream } from "@textql/sdk/lib/event-streams.js";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.chats.streamChat({
+    chatId: "<id>",
+    body: {},
+  });
+
+  // Check if the response is a EventStream instance for union types
+  if (result instanceof EventStream) {
+    for await (const event of result) {
+      // Handle the event
+      console.log(event);
+    }
+  } else {
+    console.log(result);
+  }
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { chatsStreamChat } from "@textql/sdk/funcs/chats-stream-chat.js";
+import { EventStream } from "@textql/sdk/lib/event-streams.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await chatsStreamChat(textql, {
+    chatId: "<id>",
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    // Check if the response is a EventStream instance for union types
+  if (result instanceof EventStream) {
+    for await (const event of result) {
+      // Handle the event
+      console.log(event);
+    }
+  } else {
+    console.log(result);
+  }
+  } else {
+    console.log("chatsStreamChat failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ChatServiceStreamChatRequest](../../models/operations/chat-service-stream-chat-request.md)                                                                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ChatServiceStreamChatResponse](../../models/operations/chat-service-stream-chat-response.md)\>**
 
 ### Errors
 
