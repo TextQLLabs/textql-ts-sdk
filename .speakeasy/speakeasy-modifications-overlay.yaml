@@ -11,8 +11,6 @@ actions:
   - target: $["components"]["schemas"]["connect-protocol-version"]
     update:
       default: 1
-  - target: $["paths"]["/textql.rpc.public.chat.ChatService/StreamChat"]
-    remove: true
   - target: $["paths"]["/textql.rpc.public.chat.ChatService/WatchChat"]
     remove: true
   - target: $["paths"]["/textql.rpc.public.agent.AgentService/StreamAgentStatus"]
@@ -715,6 +713,16 @@ actions:
     x-speakeasy-metadata:
       after: sdk.chat.cancelStream()
       before: sdk.ChatService.ChatService_CancelStream()
+      created_at: 1784134047110
+      reviewed_at: 1784134060142
+      type: method-name
+  - target: $["paths"]["/v2/chats/{chat_id}/cells/stream"]["post"]
+    update:
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: streamChat
+    x-speakeasy-metadata:
+      after: sdk.chats.streamChat()
+      before: sdk.ChatService.ChatService_StreamChat()
       created_at: 1784134047110
       reviewed_at: 1784134060142
       type: method-name
