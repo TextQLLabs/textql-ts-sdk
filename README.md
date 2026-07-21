@@ -354,6 +354,10 @@ run();
 * [setTopicTagFeedback](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 * [updateCustomTopic](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
 
+### [ObservabilityService](docs/sdks/observabilityservice/README.md)
+
+* [observabilityServiceGetMemberSignalTrend](docs/sdks/observabilityservice/README.md#observabilityservicegetmembersignaltrend) - GetMemberSignalTrend
+
 ### [OntologyManagementService](docs/sdks/ontologymanagementservice/README.md)
 
 * [ontologyManagementServiceAddOntologySubmodule](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceaddontologysubmodule) - AddOntologySubmodule
@@ -808,6 +812,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityGetThreadWarnings`](docs/sdks/observability/README.md#getthreadwarnings) - GetThreadWarnings
 - [`observabilityListCustomTopics`](docs/sdks/observability/README.md#listcustomtopics) - ListCustomTopics
 - [`observabilityRefineDraft`](docs/sdks/observability/README.md#refinedraft) - Custom topics
+- [`observabilityServiceObservabilityServiceGetMemberSignalTrend`](docs/sdks/observabilityservice/README.md#observabilityservicegetmembersignaltrend) - GetMemberSignalTrend
 - [`observabilitySetTopicTagFeedback`](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 - [`observabilityUpdateCustomTopic`](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
 - [`ontologyManagementServiceOntologyManagementServiceAddOntologySubmodule`](docs/sdks/ontologymanagementservice/README.md#ontologymanagementserviceaddontologysubmodule) - AddOntologySubmodule

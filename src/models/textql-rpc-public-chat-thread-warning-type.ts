@@ -24,6 +24,9 @@ export const TextqlRpcPublicChatThreadWarningType = {
     "THREAD_WARNING_TYPE_IGNORED_INSTRUCTION",
   ThreadWarningTypeUserThumbsDown: "THREAD_WARNING_TYPE_USER_THUMBS_DOWN",
   ThreadWarningTypeNoConclusion: "THREAD_WARNING_TYPE_NO_CONCLUSION",
+  ThreadWarningTypeUserThumbsUp: "THREAD_WARNING_TYPE_USER_THUMBS_UP",
+  ThreadWarningTypeGoalAchieved: "THREAD_WARNING_TYPE_GOAL_ACHIEVED",
+  ThreadWarningTypeUserSatisfaction: "THREAD_WARNING_TYPE_USER_SATISFACTION",
 } as const;
 /**
  * ThreadWarningType is the canonical set of thread warning types

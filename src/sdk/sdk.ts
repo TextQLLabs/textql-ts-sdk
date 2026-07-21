@@ -13,6 +13,7 @@ import { Dashboards } from "./dashboards.js";
 import { Datasets } from "./datasets.js";
 import { Mcp } from "./mcp.js";
 import { MetricsExports } from "./metrics-exports.js";
+import { ObservabilityService } from "./observability-service.js";
 import { Observability } from "./observability.js";
 import { OntologyManagementService } from "./ontology-management-service.js";
 import { Playbooks } from "./playbooks.js";
@@ -82,6 +83,13 @@ export class Textql extends ClientSDK {
   private _observability?: Observability;
   get observability(): Observability {
     return (this._observability ??= new Observability(this._options));
+  }
+
+  private _observabilityService?: ObservabilityService;
+  get observabilityService(): ObservabilityService {
+    return (this._observabilityService ??= new ObservabilityService(
+      this._options,
+    ));
   }
 
   private _ontologyManagementService?: OntologyManagementService;
