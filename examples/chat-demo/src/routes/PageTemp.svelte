@@ -247,6 +247,14 @@
 	</svg>
 {/snippet}
 
+{#snippet iconGift()}
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+		<path d="M4 10h16v10H4V10Z" stroke-linejoin="round" />
+		<path d="M3 7h18v3H3V7Z" stroke-linejoin="round" />
+		<path d="M12 7v13M12 7c0-2-1.2-3.5-3-3.5S6 5 6 7c0 0 2.2.8 6 0Zm0 0c0-2 1.2-3.5 3-3.5S18 5 18 7c0 0-2.2.8-6 0Z" stroke-linecap="round" stroke-linejoin="round" />
+	</svg>
+{/snippet}
+
 {#snippet iconMic()}
 	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
 		<rect x="9" y="3.5" width="6" height="11" rx="3" />
@@ -375,6 +383,11 @@
 		</div>
 
 		<div class="sidebar-footer">
+			<button type="button" class="refer-pill" tabindex="-1">
+				<span class="refer-icon">{@render iconGift()}</span>
+				<span>Refer friends, earn up to $250</span>
+			</button>
+
 			<div class="user-row">
 				<span class="avatar" aria-hidden="true">Y</span>
 				<div class="user-meta">
@@ -529,6 +542,7 @@
 	.nav-row,
 	.chat-row,
 	.retry-btn,
+	.refer-pill,
 	.icon-circle,
 	.icon-ghost,
 	.model-pill,
@@ -567,6 +581,7 @@
 
 	.nav-icon :global(svg),
 	.chat-icon :global(svg),
+	.refer-icon :global(svg),
 	.icon-circle :global(svg),
 	.icon-ghost :global(svg),
 	.send-btn :global(svg),
@@ -683,8 +698,34 @@
 	}
 
 	.sidebar-footer {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 		margin-top: auto;
 		padding-top: 12px;
+	}
+
+	.refer-pill {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 9px 12px;
+		border: 1px solid color-mix(in srgb, var(--color-line) 90%, #fff);
+		border-radius: 999px;
+		color: #52525b;
+		background: color-mix(in srgb, #fff 72%, transparent);
+		font-size: 12px;
+		box-shadow: 0 1px 2px rgba(15, 15, 20, 0.04);
+		text-align: left;
+	}
+
+	.refer-icon {
+		display: inline-flex;
+		width: 15px;
+		height: 15px;
+		flex-shrink: 0;
+		color: #6b6b75;
 	}
 
 	.user-row {

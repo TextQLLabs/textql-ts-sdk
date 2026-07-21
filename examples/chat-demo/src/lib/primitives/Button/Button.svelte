@@ -25,7 +25,7 @@
   }: Props = $props();
 
   const base =
-    "inline-flex select-none items-center justify-center gap-1.5 rounded-sm font-mono whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50";
+    "inline-flex select-none items-center justify-center gap-1.5 rounded-md font-sans whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50";
 
   const sizes: Record<Size, string> = {
     xs: "px-2 py-0.5 text-[10px]",
