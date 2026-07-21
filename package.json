@@ -56,17 +56,10 @@
     }
   },
   "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
-  },
   "scripts": {
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tsgo",
     "prepublishOnly": "npm run build"
-  },
-  "peerDependencies": {
-    
   },
   "devDependencies": {
     "@typescript/native-preview": "7.0.0-dev.20260302.1",
@@ -74,6 +67,7 @@
     "typescript": "~5.8.3"
   },
   "dependencies": {
+    "@lucide/svelte": "^1.25.0",
     "zod": "^3.25.65 || ^4.0.0"
   }
 }

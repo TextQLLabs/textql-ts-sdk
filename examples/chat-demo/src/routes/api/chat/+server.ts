@@ -1,13 +1,22 @@
 import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 import { Textql } from '@textql/sdk';
+import { TextqlRpcPublicChatLlmModel } from '@textql/sdk/models';
 
 import type { RequestHandler } from './$types';
 
 type ChatRequest = {
 	message?: unknown;
 	chatId?: unknown;
+	model?: unknown;
+	connectorIds?: unknown;
 };
+
+const ALLOWED_MODELS = new Set<string>([
+	TextqlRpcPublicChatLlmModel.ModelHaiku45,
+	TextqlRpcPublicChatLlmModel.ModelSonnet5,
+	TextqlRpcPublicChatLlmModel.ModelOpus48
+]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
 	return typeof value === 'object' && value !== null;
@@ -16,6 +25,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 function errorMessage(value: unknown, fallback: string) {
 	if (isRecord(value) && typeof value.message === 'string') return value.message;
 	return fallback;
+}
+
+function resolveModel(value: unknown) {
+	if (typeof value === 'string' && ALLOWED_MODELS.has(value)) {
+		return value as typeof TextqlRpcPublicChatLlmModel.ModelSonnet5;
+	}
+	return TextqlRpcPublicChatLlmModel.ModelSonnet5;
 }
 
 export const POST: RequestHandler = async ({ request, fetch }) => {
@@ -34,6 +50,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 
 	const message = typeof payload.message === 'string' ? payload.message.trim() : '';
 	let chatId = typeof payload.chatId === 'string' ? payload.chatId.trim() : '';
+	const model = resolveModel(payload.model);
 
 	if (!message) {
 		return json({ error: 'Message is required.' }, { status: 400 });
@@ -46,7 +63,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		if (!chatId) {
 			const created = await client.chats.createChat({
 				body: {
-					model: 'MODEL_SONNET_5',
+					model,
 					paradigm: {
 						type: 'TYPE_UNIVERSAL',
 						version: 1,

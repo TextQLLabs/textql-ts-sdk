@@ -36,11 +36,18 @@ export const GET: RequestHandler = async () => {
 		const connectors =
 			'connectors' in result && Array.isArray(result.connectors) ? result.connectors : [];
 
-		return json({
-			connectors: connectors
-				.map(normalizeConnector)
-				.filter((connector): connector is NonNullable<typeof connector> => connector !== null)
-		});
+		return json(
+			{
+				connectors: connectors
+					.map(normalizeConnector)
+					.filter((connector): connector is NonNullable<typeof connector> => connector !== null)
+			},
+			{
+				headers: {
+					'Cache-Control': 'private, max-age=60'
+				}
+			}
+		);
 	} catch (error) {
 		console.error('Connectors list request failed', error);
 		return json({ error: 'The connectors list request failed.' }, { status: 502 });
