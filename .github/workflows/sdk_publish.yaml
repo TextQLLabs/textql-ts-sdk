@@ -16,16 +16,87 @@ permissions:
   workflow_dispatch: {}
 
 jobs:
+  sdk-publisher-token:
+    runs-on: ubuntu-latest
+    outputs:
+      token: ${{ steps.app-token.outputs.token }}
+    steps:
+      - name: Generate SDK publisher token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.SDK_DISPATCH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: textql-ts-sdk
+          permission-contents: write
+          permission-pull-requests: write
+          skip-token-revoke: true
+
   publish:
+    needs: [sdk-publisher-token]
     uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
     with:
       target: textql
     secrets:
-      github_access_token: ${{ secrets.GH_PAT }}
+      github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
 
+  publish-typescript-if-missing:
+    name: Ensure TypeScript SDK is published
+    needs: [sdk-publisher-token, publish]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Check npm for the generated version
+        id: npm-version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if npm view "@textql/sdk@$version" version --json >/dev/null 2>&1; then
+            echo "needs_publish=false" >> "$GITHUB_OUTPUT"
+            echo "@textql/sdk@$version is already published."
+          else
+            echo "needs_publish=true" >> "$GITHUB_OUTPUT"
+            echo "@textql/sdk@$version is missing from npm."
+          fi
+
+      - name: Install npm with trusted publishing support
+        if: steps.npm-version.outputs.needs_publish == 'true'
+        run: npm install --global npm@latest
+
+      - name: Install dependencies
+        if: steps.npm-version.outputs.needs_publish == 'true'
+        run: npm install --ignore-scripts
+
+      - name: Install bun
+        if: steps.npm-version.outputs.needs_publish == 'true'
+        run: npm rebuild bun
+
+      - name: Publish missing version
+        if: steps.npm-version.outputs.needs_publish == 'true'
+        run: npm publish --access public
+
+      - name: Record npm publish with Speakeasy
+        if: steps.npm-version.outputs.needs_publish == 'true'
+        uses: speakeasy-api/sdk-generation-action@v15
+        with:
+          github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
+          action: publish-event
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+          target_directory: .
+          registry_name: npm
+
   sync-typescript-sdk-docs:
-    needs: [publish]
+    needs: [publish, publish-typescript-if-missing]
     runs-on: ubuntu-latest
     steps:
       - name: Generate docs dispatch bot token
@@ -42,6 +113,7 @@ jobs:
       - name: Checkout TypeScript SDK
         uses: actions/checkout@v4
         with:
+          ref: main
           path: sdk
 
       - name: Checkout TextQL docs

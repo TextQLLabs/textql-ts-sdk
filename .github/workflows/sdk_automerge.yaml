@@ -15,6 +15,17 @@ jobs:
     if: startsWith(github.head_ref, 'speakeasy-sdk-regen')
     runs-on: ubuntu-latest
     steps:
+      - name: Generate SDK publisher token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.SDK_DISPATCH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: textql-ts-sdk
+          permission-contents: write
+          permission-pull-requests: write
+
       - run: gh pr merge --auto --squash "${{ github.event.pull_request.html_url }}"
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
