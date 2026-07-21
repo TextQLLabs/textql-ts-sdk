@@ -16,13 +16,24 @@ permissions:
   workflow_dispatch: {}
 
 jobs:
-  sdk-publisher-token:
+  publish:
+    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
+    with:
+      target: textql
+    secrets:
+      github_access_token: ${{ github.token }}
+      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  publish-typescript-if-missing:
+    name: Ensure TypeScript SDK is published
+    needs: [publish]
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    outputs:
-      token: ${{ steps.app-token.outputs.token }}
     steps:
+      - uses: actions/checkout@v4
+
       - name: Generate SDK publisher token
-        id: app-token
+        id: sdk-app-token
         uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
@@ -31,23 +42,6 @@ jobs:
           repositories: textql-ts-sdk
           permission-contents: write
           permission-pull-requests: write
-          skip-token-revoke: true
-
-  publish:
-    needs: [sdk-publisher-token]
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/sdk-publish.yaml@v15
-    with:
-      target: textql
-    secrets:
-      github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
-
-  publish-typescript-if-missing:
-    name: Ensure TypeScript SDK is published
-    needs: [sdk-publisher-token, publish]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
@@ -89,14 +83,14 @@ jobs:
         if: steps.npm-version.outputs.needs_publish == 'true'
         uses: speakeasy-api/sdk-generation-action@v15
         with:
-          github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
+          github_access_token: ${{ steps.sdk-app-token.outputs.token }}
           action: publish-event
           speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
           target_directory: .
           registry_name: npm
 
   sync-typescript-sdk-docs:
-    needs: [publish, publish-typescript-if-missing]
+    needs: [publish-typescript-if-missing]
     runs-on: ubuntu-latest
     steps:
       - name: Generate docs dispatch bot token
