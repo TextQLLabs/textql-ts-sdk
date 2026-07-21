@@ -31,13 +31,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  sdk-publisher-token:
+  generate:
     runs-on: ubuntu-latest
-    outputs:
-      token: ${{ steps.app-token.outputs.token }}
     steps:
+      - name: Check pull request label
+        id: check-label
+        if: ${{ github.event_name == 'pull_request' && (github.event.action == 'labeled' || github.event.action == 'unlabeled') }}
+        continue-on-error: true
+        env:
+          LABEL: ${{ github.event.label.name }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -euo pipefail
+          tmpfile=$(mktemp)
+          printf '%s' "$PR_BODY" > "$tmpfile"
+          if [[ "$LABEL" != "patch" && "$LABEL" != "minor" && "$LABEL" != "major" && "$LABEL" != "graduate" ]] || \
+             { [[ "${{ github.event.action }}" == "labeled" ]] && grep -Fq "Version Bump Type: [$LABEL]" "$tmpfile"; }; then
+            echo "short_circuit_label_trigger=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "short_circuit_label_trigger=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate SDK publisher token
         id: app-token
+        if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
         uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
@@ -46,15 +63,44 @@ jobs:
           repositories: textql-ts-sdk
           permission-contents: write
           permission-pull-requests: write
-          skip-token-revoke: true
 
-  generate:
-    needs: [sdk-publisher-token]
-    uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
-    with:
-      force: ${{ github.event_name == 'repository_dispatch' || inputs.force }}
-      mode: pr
-      set_version: ${{ inputs.set_version }}
-    secrets:
-      github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+      - name: Checkout repository
+        if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Checkout Speakeasy generation action
+        if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: speakeasy-api/sdk-generation-action
+          ref: 7625cebc33f047f014c65479a7743c3ac337c2f0
+          path: _speakeasy
+
+      - name: Run generation workflow
+        id: run-workflow
+        if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
+        uses: ./_speakeasy
+        with:
+          github_access_token: ${{ steps.app-token.outputs.token }}
+          pr_creation_pat: ${{ steps.app-token.outputs.token }}
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+          mode: pr
+          force: ${{ github.event_name == 'repository_dispatch' || inputs.force }}
+          set_version: ${{ inputs.set_version }}
+          enable_sdk_changelog: true
+
+      - name: Log generation output
+        if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
+        uses: ./_speakeasy
+        with:
+          github_access_token: ${{ steps.app-token.outputs.token }}
+          action: log-result
+          speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+        env:
+          GH_ACTION_RESULT: ${{ job.status }}
+          RESOLVED_SPEAKEASY_VERSION: ${{ steps.run-workflow.outputs.resolved_speakeasy_version }}
+          GH_ACTION_VERSION: 7625cebc33f047f014c65479a7743c3ac337c2f0
+          GH_ACTION_STEP: ${{ github.job }}
