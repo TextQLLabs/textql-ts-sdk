@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import Composer from '$lib/components/Composer.svelte';
 	import { Button, Modal, Switch } from '$lib/primitives';
 
 	type Message = {
@@ -17,6 +21,7 @@
 
 	let messages = $state<Message[]>([]);
 	let draft = $state('');
+	let selectedConnectorIds = $state<number[]>([]);
 	let sidebarOpen = $state(false);
 	let settingsOpen = $state(false);
 	let compactMode = $state(false);
@@ -56,19 +61,86 @@
 		}
 	}
 
+	async function syncFromRoute() {
+		const id = page.params.id;
+		if (id) {
+			await loadChatById(id);
+			return;
+		}
+
+		if (!sending && (chatId !== undefined || messages.length > 0)) {
+			activeRequest?.abort();
+			sending = false;
+			activeRequest = undefined;
+			messages = [];
+			draft = '';
+			chatId = undefined;
+		}
+	}
+
 	onMount(() => {
 		void loadChats();
+	});
+
+	afterNavigate(() => {
+		void syncFromRoute();
 	});
 
 	function isRecord(value: unknown): value is Record<string, unknown> {
 		return typeof value === 'object' && value !== null;
 	}
 
-	function shortDate(value: string | null) {
-		if (!value) return '';
+	function dateKey(value: string | null) {
+		if (!value) return 'unknown';
 		const date = new Date(value);
-		if (Number.isNaN(date.getTime())) return '';
+		if (Number.isNaN(date.getTime())) return 'unknown';
+		return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+	}
+
+	function shortDate(value: string | null) {
+		if (!value) return 'Older';
+		const date = new Date(value);
+		if (Number.isNaN(date.getTime())) return 'Older';
+
+		const today = new Date();
+		const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+		const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		const dayDiff = Math.round((startOfToday.getTime() - startOfDay.getTime()) / 86_400_000);
+
+		if (dayDiff === 0) return 'Today';
+		if (dayDiff === 1) return 'Yesterday';
 		return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+	}
+
+	const chatGroups = $derived.by(() => {
+		const groups: { key: string; label: string; chats: ChatListItem[] }[] = [];
+
+		for (const chat of chats) {
+			const key = dateKey(chat.updatedAt);
+			const existing = groups.find((group) => group.key === key);
+			if (existing) {
+				existing.chats.push(chat);
+			} else {
+				groups.push({ key, label: shortDate(chat.updatedAt), chats: [chat] });
+			}
+		}
+
+		return groups;
+	});
+
+	async function setChatRoute(id: string | undefined, replace = false) {
+		if (id) {
+			if (page.params.id === id) return;
+			await goto(resolve('/(chat)/chat/[id]', { id }), {
+				replaceState: replace,
+				noScroll: true,
+				keepFocus: true
+			});
+			return;
+		}
+
+		if (page.url.pathname === '/') return;
+		await goto(resolve('/(chat)'), { replaceState: replace, noScroll: true, keepFocus: true });
 	}
 
 	function cellText(cell: unknown) {
@@ -90,6 +162,7 @@
 
 		if (event.type === 'meta' && typeof event.chatId === 'string') {
 			chatId = event.chatId;
+			void setChatRoute(event.chatId, true);
 			return;
 		}
 
@@ -160,15 +233,9 @@
 		}
 	}
 
-	function handleComposerKeydown(event: KeyboardEvent) {
-		if (event.key === 'Enter' && !event.shiftKey) {
-			event.preventDefault();
-			void sendMessage();
-		}
-	}
-
-	async function openChat(id: string) {
-		if (sending || openingChatId || id === chatId) {
+	async function loadChatById(id: string) {
+		if (openingChatId === id) return;
+		if (id === chatId && messages.length > 0) {
 			sidebarOpen = false;
 			return;
 		}
@@ -184,6 +251,8 @@
 			}
 
 			activeRequest?.abort();
+			sending = false;
+			activeRequest = undefined;
 			chatId = id;
 			messages = payload.messages
 				.filter(
@@ -201,12 +270,21 @@
 		}
 	}
 
+	function openChat(id: string) {
+		if (sending || openingChatId) return;
+		sidebarOpen = false;
+		void setChatRoute(id);
+	}
+
 	function newThread() {
 		activeRequest?.abort();
+		sending = false;
+		activeRequest = undefined;
 		messages = [];
 		draft = '';
 		chatId = undefined;
 		sidebarOpen = false;
+		void setChatRoute(undefined);
 	}
 
 	function focusComposer() {
@@ -221,51 +299,6 @@
 	<meta name="description" content="A soft chat interface inspired by Cursor Agents." />
 </svelte:head>
 
-{#snippet iconPlus()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-		<path d="M12 5v14M5 12h14" stroke-linecap="round" />
-	</svg>
-{/snippet}
-
-{#snippet iconSearch()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-		<circle cx="11" cy="11" r="6.5" />
-		<path d="M16.5 16.5 20 20" stroke-linecap="round" />
-	</svg>
-{/snippet}
-
-{#snippet iconChat()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-		<path
-			d="M8 10.5h8M8 14h5"
-			stroke-linecap="round"
-		/>
-		<path
-			d="M6.5 5.5h11A2.5 2.5 0 0 1 20 8v6.5a2.5 2.5 0 0 1-2.5 2.5H11l-3.5 2.5V17H6.5A2.5 2.5 0 0 1 4 14.5V8a2.5 2.5 0 0 1 2.5-2.5Z"
-			stroke-linejoin="round"
-		/>
-	</svg>
-{/snippet}
-
-{#snippet iconMic()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-		<rect x="9" y="3.5" width="6" height="11" rx="3" />
-		<path d="M6.5 11.5a5.5 5.5 0 0 0 11 0M12 17v3.5" stroke-linecap="round" />
-	</svg>
-{/snippet}
-
-{#snippet iconArrowUp()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-		<path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" stroke-linecap="round" stroke-linejoin="round" />
-	</svg>
-{/snippet}
-
-{#snippet iconChevron()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-		<path d="m9 6 6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-	</svg>
-{/snippet}
-
 {#snippet iconGear()}
 	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
 		<path
@@ -279,45 +312,6 @@
 			stroke-linejoin="round"
 		/>
 	</svg>
-{/snippet}
-
-{#snippet composer()}
-	<div class="composer">
-		<textarea
-			bind:value={draft}
-			onkeydown={handleComposerKeydown}
-			rows="3"
-			placeholder="Plan, @ for context, / for commands"
-			aria-label="Message"
-		></textarea>
-		<div class="composer-toolbar">
-			<div class="composer-left">
-				<button type="button" class="icon-circle" aria-label="Add context" tabindex="-1">
-					{@render iconPlus()}
-				</button>
-				<button type="button" class="model-pill" tabindex="-1">
-					<span>Agent</span>
-					<svg class="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-						<path d="m7 10 5 5 5-5" stroke-linecap="round" stroke-linejoin="round" />
-					</svg>
-				</button>
-			</div>
-			<div class="composer-right">
-				<button type="button" class="icon-ghost" aria-label="Voice input" tabindex="-1">
-					{@render iconMic()}
-				</button>
-				<button
-					type="button"
-					class="send-btn"
-					disabled={!draft.trim() || sending}
-					aria-label="Send message"
-					onclick={sendMessage}
-				>
-					{@render iconArrowUp()}
-				</button>
-			</div>
-		</div>
-	</div>
 {/snippet}
 
 <div class:compact={compactMode} class="app-shell">
@@ -335,14 +329,8 @@
 			</button>
 
 			<nav class="nav-list" aria-label="Primary">
-				<button type="button" class="nav-row" onclick={newThread}>
-					<span class="nav-icon">{@render iconPlus()}</span>
-					<span>New Agent</span>
-				</button>
-				<button type="button" class="nav-row" onclick={focusComposer}>
-					<span class="nav-icon">{@render iconSearch()}</span>
-					<span>Search</span>
-				</button>
+				<button type="button" class="nav-row" onclick={newThread}>New Agent</button>
+				<button type="button" class="nav-row" onclick={focusComposer}>Search</button>
 			</nav>
 		</div>
 
@@ -355,20 +343,23 @@
 				{:else if chats.length === 0}
 					<p class="list-empty">No chats yet</p>
 				{:else}
-					{#each chats as chat (chat.id)}
-						<button
-							type="button"
-							class="chat-row"
-							class:active={chat.id === chatId}
-							class:opening={chat.id === openingChatId}
-							title={chat.title}
-							disabled={sending || openingChatId !== undefined}
-							onclick={() => openChat(chat.id)}
-						>
-							<span class="chat-icon">{@render iconChat()}</span>
-							<span class="chat-title">{chat.title}</span>
-							<span class="chat-time">{shortDate(chat.updatedAt)}</span>
-						</button>
+					{#each chatGroups as group (group.key)}
+						<div class="chat-group">
+							<p class="chat-group-label">{group.label}</p>
+							{#each group.chats as chat (chat.id)}
+								<button
+									type="button"
+									class="chat-row"
+									class:active={chat.id === chatId}
+									class:opening={chat.id === openingChatId}
+									title={chat.title}
+									disabled={sending || openingChatId !== undefined}
+									onclick={() => openChat(chat.id)}
+								>
+									<span class="chat-title">{chat.title}</span>
+								</button>
+							{/each}
+						</div>
 					{/each}
 				{/if}
 			</div>
@@ -402,34 +393,21 @@
 
 		{#if isEmpty}
 			<section class="empty-state" aria-label="New agent">
-				<nav class="breadcrumbs" aria-label="Context">
-					<span>textql-ts-sdk</span>
-					<span class="crumb-sep">{@render iconChevron()}</span>
-					<span>chat</span>
-					<span class="crumb-sep">{@render iconChevron()}</span>
-					<span>This Mac</span>
-				</nav>
-
-				{@render composer()}
-
-				<div class="suggestion-chips">
-					<button type="button" class="chip" tabindex="-1">Plan New Idea</button>
-					<button type="button" class="chip" tabindex="-1">Multitask</button>
-				</div>
-
-				<p class="footer-hint">
-					Select Composer in your model picker for a great balance of intelligence and cost
-				</p>
+				<Composer bind:value={draft} bind:selectedConnectorIds {sending} onsend={sendMessage} />
 			</section>
 		{:else}
 			<section class="conversation" aria-label="Chat messages" aria-live="polite">
 				<div class="conversation-inner">
 					<div class="messages">
 						{#each messages as message (message.id)}
-							<article class="message" class:assistant={message.role === 'assistant'}>
-								<span class="message-role">
-									{message.role === 'assistant' ? 'Assistant' : 'You'}
-								</span>
+							<article
+								class="message"
+								class:you={message.role === 'you'}
+								class:assistant={message.role === 'assistant'}
+							>
+								{#if message.role === 'assistant'}
+									<span class="message-role">Assistant</span>
+								{/if}
 								{#if message.body}
 									<p class="message-body">{message.body}</p>
 								{:else if message.streaming}
@@ -442,7 +420,7 @@
 			</section>
 
 			<footer class="composer-dock">
-				{@render composer()}
+				<Composer bind:value={draft} bind:selectedConnectorIds {sending} docked onsend={sendMessage} />
 			</footer>
 		{/if}
 	</main>
@@ -529,11 +507,7 @@
 	.nav-row,
 	.chat-row,
 	.retry-btn,
-	.icon-circle,
-	.icon-ghost,
-	.model-pill,
-	.send-btn,
-	.chip {
+	.icon-ghost {
 		border: 0;
 		background: transparent;
 		font: inherit;
@@ -543,7 +517,6 @@
 	.nav-row {
 		display: flex;
 		align-items: center;
-		gap: 10px;
 		width: 100%;
 		padding: 8px 10px;
 		border-radius: var(--radius-sm);
@@ -558,20 +531,7 @@
 		background: color-mix(in srgb, #fff 58%, transparent);
 	}
 
-	.nav-icon {
-		display: inline-flex;
-		width: 16px;
-		height: 16px;
-		color: #6b6b75;
-	}
-
-	.nav-icon :global(svg),
-	.chat-icon :global(svg),
-	.icon-circle :global(svg),
-	.icon-ghost :global(svg),
-	.send-btn :global(svg),
-	.chevron-down,
-	.crumb-sep :global(svg) {
+	.icon-ghost :global(svg) {
 		width: 100%;
 		height: 100%;
 	}
@@ -590,13 +550,30 @@
 		padding-right: 2px;
 	}
 
+	.chat-group {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		margin-bottom: 14px;
+	}
+
+	.chat-group:last-child {
+		margin-bottom: 0;
+	}
+
+	.chat-group-label {
+		margin: 0;
+		padding: 4px 10px 6px;
+		color: var(--color-muted);
+		font-size: 11px;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+	}
+
 	.chat-row {
-		display: grid;
-		grid-template-columns: 16px minmax(0, 1fr) auto;
-		align-items: center;
-		gap: 8px;
+		display: block;
 		width: 100%;
-		padding: 7px 8px;
+		padding: 7px 10px;
 		border-radius: var(--radius-sm);
 		color: #52525b;
 		text-align: left;
@@ -622,29 +599,12 @@
 		opacity: 0.7;
 	}
 
-	.chat-icon {
-		display: inline-flex;
-		width: 14px;
-		height: 14px;
-		color: #8b8b93;
-	}
-
-	.chat-row.active .chat-icon {
-		color: var(--color-accent);
-	}
-
 	.chat-title {
+		display: block;
 		overflow: hidden;
 		font-size: 12.5px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	.chat-time {
-		flex-shrink: 0;
-		color: var(--color-muted);
-		font-size: 11px;
-		font-variant-numeric: tabular-nums;
 	}
 
 	.list-loading {
@@ -658,16 +618,12 @@
 		animation: wait 900ms ease-in-out infinite alternate;
 	}
 
-	.list-empty,
-	.footer-hint {
+	.list-empty {
 		margin: 0;
+		padding: 10px 10px 0;
 		color: var(--color-muted);
 		font-size: 12px;
 		line-height: 1.4;
-	}
-
-	.list-empty {
-		padding: 10px 10px 0;
 	}
 
 	.retry-btn {
@@ -756,123 +712,8 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 18px;
 		min-height: 0;
 		padding: 32px 24px 40px;
-	}
-
-	.breadcrumbs {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-		gap: 4px;
-		color: var(--color-muted);
-		font-size: 13px;
-	}
-
-	.crumb-sep {
-		display: inline-flex;
-		width: 12px;
-		height: 12px;
-		opacity: 0.55;
-	}
-
-	.composer {
-		display: flex;
-		width: min(640px, 100%);
-		flex-direction: column;
-		gap: 10px;
-		padding: 14px 14px 12px;
-		border: 1px solid color-mix(in srgb, var(--color-line) 95%, #cfcfd4);
-		border-radius: var(--radius-lg);
-		background: #fff;
-		box-shadow:
-			0 1px 2px rgba(15, 15, 20, 0.03),
-			0 10px 28px rgba(15, 15, 20, 0.06);
-	}
-
-	.composer:focus-within {
-		border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-line));
-		box-shadow:
-			0 1px 2px rgba(15, 15, 20, 0.03),
-			0 12px 32px rgba(15, 15, 20, 0.07),
-			0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
-	}
-
-	.composer textarea {
-		width: 100%;
-		max-height: 180px;
-		min-height: 72px;
-		padding: 2px 4px;
-		resize: none;
-		border: 0;
-		outline: 0;
-		color: var(--color-ink);
-		background: transparent;
-		font-size: 14px;
-		line-height: 1.55;
-	}
-
-	.composer textarea::placeholder {
-		color: #a1a1aa;
-	}
-
-	.composer-toolbar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 10px;
-	}
-
-	.composer-left,
-	.composer-right {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-	}
-
-	.icon-circle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 30px;
-		height: 30px;
-		border: 1px solid var(--color-line);
-		border-radius: 999px;
-		color: #71717a;
-		background: #fff;
-	}
-
-	.icon-circle :global(svg),
-	.icon-ghost :global(svg) {
-		width: 15px;
-		height: 15px;
-	}
-
-	.icon-circle:hover,
-	.model-pill:hover,
-	.chip:hover {
-		background: #f4f4f5;
-	}
-
-	.model-pill {
-		display: inline-flex;
-		align-items: center;
-		gap: 4px;
-		padding: 5px 10px;
-		border: 1px solid var(--color-line);
-		border-radius: 999px;
-		color: #3f3f46;
-		background: #fafafa;
-		font-size: 12.5px;
-		font-weight: 500;
-	}
-
-	.chevron-down {
-		width: 14px;
-		height: 14px;
-		color: #8b8b93;
 	}
 
 	.icon-ghost {
@@ -885,56 +726,13 @@
 		color: #71717a;
 	}
 
-	.icon-ghost:hover {
-		background: #f4f4f5;
-	}
-
-	.send-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: 999px;
-		color: #fff;
-		background: #171717;
-		transition: opacity 120ms ease, transform 120ms ease;
-	}
-
-	.send-btn :global(svg) {
+	.icon-ghost :global(svg) {
 		width: 15px;
 		height: 15px;
 	}
 
-	.send-btn:hover:not(:disabled) {
-		transform: translateY(-1px);
-	}
-
-	.send-btn:disabled {
-		cursor: not-allowed;
-		opacity: 0.35;
-	}
-
-	.suggestion-chips {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 8px;
-	}
-
-	.chip {
-		padding: 7px 14px;
-		border: 1px solid var(--color-line);
-		border-radius: 999px;
-		color: #52525b;
-		background: color-mix(in srgb, #fff 70%, var(--color-paper));
-		font-size: 12.5px;
-		box-shadow: 0 1px 2px rgba(15, 15, 20, 0.03);
-	}
-
-	.footer-hint {
-		max-width: 420px;
-		text-align: center;
+	.icon-ghost:hover {
+		background: #f4f4f5;
 	}
 
 	.conversation {
@@ -952,38 +750,52 @@
 	.messages {
 		display: flex;
 		flex-direction: column;
-		gap: 14px;
+		align-items: stretch;
+		gap: 16px;
 	}
 
 	.message {
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		padding: 14px 16px;
-		border: 1px solid transparent;
-		border-radius: var(--radius-md);
+		max-width: 100%;
+		padding: 0;
+		border: 0;
 		background: transparent;
 	}
 
-	.message.assistant {
-		border-color: var(--color-line);
-		background: #fff;
-		box-shadow: 0 1px 2px rgba(15, 15, 20, 0.03);
+	.message.you {
+		width: 100%;
+		max-width: 100%;
+		padding: 10px 14px;
+		border: 1px solid rgba(0, 0, 0, 0.06);
+		border-radius: 20px;
+		background: #fcfcfc;
+		box-shadow: none;
 	}
 
-	.compact .message {
-		padding: 10px 12px;
-		gap: 4px;
+	.message.you .message-body {
+		color: #1a1a1c;
+		font-size: 14px;
+		line-height: 1.45;
+		letter-spacing: -0.01em;
+	}
+
+	.message.assistant {
+		width: 100%;
+		gap: 8px;
+		padding: 2px 0;
+	}
+
+	.compact .message.you {
+		padding: 8px 14px;
+		border-radius: 16px;
 	}
 
 	.message-role {
-		color: var(--color-muted);
+		color: var(--color-accent);
 		font-size: 12px;
 		font-weight: 500;
-	}
-
-	.message.assistant .message-role {
-		color: var(--color-accent);
 	}
 
 	.message-body {
@@ -1022,10 +834,6 @@
 		justify-content: center;
 		padding: 0 24px 18px;
 		background: linear-gradient(180deg, transparent, var(--color-paper) 28%);
-	}
-
-	.composer-dock .composer {
-		width: min(720px, 100%);
 	}
 
 	.settings-list {
@@ -1125,10 +933,6 @@
 			padding-inline: 14px;
 		}
 
-		.composer textarea {
-			min-height: 56px;
-		}
-
 		.message-body {
 			font-size: 13px;
 		}
@@ -1136,8 +940,7 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.sidebar,
-		.scrim,
-		.send-btn {
+		.scrim {
 			transition: none;
 		}
 
