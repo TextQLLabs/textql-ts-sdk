@@ -31,12 +31,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  sdk-publisher-token:
+    runs-on: ubuntu-latest
+    outputs:
+      token: ${{ steps.app-token.outputs.token }}
+    steps:
+      - name: Generate SDK publisher token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.SDK_DISPATCH_APP_ID }}
+          private-key: ${{ secrets.SDK_DISPATCH_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: textql-ts-sdk
+          permission-contents: write
+          permission-pull-requests: write
+          skip-token-revoke: true
+
   generate:
+    needs: [sdk-publisher-token]
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
     with:
       force: ${{ github.event_name == 'repository_dispatch' || inputs.force }}
       mode: pr
       set_version: ${{ inputs.set_version }}
     secrets:
-      github_access_token: ${{ secrets.GH_PAT }}
+      github_access_token: ${{ needs.sdk-publisher-token.outputs.token }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
