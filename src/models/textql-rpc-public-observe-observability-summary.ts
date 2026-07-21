@@ -49,6 +49,16 @@ export type TextqlRpcPublicObserveObservabilitySummary = {
   totalTeams?: number | undefined;
   teamsDeltaPct?: number | undefined;
   teamsSparkline?: Array<number> | undefined;
+  /**
+   * Positive signals (strength-category types). total_warnings/warn_rate_pct
+   *
+   * @remarks
+   *  above count NEGATIVE signals only — strengths are tracked separately here
+   *  and must never inflate the flagged metrics.
+   */
+  totalPositive?: number | undefined;
+  positiveDeltaPct?: number | undefined;
+  positiveSparkline?: Array<number> | undefined;
 };
 
 /** @internal */
@@ -77,6 +87,9 @@ export const TextqlRpcPublicObserveObservabilitySummary$inboundSchema:
       totalTeams: types.optional(types.number()),
       teamsDeltaPct: types.optional(types.number()),
       teamsSparkline: types.optional(z.array(types.number())),
+      totalPositive: types.optional(types.number()),
+      positiveDeltaPct: types.optional(types.number()),
+      positiveSparkline: types.optional(z.array(types.number())),
     },
   );
 

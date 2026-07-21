@@ -27,6 +27,17 @@ export type TextqlRpcPublicObserveMemberBillingStat = {
   dashboardCount?: number | undefined;
   agentCount?: number | undefined;
   isFormerMember?: boolean | undefined;
+  /**
+   * Per-member signal quality over the same window. Signal counts are rows
+   *
+   * @remarks
+   *  (one thread can contribute several); flagged/analyzed count distinct
+   *  threads, so flagged/analyzed is the per-member flagged rate.
+   */
+  positiveSignalCount?: number | undefined;
+  negativeSignalCount?: number | undefined;
+  flaggedThreadCount?: number | undefined;
+  analyzedThreadCount?: number | undefined;
 };
 
 /** @internal */
@@ -44,6 +55,10 @@ export const TextqlRpcPublicObserveMemberBillingStat$inboundSchema:
     dashboardCount: types.optional(types.number()),
     agentCount: types.optional(types.number()),
     isFormerMember: types.optional(types.boolean()),
+    positiveSignalCount: types.optional(types.number()),
+    negativeSignalCount: types.optional(types.number()),
+    flaggedThreadCount: types.optional(types.number()),
+    analyzedThreadCount: types.optional(types.number()),
   });
 
 export function textqlRpcPublicObserveMemberBillingStatFromJSON(

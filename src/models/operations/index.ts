@@ -174,6 +174,7 @@ export * from "./observability-service-get-custom-topic-threads.js";
 export * from "./observability-service-get-custom-topic.js";
 export * from "./observability-service-get-engagement-spectrum.js";
 export * from "./observability-service-get-member-activity.js";
+export * from "./observability-service-get-member-signal-trend.js";
 export * from "./observability-service-get-observability-stats.js";
 export * from "./observability-service-get-thread-warnings.js";
 export * from "./observability-service-list-custom-topics.js";

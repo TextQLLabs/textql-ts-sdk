@@ -11,6 +11,7 @@ export const TextqlRpcPublicChatWarningCategory = {
   WarningCategoryCause: "WARNING_CATEGORY_CAUSE",
   WarningCategorySymptom: "WARNING_CATEGORY_SYMPTOM",
   WarningCategoryOutcome: "WARNING_CATEGORY_OUTCOME",
+  WarningCategoryStrength: "WARNING_CATEGORY_STRENGTH",
 } as const;
 export type TextqlRpcPublicChatWarningCategory = OpenEnum<
   typeof TextqlRpcPublicChatWarningCategory

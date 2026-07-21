@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 51aed37d8f41fc01700ce6dcc9d5b405
+  docChecksum: f22292ff3ecdd2e1a5a43722f643e0bc
   docVersion: 1.0.0
   speakeasyVersion: 1.790.3
   generationVersion: 2.918.4
-  releaseVersion: 1.0.5
-  configChecksum: b546aa44eb58565c5fa915fe6b989b2b
+  releaseVersion: 1.0.6
+  configChecksum: b1a3a9b36fcf886965dd39a5fa557036
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: f23ac199-b666-42bf-b142-b986c1cb7989
-  pristine_commit_hash: 6d061c99bed647cc52d5688a39b1659b4a5f8b1b
-  pristine_tree_hash: 396173de692a6f276bc88dbb55e825712fb7bdb6
+  generation_id: 7a76cbe2-4242-4700-a959-304b2f362a3b
+  pristine_commit_hash: 6c1845dc0ae917b331f67060fa545e56c60bd256
+  pristine_tree_hash: 512b2b590cc843d09f400a16dfa90543e860c16c
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -2002,6 +2002,14 @@ trackedFiles:
     id: 6b45a445b085
     last_write_checksum: sha1:b730e1197da6495445bc975ca734577a85a38756
     pristine_git_object: 0c07e74b51897b54eaa7fe7e6ce7140dc37df029
+  docs/models/operations/observability-service-get-member-signal-trend-request.md:
+    id: 0d7e6896a17a
+    last_write_checksum: sha1:1d8ef639c4acdf7de2c517b7269e6f95003b2749
+    pristine_git_object: 517cb3acff262c0863a8ad219377734d9ecadc1b
+  docs/models/operations/observability-service-get-member-signal-trend-response.md:
+    id: 3fb91e084672
+    last_write_checksum: sha1:d679240b9c634d01a7bf111ec198820697b4375c
+    pristine_git_object: 7bfb90cab78520c5ea93fee076b28a76793f566a
   docs/models/operations/observability-service-get-observability-stats-request.md:
     id: 3b2d163f3438
     last_write_checksum: sha1:98b34fd46faf0acfa499cd0a1fa3e0ad1dccdc9f
@@ -5624,8 +5632,8 @@ trackedFiles:
     pristine_git_object: 0e12469c0760d2a94a65dcbfc4ca30b48e39a354
   docs/models/textql-rpc-public-chat-thread-warning-type.md:
     id: e82f923fab0b
-    last_write_checksum: sha1:61f7a1bfd87929d40913431e03bf922e4960844a
-    pristine_git_object: 24b54da33374435c4d95566e0e8f1e420411e6bf
+    last_write_checksum: sha1:33e76f7e57e525da827813b46c24c97df52a99bb
+    pristine_git_object: 043155ed14709a173f8bc6371d1f51631df8c6f6
   docs/models/textql-rpc-public-chat-unbookmark-chat-request.md:
     id: c70792f5119a
     last_write_checksum: sha1:9fd34365aa063b7e31eb438957000e1b7f725a3a
@@ -5640,8 +5648,8 @@ trackedFiles:
     pristine_git_object: 6fdd687b952ba326819b7f6858955838f3cd82aa
   docs/models/textql-rpc-public-chat-warning-category.md:
     id: c738476bc902
-    last_write_checksum: sha1:a488674e50034241b7bf4575cea711c2c7af0674
-    pristine_git_object: 697351a9958482c875cf1dae27dfc8a2bdd8a7ba
+    last_write_checksum: sha1:794cd2129c7022f1755c25f233205d3428dee214
+    pristine_git_object: d22289d7364bf10a8b21a3273f136a404fa073f4
   docs/models/textql-rpc-public-chat-watch-chat-event.md:
     id: 237bb2701ce3
     last_write_checksum: sha1:51cc3f52f3fc4669390b3b23a5498e6676a78bb0
@@ -6982,6 +6990,14 @@ trackedFiles:
     id: bb7ed656eed0
     last_write_checksum: sha1:500ced648f25e4c33e0918425b64838b46dfc8ae
     pristine_git_object: 2da4e4b098f62bfb7259fb0ee9ccbf71bf03701e
+  docs/models/textql-rpc-public-observe-get-member-signal-trend-request.md:
+    id: ac0889f43b39
+    last_write_checksum: sha1:b0a1e02e72ded40d331c4bbb5c462a11448f9101
+    pristine_git_object: a6a8c810acf14443066fda061b92d54156d05bf2
+  docs/models/textql-rpc-public-observe-get-member-signal-trend-response.md:
+    id: 39a427e15758
+    last_write_checksum: sha1:31c73bece69bd5e1e6c76a97f00ef3bec359cc30
+    pristine_git_object: 71b82b9177e37f983e760b3b93402e3697de3b6d
   docs/models/textql-rpc-public-observe-get-observability-stats-request.md:
     id: e40ce7110134
     last_write_checksum: sha1:e3cd4e757a0541b24e068b60a8148f247ee91256
@@ -7012,16 +7028,20 @@ trackedFiles:
     pristine_git_object: f4de45d83727c416b5a55224403a6ee9ad63ab66
   docs/models/textql-rpc-public-observe-member-billing-stat.md:
     id: e387b468da30
-    last_write_checksum: sha1:577bf6355f7ccf851e539949161fca25acc60485
-    pristine_git_object: efbdb1b41081725b3baa4c06525355d64b8e6c67
+    last_write_checksum: sha1:3683e42b9ab9bea8ff7655c84f1c395b26666846
+    pristine_git_object: 3274c7c4ad0fe1ad91bc344fddf084a42f4bd932
   docs/models/textql-rpc-public-observe-member-chat-source-stat.md:
     id: b7fcc761dc7a
     last_write_checksum: sha1:6916983034eccedae9bef252af03439ac88a71da
     pristine_git_object: c59c0734d749812ef89b896ef94160d8a9fc58fa
+  docs/models/textql-rpc-public-observe-member-signal-trend-point.md:
+    id: b8302e881601
+    last_write_checksum: sha1:249a71ba4bd2196a021ae6be8523ba22e7006c23
+    pristine_git_object: 98ce0dafe752726d429aadae9ffd3b36f91feada
   docs/models/textql-rpc-public-observe-observability-summary.md:
     id: dd336c8288d8
-    last_write_checksum: sha1:e0f4c7f7c5844bbb0b7613f19ef85c4d5c6d8039
-    pristine_git_object: b456b8ab88c68c729e9119927cadf7a6e26f4711
+    last_write_checksum: sha1:ee54089d9f0cb19f28722242e2c08e63da568811
+    pristine_git_object: 0954242933c5a30975b6309bbce09a67fd0017d2
   docs/models/textql-rpc-public-observe-playbook-billing-stat.md:
     id: efae38c42a0a
     last_write_checksum: sha1:eb3b4761177f616398f0f05eb2048d6048d4b3b4
@@ -9522,6 +9542,10 @@ trackedFiles:
     id: bab967736831
     last_write_checksum: sha1:18957aa771138f1d5dc844943cb636957a741280
     pristine_git_object: 42cd7ac4609a34b2616e8912d4d782d28216912c
+  docs/sdks/observabilityservice/README.md:
+    id: a2b0b7cc2794
+    last_write_checksum: sha1:866f32d1ecf51abde9c1f5073498466477fe5253
+    pristine_git_object: ee0efe115c85f99d1724f05160b853478eea2b0d
   docs/sdks/ontologymanagementservice/README.md:
     id: 49fe27c9b83e
     last_write_checksum: sha1:a9748dc0b34f36344ad0ab4885b1a4ffb255a130
@@ -9592,12 +9616,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:55f7036e58d806e5890a616eae2c2a63d8f51ead
-    pristine_git_object: 4a2f41596c3db325be9317797371a3b5ec356ba4
+    last_write_checksum: sha1:8477f563429532043ef531525f39a851a16bc5de
+    pristine_git_object: 0f92750d260778f2c88b38aedf888b4398517e58
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:a8cecd87ea49f7ff4e72dcb0bb448db86f131592
-    pristine_git_object: 08da3a355f3218d355659e38d7c80b584b2f856a
+    last_write_checksum: sha1:4863af593eaccb7d1ca57d9c65ea5d45c029bb2a
+    pristine_git_object: 7a5e03aa75e7b1752ab34b5e258443d15188cb0c
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -10306,6 +10330,10 @@ trackedFiles:
     id: 0fb048fadda9
     last_write_checksum: sha1:23f188d23cf7cba05256d3ce7e20ef851a095903
     pristine_git_object: e80d0f28f394dd22da1d7fae101abfe64414addf
+  src/funcs/observability-service-observability-service-get-member-signal-trend.ts:
+    id: 64810d7f93e9
+    last_write_checksum: sha1:6795bd8479b42e96f02360900b01c8a12a094233
+    pristine_git_object: 54b92745e30e4c2e873232a67a3b423d3dee7a4d
   src/funcs/observability-set-topic-tag-feedback.ts:
     id: a7c007e2db74
     last_write_checksum: sha1:8e16891372d550d4372ef015c951c37d02eb3e73
@@ -11220,8 +11248,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:3f68b535638fd0f3d24aa21d0be074e307b167bf
-    pristine_git_object: 47b1ddbdf0db0bd9da9cd4430fc51229dac885c1
+    last_write_checksum: sha1:6ae8e90c15161b756bd93e33b81be089c1740188
+    pristine_git_object: 8a282801fe9a9f9c32ca6e7fbda31fc677b4aa92
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -11312,8 +11340,8 @@ trackedFiles:
     pristine_git_object: dd5a3e5928ce11eb841d3267cd97c0da405d92d0
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:dab5b9822eec071d4d29682b1b1ce830d84f73d4
-    pristine_git_object: ac2f832e7cef199239e78eeca575ba1c917e7c32
+    last_write_checksum: sha1:7435561ae732df05ffacede39c4a358b3cbffda4
+    pristine_git_object: 4cfaa4f64e1e0b8131e6db535057898776bab670
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:e159e3a4e22d0fa5bc724eaaf0438eb903522d3f
@@ -11864,8 +11892,8 @@ trackedFiles:
     pristine_git_object: fe653ee3b7287acd373c25531bdae78b95b9277f
   src/models/operations/index.ts:
     id: 0d9ffaf774d2
-    last_write_checksum: sha1:79d747b81739cb1f39211db79d80474f410b9654
-    pristine_git_object: 7c7b4c3e2870d995ee7a7e11f740afaf494c01c7
+    last_write_checksum: sha1:464ed12ca6af2f5c5acf70be53edca35e4ab8dbd
+    pristine_git_object: 3160a2a93f892d2a4b4075ec1260d5f63f75cbd1
   src/models/operations/mcp-service-clear-o-auth-token.ts:
     id: 22f21a173140
     last_write_checksum: sha1:23b7fd79741f93952dc0e7e257ac6cd2981fb38c
@@ -12006,6 +12034,10 @@ trackedFiles:
     id: a8a5922aeb04
     last_write_checksum: sha1:608eeafa1d5c0799022dc4243e385ee6f284945a
     pristine_git_object: 0e16456f7847ef92cda39e0aa12c549cd04bbf15
+  src/models/operations/observability-service-get-member-signal-trend.ts:
+    id: 382a5b14d1fa
+    last_write_checksum: sha1:9abb4be4564d455d0ab3f9fedebd2c942cbf7310
+    pristine_git_object: 844c2069da8b097ae55487eb6eda08f376f8ef63
   src/models/operations/observability-service-get-observability-stats.ts:
     id: d951a0d86054
     last_write_checksum: sha1:09a651273412abce56d681c421155449e8a7e31d
@@ -14176,8 +14208,8 @@ trackedFiles:
     pristine_git_object: 112731f0945ef6c0bf37b7f533eafc2489faa2e1
   src/models/textql-rpc-public-chat-thread-warning-type.ts:
     id: c4793a85ad72
-    last_write_checksum: sha1:5c4537abba3d2aa409628ce675e9c04485467d53
-    pristine_git_object: b78ea338383bb71323100641c0d7f97567f3402d
+    last_write_checksum: sha1:2a8b62e46a1415a56177816d04d84c827baf8ce7
+    pristine_git_object: 253f43a941fa480a3f965da7a1c9183764bb17fb
   src/models/textql-rpc-public-chat-unbookmark-chat-request.ts:
     id: 7e944e2b400a
     last_write_checksum: sha1:ef8f17310cd80287daebe5b05ca2782314ba2d11
@@ -14192,8 +14224,8 @@ trackedFiles:
     pristine_git_object: c7920d9e31e64cc3ebba31e6ed4bd29925e57b16
   src/models/textql-rpc-public-chat-warning-category.ts:
     id: 20e2d89e474c
-    last_write_checksum: sha1:cb2f74286e9740d0b2d156a8a667574ba2306e49
-    pristine_git_object: f3e0f8481e521a10840ae1cd9886d804fb8b1d1b
+    last_write_checksum: sha1:4e640ca10374fd1ba2f7236ccc49a66d98d6e2b1
+    pristine_git_object: a84b3f5a97efe6de792600ec549f6aa7731de755
   src/models/textql-rpc-public-chat-watch-chat-event.ts:
     id: b0ff2789d67f
     last_write_checksum: sha1:1f949b5248e349bf60bc5906139e49402000d98c
@@ -15438,6 +15470,14 @@ trackedFiles:
     id: b0fd632bf579
     last_write_checksum: sha1:e6db22fb2aa8f759c82ba05647d83828e87c43af
     pristine_git_object: a79c1d4db24daebc0074675e49835a0bd3fea6be
+  src/models/textql-rpc-public-observe-get-member-signal-trend-request.ts:
+    id: fdf1fb02ee3d
+    last_write_checksum: sha1:4903c4096f5182f02ea919eef0ee04930d9d9f1e
+    pristine_git_object: c9f9b1ea51966ce45dc3fdce2e0dbb2ed3955a81
+  src/models/textql-rpc-public-observe-get-member-signal-trend-response.ts:
+    id: 56afae21a61e
+    last_write_checksum: sha1:80cf2c116b1cda97ca202e254afa24768d41fb07
+    pristine_git_object: 6cba71308eba8a4b026160d46ebbfda4d8d8c02c
   src/models/textql-rpc-public-observe-get-observability-stats-request.ts:
     id: 2a7574b7b91b
     last_write_checksum: sha1:13fb4dcc37a29cebb80605e9da3a36ea968e2350
@@ -15468,16 +15508,20 @@ trackedFiles:
     pristine_git_object: 3590d82cacbb29773f84b32a3b4af79cc0475d22
   src/models/textql-rpc-public-observe-member-billing-stat.ts:
     id: e5612b00a757
-    last_write_checksum: sha1:9ad4bcb15d76fd6512e05d55e67599c6e4a8297e
-    pristine_git_object: 518156ef5ad69e42ba47256bdc5595ec81511ae1
+    last_write_checksum: sha1:8677a5356fa50775179fff43ff8e89a1b106672a
+    pristine_git_object: 67d1f98ebdcc7f00127fb7d5e6b0ddccc2d0f611
   src/models/textql-rpc-public-observe-member-chat-source-stat.ts:
     id: a64264fdcbf9
     last_write_checksum: sha1:22a1833e4ca9e240fc8e04d35099a754807ec38d
     pristine_git_object: cd2f791c386a42dd025b6322c9bc329e6e536500
+  src/models/textql-rpc-public-observe-member-signal-trend-point.ts:
+    id: 0077fa09ff1a
+    last_write_checksum: sha1:79d52bd5749e737e8551286ddf28e78800e36c7b
+    pristine_git_object: 4c4669236ed8d57778bcd495d94d13ff0702731a
   src/models/textql-rpc-public-observe-observability-summary.ts:
     id: 8c65b8c60d35
-    last_write_checksum: sha1:d7a0cdac715552d9e5c5ac8ef12121b32ee12c23
-    pristine_git_object: 9fa868c10c235dd437c1c7d0fec618e079443177
+    last_write_checksum: sha1:7144ff0361a34b171b3c36df290e9e0d9eb73d38
+    pristine_git_object: 95312c76de4a1346c3e0fc1e4be55743d31e6755
   src/models/textql-rpc-public-observe-playbook-billing-stat.ts:
     id: 9adf2f9fff44
     last_write_checksum: sha1:fa4ce01eaa6ffae22b2e6e56bc1632dbf73622de
@@ -17798,6 +17842,10 @@ trackedFiles:
     id: cd0b61befd53
     last_write_checksum: sha1:dd98e47f3e9160b66c5d14ed7a821e4c070b9f51
     pristine_git_object: 718237923462e1922cbefb595f8003751dd190fb
+  src/sdk/observability-service.ts:
+    id: 4d1b83e6d38d
+    last_write_checksum: sha1:73e0595664977c77a05b79eabeb298fee2d35d58
+    pristine_git_object: e7255f2adefc2451b162b24180bc6bd1da2c86a1
   src/sdk/observability.ts:
     id: 9c0e070af33d
     last_write_checksum: sha1:846bbfea731db96bfa97330f35dc55ef1de96819
@@ -17840,8 +17888,8 @@ trackedFiles:
     pristine_git_object: 799331d96cc8715f380b7abb8c044dc1f0d52d92
   src/sdk/sdk.ts:
     id: 784571af2f69
-    last_write_checksum: sha1:52bee4981f5d5f76d1458e9be19270c274f3896c
-    pristine_git_object: 980b851af88de55d06c408a51afe03de70cce7a0
+    last_write_checksum: sha1:8dac96dbacdb309b65adb03398f81d4a7a16090e
+    pristine_git_object: eb7636f505c113d20e59bf8be3a86457d61c68df
   src/sdk/secrets.ts:
     id: 38d4c76a4493
     last_write_checksum: sha1:d7de525ea2f4d9e54b96d8b5c48e2f53aa657668
@@ -23675,5 +23723,17 @@ examples:
           application/json: {}
         default:
           application/json: {"code": "not_found"}
+  ObservabilityService_GetMemberSignalTrend:
+    speakeasy-default-observability-service-get-member-signal-trend:
+      parameters:
+        header:
+          Connect-Protocol-Version: 1
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        default:
+          application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.agents.create()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.duplicate()`:  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.getAgent()`:  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.agents.list()`:  `response.agents[]` **Changed** (Breaking ⚠️)\n* `textql.agents.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.checkHealth()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.getAll()`: \n  *  `request.body.source` **Changed** (Breaking ⚠️)\n  *  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`:  `response.chats[]` **Changed** (Breaking ⚠️)\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.queryOneShot()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`:  `response.chat` **Changed** (Breaking ⚠️)\n* `textql.observability.getChatSourceStats()`:  `response.orgBySource[].source` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed** (Breaking ⚠️)\n* `textql.playbooks.createPlaybook()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.duplicate()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.fetch()`:  `response.playbook` **Changed** (Breaking ⚠️)\n* `textql.playbooks.get()`:  `response.playbooks[]` **Changed** (Breaking ⚠️)\n* `textql.playbooks.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.playbook` **Changed** (Breaking ⚠️)\n"
+releaseNotes: "## Typescript SDK Changes:\n* `textql.observabilityService.observabilityServiceGetMemberSignalTrend()`: **Added**\n* `textql.chats.getAll()`: \n  *  `request.body.threadWarningTypes[]` **Changed**\n* `textql.observability.getBillingStats()`:  `response.memberStats[]` **Changed**\n* `textql.observability.getObservabilityStats()`:  `response` **Changed**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].warningType` **Changed**\n"

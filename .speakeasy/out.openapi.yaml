@@ -6421,6 +6421,41 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberActivityResponse'
       x-speakeasy-group: observability
       x-speakeasy-name-override: getMemberActivity
+  /textql.rpc.public.observe.ObservabilityService/GetMemberSignalTrend:
+    post:
+      tags:
+        - ObservabilityService
+      summary: GetMemberSignalTrend
+      operationId: ObservabilityService_GetMemberSignalTrend
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberSignalTrendRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberSignalTrendResponse'
   /textql.rpc.public.observe.ObservabilityService/GetObservabilityStats:
     post:
       tags:
@@ -14735,6 +14770,42 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.teams.TeamsSyncWorkspaceResponse'
       x-speakeasy-group: teams
       x-speakeasy-name-override: syncWorkspace
+  /v2/chats/{chat_id}/cells/stream:
+    post:
+      operationId: ChatService_StreamChat
+      tags:
+        - ChatService
+      parameters:
+        - name: chat_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.chat.ChatService.StreamChatBody'
+        required: true
+      responses:
+        "200":
+          description: A successful response.(streaming responses)
+          content:
+            application/x-ndjson:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/textql.rpc.public.chat.Cell'
+                  error:
+                    $ref: '#/components/schemas/google.rpc.Status'
+                title: Stream result of textql.rpc.public.chat.Cell
+        default:
+          description: An unexpected error response.
+          content:
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/google.rpc.Status'
 components:
   schemas:
     connect-protocol-version:
@@ -22355,6 +22426,9 @@ components:
         - THREAD_WARNING_TYPE_IGNORED_INSTRUCTION
         - THREAD_WARNING_TYPE_USER_THUMBS_DOWN
         - THREAD_WARNING_TYPE_NO_CONCLUSION
+        - THREAD_WARNING_TYPE_USER_THUMBS_UP
+        - THREAD_WARNING_TYPE_GOAL_ACHIEVED
+        - THREAD_WARNING_TYPE_USER_SATISFACTION
       description: ThreadWarningType is the canonical set of thread warning types
     textql.rpc.public.chat.UnbookmarkChatRequest:
       type: object
@@ -22418,6 +22492,7 @@ components:
         - WARNING_CATEGORY_CAUSE
         - WARNING_CATEGORY_SYMPTOM
         - WARNING_CATEGORY_OUTCOME
+        - WARNING_CATEGORY_STRENGTH
     textql.rpc.public.chat.WatchChatEvent:
       type: object
       allOf:
@@ -28530,6 +28605,25 @@ components:
           title: members
       title: GetMemberActivityResponse
       additionalProperties: false
+    textql.rpc.public.observe.GetMemberSignalTrendRequest:
+      type: object
+      properties:
+        days:
+          type: integer
+          title: days
+          format: int32
+      title: GetMemberSignalTrendRequest
+      additionalProperties: false
+    textql.rpc.public.observe.GetMemberSignalTrendResponse:
+      type: object
+      properties:
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.observe.MemberSignalTrendPoint'
+          title: points
+      title: GetMemberSignalTrendResponse
+      additionalProperties: false
     textql.rpc.public.observe.GetObservabilityStatsRequest:
       type: object
       properties:
@@ -28714,6 +28808,26 @@ components:
         isFormerMember:
           type: boolean
           title: is_former_member
+        positiveSignalCount:
+          type: integer
+          title: positive_signal_count
+          format: int32
+          description: |-
+            Per-member signal quality over the same window. Signal counts are rows
+             (one thread can contribute several); flagged/analyzed count distinct
+             threads, so flagged/analyzed is the per-member flagged rate.
+        negativeSignalCount:
+          type: integer
+          title: negative_signal_count
+          format: int32
+        flaggedThreadCount:
+          type: integer
+          title: flagged_thread_count
+          format: int32
+        analyzedThreadCount:
+          type: integer
+          title: analyzed_thread_count
+          format: int32
       title: MemberBillingStat
       additionalProperties: false
     textql.rpc.public.observe.MemberBillingStat.AcuByCategoryEntry:
@@ -28763,6 +28877,34 @@ components:
           title: by_source
       title: MemberChatSourceStat
       additionalProperties: false
+    textql.rpc.public.observe.MemberSignalTrendPoint:
+      type: object
+      properties:
+        memberId:
+          type: string
+          title: member_id
+        bucketStart:
+          type: string
+          title: bucket_start
+          description: YYYY-MM-DD, week start
+        positive:
+          type: integer
+          title: positive
+          format: int32
+        negative:
+          type: integer
+          title: negative
+          format: int32
+        analyzed:
+          type: integer
+          title: analyzed
+          format: int32
+          description: distinct analyzed threads in the bucket
+      title: MemberSignalTrendPoint
+      additionalProperties: false
+      description: |-
+        One (member, week) bucket of signal quality. Weeks with no signals and no
+         analyzed threads are omitted; the client zero-fills the axis.
     textql.rpc.public.observe.ObservabilitySummary:
       type: object
       properties:
@@ -28874,6 +29016,24 @@ components:
             type: integer
             format: int32
           title: teams_sparkline
+        totalPositive:
+          type: integer
+          title: total_positive
+          format: int32
+          description: |-
+            Positive signals (strength-category types). total_warnings/warn_rate_pct
+             above count NEGATIVE signals only — strengths are tracked separately here
+             and must never inflate the flagged metrics.
+        positiveDeltaPct:
+          type: integer
+          title: positive_delta_pct
+          format: int32
+        positiveSparkline:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: positive_sparkline
       title: ObservabilitySummary
       additionalProperties: false
     textql.rpc.public.observe.PlaybookBillingStat:
@@ -37740,6 +37900,38 @@ components:
           nullable: true
       title: TeamsUser
       additionalProperties: false
+    google.protobuf.Any:
+      type: object
+      properties:
+        '@type':
+          type: string
+      additionalProperties: {}
+    google.rpc.Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/google.protobuf.Any'
+            type: object
+    textql.rpc.public.chat.ChatService.StreamChatBody:
+      type: object
+      properties:
+        latestCompleteCellId:
+          type: string
+        research:
+          type: boolean
+        model:
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+        fastMode:
+          type: boolean
+        maxThinking:
+          type: boolean
   securitySchemes:
     apiKey:
       type: apiKey
