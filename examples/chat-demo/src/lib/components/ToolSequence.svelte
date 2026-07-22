@@ -11,7 +11,6 @@
 		getCellPayload,
 		getSegmentKey,
 		getStepLabel,
-		getUniqueToolIcons,
 		type CellLike,
 		type Segment
 	} from '$lib/cells';
@@ -123,7 +122,6 @@
 					/>
 				</div>
 			{:else}
-				{@const icons = getUniqueToolIcons(segment.cells)}
 				{@const open = expandedBatches.has(key)}
 				<div class="segment">
 					<button
@@ -134,16 +132,6 @@
 					>
 						{#if active && segment.cells.some((cell) => !cell.complete)}
 							<UnicodeSpinner label="Running tools" />
-						{:else if icons.length > 0}
-							<span class="icon-stack">
-								{#each icons.slice(0, 3) as iconInfo (iconInfo.key)}
-									{@const Icon = iconInfo.icon}
-									<span class="icon-chip"><Icon size={13} /></span>
-								{/each}
-								{#if icons.length > 3}
-									<span class="icon-chip icon-more">+{icons.length - 3}</span>
-								{/if}
-							</span>
 						{/if}
 						<span class="batch-summary" class:shimmer={active}>
 							{batchLabel(segment.cells, active)}
@@ -226,35 +214,6 @@
 
 	.batch-header:hover {
 		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
-	}
-
-	.icon-stack {
-		display: flex;
-		flex-shrink: 0;
-		align-items: center;
-	}
-
-	.icon-chip {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 22px;
-		height: 22px;
-		border-radius: 999px;
-		margin-left: -6px;
-		color: #52525b;
-		background: color-mix(in srgb, var(--color-ink) 6%, #fff);
-		box-shadow: 0 0 0 2px var(--color-paper);
-	}
-
-	.icon-chip:first-child {
-		margin-left: 0;
-	}
-
-	.icon-more {
-		color: var(--color-muted);
-		font-size: 10px;
-		font-weight: 600;
 	}
 
 	.batch-summary {

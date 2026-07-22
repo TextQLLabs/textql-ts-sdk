@@ -1,30 +1,12 @@
 <script lang="ts">
-	import type { Component } from 'svelte';
-	import AppWindow from '@lucide/svelte/icons/app-window';
 	import ArrowUp from '@lucide/svelte/icons/arrow-up';
 	import Boxes from '@lucide/svelte/icons/boxes';
-	import Braces from '@lucide/svelte/icons/braces';
 	import Cable from '@lucide/svelte/icons/cable';
-	import Calendar from '@lucide/svelte/icons/calendar';
-	import ChartColumn from '@lucide/svelte/icons/chart-column';
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
-	import Cloud from '@lucide/svelte/icons/cloud';
-	import CodeXml from '@lucide/svelte/icons/code-xml';
-	import Database from '@lucide/svelte/icons/database';
-	import Globe from '@lucide/svelte/icons/globe';
-	import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
-	import Mail from '@lucide/svelte/icons/mail';
-	import Network from '@lucide/svelte/icons/network';
 	import Plus from '@lucide/svelte/icons/plus';
-	import Terminal from '@lucide/svelte/icons/terminal';
-	import {
-		enabledToolDisplays,
-		previewToolsFromSelection,
-		type ChatTools,
-		type ToolFlagKey
-	} from '$lib/chatTools';
+	import type { ChatTools } from '$lib/chatTools';
 	import { connectorIconSrc } from '$lib/connectorIcons';
 	import { connectorsCache } from '$lib/connectorsCache.svelte';
 
@@ -45,28 +27,13 @@
 		selectedConnectorIds?: number[];
 		selectedModel?: string;
 		/**
-		 * Enabled tools from GetChat (existing chat). When null/undefined on a blank chat,
-		 * tools are inferred from the current selection (connectors → SQL).
+		 * Enabled tools from GetChat (existing chat). Kept for callers;
+		 * tools are no longer shown as toolbar icons.
 		 */
 		tools?: ChatTools | null;
 		onsend?: () => void;
 		class?: string;
 	}
-
-	const TOOL_ICONS: Record<ToolFlagKey, Component> = {
-		sqlEnabled: Database,
-		pythonEnabled: Braces,
-		webSearchEnabled: Globe,
-		bashEnabled: Terminal,
-		javascriptEnabled: CodeXml,
-		ontologyEnabled: Network,
-		googleDriveEnabled: Cloud,
-		gmailEnabled: Mail,
-		googleCalendarEnabled: Calendar,
-		microsoft365Enabled: AppWindow,
-		powerbiEnabled: ChartColumn,
-		streamlitEnabled: LayoutDashboard
-	};
 
 	const CLAUDE_MODELS: ModelOption[] = [
 		{ id: 'MODEL_HAIKU_4_5', label: 'Claude Haiku 4.5', hint: 'Fast responses for quick tasks' },
@@ -81,7 +48,8 @@
 		configLocked = false,
 		selectedConnectorIds = $bindable<number[]>([]),
 		selectedModel = $bindable('MODEL_SONNET_5'),
-		tools = null,
+		// Accepted from ChatPage; tools are implied by connectors, not shown as icons.
+		tools: _tools = null,
 		onsend,
 		class: className = ''
 	}: Props = $props();
@@ -126,11 +94,6 @@
 			};
 		})
 	);
-
-	const activeTools = $derived(
-		tools != null ? tools : previewToolsFromSelection(selectedConnectorIds)
-	);
-	const toolItems = $derived(enabledToolDisplays(activeTools));
 
 	function openMenu(initialFlyout: Flyout | null = null) {
 		if (configLocked) return;
@@ -190,12 +153,48 @@
 		selectedConnectorIds = selectedConnectorIds.filter((selectedId) => selectedId !== id);
 	}
 
-	function handleComposerKeydown(event: KeyboardEvent) {
-		if (event.key === 'Enter' && !event.shiftKey) {
-			event.preventDefault();
-			onsend?.();
-		}
+	const TEXTAREA_MAX_PX = 160;
+
+	function resizeTextarea() {
+		const el = textareaEl;
+		if (!el) return;
+		el.style.height = '0px';
+		const next = Math.min(el.scrollHeight, TEXTAREA_MAX_PX);
+		el.style.height = `${next}px`;
+		el.style.overflowY = el.scrollHeight > TEXTAREA_MAX_PX ? 'auto' : 'hidden';
 	}
+
+	function insertNewline() {
+		const el = textareaEl;
+		if (!el) return;
+		const start = el.selectionStart;
+		const end = el.selectionEnd;
+		value = `${value.slice(0, start)}\n${value.slice(end)}`;
+		queueMicrotask(() => {
+			el.selectionStart = el.selectionEnd = start + 1;
+			resizeTextarea();
+			el.focus();
+		});
+	}
+
+	function handleComposerKeydown(event: KeyboardEvent) {
+		if (event.key !== 'Enter') return;
+
+		// Cmd/Ctrl+Enter or Shift+Enter → new line (grows until max, then scrolls).
+		if (event.metaKey || event.ctrlKey || event.shiftKey) {
+			event.preventDefault();
+			insertNewline();
+			return;
+		}
+
+		event.preventDefault();
+		onsend?.();
+	}
+
+	$effect(() => {
+		value;
+		queueMicrotask(resizeTextarea);
+	});
 
 	function handleWindowKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape' && menuOpen) {
@@ -233,6 +232,7 @@
 
 	function attachTextarea(element: HTMLTextAreaElement) {
 		textareaEl = element;
+		queueMicrotask(resizeTextarea);
 		return () => {
 			if (textareaEl === element) textareaEl = undefined;
 		};
@@ -242,32 +242,12 @@
 <svelte:window onkeydown={handleWindowKeydown} onpointerdown={handleWindowPointerDown} />
 
 <div class={['composer', docked && 'docked', className]}>
-	{#if selectedChips.length > 0}
-		<div class="attachments" aria-label="Attached connectors">
-			{#each selectedChips as chip (chip.id)}
-				<span class="attachment-pill">
-					<img class="attachment-icon" src={connectorIconSrc(chip.type)} alt="" />
-					<span class="attachment-label">{chip.name}</span>
-					{#if !configLocked}
-						<button
-							type="button"
-							class="attachment-remove"
-							aria-label={`Remove ${chip.name}`}
-							onclick={() => removeConnector(chip.id)}
-						>
-							×
-						</button>
-					{/if}
-				</span>
-			{/each}
-		</div>
-	{/if}
-
 	<textarea
 		{@attach attachTextarea}
 		bind:value
 		onkeydown={handleComposerKeydown}
-		rows="3"
+		oninput={resizeTextarea}
+		rows="1"
 		placeholder="Plan, @ for context, / for commands"
 		aria-label="Message"
 	></textarea>
@@ -290,26 +270,55 @@
 
 			<button
 				type="button"
-				class="model-pill"
+				class="model-label"
 				class:locked={configLocked}
 				disabled={configLocked}
 				aria-disabled={configLocked}
+				aria-label={`Model: ${selectedModelLabel}`}
 				onclick={() => openMenu('models')}
 			>
 				<span>{selectedModelLabel}</span>
 				{#if !configLocked}
-					<ChevronDown class="chevron-down" size={14} strokeWidth={1.5} aria-hidden="true" />
+					<ChevronDown class="chevron-down" size={13} strokeWidth={1.5} aria-hidden="true" />
 				{/if}
 			</button>
 
-			{#if toolItems.length > 0}
-				<div class="tools-row" aria-label="Available tools">
-					{#each toolItems as tool (tool.key)}
-						{@const Icon = TOOL_ICONS[tool.key]}
-						<span class="tool-chip" title={tool.label} aria-label={tool.label}>
-							<Icon size={13} strokeWidth={1.5} aria-hidden="true" />
-						</span>
-					{/each}
+			{#if selectedChips.length > 0}
+				<div class="meta-row">
+					<div class="connector-stack" aria-label="Attached connectors">
+						{#each selectedChips.slice(0, 3) as chip (chip.id)}
+							{#if configLocked}
+								<span class="connector-dot" aria-label={chip.name}>
+									<img src={connectorIconSrc(chip.type)} alt="" />
+									<span class="connector-tip">{chip.name}</span>
+								</span>
+							{:else}
+								<button
+									type="button"
+									class="connector-dot"
+									aria-label={`Remove ${chip.name}`}
+									onclick={() => removeConnector(chip.id)}
+								>
+									<img src={connectorIconSrc(chip.type)} alt="" />
+									<span class="connector-tip">{chip.name}</span>
+								</button>
+							{/if}
+						{/each}
+						{#if selectedChips.length > 3}
+							<button
+								type="button"
+								class="connector-more"
+								aria-label={`${selectedChips.length - 3} more connectors`}
+								onclick={() => openMenu('connectors')}
+								disabled={configLocked}
+							>
+								+{selectedChips.length - 3}
+								<span class="connector-tip"
+									>{selectedChips.length - 3} more</span
+								>
+							</button>
+						{/if}
+					</div>
 				</div>
 			{/if}
 
@@ -449,8 +458,8 @@
 		display: flex;
 		width: min(640px, 100%);
 		flex-direction: column;
-		gap: 10px;
-		padding: 14px 14px 12px;
+		gap: 8px;
+		padding: 12px 14px 10px;
 		border: 1px solid color-mix(in srgb, var(--color-line) 95%, #cfcfd4);
 		border-radius: var(--radius-lg);
 		background: #fff;
@@ -471,66 +480,13 @@
 			0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
 	}
 
-	.attachments {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
-
-	.attachment-pill {
-		display: inline-flex;
-		max-width: 220px;
-		align-items: center;
-		gap: 6px;
-		padding: 4px 6px 4px 8px;
-		border: 1px solid color-mix(in srgb, var(--color-line) 88%, #d4d4d8);
-		border-radius: 999px;
-		color: #3f3f46;
-		background: #f4f4f5;
-		font-size: 12px;
-		line-height: 1.2;
-	}
-
-	.attachment-icon {
-		width: 14px;
-		height: 14px;
-		flex-shrink: 0;
-		object-fit: contain;
-	}
-
-	.attachment-label {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.attachment-remove {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 16px;
-		height: 16px;
-		border: 0;
-		border-radius: 999px;
-		color: #71717a;
-		background: transparent;
-		font: inherit;
-		font-size: 13px;
-		line-height: 1;
-		cursor: pointer;
-	}
-
-	.attachment-remove:hover {
-		color: var(--color-ink);
-		background: #e4e4e7;
-	}
-
 	.composer textarea {
 		width: 100%;
-		max-height: 180px;
-		min-height: 72px;
-		padding: 2px 4px;
+		min-height: 22px;
+		max-height: 160px;
+		padding: 0 4px;
 		resize: none;
+		overflow-y: hidden;
 		border: 0;
 		outline: 0;
 		color: var(--color-ink);
@@ -538,6 +494,7 @@
 		font: inherit;
 		font-size: 14px;
 		line-height: 1.55;
+		field-sizing: content;
 	}
 
 	.composer textarea::placeholder {
@@ -565,8 +522,9 @@
 	.menu-row,
 	.retry-btn,
 	.connector-row,
-	.model-pill,
-	.attachment-remove {
+	.model-label,
+	.connector-dot,
+	.connector-more {
 		border: 0;
 		font: inherit;
 		cursor: pointer;
@@ -577,78 +535,163 @@
 		flex-shrink: 0;
 		align-items: center;
 		justify-content: center;
-		width: 30px;
-		height: 30px;
-		border: 1px solid var(--color-line);
+		width: 28px;
+		height: 28px;
+		border: 1px solid transparent;
 		border-radius: 999px;
-		color: #71717a;
-		background: #fff;
+		color: #a1a1aa;
+		background: transparent;
 	}
 
 	.icon-circle:hover,
-	.icon-circle.active,
-	.model-pill:hover {
-		background: #f4f4f5;
+	.icon-circle.active {
+		color: #71717a;
+		background: color-mix(in srgb, var(--color-ink) 4%, transparent);
 	}
 
-	.model-pill {
+	.model-label {
 		display: inline-flex;
-		max-width: 180px;
+		max-width: 160px;
 		align-items: center;
-		gap: 4px;
-		padding: 5px 10px;
-		border: 1px solid var(--color-line);
-		border-radius: 999px;
-		color: #3f3f46;
-		background: #fafafa;
-		font-size: 12.5px;
+		gap: 2px;
+		padding: 2px 4px;
+		border-radius: 6px;
+		color: #a1a1aa;
+		background: transparent;
+		font-size: 12px;
 		font-weight: 500;
 	}
 
-	.model-pill.locked {
+	.model-label:hover:not(:disabled) {
+		color: #71717a;
+	}
+
+	.model-label.locked {
 		cursor: default;
-		opacity: 0.92;
 	}
 
-	.model-pill.locked:hover {
-		background: #fafafa;
-	}
-
-	.model-pill span {
+	.model-label span {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
-	.model-pill :global(.chevron-down) {
+	.model-label :global(.chevron-down) {
 		flex-shrink: 0;
-		color: #8b8b93;
+		color: #c4c4c8;
 	}
 
-	.tools-row {
+	.meta-row {
 		display: inline-flex;
 		min-width: 0;
 		align-items: center;
-		gap: 2px;
 		margin-left: 2px;
-		padding-left: 6px;
-		border-left: 1px solid color-mix(in srgb, var(--color-line) 90%, #d4d4d8);
+		padding-left: 8px;
+		border-left: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
 	}
 
-	.tool-chip {
+	.connector-stack {
 		display: inline-flex;
 		flex-shrink: 0;
 		align-items: center;
+	}
+
+	.connector-dot {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
 		justify-content: center;
-		width: 24px;
-		height: 24px;
+		width: 22px;
+		height: 22px;
+		margin-left: -6px;
+		padding: 0;
 		border-radius: 999px;
+		background: #eef2ff;
+		box-shadow: 0 0 0 1.5px #fff;
+		transition:
+			transform 0.12s ease,
+			background 0.12s ease;
+	}
+
+	.connector-dot:first-child {
+		margin-left: 0;
+	}
+
+	.connector-dot img {
+		width: 13px;
+		height: 13px;
+		object-fit: contain;
+	}
+
+	.connector-dot:hover,
+	.connector-dot:focus-visible,
+	.connector-dot:active {
+		z-index: 2;
+		background: #e0e7ff;
+		transform: translateY(-1px) scale(1.06);
+	}
+
+	.connector-dot:active {
+		transform: translateY(0) scale(0.96);
+		background: #c7d2fe;
+	}
+
+	.connector-tip {
+		position: absolute;
+		bottom: calc(100% + 6px);
+		left: 50%;
+		z-index: 5;
+		padding: 3px 7px;
+		border-radius: 6px;
+		color: #fafafa;
+		background: #27272a;
+		font-size: 11px;
+		font-weight: 500;
+		line-height: 1.2;
+		white-space: nowrap;
+		pointer-events: none;
+		opacity: 0;
+		transform: translateX(-50%) translateY(2px);
+		transition:
+			opacity 0.12s ease,
+			transform 0.12s ease;
+	}
+
+	.connector-dot:hover .connector-tip,
+	.connector-dot:focus-visible .connector-tip,
+	.connector-dot:active .connector-tip,
+	.connector-more:hover .connector-tip,
+	.connector-more:focus-visible .connector-tip {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+
+	.connector-more {
+		position: relative;
+		margin-left: 4px;
+		padding: 0 2px;
+		color: #a1a1aa;
+		background: transparent;
+		font-size: 11px;
+		font-weight: 600;
+	}
+
+	.connector-more:hover:not(:disabled) {
 		color: #71717a;
 	}
 
-	.tool-chip:hover {
-		color: #3f3f46;
-		background: #f4f4f5;
+	.connector-more:disabled {
+		cursor: default;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.connector-dot {
+			transition: none;
+		}
+
+		.connector-tip {
+			transition: none;
+		}
 	}
 
 	.menu-shell {
@@ -947,16 +990,8 @@
 	}
 
 	@media (max-width: 560px) {
-		.composer textarea {
-			min-height: 56px;
-		}
-
-		.attachment-pill {
-			max-width: 160px;
-		}
-
-		.model-pill {
-			max-width: 120px;
+		.model-label {
+			max-width: 110px;
 		}
 
 		.flyout-popover {
