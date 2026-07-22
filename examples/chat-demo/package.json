@@ -26,7 +26,7 @@
 		"@bufbuild/protobuf": "^2.13.0",
 		"@lucide/svelte": "^1.25.0",
 		"@pierre/diffs": "^1.2.12",
-		"@textql/sdk": "^1.2.0",
+		"@textql/sdk": "^1.2.1",
 		"marked": "^18.0.7",
 		"svelte-sonner": "^1.1.1",
 		"unicode-animations": "^1.0.3",

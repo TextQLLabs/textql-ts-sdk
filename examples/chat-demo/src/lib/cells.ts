@@ -30,6 +30,10 @@ import {
 	Users,
 	Wrench
 } from '@lucide/svelte';
+import {
+	TextqlRpcPublicChatCellLifecycle,
+	type TextqlRpcPublicChatCellLifecycle as CellLifecycle
+} from '@textql/sdk/models';
 
 /**
  * A chat cell as returned by both the SDK (`chats.getHistory`) and the
@@ -47,60 +51,49 @@ export type CellLike = Record<string, unknown> & {
 	timestamp?: string | Date | number | null;
 	startedAt?: string | Date | number | null;
 	createdAt?: string | Date | number | null;
-	lifecycle?: string | null;
+	lifecycle?: CellLifecycle | null;
 	durationMs?: number | string | null;
 };
 
-const TERMINAL_LIFECYCLES = new Set([
-	'LIFECYCLE_EXECUTED',
-	'LIFECYCLE_HALTED'
+const TERMINAL_LIFECYCLES = new Set<CellLifecycle>([
+	TextqlRpcPublicChatCellLifecycle.LifecycleExecuted,
+	TextqlRpcPublicChatCellLifecycle.LifecycleHalted
 ]);
 
-const EXECUTING_LIFECYCLES = new Set([
-	'LIFECYCLE_CREATING',
-	'LIFECYCLE_CREATED',
-	'LIFECYCLE_EXECUTING',
-	'LIFECYCLE_HANDOFF_PENDING'
+const EXECUTING_LIFECYCLES = new Set<CellLifecycle>([
+	TextqlRpcPublicChatCellLifecycle.LifecycleCreating,
+	TextqlRpcPublicChatCellLifecycle.LifecycleCreated,
+	TextqlRpcPublicChatCellLifecycle.LifecycleExecuting,
+	TextqlRpcPublicChatCellLifecycle.LifecycleHandoffPending
 ]);
 
-/**
- * True while a tool/thought cell is still in flight.
- * Prefer lifecycle / explicit `complete: false`. When those are sparse
- * (live stream snapshots), pass `assumeIncomplete` from the active segment.
- */
 export function isCellExecuting(
 	cell: CellLike,
 	assumeIncomplete = false
 ): boolean {
-	const lifecycle = typeof cell.lifecycle === 'string' ? cell.lifecycle : '';
-	// Lifecycle wins when present — `complete` can lag mid-stream.
-	if (lifecycle && EXECUTING_LIFECYCLES.has(lifecycle)) return true;
+	const lifecycle = cell.lifecycle;
 	if (lifecycle && TERMINAL_LIFECYCLES.has(lifecycle)) return false;
 	if (cell.complete === true) return false;
+	if (lifecycle && EXECUTING_LIFECYCLES.has(lifecycle)) return true;
 	if (cell.complete === false) return true;
 	return assumeIncomplete && cell.complete == null;
 }
 
-/**
- * Force still-executing cells terminal. Call when the run is known finished
- * (watchChat runComplete, or history loads — the demo never resumes live
- * runs), so a missed final snapshot can't leave a chip on "Running" forever.
- */
 export function settleCells(cells: CellLike[] | undefined): void {
 	if (!cells) return;
 	for (const cell of cells) {
 		if (!isCellExecuting(cell)) continue;
-		cell.lifecycle = 'LIFECYCLE_EXECUTED';
+		cell.lifecycle = TextqlRpcPublicChatCellLifecycle.LifecycleExecuted;
 		cell.complete = true;
 	}
 }
 
 /** Finished enough to show final wall-clock duration (not a live timer). */
 export function isCellFinished(cell: CellLike): boolean {
-	const lifecycle = typeof cell.lifecycle === 'string' ? cell.lifecycle : '';
-	if (lifecycle && EXECUTING_LIFECYCLES.has(lifecycle)) return false;
+	const lifecycle = cell.lifecycle;
 	if (lifecycle && TERMINAL_LIFECYCLES.has(lifecycle)) return true;
-	return cell.complete === true;
+	if (cell.complete === true) return true;
+	return false;
 }
 
 function parseTimeMs(value: unknown): number | null {
