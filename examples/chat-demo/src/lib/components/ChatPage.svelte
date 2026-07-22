@@ -22,6 +22,7 @@
 	let messages = $state<Message[]>([]);
 	let draft = $state('');
 	let selectedConnectorIds = $state<number[]>([]);
+	let selectedModel = $state('MODEL_SONNET_5');
 	let sidebarOpen = $state(false);
 	let settingsOpen = $state(false);
 	let compactMode = $state(false);
@@ -191,7 +192,12 @@
 			const response = await fetch('/api/chat', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ message: body, chatId }),
+				body: JSON.stringify({
+					message: body,
+					chatId,
+					model: selectedModel,
+					connectorIds: selectedConnectorIds
+				}),
 				signal: activeRequest.signal
 			});
 
@@ -393,7 +399,13 @@
 
 		{#if isEmpty}
 			<section class="empty-state" aria-label="New agent">
-				<Composer bind:value={draft} bind:selectedConnectorIds {sending} onsend={sendMessage} />
+				<Composer
+					bind:value={draft}
+					bind:selectedConnectorIds
+					bind:selectedModel
+					{sending}
+					onsend={sendMessage}
+				/>
 			</section>
 		{:else}
 			<section class="conversation" aria-label="Chat messages" aria-live="polite">
@@ -420,7 +432,14 @@
 			</section>
 
 			<footer class="composer-dock">
-				<Composer bind:value={draft} bind:selectedConnectorIds {sending} docked onsend={sendMessage} />
+				<Composer
+					bind:value={draft}
+					bind:selectedConnectorIds
+					bind:selectedModel
+					{sending}
+					docked
+					onsend={sendMessage}
+				/>
 			</footer>
 		{/if}
 	</main>

@@ -1,117 +1,119 @@
 <script lang="ts">
-	type ConnectorItem = {
-		id: number;
-		name: string;
-		type: string;
+	import ArrowUp from '@lucide/svelte/icons/arrow-up';
+	import Boxes from '@lucide/svelte/icons/boxes';
+	import Cable from '@lucide/svelte/icons/cable';
+	import Check from '@lucide/svelte/icons/check';
+	import ChevronDown from '@lucide/svelte/icons/chevron-down';
+	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import Plus from '@lucide/svelte/icons/plus';
+	import { connectorIconSrc } from '$lib/connectorIcons';
+	import { connectorsCache } from '$lib/connectorsCache.svelte';
+
+	type ModelOption = {
+		id: string;
+		label: string;
+		hint: string;
 	};
+
+	type Flyout = 'models' | 'connectors';
 
 	interface Props {
 		value?: string;
 		sending?: boolean;
 		docked?: boolean;
 		selectedConnectorIds?: number[];
+		selectedModel?: string;
 		onsend?: () => void;
 		class?: string;
 	}
+
+	const CLAUDE_MODELS: ModelOption[] = [
+		{ id: 'MODEL_HAIKU_4_5', label: 'Claude Haiku 4.5', hint: 'Fast responses for quick tasks' },
+		{ id: 'MODEL_SONNET_5', label: 'Claude Sonnet 5', hint: 'Balanced speed and quality' },
+		{ id: 'MODEL_OPUS_4_8', label: 'Claude Opus 4.8', hint: 'Highest capability for hard work' }
+	];
 
 	let {
 		value = $bindable(''),
 		sending = false,
 		docked = false,
 		selectedConnectorIds = $bindable<number[]>([]),
+		selectedModel = $bindable('MODEL_SONNET_5'),
 		onsend,
 		class: className = ''
 	}: Props = $props();
 
 	let menuOpen = $state(false);
-	let panel = $state<'menu' | 'connectors'>('menu');
-	let connectors = $state.raw<ConnectorItem[]>([]);
+	let flyout = $state<Flyout | null>(null);
+	let menuQuery = $state('');
 	let connectorNames = $state.raw<Record<number, string>>({});
-	let connectorsLoading = $state(false);
-	let connectorsError = $state(false);
-	let connectorsLoaded = $state(false);
-	let search = $state('');
 	let menuRoot: HTMLDivElement | undefined;
+	let searchInput: HTMLInputElement | undefined;
+	let textareaEl: HTMLTextAreaElement | undefined;
 
-	const filteredConnectors = $derived(
-		connectors.filter((connector) => {
-			const query = search.trim().toLowerCase();
-			if (!query) return true;
+	const normalizedQuery = $derived(menuQuery.trim().toLowerCase());
+
+	const rootItems = $derived(
+		[
+			{ id: 'models' as const, label: 'Models', hasSubmenu: true },
+			{ id: 'connectors' as const, label: 'Connectors', hasSubmenu: true }
+		].filter((item) => !normalizedQuery || item.label.toLowerCase().includes(normalizedQuery))
+	);
+
+	const filteredModels = $derived(
+		CLAUDE_MODELS.filter((model) => {
+			if (!normalizedQuery) return true;
 			return (
-				connector.name.toLowerCase().includes(query) ||
-				connector.type.toLowerCase().includes(query)
+				model.label.toLowerCase().includes(normalizedQuery) ||
+				model.hint.toLowerCase().includes(normalizedQuery) ||
+				model.id.toLowerCase().includes(normalizedQuery)
 			);
 		})
 	);
 
-	const selectedChips = $derived(
-		selectedConnectorIds.map((id) => ({
-			id,
-			name: connectorNames[id] ?? connectors.find((connector) => connector.id === id)?.name ?? `Connector ${id}`
-		}))
+	const filteredConnectors = $derived(
+		connectorsCache.connectors.filter((connector) => {
+			if (!normalizedQuery) return true;
+			return (
+				connector.name.toLowerCase().includes(normalizedQuery) ||
+				connector.type.toLowerCase().includes(normalizedQuery)
+			);
+		})
 	);
 
-	function isRecord(value: unknown): value is Record<string, unknown> {
-		return typeof value === 'object' && value !== null;
+	const selectedModelLabel = $derived(
+		CLAUDE_MODELS.find((model) => model.id === selectedModel)?.label ?? 'Claude Sonnet 5'
+	);
+
+	const selectedChips = $derived(
+		selectedConnectorIds.map((id) => {
+			const match = connectorsCache.connectors.find((connector) => connector.id === id);
+			return {
+				id,
+				name: connectorsCache.nameFor(id, connectorNames),
+				type: match?.type ?? 'UNKNOWN'
+			};
+		})
+	);
+
+	function focusSearch() {
+		queueMicrotask(() => searchInput?.focus());
 	}
 
-	async function loadConnectors() {
-		if (connectorsLoading) return;
-
-		connectorsLoading = true;
-		connectorsError = false;
-
-		try {
-			const response = await fetch('/api/connectors');
-			const payload: unknown = await response.json();
-
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.connectors)) {
-				throw new Error('Unable to load connectors.');
-			}
-
-			const next: ConnectorItem[] = [];
-			const names = { ...connectorNames };
-
-			for (const item of payload.connectors) {
-				if (
-					!isRecord(item) ||
-					typeof item.id !== 'number' ||
-					typeof item.name !== 'string' ||
-					typeof item.type !== 'string'
-				) {
-					continue;
-				}
-
-				next.push({ id: item.id, name: item.name, type: item.type });
-				names[item.id] = item.name;
-			}
-
-			connectors = next;
-			connectorNames = names;
-			connectorsLoaded = true;
-		} catch {
-			connectorsError = true;
-		} finally {
-			connectorsLoading = false;
-		}
-	}
-
-	function openMenu() {
+	function openMenu(initialFlyout: Flyout | null = null) {
 		menuOpen = true;
-		panel = 'menu';
+		flyout = initialFlyout;
+		menuQuery = '';
+		focusSearch();
+		if (initialFlyout === 'connectors') {
+			void connectorsCache.load();
+		}
 	}
 
 	function closeMenu() {
 		menuOpen = false;
-		panel = 'menu';
-		search = '';
-	}
-
-	function openConnectorsPanel() {
-		panel = 'connectors';
-		if (!connectorsLoaded || connectorsError) {
-			void loadConnectors();
-		}
+		flyout = null;
+		menuQuery = '';
 	}
 
 	function toggleMenu() {
@@ -122,21 +124,35 @@
 		openMenu();
 	}
 
-	function toggleConnector(connector: ConnectorItem) {
-		if (selectedConnectorIds.includes(connector.id)) {
-			selectedConnectorIds = selectedConnectorIds.filter((id) => id !== connector.id);
-			return;
+	function openFlyout(next: Flyout) {
+		flyout = next;
+		if (next === 'connectors') {
+			void connectorsCache.load();
+		}
+	}
+
+	function selectModel(modelId: string) {
+		selectedModel = modelId;
+		closeMenu();
+		textareaEl?.focus();
+	}
+
+	function attachConnector(connector: { id: number; name: string }) {
+		connectorNames = { ...connectorNames, [connector.id]: connector.name };
+
+		if (!selectedConnectorIds.includes(connector.id)) {
+			selectedConnectorIds = [...selectedConnectorIds, connector.id];
 		}
 
-		selectedConnectorIds = [...selectedConnectorIds, connector.id];
-		connectorNames = { ...connectorNames, [connector.id]: connector.name };
+		closeMenu();
+		textareaEl?.focus();
 	}
 
 	function removeConnector(id: number) {
 		selectedConnectorIds = selectedConnectorIds.filter((selectedId) => selectedId !== id);
 	}
 
-	function handleKeydown(event: KeyboardEvent) {
+	function handleComposerKeydown(event: KeyboardEvent) {
 		if (event.key === 'Enter' && !event.shiftKey) {
 			event.preventDefault();
 			onsend?.();
@@ -146,6 +162,10 @@
 	function handleWindowKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape' && menuOpen) {
 			event.preventDefault();
+			if (flyout) {
+				flyout = null;
+				return;
+			}
 			closeMenu();
 		}
 	}
@@ -163,18 +183,53 @@
 			if (menuRoot === element) menuRoot = undefined;
 		};
 	}
+
+	function attachSearchInput(element: HTMLInputElement) {
+		searchInput = element;
+		return () => {
+			if (searchInput === element) searchInput = undefined;
+		};
+	}
+
+	function attachTextarea(element: HTMLTextAreaElement) {
+		textareaEl = element;
+		return () => {
+			if (textareaEl === element) textareaEl = undefined;
+		};
+	}
 </script>
 
 <svelte:window onkeydown={handleWindowKeydown} onpointerdown={handleWindowPointerDown} />
 
 <div class={['composer', docked && 'docked', className]}>
+	{#if selectedChips.length > 0}
+		<div class="attachments" aria-label="Attached connectors">
+			{#each selectedChips as chip (chip.id)}
+				<span class="attachment-pill">
+					<img class="attachment-icon" src={connectorIconSrc(chip.type)} alt="" />
+					<span class="attachment-label">{chip.name}</span>
+					<button
+						type="button"
+						class="attachment-remove"
+						aria-label={`Remove ${chip.name}`}
+						onclick={() => removeConnector(chip.id)}
+					>
+						×
+					</button>
+				</span>
+			{/each}
+		</div>
+	{/if}
+
 	<textarea
+		{@attach attachTextarea}
 		bind:value
-		onkeydown={handleKeydown}
+		onkeydown={handleComposerKeydown}
 		rows="3"
-		placeholder="Plan, @ to add a connector, / for commands"
+		placeholder="Plan, @ for context, / for commands"
 		aria-label="Message"
 	></textarea>
+
 	<div class="composer-toolbar">
 		<div class="toolbar-left" {@attach attachMenuRoot}>
 			<button
@@ -186,105 +241,130 @@
 				aria-expanded={menuOpen}
 				onclick={toggleMenu}
 			>
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-					<path d="M12 5v14M5 12h14" stroke-linecap="round" />
-				</svg>
+				<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
 			</button>
 
-			{#if selectedChips.length > 0}
-				<div class="chips" aria-label="Selected connectors">
-					{#each selectedChips as chip (chip.id)}
-						<span class="chip">
-							<span class="chip-label">{chip.name}</span>
-							<button
-								type="button"
-								class="chip-remove"
-								aria-label={`Remove ${chip.name}`}
-								onclick={() => removeConnector(chip.id)}
-							>
-								×
-							</button>
-						</span>
-					{/each}
-				</div>
-			{/if}
+			<button type="button" class="model-pill" onclick={() => openMenu('models')}>
+				<span>{selectedModelLabel}</span>
+				<ChevronDown class="chevron-down" size={14} strokeWidth={1.5} aria-hidden="true" />
+			</button>
 
 			{#if menuOpen}
-				<div class="popover" aria-label="Composer menu">
-					{#if panel === 'menu'}
-						<button type="button" class="menu-item" onclick={openConnectorsPanel}>
-							<span class="menu-item-label">
-								<svg
-									class="menu-item-icon"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="1.5"
-									aria-hidden="true"
+				<div class="menu-shell">
+					<div class="popover root-popover" role="menu" aria-label="Add context">
+						<label class="search-field">
+							<span class="sr-only">Search</span>
+							<input
+								{@attach attachSearchInput}
+								type="search"
+								bind:value={menuQuery}
+								placeholder="Add models, connectors..."
+								autocomplete="off"
+							/>
+						</label>
+
+						<div class="menu-section">
+							{#each rootItems as item (item.id)}
+								<button
+									type="button"
+									class="menu-row"
+									class:flyout-open={flyout === item.id}
+									role="menuitem"
+									aria-haspopup="menu"
+									aria-expanded={flyout === item.id}
+									onmouseenter={() => openFlyout(item.id)}
+									onfocus={() => openFlyout(item.id)}
+									onclick={() => openFlyout(item.id)}
 								>
-									<path
-										d="M7 7h10v3H7V7Zm0 7h10v3H7v-3ZM4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"
-										stroke-linejoin="round"
-									/>
-								</svg>
-								Connectors
-							</span>
-							{#if selectedConnectorIds.length > 0}
-								<span class="badge">{selectedConnectorIds.length}</span>
-							{/if}
-						</button>
-					{:else}
-						<div class="connectors-panel">
-							<div class="connectors-header">
-								<button type="button" class="back-btn" onclick={() => (panel = 'menu')}>
-									<svg
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="1.75"
-										aria-hidden="true"
-									>
-										<path d="M15 6 9 12l6 6" stroke-linecap="round" stroke-linejoin="round" />
-									</svg>
-									Connectors
+									<span class="menu-row-main">
+										<span class="menu-icon" aria-hidden="true">
+											{#if item.id === 'models'}
+												<Boxes size={14} strokeWidth={1.5} />
+											{:else}
+												<Cable size={14} strokeWidth={1.5} />
+											{/if}
+										</span>
+										{item.label}
+									</span>
+									<span class="menu-meta">
+										{#if item.id === 'connectors' && selectedConnectorIds.length > 0}
+											<span class="badge">{selectedConnectorIds.length}</span>
+										{:else if item.id === 'models'}
+											<span class="menu-hint">{selectedModelLabel}</span>
+										{/if}
+										<ChevronRight class="chevron" size={14} strokeWidth={1.5} aria-hidden="true" />
+									</span>
 								</button>
+							{/each}
+						</div>
+
+						{#if rootItems.length === 0}
+							<p class="state-copy">No matches.</p>
+						{/if}
+					</div>
+
+					{#if flyout === 'models'}
+						<div class="popover flyout-popover" role="menu" aria-label="Models">
+							<div class="menu-section models-list">
+								{#each filteredModels as model (model.id)}
+									<button
+										type="button"
+										class="menu-row model-row"
+										class:selected={selectedModel === model.id}
+										role="menuitem"
+										onclick={() => selectModel(model.id)}
+									>
+										<span class="menu-row-main column">
+											<span class="model-title">{model.label}</span>
+											<span class="model-hint">{model.hint}</span>
+										</span>
+										{#if selectedModel === model.id}
+											<span class="check-mark" aria-hidden="true">
+												<Check size={14} strokeWidth={1.5} />
+											</span>
+										{/if}
+									</button>
+								{:else}
+									<p class="state-copy">No matches.</p>
+								{/each}
 							</div>
-
-							<label class="search-field">
-								<span class="sr-only">Search connectors</span>
-								<input
-									type="search"
-									bind:value={search}
-									placeholder="Search connectors"
-									autocomplete="off"
-								/>
-							</label>
-
-							<div class="connectors-list" aria-live="polite" aria-busy={connectorsLoading}>
-								{#if connectorsLoading}
+						</div>
+					{:else if flyout === 'connectors'}
+						<div class="popover flyout-popover" role="menu" aria-label="Connectors">
+							<div class="connectors-list" aria-live="polite" aria-busy={connectorsCache.loading}>
+								{#if connectorsCache.loading && !connectorsCache.loaded}
 									<p class="state-copy">Loading connectors…</p>
-								{:else if connectorsError}
+								{:else if connectorsCache.error && !connectorsCache.loaded}
 									<div class="state-block">
-										<p class="state-copy">Couldn’t load connectors.</p>
-										<button type="button" class="retry-btn" onclick={loadConnectors}>Retry</button>
+										<p class="state-copy tight">Couldn’t load connectors.</p>
+										<button type="button" class="retry-btn" onclick={() => connectorsCache.load(true)}>
+											Retry
+										</button>
 									</div>
-								{:else if connectors.length === 0}
+								{:else if connectorsCache.connectors.length === 0}
 									<p class="state-copy">No connectors available.</p>
 								{:else if filteredConnectors.length === 0}
 									<p class="state-copy">No matches.</p>
 								{:else}
 									{#each filteredConnectors as connector (connector.id)}
-										<label class="connector-row">
-											<input
-												type="checkbox"
-												checked={selectedConnectorIds.includes(connector.id)}
-												onchange={() => toggleConnector(connector)}
+										<button
+											type="button"
+											class="connector-row"
+											class:attached={selectedConnectorIds.includes(connector.id)}
+											onclick={() => attachConnector(connector)}
+										>
+											<img
+												class="connector-icon"
+												src={connectorIconSrc(connector.type)}
+												alt=""
 											/>
-											<span class="connector-meta">
-												<span class="connector-name">{connector.name}</span>
-												<span class="connector-type">{connector.type}</span>
-											</span>
-										</label>
+											<span class="connector-name">{connector.name}</span>
+											{#if selectedConnectorIds.includes(connector.id)}
+												<span class="check-mark" aria-hidden="true">
+													<Check size={14} strokeWidth={1.5} />
+												</span>
+											{/if}
+										</button>
 									{/each}
 								{/if}
 							</div>
@@ -301,9 +381,7 @@
 			aria-label="Send message"
 			onclick={() => onsend?.()}
 		>
-			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-				<path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" stroke-linecap="round" stroke-linejoin="round" />
-			</svg>
+			<ArrowUp size={15} strokeWidth={2} aria-hidden="true" />
 		</button>
 	</div>
 </div>
@@ -333,6 +411,60 @@
 			0 1px 2px rgba(15, 15, 20, 0.03),
 			0 12px 32px rgba(15, 15, 20, 0.07),
 			0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
+	}
+
+	.attachments {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.attachment-pill {
+		display: inline-flex;
+		max-width: 220px;
+		align-items: center;
+		gap: 6px;
+		padding: 4px 6px 4px 8px;
+		border: 1px solid color-mix(in srgb, var(--color-line) 88%, #d4d4d8);
+		border-radius: 999px;
+		color: #3f3f46;
+		background: #f4f4f5;
+		font-size: 12px;
+		line-height: 1.2;
+	}
+
+	.attachment-icon {
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
+		object-fit: contain;
+	}
+
+	.attachment-label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.attachment-remove {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		border: 0;
+		border-radius: 999px;
+		color: #71717a;
+		background: transparent;
+		font: inherit;
+		font-size: 13px;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.attachment-remove:hover {
+		color: var(--color-ink);
+		background: #e4e4e7;
 	}
 
 	.composer textarea {
@@ -367,15 +499,16 @@
 		min-width: 0;
 		flex: 1;
 		align-items: center;
-		gap: 8px;
+		gap: 6px;
 	}
 
 	.icon-circle,
 	.send-btn,
-	.menu-item,
-	.back-btn,
+	.menu-row,
 	.retry-btn,
-	.chip-remove {
+	.connector-row,
+	.model-pill,
+	.attachment-remove {
 		border: 0;
 		font: inherit;
 		cursor: pointer;
@@ -394,104 +527,173 @@
 		background: #fff;
 	}
 
-	.icon-circle svg {
-		width: 15px;
-		height: 15px;
-	}
-
 	.icon-circle:hover,
-	.icon-circle.active {
+	.icon-circle.active,
+	.model-pill:hover {
 		background: #f4f4f5;
 	}
 
-	.chips {
-		display: flex;
-		min-width: 0;
-		flex-wrap: wrap;
-		gap: 6px;
-	}
-
-	.chip {
+	.model-pill {
 		display: inline-flex;
-		max-width: 160px;
+		max-width: 180px;
 		align-items: center;
 		gap: 4px;
-		padding: 3px 6px 3px 8px;
-		border: 1px solid color-mix(in srgb, var(--color-line) 90%, #d4d4d8);
+		padding: 5px 10px;
+		border: 1px solid var(--color-line);
 		border-radius: 999px;
 		color: #3f3f46;
-		background: #fcfcfc;
-		font-size: 11.5px;
-		line-height: 1.2;
+		background: #fafafa;
+		font-size: 12.5px;
+		font-weight: 500;
 	}
 
-	.chip-label {
+	.model-pill span {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
-	.chip-remove {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 16px;
-		height: 16px;
-		border-radius: 999px;
-		color: #71717a;
-		background: transparent;
-		font-size: 13px;
-		line-height: 1;
+	.model-pill :global(.chevron-down) {
+		flex-shrink: 0;
+		color: #8b8b93;
 	}
 
-	.chip-remove:hover {
-		color: var(--color-ink);
-		background: #ececee;
+	.menu-shell {
+		position: absolute;
+		bottom: calc(100% + 8px);
+		left: 0;
+		z-index: 20;
 	}
 
 	.popover {
-		position: absolute;
-		bottom: calc(100% + 10px);
-		left: 0;
-		z-index: 20;
-		width: min(280px, calc(100vw - 48px));
 		overflow: hidden;
-		border: 1px solid color-mix(in srgb, var(--color-line) 92%, #d4d4d8);
-		border-radius: 14px;
-		background: #fcfcfc;
+		border: 1px solid color-mix(in srgb, var(--color-line) 90%, #d4d4d8);
+		border-radius: 12px;
+		background: #fff;
 		box-shadow:
 			0 1px 2px rgba(15, 15, 20, 0.04),
-			0 16px 40px rgba(15, 15, 20, 0.1);
+			0 14px 32px rgba(15, 15, 20, 0.1);
 	}
 
-	.menu-item {
+	.root-popover {
+		position: relative;
+		width: min(240px, calc(100vw - 32px));
+	}
+
+	.flyout-popover {
+		position: absolute;
+		bottom: 0;
+		left: calc(100% + 4px);
+		width: min(272px, calc(100vw - 32px));
+		animation: flyout-in 120ms ease;
+	}
+
+	@keyframes flyout-in {
+		from {
+			opacity: 0;
+			transform: translateX(-4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	.search-field {
+		display: block;
+		padding: 6px 6px 4px;
+	}
+
+	.search-field input {
+		width: 100%;
+		padding: 6px 8px;
+		border: 0;
+		border-radius: 7px;
+		color: var(--color-ink);
+		background: #f4f4f5;
+		font: inherit;
+		font-size: 12px;
+		outline: 0;
+	}
+
+	.search-field input::placeholder {
+		color: #a1a1aa;
+	}
+
+	.search-field input:focus {
+		background: #ececee;
+	}
+
+	.menu-section {
+		display: flex;
+		flex-direction: column;
+		padding: 2px;
+	}
+
+	.models-list {
+		max-height: 240px;
+		overflow-y: auto;
+		padding-bottom: 4px;
+	}
+
+	.menu-row {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 12px;
+		gap: 8px;
 		width: 100%;
-		padding: 11px 12px;
+		padding: 6px 8px;
+		border-radius: 7px;
 		color: #27272a;
 		background: transparent;
-		font-size: 13px;
-		font-weight: 500;
+		font-size: 12.5px;
 		text-align: left;
 	}
 
-	.menu-item:hover {
-		background: #f4f4f5;
+	.menu-row:hover,
+	.menu-row.flyout-open,
+	.menu-row.selected,
+	.model-row:hover {
+		background: #f3f3f3;
 	}
 
-	.menu-item-label {
+	.menu-row-main {
 		display: inline-flex;
+		min-width: 0;
 		align-items: center;
 		gap: 8px;
 	}
 
-	.menu-item-icon {
-		width: 15px;
-		height: 15px;
+	.menu-row-main.column {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1px;
+	}
+
+	.menu-icon {
+		display: inline-flex;
+		width: 14px;
+		height: 14px;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
 		color: #71717a;
+	}
+
+	.menu-meta {
+		display: inline-flex;
+		min-width: 0;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.menu-hint {
+		overflow: hidden;
+		max-width: 90px;
+		color: var(--color-muted);
+		font-size: 10.5px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.badge {
@@ -507,96 +709,64 @@
 		font-weight: 600;
 	}
 
-	.connectors-panel {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		padding: 8px;
-	}
-
-	.connectors-header {
-		display: flex;
-		align-items: center;
-	}
-
-	.back-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 4px;
-		padding: 4px 6px;
-		border-radius: 8px;
-		color: #3f3f46;
-		background: transparent;
-		font-size: 12.5px;
-		font-weight: 550;
-	}
-
-	.back-btn svg {
-		width: 14px;
-		height: 14px;
-	}
-
-	.back-btn:hover {
-		background: #f0f0f2;
-	}
-
-	.search-field input {
-		width: 100%;
-		padding: 8px 10px;
-		border: 1px solid var(--color-line);
-		border-radius: 10px;
-		color: var(--color-ink);
-		background: #fff;
-		font: inherit;
-		font-size: 12.5px;
-		outline: 0;
-	}
-
-	.search-field input::placeholder {
+	.menu-meta :global(.chevron) {
+		flex-shrink: 0;
 		color: #a1a1aa;
 	}
 
-	.search-field input:focus {
-		border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-line));
-		box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
+	.model-title {
+		overflow: hidden;
+		color: #27272a;
+		font-size: 12.5px;
+		font-weight: 600;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.model-hint {
+		overflow: hidden;
+		color: var(--color-muted);
+		font-size: 11px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.connectors-list {
 		display: flex;
 		max-height: 220px;
 		flex-direction: column;
-		gap: 2px;
+		gap: 1px;
 		overflow-y: auto;
-		padding: 2px;
+		padding: 2px 2px 6px;
 	}
 
 	.connector-row {
 		display: flex;
-		align-items: flex-start;
-		gap: 10px;
-		padding: 8px 8px;
-		border-radius: 10px;
-		cursor: pointer;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 7px 8px;
+		border-radius: 7px;
+		color: inherit;
+		background: transparent;
+		text-align: left;
 	}
 
-	.connector-row:hover {
-		background: #f4f4f5;
+	.connector-row:hover,
+	.connector-row.attached {
+		background: #f3f3f3;
 	}
 
-	.connector-row input {
-		margin-top: 2px;
-		accent-color: var(--color-accent);
-	}
-
-	.connector-meta {
-		display: flex;
-		min-width: 0;
-		flex: 1;
-		flex-direction: column;
-		gap: 2px;
+	.connector-icon {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+		object-fit: contain;
 	}
 
 	.connector-name {
+		min-width: 0;
+		flex: 1;
 		overflow: hidden;
 		color: #27272a;
 		font-size: 12.5px;
@@ -605,32 +775,31 @@
 		white-space: nowrap;
 	}
 
-	.connector-type {
-		overflow: hidden;
-		color: var(--color-muted);
-		font-size: 11px;
-		letter-spacing: 0.01em;
-		text-overflow: ellipsis;
-		text-transform: lowercase;
-		white-space: nowrap;
+	.check-mark {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		color: #52525b;
 	}
 
 	.state-block {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 8px;
-		padding: 8px;
+		gap: 6px;
+		padding: 6px 8px;
 	}
 
 	.state-copy {
 		margin: 0;
-		padding: 10px 8px;
+		padding: 8px;
 		color: var(--color-muted);
-		font-size: 12px;
-		line-height: 1.4;
+		font-size: 11.5px;
+		line-height: 1.35;
 	}
 
+	.state-copy.tight,
 	.state-block .state-copy {
 		padding: 0;
 	}
@@ -663,11 +832,6 @@
 			transform 120ms ease;
 	}
 
-	.send-btn svg {
-		width: 15px;
-		height: 15px;
-	}
-
 	.send-btn:hover:not(:disabled) {
 		transform: translateY(-1px);
 	}
@@ -694,14 +858,28 @@
 			min-height: 56px;
 		}
 
-		.chip {
+		.attachment-pill {
+			max-width: 160px;
+		}
+
+		.model-pill {
 			max-width: 120px;
+		}
+
+		.flyout-popover {
+			left: 0;
+			bottom: calc(100% + 4px);
+			width: min(240px, calc(100vw - 32px));
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		.send-btn {
 			transition: none;
+		}
+
+		.flyout-popover {
+			animation: none;
 		}
 	}
 </style>
