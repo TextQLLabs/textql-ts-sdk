@@ -4,8 +4,6 @@ import { Textql } from '@textql/sdk';
 import type { ConnectError, TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
 import { createStreamingClient, type StreamingClient } from '@textql/sdk/streaming';
 
-const RPC_SERVER_URL = 'https://app.textql.com/rpc/public';
-
 type Clients = { client: Textql; streaming: StreamingClient };
 
 let cached: Clients | undefined;
@@ -14,10 +12,10 @@ let cached: Clients | undefined;
 export function textqlClients(): Clients {
 	const apiKey = env.TEXTQL_API_KEY;
 	if (!apiKey) error(503, 'TEXTQL_API_KEY is not configured.');
-	cached ??= {
-		client: new Textql({ apiKey, serverURL: RPC_SERVER_URL }),
-		streaming: createStreamingClient({ apiKey, serverURL: RPC_SERVER_URL })
-	};
+	if (!cached) {
+		const client = new Textql({ apiKey });
+		cached = { client, streaming: createStreamingClient(client) };
+	}
 	return cached;
 }
 
