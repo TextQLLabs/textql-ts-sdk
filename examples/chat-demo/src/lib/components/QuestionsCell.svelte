@@ -1,9 +1,18 @@
 <script lang="ts">
-	import Check from '@lucide/svelte/icons/check';
-	import { asRecords, asString, asStrings, getCellPayload, type CellLike } from '$lib/cells';
-	import { toast } from 'svelte-sonner';
+	import Check from "@lucide/svelte/icons/check";
+	import {
+		asRecords,
+		asString,
+		asStrings,
+		getCellPayload,
+		type CellLike,
+	} from "$lib/cells";
+	import { toast } from "svelte-sonner";
 
-	let { cell }: { cell: CellLike } = $props();
+	// onAnswered lets the page re-attach its watch stream so the resumed run's
+	// cells show up (submitting halts → resumes the run on the backend).
+	let { cell, onAnswered }: { cell: CellLike; onAnswered?: () => void } =
+		$props();
 
 	// Cell payloads arrive as untyped proto JSON; read them with the same
 	// coercion helpers the rest of the demo uses (enums are string names).
@@ -11,38 +20,53 @@
 	const status = $derived(asString(payload.status));
 	const questions = $derived(asRecords(payload.questions));
 	const summary = $derived(asRecords(payload.answers));
-	const pending = $derived(status === '' || status.endsWith('PENDING'));
-	const dismissed = $derived(status.endsWith('DISMISSED'));
+	const pending = $derived(status === "" || status.endsWith("PENDING"));
+	const dismissed = $derived(status.endsWith("DISMISSED"));
 
-	type Working = { selected: string[]; custom: string; other: boolean; inputs: string[] };
+	type Working = {
+		selected: string[];
+		custom: string;
+		other: boolean;
+		inputs: string[];
+	};
 	let working = $state<Working[]>([]);
 	let submitting = $state(false);
 	let done = $state(false); // optimistic: hide the form as soon as we submit
 
-	// Re-seed the form only when a different questions cell mounts, so streamed
-	// re-renders of the same cell don't wipe in-progress edits.
-	let initId = '';
-	$effect(() => {
-		const id = asString(cell.id);
-		if (id === initId) return;
-		initId = id;
-		working = questions.map((q) => ({
-			selected: [],
-			custom: '',
-			other: false,
-			inputs: asRecords(q.inputs).map(() => '')
-		}));
+	const blank = (q: Record<string, unknown>): Working => ({
+		selected: [],
+		custom: "",
+		other: false,
+		inputs: asRecords(q.inputs).map(() => ""),
 	});
 
-	function kindOf(q: Record<string, unknown>): 'choice' | 'multichoice' | 'inputs' {
+	let initId = "";
+	$effect(() => {
+		const id = asString(cell.id);
+		const reset = id !== initId;
+		if (reset) initId = id;
+		if (reset || working.length !== questions.length) {
+			working = questions.map((q, i) =>
+				reset ? blank(q) : (working[i] ?? blank(q)),
+			);
+		}
+	});
+
+	function kindOf(
+		q: Record<string, unknown>,
+	): "choice" | "multichoice" | "inputs" {
 		const k = asString(q.kind);
-		if (k.endsWith('MULTICHOICE')) return 'multichoice';
-		if (k.endsWith('INPUTS')) return 'inputs';
-		return 'choice';
+		if (k.endsWith("MULTICHOICE")) return "multichoice";
+		if (k.endsWith("INPUTS")) return "inputs";
+		return "choice";
 	}
-	function inputType(input: Record<string, unknown>): 'text' | 'multiline' | 'password' {
-		if (input.sensitive === true) return 'password';
-		return asString(input.kind).endsWith('MULTILINE') ? 'multiline' : 'text';
+	function inputType(
+		input: Record<string, unknown>,
+	): "text" | "multiline" | "password" {
+		if (input.sensitive === true) return "password";
+		return asString(input.kind).endsWith("MULTILINE")
+			? "multiline"
+			: "text";
 	}
 
 	function pickChoice(qi: number, name: string) {
@@ -64,7 +88,27 @@
 		working[qi].selected = [...set];
 	}
 
-	async function send(action: 'submit' | 'dismiss') {
+	function answerText(qi: number): string {
+		const ans = summary[qi];
+		const server = ans
+			? [
+					...asStrings(ans.selected),
+					asString(ans.custom),
+					...asStrings(ans.inputs),
+				].filter(Boolean)
+			: [];
+		if (server.length) return server.join(", ");
+		const w = working[qi];
+		if (!w) return "";
+		const local = [
+			...w.selected,
+			w.other ? w.custom : "",
+			...w.inputs,
+		].filter(Boolean);
+		return local.join(", ");
+	}
+
+	async function send(action: "submit" | "dismiss") {
 		submitting = true;
 		try {
 			const answers = working.map((w, i) => {
@@ -73,21 +117,32 @@
 					selected: w.selected,
 					custom: w.other && w.custom ? w.custom : undefined,
 					inputs: w.inputs,
-					provided: inputs.map((_, j) => (w.inputs[j] ?? '').length > 0)
+					provided: inputs.map(
+						(_, j) => (w.inputs[j] ?? "").length > 0,
+					),
 				};
 			});
-			const res = await fetch('/api/questions', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ action, cellId: asString(cell.id), answers })
+			const res = await fetch("/api/questions", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					action,
+					cellId: asString(cell.id),
+					answers,
+				}),
 			});
 			if (!res.ok) {
-				const body = (await res.json().catch(() => ({}))) as { error?: string };
+				const body = (await res.json().catch(() => ({}))) as {
+					error?: string;
+				};
 				throw new Error(body.error ?? `Request failed (${res.status})`);
 			}
 			done = true;
+			onAnswered?.();
 		} catch (err) {
-			toast.error(err instanceof Error ? err.message : 'Failed to send answers.');
+			toast.error(
+				err instanceof Error ? err.message : "Failed to send answers.",
+			);
 		} finally {
 			submitting = false;
 		}
@@ -97,7 +152,10 @@
 {#snippet indicator(chosen: boolean, round: boolean)}
 	<span class="indicator" class:round class:on={chosen}>
 		{#if chosen}
-			{#if round}<span class="dot"></span>{:else}<Check size={11} strokeWidth={3} />{/if}
+			{#if round}<span class="dot"></span>{:else}<Check
+					size={11}
+					strokeWidth={3}
+				/>{/if}
 		{/if}
 	</span>
 {/snippet}
@@ -114,24 +172,30 @@
 					<p class="question-explain">{asString(q.explanation)}</p>
 				{/if}
 
-				{#if kind === 'choice' || kind === 'multichoice'}
-					{@const multi = kind === 'multichoice'}
+				{#if kind === "choice" || kind === "multichoice"}
+					{@const multi = kind === "multichoice"}
 					<div class="options">
 						{#each asRecords(q.options) as opt (asString(opt.name))}
 							{@const name = asString(opt.name)}
-							{@const chosen = working[qi]?.selected.includes(name) ?? false}
+							{@const chosen =
+								working[qi]?.selected.includes(name) ?? false}
 							<button
 								type="button"
 								class="option"
 								class:selected={chosen}
 								aria-pressed={chosen}
-								onclick={() => (multi ? toggleMulti(qi, name) : pickChoice(qi, name))}
+								onclick={() =>
+									multi
+										? toggleMulti(qi, name)
+										: pickChoice(qi, name)}
 							>
 								{@render indicator(chosen, !multi)}
 								<span class="option-body">
 									<span class="option-name">{name}</span>
 									{#if asString(opt.description)}
-										<span class="option-desc">{asString(opt.description)}</span>
+										<span class="option-desc"
+											>{asString(opt.description)}</span
+										>
 									{/if}
 								</span>
 							</button>
@@ -146,7 +210,10 @@
 								onclick={() => pickOther(qi, multi)}
 							>
 								{@render indicator(chosen, !multi)}
-								<span class="option-body"><span class="option-name">Other…</span></span>
+								<span class="option-body"
+									><span class="option-name">Other…</span
+									></span
+								>
 							</button>
 							{#if chosen}
 								<input
@@ -165,16 +232,25 @@
 								<span class="field-label">
 									{asString(input.label)}
 									{#if asString(input.formPathLabel)}
-										<em class="option-desc">→ {asString(input.formPathLabel)}</em>
+										<em class="option-desc"
+											>→ {asString(
+												input.formPathLabel,
+											)}</em
+										>
 									{/if}
 								</span>
-								{#if type === 'multiline'}
-									<textarea class="text-input" rows="3" bind:value={working[qi].inputs[ii]}
+								{#if type === "multiline"}
+									<textarea
+										class="text-input"
+										rows="3"
+										bind:value={working[qi].inputs[ii]}
 									></textarea>
 								{:else}
 									<input
 										class="text-input"
-										type={type === 'password' ? 'password' : 'text'}
+										type={type === "password"
+											? "password"
+											: "text"}
 										bind:value={working[qi].inputs[ii]}
 									/>
 								{/if}
@@ -186,22 +262,31 @@
 		{/each}
 
 		<div class="actions">
-			<button type="button" class="btn-submit" disabled={submitting} onclick={() => send('submit')}>
+			<button
+				type="button"
+				class="btn-submit"
+				disabled={submitting}
+				onclick={() => send("submit")}
+			>
 				Submit
 			</button>
-			<button type="button" class="btn-skip" disabled={submitting} onclick={() => send('dismiss')}>
+			<button
+				type="button"
+				class="btn-skip"
+				disabled={submitting}
+				onclick={() => send("dismiss")}
+			>
 				Skip
 			</button>
 		</div>
 	{:else}
-		<header class="questions-head">{dismissed ? 'Questions skipped' : 'Answers submitted'}</header>
+		<header class="questions-head">
+			{dismissed ? "Questions skipped" : "Answers submitted"}
+		</header>
 		{#each questions as q, qi (qi)}
-			{@const ans = summary[qi]}
-			{@const chosen = ans ? [...asStrings(ans.selected), asString(ans.custom)].filter(Boolean) : []}
-			{@const filled = ans ? asStrings(ans.inputs).filter(Boolean) : []}
 			<div class="answered">
 				<span class="answered-q">{asString(q.question)}</span>
-				<span class="answered-a">{[...chosen, ...filled].join(', ') || '—'}</span>
+				<span class="answered-a">{answerText(qi) || "—"}</span>
 			</div>
 		{/each}
 	{/if}
@@ -268,7 +353,11 @@
 			background 0.12s ease;
 	}
 	.option:hover {
-		border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
+		border-color: color-mix(
+			in srgb,
+			var(--color-accent) 45%,
+			var(--color-line)
+		);
 	}
 	.option.selected {
 		border-color: var(--color-accent);
@@ -284,7 +373,8 @@
 		width: 15px;
 		height: 15px;
 		margin-top: 1px;
-		border: 1.5px solid color-mix(in srgb, var(--color-ink) 25%, transparent);
+		border: 1.5px solid
+			color-mix(in srgb, var(--color-ink) 25%, transparent);
 		border-radius: 4px;
 		display: flex;
 		align-items: center;

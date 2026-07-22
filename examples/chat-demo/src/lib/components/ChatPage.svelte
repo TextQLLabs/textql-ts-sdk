@@ -484,6 +484,13 @@
 		}
 	}
 
+	function handleQuestionsAnswered() {
+		const id =
+			chatId ??
+			(typeof page.params.id === "string" ? page.params.id : undefined);
+		if (id) void resumeLiveRun(id);
+	}
+
 	async function sendMessage() {
 		const body = draft.trim();
 		if (!body || sending) return;
@@ -1000,6 +1007,7 @@
 												cells={message.cells}
 												streaming={message.streaming ??
 													false}
+												onAnswered={handleQuestionsAnswered}
 											/>
 										{:else if message.body}
 											<p class="message-body">

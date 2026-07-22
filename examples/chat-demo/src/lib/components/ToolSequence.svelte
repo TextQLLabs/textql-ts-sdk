@@ -55,7 +55,11 @@
 		};
 	}
 
-	let { cells, streaming = false }: { cells: CellLike[]; streaming?: boolean } = $props();
+	let {
+		cells,
+		streaming = false,
+		onAnswered
+	}: { cells: CellLike[]; streaming?: boolean; onAnswered?: () => void } = $props();
 
 	// ChatPage's upsertAssistantCell reassigns the cells array on every stream
 	// snapshot, so array identity alone invalidates this derived.
@@ -155,7 +159,7 @@
 					/>
 				</div>
 			{:else if segment.type === 'questions'}
-				<QuestionsCell cell={segment.cell} />
+				<QuestionsCell cell={segment.cell} {onAnswered} />
 			{:else}
 				{@const open = expandedBatches.has(key)}
 				{@const batchRunning = segment.cells.some((cell) =>
