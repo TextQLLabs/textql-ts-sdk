@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Check from '@lucide/svelte/icons/check';
 	import { asRecords, asString, asStrings, getCellPayload, type CellLike } from '$lib/cells';
 	import { toast } from 'svelte-sonner';
 
@@ -48,14 +49,18 @@
 		working[qi].selected = [name];
 		working[qi].other = false;
 	}
-	function pickOther(qi: number) {
-		working[qi].selected = [];
-		working[qi].other = true;
+	function pickOther(qi: number, multi: boolean) {
+		if (multi) {
+			working[qi].other = !working[qi].other;
+		} else {
+			working[qi].selected = [];
+			working[qi].other = true;
+		}
 	}
-	function toggleMulti(qi: number, name: string, checked: boolean) {
+	function toggleMulti(qi: number, name: string) {
 		const set = new Set(working[qi].selected);
-		if (checked) set.add(name);
-		else set.delete(name);
+		if (set.has(name)) set.delete(name);
+		else set.add(name);
 		working[qi].selected = [...set];
 	}
 
@@ -89,101 +94,95 @@
 	}
 </script>
 
+{#snippet indicator(chosen: boolean, round: boolean)}
+	<span class="indicator" class:round class:on={chosen}>
+		{#if chosen}
+			{#if round}<span class="dot"></span>{:else}<Check size={11} strokeWidth={3} />{/if}
+		{/if}
+	</span>
+{/snippet}
+
 <section class="questions" class:resolved={!pending || done}>
 	{#if pending && !done}
 		<header class="questions-head">Please answer to continue</header>
 
 		{#each questions as q, qi (qi)}
 			{@const kind = kindOf(q)}
-			<fieldset class="question">
-				<legend class="question-title">{asString(q.question)}</legend>
+			<div class="question">
+				<p class="question-title">{asString(q.question)}</p>
 				{#if asString(q.explanation)}
 					<p class="question-explain">{asString(q.explanation)}</p>
 				{/if}
 
-				{#if kind === 'choice'}
-					{#each asRecords(q.options) as opt (asString(opt.name))}
-						<label class="option">
-							<input
-								type="radio"
-								name={`q-${qi}`}
-								checked={working[qi]?.selected[0] === asString(opt.name)}
-								onchange={() => pickChoice(qi, asString(opt.name))}
-							/>
-							<span>
-								{asString(opt.name)}
-								{#if asString(opt.description)}
-									<em class="option-desc">{asString(opt.description)}</em>
-								{/if}
-							</span>
-						</label>
-					{/each}
-					{#if q.allowCustom === true}
-						<label class="option">
-							<input
-								type="radio"
-								name={`q-${qi}`}
-								checked={working[qi]?.other}
-								onchange={() => pickOther(qi)}
-							/>
-							<span>Other…</span>
-						</label>
-						{#if working[qi]?.other}
-							<input class="text-input" bind:value={working[qi].custom} placeholder="Your answer" />
-						{/if}
-					{/if}
-				{:else if kind === 'multichoice'}
-					{#each asRecords(q.options) as opt (asString(opt.name))}
-						<label class="option">
-							<input
-								type="checkbox"
-								checked={working[qi]?.selected.includes(asString(opt.name))}
-								onchange={(e) => toggleMulti(qi, asString(opt.name), e.currentTarget.checked)}
-							/>
-							<span>
-								{asString(opt.name)}
-								{#if asString(opt.description)}
-									<em class="option-desc">{asString(opt.description)}</em>
-								{/if}
-							</span>
-						</label>
-					{/each}
-					{#if q.allowCustom === true}
-						<label class="option">
-							<input
-								type="checkbox"
-								checked={working[qi]?.other}
-								onchange={(e) => (working[qi].other = e.currentTarget.checked)}
-							/>
-							<span>Other…</span>
-						</label>
-						{#if working[qi]?.other}
-							<input class="text-input" bind:value={working[qi].custom} placeholder="Your answer" />
-						{/if}
-					{/if}
-				{:else}
-					{#each asRecords(q.inputs) as input, ii (ii)}
-						{@const type = inputType(input)}
-						<label class="field">
-							<span class="field-label">
-								{asString(input.label)}
-								{#if asString(input.formPathLabel)}
-									<em class="option-desc">→ {asString(input.formPathLabel)}</em>
-								{/if}
-							</span>
-							{#if type === 'multiline'}
-								<textarea class="text-input" rows="3" bind:value={working[qi].inputs[ii]}></textarea>
-							{:else}
+				{#if kind === 'choice' || kind === 'multichoice'}
+					{@const multi = kind === 'multichoice'}
+					<div class="options">
+						{#each asRecords(q.options) as opt (asString(opt.name))}
+							{@const name = asString(opt.name)}
+							{@const chosen = working[qi]?.selected.includes(name) ?? false}
+							<button
+								type="button"
+								class="option"
+								class:selected={chosen}
+								aria-pressed={chosen}
+								onclick={() => (multi ? toggleMulti(qi, name) : pickChoice(qi, name))}
+							>
+								{@render indicator(chosen, !multi)}
+								<span class="option-body">
+									<span class="option-name">{name}</span>
+									{#if asString(opt.description)}
+										<span class="option-desc">{asString(opt.description)}</span>
+									{/if}
+								</span>
+							</button>
+						{/each}
+						{#if q.allowCustom === true}
+							{@const chosen = working[qi]?.other ?? false}
+							<button
+								type="button"
+								class="option"
+								class:selected={chosen}
+								aria-pressed={chosen}
+								onclick={() => pickOther(qi, multi)}
+							>
+								{@render indicator(chosen, !multi)}
+								<span class="option-body"><span class="option-name">Other…</span></span>
+							</button>
+							{#if chosen}
 								<input
 									class="text-input"
-									type={type === 'password' ? 'password' : 'text'}
-									bind:value={working[qi].inputs[ii]}
+									bind:value={working[qi].custom}
+									placeholder="Type your answer"
 								/>
 							{/if}
-						</label>
-					{/each}
+						{/if}
+					</div>
+				{:else}
+					<div class="inputs">
+						{#each asRecords(q.inputs) as input, ii (ii)}
+							{@const type = inputType(input)}
+							<label class="field">
+								<span class="field-label">
+									{asString(input.label)}
+									{#if asString(input.formPathLabel)}
+										<em class="option-desc">→ {asString(input.formPathLabel)}</em>
+									{/if}
+								</span>
+								{#if type === 'multiline'}
+									<textarea class="text-input" rows="3" bind:value={working[qi].inputs[ii]}
+									></textarea>
+								{:else}
+									<input
+										class="text-input"
+										type={type === 'password' ? 'password' : 'text'}
+										bind:value={working[qi].inputs[ii]}
+									/>
+								{/if}
+							</label>
+						{/each}
+					</div>
 				{/if}
-			</fieldset>
+			</div>
 		{/each}
 
 		<div class="actions">
@@ -212,32 +211,30 @@
 	.questions {
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-sm, 10px);
-		padding: 0.7rem 0.8rem;
+		padding: 0.75rem 0.85rem;
 		margin: 0.25rem 0;
 		background: color-mix(in srgb, var(--color-ink) 3.5%, transparent);
 		display: flex;
 		flex-direction: column;
-		gap: 0.6rem;
+		gap: 0.7rem;
 		font-size: 12.5px;
 		color: var(--color-ink);
 	}
 	.questions-head {
 		font-weight: 600;
-		font-size: 12.5px;
+		font-size: 12px;
+		letter-spacing: 0.01em;
 		color: var(--color-muted);
 	}
 	.question {
-		border: 0;
-		margin: 0;
-		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.3rem;
+		gap: 0.35rem;
 	}
 	.question-title {
 		font-weight: 500;
 		font-size: 13px;
-		padding: 0;
+		margin: 0;
 	}
 	.question-explain,
 	.option-desc {
@@ -246,23 +243,91 @@
 		font-style: normal;
 		margin: 0;
 	}
-	.option-desc {
-		margin-left: 0.4rem;
+	.options {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
 	}
+	/* Selectable card: neutral by default, accent border + tint when picked. */
 	.option {
 		display: flex;
-		align-items: baseline;
-		gap: 0.45rem;
+		align-items: flex-start;
+		gap: 0.5rem;
+		width: 100%;
+		text-align: left;
+		font: inherit;
+		font-size: 12.5px;
+		color: var(--color-ink);
+		padding: 0.4rem 0.55rem;
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-xs, 6px);
+		background: color-mix(in srgb, var(--color-paper) 60%, #fff);
 		cursor: pointer;
-		line-height: 1.5;
+		transition:
+			border-color 0.12s ease,
+			background 0.12s ease;
 	}
-	.option input {
-		accent-color: var(--color-accent);
+	.option:hover {
+		border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
+	}
+	.option.selected {
+		border-color: var(--color-accent);
+		background: color-mix(in srgb, var(--color-accent) 8%, #fff);
+	}
+	.option:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 1px;
+	}
+	/* Custom radio/checkbox indicator so the picked state reads clearly. */
+	.indicator {
+		flex: 0 0 auto;
+		width: 15px;
+		height: 15px;
+		margin-top: 1px;
+		border: 1.5px solid color-mix(in srgb, var(--color-ink) 25%, transparent);
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+		transition:
+			border-color 0.12s ease,
+			background 0.12s ease;
+	}
+	.indicator.round {
+		border-radius: 50%;
+	}
+	.option.selected .indicator {
+		border-color: var(--color-accent);
+		background: var(--color-accent);
+	}
+	.option.selected .indicator.round {
+		background: #fff;
+	}
+	.dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--color-accent);
+	}
+	.option-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.05rem;
+		min-width: 0;
+	}
+	.option-name {
+		font-weight: 450;
+	}
+	.inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 	.field {
 		display: flex;
 		flex-direction: column;
-		gap: 0.2rem;
+		gap: 0.25rem;
 	}
 	.field-label {
 		font-weight: 500;
@@ -270,7 +335,7 @@
 	.text-input {
 		font: inherit;
 		font-size: 12.5px;
-		padding: 0.3rem 0.5rem;
+		padding: 0.35rem 0.55rem;
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-xs, 6px);
 		background: #fff;
@@ -285,19 +350,20 @@
 	.actions {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.6rem;
 		margin-top: 0.15rem;
 	}
 	.btn-submit {
 		font: inherit;
 		font-size: 12px;
 		font-weight: 500;
-		padding: 0.3rem 0.8rem;
+		padding: 0.32rem 0.85rem;
 		border: 0;
 		border-radius: var(--radius-xs, 6px);
 		background: var(--color-accent);
 		color: #fff;
 		cursor: pointer;
+		transition: background 0.12s ease;
 	}
 	.btn-submit:hover {
 		background: color-mix(in srgb, var(--color-accent) 88%, #000);
@@ -305,7 +371,7 @@
 	.btn-skip {
 		font: inherit;
 		font-size: 12px;
-		padding: 0.3rem 0.2rem;
+		padding: 0.32rem 0.3rem;
 		border: 0;
 		background: transparent;
 		color: var(--color-muted);
