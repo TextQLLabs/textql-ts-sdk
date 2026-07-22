@@ -24,6 +24,7 @@
 		previewPanel,
 		type PreviewItem,
 	} from "$lib/previewPanel.svelte";
+	import { parseStreamLine } from "$lib/streamEvents";
 	import { isRecord } from "$lib/utils";
 
 	type Message = {
@@ -331,58 +332,57 @@
 	}
 
 	function applyStreamLine(line: string, assistantId: number) {
-		const trimmed = line.trim();
-		if (!trimmed) return;
+		const event = parseStreamLine(line);
+		if (!event) return;
 
-		let event: unknown;
-		try {
-			event = JSON.parse(trimmed);
-		} catch {
-			// Heartbeats / partial garbage must not abort the whole stream.
-			return;
-		}
-		if (!isRecord(event)) return;
-
-		if (event.type === "meta" && typeof event.chatId === "string") {
-			chatId = event.chatId;
-			if (typeof event.userCellId === "string" && event.userCellId) {
-				streamUserCellId = event.userCellId;
+		switch (event.type) {
+			case "meta": {
+				chatId = event.chatId;
+				if (event.userCellId) streamUserCellId = event.userCellId;
+				void setChatRoute(event.chatId, true);
+				return;
 			}
-			void setChatRoute(event.chatId, true);
-			return;
-		}
-
-		if (event.type === "done") {
-			const assistant = messages.find(
-				(message) => message.id === assistantId,
-			);
-			if (assistant) {
-				assistant.streaming = false;
-				settleCells(assistant.cells);
+			case "done": {
+				const assistant = messages.find(
+					(message) => message.id === assistantId,
+				);
+				if (assistant) {
+					assistant.streaming = false;
+					settleCells(assistant.cells);
+				}
+				return;
 			}
-			return;
+			case "runStarted": {
+				if (!messages.some((message) => message.id === assistantId)) {
+					messages.push({
+						id: assistantId,
+						role: "assistant",
+						body: "",
+						streaming: true,
+					});
+				}
+				sending = true;
+				stickToBottom = true;
+				return;
+			}
+			case "idle":
+				return;
+			case "error": {
+				const assistant = messages.find(
+					(message) => message.id === assistantId,
+				);
+				if (assistant) assistant.body = event.message;
+				return;
+			}
+			case "cell": {
+				const assistant = messages.find(
+					(message) => message.id === assistantId,
+				);
+				if (!assistant || isEchoedUserCell(event.cell)) return;
+				upsertAssistantCell(assistant, event.cell);
+				return;
+			}
 		}
-
-		const assistant = messages.find(
-			(message) => message.id === assistantId,
-		);
-		if (!assistant) return;
-
-		// grpc-gateway wraps stream messages as {result} and failures as {error}.
-		if (isRecord(event.error)) {
-			assistant.body =
-				typeof event.error.message === "string"
-					? event.error.message
-					: "The chat stream failed.";
-			return;
-		}
-
-		// Accept both `{ result: cell }` and a bare cell snapshot.
-		const cell = isRecord(event.result) ? event.result : event;
-		if (!isRecord(cell) || typeof cell.id !== "string") return;
-		if (isEchoedUserCell(cell)) return;
-
-		upsertAssistantCell(assistant, cell);
 	}
 
 	function onConversationScroll() {
@@ -396,6 +396,77 @@
 		if (!stickToBottom || !conversationEl) return;
 		await tick();
 		conversationEl.scrollTop = conversationEl.scrollHeight;
+	}
+
+	async function pumpNdjson(
+		body: ReadableStream<Uint8Array>,
+		request: AbortController,
+		assistantId: number,
+	) {
+		const reader = body.getReader();
+		const decoder = new TextDecoder();
+		let buffer = "";
+
+		while (true) {
+			const { done, value } = await reader.read();
+			if (activeRequest !== request) return;
+			if (value) buffer += decoder.decode(value, { stream: true });
+			if (done) buffer += decoder.decode();
+
+			const lines = buffer.split("\n");
+			buffer = lines.pop() ?? "";
+			for (const line of lines) applyStreamLine(line, assistantId);
+			if (done && buffer) {
+				applyStreamLine(buffer, assistantId);
+				buffer = "";
+			}
+			await scrollConversationToBottom();
+
+			if (done) break;
+		}
+	}
+
+	function lastCellId(): string | undefined {
+		for (let i = messages.length - 1; i >= 0; i--) {
+			const cells = messages[i].cells;
+			if (!cells?.length) continue;
+			const id = cells[cells.length - 1]?.id;
+			if (typeof id === "string" && id) return id;
+		}
+		return undefined;
+	}
+
+	async function resumeLiveRun(id: string) {
+		const cursor = lastCellId();
+		const request = new AbortController();
+		activeRequest = request;
+		const assistantId = Date.now();
+
+		try {
+			const query = cursor
+				? `?latestCompleteCellId=${encodeURIComponent(cursor)}`
+				: "";
+			const response = await fetch(
+				`/api/chats/${encodeURIComponent(id)}/watch${query}`,
+				{ signal: request.signal },
+			);
+			if (!response.ok || !response.body) return;
+			await pumpNdjson(response.body, request, assistantId);
+		} catch {
+			// Resume is best-effort; the chat renders fine without it.
+		} finally {
+			const assistant = messages.find(
+				(message) => message.id === assistantId,
+			);
+			if (assistant?.streaming) {
+				assistant.streaming = false;
+				settleCells(assistant.cells);
+			}
+			if (activeRequest === request) {
+				activeRequest = undefined;
+				sending = false;
+			}
+		}
 	}
 
 	async function sendMessage() {
@@ -441,29 +512,7 @@
 				throw new Error(apiErrorDetail(payload, "Request failed."));
 			}
 
-			const reader = response.body.getReader();
-			const decoder = new TextDecoder();
-			let buffer = "";
-
-			while (true) {
-				const { done, value } = await reader.read();
-				if (activeRequest !== request) return;
-				if (value) buffer += decoder.decode(value, { stream: true });
-				if (done) buffer += decoder.decode();
-
-				const lines = buffer.split("\n");
-				buffer = lines.pop() ?? "";
-				for (const line of lines) applyStreamLine(line, assistantId);
-				if (done && buffer) {
-					applyStreamLine(buffer, assistantId);
-					buffer = "";
-				}
-
-				// Yield so Svelte can paint between network chunks.
-				await scrollConversationToBottom();
-
-				if (done) break;
-			}
+			await pumpNdjson(response.body, request, assistantId);
 
 			// New chat: remember the config that was actually used.
 			if (!existingChatId) {
@@ -584,6 +633,10 @@
 			}
 
 			closeSidebarIfMobile();
+
+			// A run may still be executing on this chat (e.g. the page was
+			// refreshed mid-stream) — re-attach so progress keeps rendering.
+			void resumeLiveRun(id);
 		} catch (error) {
 			if (request.signal.aborted || request !== chatLoadRequest) return;
 			chatLoadError =

@@ -56,16 +56,12 @@ export const GET: RequestHandler = async ({ params }) => {
 
 		const chat = isRecord(result.chat) ? result.chat : null;
 
-		// Prefer raw cell history: assistant turns keep every cell (SQL, Python,
-		// web search, thinking, ...) so the client can render the full tool
-		// sequence, not just flattened text.
 		type Turn = { role: 'you' | 'assistant'; body?: string; cells?: unknown[] };
 		const messages: Turn[] = [];
 
 		if (historyCells) {
 			let assistantTurn: Turn | null = null;
-			// GetChatHistory is newest-first, including cells within each turn.
-			for (const cell of [...historyCells].reverse()) {
+			for (const cell of historyCells) {
 				if (!isRecord(cell)) continue;
 				if (cell.generated !== true) {
 					const content = userTextContent(cell);

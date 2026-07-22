@@ -1,5 +1,6 @@
 import { CHAT_MODEL_IDS, DEFAULT_CHAT_MODEL } from '$lib/chatModels';
 import { isConnectError, proxyError, textqlClients } from '$lib/server/textql';
+import type { StreamEventOut } from '$lib/streamEvents';
 import { toJson } from '@bufbuild/protobuf';
 import { json } from '@sveltejs/kit';
 import { CellSchema, type WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
@@ -94,7 +95,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 
 		const encoder = new TextEncoder();
-		const line = (value: unknown) => encoder.encode(`${JSON.stringify(value)}\n`);
+		const line = (value: StreamEventOut) => encoder.encode(`${JSON.stringify(value)}\n`);
 
 		const stream = new ReadableStream<Uint8Array>({
 			async start(controller) {
@@ -103,7 +104,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					for (let next = first; !next.done; next = await events.next()) {
 						const payload = next.value.payload;
 						if (payload.case === 'cell') {
-							controller.enqueue(line(toJson(CellSchema, payload.value)));
+							controller.enqueue(line(toJson(CellSchema, payload.value) as Record<string, unknown>));
 						} else if (payload.case === 'runComplete') {
 							controller.enqueue(line({ type: 'done' }));
 							break;
