@@ -135,7 +135,11 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 
 		const reader = upstream.body.getReader();
 		const encoder = new TextEncoder();
-		const metadata = encoder.encode(`${JSON.stringify({ type: 'meta', chatId })}\n`);
+		// Include userCellId so the client can filter the echoed user md cell by id
+		// instead of relying on `generated` (which can be omitted mid-stream).
+		const metadata = encoder.encode(
+			`${JSON.stringify({ type: 'meta', chatId, userCellId: cellId })}\n`
+		);
 
 		const stream = new ReadableStream<Uint8Array>({
 			async start(controller) {
@@ -144,22 +148,26 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 					while (true) {
 						const { done, value } = await reader.read();
 						if (done) break;
-						controller.enqueue(value);
+						if (value) controller.enqueue(value);
 					}
 					controller.close();
 				} catch (error) {
 					controller.error(error);
+				} finally {
+					reader.releaseLock();
 				}
 			},
-			cancel() {
-				return reader.cancel();
+			cancel(reason) {
+				return reader.cancel(reason);
 			}
 		});
 
 		return new Response(stream, {
 			headers: {
 				'Content-Type': 'application/x-ndjson; charset=utf-8',
-				'Cache-Control': 'no-cache, no-transform'
+				'Cache-Control': 'no-cache, no-transform',
+				// Prevent reverse proxies from buffering the NDJSON body.
+				'X-Accel-Buffering': 'no'
 			}
 		});
 	} catch (error) {

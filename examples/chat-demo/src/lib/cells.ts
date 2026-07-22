@@ -43,7 +43,101 @@ export type CellLike = Record<string, unknown> & {
 	generated?: boolean;
 	toolSummary?: string | null;
 	execError?: string | null;
+	/** Wall-clock start from the API (ISO string or Date). */
+	timestamp?: string | Date | number | null;
+	startedAt?: string | Date | number | null;
+	createdAt?: string | Date | number | null;
+	lifecycle?: string | null;
+	durationMs?: number | string | null;
 };
+
+const TERMINAL_LIFECYCLES = new Set([
+	'LIFECYCLE_EXECUTED',
+	'LIFECYCLE_HALTED'
+]);
+
+const EXECUTING_LIFECYCLES = new Set([
+	'LIFECYCLE_CREATING',
+	'LIFECYCLE_CREATED',
+	'LIFECYCLE_EXECUTING',
+	'LIFECYCLE_HANDOFF_PENDING'
+]);
+
+/**
+ * True while a tool/thought cell is still in flight.
+ * Prefer lifecycle / explicit `complete: false`. When those are sparse
+ * (live stream snapshots), pass `assumeIncomplete` from the active segment.
+ */
+export function isCellExecuting(
+	cell: CellLike,
+	assumeIncomplete = false
+): boolean {
+	const lifecycle = typeof cell.lifecycle === 'string' ? cell.lifecycle : '';
+	// Lifecycle wins when present — `complete` can lag mid-stream.
+	if (lifecycle && EXECUTING_LIFECYCLES.has(lifecycle)) return true;
+	if (lifecycle && TERMINAL_LIFECYCLES.has(lifecycle)) return false;
+	if (cell.complete === true) return false;
+	if (cell.complete === false) return true;
+	return assumeIncomplete && cell.complete == null;
+}
+
+/** Finished enough to show final wall-clock duration (not a live timer). */
+export function isCellFinished(cell: CellLike): boolean {
+	const lifecycle = typeof cell.lifecycle === 'string' ? cell.lifecycle : '';
+	if (lifecycle && EXECUTING_LIFECYCLES.has(lifecycle)) return false;
+	if (lifecycle && TERMINAL_LIFECYCLES.has(lifecycle)) return true;
+	return cell.complete === true;
+}
+
+function parseTimeMs(value: unknown): number | null {
+	if (value == null) return null;
+	if (typeof value === 'number' && Number.isFinite(value)) {
+		// Seconds vs milliseconds heuristic.
+		return value < 1e12 ? value * 1000 : value;
+	}
+	if (value instanceof Date) {
+		const ms = value.getTime();
+		return Number.isFinite(ms) ? ms : null;
+	}
+	if (typeof value === 'string' && value.trim()) {
+		const ms = Date.parse(value);
+		return Number.isFinite(ms) ? ms : null;
+	}
+	return null;
+}
+
+/** Prefer API timestamps; caller falls back to a local clock when null. */
+export function getCellStartedAtMs(cell: CellLike): number | null {
+	return (
+		parseTimeMs(cell.startedAt) ??
+		parseTimeMs(cell.createdAt) ??
+		parseTimeMs(cell.timestamp)
+	);
+}
+
+/** Compact elapsed label: `3s`, `1m 05s`, `1h 02m`. */
+export function formatElapsed(ms: number): string {
+	const totalSec = Math.max(0, Math.floor(ms / 1000));
+	if (totalSec < 60) return `${totalSec}s`;
+	const mins = Math.floor(totalSec / 60);
+	const secs = totalSec % 60;
+	if (mins < 60) return `${mins}m ${String(secs).padStart(2, '0')}s`;
+	const hours = Math.floor(mins / 60);
+	const remMins = mins % 60;
+	return `${hours}h ${String(remMins).padStart(2, '0')}m`;
+}
+
+/** Earliest start among still-running cells in a batch (for the header timer). */
+export function getBatchStartedAtMs(cells: CellLike[]): number | null {
+	let earliest: number | null = null;
+	for (const cell of cells) {
+		if (!isCellExecuting(cell)) continue;
+		const started = getCellStartedAtMs(cell);
+		if (started == null) continue;
+		if (earliest == null || started < earliest) earliest = started;
+	}
+	return earliest;
+}
 
 export type IconComponent = Component<{ size?: number | string; class?: string }>;
 
@@ -212,9 +306,14 @@ export function getUniqueToolIcons(cells: CellLike[]): { key: string; icon: Icon
 }
 
 /**
- * How a chat turn is chunked for the UI: generated assistant markdown
+ * How a chat turn is chunked for the UI: assistant markdown
  * (`mdCell` / `ansCell`) splits the stream. Everything between those —
  * thinking + tool calls — collapses into one expandable "toolgroup".
+ *
+ * Note: these arrays are already scoped to the assistant turn (user echoes
+ * are filtered out before this runs). Do not require `generated === true` —
+ * stream snapshots sometimes omit that flag until the cell completes, which
+ * would hide live markdown inside a collapsed tool group.
  */
 export type Segment =
 	| { type: 'assistant'; cell: CellLike }
@@ -235,7 +334,7 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 
 	for (const cell of cells) {
 		const cellCase = getCellCase(cell);
-		if (cellCase && TEXT_CASES.has(cellCase) && cell.generated) {
+		if (cellCase && TEXT_CASES.has(cellCase)) {
 			flushGroup();
 			result.push({ type: 'assistant', cell });
 		} else {
@@ -244,6 +343,22 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 	}
 	flushGroup();
 	return result;
+}
+
+/** Content fingerprint so UI deriveds invalidate on in-place stream upserts. */
+export function cellStreamEpoch(cells: CellLike[]): string {
+	let epoch = String(cells.length);
+	for (const cell of cells) {
+		const payload = getCellPayload(cell);
+		const content =
+			typeof payload.content === 'string'
+				? payload.content.length
+				: typeof payload.summary === 'string'
+					? payload.summary.length
+					: 0;
+		epoch += `|${cell.id ?? ''}:${cell.complete ? 1 : 0}:${content}:${typeof cell.toolSummary === 'string' ? cell.toolSummary.length : 0}`;
+	}
+	return epoch;
 }
 
 /** Stable key so segment DOM survives cells appending mid-stream. */
@@ -272,17 +387,19 @@ export function getBatchHeadline(cells: CellLike[]): string {
 }
 
 /** One-line label for a step inside an expanded batch. */
-export function getStepLabel(cell: CellLike): string {
+export function getStepLabel(cell: CellLike, assumeIncomplete = false): string {
+	const running = isCellExecuting(cell, assumeIncomplete);
 	const cellCase = getCellCase(cell);
 	if (cellCase === 'thinkingCell') {
 		const payload = getCellPayload(cell);
 		if (payload.redacted === true) return 'Thought (redacted)';
-		return 'Thought briefly';
+		return running ? 'Thinking' : 'Thought briefly';
 	}
 	const summary =
 		typeof cell.toolSummary === 'string' && cell.toolSummary.trim()
 			? cell.toolSummary.trim()
 			: '';
 	const name = getToolDisplayName(cell);
-	return summary ? `Ran ${name} — ${summary}` : `Ran ${name}`;
+	const verb = running ? 'Running' : 'Ran';
+	return summary ? `${verb} ${name} — ${summary}` : `${verb} ${name}`;
 }

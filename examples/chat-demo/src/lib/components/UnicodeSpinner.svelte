@@ -3,8 +3,14 @@
 		type BrailleSpinnerName,
 	} from "unicode-animations";
 
+	const spinnerNames = Object.keys(spinners) as BrailleSpinnerName[];
+
+	function randomSpinnerName(): BrailleSpinnerName {
+		return spinnerNames[Math.floor(Math.random() * spinnerNames.length)]!;
+	}
+
 	let {
-		name = "braille",
+		name: nameProp,
 		label = "Loading",
 		class: className = "",
 	}: {
@@ -13,12 +19,18 @@
 		class?: string;
 	} = $props();
 
+	let name = $state<BrailleSpinnerName>("braille");
 	let frame = $state(0);
+	let ready = $state(false);
 	const spinner = $derived(spinners[name]);
 
-	// $effect only runs in the browser — start/stop the interval there and clean up on destroy.
+	// Randomize once per mount after hydration (avoids SSR mismatch). Explicit `name` still wins.
 	$effect(() => {
-		const { frames, interval } = spinner;
+		const resolved = nameProp ?? randomSpinnerName();
+		name = resolved;
+		ready = true;
+
+		const { frames, interval } = spinners[resolved];
 		frame = 0;
 
 		const reduced =
@@ -42,7 +54,7 @@
 	aria-label={label}
 	aria-live="polite"
 >
-	<span aria-hidden="true">{spinner.frames[frame] ?? ""}</span>
+	<span aria-hidden="true">{ready ? (spinner.frames[frame] ?? "") : ""}</span>
 </span>
 
 <style>
