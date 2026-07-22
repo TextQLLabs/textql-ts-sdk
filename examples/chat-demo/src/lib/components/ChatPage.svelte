@@ -12,11 +12,8 @@
 		loadLastChatConfig,
 		saveLastChatConfig,
 	} from "$lib/chatConfigPrefs";
-	import {
-		extractEnabledTools,
-		type ChatTools,
-	} from "$lib/chatTools";
-	import { getCellCase, type CellLike } from "$lib/cells";
+	import { extractEnabledTools, type ChatTools } from "$lib/chatTools";
+	import { getCellCase, settleCells, type CellLike } from "$lib/cells";
 	import Composer from "$lib/components/Composer.svelte";
 	import PreviewPanel from "$lib/components/PreviewPanel.svelte";
 	import ToolSequence from "$lib/components/ToolSequence.svelte";
@@ -107,8 +104,6 @@
 		return collectPreviewItems(allCells);
 	});
 	const hasAssets = $derived(chatAssets.length > 0);
-	// Preview sync is secondary — debounce so token-level stream upserts don't
-	// thrash the panel on every NDJSON line.
 	$effect(() => {
 		const items = chatAssets;
 		if (previewPanel.tabs.length === 0) return;
@@ -349,6 +344,17 @@
 			return;
 		}
 
+		if (event.type === "done") {
+			const assistant = messages.find(
+				(message) => message.id === assistantId,
+			);
+			if (assistant) {
+				assistant.streaming = false;
+				settleCells(assistant.cells);
+			}
+			return;
+		}
+
 		const assistant = messages.find(
 			(message) => message.id === assistantId,
 		);
@@ -510,7 +516,9 @@
 				!isRecord(payload) ||
 				!Array.isArray(payload.messages)
 			) {
-				throw new Error(apiErrorDetail(payload, "Unable to load chat."));
+				throw new Error(
+					apiErrorDetail(payload, "Unable to load chat."),
+				);
 			}
 
 			activeRequest?.abort();
@@ -532,6 +540,9 @@
 					? (item.cells.filter(isRecord) as CellLike[])
 					: undefined;
 				if (!body && (!cells || cells.length === 0)) return [];
+				// History is never a live run; stale executing lifecycles from an
+				// interrupted run must not tick a "Running" timer forever.
+				settleCells(cells);
 				return [{ id: index, role: item.role, body, cells }];
 			});
 
@@ -679,11 +690,7 @@
 	>
 		<div class="sidebar-top">
 			<div class="sidebar-header">
-				<button
-					type="button"
-					class="new-chat-btn"
-					onclick={newThread}
-				>
+				<button type="button" class="new-chat-btn" onclick={newThread}>
 					<Plus size={15} strokeWidth={2} />
 					<span>New chat</span>
 				</button>
@@ -849,7 +856,11 @@
 			{/if}
 
 			{#if showChatLoading}
-				<section class="chat-status" aria-label="Loading chat" aria-busy="true">
+				<section
+					class="chat-status"
+					aria-label="Loading chat"
+					aria-busy="true"
+				>
 					<UnicodeSpinner label="Loading chat" />
 					<p class="chat-status-text">Loading chat…</p>
 				</section>
@@ -857,11 +868,15 @@
 				<section class="chat-status" aria-label="Chat load error">
 					<p class="chat-status-text">{chatLoadError}</p>
 					<div class="chat-status-actions">
-						<button type="button" class="retry-btn" onclick={retryLoadChat}
-							>Retry</button
+						<button
+							type="button"
+							class="retry-btn"
+							onclick={retryLoadChat}>Retry</button
 						>
-						<button type="button" class="retry-btn" onclick={newThread}
-							>New chat</button
+						<button
+							type="button"
+							class="retry-btn"
+							onclick={newThread}>New chat</button
 						>
 					</div>
 				</section>
@@ -891,17 +906,23 @@
 								<article
 									class="message"
 									class:you={message.role === "you"}
-									class:assistant={message.role === "assistant"}
+									class:assistant={message.role ===
+										"assistant"}
 								>
 									{#if message.role === "assistant"}
-										<span class="message-role">Assistant</span>
+										<span class="message-role"
+											>Assistant</span
+										>
 										{#if message.cells && message.cells.length > 0}
 											<ToolSequence
 												cells={message.cells}
-												streaming={message.streaming ?? false}
+												streaming={message.streaming ??
+													false}
 											/>
 										{:else if message.body}
-											<p class="message-body">{message.body}</p>
+											<p class="message-body">
+												{message.body}
+											</p>
 										{:else if message.streaming}
 											<UnicodeSpinner
 												class="streaming-indicator"
@@ -909,7 +930,9 @@
 											/>
 										{/if}
 									{:else if message.body}
-										<p class="message-body">{message.body}</p>
+										<p class="message-body">
+											{message.body}
+										</p>
 									{/if}
 								</article>
 							{/each}
@@ -1209,8 +1232,7 @@
 		z-index: 5;
 		min-width: 96px;
 		padding: 3px;
-		border: 1px solid
-			color-mix(in srgb, var(--color-line) 85%, transparent);
+		border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
 		border-radius: var(--radius-sm);
 		background: color-mix(in srgb, var(--color-paper) 96%, #fff);
 		box-shadow: 0 4px 14px rgba(15, 15, 20, 0.06);
@@ -1473,7 +1495,8 @@
 			width: 100%;
 			height: min(45vh, 420px);
 			border-left: 0;
-			border-top: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
+			border-top: 1px solid
+				color-mix(in srgb, var(--color-line) 85%, transparent);
 		}
 	}
 

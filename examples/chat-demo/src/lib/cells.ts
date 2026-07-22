@@ -81,6 +81,20 @@ export function isCellExecuting(
 	return assumeIncomplete && cell.complete == null;
 }
 
+/**
+ * Force still-executing cells terminal. Call when the run is known finished
+ * (watchChat runComplete, or history loads — the demo never resumes live
+ * runs), so a missed final snapshot can't leave a chip on "Running" forever.
+ */
+export function settleCells(cells: CellLike[] | undefined): void {
+	if (!cells) return;
+	for (const cell of cells) {
+		if (!isCellExecuting(cell)) continue;
+		cell.lifecycle = 'LIFECYCLE_EXECUTED';
+		cell.complete = true;
+	}
+}
+
 /** Finished enough to show final wall-clock duration (not a live timer). */
 export function isCellFinished(cell: CellLike): boolean {
 	const lifecycle = typeof cell.lifecycle === 'string' ? cell.lifecycle : '';

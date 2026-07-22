@@ -1,7 +1,7 @@
 import { textqlClients } from '$lib/server/textql';
 import { toJson } from '@bufbuild/protobuf';
 import { json } from '@sveltejs/kit';
-import { type Cell, CellSchema } from '@textql/sdk/generated/connect/public/chat_pb.js';
+import { CellSchema, type WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
 import {
 	type ConnectError,
 	TextqlRpcParadigmParamsParadigmType,
@@ -25,8 +25,6 @@ const ChatRequestSchema = z.object({
 	connectorIds: z.array(z.number().int().positive()).default([])
 });
 
-// Unary RPC responses are `<success model> | ConnectError` unions with only
-// optional fields, so TS `in` checks can't narrow them without a predicate.
 function isConnectError(response: object): response is ConnectError {
 	return 'code' in response || 'details' in response;
 }
@@ -91,14 +89,14 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'The chat service did not accept the message.' }, { status: 502 });
 		}
 
-		const cells = streaming.chats.streamChat(
+		const events = streaming.chats.watchChat(
 			{ chatId, latestCompleteCellId: cellId },
 			{ signal: request.signal }
 		)[Symbol.asyncIterator]();
 
-		let first: IteratorResult<Cell>;
+		let first: IteratorResult<WatchChatEvent>;
 		try {
-			first = await cells.next();
+			first = await events.next();
 		} catch (error) {
 			return json(
 				{ error: error instanceof Error ? error.message : 'The chat stream failed.' },
@@ -113,10 +111,19 @@ export const POST: RequestHandler = async ({ request }) => {
 			async start(controller) {
 				controller.enqueue(line({ type: 'meta', chatId, userCellId: cellId }));
 				try {
-					let next = first;
-					while (!next.done) {
-						controller.enqueue(line(toJson(CellSchema, next.value)));
-						next = await cells.next();
+					for (let next = first; !next.done; next = await events.next()) {
+						const payload = next.value.payload;
+						if (payload.case === 'cell') {
+							controller.enqueue(line(toJson(CellSchema, payload.value)));
+						} else if (payload.case === 'runComplete') {
+							controller.enqueue(line({ type: 'done' }));
+							break;
+						} else if (payload.case === 'runError') {
+							controller.enqueue(
+								line({ error: { message: payload.value.error || 'The chat run failed.' } })
+							);
+							break;
+						}
 					}
 				} catch (error) {
 					if (!request.signal.aborted) {
@@ -125,9 +132,10 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 				}
 				controller.close();
+				void events.return?.(undefined);
 			},
 			cancel() {
-				void cells.return?.(undefined);
+				void events.return?.(undefined);
 			}
 		});
 
