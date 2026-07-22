@@ -12,29 +12,22 @@ import { PlaybookService } from "./generated/connect/public/playbook_pb.js";
 
 export interface StreamingClientOptions {
   apiKey: string | (() => Promise<string>);
-  /** Host of your TextQL deployment; defaults to the SDK's configured server. The /rpc/public prefix is appended unless the URL already has a path. */
   serverURL?: string;
   fetch?: typeof globalThis.fetch;
 }
 
-/**
- * Either a configured SDK instance (e.g. `new Textql({ apiKey, serverURL })`),
- * whose server and API key are reused, or a standalone options object.
- */
 export type StreamingClientSource = ClientSDK | StreamingClientOptions;
 
-// Connect RPCs are mounted under /rpc/public. Callers pass just their host
-// (cloud or on-prem); the prefix is appended unless an explicit path is given.
+// Connect RPCs are always mounted at /rpc/public on the host. Append it to
+// whatever base the caller/SDK provides — idempotently, so a base that already
+// carries the prefix isn't doubled.
 function rpcBaseUrl(serverURL: string): string {
   const url = new URL(serverURL);
-  if (url.pathname === "" || url.pathname === "/") {
-    url.pathname = "/rpc/public";
-  }
+  const base = url.pathname.replace(/\/+$/, "");
+  url.pathname = base.endsWith("/rpc/public") ? base : `${base}/rpc/public`;
   return url.toString();
 }
 
-// Pull the resolved server + api key off a configured SDK so streaming inherits
-// whatever the caller already set up, rather than re-specifying it.
 function optionsFromSource(source: StreamingClientSource): StreamingClientOptions {
   if (source instanceof ClientSDK) {
     return {
@@ -58,11 +51,6 @@ function createTransport(options: StreamingClientOptions): Transport {
   });
 }
 
-/**
- * Connect-RPC client for a single service. Escape hatch for services not
- * covered by createStreamingClient — any service in src/generated/connect
- * works.
- */
 export function createConnectClient<T extends DescService>(
   service: T,
   source: StreamingClientSource,
@@ -78,22 +66,7 @@ export interface StreamingClient {
   playbooks: Client<typeof PlaybookService>;
 }
 
-/**
- * Streaming bridge over Connect-RPC for the server-streaming endpoints that
- * have no HTTP/JSON shape in the OpenAPI spec. Pass a configured SDK to inherit
- * its server and API key, or a standalone options object. Streaming methods
- * return async iterables:
- *
- *   const sdk = new Textql({ apiKey });     // serverURL optional
- *   const streaming = createStreamingClient(sdk);
- *   for await (const event of streaming.chats.watchChat({ chatId })) { ... }
- *
- * Server-streaming methods: chats.watchChat, chats.streamChat,
- * agents.streamAgentStatus, apps.streamAppActivity,
- * dashboards.watchDashboardHealth, playbooks.streamTemplateDataStatus.
- * Unary RPCs on these clients work too, but prefer the generated SDK for
- * those.
- */
+
 export function createStreamingClient(source: StreamingClientSource): StreamingClient {
   const transport = createTransport(optionsFromSource(source));
   return {
