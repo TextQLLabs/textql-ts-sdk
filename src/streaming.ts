@@ -10,13 +10,22 @@ import { PlaybookService } from "./generated/connect/public/playbook_pb.js";
 
 export interface StreamingClientOptions {
   apiKey: string;
-  /** Defaults to https://app.textql.com */
+  /** Host of your TextQL deployment; defaults to https://app.textql.com. The /rpc/public prefix is appended unless the URL already has a path. */
   serverURL?: string;
   fetch?: typeof globalThis.fetch;
 }
 
-// Connect RPCs are mounted under /rpc/public (same prefix the unary SDK needs).
-const DEFAULT_SERVER_URL = "https://app.textql.com/rpc/public";
+const DEFAULT_SERVER_URL = "https://app.textql.com";
+
+// Connect RPCs are mounted under /rpc/public. Callers pass just their host
+// (cloud or on-prem); the prefix is appended unless an explicit path is given.
+function rpcBaseUrl(serverURL: string): string {
+  const url = new URL(serverURL);
+  if (url.pathname === "" || url.pathname === "/") {
+    url.pathname = "/rpc/public";
+  }
+  return url.toString();
+}
 
 function createTransport(options: StreamingClientOptions): Transport {
   const auth: Interceptor = (next) => (req) => {
@@ -24,7 +33,7 @@ function createTransport(options: StreamingClientOptions): Transport {
     return next(req);
   };
   return createConnectTransport({
-    baseUrl: options.serverURL ?? DEFAULT_SERVER_URL,
+    baseUrl: rpcBaseUrl(options.serverURL ?? DEFAULT_SERVER_URL),
     interceptors: [auth],
     ...(options.fetch ? { fetch: options.fetch } : {}),
   });
