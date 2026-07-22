@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-	<title>TextQL chat</title>
+	<title>Chat</title>
 	<rect width="64" height="64" fill="#f7f6f5" />
 	<path d="M10 10h44v34H32L19 55V44h-9V10Z" fill="none" stroke="#2200ff" stroke-width="4" />
 	<path d="M20 23h24M20 32h17" stroke="#0a0a0a" stroke-width="3" />

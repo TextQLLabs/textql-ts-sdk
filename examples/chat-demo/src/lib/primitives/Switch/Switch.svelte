@@ -33,11 +33,11 @@
   {disabled}
   data-checked={checked ? "" : undefined}
   onclick={toggle}
-  class="inline-flex h-5 w-9 shrink-0 cursor-pointer items-center border border-line bg-paper p-0.5 outline-none transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default disabled:opacity-40 data-[checked]:border-accent data-[checked]:bg-accent {className ??
+  class="inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border border-line bg-paper p-0.5 outline-none transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default disabled:opacity-40 data-[checked]:border-accent data-[checked]:bg-accent {className ??
     ''}"
 >
   <span
     data-checked={checked ? "" : undefined}
-    class="size-3.5 bg-ink transition-[translate,background-color] duration-150 data-[checked]:translate-x-[18px] data-[checked]:bg-paper"
+    class="size-3.5 rounded-full bg-ink transition-[translate,background-color] duration-150 data-[checked]:translate-x-[18px] data-[checked]:bg-paper"
   ></span>
 </button>

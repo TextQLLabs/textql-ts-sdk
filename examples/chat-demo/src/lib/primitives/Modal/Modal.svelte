@@ -57,14 +57,14 @@
     ></button>
 
     <div
-      class="relative z-10 w-full max-w-sm rounded-sm border border-line bg-paper p-6 shadow-[0_20px_60px_-12px_rgba(10,10,10,0.35)]"
+      class="relative z-10 w-full max-w-sm rounded-lg border border-line bg-paper p-6 shadow-[0_20px_60px_-12px_rgba(15,15,20,0.18)]"
       transition:scale={{ duration: 180, start: 0.96 }}
     >
       {#if title}
-        <h2 class="font-pixel text-lg leading-tight text-ink">{title}</h2>
+        <h2 class="font-sans text-lg font-medium leading-tight text-ink">{title}</h2>
       {/if}
       {#if children}
-        <div class="mt-2 font-mono text-sm leading-relaxed text-muted">
+        <div class="mt-2 font-sans text-sm leading-relaxed text-muted">
           {@render children()}
         </div>
       {/if}

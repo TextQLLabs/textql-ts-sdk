@@ -25,41 +25,46 @@
 }
 
 @theme {
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 	--font-mono: 'Ioskeley Mono', ui-monospace, monospace;
 	--font-pixel: 'Geist Pixel', 'Ioskeley Mono', ui-monospace, monospace;
-	--default-font-family: var(--font-mono);
+	--default-font-family: var(--font-sans);
 
-	--color-paper: #f7f6f5;
-	--color-ink: #0a0a0a;
-	--color-muted: #6b6b6b;
-	--color-line: #e3e1da;
+	--color-paper: #f7f7f8;
+	--color-sidebar: #ececee;
+	--color-ink: #1a1a1c;
+	--color-muted: #8b8b93;
+	--color-line: #e2e2e6;
 	--color-accent: var(--color-blue-500);
 
-	--radius-xs: 1px;
-	--radius-sm: 2px;
-	--radius-md: 3px;
-	--radius-lg: 4px;
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
 }
 
 @theme static {
-	--color-blue-50: #ecebff;
-	--color-blue-100: #d6d4ff;
-	--color-blue-200: #b9b4ff;
-	--color-blue-300: #8f88ff;
-	--color-blue-400: #5c4dff;
-	--color-blue-500: #2200ff;
-	--color-blue-600: #1e00e0;
-	--color-blue-700: #1a00bf;
-	--color-blue-800: #140093;
-	--color-blue-900: #0d0066;
+	--color-blue-50: #eff6ff;
+	--color-blue-100: #dbeafe;
+	--color-blue-200: #bfdbfe;
+	--color-blue-300: #93c5fd;
+	--color-blue-400: #60a5fa;
+	--color-blue-500: #3b82f6;
+	--color-blue-600: #2563eb;
+	--color-blue-700: #1d4ed8;
+	--color-blue-800: #1e40af;
+	--color-blue-900: #1e3a8a;
 }
 
 :root {
-	font-family: var(--font-mono);
+	font-family: var(--font-sans);
 	color: var(--color-ink);
 	background: var(--color-paper);
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
 }
 
 * {
@@ -93,6 +98,6 @@ textarea {
 }
 
 ::selection {
-	color: #fff;
-	background: var(--color-accent);
+	color: var(--color-ink);
+	background: var(--color-blue-100);
 }
