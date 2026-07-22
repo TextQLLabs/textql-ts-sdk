@@ -8,6 +8,10 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
+  TextqlRpcPublicCellsEmailAttachment,
+  TextqlRpcPublicCellsEmailAttachment$inboundSchema,
+} from "./textql-rpc-public-cells-email-attachment.js";
+import {
   TextqlRpcPublicCellsEmailRecipient,
   TextqlRpcPublicCellsEmailRecipient$inboundSchema,
 } from "./textql-rpc-public-cells-email-recipient.js";
@@ -65,6 +69,7 @@ export type TextqlRpcPublicCellsEmailCell = {
    *  for inline use within the chat thread.
    */
   renderedBodyHtml?: string | null | undefined;
+  attachments?: Array<TextqlRpcPublicCellsEmailAttachment> | undefined;
 };
 
 /** @internal */
@@ -85,6 +90,9 @@ export const TextqlRpcPublicCellsEmailCell$inboundSchema: z.ZodMiniType<
   errorClass: z.optional(z.nullable(types.string())),
   sentCount: types.optional(types.number()),
   renderedBodyHtml: z.optional(z.nullable(types.string())),
+  attachments: types.optional(
+    z.array(TextqlRpcPublicCellsEmailAttachment$inboundSchema),
+  ),
 });
 
 export function textqlRpcPublicCellsEmailCellFromJSON(

@@ -36,7 +36,6 @@ import { chatsRejectContextPromptChange } from "../funcs/chats-reject-context-pr
 import { chatsRejectOntologyChange } from "../funcs/chats-reject-ontology-change.js";
 import { chatsRun } from "../funcs/chats-run.js";
 import { chatsSend } from "../funcs/chats-send.js";
-import { chatsStreamChat } from "../funcs/chats-stream-chat.js";
 import { chatsSubmitContextPromptChange } from "../funcs/chats-submit-context-prompt-change.js";
 import { chatsSubmitQuestions } from "../funcs/chats-submit-questions.js";
 import { chatsUnbookmark } from "../funcs/chats-unbookmark.js";
@@ -592,17 +591,6 @@ export class Chats extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ChatServiceUpdateChatResponse> {
     return unwrapAsync(chatsUpdate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  async streamChat(
-    request: operations.ChatServiceStreamChatRequest,
-    options?: RequestOptions,
-  ): Promise<operations.ChatServiceStreamChatResponse> {
-    return unwrapAsync(chatsStreamChat(
       this,
       request,
       options,

@@ -11,10 +11,10 @@ const value: models.Bools = {
 };
 ```
 
-### `models.Bytes`
+### `models.TextqlRpcPublicDataframeDataFrameColumnBytes`
 
 ```typescript
-const value: models.Bytes = {
+const value: models.TextqlRpcPublicDataframeDataFrameColumnBytes = {
   bytes: {},
 };
 ```

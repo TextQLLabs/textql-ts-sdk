@@ -2918,6 +2918,7 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.chat.SendResponse'
       x-speakeasy-group: chats
       x-speakeasy-name-override: send
+  /textql.rpc.public.chat.ChatService/StreamChat: {}
   /textql.rpc.public.chat.ChatService/SubmitContextPromptChange:
     post:
       tags:
@@ -14770,54 +14771,6 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.teams.TeamsSyncWorkspaceResponse'
       x-speakeasy-group: teams
       x-speakeasy-name-override: syncWorkspace
-  /v2/chats/{chat_id}/cells/stream:
-    post:
-      operationId: ChatService_StreamChat
-      tags:
-        - ChatService
-      parameters:
-        - name: chat_id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.chat.ChatService.StreamChatBody'
-        required: true
-      responses:
-        "200":
-          description: A successful response.(streaming responses)
-          content:
-            text/event-stream:
-              schema:
-                title: StreamChatEvent
-                type: object
-                required:
-                  - data
-                properties:
-                  data:
-                    title: StreamChatEventData
-                    description: >-
-                      A chat stream event. `type` discriminates the payload: `metadata` (id, chat_id, model, created_at, is_continuation), `text` (text), `cell` (cell), `asset` (asset), `error` (message), and `done`.
-                    type: object
-                    required:
-                      - type
-                    properties:
-                      type:
-                        type: string
-                        description: "Event type: metadata, text, cell, asset, error, or done."
-                    additionalProperties: true
-        default:
-          description: An unexpected error response.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/google.rpc.Status"
-      x-speakeasy-group: chats
-      x-speakeasy-name-override: streamChat
 components:
   schemas:
     connect-protocol-version:
@@ -17898,6 +17851,21 @@ components:
         - EDITABLE_FORM_STATUS_SUBMITTING
         - EDITABLE_FORM_STATUS_SUBMITTED
         - EDITABLE_FORM_STATUS_REJECTED
+    textql.rpc.public.cells.EmailAttachment:
+      type: object
+      properties:
+        filename:
+          type: string
+          title: filename
+        bytes:
+          type:
+            - integer
+            - string
+          title: bytes
+          format: int64
+      title: EmailAttachment
+      additionalProperties: false
+      description: EmailAttachment is delivered-attachment metadata surfaced to the frontend
     textql.rpc.public.cells.EmailCell:
       type: object
       properties:
@@ -17961,6 +17929,11 @@ components:
              Already sanitized server-side (sanitizeEmailHTML) and self-contained
              for inline use within the chat thread.
           nullable: true
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.cells.EmailAttachment'
+          title: attachments
       title: EmailCell
       additionalProperties: false
       description: |-
@@ -37912,38 +37885,6 @@ components:
           nullable: true
       title: TeamsUser
       additionalProperties: false
-    google.protobuf.Any:
-      type: object
-      properties:
-        '@type':
-          type: string
-      additionalProperties: {}
-    google.rpc.Status:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/google.protobuf.Any'
-            type: object
-    textql.rpc.public.chat.ChatService.StreamChatBody:
-      type: object
-      properties:
-        latestCompleteCellId:
-          type: string
-        research:
-          type: boolean
-        model:
-          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
-        fastMode:
-          type: boolean
-        maxThinking:
-          type: boolean
   securitySchemes:
     apiKey:
       type: apiKey

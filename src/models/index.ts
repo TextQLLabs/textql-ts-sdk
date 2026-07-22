@@ -4,10 +4,8 @@
 
 export * from "./connect-error-details-any.js";
 export * from "./connect-error.js";
-export * from "./google-protobuf-any.js";
 export * from "./google-protobuf-empty.js";
 export * from "./google-protobuf-value.js";
-export * from "./google-rpc-status.js";
 export * from "./security.js";
 export * from "./textql-rpc-identity-member-preview.js";
 export * from "./textql-rpc-paradigm-params-paradigm-type.js";
@@ -140,6 +138,7 @@ export * from "./textql-rpc-public-cells-date-range.js";
 export * from "./textql-rpc-public-cells-document-cell.js";
 export * from "./textql-rpc-public-cells-editable-form-status.js";
 export * from "./textql-rpc-public-cells-editable-form.js";
+export * from "./textql-rpc-public-cells-email-attachment.js";
 export * from "./textql-rpc-public-cells-email-cell.js";
 export * from "./textql-rpc-public-cells-email-recipient.js";
 export * from "./textql-rpc-public-cells-exa-search-result.js";
@@ -253,7 +252,6 @@ export * from "./textql-rpc-public-chat-cell-rating.js";
 export * from "./textql-rpc-public-chat-cell.js";
 export * from "./textql-rpc-public-chat-chat-execution-timing.js";
 export * from "./textql-rpc-public-chat-chat-message.js";
-export * from "./textql-rpc-public-chat-chat-service-stream-chat-body.js";
 export * from "./textql-rpc-public-chat-chat-sort-direction.js";
 export * from "./textql-rpc-public-chat-chat-sort-field.js";
 export * from "./textql-rpc-public-chat-chat-source.js";

@@ -80,7 +80,6 @@ export * from "./chat-service-reject-context-prompt-change.js";
 export * from "./chat-service-reject-ontology-change.js";
 export * from "./chat-service-run-chat.js";
 export * from "./chat-service-send-message.js";
-export * from "./chat-service-stream-chat.js";
 export * from "./chat-service-submit-context-prompt-change.js";
 export * from "./chat-service-submit-questions.js";
 export * from "./chat-service-unbookmark-chat.js";
