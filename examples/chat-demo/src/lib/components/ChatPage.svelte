@@ -1,4 +1,9 @@
 <script lang="ts">
+	import Ellipsis from "@lucide/svelte/icons/ellipsis";
+	import PanelLeft from "@lucide/svelte/icons/panel-left";
+	import PanelLeftClose from "@lucide/svelte/icons/panel-left-close";
+	import PanelRight from "@lucide/svelte/icons/panel-right";
+	import Plus from "@lucide/svelte/icons/plus";
 	import { onMount } from "svelte";
 	import { afterNavigate, goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
@@ -13,10 +18,14 @@
 	} from "$lib/chatTools";
 	import { getCellCase, type CellLike } from "$lib/cells";
 	import Composer from "$lib/components/Composer.svelte";
+	import PreviewPanel from "$lib/components/PreviewPanel.svelte";
 	import ToolSequence from "$lib/components/ToolSequence.svelte";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
 	import { connectorsCache } from "$lib/connectorsCache.svelte";
-	import { Button, Modal, Switch } from "$lib/primitives";
+	import {
+		collectPreviewItems,
+		previewPanel,
+	} from "$lib/previewPanel.svelte";
 
 	type Message = {
 		id: number;
@@ -33,6 +42,7 @@
 	};
 
 	const DEFAULT_MODEL = "MODEL_SONNET_5";
+	const MOBILE_SIDEBAR_MQ = "(max-width: 780px)";
 
 	let messages = $state<Message[]>([]);
 	let draft = $state("");
@@ -40,9 +50,8 @@
 	let selectedModel = $state(DEFAULT_MODEL);
 	/** Enabled tools from GetChat; null on blank chats (Composer infers from selection). */
 	let chatTools = $state<ChatTools | null>(null);
-	let sidebarOpen = $state(false);
-	let settingsOpen = $state(false);
-	let compactMode = $state(false);
+	/** Desktop: collapsible panel. Mobile: drawer open state. */
+	let sidebarOpen = $state(true);
 	let chatId = $state<string | undefined>();
 	let sending = $state(false);
 	let activeRequest: AbortController | undefined;
@@ -50,10 +59,26 @@
 	let chatsLoading = $state(true);
 	let chatsError = $state(false);
 	let openingChatId = $state<string | undefined>();
+	let closingChatId = $state<string | undefined>();
+	let menuChatId = $state<string | undefined>();
 	let prefsReady = $state(false);
 
 	const isEmpty = $derived(messages.length === 0);
 	const configLocked = $derived(chatId !== undefined || !isEmpty);
+	const chatAssets = $derived.by(() => {
+		const allCells = messages.flatMap((message) => message.cells ?? []);
+		return collectPreviewItems(allCells);
+	});
+	const hasAssets = $derived(chatAssets.length > 0);
+	const showTopbar = $derived(!sidebarOpen || hasAssets);
+
+	$effect(() => {
+		previewPanel.syncFromCells(chatAssets);
+	});
+
+	function openAssetsPanel() {
+		previewPanel.openPanel(chatAssets);
+	}
 
 	function resetChatConfig() {
 		const prefs = loadLastChatConfig();
@@ -115,10 +140,20 @@
 			draft = "";
 			chatId = undefined;
 			resetChatConfig();
+			previewPanel.reset();
 		}
 	}
 
+	function isMobileSidebar() {
+		return window.matchMedia(MOBILE_SIDEBAR_MQ).matches;
+	}
+
+	function closeSidebarIfMobile() {
+		if (isMobileSidebar()) sidebarOpen = false;
+	}
+
 	onMount(() => {
+		if (isMobileSidebar()) sidebarOpen = false;
 		if (!page.params.id) {
 			resetChatConfig();
 		}
@@ -352,7 +387,7 @@
 	async function loadChatById(id: string) {
 		if (openingChatId === id) return;
 		if (id === chatId && messages.length > 0) {
-			sidebarOpen = false;
+			closeSidebarIfMobile();
 			return;
 		}
 
@@ -376,6 +411,7 @@
 			sending = false;
 			activeRequest = undefined;
 			chatId = id;
+			previewPanel.reset();
 			messages = payload.messages.flatMap((item, index): Message[] => {
 				if (
 					!isRecord(item) ||
@@ -411,7 +447,7 @@
 				void connectorsCache.load();
 			}
 
-			sidebarOpen = false;
+			closeSidebarIfMobile();
 		} catch {
 			chatsError = true;
 		} finally {
@@ -420,8 +456,8 @@
 	}
 
 	function openChat(id: string) {
-		if (sending || openingChatId) return;
-		sidebarOpen = false;
+		if (sending || openingChatId || closingChatId) return;
+		closeSidebarIfMobile();
 		void setChatRoute(id);
 	}
 
@@ -433,17 +469,66 @@
 		draft = "";
 		chatId = undefined;
 		resetChatConfig();
-		sidebarOpen = false;
+		previewPanel.reset();
+		closeSidebarIfMobile();
 		void setChatRoute(undefined);
 	}
 
-	function focusComposer() {
-		const el =
-			document.querySelector<HTMLTextAreaElement>(".composer textarea");
-		el?.focus();
-		sidebarOpen = false;
+	function toggleChatMenu(id: string, event: MouseEvent) {
+		event.stopPropagation();
+		event.preventDefault();
+		if (closingChatId || openingChatId || sending) return;
+		menuChatId = menuChatId === id ? undefined : id;
+	}
+
+	function onWindowKeydown(event: KeyboardEvent) {
+		if (event.key === "Escape" && menuChatId !== undefined) {
+			menuChatId = undefined;
+		}
+	}
+
+	function onWindowPointerDown(event: PointerEvent) {
+		if (menuChatId === undefined) return;
+		const target = event.target;
+		if (!(target instanceof Element) || !target.closest(".chat-menu")) {
+			menuChatId = undefined;
+		}
+	}
+
+	async function deleteChat(id: string, event: MouseEvent) {
+		event.stopPropagation();
+		event.preventDefault();
+		menuChatId = undefined;
+		if (closingChatId || openingChatId || sending) return;
+
+		closingChatId = id;
+		const previous = chats;
+		chats = chats.filter((chat) => chat.id !== id);
+
+		try {
+			const response = await fetch(
+				`/api/chats/${encodeURIComponent(id)}`,
+				{ method: "DELETE" },
+			);
+			if (!response.ok) {
+				throw new Error("Unable to delete chat.");
+			}
+
+			if (chatId === id) {
+				newThread();
+			}
+		} catch {
+			chats = previous;
+		} finally {
+			closingChatId = undefined;
+		}
 	}
 </script>
+
+<svelte:window
+	onkeydown={onWindowKeydown}
+	onpointerdown={onWindowPointerDown}
+/>
 
 <svelte:head>
 	<title>Chat</title>
@@ -453,28 +538,11 @@
 	/>
 </svelte:head>
 
-{#snippet iconGear()}
-	<svg
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="1.5"
-		aria-hidden="true"
-	>
-		<path
-			d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
-		<path
-			d="M19.1 14.2a1.5 1.5 0 0 0 .3 1.65l.05.05a1.8 1.8 0 0 1-2.55 2.55l-.05-.05a1.5 1.5 0 0 0-1.65-.3 1.5 1.5 0 0 0-.93 1.38V19.8a1.8 1.8 0 0 1-3.6 0v-.07a1.5 1.5 0 0 0-.93-1.38 1.5 1.5 0 0 0-1.65.3l-.05.05a1.8 1.8 0 1 1-2.55-2.55l.05-.05a1.5 1.5 0 0 0 .3-1.65 1.5 1.5 0 0 0-1.38-.93H4.2a1.8 1.8 0 0 1 0-3.6h.07a1.5 1.5 0 0 0 1.38-.93 1.5 1.5 0 0 0-.3-1.65l-.05-.05a1.8 1.8 0 1 1 2.55-2.55l.05.05a1.5 1.5 0 0 0 1.65.3h.02A1.5 1.5 0 0 0 10.5 4.27V4.2a1.8 1.8 0 0 1 3.6 0v.07a1.5 1.5 0 0 0 .93 1.38h.02a1.5 1.5 0 0 0 1.65-.3l.05-.05a1.8 1.8 0 1 1 2.55 2.55l-.05.05a1.5 1.5 0 0 0-.3 1.65v.02a1.5 1.5 0 0 0 1.38.93H19.8a1.8 1.8 0 0 1 0 3.6h-.07a1.5 1.5 0 0 0-1.38.93Z"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		/>
-	</svg>
-{/snippet}
-
-<div class:compact={compactMode} class="app-shell">
+<div
+	class:preview-open={previewPanel.open}
+	class:sidebar-collapsed={!sidebarOpen}
+	class="app-shell"
+>
 	<button
 		class:visible={sidebarOpen}
 		class="scrim"
@@ -486,25 +554,29 @@
 		class:open={sidebarOpen}
 		class="sidebar"
 		aria-label="Conversation history"
+		aria-hidden={!sidebarOpen}
+		inert={!sidebarOpen ? true : undefined}
 	>
 		<div class="sidebar-top">
-			<button
-				type="button"
-				class="mobile-close"
-				aria-label="Close sidebar"
-				onclick={() => (sidebarOpen = false)}
-			>
-				Close
-			</button>
-
-			<nav class="nav-list" aria-label="Primary">
-				<button type="button" class="nav-row" onclick={newThread}
-					>New Agent</button
+			<div class="sidebar-header">
+				<button
+					type="button"
+					class="new-chat-btn"
+					onclick={newThread}
 				>
-				<button type="button" class="nav-row" onclick={focusComposer}
-					>Search</button
+					<Plus size={15} strokeWidth={2} />
+					<span>New chat</span>
+				</button>
+				<button
+					type="button"
+					class="icon-ghost sidebar-toggle"
+					aria-label="Close sidebar"
+					title="Close sidebar"
+					onclick={() => (sidebarOpen = false)}
 				>
-			</nav>
+					<PanelLeftClose size={16} strokeWidth={1.75} />
+				</button>
+			</div>
 		</div>
 
 		<div class="chats-section">
@@ -524,149 +596,207 @@
 						<div class="chat-group">
 							<p class="chat-group-label">{group.label}</p>
 							{#each group.chats as chat (chat.id)}
-								<button
-									type="button"
+								<div
 									class="chat-row"
 									class:active={chat.id === chatId}
 									class:opening={chat.id === openingChatId}
-									title={chat.title}
-									disabled={sending ||
-										openingChatId !== undefined}
-									onclick={() => openChat(chat.id)}
+									class:closing={chat.id === closingChatId}
 								>
-									<span class="chat-title">{chat.title}</span>
-									{#if chat.id === openingChatId}
-										<UnicodeSpinner
-											class="chat-opening-spinner"
-											label="Opening chat"
-										/>
-									{/if}
-								</button>
+									<button
+										type="button"
+										class="chat-row-main"
+										title={chat.title}
+										disabled={sending ||
+											openingChatId !== undefined ||
+											closingChatId !== undefined}
+										onclick={() => openChat(chat.id)}
+									>
+										<span class="chat-title"
+											>{chat.title}</span
+										>
+										{#if chat.id === openingChatId}
+											<UnicodeSpinner
+												class="chat-opening-spinner"
+												label="Opening chat"
+											/>
+										{/if}
+									</button>
+									<div
+										class="chat-menu"
+										class:open={menuChatId === chat.id}
+									>
+										<button
+											type="button"
+											class="chat-menu-btn"
+											aria-label="Chat options"
+											aria-haspopup="menu"
+											aria-expanded={menuChatId ===
+												chat.id}
+											title="Chat options"
+											disabled={closingChatId !==
+												undefined || sending}
+											onclick={(event) =>
+												toggleChatMenu(chat.id, event)}
+										>
+											{#if chat.id === closingChatId}
+												<UnicodeSpinner
+													class="chat-closing-spinner"
+													label="Deleting chat"
+												/>
+											{:else}
+												<Ellipsis
+													size={13}
+													strokeWidth={2}
+												/>
+											{/if}
+										</button>
+										{#if menuChatId === chat.id}
+											<div
+												class="chat-menu-popover"
+												role="menu"
+											>
+												<button
+													type="button"
+													class="chat-menu-item"
+													role="menuitem"
+													onclick={(event) =>
+														deleteChat(
+															chat.id,
+															event,
+														)}
+												>
+													Delete
+												</button>
+											</div>
+										{/if}
+									</div>
+								</div>
 							{/each}
 						</div>
 					{/each}
 				{/if}
 			</div>
 		</div>
-
-		<div class="sidebar-footer">
-			<div class="user-row">
-				<span class="avatar" aria-hidden="true">Y</span>
-				<div class="user-meta">
-					<span class="user-name">You</span>
-					<span class="user-plan">Pro Plan</span>
-				</div>
-				<button
-					type="button"
-					class="icon-ghost gear"
-					aria-label="Open settings"
-					onclick={() => (settingsOpen = true)}
-				>
-					{@render iconGear()}
-				</button>
-			</div>
-		</div>
 	</aside>
 
-	<main class="chat-panel" class:empty={isEmpty}>
-		<header class="topbar">
-			<button
-				type="button"
-				class="menu-button"
-				onclick={() => (sidebarOpen = true)}
-			>
-				Menu
-			</button>
-		</header>
+	<div
+		class="workspace"
+		class:with-preview={previewPanel.open}
+		class:is-resizing={previewPanel.resizing}
+		style:--preview-panel-width="{previewPanel.width}px"
+	>
+		<main
+			class="chat-panel"
+			class:empty={isEmpty}
+			class:show-topbar={showTopbar}
+		>
+			<header class="topbar">
+				{#if !sidebarOpen}
+					<button
+						type="button"
+						class="icon-ghost sidebar-toggle"
+						aria-label="Open sidebar"
+						title="Open sidebar"
+						onclick={() => (sidebarOpen = true)}
+					>
+						<PanelLeft size={16} strokeWidth={1.75} />
+					</button>
+					<button
+						type="button"
+						class="new-chat-btn topbar-new"
+						onclick={newThread}
+					>
+						<Plus size={15} strokeWidth={2} />
+						<span>New chat</span>
+					</button>
+				{/if}
+				{#if hasAssets}
+					<button
+						type="button"
+						class="icon-ghost assets-toggle"
+						class:active={previewPanel.open}
+						aria-label="Open preview panel"
+						aria-pressed={previewPanel.open}
+						title={previewPanel.open
+							? "Preview open"
+							: `Preview (${chatAssets.length})`}
+						onclick={openAssetsPanel}
+					>
+						<PanelRight size={16} strokeWidth={1.75} />
+					</button>
+				{/if}
+			</header>
 
-		{#if isEmpty}
-			<section class="empty-state" aria-label="New agent">
-				<Composer
-					bind:value={draft}
-					bind:selectedConnectorIds
-					bind:selectedModel
-					{sending}
-					{configLocked}
-					tools={chatTools}
-					onsend={sendMessage}
-				/>
-			</section>
-		{:else}
-			<section
-				class="conversation"
-				aria-label="Chat messages"
-				aria-live="polite"
-			>
-				<div class="conversation-inner">
-					<div class="messages">
-						{#each messages as message (message.id)}
-							<article
-								class="message"
-								class:you={message.role === "you"}
-								class:assistant={message.role === "assistant"}
-							>
-								{#if message.role === "assistant"}
-									<span class="message-role">Assistant</span>
-									{#if message.cells && message.cells.length > 0}
-										<ToolSequence
-											cells={message.cells}
-											streaming={message.streaming ?? false}
-										/>
+			{#if isEmpty}
+				<section class="empty-state" aria-label="New agent">
+					<Composer
+						bind:value={draft}
+						bind:selectedConnectorIds
+						bind:selectedModel
+						{sending}
+						{configLocked}
+						tools={chatTools}
+						onsend={sendMessage}
+					/>
+				</section>
+			{:else}
+				<section
+					class="conversation"
+					aria-label="Chat messages"
+					aria-live="polite"
+				>
+					<div class="conversation-inner">
+						<div class="messages">
+							{#each messages as message (message.id)}
+								<article
+									class="message"
+									class:you={message.role === "you"}
+									class:assistant={message.role === "assistant"}
+								>
+									{#if message.role === "assistant"}
+										<span class="message-role">Assistant</span>
+										{#if message.cells && message.cells.length > 0}
+											<ToolSequence
+												cells={message.cells}
+												streaming={message.streaming ?? false}
+											/>
+										{:else if message.body}
+											<p class="message-body">{message.body}</p>
+										{:else if message.streaming}
+											<UnicodeSpinner
+												class="streaming-indicator"
+												label="Waiting for response"
+											/>
+										{/if}
 									{:else if message.body}
 										<p class="message-body">{message.body}</p>
-									{:else if message.streaming}
-										<UnicodeSpinner
-											class="streaming-indicator"
-											label="Waiting for response"
-										/>
 									{/if}
-								{:else if message.body}
-									<p class="message-body">{message.body}</p>
-								{/if}
-							</article>
-						{/each}
+								</article>
+							{/each}
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
 
-			<footer class="composer-dock">
-				<Composer
-					bind:value={draft}
-					bind:selectedConnectorIds
-					bind:selectedModel
-					{sending}
-					{configLocked}
-					tools={chatTools}
-					docked
-					onsend={sendMessage}
-				/>
-			</footer>
+				<footer class="composer-dock">
+					<Composer
+						bind:value={draft}
+						bind:selectedConnectorIds
+						bind:selectedModel
+						{sending}
+						{configLocked}
+						tools={chatTools}
+						docked
+						onsend={sendMessage}
+					/>
+				</footer>
+			{/if}
+		</main>
+
+		{#if previewPanel.open}
+			<PreviewPanel />
 		{/if}
-	</main>
-</div>
-
-<Modal bind:open={settingsOpen} title="Settings">
-	<div class="settings-list">
-		<label>
-			<span class="settings-label">Compact messages</span>
-			<Switch
-				bind:checked={compactMode}
-				aria-label="Use compact messages"
-			/>
-		</label>
 	</div>
-
-	{#snippet actions()}
-		<Button
-			class="rounded-xl"
-			variant="solid"
-			size="sm"
-			onclick={() => (settingsOpen = false)}
-		>
-			Done
-		</Button>
-	{/snippet}
-</Modal>
+</div>
 
 <style>
 	:global(body) {
@@ -688,16 +818,61 @@
 		color: var(--color-ink);
 		background: var(--color-paper);
 		font-family: var(--font-sans);
+		transition: grid-template-columns 180ms ease;
+	}
+
+	.app-shell.sidebar-collapsed {
+		grid-template-columns: 0 minmax(0, 1fr);
+	}
+
+	.workspace {
+		display: flex;
+		min-width: 0;
+		min-height: 0;
+		height: 100%;
+	}
+
+	.workspace .chat-panel {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	.workspace.is-resizing {
+		cursor: col-resize;
+	}
+
+	.workspace.is-resizing .chat-panel {
+		pointer-events: none;
+		contain: layout style;
+	}
+
+	.workspace :global(.preview-panel) {
+		flex: 0 0 auto;
+		width: var(--preview-panel-width, 420px);
+		min-width: 0;
+		min-height: 0;
+		height: 100%;
 	}
 
 	.sidebar {
 		display: flex;
+		min-width: 0;
 		min-height: 0;
 		flex-direction: column;
+		overflow: hidden;
 		padding: 14px 12px 12px;
 		border-right: 1px solid
 			color-mix(in srgb, var(--color-line) 80%, transparent);
 		background: var(--color-sidebar);
+		transition:
+			opacity 160ms ease,
+			border-color 160ms ease;
+	}
+
+	.app-shell.sidebar-collapsed .sidebar {
+		opacity: 0;
+		pointer-events: none;
+		border-right-color: transparent;
 	}
 
 	.sidebar-top {
@@ -706,57 +881,52 @@
 		gap: 4px;
 	}
 
-	.mobile-close,
-	.menu-button {
-		display: none;
+	.sidebar-header {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.new-chat-btn {
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 6px 10px;
+		gap: 6px;
+		min-width: 0;
+		flex: 1;
+		padding: 7px 10px;
 		border: 0;
 		border-radius: var(--radius-sm);
-		color: var(--color-muted);
-		background: transparent;
+		color: #3f3f46;
+		background: color-mix(in srgb, #fff 62%, transparent);
+		font: inherit;
 		font-size: 13px;
+		font-weight: 500;
 		cursor: pointer;
+		transition: background 120ms ease;
 	}
 
-	.mobile-close:hover,
-	.menu-button:hover {
-		color: var(--color-ink);
-		background: color-mix(in srgb, #fff 55%, transparent);
+	.new-chat-btn:hover {
+		background: color-mix(in srgb, #fff 82%, transparent);
 	}
 
-	.nav-list {
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
+	.new-chat-btn :global(svg) {
+		flex-shrink: 0;
 	}
 
-	.nav-row,
-	.chat-row,
+	.sidebar-header .sidebar-toggle {
+		flex-shrink: 0;
+	}
+
+	.chat-row-main,
+	.chat-menu-btn,
+	.chat-menu-item,
 	.retry-btn,
 	.icon-ghost {
 		border: 0;
 		background: transparent;
 		font: inherit;
 		cursor: pointer;
-	}
-
-	.nav-row {
-		display: flex;
-		align-items: center;
-		width: 100%;
-		padding: 8px 10px;
-		border-radius: var(--radius-sm);
-		color: #3f3f46;
-		font-size: 13.5px;
-		font-weight: 500;
-		text-align: left;
-		transition: background 120ms ease;
-	}
-
-	.nav-row:hover {
-		background: color-mix(in srgb, #fff 58%, transparent);
 	}
 
 	.icon-ghost :global(svg) {
@@ -769,7 +939,7 @@
 		min-height: 0;
 		flex: 1;
 		flex-direction: column;
-		margin-top: 18px;
+		margin-top: 14px;
 	}
 
 	.chat-list {
@@ -801,16 +971,14 @@
 	.chat-row {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 2px;
 		width: 100%;
-		padding: 7px 10px;
 		border-radius: var(--radius-sm);
 		color: #52525b;
-		text-align: left;
 		transition: background 120ms ease;
 	}
 
-	.chat-row:hover:not(:disabled) {
+	.chat-row:hover {
 		background: color-mix(in srgb, #fff 55%, transparent);
 	}
 
@@ -821,11 +989,24 @@
 			color-mix(in srgb, var(--color-line) 70%, transparent);
 	}
 
-	.chat-row.opening {
+	.chat-row.opening,
+	.chat-row.closing {
 		opacity: 0.65;
 	}
 
-	.chat-row:disabled {
+	.chat-row-main {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+		flex: 1;
+		padding: 7px 4px 7px 10px;
+		color: inherit;
+		text-align: left;
+		border-radius: var(--radius-sm);
+	}
+
+	.chat-row-main:disabled {
 		cursor: wait;
 		opacity: 0.7;
 	}
@@ -840,7 +1021,78 @@
 		white-space: nowrap;
 	}
 
-	.chat-row :global(.chat-opening-spinner) {
+	.chat-menu {
+		position: relative;
+		flex-shrink: 0;
+		margin-right: 4px;
+	}
+
+	.chat-menu-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		border-radius: 6px;
+		color: var(--color-muted);
+		opacity: 0;
+		pointer-events: none;
+		transition:
+			opacity 120ms ease,
+			background 120ms ease,
+			color 120ms ease;
+	}
+
+	.chat-row:hover .chat-menu-btn,
+	.chat-row.active .chat-menu-btn,
+	.chat-menu-btn:focus-visible,
+	.chat-row.closing .chat-menu-btn,
+	.chat-menu.open .chat-menu-btn,
+	.chat-menu:focus-within .chat-menu-btn {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.chat-menu-btn:hover:not(:disabled) {
+		color: var(--color-ink);
+		background: color-mix(in srgb, #fff 70%, transparent);
+	}
+
+	.chat-menu-btn:disabled {
+		cursor: wait;
+	}
+
+	.chat-menu-popover {
+		position: absolute;
+		top: calc(100% + 2px);
+		right: 0;
+		z-index: 5;
+		min-width: 96px;
+		padding: 3px;
+		border: 1px solid
+			color-mix(in srgb, var(--color-line) 85%, transparent);
+		border-radius: var(--radius-sm);
+		background: color-mix(in srgb, var(--color-paper) 96%, #fff);
+		box-shadow: 0 4px 14px rgba(15, 15, 20, 0.06);
+	}
+
+	.chat-menu-item {
+		display: block;
+		width: 100%;
+		padding: 6px 8px;
+		border-radius: 5px;
+		color: #52525b;
+		font-size: 12px;
+		text-align: left;
+	}
+
+	.chat-menu-item:hover {
+		color: var(--color-ink);
+		background: color-mix(in srgb, #fff 70%, transparent);
+	}
+
+	.chat-row :global(.chat-opening-spinner),
+	.chat-row :global(.chat-closing-spinner) {
 		flex-shrink: 0;
 		opacity: 0.85;
 	}
@@ -872,54 +1124,6 @@
 		background: color-mix(in srgb, #fff 60%, transparent);
 	}
 
-	.sidebar-footer {
-		margin-top: auto;
-		padding-top: 12px;
-	}
-
-	.user-row {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding: 4px 4px 2px;
-	}
-
-	.avatar {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 28px;
-		height: 28px;
-		border-radius: 999px;
-		color: #fff;
-		background: linear-gradient(145deg, #7c8cff, #4f6ef7);
-		font-size: 12px;
-		font-weight: 600;
-	}
-
-	.user-meta {
-		display: flex;
-		min-width: 0;
-		flex: 1;
-		flex-direction: column;
-		gap: 1px;
-	}
-
-	.user-name {
-		font-size: 13px;
-		font-weight: 500;
-	}
-
-	.user-plan {
-		color: var(--color-muted);
-		font-size: 11px;
-	}
-
-	.gear {
-		width: 30px;
-		height: 30px;
-	}
-
 	.chat-panel {
 		display: grid;
 		min-width: 0;
@@ -932,13 +1136,40 @@
 		grid-template-rows: minmax(0, 1fr);
 	}
 
+	.chat-panel.show-topbar {
+		grid-template-rows: 48px minmax(0, 1fr) auto;
+	}
+
+	.chat-panel.show-topbar.empty {
+		grid-template-rows: 48px minmax(0, 1fr);
+	}
+
 	.topbar {
 		display: none;
 		align-items: center;
-		padding: 0 14px;
+		gap: 8px;
+		padding: 0 12px;
 		border-bottom: 1px solid var(--color-line);
 		background: color-mix(in srgb, var(--color-paper) 92%, transparent);
 		backdrop-filter: blur(12px);
+	}
+
+	.chat-panel.show-topbar .topbar {
+		display: flex;
+	}
+
+	.topbar-new {
+		flex: 0 1 auto;
+		max-width: 140px;
+	}
+
+	.assets-toggle {
+		margin-left: auto;
+	}
+
+	.assets-toggle.active {
+		color: var(--color-ink);
+		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
 	}
 
 	.empty-state {
@@ -972,7 +1203,6 @@
 	.conversation {
 		min-height: 0;
 		overflow-y: auto;
-		scrollbar-color: #d4d4d8 transparent;
 	}
 
 	.conversation-inner {
@@ -1021,11 +1251,6 @@
 		padding: 2px 0;
 	}
 
-	.compact .message.you {
-		padding: 8px 14px;
-		border-radius: 16px;
-	}
-
 	.message-role {
 		color: var(--color-accent);
 		font-size: 12px;
@@ -1057,35 +1282,33 @@
 		);
 	}
 
-	.settings-list {
-		display: flex;
-		flex-direction: column;
-		margin-top: 18px;
-		border-top: 1px solid var(--color-line);
-	}
-
-	.settings-list label {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 24px;
-		padding: 15px 0;
-		border-bottom: 1px solid var(--color-line);
-	}
-
-	.settings-label {
-		color: var(--color-ink);
-		font-size: 13px;
-		font-weight: 500;
-	}
-
 	.scrim {
 		display: none;
 	}
 
+	@media (max-width: 960px) {
+		.workspace.with-preview {
+			flex-direction: column;
+		}
+
+		.workspace.with-preview :global(.preview-panel) {
+			width: 100%;
+			height: min(45vh, 420px);
+			border-left: 0;
+			border-top: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
+		}
+	}
+
 	@media (max-width: 780px) {
-		.app-shell {
+		.app-shell,
+		.app-shell.sidebar-collapsed {
 			display: block;
+			grid-template-columns: unset;
+		}
+
+		.workspace {
+			height: 100vh;
+			height: 100dvh;
 		}
 
 		.sidebar {
@@ -1093,17 +1316,25 @@
 			inset: 0 auto 0 0;
 			z-index: 30;
 			width: min(300px, 90vw);
+			opacity: 1;
+			pointer-events: auto;
 			transform: translateX(-102%);
 			transition: transform 180ms ease;
 		}
 
-		.sidebar.open {
-			transform: translateX(0);
+		.app-shell.sidebar-collapsed .sidebar {
+			opacity: 1;
+			pointer-events: none;
+			border-right-color: color-mix(
+				in srgb,
+				var(--color-line) 80%,
+				transparent
+			);
 		}
 
-		.mobile-close,
-		.menu-button {
-			display: inline-flex;
+		.sidebar.open {
+			pointer-events: auto;
+			transform: translateX(0);
 		}
 
 		.scrim {
@@ -1126,14 +1357,16 @@
 			opacity: 1;
 		}
 
-		.chat-panel {
+		.chat-panel,
+		.chat-panel.show-topbar {
 			height: 100vh;
 			height: 100dvh;
-			grid-template-rows: 56px minmax(0, 1fr) auto;
+			grid-template-rows: 52px minmax(0, 1fr) auto;
 		}
 
-		.chat-panel.empty {
-			grid-template-rows: 56px minmax(0, 1fr);
+		.chat-panel.empty,
+		.chat-panel.show-topbar.empty {
+			grid-template-rows: 52px minmax(0, 1fr);
 		}
 
 		.topbar {
@@ -1160,6 +1393,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.app-shell,
 		.sidebar,
 		.scrim {
 			transition: none;

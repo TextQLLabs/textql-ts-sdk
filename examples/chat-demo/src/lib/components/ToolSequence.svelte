@@ -17,6 +17,11 @@
 	import CellDetail from '$lib/components/CellDetail.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import UnicodeSpinner from '$lib/components/UnicodeSpinner.svelte';
+	import {
+		cellOpensInPreviewPanel,
+		previewItemsFromCell,
+		previewPanel
+	} from '$lib/previewPanel.svelte';
 
 	/** Height + opacity so expand/collapse feels soft, not a hard cut. */
 	function softSlide(
@@ -102,6 +107,27 @@
 		if (payload.redacted === true) return '_Thinking (redacted)_';
 		return typeof payload.content === 'string' ? payload.content : '';
 	}
+
+	function openPreview(cell: CellLike) {
+		const items = previewItemsFromCell(cell);
+		if (items.length === 0) return;
+		for (const item of items) previewPanel.openItem(item);
+		previewPanel.select(items[0].id);
+	}
+
+	function onStepClick(cell: CellLike, sKey: string) {
+		if (cellOpensInPreviewPanel(cell)) {
+			openPreview(cell);
+			return;
+		}
+		toggleStep(sKey);
+	}
+
+	function isAssetStepOpen(cell: CellLike): boolean {
+		if (!previewPanel.open) return false;
+		const items = previewItemsFromCell(cell);
+		return items.some((item) => item.id === previewPanel.selectedId);
+	}
 </script>
 
 {#if segments.length === 0}
@@ -148,21 +174,25 @@
 								{@const sKey = stepKey(key, cell, cellIdx)}
 								{@const stepOpen = expandedSteps.has(sKey)}
 								{@const isThought = getCellCase(cell) === 'thinkingCell'}
+								{@const isAsset = cellOpensInPreviewPanel(cell)}
 								<div class="step">
 									<button
 										type="button"
 										class="step-header"
 										class:tool-step={!isThought}
-										aria-expanded={stepOpen}
-										onclick={() => toggleStep(sKey)}
+										aria-expanded={isAsset ? isAssetStepOpen(cell) : stepOpen}
+										onclick={() => onStepClick(cell, sKey)}
 									>
 										<span class="step-label">{getStepLabel(cell)}</span>
+										{#if isAsset}
+											<span class="step-open-label">Open</span>
+										{/if}
 										<ChevronRight
 											size={12}
-											class={['step-chevron', stepOpen && 'open']}
+											class={['step-chevron', !isAsset && stepOpen && 'open']}
 										/>
 									</button>
-									{#if stepOpen}
+									{#if stepOpen && !isAsset}
 										<div class="step-detail" transition:softSlide>
 											{#if isThought}
 												<div class="thought-body">
@@ -322,6 +352,19 @@
 
 	.step-header.tool-step :global(.step-chevron) {
 		margin-left: auto;
+	}
+
+	.step-open-label {
+		margin-left: auto;
+		color: #a1a1aa;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.step-header:hover .step-open-label {
+		color: #52525b;
 	}
 
 	.step-detail {

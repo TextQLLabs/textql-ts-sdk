@@ -7,6 +7,12 @@
 		getToolDisplayName,
 		type CellLike,
 	} from "$lib/cells";
+	import {
+		guessPreviewType,
+		previewItemsFromCell,
+		previewPanel,
+	} from "$lib/previewPanel.svelte";
+	import { toEmbeddablePreviewUrl } from "$lib/previewUrl";
 	import Markdown from "./Markdown.svelte";
 	import PierreCode from "./PierreCode.svelte";
 
@@ -19,6 +25,10 @@
 	);
 	const blocks = $derived(buildCellBlocks(cell));
 	const Icon = $derived(info.icon);
+	const cellAssets = $derived(previewItemsFromCell(cell));
+	const cellKey = $derived(
+		typeof cell.id === "string" && cell.id ? cell.id : "cell",
+	);
 
 	// Pierre detects language from the filename extension.
 	const LANG_FILENAMES: Record<string, string> = {
@@ -32,6 +42,25 @@
 
 	function codeFileName(lang: string): string {
 		return LANG_FILENAMES[lang] ?? `code.${lang}`;
+	}
+
+	/** Prefer the collected chat-asset identity so topbar / steps share tabs. */
+	function openUrlAsset(url: string, name: string, suffix: string, previewType?: string) {
+		const match = cellAssets.find((item) => item.url === url);
+		if (match) {
+			previewPanel.openItem(match);
+			return;
+		}
+		previewPanel.openItem({
+			id: `${cellKey}:${suffix}`,
+			name,
+			previewType: previewType ?? guessPreviewType(url),
+			url,
+			content: null,
+			error: null,
+			toolSummary:
+				typeof cell.toolSummary === "string" ? cell.toolSummary : null,
+		});
 	}
 </script>
 
@@ -84,22 +113,34 @@
 				{block.text}
 			</p>
 		{:else if block.kind === "link"}
-			<a
+			<button
+				type="button"
 				class="block-link"
-				href={block.href}
-				target="_blank"
-				rel="noreferrer noopener"
+				onclick={() =>
+					openUrlAsset(block.href, block.label || "Link", `link-${i}`)}
 			>
 				{block.label}
 				<ExternalLink size={12} />
-			</a>
+			</button>
 		{:else if block.kind === "image"}
-			<img
-				class="cell-image"
-				src={block.url}
-				alt={block.alt ?? ""}
-				loading="lazy"
-			/>
+			<button
+				type="button"
+				class="cell-image-btn"
+				onclick={() =>
+					openUrlAsset(
+						block.url,
+						block.alt || "Image",
+						`image-${i}`,
+						"image",
+					)}
+			>
+				<img
+					class="cell-image"
+					src={toEmbeddablePreviewUrl(block.url) ?? block.url}
+					alt={block.alt ?? ""}
+					loading="lazy"
+				/>
+			</button>
 		{:else if block.kind === "list"}
 			{#if block.label}
 				<p class="block-label">{block.label}</p>
@@ -108,11 +149,18 @@
 				{#each block.items as item, j (j)}
 					<li>
 						{#if item.href}
-							<a
-								href={item.href}
-								target="_blank"
-								rel="noreferrer noopener">{item.title}</a
+							<button
+								type="button"
+								class="list-link"
+								onclick={() =>
+									openUrlAsset(
+										item.href!,
+										item.title || "File",
+										`list-${i}-${j}`,
+									)}
 							>
+								{item.title}
+							</button>
 						{:else}
 							<span class="list-title">{item.title}</span>
 						{/if}
@@ -243,20 +291,38 @@
 		color: #dc2626;
 	}
 
-	.block-link {
+	.block-link,
+	.list-link {
 		display: inline-flex;
 		align-items: center;
 		gap: 5px;
 		align-self: flex-start;
+		padding: 0;
+		border: 0;
+		background: transparent;
 		color: #2563eb;
+		font: inherit;
 		font-size: 12.5px;
 		font-weight: 500;
+		text-align: left;
 		text-decoration: none;
+		cursor: pointer;
 	}
 
-	.block-link:hover {
+	.block-link:hover,
+	.list-link:hover {
 		text-decoration: underline;
 		text-underline-offset: 2px;
+	}
+
+	.cell-image-btn {
+		display: block;
+		max-width: 100%;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		cursor: zoom-in;
+		text-align: left;
 	}
 
 	.block-list {
@@ -273,18 +339,6 @@
 		flex-direction: column;
 		gap: 1px;
 		min-width: 0;
-	}
-
-	.block-list a {
-		color: #2563eb;
-		font-size: 12.5px;
-		font-weight: 500;
-		text-decoration: none;
-	}
-
-	.block-list a:hover {
-		text-decoration: underline;
-		text-underline-offset: 2px;
 	}
 
 	.list-title {

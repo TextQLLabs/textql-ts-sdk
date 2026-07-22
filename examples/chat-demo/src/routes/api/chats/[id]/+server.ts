@@ -100,3 +100,28 @@ export const GET: RequestHandler = async ({ params }) => {
 		return json({ error: 'The chat request failed.' }, { status: 502 });
 	}
 };
+
+export const DELETE: RequestHandler = async ({ params }) => {
+	const apiKey = env.TEXTQL_API_KEY;
+	if (!apiKey) {
+		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
+	}
+
+	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
+
+	try {
+		const result = await client.chats.delete({ body: { chatId: params.id } });
+
+		if (isRecord(result) && 'code' in result) {
+			return json(
+				{ error: typeof result.message === 'string' ? result.message : 'Unable to delete chat.' },
+				{ status: 404 }
+			);
+		}
+
+		return json({ ok: true, id: params.id });
+	} catch (error) {
+		console.error('Chat delete request failed', error);
+		return json({ error: 'The chat delete request failed.' }, { status: 502 });
+	}
+};
