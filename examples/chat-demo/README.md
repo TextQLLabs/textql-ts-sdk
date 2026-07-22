@@ -20,6 +20,7 @@ git clone https://github.com/TextQLLabs/textql-ts-sdk.git
 cd textql-ts-sdk/examples/chat-demo
 npm install
 echo 'TEXTQL_API_KEY=your-key-here' > .env
+echo 'TEXTQL_SERVER_URL=overide url if needed' > .env
 ```
 
 **3. Run:**
@@ -30,8 +31,9 @@ npm run dev -- --open
 
 That's it — the app opens at `http://localhost:5173`. Requires Node 18+.
 
-> On-prem deployments: point `RPC_SERVER_URL` in `src/lib/server/textql.ts`
-> at your own host.
+> On-prem deployments: set `TEXTQL_SERVER_URL` in `.env` to your plain host
+> (e.g. `https://your-host.example.com`).
+> mount itself, for both unary and streaming calls.
 
 ## What it demonstrates
 
