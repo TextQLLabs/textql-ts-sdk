@@ -1,7 +1,10 @@
 import { env } from '$env/dynamic/private';
+import { toJson } from '@bufbuild/protobuf';
 import { json } from '@sveltejs/kit';
 import { Textql } from '@textql/sdk';
+import { type Cell, CellSchema } from '@textql/sdk/generated/connect/public/chat_pb.js';
 import { TextqlRpcPublicChatLlmModel } from '@textql/sdk/models';
+import { createStreamingClient } from '@textql/sdk/streaming';
 
 import type { RequestHandler } from './$types';
 
@@ -34,7 +37,7 @@ function resolveModel(value: unknown) {
 	return TextqlRpcPublicChatLlmModel.ModelSonnet5;
 }
 
-export const POST: RequestHandler = async ({ request, fetch }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	const apiKey = env.TEXTQL_API_KEY;
 
 	if (!apiKey) {
@@ -53,8 +56,8 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	const model = resolveModel(payload.model);
 	const connectorIds = Array.isArray(payload.connectorIds)
 		? payload.connectorIds.filter(
-				(id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0
-			)
+			(id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0
+		)
 		: [];
 
 	if (!message) {
@@ -108,57 +111,42 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			);
 		}
 
-		// @textql/sdk 1.0.6 documents streamChat but does not yet ship the generated
-		// method. Keep create/send on the SDK and call that documented endpoint here.
-		const upstream = await fetch(
-			`https://app.textql.com/v2/chats/${encodeURIComponent(chatId)}/cells/stream`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/x-ndjson',
-					// The /v2 stream endpoint only accepts bearer auth, not tql_api_key.
-					Authorization: `Bearer ${apiKey}`
-				},
-				body: JSON.stringify({ latestCompleteCellId: cellId }),
-				signal: request.signal
-			}
-		);
+		const streaming = createStreamingClient({ apiKey });
+		const cells = streaming.chats.streamChat(
+			{ chatId, latestCompleteCellId: cellId },
+			{ signal: request.signal }
+		)[Symbol.asyncIterator]();
 
-		if (!upstream.ok || !upstream.body) {
-			const detail = await upstream.text();
-			return json(
-				{ error: detail || `The chat stream failed with status ${upstream.status}.` },
-				{ status: upstream.status || 502 }
-			);
+		let first: IteratorResult<Cell>;
+		try {
+			first = await cells.next();
+		} catch (error) {
+			return json({ error: errorMessage(error, 'The chat stream failed.') }, { status: 502 });
 		}
 
-		const reader = upstream.body.getReader();
 		const encoder = new TextEncoder();
-		// Include userCellId so the client can filter the echoed user md cell by id
-		// instead of relying on `generated` (which can be omitted mid-stream).
-		const metadata = encoder.encode(
-			`${JSON.stringify({ type: 'meta', chatId, userCellId: cellId })}\n`
-		);
+		const line = (value: unknown) => encoder.encode(`${JSON.stringify(value)}\n`);
 
 		const stream = new ReadableStream<Uint8Array>({
 			async start(controller) {
-				controller.enqueue(metadata);
+				controller.enqueue(line({ type: 'meta', chatId, userCellId: cellId }));
 				try {
-					while (true) {
-						const { done, value } = await reader.read();
-						if (done) break;
-						if (value) controller.enqueue(value);
+					let next = first;
+					while (!next.done) {
+						controller.enqueue(line(toJson(CellSchema, next.value)));
+						next = await cells.next();
 					}
-					controller.close();
 				} catch (error) {
-					controller.error(error);
-				} finally {
-					reader.releaseLock();
+					if (!request.signal.aborted) {
+						controller.enqueue(
+							line({ error: { message: errorMessage(error, 'The chat stream failed.') } })
+						);
+					}
 				}
+				controller.close();
 			},
-			cancel(reason) {
-				return reader.cancel(reason);
+			cancel() {
+				void cells.return?.(undefined);
 			}
 		});
 
@@ -166,7 +154,6 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 			headers: {
 				'Content-Type': 'application/x-ndjson; charset=utf-8',
 				'Cache-Control': 'no-cache, no-transform',
-				// Prevent reverse proxies from buffering the NDJSON body.
 				'X-Accel-Buffering': 'no'
 			}
 		});
