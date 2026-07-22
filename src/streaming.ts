@@ -15,7 +15,8 @@ export interface StreamingClientOptions {
   fetch?: typeof globalThis.fetch;
 }
 
-const DEFAULT_SERVER_URL = "https://app.textql.com";
+// Connect RPCs are mounted under /rpc/public (same prefix the unary SDK needs).
+const DEFAULT_SERVER_URL = "https://app.textql.com/rpc/public";
 
 function createTransport(options: StreamingClientOptions): Transport {
   const auth: Interceptor = (next) => (req) => {
