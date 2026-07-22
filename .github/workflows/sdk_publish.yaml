@@ -170,11 +170,20 @@ jobs:
 
       - name: Render Mintlify release log
         run: |
-          published_version=$(python3 -c 'import json; print(json.load(open("sdk/package.json"))["version"])')
+          set -euo pipefail
+          # Speakeasy only stamps `[NPM v...]` lines for some releases, so drive
+          # the release log off the full set of versions actually on npm. This
+          # keeps the docs log in lockstep with the registry instead of showing
+          # only the versions Speakeasy happened to annotate plus the current one.
+          published_args=()
+          while IFS= read -r version; do
+            [ -n "$version" ] && published_args+=("--published-version=$version")
+          done < <(npm view @textql/sdk versions --json \
+            | python3 -c 'import sys, json; [print(v) for v in json.load(sys.stdin)]')
           python3 sdk/scripts/render_mintlify_releases.py \
             sdk/RELEASES.md \
             demo2/docs/public/api-reference/sdk/typescript.mdx \
-            --published-version "$published_version"
+            "${published_args[@]}"
 
       - name: Create or update docs pull request
         id: docs-pr
