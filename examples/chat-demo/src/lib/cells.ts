@@ -278,18 +278,9 @@ export function getActiveSummary(cells: CellLike[]): string {
 	return cells.length > 0 ? getToolDisplayName(cells[cells.length - 1]) : 'Working';
 }
 
-/**
- * How a chat turn is chunked for the UI: assistant markdown
- * (`mdCell` / `ansCell`) splits the stream. Everything between those —
- * thinking + tool calls — collapses into one expandable "toolgroup".
- *
- * Note: these arrays are already scoped to the assistant turn (user echoes
- * are filtered out before this runs). Do not require `generated === true` —
- * stream snapshots sometimes omit that flag until the cell completes, which
- * would hide live markdown inside a collapsed tool group.
- */
 export type Segment =
 	| { type: 'assistant'; cell: CellLike }
+	| { type: 'questions'; cell: CellLike }
 	| { type: 'toolgroup'; cells: CellLike[] };
 
 const TEXT_CASES = new Set(['mdCell', 'ansCell']);
@@ -310,6 +301,9 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 		if (cellCase && TEXT_CASES.has(cellCase)) {
 			flushGroup();
 			result.push({ type: 'assistant', cell });
+		} else if (cellCase === 'questionsCell') {
+			flushGroup();
+			result.push({ type: 'questions', cell });
 		} else {
 			currentGroup.push(cell);
 		}
@@ -320,8 +314,8 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 
 /** Stable key so segment DOM survives cells appending mid-stream. */
 export function getSegmentKey(segment: Segment, index: number): string {
-	if (segment.type === 'assistant') {
-		return `assistant:${segment.cell.id || index}`;
+	if (segment.type === 'assistant' || segment.type === 'questions') {
+		return `${segment.type}:${segment.cell.id || index}`;
 	}
 	return `toolgroup:${segment.cells[0]?.id || index}`;
 }

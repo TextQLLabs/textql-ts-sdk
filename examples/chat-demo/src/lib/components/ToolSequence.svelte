@@ -19,6 +19,7 @@
 	} from '$lib/cells';
 	import CellDetail from '$lib/components/CellDetail.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
+	import QuestionsCell from '$lib/components/QuestionsCell.svelte';
 	import RunningDuration from '$lib/components/RunningDuration.svelte';
 	import ThinkingCell from '$lib/components/ThinkingCell.svelte';
 	import UnicodeSpinner from '$lib/components/UnicodeSpinner.svelte';
@@ -153,6 +154,8 @@
 						content={assistantText(segment.cell)}
 					/>
 				</div>
+			{:else if segment.type === 'questions'}
+				<QuestionsCell cell={segment.cell} />
 			{:else}
 				{@const open = expandedBatches.has(key)}
 				{@const batchRunning = segment.cells.some((cell) =>

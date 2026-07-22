@@ -20,7 +20,8 @@ git clone https://github.com/TextQLLabs/textql-ts-sdk.git
 cd textql-ts-sdk/examples/chat-demo
 npm install
 echo 'TEXTQL_API_KEY=your-key-here' > .env
-echo 'TEXTQL_SERVER_URL=overide url if needed' > .env
+# On-prem only — otherwise omit (defaults to the cloud host):
+echo 'TEXTQL_SERVER_URL=https://your-host.example.com' >> .env
 ```
 
 **3. Run:**
