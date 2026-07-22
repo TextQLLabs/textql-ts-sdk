@@ -8,3 +8,4 @@ export * from './Layout';
 export * from './Toaster';
 export * from './Modal';
 export * from './Switch';
+export * from './Tooltip';

@@ -8,6 +8,7 @@ import {
 	titleCaseSnake,
 	type CellLike
 } from '$lib/cells';
+import { formatCron } from '$lib/cron';
 import { isRecord } from '$lib/utils';
 
 export type Block =
@@ -500,10 +501,13 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Action', humanizeEnum(p.action)],
 			['Total', num(p.totalCount)]
 		]);
-		const items = recs(p.playbooks).map((playbook) => ({
-			title: str(playbook.name) || 'playbook',
-			subtitle: str(playbook.cronString) || undefined
-		}));
+		const items = recs(p.playbooks).map((playbook) => {
+			const cron = str(playbook.cronString);
+			return {
+				title: str(playbook.name) || 'playbook',
+				subtitle: cron ? formatCron(cron) : undefined
+			};
+		});
 		list(b, 'Playbooks', items);
 		fieldChanges(b, p.fieldChanges);
 		text(b, 'Error', p.errorMessage);

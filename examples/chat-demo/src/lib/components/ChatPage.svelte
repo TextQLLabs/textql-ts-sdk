@@ -1,5 +1,7 @@
 <script lang="ts">
+	import BookOpen from "@lucide/svelte/icons/book-open";
 	import Ellipsis from "@lucide/svelte/icons/ellipsis";
+	import Network from "@lucide/svelte/icons/network";
 	import PanelLeft from "@lucide/svelte/icons/panel-left";
 	import PanelLeftClose from "@lucide/svelte/icons/panel-left-close";
 	import PanelRight from "@lucide/svelte/icons/panel-right";
@@ -15,6 +17,8 @@
 	import { DEFAULT_CHAT_MODEL } from "$lib/chatModels";
 	import { getCellCase, settleCells, type CellLike } from "$lib/cells";
 	import Composer from "$lib/components/Composer.svelte";
+	import OntologyPage from "$lib/components/OntologyPage.svelte";
+	import PlaybooksPage from "$lib/components/PlaybooksPage.svelte";
 	import PreviewPanel from "$lib/components/PreviewPanel.svelte";
 	import ToolSequence from "$lib/components/ToolSequence.svelte";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
@@ -24,6 +28,7 @@
 		previewPanel,
 		type PreviewItem,
 	} from "$lib/previewPanel.svelte";
+	import { Tooltip } from "$lib/primitives";
 	import { parseStreamLine, toCellLike } from "$lib/streamEvents";
 	import { isRecord } from "$lib/utils";
 
@@ -75,13 +80,28 @@
 		return CHAT_UUID_RE.test(value);
 	}
 
+	const isPlaybooksRoute = $derived(
+		page.url.pathname === "/playbooks" ||
+			page.url.pathname.startsWith("/playbooks/"),
+	);
+	const isOntologyRoute = $derived(
+		page.url.pathname === "/ontology" ||
+			page.url.pathname.startsWith("/ontology/"),
+	);
+	/** True on any full-panel section route (playbooks/ontology) — i.e. not chat. */
+	const inSection = $derived(isPlaybooksRoute || isOntologyRoute);
 	const routeChatId = $derived(
-		typeof page.params.id === "string" ? page.params.id : undefined,
+		inSection
+			? undefined
+			: typeof page.params.id === "string"
+				? page.params.id
+				: undefined,
 	);
 	const isEmpty = $derived(messages.length === 0);
 	const configLocked = $derived(chatId !== undefined || !isEmpty);
 	/** Deep link / sidebar open: fetch before showing the new-chat composer. */
 	const showChatLoading = $derived.by(() => {
+		if (inSection) return false;
 		const id = routeChatId;
 		if (!id) return false;
 		if (sending && id === chatId && messages.length > 0) return false;
@@ -91,14 +111,19 @@
 	});
 	const showChatError = $derived(
 		Boolean(
-			routeChatId &&
+			!inSection &&
+				routeChatId &&
 				chatLoadError &&
 				resolvedChatId !== routeChatId &&
 				!showChatLoading,
 		),
 	);
 	const showNewChat = $derived(
-		!routeChatId && isEmpty && !showChatLoading && !showChatError,
+		!inSection &&
+			!routeChatId &&
+			isEmpty &&
+			!showChatLoading &&
+			!showChatError,
 	);
 	// Collecting preview assets walks every cell in the chat, so debounce it
 	// off the per-snapshot stream path; cells arrays are reassigned on every
@@ -180,6 +205,15 @@
 	}
 
 	async function syncFromRoute() {
+		if (
+			page.url.pathname === "/playbooks" ||
+			page.url.pathname.startsWith("/playbooks/") ||
+			page.url.pathname === "/ontology" ||
+			page.url.pathname.startsWith("/ontology/")
+		) {
+			return;
+		}
+
 		const id = page.params.id;
 		if (id) {
 			await loadChatById(id);
@@ -706,6 +740,13 @@
 		if (event.key === "Escape" && menuChatId !== undefined) {
 			menuChatId = undefined;
 		}
+		if (
+			(event.metaKey || event.ctrlKey) &&
+			event.key.toLowerCase() === "s"
+		) {
+			event.preventDefault();
+			sidebarOpen = !sidebarOpen;
+		}
 	}
 
 	function onWindowPointerDown(event: PointerEvent) {
@@ -784,20 +825,47 @@
 					<Plus size={15} strokeWidth={2} />
 					<span>New chat</span>
 				</button>
-				<button
-					type="button"
-					class="icon-ghost sidebar-toggle"
-					aria-label="Close sidebar"
-					title="Close sidebar"
-					onclick={() => (sidebarOpen = false)}
-				>
-					<PanelLeftClose size={16} strokeWidth={1.75} />
-				</button>
+				<Tooltip label="Close sidebar" shortcut="⌘S" side="bottom">
+					<button
+						type="button"
+						class="icon-ghost sidebar-toggle"
+						aria-label="Close sidebar"
+						onclick={() => (sidebarOpen = false)}
+					>
+						<PanelLeftClose size={16} strokeWidth={1.75} />
+					</button>
+				</Tooltip>
 			</div>
 		</div>
 
 		<div class="chats-section">
 			<div class="chat-list" aria-live="polite" aria-busy={chatsLoading}>
+				<a
+					class="sidebar-nav-entry"
+					class:active={isPlaybooksRoute}
+					href={resolve("/(chat)/playbooks")}
+					aria-current={isPlaybooksRoute ? "page" : undefined}
+				>
+					<BookOpen
+						size={14}
+						strokeWidth={1.75}
+						class="sidebar-nav-icon"
+					/>
+					<span>Playbooks</span>
+				</a>
+				<a
+					class="sidebar-nav-entry"
+					class:active={isOntologyRoute}
+					href={resolve("/(chat)/ontology")}
+					aria-current={isOntologyRoute ? "page" : undefined}
+				>
+					<Network
+						size={14}
+						strokeWidth={1.75}
+						class="sidebar-nav-icon"
+					/>
+					<span>Ontology</span>
+				</a>
 				{#if chatsLoading}
 					<div class="list-loading">
 						<UnicodeSpinner label="Loading chats" />
@@ -815,7 +883,8 @@
 							{#each group.chats as chat (chat.id)}
 								<div
 									class="chat-row"
-									class:active={chat.id === chatId}
+									class:active={!inSection &&
+										chat.id === chatId}
 									class:opening={chat.id === openingChatId}
 									class:closing={chat.id === closingChatId}
 								>
@@ -904,32 +973,37 @@
 	>
 		<main
 			class="chat-panel"
-			class:empty={showNewChat || showChatLoading || showChatError}
+			class:empty={!inSection &&
+				(showNewChat || showChatLoading || showChatError)}
 			class:has-overlays={!sidebarOpen}
+			class:playbooks={inSection}
 		>
 			{#if !sidebarOpen}
 				<div class="panel-overlays panel-overlays-start">
-					<button
-						type="button"
-						class="icon-ghost"
-						aria-label="Open sidebar"
-						title="Open sidebar"
-						onclick={() => (sidebarOpen = true)}
-					>
-						<PanelLeft size={16} strokeWidth={1.75} />
-					</button>
-					<button
-						type="button"
-						class="new-chat-btn panel-new"
-						onclick={newThread}
-					>
-						<Plus size={15} strokeWidth={2} />
-						<span>New chat</span>
-					</button>
+					<Tooltip label="Open sidebar" shortcut="⌘S" side="right">
+						<button
+							type="button"
+							class="icon-ghost"
+							aria-label="Open sidebar"
+							onclick={() => (sidebarOpen = true)}
+						>
+							<PanelLeft size={16} strokeWidth={1.75} />
+						</button>
+					</Tooltip>
+					{#if !inSection}
+						<button
+							type="button"
+							class="new-chat-btn panel-new"
+							onclick={newThread}
+						>
+							<Plus size={15} strokeWidth={2} />
+							<span>New chat</span>
+						</button>
+					{/if}
 				</div>
 			{/if}
 
-			{#if hasAssets}
+			{#if !inSection && hasAssets}
 				<button
 					type="button"
 					class="icon-ghost assets-toggle"
@@ -945,7 +1019,11 @@
 				</button>
 			{/if}
 
-			{#if showChatLoading}
+			{#if isPlaybooksRoute}
+				<PlaybooksPage />
+			{:else if isOntologyRoute}
+				<OntologyPage />
+			{:else if showChatLoading}
 				<section
 					class="chat-status"
 					aria-label="Loading chat"
@@ -1044,7 +1122,7 @@
 			{/if}
 		</main>
 
-		{#if previewPanel.open}
+		{#if !inSection && previewPanel.open}
 			<PreviewPanel />
 		{/if}
 	</div>
@@ -1198,6 +1276,49 @@
 		min-height: 0;
 		overflow-y: auto;
 		padding-right: 2px;
+	}
+
+	.sidebar-nav-entry {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		margin-bottom: 10px;
+		padding: 7px 10px;
+		border-radius: var(--radius-sm);
+		color: #52525b;
+		font-size: 12.5px;
+		font-weight: 500;
+		text-decoration: none;
+		transition: background 120ms ease;
+	}
+
+	.sidebar-nav-entry:hover {
+		background: color-mix(in srgb, #fff 55%, transparent);
+	}
+
+	.sidebar-nav-entry.active {
+		color: var(--color-ink);
+		background: color-mix(in srgb, #fff 78%, transparent);
+		box-shadow: inset 0 0 0 1px
+			color-mix(in srgb, var(--color-line) 70%, transparent);
+	}
+
+	.chat-panel.playbooks {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.chat-panel.playbooks :global(.page) {
+		flex: 1;
+		min-height: 0;
+		height: 100%;
+	}
+
+	.sidebar-nav-entry :global(.sidebar-nav-icon) {
+		flex-shrink: 0;
+		color: #71717a;
 	}
 
 	.chat-group {

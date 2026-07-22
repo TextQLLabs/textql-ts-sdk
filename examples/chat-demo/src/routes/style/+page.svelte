@@ -7,6 +7,7 @@
 		Toaster,
 		toast,
 		Marquee,
+		Page
 	} from '$lib/primitives';
 
 	const buttonVariants = [
@@ -34,27 +35,28 @@
 
 <Toaster />
 
-<div class="page">
-	<header class="page-header">
-		<p class="eyebrow">chat-demo · $lib/primitives</p>
-		<h1 class="page-title">Style guide</h1>
-		<p class="page-lead">
-			Inventory of UI primitives — variants, sizes, and interactive states for designers and
-			devs.
-		</p>
-		<nav class="toc" aria-label="On this page">
-			<a href="#button">Button</a>
-			<a href="#text">Text</a>
-			<a href="#switch">Switch</a>
-			<a href="#modal">Modal</a>
-			<a href="#toaster">Toaster</a>
-			<a href="#marquee">Marquee</a>
-			<a href="#page">Page</a>
-			<a href="#layout">Layout</a>
-		</nav>
-	</header>
+<div class="style-shell">
+	<Page
+		title="Style guide"
+		lead="Inventory of UI primitives — variants, sizes, and interactive states."
+	>
+		{#snippet actions()}
+			<a class="back-link" href="/">← Chat demo</a>
+		{/snippet}
 
-	<section id="button" class="card">
+		<div class="guide">
+			<nav class="toc" aria-label="On this page">
+				<a href="#button">Button</a>
+				<a href="#text">Text</a>
+				<a href="#switch">Switch</a>
+				<a href="#modal">Modal</a>
+				<a href="#toaster">Toaster</a>
+				<a href="#marquee">Marquee</a>
+				<a href="#page">Page</a>
+				<a href="#layout">Layout</a>
+			</nav>
+
+			<section id="button" class="card">
 		<div class="card-head">
 			<h2>Button</h2>
 			<p>Variants × sizes, disabled, and link (<code>href</code>) rendering.</p>
@@ -269,26 +271,26 @@
 		<div class="card-head">
 			<h2>Page</h2>
 			<p>
-				App page shell (<code>title</code>, optional <code>label</code> / <code>lead</code>,
-				content slot). Full-bleed layout — not embedded here to avoid nesting another
-				<code>min-h-screen</code> frame.
+				App page shell: full-bleed header (title, optional lead, optional actions with space-between) + max-width body.
+				Works embedded in the chat shell or standalone — not mounted here to avoid nesting
+				another full-height frame.
 			</p>
 		</div>
 		<div class="api-box">
-			<pre class="api-code">{`<Page
-  title="Style guide"
-  label="Primitives"
-  lead="Optional supporting sentence."
-  titleSize="lg"
-  showTime={false}
->
-  <!-- page content -->
+			<pre class="api-code">{`<Page title="Playbooks" lead="Optional supporting line." wide={false}>
+  {#snippet actions()}
+    <button type="button">New playbook</button>
+  {/snippet}
+
+  <!-- body -->
 </Page>`}</pre>
 			<ul class="api-list">
-				<li><strong>title</strong> — required heading (pixel font + scramble)</li>
-				<li><strong>label</strong> — eyebrow; defaults from route path</li>
-				<li><strong>lead</strong> — muted supporting paragraph</li>
-				<li><strong>showTime</strong> — NYC clock in the header</li>
+				<li><strong>title</strong> — required page heading</li>
+				<li><strong>lead</strong> — muted supporting sentence under the title</li>
+				<li><strong>actions</strong> — snippet for header-right controls</li>
+				<li><strong>children</strong> — body content in a centered 840px column</li>
+				<li><strong>wide</strong> — full-width body/header (e.g. ontology)</li>
+				<li><strong>class</strong> — optional class on the root</li>
 			</ul>
 		</div>
 	</section>
@@ -312,62 +314,38 @@
 			</ul>
 		</div>
 	</section>
-
-	<footer class="page-footer">
-		<a href="/">← Chat demo</a>
-	</footer>
+		</div>
+	</Page>
 </div>
 
 <style>
-	.page {
-		max-width: 52rem;
-		margin: 0 auto;
-		padding: 2.5rem 1.25rem 4rem;
+	.style-shell {
+		min-height: 100dvh;
+	}
+
+	.guide {
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;
 	}
 
-	.page-header {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		padding-bottom: 0.75rem;
+	.back-link {
+		font-size: 13px;
+		font-weight: 500;
+		color: #52525b;
+		text-decoration: none;
 	}
 
-	.eyebrow {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: 0.6875rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-muted);
-	}
-
-	.page-title {
-		margin: 0;
-		font-family: var(--font-sans);
-		font-size: 1.75rem;
-		font-weight: 560;
-		letter-spacing: -0.02em;
+	.back-link:hover {
 		color: var(--color-ink);
-	}
-
-	.page-lead {
-		margin: 0;
-		max-width: 36rem;
-		font-size: 0.9375rem;
-		line-height: 1.55;
-		color: var(--color-muted);
 	}
 
 	.toc {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.35rem 0.85rem;
-		margin-top: 0.75rem;
-		padding-top: 0.85rem;
-		border-top: 1px solid var(--color-line);
+		padding-bottom: 0.85rem;
+		border-bottom: 1px solid var(--color-line);
 	}
 
 	.toc a {
@@ -409,7 +387,6 @@
 	}
 
 	.card-head code,
-	.hint code,
 	.api-list code {
 		font-family: var(--font-mono);
 		font-size: 0.78em;
@@ -564,21 +541,6 @@
 	.api-list strong {
 		color: var(--color-ink);
 		font-weight: 550;
-	}
-
-	.page-footer {
-		padding-top: 0.5rem;
-	}
-
-	.page-footer a {
-		font-family: var(--font-mono);
-		font-size: 0.75rem;
-		color: var(--color-muted);
-		text-decoration: none;
-	}
-
-	.page-footer a:hover {
-		color: var(--color-accent);
 	}
 
 	@media (max-width: 640px) {

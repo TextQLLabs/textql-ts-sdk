@@ -1,118 +1,130 @@
-<script module lang="ts">
-  const TIME_FMT = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    timeZoneName: "short",
-  });
-</script>
-
 <script lang="ts">
-  import type { Snippet } from "svelte";
-  import { onMount } from "svelte";
-  import { Text, type TextSize } from "../Text";
-  import { deviceType } from "../../deviceStore";
-  import { getRouteLabel } from "../../utils";
+	import type { Snippet } from 'svelte';
 
-  let {
-    title,
-    label,
-    lead,
-    titleSize = "lg",
-    contentClass = "flex flex-col gap-8",
-    showTime = false,
-    children,
-  }: {
-    title: string;
-    label?: string;
-    lead?: string;
-    titleSize?: TextSize;
-    contentClass?: string;
-    showTime?: boolean;
-    children?: Snippet;
-  } = $props();
-
-  let currentPath = $state(
-    typeof window === "undefined" ? "/" : window.location.pathname,
-  );
-
-  $effect(() => {
-    const onPop = () => (currentPath = window.location.pathname);
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
-  });
-
-  const derivedLabel = $derived(label ?? getRouteLabel(currentPath));
-
-  let timeString = $state("");
-
-  const updateTime = () => {
-    const parts = TIME_FMT.formatToParts(new Date());
-    const part = (type: Intl.DateTimeFormatPartTypes) =>
-      parts.find((p) => p.type === type)?.value ?? "";
-    timeString = `${part("hour")}:${part("minute")}:${part("second")} ${part("timeZoneName")}`;
-  };
-
-  onMount(() => {
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  });
+	let {
+		title,
+		lead,
+		actions,
+		children,
+		wide = false,
+		class: className
+	}: {
+		title: string;
+		lead?: string;
+		actions?: Snippet;
+		children?: Snippet;
+		/** Full-width body (no 840px column). Header is always full-bleed. */
+		wide?: boolean;
+		class?: string;
+	} = $props();
 </script>
 
-<main
-  class="mx-auto flex min-h-screen w-full max-w-2xl flex-col gap-12 {$deviceType ===
-  'mobile'
-    ? 'px-4 pt-12 pb-28'
-    : 'px-6 py-20'}"
->
-  <header class="flex flex-col">
-    <div class="flex items-baseline justify-between gap-3">
-      {#if derivedLabel}
-        <Text type="label" size="xs" color="muted" class="leading-none"
-          >{derivedLabel}</Text
-        >
-      {:else}
-        <span></span>
-      {/if}
-      {#if showTime}
-        <Text type="label" size="xs" color="muted" class="leading-none"
-          >New York City, NY</Text
-        >
-      {/if}
-    </div>
-    <div class="flex flex-row items-baseline justify-between gap-2">
-      <Text
-        type="heading"
-        size={titleSize}
-        color="black"
-        animate
-        animateOnHover
-        class="leading-tight"
-      >
-        {title}
-      </Text>
-      {#if showTime}
-        <Text
-          type="label"
-          size="xs"
-          color="muted"
-          animate
-          duration={200}
-          class="shrink-0"
-        >
-          {timeString}
-        </Text>
-      {/if}
-    </div>
-    {#if lead}
-      <Text type="paragraph" size="sm" color="muted" class="mt-2">{lead}</Text>
-    {/if}
-  </header>
+<div class={['page', wide && 'wide', className]}>
+	<header class="header">
+		<div class="header-inner">
+			<div class="title-block">
+				<h1 class="title">{title}</h1>
+				{#if lead}
+					<p class="lead">{lead}</p>
+				{/if}
+			</div>
+			{#if actions}
+				<div class="actions">
+					{@render actions()}
+				</div>
+			{/if}
+		</div>
+	</header>
 
-  <div class={contentClass}>
-    {@render children?.()}
-  </div>
-</main>
+	<div class="body">
+		{@render children?.()}
+	</div>
+</div>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+		min-height: 100%;
+		color: var(--color-ink);
+		background: var(--color-paper);
+		font-family: var(--font-sans);
+	}
+
+	.header {
+		flex-shrink: 0;
+		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
+		background: color-mix(in srgb, var(--color-paper) 92%, #fff);
+	}
+
+	.header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 10px;
+		width: 100%;
+		padding: 8px 16px;
+		min-height: 40px;
+	}
+
+	.page.wide .body {
+		width: 100%;
+		max-width: none;
+	}
+
+	.title-block {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		min-width: 0;
+	}
+
+	.title {
+		margin: 0;
+		color: var(--color-ink);
+		font-size: 13.5px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		line-height: 1.25;
+	}
+
+	.lead {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: 11.5px;
+		line-height: 1.3;
+	}
+
+	.actions {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+		gap: 6px;
+	}
+
+	.body {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		width: min(840px, 100%);
+		margin: 0 auto;
+		padding: 28px 20px 48px;
+		min-height: 0;
+	}
+
+	.page.wide .body {
+		padding: 16px 16px 24px;
+	}
+
+	@media (max-width: 560px) {
+		.header-inner {
+			padding-inline: 12px;
+		}
+
+		.body {
+			padding-inline: 14px;
+		}
+	}
+</style>
