@@ -24,7 +24,9 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.25.0",
+		"@pierre/diffs": "^1.2.12",
 		"@textql/sdk": "^1.0.6",
+		"marked": "^18.0.7",
 		"svelte-sonner": "^1.1.1",
 		"unicode-animations": "^1.0.3"
 	}

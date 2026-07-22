@@ -38,30 +38,51 @@ export const GET: RequestHandler = async ({ params }) => {
 		}
 
 		const chat = isRecord(result.chat) ? result.chat : null;
-		const rawMessages = Array.isArray(result.messages) ? result.messages : [];
 
-		const messages = [];
-		for (const message of rawMessages) {
-			if (!isRecord(message) || typeof message.content !== 'string' || !message.content) continue;
-			const role = message.role === 'assistant' ? 'assistant' : message.role === 'user' ? 'you' : null;
-			if (!role) continue;
-			messages.push({ role, body: message.content });
+		// Prefer raw cell history: assistant turns keep every cell (SQL, Python,
+		// web search, thinking, ...) so the client can render the full tool
+		// sequence, not just flattened text.
+		type Turn = { role: 'you' | 'assistant'; body?: string; cells?: unknown[] };
+		const messages: Turn[] = [];
+
+		const history = await client.chats.getHistory({ body: { chatId: params.id } });
+		if (!('code' in history) && Array.isArray(history.cells)) {
+			let assistantTurn: Turn | null = null;
+			for (const cell of history.cells) {
+				if (!isRecord(cell)) continue;
+				if (cell.generated !== true) {
+					const content =
+						'mdCell' in cell && isRecord(cell.mdCell) && typeof cell.mdCell.content === 'string'
+							? cell.mdCell.content
+							: 'ansCell' in cell &&
+								  isRecord(cell.ansCell) &&
+								  typeof cell.ansCell.content === 'string'
+								? cell.ansCell.content
+								: '';
+					if (content) {
+						messages.push({ role: 'you', body: content });
+						assistantTurn = null;
+					}
+					continue;
+				}
+				if (!assistantTurn) {
+					assistantTurn = { role: 'assistant', cells: [] };
+					messages.push(assistantTurn);
+				}
+				assistantTurn.cells?.push(cell);
+			}
 		}
 
-		// Fall back to cell history when GetChat returns no flattened messages.
+		// Fall back to GetChat's flattened messages when history has no cells.
 		if (messages.length === 0) {
-			const history = await client.chats.getHistory({ body: { chatId: params.id } });
-			if (!('code' in history) && Array.isArray(history.cells)) {
-				for (const cell of history.cells) {
-					const content =
-						'mdCell' in cell
-							? cell.mdCell.content
-							: 'ansCell' in cell
-								? cell.ansCell.content
-								: undefined;
-					if (!content) continue;
-					messages.push({ role: cell.generated ? 'assistant' : 'you', body: content });
-				}
+			const rawMessages = Array.isArray(result.messages) ? result.messages : [];
+			for (const message of rawMessages) {
+				if (!isRecord(message) || typeof message.content !== 'string' || !message.content)
+					continue;
+				const role =
+					message.role === 'assistant' ? 'assistant' : message.role === 'user' ? 'you' : null;
+				if (!role) continue;
+				messages.push({ role, body: message.content });
 			}
 		}
 
