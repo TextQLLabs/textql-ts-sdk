@@ -1,18 +1,17 @@
 # Bytes
 
-## Example Usage
+
+## Supported Types
+
+### `number`
 
 ```typescript
-import { Bytes } from "@textql/sdk/models";
-
-let value: Bytes = {
-  bytes: {},
-};
+const value: number = 128403;
 ```
 
-## Fields
+### `string`
 
-| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `bytes`                                                                                           | [models.TextqlRpcPublicDataframeByteValues](../models/textql-rpc-public-dataframe-byte-values.md) | :heavy_check_mark:                                                                                | N/A                                                                                               |
-| `columnIndex`                                                                                     | *number*                                                                                          | :heavy_minus_sign:                                                                                | N/A                                                                                               |
+```typescript
+const value: string = "<value>";
+```
+

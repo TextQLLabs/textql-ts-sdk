@@ -89,7 +89,7 @@ export type Doubles = {
   columnIndex?: number | undefined;
 };
 
-export type Bytes = {
+export type TextqlRpcPublicDataframeDataFrameColumnBytes = {
   bytes: TextqlRpcPublicDataframeByteValues;
   columnIndex?: number | undefined;
 };
@@ -101,7 +101,7 @@ export type Bools = {
 
 export type TextqlRpcPublicDataframeDataFrameColumn =
   | Bools
-  | Bytes
+  | TextqlRpcPublicDataframeDataFrameColumnBytes
   | Doubles
   | Floats
   | Int32
@@ -241,18 +241,26 @@ export function doublesFromJSON(
 }
 
 /** @internal */
-export const Bytes$inboundSchema: z.ZodMiniType<Bytes, unknown> = z.object({
-  bytes: TextqlRpcPublicDataframeByteValues$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema:
+  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumnBytes, unknown> = z
+    .object({
+      bytes: TextqlRpcPublicDataframeByteValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    });
 
-export function bytesFromJSON(
+export function textqlRpcPublicDataframeDataFrameColumnBytesFromJSON(
   jsonString: string,
-): SafeParseResult<Bytes, SDKValidationError> {
+): SafeParseResult<
+  TextqlRpcPublicDataframeDataFrameColumnBytes,
+  SDKValidationError
+> {
   return safeParse(
     jsonString,
-    (x) => Bytes$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Bytes' from JSON`,
+    (x) =>
+      TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'TextqlRpcPublicDataframeDataFrameColumnBytes' from JSON`,
   );
 }
 
@@ -276,7 +284,7 @@ export function boolsFromJSON(
 export const TextqlRpcPublicDataframeDataFrameColumn$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumn, unknown> = smartUnion([
     z.lazy(() => Bools$inboundSchema),
-    z.lazy(() => Bytes$inboundSchema),
+    z.lazy(() => TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema),
     z.lazy(() => Doubles$inboundSchema),
     z.lazy(() => Floats$inboundSchema),
     z.lazy(() => Int32$inboundSchema),
