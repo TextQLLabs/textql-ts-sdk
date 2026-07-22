@@ -25,6 +25,7 @@
 	"dependencies": {
 		"@lucide/svelte": "^1.25.0",
 		"@textql/sdk": "^1.0.6",
-		"svelte-sonner": "^1.1.1"
+		"svelte-sonner": "^1.1.1",
+		"unicode-animations": "^1.0.3"
 	}
 }

@@ -1,11 +1,30 @@
 <script lang="ts">
+	import type { Component } from 'svelte';
+	import AppWindow from '@lucide/svelte/icons/app-window';
 	import ArrowUp from '@lucide/svelte/icons/arrow-up';
 	import Boxes from '@lucide/svelte/icons/boxes';
+	import Braces from '@lucide/svelte/icons/braces';
 	import Cable from '@lucide/svelte/icons/cable';
+	import Calendar from '@lucide/svelte/icons/calendar';
+	import ChartColumn from '@lucide/svelte/icons/chart-column';
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import Cloud from '@lucide/svelte/icons/cloud';
+	import CodeXml from '@lucide/svelte/icons/code-xml';
+	import Database from '@lucide/svelte/icons/database';
+	import Globe from '@lucide/svelte/icons/globe';
+	import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
+	import Mail from '@lucide/svelte/icons/mail';
+	import Network from '@lucide/svelte/icons/network';
 	import Plus from '@lucide/svelte/icons/plus';
+	import Terminal from '@lucide/svelte/icons/terminal';
+	import {
+		enabledToolDisplays,
+		previewToolsFromSelection,
+		type ChatTools,
+		type ToolFlagKey
+	} from '$lib/chatTools';
 	import { connectorIconSrc } from '$lib/connectorIcons';
 	import { connectorsCache } from '$lib/connectorsCache.svelte';
 
@@ -21,11 +40,33 @@
 		value?: string;
 		sending?: boolean;
 		docked?: boolean;
+		/** When true, model + connectors are read-only (existing chat). */
+		configLocked?: boolean;
 		selectedConnectorIds?: number[];
 		selectedModel?: string;
+		/**
+		 * Enabled tools from GetChat (existing chat). When null/undefined on a blank chat,
+		 * tools are inferred from the current selection (connectors → SQL).
+		 */
+		tools?: ChatTools | null;
 		onsend?: () => void;
 		class?: string;
 	}
+
+	const TOOL_ICONS: Record<ToolFlagKey, Component> = {
+		sqlEnabled: Database,
+		pythonEnabled: Braces,
+		webSearchEnabled: Globe,
+		bashEnabled: Terminal,
+		javascriptEnabled: CodeXml,
+		ontologyEnabled: Network,
+		googleDriveEnabled: Cloud,
+		gmailEnabled: Mail,
+		googleCalendarEnabled: Calendar,
+		microsoft365Enabled: AppWindow,
+		powerbiEnabled: ChartColumn,
+		streamlitEnabled: LayoutDashboard
+	};
 
 	const CLAUDE_MODELS: ModelOption[] = [
 		{ id: 'MODEL_HAIKU_4_5', label: 'Claude Haiku 4.5', hint: 'Fast responses for quick tasks' },
@@ -37,52 +78,42 @@
 		value = $bindable(''),
 		sending = false,
 		docked = false,
+		configLocked = false,
 		selectedConnectorIds = $bindable<number[]>([]),
 		selectedModel = $bindable('MODEL_SONNET_5'),
+		tools = null,
 		onsend,
 		class: className = ''
 	}: Props = $props();
 
+	const ROOT_ITEMS = [
+		{ id: 'models' as const, label: 'Models' },
+		{ id: 'connectors' as const, label: 'Connectors' }
+	];
+
 	let menuOpen = $state(false);
 	let flyout = $state<Flyout | null>(null);
-	let menuQuery = $state('');
+	let connectorQuery = $state('');
 	let connectorNames = $state.raw<Record<number, string>>({});
 	let menuRoot: HTMLDivElement | undefined;
-	let searchInput: HTMLInputElement | undefined;
+	let connectorSearchInput: HTMLInputElement | undefined;
 	let textareaEl: HTMLTextAreaElement | undefined;
 
-	const normalizedQuery = $derived(menuQuery.trim().toLowerCase());
-
-	const rootItems = $derived(
-		[
-			{ id: 'models' as const, label: 'Models', hasSubmenu: true },
-			{ id: 'connectors' as const, label: 'Connectors', hasSubmenu: true }
-		].filter((item) => !normalizedQuery || item.label.toLowerCase().includes(normalizedQuery))
-	);
-
-	const filteredModels = $derived(
-		CLAUDE_MODELS.filter((model) => {
-			if (!normalizedQuery) return true;
-			return (
-				model.label.toLowerCase().includes(normalizedQuery) ||
-				model.hint.toLowerCase().includes(normalizedQuery) ||
-				model.id.toLowerCase().includes(normalizedQuery)
-			);
-		})
-	);
+	const normalizedConnectorQuery = $derived(connectorQuery.trim().toLowerCase());
 
 	const filteredConnectors = $derived(
 		connectorsCache.connectors.filter((connector) => {
-			if (!normalizedQuery) return true;
+			if (!normalizedConnectorQuery) return true;
 			return (
-				connector.name.toLowerCase().includes(normalizedQuery) ||
-				connector.type.toLowerCase().includes(normalizedQuery)
+				connector.name.toLowerCase().includes(normalizedConnectorQuery) ||
+				connector.type.toLowerCase().includes(normalizedConnectorQuery)
 			);
 		})
 	);
 
 	const selectedModelLabel = $derived(
-		CLAUDE_MODELS.find((model) => model.id === selectedModel)?.label ?? 'Claude Sonnet 5'
+		CLAUDE_MODELS.find((model) => model.id === selectedModel)?.label ??
+			selectedModel.replace(/^MODEL_/, '').replaceAll('_', ' ')
 	);
 
 	const selectedChips = $derived(
@@ -96,15 +127,16 @@
 		})
 	);
 
-	function focusSearch() {
-		queueMicrotask(() => searchInput?.focus());
-	}
+	const activeTools = $derived(
+		tools != null ? tools : previewToolsFromSelection(selectedConnectorIds)
+	);
+	const toolItems = $derived(enabledToolDisplays(activeTools));
 
 	function openMenu(initialFlyout: Flyout | null = null) {
+		if (configLocked) return;
 		menuOpen = true;
 		flyout = initialFlyout;
-		menuQuery = '';
-		focusSearch();
+		connectorQuery = '';
 		if (initialFlyout === 'connectors') {
 			void connectorsCache.load();
 		}
@@ -113,10 +145,11 @@
 	function closeMenu() {
 		menuOpen = false;
 		flyout = null;
-		menuQuery = '';
+		connectorQuery = '';
 	}
 
 	function toggleMenu() {
+		if (configLocked) return;
 		if (menuOpen) {
 			closeMenu();
 			return;
@@ -125,30 +158,35 @@
 	}
 
 	function openFlyout(next: Flyout) {
+		if (configLocked) return;
+		if (flyout === next) return;
 		flyout = next;
+		connectorQuery = '';
 		if (next === 'connectors') {
 			void connectorsCache.load();
 		}
 	}
 
 	function selectModel(modelId: string) {
+		if (configLocked) return;
 		selectedModel = modelId;
 		closeMenu();
 		textareaEl?.focus();
 	}
 
-	function attachConnector(connector: { id: number; name: string }) {
+	function toggleConnector(connector: { id: number; name: string }) {
+		if (configLocked) return;
 		connectorNames = { ...connectorNames, [connector.id]: connector.name };
 
-		if (!selectedConnectorIds.includes(connector.id)) {
+		if (selectedConnectorIds.includes(connector.id)) {
+			selectedConnectorIds = selectedConnectorIds.filter((id) => id !== connector.id);
+		} else {
 			selectedConnectorIds = [...selectedConnectorIds, connector.id];
 		}
-
-		closeMenu();
-		textareaEl?.focus();
 	}
 
 	function removeConnector(id: number) {
+		if (configLocked) return;
 		selectedConnectorIds = selectedConnectorIds.filter((selectedId) => selectedId !== id);
 	}
 
@@ -164,6 +202,7 @@
 			event.preventDefault();
 			if (flyout) {
 				flyout = null;
+				connectorQuery = '';
 				return;
 			}
 			closeMenu();
@@ -184,10 +223,11 @@
 		};
 	}
 
-	function attachSearchInput(element: HTMLInputElement) {
-		searchInput = element;
+	function attachConnectorSearchInput(element: HTMLInputElement) {
+		connectorSearchInput = element;
+		queueMicrotask(() => element.focus());
 		return () => {
-			if (searchInput === element) searchInput = undefined;
+			if (connectorSearchInput === element) connectorSearchInput = undefined;
 		};
 	}
 
@@ -208,14 +248,16 @@
 				<span class="attachment-pill">
 					<img class="attachment-icon" src={connectorIconSrc(chip.type)} alt="" />
 					<span class="attachment-label">{chip.name}</span>
-					<button
-						type="button"
-						class="attachment-remove"
-						aria-label={`Remove ${chip.name}`}
-						onclick={() => removeConnector(chip.id)}
-					>
-						×
-					</button>
+					{#if !configLocked}
+						<button
+							type="button"
+							class="attachment-remove"
+							aria-label={`Remove ${chip.name}`}
+							onclick={() => removeConnector(chip.id)}
+						>
+							×
+						</button>
+					{/if}
 				</span>
 			{/each}
 		</div>
@@ -232,39 +274,50 @@
 
 	<div class="composer-toolbar">
 		<div class="toolbar-left" {@attach attachMenuRoot}>
+			{#if !configLocked}
+				<button
+					type="button"
+					class="icon-circle"
+					class:active={menuOpen || selectedConnectorIds.length > 0}
+					aria-label="Add context"
+					aria-haspopup="menu"
+					aria-expanded={menuOpen}
+					onclick={toggleMenu}
+				>
+					<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
+				</button>
+			{/if}
+
 			<button
 				type="button"
-				class="icon-circle"
-				class:active={menuOpen || selectedConnectorIds.length > 0}
-				aria-label="Add context"
-				aria-haspopup="menu"
-				aria-expanded={menuOpen}
-				onclick={toggleMenu}
+				class="model-pill"
+				class:locked={configLocked}
+				disabled={configLocked}
+				aria-disabled={configLocked}
+				onclick={() => openMenu('models')}
 			>
-				<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
-			</button>
-
-			<button type="button" class="model-pill" onclick={() => openMenu('models')}>
 				<span>{selectedModelLabel}</span>
-				<ChevronDown class="chevron-down" size={14} strokeWidth={1.5} aria-hidden="true" />
+				{#if !configLocked}
+					<ChevronDown class="chevron-down" size={14} strokeWidth={1.5} aria-hidden="true" />
+				{/if}
 			</button>
 
-			{#if menuOpen}
+			{#if toolItems.length > 0}
+				<div class="tools-row" aria-label="Available tools">
+					{#each toolItems as tool (tool.key)}
+						{@const Icon = TOOL_ICONS[tool.key]}
+						<span class="tool-chip" title={tool.label} aria-label={tool.label}>
+							<Icon size={13} strokeWidth={1.5} aria-hidden="true" />
+						</span>
+					{/each}
+				</div>
+			{/if}
+
+			{#if menuOpen && !configLocked}
 				<div class="menu-shell">
 					<div class="popover root-popover" role="menu" aria-label="Add context">
-						<label class="search-field">
-							<span class="sr-only">Search</span>
-							<input
-								{@attach attachSearchInput}
-								type="search"
-								bind:value={menuQuery}
-								placeholder="Add models, connectors..."
-								autocomplete="off"
-							/>
-						</label>
-
 						<div class="menu-section">
-							{#each rootItems as item (item.id)}
+							{#each ROOT_ITEMS as item (item.id)}
 								<button
 									type="button"
 									class="menu-row"
@@ -297,16 +350,12 @@
 								</button>
 							{/each}
 						</div>
-
-						{#if rootItems.length === 0}
-							<p class="state-copy">No matches.</p>
-						{/if}
 					</div>
 
 					{#if flyout === 'models'}
 						<div class="popover flyout-popover" role="menu" aria-label="Models">
 							<div class="menu-section models-list">
-								{#each filteredModels as model (model.id)}
+								{#each CLAUDE_MODELS as model (model.id)}
 									<button
 										type="button"
 										class="menu-row model-row"
@@ -324,13 +373,22 @@
 											</span>
 										{/if}
 									</button>
-								{:else}
-									<p class="state-copy">No matches.</p>
 								{/each}
 							</div>
 						</div>
 					{:else if flyout === 'connectors'}
 						<div class="popover flyout-popover" role="menu" aria-label="Connectors">
+							<label class="search-field">
+								<span class="sr-only">Search connectors</span>
+								<input
+									{@attach attachConnectorSearchInput}
+									type="search"
+									bind:value={connectorQuery}
+									placeholder="Search connectors..."
+									autocomplete="off"
+								/>
+							</label>
+
 							<div class="connectors-list" aria-live="polite" aria-busy={connectorsCache.loading}>
 								{#if connectorsCache.loading && !connectorsCache.loaded}
 									<p class="state-copy">Loading connectors…</p>
@@ -351,7 +409,7 @@
 											type="button"
 											class="connector-row"
 											class:attached={selectedConnectorIds.includes(connector.id)}
-											onclick={() => attachConnector(connector)}
+											onclick={() => toggleConnector(connector)}
 										>
 											<img
 												class="connector-icon"
@@ -547,6 +605,15 @@
 		font-weight: 500;
 	}
 
+	.model-pill.locked {
+		cursor: default;
+		opacity: 0.92;
+	}
+
+	.model-pill.locked:hover {
+		background: #fafafa;
+	}
+
 	.model-pill span {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -556,6 +623,32 @@
 	.model-pill :global(.chevron-down) {
 		flex-shrink: 0;
 		color: #8b8b93;
+	}
+
+	.tools-row {
+		display: inline-flex;
+		min-width: 0;
+		align-items: center;
+		gap: 2px;
+		margin-left: 2px;
+		padding-left: 6px;
+		border-left: 1px solid color-mix(in srgb, var(--color-line) 90%, #d4d4d8);
+	}
+
+	.tool-chip {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: 24px;
+		height: 24px;
+		border-radius: 999px;
+		color: #71717a;
+	}
+
+	.tool-chip:hover {
+		color: #3f3f46;
+		background: #f4f4f5;
 	}
 
 	.menu-shell {

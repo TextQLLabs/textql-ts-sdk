@@ -1,14 +1,24 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { afterNavigate, goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import Composer from '$lib/components/Composer.svelte';
-	import { Button, Modal, Switch } from '$lib/primitives';
+	import { onMount } from "svelte";
+	import { afterNavigate, goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+	import { page } from "$app/state";
+	import {
+		loadLastChatConfig,
+		saveLastChatConfig,
+	} from "$lib/chatConfigPrefs";
+	import {
+		extractEnabledTools,
+		type ChatTools,
+	} from "$lib/chatTools";
+	import Composer from "$lib/components/Composer.svelte";
+	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
+	import { connectorsCache } from "$lib/connectorsCache.svelte";
+	import { Button, Modal, Switch } from "$lib/primitives";
 
 	type Message = {
 		id: number;
-		role: 'you' | 'assistant';
+		role: "you" | "assistant";
 		body: string;
 		streaming?: boolean;
 	};
@@ -19,10 +29,14 @@
 		updatedAt: string | null;
 	};
 
+	const DEFAULT_MODEL = "MODEL_SONNET_5";
+
 	let messages = $state<Message[]>([]);
-	let draft = $state('');
+	let draft = $state("");
 	let selectedConnectorIds = $state<number[]>([]);
-	let selectedModel = $state('MODEL_SONNET_5');
+	let selectedModel = $state(DEFAULT_MODEL);
+	/** Enabled tools from GetChat; null on blank chats (Composer infers from selection). */
+	let chatTools = $state<ChatTools | null>(null);
 	let sidebarOpen = $state(false);
 	let settingsOpen = $state(false);
 	let compactMode = $state(false);
@@ -33,27 +47,48 @@
 	let chatsLoading = $state(true);
 	let chatsError = $state(false);
 	let openingChatId = $state<string | undefined>();
+	let prefsReady = $state(false);
 
 	const isEmpty = $derived(messages.length === 0);
+	const configLocked = $derived(chatId !== undefined || !isEmpty);
+
+	function resetChatConfig() {
+		const prefs = loadLastChatConfig();
+		selectedModel = prefs?.model ?? DEFAULT_MODEL;
+		selectedConnectorIds = prefs?.connectorIds ?? [];
+		chatTools = null;
+		if (selectedConnectorIds.length > 0) {
+			void connectorsCache.load();
+		}
+	}
+
+	function persistChatConfig(model: string, connectorIds: number[]) {
+		saveLastChatConfig({ model, connectorIds });
+	}
 
 	async function loadChats() {
 		chatsLoading = true;
 		chatsError = false;
 
 		try {
-			const response = await fetch('/api/chats');
+			const response = await fetch("/api/chats");
 			const payload: unknown = await response.json();
 
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.chats)) {
-				throw new Error('Unable to load chats.');
+			if (
+				!response.ok ||
+				!isRecord(payload) ||
+				!Array.isArray(payload.chats)
+			) {
+				throw new Error("Unable to load chats.");
 			}
 
 			chats = payload.chats.filter(
 				(item): item is ChatListItem =>
 					isRecord(item) &&
-					typeof item.id === 'string' &&
-					typeof item.title === 'string' &&
-					(typeof item.updatedAt === 'string' || item.updatedAt === null)
+					typeof item.id === "string" &&
+					typeof item.title === "string" &&
+					(typeof item.updatedAt === "string" ||
+						item.updatedAt === null),
 			);
 		} catch {
 			chatsError = true;
@@ -74,12 +109,17 @@
 			sending = false;
 			activeRequest = undefined;
 			messages = [];
-			draft = '';
+			draft = "";
 			chatId = undefined;
+			resetChatConfig();
 		}
 	}
 
 	onMount(() => {
+		if (!page.params.id) {
+			resetChatConfig();
+		}
+		prefsReady = true;
 		void loadChats();
 	});
 
@@ -87,34 +127,54 @@
 		void syncFromRoute();
 	});
 
+	// Persist last-used defaults while configuring a new chat (not locked).
+	$effect(() => {
+		if (!prefsReady || configLocked || page.params.id) return;
+		persistChatConfig(selectedModel, [...selectedConnectorIds]);
+	});
+
 	function isRecord(value: unknown): value is Record<string, unknown> {
-		return typeof value === 'object' && value !== null;
+		return typeof value === "object" && value !== null;
 	}
 
 	function dateKey(value: string | null) {
-		if (!value) return 'unknown';
+		if (!value) return "unknown";
 		const date = new Date(value);
-		if (Number.isNaN(date.getTime())) return 'unknown';
-		return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+		if (Number.isNaN(date.getTime())) return "unknown";
+		return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 	}
 
 	function shortDate(value: string | null) {
-		if (!value) return 'Older';
+		if (!value) return "Older";
 		const date = new Date(value);
-		if (Number.isNaN(date.getTime())) return 'Older';
+		if (Number.isNaN(date.getTime())) return "Older";
 
 		const today = new Date();
-		const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-		const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		const dayDiff = Math.round((startOfToday.getTime() - startOfDay.getTime()) / 86_400_000);
+		const startOfToday = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate(),
+		);
+		const startOfDay = new Date(
+			date.getFullYear(),
+			date.getMonth(),
+			date.getDate(),
+		);
+		const dayDiff = Math.round(
+			(startOfToday.getTime() - startOfDay.getTime()) / 86_400_000,
+		);
 
-		if (dayDiff === 0) return 'Today';
-		if (dayDiff === 1) return 'Yesterday';
-		return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+		if (dayDiff === 0) return "Today";
+		if (dayDiff === 1) return "Yesterday";
+		return date.toLocaleDateString(undefined, {
+			month: "short",
+			day: "numeric",
+		});
 	}
 
 	const chatGroups = $derived.by(() => {
-		const groups: { key: string; label: string; chats: ChatListItem[] }[] = [];
+		const groups: { key: string; label: string; chats: ChatListItem[] }[] =
+			[];
 
 		for (const chat of chats) {
 			const key = dateKey(chat.updatedAt);
@@ -122,7 +182,11 @@
 			if (existing) {
 				existing.chats.push(chat);
 			} else {
-				groups.push({ key, label: shortDate(chat.updatedAt), chats: [chat] });
+				groups.push({
+					key,
+					label: shortDate(chat.updatedAt),
+					chats: [chat],
+				});
 			}
 		}
 
@@ -132,27 +196,37 @@
 	async function setChatRoute(id: string | undefined, replace = false) {
 		if (id) {
 			if (page.params.id === id) return;
-			await goto(resolve('/(chat)/chat/[id]', { id }), {
+			await goto(resolve("/(chat)/chat/[id]", { id }), {
 				replaceState: replace,
 				noScroll: true,
-				keepFocus: true
+				keepFocus: true,
 			});
 			return;
 		}
 
-		if (page.url.pathname === '/') return;
-		await goto(resolve('/(chat)'), { replaceState: replace, noScroll: true, keepFocus: true });
+		if (page.url.pathname === "/") return;
+		await goto(resolve("/(chat)"), {
+			replaceState: replace,
+			noScroll: true,
+			keepFocus: true,
+		});
 	}
 
 	function cellText(cell: unknown) {
-		if (!isRecord(cell)) return '';
+		if (!isRecord(cell)) return "";
 
-		const candidates = [cell.ansCell, cell.ans_cell, cell.mdCell, cell.md_cell];
+		const candidates = [
+			cell.ansCell,
+			cell.ans_cell,
+			cell.mdCell,
+			cell.md_cell,
+		];
 		for (const candidate of candidates) {
-			if (isRecord(candidate) && typeof candidate.content === 'string') return candidate.content;
+			if (isRecord(candidate) && typeof candidate.content === "string")
+				return candidate.content;
 		}
 
-		return '';
+		return "";
 	}
 
 	function applyStreamLine(line: string, assistantId: number) {
@@ -161,7 +235,7 @@
 		const event: unknown = JSON.parse(line);
 		if (!isRecord(event)) return;
 
-		if (event.type === 'meta' && typeof event.chatId === 'string') {
+		if (event.type === "meta" && typeof event.chatId === "string") {
 			chatId = event.chatId;
 			void setChatRoute(event.chatId, true);
 			return;
@@ -170,7 +244,9 @@
 		const text = cellText(event.result);
 		if (!text) return;
 
-		const assistant = messages.find((message) => message.id === assistantId);
+		const assistant = messages.find(
+			(message) => message.id === assistantId,
+		);
 		if (assistant) assistant.body = text;
 	}
 
@@ -178,60 +254,79 @@
 		const body = draft.trim();
 		if (!body || sending) return;
 
+		// Snapshot config before optimistic UI (messages → configLocked).
+		const model = selectedModel;
+		const connectorIds = [...selectedConnectorIds];
+		const existingChatId = chatId;
+
 		const userId = Date.now();
 		const assistantId = userId + 1;
 		messages.push(
-			{ id: userId, role: 'you', body },
-			{ id: assistantId, role: 'assistant', body: '', streaming: true }
+			{ id: userId, role: "you", body },
+			{ id: assistantId, role: "assistant", body: "", streaming: true },
 		);
-		draft = '';
+		draft = "";
 		sending = true;
 		activeRequest = new AbortController();
 
 		try {
-			const response = await fetch('/api/chat', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+			const response = await fetch("/api/chat", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					message: body,
-					chatId,
-					model: selectedModel,
-					connectorIds: selectedConnectorIds
+					chatId: existingChatId,
+					model,
+					connectorIds,
 				}),
-				signal: activeRequest.signal
+				signal: activeRequest.signal,
 			});
 
 			if (!response.ok || !response.body) {
-				const payload: unknown = await response.json().catch(() => null);
+				const payload: unknown = await response
+					.json()
+					.catch(() => null);
 				const detail =
-					isRecord(payload) && typeof payload.error === 'string'
+					isRecord(payload) && typeof payload.error === "string"
 						? payload.error
-						: 'Request failed.';
+						: "Request failed.";
 				throw new Error(detail);
 			}
 
 			const reader = response.body.getReader();
 			const decoder = new TextDecoder();
-			let buffer = '';
+			let buffer = "";
 
 			while (true) {
 				const { done, value } = await reader.read();
 				buffer += decoder.decode(value, { stream: !done });
 
-				const lines = buffer.split('\n');
-				buffer = lines.pop() ?? '';
+				const lines = buffer.split("\n");
+				buffer = lines.pop() ?? "";
 				for (const line of lines) applyStreamLine(line, assistantId);
 
 				if (done) break;
 			}
 
 			if (buffer) applyStreamLine(buffer, assistantId);
+
+			// New chat: remember the config that was actually used.
+			if (!existingChatId) {
+				persistChatConfig(model, connectorIds);
+			}
 		} catch (error) {
-			if (error instanceof DOMException && error.name === 'AbortError') return;
-			const assistant = messages.find((message) => message.id === assistantId);
-			if (assistant) assistant.body = error instanceof Error ? error.message : 'Request failed.';
+			if (error instanceof DOMException && error.name === "AbortError")
+				return;
+			const assistant = messages.find(
+				(message) => message.id === assistantId,
+			);
+			if (assistant)
+				assistant.body =
+					error instanceof Error ? error.message : "Request failed.";
 		} finally {
-			const assistant = messages.find((message) => message.id === assistantId);
+			const assistant = messages.find(
+				(message) => message.id === assistantId,
+			);
 			if (assistant) assistant.streaming = false;
 			sending = false;
 			activeRequest = undefined;
@@ -249,11 +344,17 @@
 		openingChatId = id;
 
 		try {
-			const response = await fetch(`/api/chats/${encodeURIComponent(id)}`);
+			const response = await fetch(
+				`/api/chats/${encodeURIComponent(id)}`,
+			);
 			const payload: unknown = await response.json();
 
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.messages)) {
-				throw new Error('Unable to load chat.');
+			if (
+				!response.ok ||
+				!isRecord(payload) ||
+				!Array.isArray(payload.messages)
+			) {
+				throw new Error("Unable to load chat.");
 			}
 
 			activeRequest?.abort();
@@ -262,12 +363,39 @@
 			chatId = id;
 			messages = payload.messages
 				.filter(
-					(item): item is { role: 'you' | 'assistant'; body: string } =>
+					(
+						item,
+					): item is { role: "you" | "assistant"; body: string } =>
 						isRecord(item) &&
-						(item.role === 'you' || item.role === 'assistant') &&
-						typeof item.body === 'string'
+						(item.role === "you" || item.role === "assistant") &&
+						typeof item.body === "string",
 				)
-				.map((item, index) => ({ id: index, role: item.role, body: item.body }));
+				.map((item, index) => ({
+					id: index,
+					role: item.role,
+					body: item.body,
+				}));
+
+			if (typeof payload.model === "string" && payload.model) {
+				selectedModel = payload.model;
+			} else {
+				selectedModel = DEFAULT_MODEL;
+			}
+
+			selectedConnectorIds = Array.isArray(payload.connectorIds)
+				? payload.connectorIds.filter(
+						(value): value is number =>
+							typeof value === "number" &&
+							Number.isInteger(value),
+					)
+				: [];
+
+			chatTools = extractEnabledTools(payload.tools);
+
+			if (selectedConnectorIds.length > 0) {
+				void connectorsCache.load();
+			}
+
 			sidebarOpen = false;
 		} catch {
 			chatsError = true;
@@ -287,14 +415,16 @@
 		sending = false;
 		activeRequest = undefined;
 		messages = [];
-		draft = '';
+		draft = "";
 		chatId = undefined;
+		resetChatConfig();
 		sidebarOpen = false;
 		void setChatRoute(undefined);
 	}
 
 	function focusComposer() {
-		const el = document.querySelector<HTMLTextAreaElement>('.composer textarea');
+		const el =
+			document.querySelector<HTMLTextAreaElement>(".composer textarea");
 		el?.focus();
 		sidebarOpen = false;
 	}
@@ -302,11 +432,20 @@
 
 <svelte:head>
 	<title>Chat</title>
-	<meta name="description" content="A soft chat interface inspired by Cursor Agents." />
+	<meta
+		name="description"
+		content="A soft chat interface inspired by Cursor Agents."
+	/>
 </svelte:head>
 
 {#snippet iconGear()}
-	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+	<svg
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="1.5"
+		aria-hidden="true"
+	>
 		<path
 			d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"
 			stroke-linecap="round"
@@ -328,24 +467,41 @@
 		onclick={() => (sidebarOpen = false)}
 	></button>
 
-	<aside class:open={sidebarOpen} class="sidebar" aria-label="Conversation history">
+	<aside
+		class:open={sidebarOpen}
+		class="sidebar"
+		aria-label="Conversation history"
+	>
 		<div class="sidebar-top">
-			<button type="button" class="mobile-close" aria-label="Close sidebar" onclick={() => (sidebarOpen = false)}>
+			<button
+				type="button"
+				class="mobile-close"
+				aria-label="Close sidebar"
+				onclick={() => (sidebarOpen = false)}
+			>
 				Close
 			</button>
 
 			<nav class="nav-list" aria-label="Primary">
-				<button type="button" class="nav-row" onclick={newThread}>New Agent</button>
-				<button type="button" class="nav-row" onclick={focusComposer}>Search</button>
+				<button type="button" class="nav-row" onclick={newThread}
+					>New Agent</button
+				>
+				<button type="button" class="nav-row" onclick={focusComposer}
+					>Search</button
+				>
 			</nav>
 		</div>
 
 		<div class="chats-section">
 			<div class="chat-list" aria-live="polite" aria-busy={chatsLoading}>
 				{#if chatsLoading}
-					<span class="list-loading" aria-label="Loading chats"></span>
+					<div class="list-loading">
+						<UnicodeSpinner label="Loading chats" />
+					</div>
 				{:else if chatsError}
-					<button type="button" class="retry-btn" onclick={loadChats}>Retry</button>
+					<button type="button" class="retry-btn" onclick={loadChats}
+						>Retry</button
+					>
 				{:else if chats.length === 0}
 					<p class="list-empty">No chats yet</p>
 				{:else}
@@ -359,10 +515,17 @@
 									class:active={chat.id === chatId}
 									class:opening={chat.id === openingChatId}
 									title={chat.title}
-									disabled={sending || openingChatId !== undefined}
+									disabled={sending ||
+										openingChatId !== undefined}
 									onclick={() => openChat(chat.id)}
 								>
 									<span class="chat-title">{chat.title}</span>
+									{#if chat.id === openingChatId}
+										<UnicodeSpinner
+											class="chat-opening-spinner"
+											label="Opening chat"
+										/>
+									{/if}
 								</button>
 							{/each}
 						</div>
@@ -392,7 +555,11 @@
 
 	<main class="chat-panel" class:empty={isEmpty}>
 		<header class="topbar">
-			<button type="button" class="menu-button" onclick={() => (sidebarOpen = true)}>
+			<button
+				type="button"
+				class="menu-button"
+				onclick={() => (sidebarOpen = true)}
+			>
 				Menu
 			</button>
 		</header>
@@ -404,26 +571,35 @@
 					bind:selectedConnectorIds
 					bind:selectedModel
 					{sending}
+					{configLocked}
+					tools={chatTools}
 					onsend={sendMessage}
 				/>
 			</section>
 		{:else}
-			<section class="conversation" aria-label="Chat messages" aria-live="polite">
+			<section
+				class="conversation"
+				aria-label="Chat messages"
+				aria-live="polite"
+			>
 				<div class="conversation-inner">
 					<div class="messages">
 						{#each messages as message (message.id)}
 							<article
 								class="message"
-								class:you={message.role === 'you'}
-								class:assistant={message.role === 'assistant'}
+								class:you={message.role === "you"}
+								class:assistant={message.role === "assistant"}
 							>
-								{#if message.role === 'assistant'}
+								{#if message.role === "assistant"}
 									<span class="message-role">Assistant</span>
 								{/if}
 								{#if message.body}
 									<p class="message-body">{message.body}</p>
 								{:else if message.streaming}
-									<span class="streaming-indicator" aria-label="Waiting for response"></span>
+									<UnicodeSpinner
+										class="streaming-indicator"
+										label="Waiting for response"
+									/>
 								{/if}
 							</article>
 						{/each}
@@ -437,6 +613,8 @@
 					bind:selectedConnectorIds
 					bind:selectedModel
 					{sending}
+					{configLocked}
+					tools={chatTools}
 					docked
 					onsend={sendMessage}
 				/>
@@ -449,12 +627,20 @@
 	<div class="settings-list">
 		<label>
 			<span class="settings-label">Compact messages</span>
-			<Switch bind:checked={compactMode} aria-label="Use compact messages" />
+			<Switch
+				bind:checked={compactMode}
+				aria-label="Use compact messages"
+			/>
 		</label>
 	</div>
 
 	{#snippet actions()}
-		<Button class="rounded-xl" variant="solid" size="sm" onclick={() => (settingsOpen = false)}>
+		<Button
+			class="rounded-xl"
+			variant="solid"
+			size="sm"
+			onclick={() => (settingsOpen = false)}
+		>
 			Done
 		</Button>
 	{/snippet}
@@ -487,7 +673,8 @@
 		min-height: 0;
 		flex-direction: column;
 		padding: 14px 12px 12px;
-		border-right: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
+		border-right: 1px solid
+			color-mix(in srgb, var(--color-line) 80%, transparent);
 		background: var(--color-sidebar);
 	}
 
@@ -590,7 +777,9 @@
 	}
 
 	.chat-row {
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 		width: 100%;
 		padding: 7px 10px;
 		border-radius: var(--radius-sm);
@@ -606,7 +795,8 @@
 	.chat-row.active {
 		color: var(--color-ink);
 		background: color-mix(in srgb, #fff 78%, transparent);
-		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-line) 70%, transparent);
+		box-shadow: inset 0 0 0 1px
+			color-mix(in srgb, var(--color-line) 70%, transparent);
 	}
 
 	.chat-row.opening {
@@ -620,21 +810,24 @@
 
 	.chat-title {
 		display: block;
+		min-width: 0;
+		flex: 1;
 		overflow: hidden;
 		font-size: 12.5px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
+	.chat-row :global(.chat-opening-spinner) {
+		flex-shrink: 0;
+		opacity: 0.85;
+	}
+
 	.list-loading {
-		display: block;
-		width: 40px;
-		height: 3px;
+		display: flex;
+		align-items: center;
 		margin: 14px 10px;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--color-accent) 55%, #c7c7d1);
-		transform-origin: left;
-		animation: wait 900ms ease-in-out infinite alternate;
+		min-height: 1em;
 	}
 
 	.list-empty {
@@ -826,33 +1019,20 @@
 		overflow-wrap: anywhere;
 	}
 
-	.streaming-indicator {
-		display: block;
-		width: 42px;
-		height: 3px;
+	.message :global(.streaming-indicator) {
+		display: inline-block;
 		margin-top: 6px;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--color-accent) 55%, #c7c7d1);
-		transform-origin: left;
-		animation: wait 900ms ease-in-out infinite alternate;
-	}
-
-	@keyframes wait {
-		from {
-			transform: scaleX(0.25);
-			opacity: 0.35;
-		}
-		to {
-			transform: scaleX(1);
-			opacity: 1;
-		}
 	}
 
 	.composer-dock {
 		display: flex;
 		justify-content: center;
 		padding: 0 24px 18px;
-		background: linear-gradient(180deg, transparent, var(--color-paper) 28%);
+		background: linear-gradient(
+			180deg,
+			transparent,
+			var(--color-paper) 28%
+		);
 	}
 
 	.settings-list {
@@ -961,11 +1141,6 @@
 		.sidebar,
 		.scrim {
 			transition: none;
-		}
-
-		.streaming-indicator,
-		.list-loading {
-			animation: none;
 		}
 	}
 </style>

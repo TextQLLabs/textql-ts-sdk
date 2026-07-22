@@ -51,6 +51,11 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	const message = typeof payload.message === 'string' ? payload.message.trim() : '';
 	let chatId = typeof payload.chatId === 'string' ? payload.chatId.trim() : '';
 	const model = resolveModel(payload.model);
+	const connectorIds = Array.isArray(payload.connectorIds)
+		? payload.connectorIds.filter(
+				(id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0
+			)
+		: [];
 
 	if (!message) {
 		return json({ error: 'Message is required.' }, { status: 400 });
@@ -67,7 +72,13 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 					paradigm: {
 						type: 'TYPE_UNIVERSAL',
 						version: 1,
-						options: { universal: {} }
+						options: {
+							universal: {
+								...(connectorIds.length > 0
+									? { connectorIds, sqlEnabled: true }
+									: {})
+							}
+						}
 					}
 				}
 			});
