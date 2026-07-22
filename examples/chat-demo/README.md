@@ -1,42 +1,79 @@
-# sv
+# TextQL Chat Demo
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A full chat application built on the TextQL API with [`@textql/sdk`](https://www.npmjs.com/package/@textql/sdk):
+create chats, pick a model and data connectors, watch runs stream in live
+(thinking, tool calls, answers), preview generated assets — and reload the page
+mid-run without losing the stream.
 
-## Creating a project
+Built with SvelteKit. It doubles as the reference implementation for the SDK's
+[streaming client](../../STREAMING.md).
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Setup
+
+**1. Get a TextQL API key** — in the TextQL app under
+**Settings → Developers → API Keys**, click **+ Create API Key** (admin only).
+
+**2. Install and configure:**
 
 ```sh
-# create a new project
-npx sv create my-app
+git clone https://github.com/TextQLLabs/textql-ts-sdk.git
+cd textql-ts-sdk/examples/chat-demo
+npm install
+echo 'TEXTQL_API_KEY=your-key-here' > .env
 ```
 
-To recreate this project with the same configuration:
+**3. Run:**
 
 ```sh
-# recreate this project
-npx sv@0.16.4 create --template minimal --types ts --install npm examples/chat-demo
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
+That's it — the app opens at `http://localhost:5173`. Requires Node 18+.
 
-To create a production version of your app:
+> On-prem deployments: point `RPC_SERVER_URL` in `src/lib/server/textql.ts`
+> at your own host.
 
-```sh
-npm run build
+## What it demonstrates
+
+| Capability | How |
+| --- | --- |
+| Create chats with a model + connectors | `client.chats.createChat` with a typed universal paradigm |
+| Send messages | `client.chats.send` |
+| Live run streaming | `streaming.chats.watchChat` — cells plus `runStarted` / `runComplete` / `runError` lifecycle |
+| Re-attach after a page reload | watch with `latestCompleteCellId` as the resume cursor |
+| List / open / delete chats, list connectors | unary SDK calls |
+
+## How it's put together
+
+The API key never reaches the browser: SvelteKit server routes hold the SDK
+clients and proxy everything, forwarding stream events to the client as NDJSON
+lines of protojson-encoded `WatchChatEvent`s (the gRPC type is the wire
+contract — no bespoke event protocol).
+
+```md
+Browser (ChatPage.svelte)
+  │  fetch + NDJSON
+  ▼
+SvelteKit server routes (src/routes/api/**)
+  │  @textql/sdk (unary) + @textql/sdk/streaming (Connect-RPC)
+  ▼
+TextQL API
 ```
 
-You can preview the production build with `npm run preview`.
+Key files:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- `src/lib/server/textql.ts` — shared per-process SDK clients (unary + streaming)
+- `src/routes/api/chat/+server.ts` — create/send, then stream the run via `watchChat`
+- `src/routes/api/chats/[id]/watch/+server.ts` — re-attach to a live run after reload
+- `src/lib/streamEvents.ts` — the typed NDJSON wire contract (protojson `WatchChatEvent` + zod envelope)
+- `src/lib/components/ChatPage.svelte` — stream consumption, run-state UI, resume
+- `src/lib/cells.ts` — cell lifecycle helpers (what's running vs settled)
+
+## Scripts
+
+```sh
+npm run dev      # dev server with hot reload
+npm run check    # svelte-check (types)
+npm run build    # production build
+npm run preview  # serve the production build
+```
