@@ -3,7 +3,6 @@
 	import Boxes from '@lucide/svelte/icons/boxes';
 	import Cable from '@lucide/svelte/icons/cable';
 	import Check from '@lucide/svelte/icons/check';
-	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Plus from '@lucide/svelte/icons/plus';
 	import type { ChatTools } from '$lib/chatTools';
@@ -259,7 +258,7 @@
 					type="button"
 					class="icon-circle"
 					class:active={menuOpen || selectedConnectorIds.length > 0}
-					aria-label="Add context"
+					aria-label="Composer settings"
 					aria-haspopup="menu"
 					aria-expanded={menuOpen}
 					onclick={toggleMenu}
@@ -267,21 +266,6 @@
 					<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
 				</button>
 			{/if}
-
-			<button
-				type="button"
-				class="model-label"
-				class:locked={configLocked}
-				disabled={configLocked}
-				aria-disabled={configLocked}
-				aria-label={`Model: ${selectedModelLabel}`}
-				onclick={() => openMenu('models')}
-			>
-				<span>{selectedModelLabel}</span>
-				{#if !configLocked}
-					<ChevronDown class="chevron-down" size={13} strokeWidth={1.5} aria-hidden="true" />
-				{/if}
-			</button>
 
 			{#if selectedChips.length > 0}
 				<div class="meta-row">
@@ -324,7 +308,7 @@
 
 			{#if menuOpen && !configLocked}
 				<div class="menu-shell">
-					<div class="popover root-popover" role="menu" aria-label="Add context">
+					<div class="popover root-popover" role="menu" aria-label="Composer settings">
 						<div class="menu-section">
 							{#each ROOT_ITEMS as item (item.id)}
 								<button
@@ -441,15 +425,18 @@
 			{/if}
 		</div>
 
-		<button
-			type="button"
-			class="send-btn"
-			disabled={!value.trim() || sending}
-			aria-label="Send message"
-			onclick={() => onsend?.()}
-		>
-			<ArrowUp size={15} strokeWidth={2} aria-hidden="true" />
-		</button>
+		<div class="toolbar-right">
+			<span class="model-label" aria-label={`Model: ${selectedModelLabel}`}>{selectedModelLabel}</span>
+			<button
+				type="button"
+				class="send-btn"
+				disabled={!value.trim() || sending}
+				aria-label="Send message"
+				onclick={() => onsend?.()}
+			>
+				<ArrowUp size={15} strokeWidth={2} aria-hidden="true" />
+			</button>
+		</div>
 	</div>
 </div>
 
@@ -517,12 +504,18 @@
 		gap: 6px;
 	}
 
+	.toolbar-right {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		gap: 8px;
+	}
+
 	.icon-circle,
 	.send-btn,
 	.menu-row,
 	.retry-btn,
 	.connector-row,
-	.model-label,
 	.connector-dot,
 	.connector-more {
 		border: 0;
@@ -550,44 +543,23 @@
 	}
 
 	.model-label {
-		display: inline-flex;
+		display: inline-block;
 		max-width: 160px;
-		align-items: center;
-		gap: 2px;
-		padding: 2px 4px;
-		border-radius: 6px;
+		overflow: hidden;
 		color: #a1a1aa;
-		background: transparent;
 		font-size: 12px;
 		font-weight: 500;
-	}
-
-	.model-label:hover:not(:disabled) {
-		color: #71717a;
-	}
-
-	.model-label.locked {
-		cursor: default;
-	}
-
-	.model-label span {
-		overflow: hidden;
+		line-height: 1.2;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	.model-label :global(.chevron-down) {
-		flex-shrink: 0;
-		color: #c4c4c8;
+		user-select: none;
+		pointer-events: none;
 	}
 
 	.meta-row {
 		display: inline-flex;
 		min-width: 0;
 		align-items: center;
-		margin-left: 2px;
-		padding-left: 8px;
-		border-left: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
 	}
 
 	.connector-stack {

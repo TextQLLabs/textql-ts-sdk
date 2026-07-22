@@ -69,6 +69,8 @@
 
 * {
 	box-sizing: border-box;
+	scrollbar-width: thin;
+	scrollbar-color: #c4c4c8 transparent;
 }
 
 html,
@@ -100,4 +102,23 @@ textarea {
 ::selection {
 	color: var(--color-ink);
 	background: var(--color-blue-100);
+}
+
+/* Thin, muted scrollbars (Chromium/WebKit; Firefox uses scrollbar-* above) */
+*::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	border-radius: 999px;
+	background: #c4c4c8;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: #a1a1aa;
 }
