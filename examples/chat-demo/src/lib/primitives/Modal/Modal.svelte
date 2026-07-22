@@ -57,21 +57,21 @@
     ></button>
 
     <div
-      class="relative z-10 w-full max-w-sm rounded-sm border border-line bg-paper p-6 shadow-[0_20px_60px_-12px_rgba(10,10,10,0.35)]"
+      class="relative z-10 w-full max-w-xs rounded-lg border border-line bg-paper px-4 py-3 shadow-[0_20px_60px_-12px_rgba(15,15,20,0.18)]"
       transition:scale={{ duration: 180, start: 0.96 }}
     >
       {#if title}
-        <h2 class="font-pixel text-lg leading-tight text-ink">{title}</h2>
+        <h2 class="font-sans text-base font-medium leading-tight text-ink">{title}</h2>
       {/if}
       {#if children}
-        <div class="mt-2 font-mono text-sm leading-relaxed text-muted">
+        <div class="mt-1.5 font-sans text-sm leading-relaxed text-muted">
           {@render children()}
         </div>
       {/if}
       {#if actions}
         <!-- Right-aligned: dismiss (first) on the left, primary action (last)
              on the right. -->
-        <div class="mt-6 flex justify-end gap-2">
+        <div class="mt-4 flex justify-end gap-2">
           {@render actions()}
         </div>
       {/if}
