@@ -6,6 +6,7 @@
 	import type { TransitionConfig } from 'svelte/transition';
 	import {
 		clampPreviewWidth,
+		guessPreviewType,
 		previewPanel,
 		type PreviewItem
 	} from '$lib/previewPanel.svelte';
@@ -41,37 +42,42 @@
 		return previewType.charAt(0).toUpperCase() + previewType.slice(1);
 	}
 
-	function isImage(preview: PreviewItem): boolean {
+	/** Charts / HTML / echarts — always iframe, never navigate or download. */
+	const HTML_EMBED_TYPES = new Set([
+		'html',
+		'chart',
+		'echarts',
+		'plotly',
+		'vega',
+		'visualization',
+		'iframe',
+		'app'
+	]);
+	const TABLE_TYPES = new Set(['table', 'dataframe', 'csv']);
+
+	/** Trust a recognized declared type; otherwise sniff the URL extension. */
+	function previewKind(preview: PreviewItem): string {
 		const t = preview.previewType.toLowerCase();
-		return t === 'image' || /\.(png|jpe?g|gif|webp|svg)(\?|$)/i.test(preview.url ?? '');
+		if (t === 'image' || t === 'pdf' || HTML_EMBED_TYPES.has(t) || TABLE_TYPES.has(t)) {
+			return t;
+		}
+		return guessPreviewType(preview.url ?? '', t || 'file');
 	}
 
-	/** Charts / HTML / echarts — always iframe, never navigate or download. */
+	function isImage(preview: PreviewItem): boolean {
+		return previewKind(preview) === 'image';
+	}
+
 	function isHtmlEmbed(preview: PreviewItem): boolean {
-		const t = preview.previewType.toLowerCase();
-		if (
-			t === 'html' ||
-			t === 'chart' ||
-			t === 'echarts' ||
-			t === 'plotly' ||
-			t === 'vega' ||
-			t === 'visualization' ||
-			t === 'iframe' ||
-			t === 'app'
-		) {
-			return true;
-		}
-		return /\.html?(\?|$)/i.test(preview.url ?? '');
+		return HTML_EMBED_TYPES.has(previewKind(preview));
 	}
 
 	function isPdf(preview: PreviewItem): boolean {
-		const t = preview.previewType.toLowerCase();
-		return t === 'pdf' || /\.pdf(\?|$)/i.test(preview.url ?? '');
+		return previewKind(preview) === 'pdf';
 	}
 
 	function isTable(preview: PreviewItem): boolean {
-		const t = preview.previewType.toLowerCase();
-		return t === 'table' || t === 'dataframe' || t === 'csv';
+		return TABLE_TYPES.has(previewKind(preview));
 	}
 
 	function shouldIframe(preview: PreviewItem): boolean {
@@ -202,13 +208,14 @@
 				class="preview-frame"
 				src={embedUrl}
 				title={item.name}
+				sandbox="allow-scripts"
 				referrerpolicy="no-referrer"
 			></iframe>
 		{:else if isHtmlEmbed(item) && item.content}
 			<iframe
 				class="preview-frame"
 				title={item.name}
-				sandbox="allow-scripts allow-same-origin"
+				sandbox="allow-scripts"
 				srcdoc={item.content}
 			></iframe>
 		{:else if isTable(item) && item.content}
@@ -218,6 +225,7 @@
 				class="preview-frame"
 				src={embedUrl}
 				title={item.name}
+				sandbox="allow-scripts"
 				referrerpolicy="no-referrer"
 			></iframe>
 		{:else if item.content}
@@ -240,7 +248,7 @@
 		<footer class="panel-foot">
 			<a
 				class="open-external"
-				href={toEmbeddablePreviewUrl(item.url) ?? item.url}
+				href={embedUrl ?? item.url}
 				target="_blank"
 				rel="noreferrer noopener"
 			>

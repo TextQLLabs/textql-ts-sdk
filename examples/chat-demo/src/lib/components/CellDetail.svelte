@@ -5,7 +5,6 @@
 		getCellCase,
 		getCellTypeInfo,
 		getToolDisplayName,
-		isCellFinished,
 		type CellLike,
 	} from "$lib/cells";
 	import {
@@ -24,16 +23,8 @@
 	const execError = $derived(
 		typeof cell.execError === "string" ? cell.execError : "",
 	);
-	const blocks = $derived.by(() => {
-		const built = buildCellBlocks(cell);
-		// Fail-closed: never render Time meta while the cell is still in flight.
-		if (isCellFinished(cell)) return built;
-		return built.map((block) =>
-			block.kind === "kv"
-				? { ...block, rows: block.rows.filter((row) => row.label !== "Time") }
-				: block,
-		);
-	});
+	// buildCellBlocks owns the Time row: it only appends one once the cell finishes.
+	const blocks = $derived(buildCellBlocks(cell));
 	const Icon = $derived(info.icon);
 	const cellAssets = $derived(previewItemsFromCell(cell));
 	const cellKey = $derived(

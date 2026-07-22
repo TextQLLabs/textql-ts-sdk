@@ -19,7 +19,6 @@
 	let host: HTMLElement | undefined;
 	let lastKey = "";
 	let destroyed = false;
-	let viewerReady = false;
 	let loadError = $state(false);
 
 	const currentKey = $derived(
@@ -82,8 +81,7 @@ code, pre, [class*="line"] {
 
 			await tick();
 			if (destroyed || !fileViewer || !host) return;
-			viewerReady = true;
-			renderFile(true);
+			renderFile();
 		} catch {
 			loadError = true;
 		}
@@ -91,17 +89,17 @@ code, pre, [class*="line"] {
 
 	$effect(() => {
 		const key = currentKey;
-		if (!browser || !viewerReady || !fileViewer || !host) return;
+		if (!browser || !fileViewer || !host) return;
 		host.setAttribute("aria-label", `Contents of ${fileName}`);
-		if (key !== lastKey) renderFile(true);
+		if (key !== lastKey) renderFile();
 	});
 
-	function renderFile(forceRender: boolean) {
+	function renderFile() {
 		if (!fileViewer || !host) return;
 		fileViewer.render({
 			file: toFileContents(),
 			fileContainer: host,
-			forceRender,
+			forceRender: true,
 		});
 		lastKey = currentKey;
 	}
@@ -112,7 +110,6 @@ code, pre, [class*="line"] {
 			fileViewer.cleanUp();
 			fileViewer = undefined;
 		}
-		viewerReady = false;
 		host = undefined;
 	});
 </script>

@@ -1,10 +1,9 @@
 import { env } from '$env/dynamic/private';
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { Textql } from '@textql/sdk';
+import type { ConnectError, TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
 import { createStreamingClient, type StreamingClient } from '@textql/sdk/streaming';
 
-// Connect RPCs (unary and streaming) are mounted under /rpc/public; the
-// streaming bridge's default server URL omits the prefix and 404s.
 const RPC_SERVER_URL = 'https://app.textql.com/rpc/public';
 
 type Clients = { client: Textql; streaming: StreamingClient };
@@ -20,4 +19,29 @@ export function textqlClients(): Clients {
 		streaming: createStreamingClient({ apiKey, serverURL: RPC_SERVER_URL })
 	};
 	return cached;
+}
+
+export function isConnectError(response: object): response is ConnectError {
+	return 'code' in response || 'details' in response;
+}
+
+export function proxyError(label: string, cause: unknown): Response {
+	console.error(label, cause);
+	return json({ error: `The ${label.toLowerCase()} failed.` }, { status: 502 });
+}
+
+export function normalizeConnector(connector: TextqlRpcPublicConnectorConnector) {
+	if (
+		typeof connector.id !== 'number' ||
+		typeof connector.name !== 'string' ||
+		!connector.name.trim()
+	) {
+		return null;
+	}
+
+	return {
+		id: connector.id,
+		name: connector.name.trim(),
+		type: typeof connector.connectorType === 'string' ? connector.connectorType : 'UNKNOWN'
+	};
 }

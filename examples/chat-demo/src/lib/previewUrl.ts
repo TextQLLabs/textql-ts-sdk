@@ -2,7 +2,7 @@
  * Preview assets live on textqlusercontent.com (and some sandbox embeds on
  * app.textql.com). Those origins only allow framing from the main TextQL app,
  * so localhost iframes get "refused to connect". Rewrite to same-origin URLs
- * served via Vite proxy (path prefixes) or /api/preview-proxy.
+ * served through /api/preview-proxy in both development and production.
  */
 
 const USERCONTENT_HOST = 'textqlusercontent.com';
@@ -29,6 +29,10 @@ function pathIsProxied(pathname: string): boolean {
 	);
 }
 
+function proxyUrl(target: string): string {
+	return `/api/preview-proxy?url=${encodeURIComponent(target)}`;
+}
+
 export function toEmbeddablePreviewUrl(url: string | null | undefined): string | null {
 	if (!url) return null;
 
@@ -38,20 +42,23 @@ export function toEmbeddablePreviewUrl(url: string | null | undefined): string |
 		const parsed = new URL(url, localOrigin);
 		const pathWithQuery = `${parsed.pathname}${parsed.search}`;
 
-		// Already same-origin / relative.
+		// Relative asset paths are upstream preview URLs, not application routes.
 		if (parsed.origin === localOrigin) {
+			if (pathIsProxied(parsed.pathname)) {
+				const upstreamOrigin = parsed.pathname.startsWith('/sandbox/proxy')
+					? `https://${APP_HOST}`
+					: `https://${USERCONTENT_HOST}`;
+				return proxyUrl(`${upstreamOrigin}${pathWithQuery}`);
+			}
 			return pathWithQuery;
 		}
 
 		if (isUserContentHost(parsed.hostname)) {
-			if (pathIsProxied(parsed.pathname)) {
-				return pathWithQuery;
-			}
-			return `/api/preview-proxy?url=${encodeURIComponent(parsed.href)}`;
+			return proxyUrl(parsed.href);
 		}
 
 		if (parsed.hostname === APP_HOST && pathIsProxied(parsed.pathname)) {
-			return pathWithQuery;
+			return proxyUrl(parsed.href);
 		}
 
 		return url;

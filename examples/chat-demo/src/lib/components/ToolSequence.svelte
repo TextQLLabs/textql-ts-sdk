@@ -5,7 +5,6 @@
 	import type { TransitionConfig } from 'svelte/transition';
 	import {
 		buildSegments,
-		cellStreamEpoch,
 		getActiveSummary,
 		getBatchHeadline,
 		getBatchStartedAtMs,
@@ -28,16 +27,14 @@
 		previewItemsFromCell,
 		previewPanel
 	} from '$lib/previewPanel.svelte';
+	import { prefersReducedMotion } from '$lib/utils';
 
 	/** Height + opacity so expand/collapse feels soft, not a hard cut. */
 	function softSlide(
 		node: Element,
 		{ duration = 220 }: { duration?: number } = {}
 	): TransitionConfig {
-		const reduced =
-			typeof matchMedia !== 'undefined' &&
-			matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduced) return { duration: 0 };
+		if (prefersReducedMotion()) return { duration: 0 };
 
 		const style = getComputedStyle(node);
 		const opacity = +style.opacity;
@@ -59,12 +56,9 @@
 
 	let { cells, streaming = false }: { cells: CellLike[]; streaming?: boolean } = $props();
 
-	// Touch a content epoch so token-level upserts always rebuild segments,
-	// even when array identity is reused across stream snapshots.
-	const segments = $derived.by(() => {
-		void cellStreamEpoch(cells);
-		return buildSegments(cells);
-	});
+	// ChatPage's upsertAssistantCell reassigns the cells array on every stream
+	// snapshot, so array identity alone invalidates this derived.
+	const segments = $derived(buildSegments(cells));
 	/** Batches stay collapsed until the user clicks. */
 	const expandedBatches = new SvelteSet<string>();
 	/** Nested step detail inside an open batch. */
@@ -326,31 +320,9 @@
 		transform: rotate(90deg);
 	}
 
-	.shimmer {
-		background: linear-gradient(90deg, #a1a1aa 25%, #3f3f46 50%, #a1a1aa 75%);
-		background-size: 200% 100%;
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		animation: shimmer 1.6s linear infinite;
-	}
-
-	@keyframes shimmer {
-		0% {
-			background-position: 200% 0;
-		}
-		100% {
-			background-position: -200% 0;
-		}
-	}
+	/* .shimmer comes from app.css */
 
 	@media (prefers-reduced-motion: reduce) {
-		.shimmer {
-			background: none;
-			-webkit-text-fill-color: currentColor;
-			animation: none;
-		}
-
 		.batch-header :global(.batch-chevron),
 		.step-header :global(.step-chevron) {
 			transition: none;

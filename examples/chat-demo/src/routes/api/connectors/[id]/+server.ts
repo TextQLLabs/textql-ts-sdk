@@ -1,20 +1,8 @@
-import { textqlClients } from '$lib/server/textql';
+import { isConnectError, normalizeConnector, proxyError, textqlClients } from '$lib/server/textql';
 import { json } from '@sveltejs/kit';
 
 import type { TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
 import type { RequestHandler } from './$types';
-
-function normalizeConnector(connector: TextqlRpcPublicConnectorConnector) {
-	if (typeof connector.id !== 'number' || typeof connector.name !== 'string' || !connector.name.trim()) {
-		return null;
-	}
-
-	return {
-		id: connector.id,
-		name: connector.name.trim(),
-		type: typeof connector.connectorType === 'string' ? connector.connectorType : 'UNKNOWN'
-	};
-}
 
 export const GET: RequestHandler = async ({ params }) => {
 	const { client } = textqlClients();
@@ -27,7 +15,7 @@ export const GET: RequestHandler = async ({ params }) => {
 	try {
 		const result = await client.connectors.get({ body: { connectorId } });
 
-		if ('code' in result) {
+		if (isConnectError(result)) {
 			return json({ error: result.message ?? 'Connector not found.' }, { status: 404 });
 		}
 
@@ -43,7 +31,6 @@ export const GET: RequestHandler = async ({ params }) => {
 
 		return json({ connector: normalized });
 	} catch (error) {
-		console.error('Connector request failed', error);
-		return json({ error: 'The connector request failed.' }, { status: 502 });
+		return proxyError('Connector request', error);
 	}
 };

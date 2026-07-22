@@ -1,33 +1,114 @@
+<script module lang="ts">
+	import { marked } from "marked";
+	import sanitizeHtml from "sanitize-html";
+
+	marked.setOptions({ gfm: true, breaks: true });
+
+	const STREAM_PARSE_INTERVAL_MS = 120;
+
+	const sanitizeOptions: sanitizeHtml.IOptions = {
+		allowedTags: [
+			"a",
+			"blockquote",
+			"br",
+			"code",
+			"del",
+			"div",
+			"em",
+			"h1",
+			"h2",
+			"h3",
+			"h4",
+			"h5",
+			"h6",
+			"hr",
+			"img",
+			"li",
+			"ol",
+			"p",
+			"pre",
+			"span",
+			"strong",
+			"table",
+			"tbody",
+			"td",
+			"thead",
+			"th",
+			"tr",
+			"ul",
+		],
+		allowedAttributes: {
+			a: ["href", "title"],
+			code: ["class"],
+			div: ["class"],
+			img: ["src", "alt", "title", "width", "height"],
+			pre: ["class"],
+			span: ["class"],
+			td: ["align"],
+			th: ["align"],
+		},
+		allowedSchemes: ["http", "https", "mailto"],
+		allowedSchemesByTag: { img: ["http", "https"] },
+		allowProtocolRelative: false,
+		transformTags: {
+			a: sanitizeHtml.simpleTransform("a", {
+				rel: "noreferrer noopener",
+			}),
+		},
+	};
+
+	function sanitize(value: string): string {
+		return sanitizeHtml(value, sanitizeOptions);
+	}
+</script>
+
 <script lang="ts">
 	/**
 	 * Assistant markdown: prefer server `renderedHtml` (goldmark + highlighting),
 	 * fall back to client-side marked when only raw content is available.
 	 */
-	import { marked } from 'marked';
-
 	let {
-		renderedHtml = '',
-		content = ''
+		renderedHtml = "",
+		content = "",
 	}: {
 		renderedHtml?: string;
 		content?: string;
 	} = $props();
 
-	marked.setOptions({ gfm: true, breaks: true });
-
-	const html = $derived.by(() => {
-		if (renderedHtml.trim()) return renderedHtml;
-		if (!content.trim()) return '';
+	function parse(text: string): string {
+		if (!text.trim()) return "";
 		try {
-			return marked.parse(content, { async: false }) as string;
+			return sanitize(marked.parse(text, { async: false }) as string);
 		} catch {
-			return '';
+			return "";
 		}
+	}
+
+	// svelte-ignore state_referenced_locally -- initial value on purpose; the effect below tracks updates
+	let parsedContent = $state(parse(content));
+	// svelte-ignore state_referenced_locally
+	let lastParsedText = content;
+	let lastParsedAt = Date.now();
+	$effect(() => {
+		const text = content;
+		if (text === lastParsedText) return;
+		const now = Date.now();
+		const wait = Math.max(0, lastParsedAt + STREAM_PARSE_INTERVAL_MS - now);
+		const handle = setTimeout(() => {
+			lastParsedAt = Date.now();
+			lastParsedText = text;
+			parsedContent = parse(text);
+		}, wait);
+		return () => clearTimeout(handle);
 	});
+
+	const html = $derived(
+		renderedHtml.trim() ? sanitize(renderedHtml) : parsedContent,
+	);
 </script>
 
 {#if html}
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -- TextQL server HTML or local marked of chat content -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- allowlist-sanitized above -->
 	<div class="md">{@html html}</div>
 {:else if content}
 	<p class="md-plain">{content}</p>

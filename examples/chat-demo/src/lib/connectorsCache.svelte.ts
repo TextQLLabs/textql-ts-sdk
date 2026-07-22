@@ -1,12 +1,10 @@
+import { isRecord } from '$lib/utils';
+
 export type ConnectorItem = {
 	id: number;
 	name: string;
 	type: string;
 };
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
-}
 
 class ConnectorsCache {
 	connectors = $state.raw<ConnectorItem[]>([]);
@@ -59,14 +57,6 @@ class ConnectorsCache {
 		})();
 
 		return this.#inflight;
-	}
-
-	nameFor(id: number, fallbackNames: Record<number, string> = {}) {
-		return (
-			fallbackNames[id] ??
-			this.connectors.find((connector) => connector.id === id)?.name ??
-			`Connector ${id}`
-		);
 	}
 }
 

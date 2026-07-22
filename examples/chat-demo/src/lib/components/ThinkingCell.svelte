@@ -114,31 +114,9 @@
 		white-space: nowrap;
 	}
 
-	.shimmer {
-		background: linear-gradient(90deg, #a1a1aa 25%, #3f3f46 50%, #a1a1aa 75%);
-		background-size: 200% 100%;
-		background-clip: text;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		animation: shimmer 1.6s linear infinite;
-	}
-
-	@keyframes shimmer {
-		0% {
-			background-position: 200% 0;
-		}
-		100% {
-			background-position: -200% 0;
-		}
-	}
+	/* .shimmer comes from app.css */
 
 	@media (prefers-reduced-motion: reduce) {
-		.shimmer {
-			background: none;
-			-webkit-text-fill-color: currentColor;
-			animation: none;
-		}
-
 		.thinking-toggle :global(.chevron) {
 			transition: none;
 		}

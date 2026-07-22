@@ -34,13 +34,24 @@ import {
 	TextqlRpcPublicChatCellLifecycle,
 	type TextqlRpcPublicChatCellLifecycle as CellLifecycle
 } from '@textql/sdk/models';
+import { isRecord } from '$lib/utils';
 
-/**
- * A chat cell as returned by both the SDK (`chats.getHistory`) and the
- * `/v2/chats/:id/cells/stream` NDJSON endpoint: common metadata fields plus
- * exactly one `<case>Cell` key holding the typed payload (a flattened proto
- * oneof, e.g. `{ id, complete, toolSummary, sqlCell: { query, ... } }`).
- */
+/** Coerce unknown payload fields; cell payloads are untyped proto JSON. */
+export function asString(value: unknown): string {
+	return typeof value === 'string' ? value : '';
+}
+
+export function asRecords(value: unknown): Record<string, unknown>[] {
+	return Array.isArray(value) ? value.filter(isRecord) : [];
+}
+
+export function asStrings(value: unknown): string[] {
+	return Array.isArray(value)
+		? value.filter((item): item is string => typeof item === 'string')
+		: [];
+}
+
+
 export type CellLike = Record<string, unknown> & {
 	id?: string;
 	complete?: boolean;
@@ -148,18 +159,10 @@ export function getBatchStartedAtMs(cells: CellLike[]): number | null {
 
 export type IconComponent = Component<{ size?: number | string; class?: string }>;
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
-}
-
-/** Cell metadata keys that end in "Cell" but are not the oneof payload. */
-const NON_PAYLOAD_KEYS = new Set(['id', 'toolCallId']);
-
 /** Find the oneof payload key, e.g. "sqlCell" | "mdCell" | "mcpToolCell". */
 export function getCellCase(cell: CellLike): string | undefined {
 	for (const key of Object.keys(cell)) {
-		if (!key.endsWith('Cell') || NON_PAYLOAD_KEYS.has(key)) continue;
-		if (isRecord(cell[key])) return key;
+		if (key.endsWith('Cell') && isRecord(cell[key])) return key;
 	}
 	return undefined;
 }
@@ -241,7 +244,7 @@ export function getCellTypeInfo(cellCase: string | undefined): CellTypeInfo {
 	return { name: 'Tool', icon: Bot };
 }
 
-function titleCaseSnake(value: string): string {
+export function titleCaseSnake(value: string): string {
 	return value
 		.split('_')
 		.filter(Boolean)
@@ -265,31 +268,6 @@ export function getToolDisplayName(cell: CellLike): string {
 	return getCellTypeInfo(cellCase).name;
 }
 
-/** "3 SQL, Python, Web Search" — grouped counts across a tool segment. */
-export function getToolSummaryText(cells: CellLike[]): string {
-	const counts = new Map<string, number>();
-	for (const cell of cells) {
-		const name = getToolDisplayName(cell);
-		counts.set(name, (counts.get(name) ?? 0) + 1);
-	}
-
-	const parts: string[] = [];
-	for (const [name, count] of counts) {
-		parts.push(count > 1 ? `${count} ${name}` : name);
-	}
-	return parts.join(', ');
-}
-
-/** Prefer the LLM-written toolSummary when the segment has one. */
-export function getLlmSummary(cells: CellLike[]): string | null {
-	const summaries = cells
-		.map((cell) => (typeof cell.toolSummary === 'string' ? cell.toolSummary : ''))
-		.filter(Boolean);
-	if (summaries.length === 0) return null;
-	if (cells.length === 1) return summaries[0];
-	return `${cells.length} steps — ${summaries[0]}, ...`;
-}
-
 /** Latest available summary while a segment is still streaming. */
 export function getActiveSummary(cells: CellLike[]): string {
 	for (let i = cells.length - 1; i >= 0; i--) {
@@ -298,18 +276,6 @@ export function getActiveSummary(cells: CellLike[]): string {
 		}
 	}
 	return cells.length > 0 ? getToolDisplayName(cells[cells.length - 1]) : 'Working';
-}
-
-export function getUniqueToolIcons(cells: CellLike[]): { key: string; icon: IconComponent }[] {
-	const seen = new Set<string>();
-	const out: { key: string; icon: IconComponent }[] = [];
-	for (const cell of cells) {
-		const cellCase = getCellCase(cell);
-		if (!cellCase || seen.has(cellCase)) continue;
-		seen.add(cellCase);
-		out.push({ key: cellCase, icon: getCellTypeInfo(cellCase).icon });
-	}
-	return out;
 }
 
 /**
@@ -352,22 +318,6 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 	return result;
 }
 
-/** Content fingerprint so UI deriveds invalidate on in-place stream upserts. */
-export function cellStreamEpoch(cells: CellLike[]): string {
-	let epoch = String(cells.length);
-	for (const cell of cells) {
-		const payload = getCellPayload(cell);
-		const content =
-			typeof payload.content === 'string'
-				? payload.content.length
-				: typeof payload.summary === 'string'
-					? payload.summary.length
-					: 0;
-		epoch += `|${cell.id ?? ''}:${cell.complete ? 1 : 0}:${content}:${typeof cell.toolSummary === 'string' ? cell.toolSummary.length : 0}`;
-	}
-	return epoch;
-}
-
 /** Stable key so segment DOM survives cells appending mid-stream. */
 export function getSegmentKey(segment: Segment, index: number): string {
 	if (segment.type === 'assistant') {
@@ -389,7 +339,6 @@ export function getBatchHeadline(cells: CellLike[]): string {
 		tools.length === 1
 			? getToolDisplayName(tools[0])
 			: `${tools.length} tools`;
-	if (thoughts === 0) return `Explored ${toolBit}`;
 	return `Explored ${toolBit}`;
 }
 

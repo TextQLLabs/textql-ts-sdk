@@ -1,12 +1,8 @@
-import { textqlClients } from '$lib/server/textql';
+import { isConnectError, proxyError, textqlClients } from '$lib/server/textql';
+import { isRecord } from '$lib/utils';
 import { json } from '@sveltejs/kit';
-import { extractEnabledTools } from '$lib/chatTools';
 
 import type { RequestHandler } from './$types';
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
-}
 
 function extractUniversal(chat: Record<string, unknown>): Record<string, unknown> | null {
 	const paradigm = isRecord(chat.paradigm) ? chat.paradigm : null;
@@ -21,13 +17,40 @@ function extractConnectorIds(universal: Record<string, unknown> | null): number[
 	return ids.filter((id): id is number => typeof id === 'number' && Number.isInteger(id));
 }
 
+/** Text content of a user-authored cell (`mdCell` / `ansCell`), else ''. */
+function userTextContent(cell: Record<string, unknown>): string {
+	for (const key of ['mdCell', 'ansCell']) {
+		const payload = cell[key];
+		if (isRecord(payload) && typeof payload.content === 'string') return payload.content;
+	}
+	return '';
+}
+
 export const GET: RequestHandler = async ({ params }) => {
 	const { client } = textqlClients();
 
 	try {
-		const result = await client.chats.get({ body: { chatId: params.id } });
+		// Independent lookups — run them concurrently.
+		const [result, historyCells] = await Promise.all([
+			client.chats.get({ body: { chatId: params.id } }),
+			(async (): Promise<unknown[] | null> => {
+				const cells: unknown[] = [];
+				const limit = 100;
+				let skip = 0;
+				while (true) {
+					const page = await client.chats.getHistory({
+						body: { chatId: params.id, limit, skip }
+					});
+					if (isConnectError(page)) return null;
+					const pageCells = Array.isArray(page.cells) ? page.cells : [];
+					cells.push(...pageCells);
+					if (!page.hasMore || pageCells.length === 0) return cells;
+					skip += pageCells.length;
+				}
+			})()
+		]);
 
-		if ('code' in result) {
+		if (isConnectError(result)) {
 			return json({ error: result.message ?? 'Chat not found.' }, { status: 404 });
 		}
 
@@ -39,20 +62,13 @@ export const GET: RequestHandler = async ({ params }) => {
 		type Turn = { role: 'you' | 'assistant'; body?: string; cells?: unknown[] };
 		const messages: Turn[] = [];
 
-		const history = await client.chats.getHistory({ body: { chatId: params.id } });
-		if (!('code' in history) && Array.isArray(history.cells)) {
+		if (historyCells) {
 			let assistantTurn: Turn | null = null;
-			for (const cell of history.cells) {
+			// GetChatHistory is newest-first, including cells within each turn.
+			for (const cell of [...historyCells].reverse()) {
 				if (!isRecord(cell)) continue;
 				if (cell.generated !== true) {
-					const content =
-						'mdCell' in cell && isRecord(cell.mdCell) && typeof cell.mdCell.content === 'string'
-							? cell.mdCell.content
-							: 'ansCell' in cell &&
-								  isRecord(cell.ansCell) &&
-								  typeof cell.ansCell.content === 'string'
-								? cell.ansCell.content
-								: '';
+					const content = userTextContent(cell);
 					if (content) {
 						messages.push({ role: 'you', body: content });
 						assistantTurn = null;
@@ -80,18 +96,14 @@ export const GET: RequestHandler = async ({ params }) => {
 			}
 		}
 
-		const universal = chat ? extractUniversal(chat) : null;
-
 		return json({
 			id: params.id,
 			messages,
 			model: chat && typeof chat.model === 'string' ? chat.model : null,
-			connectorIds: extractConnectorIds(universal),
-			tools: extractEnabledTools(universal)
+			connectorIds: extractConnectorIds(chat ? extractUniversal(chat) : null)
 		});
 	} catch (error) {
-		console.error('Chat get request failed', error);
-		return json({ error: 'The chat request failed.' }, { status: 502 });
+		return proxyError('Chat request', error);
 	}
 };
 
@@ -101,7 +113,7 @@ export const DELETE: RequestHandler = async ({ params }) => {
 	try {
 		const result = await client.chats.delete({ body: { chatId: params.id } });
 
-		if (isRecord(result) && 'code' in result) {
+		if (isRecord(result) && isConnectError(result)) {
 			return json(
 				{ error: typeof result.message === 'string' ? result.message : 'Unable to delete chat.' },
 				{ status: 404 }
@@ -110,7 +122,6 @@ export const DELETE: RequestHandler = async ({ params }) => {
 
 		return json({ ok: true, id: params.id });
 	} catch (error) {
-		console.error('Chat delete request failed', error);
-		return json({ error: 'The chat delete request failed.' }, { status: 502 });
+		return proxyError('Chat delete request', error);
 	}
 };

@@ -12,7 +12,7 @@
 		loadLastChatConfig,
 		saveLastChatConfig,
 	} from "$lib/chatConfigPrefs";
-	import { extractEnabledTools, type ChatTools } from "$lib/chatTools";
+	import { DEFAULT_CHAT_MODEL } from "$lib/chatModels";
 	import { getCellCase, settleCells, type CellLike } from "$lib/cells";
 	import Composer from "$lib/components/Composer.svelte";
 	import PreviewPanel from "$lib/components/PreviewPanel.svelte";
@@ -22,7 +22,9 @@
 	import {
 		collectPreviewItems,
 		previewPanel,
+		type PreviewItem,
 	} from "$lib/previewPanel.svelte";
+	import { isRecord } from "$lib/utils";
 
 	type Message = {
 		id: number;
@@ -38,7 +40,6 @@
 		updatedAt: string | null;
 	};
 
-	const DEFAULT_MODEL = "MODEL_SONNET_5";
 	const MOBILE_SIDEBAR_MQ = "(max-width: 780px)";
 	const CHAT_UUID_RE =
 		/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -46,9 +47,7 @@
 	let messages = $state<Message[]>([]);
 	let draft = $state("");
 	let selectedConnectorIds = $state<number[]>([]);
-	let selectedModel = $state(DEFAULT_MODEL);
-	/** Enabled tools from GetChat; null on blank chats (Composer infers from selection). */
-	let chatTools = $state<ChatTools | null>(null);
+	let selectedModel = $state<string>(DEFAULT_CHAT_MODEL);
 	/** Desktop: collapsible panel. Mobile: drawer open state. */
 	let sidebarOpen = $state(true);
 	let chatId = $state<string | undefined>();
@@ -61,6 +60,7 @@
 	let chatsLoading = $state(true);
 	let chatsError = $state(false);
 	let openingChatId = $state<string | undefined>();
+	let chatLoadRequest: AbortController | undefined;
 	let closingChatId = $state<string | undefined>();
 	let menuChatId = $state<string | undefined>();
 	let prefsReady = $state(false);
@@ -83,7 +83,7 @@
 	const showChatLoading = $derived.by(() => {
 		const id = routeChatId;
 		if (!id) return false;
-		if (sending && messages.length > 0) return false;
+		if (sending && id === chatId && messages.length > 0) return false;
 		if (chatLoadError && resolvedChatId !== id) return false;
 		if (resolvedChatId === id) return false;
 		return true;
@@ -99,15 +99,19 @@
 	const showNewChat = $derived(
 		!routeChatId && isEmpty && !showChatLoading && !showChatError,
 	);
-	const chatAssets = $derived.by(() => {
-		const allCells = messages.flatMap((message) => message.cells ?? []);
-		return collectPreviewItems(allCells);
-	});
+	// Collecting preview assets walks every cell in the chat, so debounce it
+	// off the per-snapshot stream path; cells arrays are reassigned on every
+	// upsert, so reading them here is enough to re-arm the timer.
+	let chatAssets = $state<PreviewItem[]>([]);
 	const hasAssets = $derived(chatAssets.length > 0);
 	$effect(() => {
-		const items = chatAssets;
-		if (previewPanel.tabs.length === 0) return;
-		const handle = setTimeout(() => previewPanel.syncFromCells(items), 120);
+		const allCells = messages.flatMap((message) => message.cells ?? []);
+		const handle = setTimeout(() => {
+			chatAssets = collectPreviewItems(allCells);
+			if (previewPanel.tabs.length > 0) {
+				previewPanel.syncFromCells(chatAssets);
+			}
+		}, 120);
 		return () => clearTimeout(handle);
 	});
 
@@ -117,12 +121,26 @@
 
 	function resetChatConfig() {
 		const prefs = loadLastChatConfig();
-		selectedModel = prefs?.model ?? DEFAULT_MODEL;
+		selectedModel = prefs?.model ?? DEFAULT_CHAT_MODEL;
 		selectedConnectorIds = prefs?.connectorIds ?? [];
-		chatTools = null;
 		if (selectedConnectorIds.length > 0) {
 			void connectorsCache.load();
 		}
+	}
+
+	/** Back to the blank new-chat state (aborts any in-flight stream). */
+	function resetChatState() {
+		activeRequest?.abort();
+		sending = false;
+		activeRequest = undefined;
+		messages = [];
+		draft = "";
+		chatId = undefined;
+		resolvedChatId = undefined;
+		chatLoadError = undefined;
+		streamUserCellId = undefined;
+		resetChatConfig();
+		previewPanel.reset();
 	}
 
 	function persistChatConfig(model: string, connectorIds: number[]) {
@@ -166,18 +184,12 @@
 			await loadChatById(id);
 			return;
 		}
+		chatLoadRequest?.abort();
+		chatLoadRequest = undefined;
+		openingChatId = undefined;
 
 		if (!sending && (chatId !== undefined || messages.length > 0)) {
-			activeRequest?.abort();
-			sending = false;
-			activeRequest = undefined;
-			messages = [];
-			draft = "";
-			chatId = undefined;
-			resolvedChatId = undefined;
-			chatLoadError = undefined;
-			resetChatConfig();
-			previewPanel.reset();
+			resetChatState();
 		}
 	}
 
@@ -209,10 +221,6 @@
 		if (!prefsReady || configLocked || page.params.id) return;
 		persistChatConfig(selectedModel, [...selectedConnectorIds]);
 	});
-
-	function isRecord(value: unknown): value is Record<string, unknown> {
-		return typeof value === "object" && value !== null;
-	}
 
 	// API routes return { error }; SvelteKit's thrown error() returns { message }.
 	function apiErrorDetail(payload: unknown, fallback: string): string {
@@ -409,7 +417,8 @@
 		sending = true;
 		stickToBottom = true;
 		streamUserCellId = undefined;
-		activeRequest = new AbortController();
+		const request = new AbortController();
+		activeRequest = request;
 		void scrollConversationToBottom();
 
 		try {
@@ -422,7 +431,7 @@
 					model,
 					connectorIds,
 				}),
-				signal: activeRequest.signal,
+				signal: request.signal,
 			});
 
 			if (!response.ok || !response.body) {
@@ -438,6 +447,7 @@
 
 			while (true) {
 				const { done, value } = await reader.read();
+				if (activeRequest !== request) return;
 				if (value) buffer += decoder.decode(value, { stream: true });
 				if (done) buffer += decoder.decode();
 
@@ -475,7 +485,7 @@
 			if (assistant) assistant.streaming = false;
 			sending = false;
 			streamUserCellId = undefined;
-			activeRequest = undefined;
+			if (activeRequest === request) activeRequest = undefined;
 			void loadChats();
 		}
 	}
@@ -491,7 +501,7 @@
 
 		// Never clobber an in-flight stream with a history fetch (e.g. after
 		// meta navigates `/` → `/chat/[id]` mid-response).
-		if (sending && (id === chatId || messages.length > 0)) {
+		if (sending && id === chatId) {
 			resolvedChatId = id;
 			chatLoadError = undefined;
 			closeSidebarIfMobile();
@@ -502,14 +512,26 @@
 			return;
 		}
 
+		// An explicit navigation abandons work for the prior route.
+		if (sending) {
+			activeRequest?.abort();
+			sending = false;
+			activeRequest = undefined;
+		}
+		chatLoadRequest?.abort();
+		const request = new AbortController();
+		chatLoadRequest = request;
+
 		openingChatId = id;
 		chatLoadError = undefined;
 
 		try {
 			const response = await fetch(
 				`/api/chats/${encodeURIComponent(id)}`,
+				{ signal: request.signal },
 			);
 			const payload: unknown = await response.json();
+			if (request !== chatLoadRequest || page.params.id !== id) return;
 
 			if (
 				!response.ok ||
@@ -521,9 +543,6 @@
 				);
 			}
 
-			activeRequest?.abort();
-			sending = false;
-			activeRequest = undefined;
 			chatId = id;
 			resolvedChatId = id;
 			chatLoadError = undefined;
@@ -549,7 +568,7 @@
 			if (typeof payload.model === "string" && payload.model) {
 				selectedModel = payload.model;
 			} else {
-				selectedModel = DEFAULT_MODEL;
+				selectedModel = DEFAULT_CHAT_MODEL;
 			}
 
 			selectedConnectorIds = Array.isArray(payload.connectorIds)
@@ -560,19 +579,21 @@
 					)
 				: [];
 
-			chatTools = extractEnabledTools(payload.tools);
-
 			if (selectedConnectorIds.length > 0) {
 				void connectorsCache.load();
 			}
 
 			closeSidebarIfMobile();
 		} catch (error) {
+			if (request.signal.aborted || request !== chatLoadRequest) return;
 			chatLoadError =
 				error instanceof Error ? error.message : "Unable to load chat.";
 			resolvedChatId = undefined;
 		} finally {
-			openingChatId = undefined;
+			if (request === chatLoadRequest) {
+				chatLoadRequest = undefined;
+				openingChatId = undefined;
+			}
 		}
 	}
 
@@ -583,16 +604,10 @@
 	}
 
 	function newThread() {
-		activeRequest?.abort();
-		sending = false;
-		activeRequest = undefined;
-		messages = [];
-		draft = "";
-		chatId = undefined;
-		resolvedChatId = undefined;
-		chatLoadError = undefined;
-		resetChatConfig();
-		previewPanel.reset();
+		chatLoadRequest?.abort();
+		chatLoadRequest = undefined;
+		openingChatId = undefined;
+		resetChatState();
 		closeSidebarIfMobile();
 		void setChatRoute(undefined);
 	}
@@ -888,7 +903,6 @@
 						bind:selectedModel
 						{sending}
 						{configLocked}
-						tools={chatTools}
 						onsend={sendMessage}
 					/>
 				</section>
@@ -947,7 +961,6 @@
 						bind:selectedModel
 						{sending}
 						{configLocked}
-						tools={chatTools}
 						docked
 						onsend={sendMessage}
 					/>

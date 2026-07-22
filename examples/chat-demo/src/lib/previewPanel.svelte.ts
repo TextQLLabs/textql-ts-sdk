@@ -1,4 +1,12 @@
-import { getCellCase, getCellPayload, type CellLike } from '$lib/cells';
+import {
+	asRecords as records,
+	asString,
+	asStrings as strings,
+	getCellCase,
+	getCellPayload,
+	type CellLike
+} from '$lib/cells';
+import { storageGet, storageSet } from '$lib/utils';
 
 export type PreviewItem = {
 	id: string;
@@ -15,22 +23,6 @@ const MIN_WIDTH = 280;
 const MAX_WIDTH = 860;
 const DEFAULT_WIDTH = 420;
 
-function asString(value: unknown): string {
-	return typeof value === 'string' ? value : '';
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
-}
-
-function records(value: unknown): Record<string, unknown>[] {
-	return Array.isArray(value) ? value.filter(isRecord) : [];
-}
-
-function strings(value: unknown): string[] {
-	return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
-}
-
 export function clampPreviewWidth(value: number): number {
 	const max =
 		typeof window !== 'undefined'
@@ -40,24 +32,10 @@ export function clampPreviewWidth(value: number): number {
 }
 
 function loadWidth(): number {
-	if (typeof localStorage === 'undefined') return DEFAULT_WIDTH;
-	try {
-		const raw = localStorage.getItem(WIDTH_KEY);
-		if (!raw) return DEFAULT_WIDTH;
-		const n = Number(raw);
-		return Number.isFinite(n) ? clampPreviewWidth(n) : DEFAULT_WIDTH;
-	} catch {
-		return DEFAULT_WIDTH;
-	}
-}
-
-function persistWidth(width: number) {
-	if (typeof localStorage === 'undefined') return;
-	try {
-		localStorage.setItem(WIDTH_KEY, String(width));
-	} catch {
-		/* ignore quota / private mode */
-	}
+	const raw = storageGet(WIDTH_KEY);
+	if (!raw) return DEFAULT_WIDTH;
+	const n = Number(raw);
+	return Number.isFinite(n) ? clampPreviewWidth(n) : DEFAULT_WIDTH;
 }
 
 /** Infer a preview type from a URL / filename when the cell doesn't specify one. */
@@ -77,57 +55,6 @@ function cellId(cell: CellLike, suffix: string): string {
 	return `${base}:${suffix}`;
 }
 
-function pushItem(
-	out: PreviewItem[],
-	seen: Set<string>,
-	item: PreviewItem | null | undefined
-) {
-	if (!item) return;
-	const hasPayload = Boolean(item.url || item.content || item.error);
-	if (!hasPayload) return;
-	if (seen.has(item.id)) return;
-	seen.add(item.id);
-	out.push(item);
-}
-
-function itemFromUrl(opts: {
-	id: string;
-	name: string;
-	url: string;
-	previewType?: string;
-	toolSummary?: string | null;
-	error?: string | null;
-}): PreviewItem {
-	return {
-		id: opts.id,
-		name: opts.name || 'Asset',
-		previewType: opts.previewType || guessPreviewType(opts.url),
-		url: opts.url,
-		content: null,
-		error: opts.error ?? null,
-		toolSummary: opts.toolSummary ?? null
-	};
-}
-
-function itemFromContent(opts: {
-	id: string;
-	name: string;
-	content: string;
-	previewType?: string;
-	toolSummary?: string | null;
-	error?: string | null;
-}): PreviewItem {
-	return {
-		id: opts.id,
-		name: opts.name || 'Asset',
-		previewType: opts.previewType || 'file',
-		url: null,
-		content: opts.content,
-		error: opts.error ?? null,
-		toolSummary: opts.toolSummary ?? null
-	};
-}
-
 function toolSummaryOf(cell: CellLike): string | null {
 	return typeof cell.toolSummary === 'string' ? cell.toolSummary : null;
 }
@@ -143,7 +70,6 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 	const summary = toolSummaryOf(cell);
 	const execError = execErrorOf(cell);
 	const out: PreviewItem[] = [];
-	const seen = new Set<string>();
 
 	const addUrl = (
 		url: unknown,
@@ -153,18 +79,15 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 	) => {
 		const href = asString(url);
 		if (!href) return;
-		pushItem(
-			out,
-			seen,
-			itemFromUrl({
-				id: cellId(cell, suffix),
-				name,
-				url: href,
-				previewType,
-				toolSummary: summary,
-				error: execError
-			})
-		);
+		out.push({
+			id: cellId(cell, suffix),
+			name: name || 'Asset',
+			previewType: previewType || guessPreviewType(href),
+			url: href,
+			content: null,
+			error: execError,
+			toolSummary: summary
+		});
 	};
 
 	const addContent = (
@@ -175,18 +98,15 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 	) => {
 		const text = asString(content);
 		if (!text) return;
-		pushItem(
-			out,
-			seen,
-			itemFromContent({
-				id: cellId(cell, suffix),
-				name,
-				content: text,
-				previewType,
-				toolSummary: summary,
-				error: execError
-			})
-		);
+		out.push({
+			id: cellId(cell, suffix),
+			name: name || 'Asset',
+			previewType: previewType || 'file',
+			url: null,
+			content: text,
+			error: execError,
+			toolSummary: summary
+		});
 	};
 
 	const addImageRefs = (value: unknown, prefix: string) => {
@@ -219,15 +139,9 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 			const content = typeof payload.content === 'string' ? payload.content : null;
 			const error =
 				(typeof payload.error === 'string' && payload.error) || execError || null;
-			pushItem(out, seen, {
-				id,
-				name,
-				previewType,
-				url,
-				content,
-				error,
-				toolSummary: summary
-			});
+			if (url || content || error) {
+				out.push({ id, name, previewType, url, content, error, toolSummary: summary });
+			}
 			break;
 		}
 		case 'imageCell':
@@ -322,11 +236,6 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 	}
 
 	return out;
-}
-
-/** Primary asset for a cell (first collected), or null. */
-export function previewItemFromCell(cell: CellLike): PreviewItem | null {
-	return previewItemsFromCell(cell)[0] ?? null;
 }
 
 export function collectPreviewItems(cells: CellLike[]): PreviewItem[] {
@@ -488,7 +397,7 @@ class PreviewPanelState {
 	}
 
 	commitWidth() {
-		persistWidth(this.width);
+		storageSet(WIDTH_KEY, String(this.width));
 	}
 }
 

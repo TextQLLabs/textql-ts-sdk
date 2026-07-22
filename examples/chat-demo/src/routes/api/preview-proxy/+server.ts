@@ -6,13 +6,11 @@ import type { RequestHandler } from './$types';
 
 function preparePreviewHeaders(headers: Headers) {
 	headers.delete('x-frame-options');
-	headers.delete('content-security-policy');
 	headers.delete('content-encoding');
 	headers.delete('content-length');
 	headers.delete('transfer-encoding');
-	// Upstream signed assets often use Content-Disposition: attachment,
-	// which makes the browser download instead of embedding in an iframe.
 	headers.set('content-disposition', 'inline');
+	headers.set('content-security-policy', 'sandbox allow-scripts');
 }
 
 export const GET: RequestHandler = async ({ url, fetch }) => {

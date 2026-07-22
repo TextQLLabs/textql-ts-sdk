@@ -5,15 +5,9 @@
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Plus from '@lucide/svelte/icons/plus';
-	import type { ChatTools } from '$lib/chatTools';
+	import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '$lib/chatModels';
 	import { connectorIconSrc } from '$lib/connectorIcons';
 	import { connectorsCache } from '$lib/connectorsCache.svelte';
-
-	type ModelOption = {
-		id: string;
-		label: string;
-		hint: string;
-	};
 
 	type Flyout = 'models' | 'connectors';
 
@@ -25,20 +19,9 @@
 		configLocked?: boolean;
 		selectedConnectorIds?: number[];
 		selectedModel?: string;
-		/**
-		 * Enabled tools from GetChat (existing chat). Kept for callers;
-		 * tools are no longer shown as toolbar icons.
-		 */
-		tools?: ChatTools | null;
 		onsend?: () => void;
 		class?: string;
 	}
-
-	const CLAUDE_MODELS: ModelOption[] = [
-		{ id: 'MODEL_HAIKU_4_5', label: 'Claude Haiku 4.5', hint: 'Fast responses for quick tasks' },
-		{ id: 'MODEL_SONNET_5', label: 'Claude Sonnet 5', hint: 'Balanced speed and quality' },
-		{ id: 'MODEL_OPUS_4_8', label: 'Claude Opus 4.8', hint: 'Highest capability for hard work' }
-	];
 
 	let {
 		value = $bindable(''),
@@ -46,24 +29,20 @@
 		docked = false,
 		configLocked = false,
 		selectedConnectorIds = $bindable<number[]>([]),
-		selectedModel = $bindable('MODEL_SONNET_5'),
-		// Accepted from ChatPage; tools are implied by connectors, not shown as icons.
-		tools: _tools = null,
+		selectedModel = $bindable(DEFAULT_CHAT_MODEL as string),
 		onsend,
 		class: className = ''
 	}: Props = $props();
 
 	const ROOT_ITEMS = [
-		{ id: 'models' as const, label: 'Models' },
-		{ id: 'connectors' as const, label: 'Connectors' }
+		{ id: 'models' as const, label: 'Models', icon: Boxes },
+		{ id: 'connectors' as const, label: 'Connectors', icon: Cable }
 	];
 
 	let menuOpen = $state(false);
 	let flyout = $state<Flyout | null>(null);
 	let connectorQuery = $state('');
-	let connectorNames = $state.raw<Record<number, string>>({});
 	let menuRoot: HTMLDivElement | undefined;
-	let connectorSearchInput: HTMLInputElement | undefined;
 	let textareaEl: HTMLTextAreaElement | undefined;
 
 	const normalizedConnectorQuery = $derived(connectorQuery.trim().toLowerCase());
@@ -79,7 +58,7 @@
 	);
 
 	const selectedModelLabel = $derived(
-		CLAUDE_MODELS.find((model) => model.id === selectedModel)?.label ??
+		CHAT_MODELS.find((model) => model.id === selectedModel)?.label ??
 			selectedModel.replace(/^MODEL_/, '').replaceAll('_', ' ')
 	);
 
@@ -88,7 +67,7 @@
 			const match = connectorsCache.connectors.find((connector) => connector.id === id);
 			return {
 				id,
-				name: connectorsCache.nameFor(id, connectorNames),
+				name: match?.name ?? `Connector ${id}`,
 				type: match?.type ?? 'UNKNOWN'
 			};
 		})
@@ -138,7 +117,6 @@
 
 	function toggleConnector(connector: { id: number; name: string }) {
 		if (configLocked) return;
-		connectorNames = { ...connectorNames, [connector.id]: connector.name };
 
 		if (selectedConnectorIds.includes(connector.id)) {
 			selectedConnectorIds = selectedConnectorIds.filter((id) => id !== connector.id);
@@ -222,11 +200,7 @@
 	}
 
 	function attachConnectorSearchInput(element: HTMLInputElement) {
-		connectorSearchInput = element;
 		queueMicrotask(() => element.focus());
-		return () => {
-			if (connectorSearchInput === element) connectorSearchInput = undefined;
-		};
 	}
 
 	function attachTextarea(element: HTMLTextAreaElement) {
@@ -245,7 +219,6 @@
 		{@attach attachTextarea}
 		bind:value
 		onkeydown={handleComposerKeydown}
-		oninput={resizeTextarea}
 		rows="1"
 		placeholder="Plan, @ for context, / for commands"
 		aria-label="Message"
@@ -324,11 +297,7 @@
 								>
 									<span class="menu-row-main">
 										<span class="menu-icon" aria-hidden="true">
-											{#if item.id === 'models'}
-												<Boxes size={14} strokeWidth={1.5} />
-											{:else}
-												<Cable size={14} strokeWidth={1.5} />
-											{/if}
+											<item.icon size={14} strokeWidth={1.5} />
 										</span>
 										{item.label}
 									</span>
@@ -348,7 +317,7 @@
 					{#if flyout === 'models'}
 						<div class="popover flyout-popover" role="menu" aria-label="Models">
 							<div class="menu-section models-list">
-								{#each CLAUDE_MODELS as model (model.id)}
+								{#each CHAT_MODELS as model (model.id)}
 									<button
 										type="button"
 										class="menu-row model-row"
@@ -481,7 +450,6 @@
 		font: inherit;
 		font-size: 14px;
 		line-height: 1.55;
-		field-sizing: content;
 	}
 
 	.composer textarea::placeholder {

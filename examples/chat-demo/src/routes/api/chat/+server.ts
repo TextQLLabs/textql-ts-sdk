@@ -1,11 +1,10 @@
-import { textqlClients } from '$lib/server/textql';
+import { CHAT_MODEL_IDS, DEFAULT_CHAT_MODEL } from '$lib/chatModels';
+import { isConnectError, proxyError, textqlClients } from '$lib/server/textql';
 import { toJson } from '@bufbuild/protobuf';
 import { json } from '@sveltejs/kit';
 import { CellSchema, type WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
 import {
-	type ConnectError,
 	TextqlRpcParadigmParamsParadigmType,
-	TextqlRpcPublicChatLlmModel,
 	type TextqlRpcPublicParadigmParadigm
 } from '@textql/sdk/models';
 import { z } from 'zod';
@@ -15,19 +14,9 @@ import type { RequestHandler } from './$types';
 const ChatRequestSchema = z.object({
 	message: z.string().trim().min(1, 'Message is required.'),
 	chatId: z.string().trim().default(''),
-	model: z
-		.enum([
-			TextqlRpcPublicChatLlmModel.ModelHaiku45,
-			TextqlRpcPublicChatLlmModel.ModelSonnet5,
-			TextqlRpcPublicChatLlmModel.ModelOpus48
-		])
-		.catch(TextqlRpcPublicChatLlmModel.ModelSonnet5),
+	model: z.enum(CHAT_MODEL_IDS).catch(DEFAULT_CHAT_MODEL),
 	connectorIds: z.array(z.number().int().positive()).default([])
 });
-
-function isConnectError(response: object): response is ConnectError {
-	return 'code' in response || 'details' in response;
-}
 
 // Default to universal paradigm
 function universalParadigm(connectorIds: number[]): TextqlRpcPublicParadigmParadigm {
@@ -147,7 +136,6 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		});
 	} catch (error) {
-		console.error('Chat service request failed', error);
-		return json({ error: 'The chat service request failed.' }, { status: 502 });
+		return proxyError('Chat service request', error);
 	}
 };

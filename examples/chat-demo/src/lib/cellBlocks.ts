@@ -1,9 +1,14 @@
 import {
+	asRecords as recs,
+	asString as str,
+	asStrings as strs,
 	getCellCase,
 	getCellPayload,
 	isCellFinished,
+	titleCaseSnake,
 	type CellLike
 } from '$lib/cells';
+import { isRecord } from '$lib/utils';
 
 export type Block =
 	| { kind: 'text'; label?: string; text: string }
@@ -13,14 +18,6 @@ export type Block =
 	| { kind: 'link'; label: string; href: string }
 	| { kind: 'image'; url: string; alt?: string }
 	| { kind: 'list'; label?: string; items: { title: string; subtitle?: string; href?: string }[] };
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
-}
-
-function str(value: unknown): string {
-	return typeof value === 'string' ? value : '';
-}
 
 function num(value: unknown): string {
 	if (typeof value === 'number') return String(value);
@@ -40,23 +37,10 @@ function formatExecTimeMs(value: unknown): string {
 	return `${n} ms`;
 }
 
-function recs(value: unknown): Record<string, unknown>[] {
-	return Array.isArray(value) ? value.filter(isRecord) : [];
-}
-
-function strs(value: unknown): string[] {
-	return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
-}
-
 function humanizeEnum(value: unknown): string {
 	const text = str(value);
 	if (!/^[A-Z][A-Z0-9_]*$/.test(text)) return text;
-	return text
-		.toLowerCase()
-		.split('_')
-		.filter(Boolean)
-		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ');
+	return titleCaseSnake(text.toLowerCase());
 }
 
 function prettyJson(value: unknown): string {
@@ -100,6 +84,14 @@ function link(blocks: Block[], label: string, href: unknown) {
 	if (str(href)) blocks.push({ kind: 'link', label, href: str(href) });
 }
 
+function list(
+	blocks: Block[],
+	label: string,
+	items: { title: string; subtitle?: string; href?: string }[]
+) {
+	if (items.length > 0) blocks.push({ kind: 'list', label, items });
+}
+
 function image(blocks: Block[], url: unknown, alt?: string) {
 	if (str(url)) blocks.push({ kind: 'image', url: str(url), alt });
 }
@@ -118,7 +110,7 @@ function fileRefs(blocks: Block[], value: unknown) {
 	const items = recs(value)
 		.filter((ref) => str(ref.url))
 		.map((ref) => ({ title: str(ref.name) || 'file', href: str(ref.url) }));
-	if (items.length > 0) blocks.push({ kind: 'list', label: 'Files', items });
+	list(blocks, 'Files', items);
 }
 
 function exaResults(blocks: Block[], value: unknown) {
@@ -127,7 +119,7 @@ function exaResults(blocks: Block[], value: unknown) {
 		subtitle: str(result.summary) || undefined,
 		href: str(result.url) || undefined
 	}));
-	if (items.length > 0) blocks.push({ kind: 'list', label: 'Results', items });
+	list(blocks, 'Results', items);
 }
 
 function fieldChanges(blocks: Block[], value: unknown) {
@@ -135,7 +127,7 @@ function fieldChanges(blocks: Block[], value: unknown) {
 		title: str(change.fieldName),
 		subtitle: `${str(change.oldValue)} → ${str(change.newValue)}`
 	}));
-	if (items.length > 0) blocks.push({ kind: 'list', label: 'Changes', items });
+	list(blocks, 'Changes', items);
 }
 
 function messageBlocks(blocks: Block[], value: unknown) {
@@ -226,7 +218,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: `${str(match.objectName)}.${str(match.metricName)}`,
 			subtitle: str(match.metricDescription) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Matches', items });
+		list(b, 'Matches', items);
 	},
 	ontologyOpenObjectCell: (p, b) => {
 		kv(b, [
@@ -240,12 +232,12 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(dim.dimensionName),
 			subtitle: str(dim.dimensionDescription) || str(dim.dimensionType) || undefined
 		}));
-		if (dims.length > 0) b.push({ kind: 'list', label: 'Dimensions', items: dims });
+		list(b, 'Dimensions', dims);
 		const metrics = recs(p.metrics).map((metric) => ({
 			title: str(metric.metricName),
 			subtitle: str(metric.metricDescription) || undefined
 		}));
-		if (metrics.length > 0) b.push({ kind: 'list', label: 'Metrics', items: metrics });
+		list(b, 'Metrics', metrics);
 	},
 
 	// ── Code execution ───────────────────────────────────────────────────
@@ -352,7 +344,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(report.subject) || 'report',
 			subtitle: str(report.summary) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Reports', items });
+		list(b, 'Reports', items);
 		text(b, 'Error', p.errorMessage);
 	},
 	previewCell: (p, b) => {
@@ -391,7 +383,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		const items = recs(p.dataframes).map((frame) => ({
 			title: str(frame.name) || 'dataframe'
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Dataframes', items });
+		list(b, 'Dataframes', items);
 	},
 
 	// ── Tableau / PowerBI ────────────────────────────────────────────────
@@ -412,7 +404,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			subtitle: str(file.mimeType) || undefined,
 			href: str(file.webViewLink) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Files', items });
+		list(b, 'Files', items);
 		code(b, 'Preview', p.dataframePreview);
 		text(b, 'Error', p.errorMessage);
 	},
@@ -497,7 +489,10 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			'updatedMetric',
 			'deletedMetric'
 		]) {
-			if (isRecord(p[key])) code(b, humanizeEnum(key.replace(/([A-Z])/g, '_$1').toUpperCase()), prettyJson(p[key]), 'json');
+			if (isRecord(p[key])) {
+				const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
+				code(b, label, prettyJson(p[key]), 'json');
+			}
 		}
 	},
 	playbookEditorCell: (p, b) => {
@@ -509,7 +504,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(playbook.name) || 'playbook',
 			subtitle: str(playbook.cronString) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Playbooks', items });
+		list(b, 'Playbooks', items);
 		fieldChanges(b, p.fieldChanges);
 		text(b, 'Error', p.errorMessage);
 	},
@@ -548,7 +543,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 				subtitle: selected || inputs || undefined
 			};
 		});
-		if (items.length > 0) b.push({ kind: 'list', label: 'Questions', items });
+		list(b, 'Questions', items);
 	},
 	connectorsCell: (p, b) => {
 		kv(b, [
@@ -579,7 +574,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(dashboard.name) || 'dashboard',
 			subtitle: str(dashboard.status) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Dashboards', items });
+		list(b, 'Dashboards', items);
 		text(b, 'Error', p.errorMessage);
 	},
 	listAppsCell: (p, b) => {
@@ -591,7 +586,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(app.name) || 'app',
 			subtitle: str(app.status) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Apps', items });
+		list(b, 'Apps', items);
 		text(b, 'Error', p.errorMessage);
 	},
 	listUsersCell: (p, b) => {
@@ -604,7 +599,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			title: str(agent.name) || 'user',
 			subtitle: str(agent.email) || str(agent.type) || undefined
 		}));
-		if (items.length > 0) b.push({ kind: 'list', label: 'Users', items });
+		list(b, 'Users', items);
 		text(b, 'Error', p.errorMessage);
 	},
 
@@ -666,14 +661,6 @@ export function buildCellBlocks(cell: CellLike): Block[] {
 		// Unknown / future cell types: show the raw payload rather than nothing.
 		const json = prettyJson(payload);
 		if (json && json !== '{}') blocks.push({ kind: 'code', text: json });
-	}
-
-	// Strip any Time rows first (builders must not emit live placeholders).
-	for (let i = blocks.length - 1; i >= 0; i--) {
-		const block = blocks[i];
-		if (block.kind !== 'kv') continue;
-		block.rows = block.rows.filter((row) => row.label !== 'Time');
-		if (block.rows.length === 0) blocks.splice(i, 1);
 	}
 
 	// Only finished cells get a final duration — never 0/missing while running.

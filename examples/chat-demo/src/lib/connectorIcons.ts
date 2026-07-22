@@ -1,15 +1,15 @@
-import type { ConnectorItem } from '$lib/connectorsCache.svelte';
-
 const iconModules = import.meta.glob('./assets/connectors/**/*.{svg,png}', {
 	eager: true,
 	query: '?url',
 	import: 'default'
 }) as Record<string, string>;
 
-function iconUrl(relativePath: string) {
-	const suffix = `/assets/connectors/${relativePath}`;
-	const key = Object.keys(iconModules).find((path) => path.replace(/\\/g, '/').endsWith(suffix));
-	return key ? iconModules[key] : undefined;
+/** Path under `assets/connectors/` → served URL, resolved once at module load. */
+const iconUrlByAsset = new Map<string, string>();
+for (const [path, url] of Object.entries(iconModules)) {
+	const normalized = path.replace(/\\/g, '/');
+	const asset = normalized.split('/assets/connectors/')[1];
+	if (asset) iconUrlByAsset.set(asset, url);
 }
 
 /** Maps API `connectorType` values to files under `$lib/assets/connectors`. */
@@ -74,14 +74,10 @@ const TYPE_TO_ASSET: Record<string, string> = {
 	MCP: 'mcp.svg'
 };
 
-const FALLBACK = iconUrl('api/custom.svg') ?? '';
+const FALLBACK = iconUrlByAsset.get('api/custom.svg') ?? '';
 
 export function connectorIconSrc(type: string | null | undefined) {
 	const key = (type ?? 'UNKNOWN').trim().toUpperCase().replace(/\s+/g, '_');
 	const asset = TYPE_TO_ASSET[key] ?? 'api/custom.svg';
-	return iconUrl(asset) ?? FALLBACK;
-}
-
-export function connectorIconFor(connector: Pick<ConnectorItem, 'type'>) {
-	return connectorIconSrc(connector.type);
+	return iconUrlByAsset.get(asset) ?? FALLBACK;
 }
