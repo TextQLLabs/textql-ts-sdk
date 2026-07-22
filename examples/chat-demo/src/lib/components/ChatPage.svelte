@@ -4,7 +4,7 @@
 	import PanelLeftClose from "@lucide/svelte/icons/panel-left-close";
 	import PanelRight from "@lucide/svelte/icons/panel-right";
 	import Plus from "@lucide/svelte/icons/plus";
-	import { onMount } from "svelte";
+	import { onMount, tick } from "svelte";
 	import { afterNavigate, goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
@@ -43,6 +43,8 @@
 
 	const DEFAULT_MODEL = "MODEL_SONNET_5";
 	const MOBILE_SIDEBAR_MQ = "(max-width: 780px)";
+	const CHAT_UUID_RE =
+		/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 	let messages = $state<Message[]>([]);
 	let draft = $state("");
@@ -53,6 +55,9 @@
 	/** Desktop: collapsible panel. Mobile: drawer open state. */
 	let sidebarOpen = $state(true);
 	let chatId = $state<string | undefined>();
+	/** Last chat id successfully hydrated from `/api/chats/[id]` (not stream meta). */
+	let resolvedChatId = $state<string | undefined>();
+	let chatLoadError = $state<string | undefined>();
 	let sending = $state(false);
 	let activeRequest: AbortController | undefined;
 	let chats = $state<ChatListItem[]>([]);
@@ -62,18 +67,53 @@
 	let closingChatId = $state<string | undefined>();
 	let menuChatId = $state<string | undefined>();
 	let prefsReady = $state(false);
+	/** User md cell id from stream meta — filter echoes by id, not `generated`. */
+	let streamUserCellId = $state<string | undefined>();
+	let conversationEl = $state<HTMLElement | undefined>();
+	/** Stick to bottom while the user hasn't scrolled up during a stream. */
+	let stickToBottom = $state(true);
 
+	function isChatUuid(value: string) {
+		return CHAT_UUID_RE.test(value);
+	}
+
+	const routeChatId = $derived(
+		typeof page.params.id === "string" ? page.params.id : undefined,
+	);
 	const isEmpty = $derived(messages.length === 0);
 	const configLocked = $derived(chatId !== undefined || !isEmpty);
+	/** Deep link / sidebar open: fetch before showing the new-chat composer. */
+	const showChatLoading = $derived.by(() => {
+		const id = routeChatId;
+		if (!id) return false;
+		if (sending && messages.length > 0) return false;
+		if (chatLoadError && resolvedChatId !== id) return false;
+		if (resolvedChatId === id) return false;
+		return true;
+	});
+	const showChatError = $derived(
+		Boolean(
+			routeChatId &&
+				chatLoadError &&
+				resolvedChatId !== routeChatId &&
+				!showChatLoading,
+		),
+	);
+	const showNewChat = $derived(
+		!routeChatId && isEmpty && !showChatLoading && !showChatError,
+	);
 	const chatAssets = $derived.by(() => {
 		const allCells = messages.flatMap((message) => message.cells ?? []);
 		return collectPreviewItems(allCells);
 	});
 	const hasAssets = $derived(chatAssets.length > 0);
-	const showTopbar = $derived(!sidebarOpen || hasAssets);
-
+	// Preview sync is secondary — debounce so token-level stream upserts don't
+	// thrash the panel on every NDJSON line.
 	$effect(() => {
-		previewPanel.syncFromCells(chatAssets);
+		const items = chatAssets;
+		if (previewPanel.tabs.length === 0) return;
+		const handle = setTimeout(() => previewPanel.syncFromCells(items), 120);
+		return () => clearTimeout(handle);
 	});
 
 	function openAssetsPanel() {
@@ -139,6 +179,8 @@
 			messages = [];
 			draft = "";
 			chatId = undefined;
+			resolvedChatId = undefined;
+			chatLoadError = undefined;
 			resetChatConfig();
 			previewPanel.reset();
 		}
@@ -161,6 +203,8 @@
 		void loadChats();
 	});
 
+	// Initial load + client navigations. `showChatLoading` covers the route id
+	// immediately so deep links never flash the empty composer.
 	afterNavigate(() => {
 		void syncFromRoute();
 	});
@@ -250,9 +294,10 @@
 		});
 	}
 
-	// The user's own message cell is echoed in the stream; it's already
+	// The user's own message cell may be echoed in the stream; it's already
 	// rendered optimistically, so keep it out of the assistant's cell list.
 	function isEchoedUserCell(cell: CellLike): boolean {
+		if (streamUserCellId && cell.id === streamUserCellId) return true;
 		const cellCase = getCellCase(cell);
 		return (
 			(cellCase === "mdCell" || cellCase === "ansCell") &&
@@ -260,14 +305,38 @@
 		);
 	}
 
-	function applyStreamLine(line: string, assistantId: number) {
-		if (!line.trim()) return;
+	function upsertAssistantCell(assistant: Message, cell: CellLike) {
+		// Reassign the array so child `$derived`s / props always see a new
+		// reference on every stream snapshot (push/index mutate can miss UI).
+		const prev = assistant.cells ?? [];
+		const index = prev.findIndex((existing) => existing.id === cell.id);
+		if (index === -1) {
+			assistant.cells = [...prev, cell];
+			return;
+		}
+		const next = prev.slice();
+		next[index] = cell;
+		assistant.cells = next;
+	}
 
-		const event: unknown = JSON.parse(line);
+	function applyStreamLine(line: string, assistantId: number) {
+		const trimmed = line.trim();
+		if (!trimmed) return;
+
+		let event: unknown;
+		try {
+			event = JSON.parse(trimmed);
+		} catch {
+			// Heartbeats / partial garbage must not abort the whole stream.
+			return;
+		}
 		if (!isRecord(event)) return;
 
 		if (event.type === "meta" && typeof event.chatId === "string") {
 			chatId = event.chatId;
+			if (typeof event.userCellId === "string" && event.userCellId) {
+				streamUserCellId = event.userCellId;
+			}
 			void setChatRoute(event.chatId, true);
 			return;
 		}
@@ -286,18 +355,25 @@
 			return;
 		}
 
-		const cell = event.result;
+		// Accept both `{ result: cell }` and a bare cell snapshot.
+		const cell = isRecord(event.result) ? event.result : event;
 		if (!isRecord(cell) || typeof cell.id !== "string") return;
 		if (isEchoedUserCell(cell)) return;
 
-		// Each stream event is a full cell snapshot — upsert by id.
-		const cells = assistant.cells ?? (assistant.cells = []);
-		const index = cells.findIndex((existing) => existing.id === cell.id);
-		if (index === -1) {
-			cells.push(cell);
-		} else {
-			cells[index] = cell;
-		}
+		upsertAssistantCell(assistant, cell);
+	}
+
+	function onConversationScroll() {
+		const el = conversationEl;
+		if (!el) return;
+		const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+		stickToBottom = distance < 80;
+	}
+
+	async function scrollConversationToBottom() {
+		if (!stickToBottom || !conversationEl) return;
+		await tick();
+		conversationEl.scrollTop = conversationEl.scrollHeight;
 	}
 
 	async function sendMessage() {
@@ -317,7 +393,10 @@
 		);
 		draft = "";
 		sending = true;
+		stickToBottom = true;
+		streamUserCellId = undefined;
 		activeRequest = new AbortController();
+		void scrollConversationToBottom();
 
 		try {
 			const response = await fetch("/api/chat", {
@@ -349,16 +428,22 @@
 
 			while (true) {
 				const { done, value } = await reader.read();
-				buffer += decoder.decode(value, { stream: !done });
+				if (value) buffer += decoder.decode(value, { stream: true });
+				if (done) buffer += decoder.decode();
 
 				const lines = buffer.split("\n");
 				buffer = lines.pop() ?? "";
 				for (const line of lines) applyStreamLine(line, assistantId);
+				if (done && buffer) {
+					applyStreamLine(buffer, assistantId);
+					buffer = "";
+				}
+
+				// Yield so Svelte can paint between network chunks.
+				await scrollConversationToBottom();
 
 				if (done) break;
 			}
-
-			if (buffer) applyStreamLine(buffer, assistantId);
 
 			// New chat: remember the config that was actually used.
 			if (!existingChatId) {
@@ -379,6 +464,7 @@
 			);
 			if (assistant) assistant.streaming = false;
 			sending = false;
+			streamUserCellId = undefined;
 			activeRequest = undefined;
 			void loadChats();
 		}
@@ -386,12 +472,28 @@
 
 	async function loadChatById(id: string) {
 		if (openingChatId === id) return;
-		if (id === chatId && messages.length > 0) {
+
+		if (!isChatUuid(id)) {
+			chatLoadError = "Invalid chat id.";
+			resolvedChatId = undefined;
+			return;
+		}
+
+		// Never clobber an in-flight stream with a history fetch (e.g. after
+		// meta navigates `/` → `/chat/[id]` mid-response).
+		if (sending && (id === chatId || messages.length > 0)) {
+			resolvedChatId = id;
+			chatLoadError = undefined;
+			closeSidebarIfMobile();
+			return;
+		}
+		if (id === resolvedChatId && id === chatId) {
 			closeSidebarIfMobile();
 			return;
 		}
 
 		openingChatId = id;
+		chatLoadError = undefined;
 
 		try {
 			const response = await fetch(
@@ -404,13 +506,19 @@
 				!isRecord(payload) ||
 				!Array.isArray(payload.messages)
 			) {
-				throw new Error("Unable to load chat.");
+				const detail =
+					isRecord(payload) && typeof payload.error === "string"
+						? payload.error
+						: "Unable to load chat.";
+				throw new Error(detail);
 			}
 
 			activeRequest?.abort();
 			sending = false;
 			activeRequest = undefined;
 			chatId = id;
+			resolvedChatId = id;
+			chatLoadError = undefined;
 			previewPanel.reset();
 			messages = payload.messages.flatMap((item, index): Message[] => {
 				if (
@@ -448,8 +556,10 @@
 			}
 
 			closeSidebarIfMobile();
-		} catch {
-			chatsError = true;
+		} catch (error) {
+			chatLoadError =
+				error instanceof Error ? error.message : "Unable to load chat.";
+			resolvedChatId = undefined;
 		} finally {
 			openingChatId = undefined;
 		}
@@ -468,10 +578,20 @@
 		messages = [];
 		draft = "";
 		chatId = undefined;
+		resolvedChatId = undefined;
+		chatLoadError = undefined;
 		resetChatConfig();
 		previewPanel.reset();
 		closeSidebarIfMobile();
 		void setChatRoute(undefined);
+	}
+
+	function retryLoadChat() {
+		const id = routeChatId;
+		if (!id) return;
+		chatLoadError = undefined;
+		resolvedChatId = undefined;
+		void loadChatById(id);
 	}
 
 	function toggleChatMenu(id: string, event: MouseEvent) {
@@ -687,14 +807,14 @@
 	>
 		<main
 			class="chat-panel"
-			class:empty={isEmpty}
-			class:show-topbar={showTopbar}
+			class:empty={showNewChat || showChatLoading || showChatError}
+			class:has-overlays={!sidebarOpen}
 		>
-			<header class="topbar">
-				{#if !sidebarOpen}
+			{#if !sidebarOpen}
+				<div class="panel-overlays panel-overlays-start">
 					<button
 						type="button"
-						class="icon-ghost sidebar-toggle"
+						class="icon-ghost"
 						aria-label="Open sidebar"
 						title="Open sidebar"
 						onclick={() => (sidebarOpen = true)}
@@ -703,31 +823,49 @@
 					</button>
 					<button
 						type="button"
-						class="new-chat-btn topbar-new"
+						class="new-chat-btn panel-new"
 						onclick={newThread}
 					>
 						<Plus size={15} strokeWidth={2} />
 						<span>New chat</span>
 					</button>
-				{/if}
-				{#if hasAssets}
-					<button
-						type="button"
-						class="icon-ghost assets-toggle"
-						class:active={previewPanel.open}
-						aria-label="Open preview panel"
-						aria-pressed={previewPanel.open}
-						title={previewPanel.open
-							? "Preview open"
-							: `Preview (${chatAssets.length})`}
-						onclick={openAssetsPanel}
-					>
-						<PanelRight size={16} strokeWidth={1.75} />
-					</button>
-				{/if}
-			</header>
+				</div>
+			{/if}
 
-			{#if isEmpty}
+			{#if hasAssets}
+				<button
+					type="button"
+					class="icon-ghost assets-toggle"
+					class:active={previewPanel.open}
+					aria-label="Open preview panel"
+					aria-pressed={previewPanel.open}
+					title={previewPanel.open
+						? "Preview open"
+						: `Preview (${chatAssets.length})`}
+					onclick={openAssetsPanel}
+				>
+					<PanelRight size={16} strokeWidth={1.75} />
+				</button>
+			{/if}
+
+			{#if showChatLoading}
+				<section class="chat-status" aria-label="Loading chat" aria-busy="true">
+					<UnicodeSpinner label="Loading chat" />
+					<p class="chat-status-text">Loading chat…</p>
+				</section>
+			{:else if showChatError}
+				<section class="chat-status" aria-label="Chat load error">
+					<p class="chat-status-text">{chatLoadError}</p>
+					<div class="chat-status-actions">
+						<button type="button" class="retry-btn" onclick={retryLoadChat}
+							>Retry</button
+						>
+						<button type="button" class="retry-btn" onclick={newThread}
+							>New chat</button
+						>
+					</div>
+				</section>
+			{:else if showNewChat}
 				<section class="empty-state" aria-label="New agent">
 					<Composer
 						bind:value={draft}
@@ -741,9 +879,11 @@
 				</section>
 			{:else}
 				<section
+					bind:this={conversationEl}
 					class="conversation"
 					aria-label="Chat messages"
 					aria-live="polite"
+					onscroll={onConversationScroll}
 				>
 					<div class="conversation-inner">
 						<div class="messages">
@@ -1125,6 +1265,7 @@
 	}
 
 	.chat-panel {
+		position: relative;
 		display: grid;
 		min-width: 0;
 		min-height: 0;
@@ -1136,40 +1277,73 @@
 		grid-template-rows: minmax(0, 1fr);
 	}
 
-	.chat-panel.show-topbar {
-		grid-template-rows: 48px minmax(0, 1fr) auto;
-	}
-
-	.chat-panel.show-topbar.empty {
-		grid-template-rows: 48px minmax(0, 1fr);
-	}
-
-	.topbar {
-		display: none;
-		align-items: center;
-		gap: 8px;
-		padding: 0 12px;
-		border-bottom: 1px solid var(--color-line);
-		background: color-mix(in srgb, var(--color-paper) 92%, transparent);
-		backdrop-filter: blur(12px);
-	}
-
-	.chat-panel.show-topbar .topbar {
+	.panel-overlays {
+		position: absolute;
+		top: 8px;
+		z-index: 5;
 		display: flex;
+		align-items: center;
+		gap: 6px;
+		pointer-events: none;
 	}
 
-	.topbar-new {
+	.panel-overlays > * {
+		pointer-events: auto;
+	}
+
+	.panel-overlays-start {
+		left: 12px;
+	}
+
+	.panel-overlays .icon-ghost {
+		background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+		backdrop-filter: blur(10px);
+	}
+
+	.panel-new {
 		flex: 0 1 auto;
 		max-width: 140px;
+		background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+		backdrop-filter: blur(10px);
 	}
 
 	.assets-toggle {
-		margin-left: auto;
+		position: absolute;
+		top: 8px;
+		right: 12px;
+		z-index: 5;
+		margin: 0;
+		background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+		backdrop-filter: blur(10px);
 	}
 
 	.assets-toggle.active {
 		color: var(--color-ink);
 		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+	}
+
+	.chat-status {
+		display: flex;
+		min-height: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 32px 24px;
+	}
+
+	.chat-status-text {
+		margin: 0;
+		color: var(--color-muted);
+		font-size: 13px;
+		text-align: center;
+	}
+
+	.chat-status-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+		justify-content: center;
 	}
 
 	.empty-state {
@@ -1208,7 +1382,11 @@
 	.conversation-inner {
 		width: min(720px, calc(100% - 48px));
 		margin: 0 auto;
-		padding: 28px 0 24px;
+		padding: 8px 0 24px;
+	}
+
+	.chat-panel.has-overlays .conversation-inner {
+		padding-top: 44px;
 	}
 
 	.messages {
@@ -1357,20 +1535,9 @@
 			opacity: 1;
 		}
 
-		.chat-panel,
-		.chat-panel.show-topbar {
+		.chat-panel {
 			height: 100vh;
 			height: 100dvh;
-			grid-template-rows: 52px minmax(0, 1fr) auto;
-		}
-
-		.chat-panel.empty,
-		.chat-panel.show-topbar.empty {
-			grid-template-rows: 52px minmax(0, 1fr);
-		}
-
-		.topbar {
-			display: flex;
 		}
 	}
 

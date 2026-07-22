@@ -5,17 +5,23 @@
 	import type { TransitionConfig } from 'svelte/transition';
 	import {
 		buildSegments,
+		cellStreamEpoch,
 		getActiveSummary,
 		getBatchHeadline,
+		getBatchStartedAtMs,
 		getCellCase,
 		getCellPayload,
+		getCellStartedAtMs,
 		getSegmentKey,
 		getStepLabel,
+		isCellExecuting,
 		type CellLike,
 		type Segment
 	} from '$lib/cells';
 	import CellDetail from '$lib/components/CellDetail.svelte';
 	import Markdown from '$lib/components/Markdown.svelte';
+	import RunningDuration from '$lib/components/RunningDuration.svelte';
+	import ThinkingCell from '$lib/components/ThinkingCell.svelte';
 	import UnicodeSpinner from '$lib/components/UnicodeSpinner.svelte';
 	import {
 		cellOpensInPreviewPanel,
@@ -53,7 +59,12 @@
 
 	let { cells, streaming = false }: { cells: CellLike[]; streaming?: boolean } = $props();
 
-	const segments = $derived(buildSegments(cells));
+	// Touch a content epoch so token-level upserts always rebuild segments,
+	// even when array identity is reused across stream snapshots.
+	const segments = $derived.by(() => {
+		void cellStreamEpoch(cells);
+		return buildSegments(cells);
+	});
 	/** Batches stay collapsed until the user clicks. */
 	const expandedBatches = new SvelteSet<string>();
 	/** Nested step detail inside an open batch. */
@@ -141,14 +152,25 @@
 			{@const active = isSegmentActive(segment, segIdx)}
 
 			{#if segment.type === 'assistant'}
+				{@const live = active && !segment.cell.complete}
 				<div class="assistant-block">
 					<Markdown
-						renderedHtml={assistantHtml(segment.cell)}
+						renderedHtml={live ? '' : assistantHtml(segment.cell)}
 						content={assistantText(segment.cell)}
 					/>
 				</div>
 			{:else}
 				{@const open = expandedBatches.has(key)}
+				{@const batchRunning = segment.cells.some((cell) =>
+					isCellExecuting(cell, active)
+				)}
+				{@const liveThoughts = active
+					? segment.cells.filter(
+							(cell) =>
+								getCellCase(cell) === 'thinkingCell' &&
+								isCellExecuting(cell, true)
+						)
+					: []}
 				<div class="segment">
 					<button
 						type="button"
@@ -156,17 +178,28 @@
 						aria-expanded={open}
 						onclick={() => toggleBatch(key)}
 					>
-						{#if active && segment.cells.some((cell) => !cell.complete)}
-							<UnicodeSpinner label="Running tools" />
-						{/if}
-						<span class="batch-summary" class:shimmer={active}>
-							{batchLabel(segment.cells, active)}
+						<span class="batch-summary" class:shimmer={batchRunning}>
+							{batchLabel(segment.cells, batchRunning)}
 						</span>
+						{#if batchRunning}
+							<span class="batch-status">
+								<UnicodeSpinner label="Running tools" />
+								<RunningDuration startedAtMs={getBatchStartedAtMs(segment.cells)} />
+							</span>
+						{/if}
 						<ChevronRight
 							size={14}
 							class={['batch-chevron', open && 'open']}
 						/>
 					</button>
+
+					{#if liveThoughts.length > 0 && !open}
+						<div class="live-thoughts">
+							{#each liveThoughts as thought (thought.id)}
+								<ThinkingCell cell={thought} active />
+							{/each}
+						</div>
+					{/if}
 
 					{#if open}
 						<div class="batch-steps" transition:softSlide>
@@ -175,33 +208,45 @@
 								{@const stepOpen = expandedSteps.has(sKey)}
 								{@const isThought = getCellCase(cell) === 'thinkingCell'}
 								{@const isAsset = cellOpensInPreviewPanel(cell)}
+								{@const running = isCellExecuting(cell, active)}
 								<div class="step">
-									<button
-										type="button"
-										class="step-header"
-										class:tool-step={!isThought}
-										aria-expanded={isAsset ? isAssetStepOpen(cell) : stepOpen}
-										onclick={() => onStepClick(cell, sKey)}
-									>
-										<span class="step-label">{getStepLabel(cell)}</span>
-										{#if isAsset}
-											<span class="step-open-label">Open</span>
+									{#if isThought && running}
+										<ThinkingCell {cell} active />
+									{:else}
+										<button
+											type="button"
+											class="step-header"
+											class:tool-step={!isThought}
+											aria-expanded={isAsset ? isAssetStepOpen(cell) : stepOpen}
+											onclick={() => onStepClick(cell, sKey)}
+										>
+											<span class="step-label">{getStepLabel(cell, active)}</span>
+											<span class="step-trailing">
+												{#if running}
+													<RunningDuration
+														startedAtMs={getCellStartedAtMs(cell)}
+													/>
+												{/if}
+												{#if isAsset}
+													<span class="step-open-label">Open</span>
+												{/if}
+												<ChevronRight
+													size={12}
+													class={['step-chevron', !isAsset && stepOpen && 'open']}
+												/>
+											</span>
+										</button>
+										{#if stepOpen && !isAsset}
+											<div class="step-detail" transition:softSlide>
+												{#if isThought}
+													<div class="thought-body">
+														<Markdown content={thoughtContent(cell)} />
+													</div>
+												{:else}
+													<CellDetail {cell} />
+												{/if}
+											</div>
 										{/if}
-										<ChevronRight
-											size={12}
-											class={['step-chevron', !isAsset && stepOpen && 'open']}
-										/>
-									</button>
-									{#if stepOpen && !isAsset}
-										<div class="step-detail" transition:softSlide>
-											{#if isThought}
-												<div class="thought-body">
-													<Markdown content={thoughtContent(cell)} />
-												</div>
-											{:else}
-												<CellDetail {cell} />
-											{/if}
-										</div>
 									{/if}
 								</div>
 							{/each}
@@ -246,6 +291,10 @@
 		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
 	}
 
+	.live-thoughts {
+		padding: 2px 0 4px 8px;
+	}
+
 	.batch-summary {
 		overflow: hidden;
 		min-width: 0;
@@ -255,6 +304,14 @@
 		font-weight: 500;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.batch-status {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex-shrink: 0;
+		margin-left: 4px;
 	}
 
 	.batch-header :global(.batch-chevron),
@@ -350,12 +407,15 @@
 		flex: 1;
 	}
 
-	.step-header.tool-step :global(.step-chevron) {
+	.step-trailing {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		flex-shrink: 0;
 		margin-left: auto;
 	}
 
 	.step-open-label {
-		margin-left: auto;
 		color: #a1a1aa;
 		font-size: 11px;
 		font-weight: 600;

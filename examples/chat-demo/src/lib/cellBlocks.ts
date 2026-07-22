@@ -1,4 +1,9 @@
-import { getCellCase, getCellPayload, type CellLike } from '$lib/cells';
+import {
+	getCellCase,
+	getCellPayload,
+	isCellFinished,
+	type CellLike
+} from '$lib/cells';
 
 export type Block =
 	| { kind: 'text'; label?: string; text: string }
@@ -21,6 +26,18 @@ function num(value: unknown): string {
 	if (typeof value === 'number') return String(value);
 	if (typeof value === 'string' && value !== '') return value;
 	return '';
+}
+
+/** Finished wall-clock only — never surface placeholder 0 ms while executing. */
+function formatExecTimeMs(value: unknown): string {
+	const n =
+		typeof value === 'number'
+			? value
+			: typeof value === 'string' && value !== ''
+				? Number(value)
+				: NaN;
+	if (!Number.isFinite(n) || n <= 0) return '';
+	return `${n} ms`;
 }
 
 function recs(value: unknown): Record<string, unknown>[] {
@@ -157,10 +174,10 @@ const BUILDERS: Record<string, BlockBuilder> = {
 	// ── Query tools ──────────────────────────────────────────────────────
 	sqlCell: (p, b) => {
 		authNote(b, p);
+		// Time is appended in buildCellBlocks only after the cell finishes.
 		kv(b, [
 			['Connector', num(p.connectorId)],
-			['Agent memory', p.agentMemory === true ? 'yes' : ''],
-			['Time', num(p.executionTimeMs) ? `${num(p.executionTimeMs)} ms` : '']
+			['Agent memory', p.agentMemory === true ? 'yes' : '']
 		]);
 		code(b, 'Query', p.query, 'sql');
 		code(b, 'Result', p.dataframePreview);
@@ -280,10 +297,10 @@ const BUILDERS: Record<string, BlockBuilder> = {
 
 	// ── MCP / skills ─────────────────────────────────────────────────────
 	mcpToolCell: (p, b) => {
+		// Time is appended in buildCellBlocks only after the cell finishes.
 		kv(b, [
 			['Server', str(p.serverName)],
-			['Tool', str(p.toolName)],
-			['Time', num(p.executionTimeMs) ? `${num(p.executionTimeMs)} ms` : '']
+			['Tool', str(p.toolName)]
 		]);
 		if (str(p.argumentsJson) && str(p.argumentsJson) !== '{}') {
 			code(b, 'Arguments', prettyJson(p.argumentsJson), 'json');
@@ -650,5 +667,27 @@ export function buildCellBlocks(cell: CellLike): Block[] {
 		const json = prettyJson(payload);
 		if (json && json !== '{}') blocks.push({ kind: 'code', text: json });
 	}
+
+	// Strip any Time rows first (builders must not emit live placeholders).
+	for (let i = blocks.length - 1; i >= 0; i--) {
+		const block = blocks[i];
+		if (block.kind !== 'kv') continue;
+		block.rows = block.rows.filter((row) => row.label !== 'Time');
+		if (block.rows.length === 0) blocks.splice(i, 1);
+	}
+
+	// Only finished cells get a final duration — never 0/missing while running.
+	const time = isCellFinished(cell)
+		? formatExecTimeMs(payload.executionTimeMs ?? cell.durationMs)
+		: '';
+	if (time) {
+		const firstKv = blocks.find((block) => block.kind === 'kv');
+		if (firstKv && firstKv.kind === 'kv') {
+			firstKv.rows.push({ label: 'Time', value: time });
+		} else {
+			blocks.unshift({ kind: 'kv', rows: [{ label: 'Time', value: time }] });
+		}
+	}
+
 	return blocks;
 }
