@@ -1,98 +1,75 @@
-import { env } from '$env/dynamic/private';
+import { textqlClients } from '$lib/server/textql';
 import { toJson } from '@bufbuild/protobuf';
 import { json } from '@sveltejs/kit';
-import { Textql } from '@textql/sdk';
 import { type Cell, CellSchema } from '@textql/sdk/generated/connect/public/chat_pb.js';
-import { TextqlRpcPublicChatLlmModel } from '@textql/sdk/models';
-import { createStreamingClient } from '@textql/sdk/streaming';
+import {
+	type ConnectError,
+	TextqlRpcParadigmParamsParadigmType,
+	TextqlRpcPublicChatLlmModel,
+	type TextqlRpcPublicParadigmParadigm
+} from '@textql/sdk/models';
+import { z } from 'zod';
 
 import type { RequestHandler } from './$types';
 
-type ChatRequest = {
-	message?: unknown;
-	chatId?: unknown;
-	model?: unknown;
-	connectorIds?: unknown;
-};
+const ChatRequestSchema = z.object({
+	message: z.string().trim().min(1, 'Message is required.'),
+	chatId: z.string().trim().default(''),
+	model: z
+		.enum([
+			TextqlRpcPublicChatLlmModel.ModelHaiku45,
+			TextqlRpcPublicChatLlmModel.ModelSonnet5,
+			TextqlRpcPublicChatLlmModel.ModelOpus48
+		])
+		.catch(TextqlRpcPublicChatLlmModel.ModelSonnet5),
+	connectorIds: z.array(z.number().int().positive()).default([])
+});
 
-const ALLOWED_MODELS = new Set<string>([
-	TextqlRpcPublicChatLlmModel.ModelHaiku45,
-	TextqlRpcPublicChatLlmModel.ModelSonnet5,
-	TextqlRpcPublicChatLlmModel.ModelOpus48
-]);
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null;
+// Unary RPC responses are `<success model> | ConnectError` unions with only
+// optional fields, so TS `in` checks can't narrow them without a predicate.
+function isConnectError(response: object): response is ConnectError {
+	return 'code' in response || 'details' in response;
 }
 
-function errorMessage(value: unknown, fallback: string) {
-	if (isRecord(value) && typeof value.message === 'string') return value.message;
-	return fallback;
-}
-
-function resolveModel(value: unknown) {
-	if (typeof value === 'string' && ALLOWED_MODELS.has(value)) {
-		return value as typeof TextqlRpcPublicChatLlmModel.ModelSonnet5;
-	}
-	return TextqlRpcPublicChatLlmModel.ModelSonnet5;
+// Default to universal paradigm
+function universalParadigm(connectorIds: number[]): TextqlRpcPublicParadigmParadigm {
+	return {
+		type: TextqlRpcParadigmParamsParadigmType.TypeUniversal,
+		version: 1,
+		options: {
+			universal: connectorIds.length > 0 ? { connectorIds, sqlEnabled: true } : {}
+		}
+	};
 }
 
 export const POST: RequestHandler = async ({ request }) => {
-	const apiKey = env.TEXTQL_API_KEY;
+	const { client, streaming } = textqlClients();
 
-	if (!apiKey) {
-		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
+	const parsed = ChatRequestSchema.safeParse(await request.json().catch(() => undefined));
+	if (!parsed.success) {
+		return json({ error: parsed.error.issues[0]?.message ?? 'Invalid request body.' }, { status: 400 });
 	}
-
-	let payload: ChatRequest;
-	try {
-		payload = await request.json();
-	} catch {
-		return json({ error: 'Request body must be valid JSON.' }, { status: 400 });
-	}
-
-	const message = typeof payload.message === 'string' ? payload.message.trim() : '';
-	let chatId = typeof payload.chatId === 'string' ? payload.chatId.trim() : '';
-	const model = resolveModel(payload.model);
-	const connectorIds = Array.isArray(payload.connectorIds)
-		? payload.connectorIds.filter(
-			(id): id is number => typeof id === 'number' && Number.isInteger(id) && id > 0
-		)
-		: [];
-
-	if (!message) {
-		return json({ error: 'Message is required.' }, { status: 400 });
-	}
-
-	// RPC routes are mounted under /rpc/public; the SDK default server URL omits the prefix.
-	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
+	const { message, model, connectorIds } = parsed.data;
+	let chatId = parsed.data.chatId;
 
 	try {
 		if (!chatId) {
 			const created = await client.chats.createChat({
 				body: {
 					model,
-					paradigm: {
-						type: 'TYPE_UNIVERSAL',
-						version: 1,
-						options: {
-							universal: {
-								...(connectorIds.length > 0
-									? { connectorIds, sqlEnabled: true }
-									: {})
-							}
-						}
-					}
+					paradigm: universalParadigm(connectorIds)
 				}
 			});
-			const chat = isRecord(created) && isRecord(created.chat) ? created.chat : null;
-			chatId = chat && typeof chat.id === 'string' ? chat.id : '';
-
-			if (!chatId) {
+			if (isConnectError(created)) {
 				return json(
-					{ error: errorMessage(created, 'The chat service did not return a chat ID.') },
+					{ error: created.message ?? 'The chat service rejected the request.' },
 					{ status: 502 }
 				);
+			}
+			chatId = created.chat?.id ?? '';
+
+			if (!chatId) {
+				return json({ error: 'The chat service did not return a chat ID.' }, { status: 502 });
 			}
 		}
 
@@ -103,15 +80,17 @@ export const POST: RequestHandler = async ({ request }) => {
 			}
 		});
 
-		const cellId = 'cellId' in sent && typeof sent.cellId === 'string' ? sent.cellId : '';
-		if (!cellId) {
+		if (isConnectError(sent)) {
 			return json(
-				{ error: errorMessage(sent, 'The chat service did not accept the message.') },
+				{ error: sent.message ?? 'The chat service did not accept the message.' },
 				{ status: 502 }
 			);
 		}
+		const cellId = sent.cellId;
+		if (!cellId) {
+			return json({ error: 'The chat service did not accept the message.' }, { status: 502 });
+		}
 
-		const streaming = createStreamingClient({ apiKey });
 		const cells = streaming.chats.streamChat(
 			{ chatId, latestCompleteCellId: cellId },
 			{ signal: request.signal }
@@ -121,7 +100,10 @@ export const POST: RequestHandler = async ({ request }) => {
 		try {
 			first = await cells.next();
 		} catch (error) {
-			return json({ error: errorMessage(error, 'The chat stream failed.') }, { status: 502 });
+			return json(
+				{ error: error instanceof Error ? error.message : 'The chat stream failed.' },
+				{ status: 502 }
+			);
 		}
 
 		const encoder = new TextEncoder();
@@ -138,9 +120,8 @@ export const POST: RequestHandler = async ({ request }) => {
 					}
 				} catch (error) {
 					if (!request.signal.aborted) {
-						controller.enqueue(
-							line({ error: { message: errorMessage(error, 'The chat stream failed.') } })
-						);
+						const message = error instanceof Error ? error.message : 'The chat stream failed.';
+						controller.enqueue(line({ error: { message } }));
 					}
 				}
 				controller.close();

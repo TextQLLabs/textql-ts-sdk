@@ -1,7 +1,6 @@
-import { env } from '$env/dynamic/private';
+import { textqlClients } from '$lib/server/textql';
 import { json } from '@sveltejs/kit';
 import { extractEnabledTools } from '$lib/chatTools';
-import { Textql } from '@textql/sdk';
 
 import type { RequestHandler } from './$types';
 
@@ -23,12 +22,7 @@ function extractConnectorIds(universal: Record<string, unknown> | null): number[
 }
 
 export const GET: RequestHandler = async ({ params }) => {
-	const apiKey = env.TEXTQL_API_KEY;
-	if (!apiKey) {
-		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
-	}
-
-	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
+	const { client } = textqlClients();
 
 	try {
 		const result = await client.chats.get({ body: { chatId: params.id } });
@@ -102,12 +96,7 @@ export const GET: RequestHandler = async ({ params }) => {
 };
 
 export const DELETE: RequestHandler = async ({ params }) => {
-	const apiKey = env.TEXTQL_API_KEY;
-	if (!apiKey) {
-		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
-	}
-
-	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
+	const { client } = textqlClients();
 
 	try {
 		const result = await client.chats.delete({ body: { chatId: params.id } });

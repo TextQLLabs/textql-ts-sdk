@@ -1,6 +1,5 @@
-import { env } from '$env/dynamic/private';
+import { textqlClients } from '$lib/server/textql';
 import { json } from '@sveltejs/kit';
-import { Textql } from '@textql/sdk';
 
 import type { TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
 import type { RequestHandler } from './$types';
@@ -18,17 +17,12 @@ function normalizeConnector(connector: TextqlRpcPublicConnectorConnector) {
 }
 
 export const GET: RequestHandler = async ({ params }) => {
-	const apiKey = env.TEXTQL_API_KEY;
-	if (!apiKey) {
-		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
-	}
+	const { client } = textqlClients();
 
 	const connectorId = Number(params.id);
 	if (!Number.isInteger(connectorId) || connectorId <= 0) {
 		return json({ error: 'Invalid connector id.' }, { status: 400 });
 	}
-
-	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
 
 	try {
 		const result = await client.connectors.get({ body: { connectorId } });

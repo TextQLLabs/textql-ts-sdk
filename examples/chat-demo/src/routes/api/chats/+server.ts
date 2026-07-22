@@ -1,6 +1,5 @@
-import { env } from '$env/dynamic/private';
+import { textqlClients } from '$lib/server/textql';
 import { json } from '@sveltejs/kit';
-import { Textql } from '@textql/sdk';
 import {
 	TextqlRpcPublicChatChatSortDirection,
 	TextqlRpcPublicChatChatSortField
@@ -17,12 +16,7 @@ function titleFor(chat: TextqlRpcPublicChatChat) {
 }
 
 export const GET: RequestHandler = async () => {
-	const apiKey = env.TEXTQL_API_KEY;
-	if (!apiKey) {
-		return json({ error: 'TEXTQL_API_KEY is not configured.' }, { status: 503 });
-	}
-
-	const client = new Textql({ apiKey, serverURL: 'https://app.textql.com/rpc/public' });
+	const { client } = textqlClients();
 	const chats: TextqlRpcPublicChatChat[] = [];
 	let totalCount: number | undefined;
 

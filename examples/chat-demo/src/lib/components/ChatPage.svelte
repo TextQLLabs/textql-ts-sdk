@@ -219,6 +219,14 @@
 		return typeof value === "object" && value !== null;
 	}
 
+	// API routes return { error }; SvelteKit's thrown error() returns { message }.
+	function apiErrorDetail(payload: unknown, fallback: string): string {
+		if (!isRecord(payload)) return fallback;
+		if (typeof payload.error === "string") return payload.error;
+		if (typeof payload.message === "string") return payload.message;
+		return fallback;
+	}
+
 	function dateKey(value: string | null) {
 		if (!value) return "unknown";
 		const date = new Date(value);
@@ -415,11 +423,7 @@
 				const payload: unknown = await response
 					.json()
 					.catch(() => null);
-				const detail =
-					isRecord(payload) && typeof payload.error === "string"
-						? payload.error
-						: "Request failed.";
-				throw new Error(detail);
+				throw new Error(apiErrorDetail(payload, "Request failed."));
 			}
 
 			const reader = response.body.getReader();
@@ -506,11 +510,7 @@
 				!isRecord(payload) ||
 				!Array.isArray(payload.messages)
 			) {
-				const detail =
-					isRecord(payload) && typeof payload.error === "string"
-						? payload.error
-						: "Unable to load chat.";
-				throw new Error(detail);
+				throw new Error(apiErrorDetail(payload, "Unable to load chat."));
 			}
 
 			activeRequest?.abort();
