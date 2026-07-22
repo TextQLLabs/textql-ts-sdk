@@ -1,8 +1,7 @@
 import { textqlClients } from '$lib/server/textql';
-import type { StreamEventOut } from '$lib/streamEvents';
-import { toJson } from '@bufbuild/protobuf';
+import { runErrorJson, watchEventJson, type StreamEventOut } from '$lib/streamEvents';
 import { json } from '@sveltejs/kit';
-import { CellSchema, type WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
+import type { WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
 
 import type { RequestHandler } from './$types';
 
@@ -23,7 +22,6 @@ function nextOrTimeout(
 	]);
 }
 
-/** NDJSON re-attach after reload; same event shape as POST /api/chat. */
 export const GET: RequestHandler = async ({ params, url, request }) => {
 	const { streaming } = textqlClients();
 
@@ -36,7 +34,6 @@ export const GET: RequestHandler = async ({ params, url, request }) => {
 		{ signal: request.signal }
 	)[Symbol.asyncIterator]();
 
-	// Drain `opened` first so bad id / auth fails as HTTP 502, not mid-stream.
 	try {
 		await events.next();
 	} catch (error) {
@@ -64,30 +61,14 @@ export const GET: RequestHandler = async ({ params, url, request }) => {
 					if (result.next.done) break;
 
 					const payload = result.next.value.payload;
-					if (payload.case === 'runStarted') {
-						sawActivity = true;
-						controller.enqueue(line({ type: 'runStarted' }));
-					} else if (payload.case === 'cell') {
-						// EnsureRun can resume with cells and no `runStarted`.
-						if (!sawActivity) {
-							sawActivity = true;
-							controller.enqueue(line({ type: 'runStarted' }));
-						}
-						controller.enqueue(line(toJson(CellSchema, payload.value) as Record<string, unknown>));
-					} else if (payload.case === 'runComplete') {
-						controller.enqueue(line({ type: 'done' }));
-						break;
-					} else if (payload.case === 'runError') {
-						controller.enqueue(
-							line({ error: { message: payload.value.error || 'The chat run failed.' } })
-						);
-						break;
-					}
+					if (payload.case !== 'heartbeat') sawActivity = true;
+					controller.enqueue(line(watchEventJson(result.next.value)));
+					if (payload.case === 'runComplete' || payload.case === 'runError') break;
 				}
 			} catch (error) {
 				if (!request.signal.aborted) {
 					const message = error instanceof Error ? error.message : 'The chat watch failed.';
-					controller.enqueue(line({ error: { message } }));
+					controller.enqueue(line(runErrorJson(message)));
 				}
 			}
 			controller.close();

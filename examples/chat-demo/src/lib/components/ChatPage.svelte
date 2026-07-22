@@ -24,7 +24,7 @@
 		previewPanel,
 		type PreviewItem,
 	} from "$lib/previewPanel.svelte";
-	import { parseStreamLine } from "$lib/streamEvents";
+	import { parseStreamLine, toCellLike } from "$lib/streamEvents";
 	import { isRecord } from "$lib/utils";
 
 	type Message = {
@@ -331,18 +331,51 @@
 		assistant.cells = next;
 	}
 
-	function applyStreamLine(line: string, assistantId: number) {
-		const event = parseStreamLine(line);
-		if (!event) return;
+	/** Find the streaming assistant message, mounting it on first activity
+	 * (resume path: the run announces itself via runStarted or a cell). */
+	function mountAssistant(assistantId: number): Message {
+		let assistant = messages.find((message) => message.id === assistantId);
+		if (!assistant) {
+			assistant = {
+				id: assistantId,
+				role: "assistant",
+				body: "",
+				streaming: true,
+			};
+			messages.push(assistant);
+			sending = true;
+			stickToBottom = true;
+		}
+		return assistant;
+	}
 
-		switch (event.type) {
-			case "meta": {
-				chatId = event.chatId;
-				if (event.userCellId) streamUserCellId = event.userCellId;
-				void setChatRoute(event.chatId, true);
+	function applyStreamLine(line: string, assistantId: number) {
+		const parsed = parseStreamLine(line);
+		if (!parsed) return;
+
+		if (parsed.type === "meta") {
+			chatId = parsed.chatId;
+			if (parsed.userCellId) streamUserCellId = parsed.userCellId;
+			void setChatRoute(parsed.chatId, true);
+			return;
+		}
+		if (parsed.type === "idle") return;
+
+		// Run state comes from the gRPC WatchChatEvent payload itself.
+		const { payload } = parsed.event;
+		switch (payload.case) {
+			case "runStarted": {
+				mountAssistant(assistantId);
 				return;
 			}
-			case "done": {
+			case "cell": {
+				const assistant = mountAssistant(assistantId);
+				const cell = toCellLike(payload.value);
+				if (isEchoedUserCell(cell)) return;
+				upsertAssistantCell(assistant, cell);
+				return;
+			}
+			case "runComplete": {
 				const assistant = messages.find(
 					(message) => message.id === assistantId,
 				);
@@ -352,36 +385,18 @@
 				}
 				return;
 			}
-			case "runStarted": {
-				if (!messages.some((message) => message.id === assistantId)) {
-					messages.push({
-						id: assistantId,
-						role: "assistant",
-						body: "",
-						streaming: true,
-					});
-				}
-				sending = true;
-				stickToBottom = true;
+			case "runError": {
+				const assistant = mountAssistant(assistantId);
+				assistant.body = payload.value.error || "The chat run failed.";
+				assistant.streaming = false;
+				settleCells(assistant.cells);
 				return;
 			}
-			case "idle":
+			case "opened":
+			case "heartbeat":
+			case "handoffPending":
+			case undefined:
 				return;
-			case "error": {
-				const assistant = messages.find(
-					(message) => message.id === assistantId,
-				);
-				if (assistant) assistant.body = event.message;
-				return;
-			}
-			case "cell": {
-				const assistant = messages.find(
-					(message) => message.id === assistantId,
-				);
-				if (!assistant || isEchoedUserCell(event.cell)) return;
-				upsertAssistantCell(assistant, event.cell);
-				return;
-			}
 		}
 	}
 

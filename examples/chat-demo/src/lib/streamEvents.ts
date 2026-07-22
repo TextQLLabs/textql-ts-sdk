@@ -1,33 +1,41 @@
+import { create, fromJson, toJson, type JsonObject, type JsonValue } from '@bufbuild/protobuf';
+import {
+	type Cell,
+	CellSchema,
+	type WatchChatEvent,
+	WatchChatEventSchema
+} from '@textql/sdk/generated/connect/public/chat_pb.js';
 import { z } from 'zod';
 
 import type { CellLike } from '$lib/cells';
 
 const ControlEventSchema = z.discriminatedUnion('type', [
 	z.object({ type: z.literal('meta'), chatId: z.string(), userCellId: z.string().optional() }),
-	z.object({ type: z.literal('runStarted') }),
-	z.object({ type: z.literal('idle') }),
-	z.object({ type: z.literal('done') })
+	z.object({ type: z.literal('idle') })
 ]);
 
-const ErrorEventSchema = z.object({
-	error: z.object({ message: z.string().catch('The chat stream failed.') })
-});
-
-/** Cell snapshots pass through untouched; only the upsert key is enforced. */
-const CellSnapshotSchema = z.looseObject({ id: z.string().min(1) });
-
 export type ControlEvent = z.infer<typeof ControlEventSchema>;
-export type ErrorEvent = z.infer<typeof ErrorEventSchema>;
 
-/** What API routes are allowed to write as NDJSON lines. */
-export type StreamEventOut = ControlEvent | ErrorEvent | Record<string, unknown>;
+export type StreamEventOut = ControlEvent | JsonObject;
 
-export type StreamEvent =
-	| ControlEvent
-	| { type: 'error'; message: string }
-	| { type: 'cell'; cell: CellLike };
+export function watchEventJson(event: WatchChatEvent): JsonObject {
+	return toJson(WatchChatEventSchema, event) as JsonObject;
+}
 
-/** Parse one NDJSON line; null for blanks, keepalives, and unknown shapes. */
+export function runErrorJson(message: string): JsonObject {
+	return watchEventJson(
+		create(WatchChatEventSchema, {
+			payload: { case: 'runError', value: { error: message, code: '' } }
+		})
+	);
+}
+
+export function toCellLike(cell: Cell): CellLike {
+	return toJson(CellSchema, cell) as CellLike;
+}
+
+export type StreamEvent = ControlEvent | { type: 'event'; event: WatchChatEvent };
+
 export function parseStreamLine(line: string): StreamEvent | null {
 	const trimmed = line.trim();
 	if (!trimmed) return null;
@@ -42,11 +50,14 @@ export function parseStreamLine(line: string): StreamEvent | null {
 	const control = ControlEventSchema.safeParse(raw);
 	if (control.success) return control.data;
 
-	const failure = ErrorEventSchema.safeParse(raw);
-	if (failure.success) return { type: 'error', message: failure.data.error.message };
-
-	const cell = CellSnapshotSchema.safeParse(raw);
-	if (cell.success) return { type: 'cell', cell: cell.data as CellLike };
-
-	return null;
+	try {
+		// Tolerate fields newer than the vendored schema — never drop a live
+		// cell because the server's proto is ahead.
+		return {
+			type: 'event',
+			event: fromJson(WatchChatEventSchema, raw as JsonValue, { ignoreUnknownFields: true })
+		};
+	} catch {
+		return null;
+	}
 }
