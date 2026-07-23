@@ -5,6 +5,9 @@ create chats, pick a model and data connectors, watch runs stream in live
 (thinking, tool calls, answers), preview generated assets — and reload the page
 mid-run without losing the stream.
 
+Here's a demo of the chat. 
+https://screen.studio/share/i4hUljQU
+
 Built with SvelteKit. It doubles as the reference implementation for the SDK's
 [streaming client](../../STREAMING.md).
 
