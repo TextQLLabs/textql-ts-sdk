@@ -4,15 +4,15 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
- */
 export type TextqlRpcPublicAppListAppVersionsRequest = {
-  /**
-   * normalized relative path, forward slashes, no .. or leading /
-   */
   appId?: string | undefined;
+  /**
+   * Routing observability: warm | warm_fallback | tql | sql.
+   */
   limit?: number | undefined;
+  /**
+   * Whether this invoke paid phase-1 module definition (cold imports).
+   */
   offset?: number | undefined;
 };
 

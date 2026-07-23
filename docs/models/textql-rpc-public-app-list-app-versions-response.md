@@ -1,7 +1,6 @@
 # TextqlRpcPublicAppListAppVersionsResponse
 
-Version history (mirrors dashboard.DashboardVersion). A snapshot of the
- published app at publish time; restore writes it back into the draft.
+AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
 
 ## Example Usage
 
@@ -21,5 +20,5 @@ let value: TextqlRpcPublicAppListAppVersionsResponse = {
 
 | Field                                                                                   | Type                                                                                    | Required                                                                                | Description                                                                             |
 | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `versions`                                                                              | [models.TextqlRpcPublicAppAppVersion](../models/textql-rpc-public-app-app-version.md)[] | :heavy_minus_sign:                                                                      | N/A                                                                                     |
+| `versions`                                                                              | [models.TextqlRpcPublicAppAppVersion](../models/textql-rpc-public-app-app-version.md)[] | :heavy_minus_sign:                                                                      | normalized relative path, forward slashes, no .. or leading /                           |
 | `totalCount`                                                                            | *number*                                                                                | :heavy_minus_sign:                                                                      | N/A                                                                                     |

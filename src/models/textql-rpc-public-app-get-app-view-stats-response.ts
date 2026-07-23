@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicAppAppViewerInfo$inboundSchema,
 } from "./textql-rpc-public-app-app-viewer-info.js";
 
-/**
- * View analytics
- */
 export type TextqlRpcPublicAppGetAppViewStatsResponse = {
   totalViews?: number | undefined;
   uniqueViewers?: number | undefined;

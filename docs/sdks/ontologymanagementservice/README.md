@@ -47,6 +47,7 @@
 * [ontologyManagementServiceListOntologyImports](#ontologymanagementservicelistontologyimports) - ListOntologyImports
 * [ontologyManagementServiceListOntologySubmodules](#ontologymanagementservicelistontologysubmodules) - ListOntologySubmodules
 * [ontologyManagementServiceListOntologySyncRuns](#ontologymanagementservicelistontologysyncruns) - ListOntologySyncRuns
+* [ontologyManagementServiceListPatchObjects](#ontologymanagementservicelistpatchobjects) - ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
 * [ontologyManagementServiceListPatchReviewers](#ontologymanagementservicelistpatchreviewers) - ListPatchReviewers
 * [ontologyManagementServiceListPatches](#ontologymanagementservicelistpatches) - ListPatches
 * [ontologyManagementServiceListSkills](#ontologymanagementservicelistskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
@@ -3212,6 +3213,84 @@ run();
 ### Response
 
 **Promise\<[operations.OntologyManagementServiceListOntologySyncRunsResponse](../../models/operations/ontology-management-service-list-ontology-sync-runs-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## ontologyManagementServiceListPatchObjects
+
+ListPatchObjects parses the config objects present at a patch's git ref and
+ returns each object's Library path, resolved display name, and granular type
+ (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it
+ reuses the snapshot-at-ref + parse steps the preview path performs before
+ spawning — no sandbox spawn, no run_as authorization, no persistence. The
+ frontend uses the dashboard subtype to decide previewability (streamlit/dash).
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="OntologyManagementService_ListPatchObjects" method="post" path="/textql.rpc.public.patches.OntologyManagementService/ListPatchObjects" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.ontologyManagementService.ontologyManagementServiceListPatchObjects({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { ontologyManagementServiceOntologyManagementServiceListPatchObjects } from "@textql/sdk/funcs/ontology-management-service-ontology-management-service-list-patch-objects.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await ontologyManagementServiceOntologyManagementServiceListPatchObjects(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ontologyManagementServiceOntologyManagementServiceListPatchObjects failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.OntologyManagementServiceListPatchObjectsRequest](../../models/operations/ontology-management-service-list-patch-objects-request.md)                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.OntologyManagementServiceListPatchObjectsResponse](../../models/operations/ontology-management-service-list-patch-objects-response.md)\>**
 
 ### Errors
 

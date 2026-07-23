@@ -4,6 +4,12 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Version history (mirrors dashboard.DashboardVersion). A snapshot of the
+ *
+ * @remarks
+ *  published app at publish time; restore writes it back into the draft.
+ */
 export type TextqlRpcPublicAppGetAppVersionRequest = {
   appId?: string | undefined;
   versionNumber?: number | undefined;

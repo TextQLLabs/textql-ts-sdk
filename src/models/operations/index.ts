@@ -224,6 +224,7 @@ export * from "./ontology-management-service-list-ontology-history.js";
 export * from "./ontology-management-service-list-ontology-imports.js";
 export * from "./ontology-management-service-list-ontology-submodules.js";
 export * from "./ontology-management-service-list-ontology-sync-runs.js";
+export * from "./ontology-management-service-list-patch-objects.js";
 export * from "./ontology-management-service-list-patch-reviewers.js";
 export * from "./ontology-management-service-list-patches.js";
 export * from "./ontology-management-service-list-skills.js";

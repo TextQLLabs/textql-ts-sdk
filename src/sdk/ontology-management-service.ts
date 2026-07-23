@@ -51,6 +51,7 @@ import { ontologyManagementServiceOntologyManagementServiceListOntologyHistory }
 import { ontologyManagementServiceOntologyManagementServiceListOntologyImports } from "../funcs/ontology-management-service-ontology-management-service-list-ontology-imports.js";
 import { ontologyManagementServiceOntologyManagementServiceListOntologySubmodules } from "../funcs/ontology-management-service-ontology-management-service-list-ontology-submodules.js";
 import { ontologyManagementServiceOntologyManagementServiceListOntologySyncRuns } from "../funcs/ontology-management-service-ontology-management-service-list-ontology-sync-runs.js";
+import { ontologyManagementServiceOntologyManagementServiceListPatchObjects } from "../funcs/ontology-management-service-ontology-management-service-list-patch-objects.js";
 import { ontologyManagementServiceOntologyManagementServiceListPatchReviewers } from "../funcs/ontology-management-service-ontology-management-service-list-patch-reviewers.js";
 import { ontologyManagementServiceOntologyManagementServiceListPatches } from "../funcs/ontology-management-service-ontology-management-service-list-patches.js";
 import { ontologyManagementServiceOntologyManagementServiceListSkills } from "../funcs/ontology-management-service-ontology-management-service-list-skills.js";
@@ -812,6 +813,30 @@ export class OntologyManagementService extends ClientSDK {
   ): Promise<operations.OntologyManagementServiceListOntologySyncRunsResponse> {
     return unwrapAsync(
       ontologyManagementServiceOntologyManagementServiceListOntologySyncRuns(
+        this,
+        request,
+        options,
+      ),
+    );
+  }
+
+  /**
+   * ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
+   *
+   * @remarks
+   * ListPatchObjects parses the config objects present at a patch's git ref and
+   *  returns each object's Library path, resolved display name, and granular type
+   *  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it
+   *  reuses the snapshot-at-ref + parse steps the preview path performs before
+   *  spawning — no sandbox spawn, no run_as authorization, no persistence. The
+   *  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
+   */
+  async ontologyManagementServiceListPatchObjects(
+    request: operations.OntologyManagementServiceListPatchObjectsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.OntologyManagementServiceListPatchObjectsResponse> {
+    return unwrapAsync(
+      ontologyManagementServiceOntologyManagementServiceListPatchObjects(
         this,
         request,
         options,

@@ -8,25 +8,28 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
- */
 export type TextqlRpcPublicCellsAppCell = {
-  /**
-   * create | update | publish
-   */
   action?: string | undefined;
-  appId?: string | undefined;
-  name?: string | undefined;
-  errorMessage?: string | null | undefined;
-  screenshotUrl?: string | null | undefined;
-  lastRunAt?: string | null | undefined;
   /**
-   * Size of the app being written, updated live as the tool args stream so the
-   *
-   * @remarks
-   *  builder loader can show real "N lines / M files" progress during generation.
+   * "sql" | "python"
    */
+  appId?: string | undefined;
+  /**
+   * Produced dataframe name, if applicable
+   */
+  name?: string | undefined;
+  /**
+   * SQL only: connector ID; display name resolves client-side
+   */
+  errorMessage?: string | null | undefined;
+  /**
+   * SQL only: referenced tables
+   */
+  screenshotUrl?: string | null | undefined;
+  /**
+   * upstream cell(s), for graph lineage
+   */
+  lastRunAt?: string | null | undefined;
   buildLineCount?: number | null | undefined;
   buildFileCount?: number | null | undefined;
 };

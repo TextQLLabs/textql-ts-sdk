@@ -8185,6 +8185,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.patches.ListOntologySyncRunsResponse'
+  /textql.rpc.public.patches.OntologyManagementService/ListPatchObjects:
+    post:
+      tags:
+        - OntologyManagementService
+      summary: 'ListPatchObjects parses the config objects present at a patch''s git ref and  returns each object''s Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).'
+      description: |-
+        ListPatchObjects parses the config objects present at a patch's git ref and
+         returns each object's Library path, resolved display name, and granular type
+         (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it
+         reuses the snapshot-at-ref + parse steps the preview path performs before
+         spawning — no sandbox spawn, no run_as authorization, no persistence. The
+         frontend uses the dashboard subtype to decide previewability (streamlit/dash).
+      operationId: OntologyManagementService_ListPatchObjects
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.patches.ListPatchObjectsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.patches.ListPatchObjectsResponse'
   /textql.rpc.public.patches.OntologyManagementService/ListPatchReviewers:
     post:
       tags:
@@ -15273,6 +15315,13 @@ components:
             Index-aligned with posting_frequency_crons. Each entry is the flexible
              cadence (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) the schedule came from,
              or "" when the schedule is an exact custom cron.
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          description: |-
+            Whether this agent participates in the feed (posts/comments/engages, feed
+             tools, feed persona prompt). Delivery config (channels, recipients, slack,
+             teams) is only meaningful when true.
       title: Agent
       additionalProperties: false
     textql.rpc.public.agent.AgentRun:
@@ -15631,6 +15680,11 @@ components:
             Index-aligned with posting_frequency_crons. A non-empty cadence
              (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) marks a flexible schedule whose
              cron the backend generates; "" (or an empty list) means exact.
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          description: Feed participation. Unset defaults to true (new agents post to feed).
+          nullable: true
       title: CreateAgentRequest
       additionalProperties: false
     textql.rpc.public.agent.CreateAgentResponse:
@@ -15904,6 +15958,11 @@ components:
             Index-aligned with posting_frequency_crons. A non-empty cadence
              (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) marks a flexible schedule whose
              cron the backend generates; "" (or an empty list) means exact.
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          description: Feed participation; nil = don't touch (mirrors fast_mode/is_stateful).
+          nullable: true
       title: UpdateAgentRequest
       additionalProperties: false
     textql.rpc.public.agent.UpdateAgentResponse:
@@ -16208,12 +16267,11 @@ components:
         appId:
           type: string
           title: app_id
-          description: 'Routing observability: warm | warm_fallback | tql | sql.'
         versionNumber:
           type: integer
           title: version_number
           format: int32
-          description: Whether this invoke paid phase-1 module definition (cold imports).
+          description: JSON object, keys map to function kwargs
         code:
           type: string
           title: code
@@ -16508,6 +16566,9 @@ components:
           format: int32
       title: GetAppVersionRequest
       additionalProperties: false
+      description: |-
+        Version history (mirrors dashboard.DashboardVersion). A snapshot of the
+         published app at publish time; restore writes it back into the draft.
     textql.rpc.public.app.GetAppVersionResponse:
       type: object
       properties:
@@ -16542,7 +16603,6 @@ components:
           title: recent_viewers
       title: GetAppViewStatsResponse
       additionalProperties: false
-      description: View analytics
     textql.rpc.public.app.GetMembersWithAppsRequest:
       type: object
       title: GetMembersWithAppsRequest
@@ -16578,14 +16638,9 @@ components:
         resultJson:
           type: string
           title: result_json
+          description: running | stopped | error
       title: InvokeAppComputeFunctionResponse
       additionalProperties: false
-      description: |-
-        ComputeFunction is a declared server-side function invocable from the app via the bridge.
-         Exactly one of code (python, runs on the app's worker), sql (plain SQL on the app's
-         private DB), tql (inline TQL source), or tql_path (a Context Library .tql) must be set.
-         TQL variants are real TQL (compiled at save time) executed against a connector; sql is
-         the app-state path (:name params bound server-side, reserved :_now / :_uuid).
     textql.rpc.public.app.ListAppActivitySinceRequest:
       type: object
       properties:
@@ -16625,18 +16680,18 @@ components:
         appId:
           type: string
           title: app_id
-          description: normalized relative path, forward slashes, no .. or leading /
         limit:
           type: integer
           title: limit
           format: int32
+          description: 'Routing observability: warm | warm_fallback | tql | sql.'
         offset:
           type: integer
           title: offset
           format: int32
+          description: Whether this invoke paid phase-1 module definition (cold imports).
       title: ListAppVersionsRequest
       additionalProperties: false
-      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.ListAppVersionsResponse:
       type: object
       properties:
@@ -16645,15 +16700,14 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.app.AppVersion'
           title: versions
+          description: normalized relative path, forward slashes, no .. or leading /
         totalCount:
           type: integer
           title: total_count
           format: int32
       title: ListAppVersionsResponse
       additionalProperties: false
-      description: |-
-        Version history (mirrors dashboard.DashboardVersion). A snapshot of the
-         published app at publish time; restore writes it back into the draft.
+      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.ListAppsRequest:
       type: object
       properties:
@@ -17401,32 +17455,33 @@ components:
         action:
           type: string
           title: action
-          description: create | update | publish
         appId:
           type: string
           title: app_id
+          description: '"sql" | "python"'
         name:
           type: string
           title: name
+          description: Produced dataframe name, if applicable
         errorMessage:
           type: string
           title: error_message
+          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         screenshotUrl:
           type: string
           title: screenshot_url
+          description: 'SQL only: referenced tables'
           nullable: true
         lastRunAt:
           type: string
           title: last_run_at
+          description: upstream cell(s), for graph lineage
           nullable: true
         buildLineCount:
           type: integer
           title: build_line_count
           format: int32
-          description: |-
-            Size of the app being written, updated live as the tool args stream so the
-             builder loader can show real "N lines / M files" progress during generation.
           nullable: true
         buildFileCount:
           type: integer
@@ -17435,13 +17490,13 @@ components:
           nullable: true
       title: AppCell
       additionalProperties: false
-      description: AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
     textql.rpc.public.cells.AppInfo:
       type: object
       properties:
         id:
           type: string
           title: id
+          description: create | update | publish
         name:
           type: string
           title: name
@@ -17452,7 +17507,6 @@ components:
         status:
           type: string
           title: status
-          description: '"draft" or "published" (derived from published_at)'
         creatorId:
           type: string
           title: creator_id
@@ -17461,6 +17515,9 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         updatedAt:
           title: updated_at
+          description: |-
+            Size of the app being written, updated live as the tool args stream so the
+             builder loader can show real "N lines / M files" progress during generation.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         refreshedAt:
           title: refreshed_at
@@ -17472,6 +17529,7 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: AppInfo
       additionalProperties: false
+      description: AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
     textql.rpc.public.cells.BashCell:
       type: object
       properties:
@@ -17575,30 +17633,25 @@ components:
         kind:
           type: string
           title: kind
-          description: '"sql" | "python"'
         dataframeName:
           type: string
           title: dataframe_name
-          description: Produced dataframe name, if applicable
           nullable: true
         connectorId:
           type: integer
           title: connector_id
           format: int32
-          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         tables:
           type: array
           items:
             type: string
           title: tables
-          description: 'SQL only: referenced tables'
         inputCellIds:
           type: array
           items:
             type: string
           title: input_cell_ids
-          description: upstream cell(s), for graph lineage
       title: CitationLineageNode
       additionalProperties: false
     textql.rpc.public.cells.CompactionCell:
@@ -18588,7 +18641,6 @@ components:
         appId:
           type: string
           title: app_id
-          description: Set for single-app lookup
         totalCount:
           type: integer
           title: total_count
@@ -18596,6 +18648,7 @@ components:
         errorMessage:
           type: string
           title: error_message
+          description: '"draft" or "published" (derived from published_at)'
           nullable: true
         apps:
           type: array
@@ -20266,6 +20319,7 @@ components:
         - ARTIFACT_TYPE_AGENT
         - ARTIFACT_TYPE_HTML_CHART
         - ARTIFACT_TYPE_APP
+        - ARTIFACT_TYPE_DASHBOARD_PREVIEW
       description: Artifact types for drawer items
     textql.rpc.public.chat.AttachAgentToChatRequest:
       type: object
@@ -20414,7 +20468,6 @@ components:
             toolSummary:
               type: string
               title: tool_summary
-              description: LLM-generated summary of what this tool call does
               nullable: true
             durationMs:
               type:
@@ -20422,7 +20475,7 @@ components:
                 - string
               title: duration_ms
               format: int64
-              description: cells_v5.duration_ms — wall-clock this cell took
+              description: LLM-generated summary of what this tool call does
               nullable: true
         - oneOf:
             - properties:
@@ -29698,6 +29751,10 @@ components:
           items:
             type: string
           title: api_access_key_ids
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          nullable: true
       title: UniversalOptions
       additionalProperties: false
     textql.rpc.public.patches.AddOntologySubmoduleRequest:
@@ -31028,6 +31085,26 @@ components:
           nullable: true
       title: ListOntologySyncRunsResponse
       additionalProperties: false
+    textql.rpc.public.patches.ListPatchObjectsRequest:
+      type: object
+      properties:
+        patchRef:
+          type: string
+          title: patch_ref
+          description: git ref of the patch to inspect
+      title: ListPatchObjectsRequest
+      additionalProperties: false
+      description: ListPatchObjectsRequest inspects the config objects at a patch's git ref.
+    textql.rpc.public.patches.ListPatchObjectsResponse:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.patches.PatchObject'
+          title: objects
+      title: ListPatchObjectsResponse
+      additionalProperties: false
     textql.rpc.public.patches.ListPatchReviewersRequest:
       type: object
       properties:
@@ -31777,6 +31854,26 @@ components:
         - PATCH_LINE_OP_CONTEXT
         - PATCH_LINE_OP_DELETE
         - PATCH_LINE_OP_ADD
+    textql.rpc.public.patches.PatchObject:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+          description: Library path of the file that defines the object
+        name:
+          type: string
+          title: name
+          description: resolved display name
+        type:
+          type: string
+          title: type
+          description: |-
+            type is the granular object type: "playbook", "dashboard/streamlit",
+             "dashboard/dash" (the dashboard subtype is load-bearing for previewability).
+      title: PatchObject
+      additionalProperties: false
+      description: PatchObject is one config object parsed from a patch ref.
     textql.rpc.public.patches.PatchReviewer:
       type: object
       properties:

@@ -10,11 +10,11 @@ let value: TextqlRpcPublicCellsCitationLineageNode = {};
 
 ## Fields
 
-| Field                                                     | Type                                                      | Required                                                  | Description                                               |
-| --------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
-| `cellId`                                                  | *string*                                                  | :heavy_minus_sign:                                        | N/A                                                       |
-| `kind`                                                    | *string*                                                  | :heavy_minus_sign:                                        | "sql" \| "python"                                         |
-| `dataframeName`                                           | *string*                                                  | :heavy_minus_sign:                                        | Produced dataframe name, if applicable                    |
-| `connectorId`                                             | *number*                                                  | :heavy_minus_sign:                                        | SQL only: connector ID; display name resolves client-side |
-| `tables`                                                  | *string*[]                                                | :heavy_minus_sign:                                        | SQL only: referenced tables                               |
-| `inputCellIds`                                            | *string*[]                                                | :heavy_minus_sign:                                        | upstream cell(s), for graph lineage                       |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `cellId`           | *string*           | :heavy_minus_sign: | N/A                |
+| `kind`             | *string*           | :heavy_minus_sign: | N/A                |
+| `dataframeName`    | *string*           | :heavy_minus_sign: | N/A                |
+| `connectorId`      | *number*           | :heavy_minus_sign: | N/A                |
+| `tables`           | *string*[]         | :heavy_minus_sign: | N/A                |
+| `inputCellIds`     | *string*[]         | :heavy_minus_sign: | N/A                |
