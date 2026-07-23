@@ -7,5 +7,6 @@ export * from './Page';
 export * from './Layout';
 export * from './Toaster';
 export * from './Modal';
+export * from './Select';
 export * from './Switch';
 export * from './Tooltip';

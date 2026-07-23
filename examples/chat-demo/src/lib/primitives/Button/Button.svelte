@@ -1,7 +1,15 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
 
-  type Variant = "solid" | "classic" | "soft" | "surface" | "outline" | "ghost";
+  type Variant =
+    | "solid"
+    | "classic"
+    | "soft"
+    | "surface"
+    | "outline"
+    | "ghost"
+    | "danger"
+    | "danger-soft";
   type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
   interface Props {
@@ -45,6 +53,9 @@
       "border border-line bg-paper text-ink hover:border-accent hover:text-accent",
     outline: "border border-accent text-accent hover:bg-accent/10",
     ghost: "text-muted hover:bg-line/40 hover:text-accent",
+    // Destructive: solid red for confirm-to-delete style actions.
+    danger: "bg-red-600 text-paper hover:bg-red-700",
+    "danger-soft": "bg-red-500/10 text-red-600 hover:bg-red-500/20",
   };
 
   const cls = $derived(

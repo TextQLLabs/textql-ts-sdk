@@ -56,7 +56,7 @@
 	.header {
 		flex-shrink: 0;
 		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
-		background: color-mix(in srgb, var(--color-paper) 92%, #fff);
+		background: color-mix(in srgb, var(--color-paper) 92%, var(--color-elevate));
 	}
 
 	.header-inner {

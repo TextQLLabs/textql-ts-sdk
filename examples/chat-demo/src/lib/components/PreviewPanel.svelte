@@ -268,7 +268,7 @@
 		min-height: 0;
 		flex-direction: column;
 		border-left: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
-		background: #fafafa;
+		background: var(--color-fill);
 	}
 
 	.preview-panel.resizing {
@@ -312,7 +312,7 @@
 		min-height: 36px;
 		padding: 0 6px 0 0;
 		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
-		background: #fff;
+		background: var(--color-elevate);
 	}
 
 	.tabs {
@@ -336,13 +336,13 @@
 	}
 
 	.tab:hover {
-		color: #52525b;
+		color: var(--color-text-3);
 		background: color-mix(in srgb, var(--color-ink) 3%, transparent);
 	}
 
 	.tab.active {
 		color: var(--color-ink);
-		background: #fafafa;
+		background: var(--color-fill);
 		box-shadow: inset 0 -1px 0 var(--color-ink);
 	}
 
@@ -470,7 +470,7 @@
 		height: auto;
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
-		background: #fff;
+		background: var(--color-elevate);
 	}
 
 	.preview-frame {
@@ -478,7 +478,7 @@
 		height: min(70vh, 640px);
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
-		background: #fff;
+		background: var(--color-elevate);
 	}
 
 	.preview-table {
@@ -487,7 +487,7 @@
 		padding: 10px 12px;
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
-		background: #fff;
+		background: var(--color-elevate);
 		font-family: var(--font-mono, ui-monospace, monospace);
 		font-size: 11.5px;
 		line-height: 1.45;
@@ -515,6 +515,6 @@
 	.panel-foot {
 		padding: 10px 14px;
 		border-top: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
-		background: #fff;
+		background: var(--color-elevate);
 	}
 </style>

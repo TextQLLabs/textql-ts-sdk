@@ -37,6 +37,18 @@
 	--color-muted: #8b8b93;
 	--color-line: #e2e2e6;
 	--color-accent: var(--color-blue-500);
+	/* Raised-surface / hover base. Components mix this into overlays and use it
+	   for cards, so flipping it (below, in dark mode) themes them all at once.
+	   Kept as pure white in light mode so existing color-mix()es are unchanged. */
+	--color-elevate: #ffffff;
+	--color-scroll: #c4c4c8;
+	/* Secondary text ramps — light values match the hex they replaced, so light
+	   mode is unchanged; the dark override below lifts them for contrast. */
+	--color-text-strong: #27272a;
+	--color-text-2: #3f3f46;
+	--color-text-3: #52525b;
+	/* Subtle inset fill (chips, code blocks, hovered rows). */
+	--color-fill: #f1f1f3;
 
 	--radius-xs: 6px;
 	--radius-sm: 10px;
@@ -65,12 +77,38 @@
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
+	color-scheme: light;
+}
+
+/* Dark theme — flips the semantic tokens; everything built on var(--color-*)
+   (including --color-elevate overlays) follows automatically. Applied by
+   themePref.svelte.ts setting data-theme on <html>. */
+:root[data-theme="dark"] {
+	--color-paper: #141616;
+	--color-sidebar: #101414;
+	--color-ink: #ececee;
+	--color-muted: #8f8f98;
+	--color-line: #2b2e2e;
+	--color-elevate: #212121;
+	--color-scroll: #3a3f3f;
+	--color-text-strong: #e2e2e6;
+	--color-text-2: #cdced4;
+	--color-text-3: #a9a9b2;
+	--color-fill: #262828;
+	color-scheme: dark;
+}
+
+/* The Anthropic mark on model options is dark monochrome artwork — flip it to
+   white in dark mode. Scoped to that asset so colorful connector logos are
+   untouched. */
+:root[data-theme="dark"] img[src*="anthropic"] {
+	filter: brightness(0) invert(1);
 }
 
 * {
 	box-sizing: border-box;
 	scrollbar-width: thin;
-	scrollbar-color: #c4c4c8 transparent;
+	scrollbar-color: var(--color-scroll) transparent;
 }
 
 html,
@@ -101,7 +139,7 @@ textarea {
 
 ::selection {
 	color: var(--color-ink);
-	background: var(--color-blue-100);
+	background: color-mix(in srgb, var(--color-accent) 28%, transparent);
 }
 
 /* Thin, muted scrollbars (Chromium/WebKit; Firefox uses scrollbar-* above) */
@@ -116,11 +154,11 @@ textarea {
 
 *::-webkit-scrollbar-thumb {
 	border-radius: 999px;
-	background: #c4c4c8;
+	background: var(--color-scroll);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-	background: #a1a1aa;
+	background: color-mix(in srgb, var(--color-scroll) 70%, var(--color-ink));
 }
 
 .shimmer {

@@ -4,6 +4,8 @@
 		Text,
 		Switch,
 		Modal,
+		Confirm,
+		confirm,
 		Toaster,
 		toast,
 		Marquee,
@@ -27,6 +29,50 @@
 	let switchOff = $state(false);
 	let modalOpen = $state(false);
 	let scrambleKey = $state(0);
+
+	// Confirm dialog demo state
+	let confirmOpen = $state(false);
+	let deleting = $state(false);
+
+	async function runImperativeConfirm(tone: 'danger' | 'warning' | 'info') {
+		const ok = await confirm({
+			tone,
+			title: tone === 'danger' ? 'Delete thread?' : 'Are you sure?',
+			description:
+				tone === 'danger'
+					? 'This permanently deletes the thread and all of its messages. This cannot be undone.'
+					: 'Please confirm you want to continue with this action.',
+			confirmLabel: tone === 'danger' ? 'Delete' : 'Continue'
+		});
+		toast[ok ? 'success' : 'error'](ok ? 'Confirmed' : 'Cancelled');
+	}
+
+	async function confirmDelete() {
+		// Simulate async work while the dialog stays open in a loading state.
+		deleting = true;
+		await new Promise((r) => setTimeout(r, 1200));
+		deleting = false;
+		confirmOpen = false;
+		toast.success('Thread deleted');
+	}
+
+	function demoPromiseToast() {
+		const work = new Promise<{ name: string }>((resolve, reject) =>
+			setTimeout(() => (Math.random() > 0.3 ? resolve({ name: 'report.csv' }) : reject()), 1500)
+		);
+		toast.promise(work, {
+			loading: 'Exporting…',
+			success: (data) => `Exported ${data.name}`,
+			error: 'Export failed'
+		});
+	}
+
+	function demoActionToast() {
+		toast('Thread archived', {
+			description: 'You can restore it from the archive.',
+			action: { label: 'Undo', onClick: () => toast.success('Restored') }
+		});
+	}
 </script>
 
 <svelte:head>
@@ -50,6 +96,7 @@
 				<a href="#text">Text</a>
 				<a href="#switch">Switch</a>
 				<a href="#modal">Modal</a>
+				<a href="#confirm">Confirm</a>
 				<a href="#toaster">Toaster</a>
 				<a href="#marquee">Marquee</a>
 				<a href="#page">Page</a>
@@ -226,6 +273,40 @@
 		</Modal>
 	</section>
 
+	<section id="confirm" class="card">
+		<div class="card-head">
+			<h2>Confirm</h2>
+			<p>
+				Confirmation dialog built on <code>Modal</code>. Comes in tones (<code>danger</code>,
+				<code>warning</code>, <code>info</code>) for deletes and other guarded actions. Use the
+				imperative <code>confirm()</code> for one-liners, or the <code>&lt;Confirm&gt;</code>
+				component when you need an async loading state.
+			</p>
+		</div>
+
+		<h3 class="subhead">Imperative — <code>await confirm(...)</code></h3>
+		<div class="row wrap">
+			<Button variant="danger" onclick={() => runImperativeConfirm('danger')}>Delete…</Button>
+			<Button variant="surface" onclick={() => runImperativeConfirm('warning')}>Warning…</Button>
+			<Button variant="surface" onclick={() => runImperativeConfirm('info')}>Info…</Button>
+		</div>
+
+		<h3 class="subhead">Component — with async loading state</h3>
+		<div class="row wrap">
+			<Button variant="danger-soft" onclick={() => (confirmOpen = true)}>Delete thread…</Button>
+		</div>
+
+		<Confirm
+			bind:open={confirmOpen}
+			bind:loading={deleting}
+			tone="danger"
+			title="Delete thread?"
+			description="This permanently deletes the thread and all of its messages. This cannot be undone."
+			confirmLabel="Delete"
+			onconfirm={confirmDelete}
+		/>
+	</section>
+
 	<section id="toaster" class="card">
 		<div class="card-head">
 			<h2>Toaster</h2>
@@ -234,19 +315,33 @@
 				<code>$lib/primitives</code>.
 			</p>
 		</div>
+		<h3 class="subhead">Types — <code>richColors</code> maps each to a tone</h3>
 		<div class="row wrap">
 			<Button variant="soft" onclick={() => toast('Default toast')}>Default</Button>
 			<Button variant="soft" onclick={() => toast.success('Saved successfully')}>Success</Button>
 			<Button variant="soft" onclick={() => toast.error('Something went wrong')}>Error</Button>
+			<Button variant="soft" onclick={() => toast.warning('Double-check before continuing')}>
+				Warning
+			</Button>
+			<Button variant="soft" onclick={() => toast.info('Heads up — new data available')}>
+				Info
+			</Button>
+			<Button variant="soft" onclick={() => toast.loading('Working…')}>Loading</Button>
+		</div>
+
+		<h3 class="subhead">Composition — description, action, and promise</h3>
+		<div class="row wrap">
 			<Button
 				variant="soft"
 				onclick={() =>
 					toast('With description', {
-						description: 'Optional secondary line for context.',
+						description: 'Optional secondary line for context.'
 					})}
 			>
 				With description
 			</Button>
+			<Button variant="soft" onclick={demoActionToast}>With action</Button>
+			<Button variant="soft" onclick={demoPromiseToast}>Promise (async)</Button>
 		</div>
 	</section>
 
@@ -332,7 +427,7 @@
 	.back-link {
 		font-size: 13px;
 		font-weight: 500;
-		color: #52525b;
+		color: var(--color-text-3);
 		text-decoration: none;
 	}
 
@@ -394,6 +489,26 @@
 		border-radius: 4px;
 		background: var(--color-sidebar);
 		color: var(--color-ink);
+	}
+
+	.subhead {
+		margin: 1.1rem 0 0.6rem;
+		font-family: var(--font-mono);
+		font-size: 0.6875rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-muted);
+	}
+
+	.subhead:first-of-type {
+		margin-top: 0.6rem;
+	}
+
+	.subhead code {
+		font-size: 0.9em;
+		text-transform: none;
+		letter-spacing: 0;
 	}
 
 	.block {

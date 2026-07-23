@@ -63,10 +63,6 @@
 </script>
 
 <script lang="ts">
-	/**
-	 * Assistant markdown: prefer server `renderedHtml` (goldmark + highlighting),
-	 * fall back to client-side marked when only raw content is available.
-	 */
 	let {
 		renderedHtml = "",
 		content = "",
@@ -116,7 +112,7 @@
 
 <style>
 	.md {
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 14px;
 		line-height: 1.65;
 		overflow-wrap: anywhere;
@@ -177,6 +173,8 @@
 	.md :global(code) {
 		padding: 0.1em 0.35em;
 		border-radius: 4px;
+		/* Notion-style inline code: darkish red on a subtle gray fill. */
+		color: #c0392b;
 		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
 		font-family: var(--font-mono, ui-monospace, monospace);
 		font-size: 0.88em;
@@ -194,6 +192,7 @@
 
 	.md :global(pre code) {
 		padding: 0;
+		color: inherit;
 		background: transparent;
 		font-size: inherit;
 	}
@@ -234,7 +233,7 @@
 		margin: 0;
 		white-space: pre-wrap;
 		overflow-wrap: anywhere;
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 14px;
 		line-height: 1.65;
 	}

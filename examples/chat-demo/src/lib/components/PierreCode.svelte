@@ -7,10 +7,13 @@
 		fileName,
 		contents,
 		lang,
+		fill = false,
 	}: {
 		fileName: string;
 		contents: string;
 		lang?: string;
+		/** Fill the parent's height and scroll, instead of the 320px inline cap. */
+		fill?: boolean;
 	} = $props();
 
 	let wrapper: HTMLDivElement | undefined = $state();
@@ -114,7 +117,7 @@ code, pre, [class*="line"] {
 	});
 </script>
 
-<div class="pierre-code" bind:this={wrapper}>
+<div class="pierre-code" class:fill bind:this={wrapper}>
 	{#if loadError}
 		<pre class="fallback">{contents}</pre>
 	{/if}
@@ -126,6 +129,13 @@ code, pre, [class*="line"] {
 		overflow: auto;
 		border-radius: 6px;
 		background: color-mix(in srgb, var(--color-ink) 5%, transparent);
+	}
+
+	/* Fill the parent (e.g. the ontology viewer) and scroll instead of capping. */
+	.pierre-code.fill {
+		max-height: none;
+		flex: 1;
+		min-height: 0;
 	}
 
 	.fallback {

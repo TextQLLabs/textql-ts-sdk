@@ -4,17 +4,20 @@ export const CHAT_MODELS = [
 	{
 		id: TextqlRpcPublicChatLlmModel.ModelHaiku45,
 		label: 'Claude Haiku 4.5',
-		hint: 'Fast responses for quick tasks'
+		hint: 'Fast responses for quick tasks',
+		provider: 'ANTHROPIC'
 	},
 	{
 		id: TextqlRpcPublicChatLlmModel.ModelSonnet5,
 		label: 'Claude Sonnet 5',
-		hint: 'Balanced speed and quality'
+		hint: 'Balanced speed and quality',
+		provider: 'ANTHROPIC'
 	},
 	{
 		id: TextqlRpcPublicChatLlmModel.ModelOpus48,
 		label: 'Claude Opus 4.8',
-		hint: 'Highest capability for hard work'
+		hint: 'Highest capability for hard work',
+		provider: 'ANTHROPIC'
 	}
 ] as const;
 

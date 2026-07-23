@@ -11,6 +11,15 @@ import type { RequestHandler } from './$types';
 const PAGE_SIZE = 100;
 const MAX_PAGES = 50;
 
+function ownerLabel(playbook: TextqlRpcPublicPlaybookPlaybook): string | null {
+	const owner = playbook.owner;
+	if (!owner) return null;
+	const name = typeof owner.memberName === 'string' ? owner.memberName.trim() : '';
+	if (name) return name;
+	const email = typeof owner.memberEmail === 'string' ? owner.memberEmail.trim() : '';
+	return email || null;
+}
+
 function toListItem(playbook: TextqlRpcPublicPlaybookPlaybook) {
 	if (typeof playbook.id !== 'string') return null;
 	return {
@@ -18,6 +27,7 @@ function toListItem(playbook: TextqlRpcPublicPlaybookPlaybook) {
 		name: playbook.name?.trim() || 'Untitled playbook',
 		status: typeof playbook.status === 'string' ? playbook.status : 'STATUS_UNKNOWN',
 		cronString: typeof playbook.cronString === 'string' ? playbook.cronString : null,
+		ownerName: ownerLabel(playbook),
 		updatedAt: toIsoString(playbook.updatedAt) ?? toIsoString(playbook.createdAt),
 		isRunning: playbook.isRunning === true
 	};

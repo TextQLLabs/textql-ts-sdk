@@ -325,9 +325,16 @@
 										role="menuitem"
 										onclick={() => selectModel(model.id)}
 									>
-										<span class="menu-row-main column">
-											<span class="model-title">{model.label}</span>
-											<span class="model-hint">{model.hint}</span>
+										<span class="model-row-main">
+											<img
+												class="model-logo"
+												src={connectorIconSrc(model.provider)}
+												alt=""
+											/>
+											<span class="menu-row-main column">
+												<span class="model-title">{model.label}</span>
+												<span class="model-hint">{model.hint}</span>
+											</span>
 										</span>
 										{#if selectedModel === model.id}
 											<span class="check-mark" aria-hidden="true">
@@ -418,7 +425,7 @@
 		padding: 12px 14px 10px;
 		border: 1px solid color-mix(in srgb, var(--color-line) 95%, #cfcfd4);
 		border-radius: var(--radius-lg);
-		background: #fff;
+		background: var(--color-elevate);
 		box-shadow:
 			0 1px 2px rgba(15, 15, 20, 0.03),
 			0 10px 28px rgba(15, 15, 20, 0.06);
@@ -546,7 +553,7 @@
 		margin-left: -6px;
 		padding: 0;
 		border-radius: 999px;
-		background: #eef2ff;
+		background: color-mix(in srgb, var(--color-accent) 8%, var(--color-elevate));
 		box-shadow: 0 0 0 1.5px #fff;
 		transition:
 			transform 0.12s ease,
@@ -645,7 +652,7 @@
 		overflow: hidden;
 		border: 1px solid color-mix(in srgb, var(--color-line) 90%, #d4d4d8);
 		border-radius: 12px;
-		background: #fff;
+		background: var(--color-elevate);
 		box-shadow:
 			0 1px 2px rgba(15, 15, 20, 0.04),
 			0 14px 32px rgba(15, 15, 20, 0.1);
@@ -686,7 +693,7 @@
 		border: 0;
 		border-radius: 7px;
 		color: var(--color-ink);
-		background: #f4f4f5;
+		background: var(--color-fill);
 		font: inherit;
 		font-size: 12px;
 		outline: 0;
@@ -697,7 +704,7 @@
 	}
 
 	.search-field input:focus {
-		background: #ececee;
+		background: var(--color-sidebar);
 	}
 
 	.menu-section {
@@ -720,7 +727,7 @@
 		width: 100%;
 		padding: 6px 8px;
 		border-radius: 7px;
-		color: #27272a;
+		color: var(--color-text-strong);
 		background: transparent;
 		font-size: 12.5px;
 		text-align: left;
@@ -730,7 +737,7 @@
 	.menu-row.flyout-open,
 	.menu-row.selected,
 	.model-row:hover {
-		background: #f3f3f3;
+		background: var(--color-fill);
 	}
 
 	.menu-row-main {
@@ -744,6 +751,21 @@
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 1px;
+	}
+
+	.model-row-main {
+		display: inline-flex;
+		min-width: 0;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.model-logo {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+		object-fit: contain;
+		border-radius: 3px;
 	}
 
 	.menu-icon {
@@ -779,8 +801,8 @@
 		justify-content: center;
 		padding: 1px 6px;
 		border-radius: 999px;
-		color: #3f3f46;
-		background: #ececee;
+		color: var(--color-text-2);
+		background: var(--color-sidebar);
 		font-size: 11px;
 		font-weight: 600;
 	}
@@ -792,7 +814,7 @@
 
 	.model-title {
 		overflow: hidden;
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 12.5px;
 		font-weight: 600;
 		text-overflow: ellipsis;
@@ -830,7 +852,7 @@
 
 	.connector-row:hover,
 	.connector-row.attached {
-		background: #f3f3f3;
+		background: var(--color-fill);
 	}
 
 	.connector-icon {
@@ -844,7 +866,7 @@
 		min-width: 0;
 		flex: 1;
 		overflow: hidden;
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 12.5px;
 		font-weight: 500;
 		text-overflow: ellipsis;
@@ -856,7 +878,7 @@
 		flex-shrink: 0;
 		align-items: center;
 		justify-content: center;
-		color: #52525b;
+		color: var(--color-text-3);
 	}
 
 	.state-block {
@@ -884,13 +906,13 @@
 		padding: 5px 10px;
 		border-radius: 8px;
 		color: var(--color-accent);
-		background: color-mix(in srgb, var(--color-accent) 8%, #fff);
+		background: color-mix(in srgb, var(--color-accent) 8%, var(--color-elevate));
 		font-size: 12px;
 		font-weight: 500;
 	}
 
 	.retry-btn:hover {
-		background: color-mix(in srgb, var(--color-accent) 14%, #fff);
+		background: color-mix(in srgb, var(--color-accent) 14%, var(--color-elevate));
 	}
 
 	.send-btn {

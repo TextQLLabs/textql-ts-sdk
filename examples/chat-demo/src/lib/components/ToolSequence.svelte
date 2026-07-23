@@ -368,7 +368,7 @@
 	}
 
 	.step-header:hover .step-label {
-		color: #52525b;
+		color: var(--color-text-3);
 	}
 
 	.step-label {
@@ -403,7 +403,7 @@
 	}
 
 	.step-header:hover .step-open-label {
-		color: #52525b;
+		color: var(--color-text-3);
 	}
 
 	.step-detail {

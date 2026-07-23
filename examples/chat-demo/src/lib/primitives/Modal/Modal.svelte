@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
-  import { fade, scale } from "svelte/transition";
+  import { fade } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
 
   interface Props {
     /** Bindable open state. */
@@ -37,6 +38,17 @@
   function onKeydown(e: KeyboardEvent) {
     if (open && dismissable && e.key === "Escape") dismiss();
   }
+
+  // Panel entrance: fade + a subtle rise and scale, matching the polished feel
+  // of Tooltip.svelte (cubicOut, short duration, opacity + transform).
+  function reveal(_node: Element, { duration = 180 } = {}) {
+    return {
+      duration,
+      easing: cubicOut,
+      css: (t: number, u: number) =>
+        `opacity:${t};transform:translateY(${6 * u}px) scale(${0.97 + 0.03 * t})`,
+    };
+  }
 </script>
 
 <svelte:window onkeydown={onKeydown} />
@@ -50,15 +62,15 @@
   >
     <button
       class="absolute inset-0 cursor-default bg-ink/40 backdrop-blur-sm"
-      transition:fade={{ duration: 150 }}
+      transition:fade|global={{ duration: 160, easing: cubicOut }}
       onclick={() => dismissable && dismiss()}
       aria-label="Close"
       tabindex="-1"
     ></button>
 
     <div
-      class="relative z-10 w-full max-w-xs rounded-lg border border-line bg-paper px-4 py-3 shadow-[0_20px_60px_-12px_rgba(15,15,20,0.18)]"
-      transition:scale={{ duration: 180, start: 0.96 }}
+      class="relative z-10 w-full max-w-xs rounded-lg border border-line bg-paper px-4 py-3 shadow-[0_20px_60px_-12px_rgba(15,15,20,0.18)] [will-change:transform,opacity]"
+      transition:reveal|global={{ duration: 180 }}
     >
       {#if title}
         <h2 class="font-sans text-base font-medium leading-tight text-ink">{title}</h2>

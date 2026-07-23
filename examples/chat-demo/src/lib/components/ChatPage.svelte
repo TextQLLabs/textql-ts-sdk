@@ -1,11 +1,11 @@
 <script lang="ts">
-	import BookOpen from "@lucide/svelte/icons/book-open";
 	import Ellipsis from "@lucide/svelte/icons/ellipsis";
-	import Network from "@lucide/svelte/icons/network";
+	import Moon from "@lucide/svelte/icons/moon";
 	import PanelLeft from "@lucide/svelte/icons/panel-left";
 	import PanelLeftClose from "@lucide/svelte/icons/panel-left-close";
 	import PanelRight from "@lucide/svelte/icons/panel-right";
 	import Plus from "@lucide/svelte/icons/plus";
+	import Sun from "@lucide/svelte/icons/sun";
 	import { onMount, tick } from "svelte";
 	import { afterNavigate, goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
@@ -14,12 +14,19 @@
 		loadLastChatConfig,
 		saveLastChatConfig,
 	} from "$lib/chatConfigPrefs";
+	import FAgentIcon from "$lib/assets/icons/FAgentIcon.svelte";
+	import FOntologyIcon from "$lib/assets/icons/FOntologyIcon.svelte";
+	import FPlaybooksIcon from "$lib/assets/icons/FPlaybooksIcon.svelte";
+	import FThreadsIcon from "$lib/assets/icons/FThreadsIcon.svelte";
 	import { DEFAULT_CHAT_MODEL } from "$lib/chatModels";
 	import { getCellCase, settleCells, type CellLike } from "$lib/cells";
+	import AgentDetailPage from "$lib/components/AgentDetailPage.svelte";
+	import AgentsPage from "$lib/components/AgentsPage.svelte";
 	import Composer from "$lib/components/Composer.svelte";
 	import OntologyPage from "$lib/components/OntologyPage.svelte";
 	import PlaybooksPage from "$lib/components/PlaybooksPage.svelte";
 	import PreviewPanel from "$lib/components/PreviewPanel.svelte";
+	import ThreadsPage from "$lib/components/ThreadsPage.svelte";
 	import ToolSequence from "$lib/components/ToolSequence.svelte";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
 	import { connectorsCache } from "$lib/connectorsCache.svelte";
@@ -28,7 +35,8 @@
 		previewPanel,
 		type PreviewItem,
 	} from "$lib/previewPanel.svelte";
-	import { Tooltip } from "$lib/primitives";
+	import { Tooltip, confirm, toast } from "$lib/primitives";
+	import { themePref } from "$lib/themePref.svelte";
 	import { parseStreamLine, toCellLike } from "$lib/streamEvents";
 	import { isRecord } from "$lib/utils";
 
@@ -88,8 +96,18 @@
 		page.url.pathname === "/ontology" ||
 			page.url.pathname.startsWith("/ontology/"),
 	);
-	/** True on any full-panel section route (playbooks/ontology) — i.e. not chat. */
-	const inSection = $derived(isPlaybooksRoute || isOntologyRoute);
+	const isThreadsRoute = $derived(
+		page.url.pathname === "/threads" ||
+			page.url.pathname.startsWith("/threads/"),
+	);
+	const isAgentsRoute = $derived(
+		page.url.pathname === "/agents" ||
+			page.url.pathname.startsWith("/agents/"),
+	);
+	/** True on any full-panel section route (threads/playbooks/ontology/agents) — i.e. not chat. */
+	const inSection = $derived(
+		isPlaybooksRoute || isOntologyRoute || isThreadsRoute || isAgentsRoute,
+	);
 	const routeChatId = $derived(
 		inSection
 			? undefined
@@ -209,7 +227,11 @@
 			page.url.pathname === "/playbooks" ||
 			page.url.pathname.startsWith("/playbooks/") ||
 			page.url.pathname === "/ontology" ||
-			page.url.pathname.startsWith("/ontology/")
+			page.url.pathname.startsWith("/ontology/") ||
+			page.url.pathname === "/threads" ||
+			page.url.pathname.startsWith("/threads/") ||
+			page.url.pathname === "/agents" ||
+			page.url.pathname.startsWith("/agents/")
 		) {
 			return;
 		}
@@ -580,9 +602,10 @@
 			const assistant = messages.find(
 				(message) => message.id === assistantId,
 			);
-			if (assistant)
-				assistant.body =
-					error instanceof Error ? error.message : "Request failed.";
+			const detail =
+				error instanceof Error ? error.message : "Request failed.";
+			if (assistant) assistant.body = detail;
+			toast.error("Message failed to send", { description: detail });
 		} finally {
 			const assistant = messages.find(
 				(message) => message.id === assistantId,
@@ -763,6 +786,15 @@
 		menuChatId = undefined;
 		if (closingChatId || openingChatId || sending) return;
 
+		const confirmed = await confirm({
+			tone: "danger",
+			title: "Delete chat?",
+			description:
+				"This permanently deletes the chat and all of its messages. This cannot be undone.",
+			confirmLabel: "Delete",
+		});
+		if (!confirmed) return;
+
 		closingChatId = id;
 		const previous = chats;
 		chats = chats.filter((chat) => chat.id !== id);
@@ -779,8 +811,12 @@
 			if (chatId === id) {
 				newThread();
 			}
+			toast.success("Chat deleted");
 		} catch {
 			chats = previous;
+			toast.error("Couldn't delete chat", {
+				description: "Something went wrong. Please try again.",
+			});
 		} finally {
 			closingChatId = undefined;
 		}
@@ -842,16 +878,30 @@
 			<div class="chat-list" aria-live="polite" aria-busy={chatsLoading}>
 				<a
 					class="sidebar-nav-entry"
+					class:active={isThreadsRoute}
+					href={resolve("/(chat)/threads")}
+					aria-current={isThreadsRoute ? "page" : undefined}
+				>
+					<FThreadsIcon class="sidebar-nav-icon" />
+					<span>Threads</span>
+				</a>
+				<a
+					class="sidebar-nav-entry"
 					class:active={isPlaybooksRoute}
 					href={resolve("/(chat)/playbooks")}
 					aria-current={isPlaybooksRoute ? "page" : undefined}
 				>
-					<BookOpen
-						size={14}
-						strokeWidth={1.75}
-						class="sidebar-nav-icon"
-					/>
+					<FPlaybooksIcon class="sidebar-nav-icon" />
 					<span>Playbooks</span>
+				</a>
+				<a
+					class="sidebar-nav-entry"
+					class:active={isAgentsRoute}
+					href={resolve("/(chat)/agents")}
+					aria-current={isAgentsRoute ? "page" : undefined}
+				>
+					<FAgentIcon class="sidebar-nav-icon" />
+					<span>Agents</span>
 				</a>
 				<a
 					class="sidebar-nav-entry"
@@ -859,11 +909,7 @@
 					href={resolve("/(chat)/ontology")}
 					aria-current={isOntologyRoute ? "page" : undefined}
 				>
-					<Network
-						size={14}
-						strokeWidth={1.75}
-						class="sidebar-nav-icon"
-					/>
+					<FOntologyIcon class="sidebar-nav-icon" />
 					<span>Ontology</span>
 				</a>
 				{#if chatsLoading}
@@ -963,6 +1009,99 @@
 				{/if}
 			</div>
 		</div>
+		<div class="sidebar-foot">
+			<button
+				type="button"
+				class="theme-toggle"
+				onclick={() => themePref.toggle()}
+				aria-label={themePref.resolved === "dark"
+					? "Switch to light mode"
+					: "Switch to dark mode"}
+			>
+				{#if themePref.resolved === "dark"}
+					<Sun size={15} strokeWidth={1.75} />
+					<span>Light mode</span>
+				{:else}
+					<Moon size={15} strokeWidth={1.75} />
+					<span>Dark mode</span>
+				{/if}
+			</button>
+		</div>
+	</aside>
+
+	<aside
+		class="sidebar-rail"
+		aria-label="Collapsed navigation"
+		aria-hidden={sidebarOpen}
+		inert={sidebarOpen ? true : undefined}
+	>
+		<Tooltip label="Open sidebar" shortcut="⌘S" side="right">
+			<button
+				type="button"
+				class="rail-btn"
+				aria-label="Open sidebar"
+				onclick={() => (sidebarOpen = true)}
+			>
+				<PanelLeft size={16} strokeWidth={1.75} />
+			</button>
+		</Tooltip>
+		<Tooltip label="New chat" side="right">
+			<button
+				type="button"
+				class="rail-btn"
+				aria-label="New chat"
+				onclick={newThread}
+			>
+				<Plus size={16} strokeWidth={2} />
+			</button>
+		</Tooltip>
+
+		<div class="rail-divider" role="presentation"></div>
+
+		<Tooltip label="Threads" side="right">
+			<a
+				class="rail-btn"
+				class:active={isThreadsRoute}
+				href={resolve("/(chat)/threads")}
+				aria-label="Threads"
+				aria-current={isThreadsRoute ? "page" : undefined}
+			>
+				<FThreadsIcon class="rail-icon" />
+			</a>
+		</Tooltip>
+		<Tooltip label="Playbooks" side="right">
+			<a
+				class="rail-btn"
+				class:active={isPlaybooksRoute}
+				href={resolve("/(chat)/playbooks")}
+				aria-label="Playbooks"
+				aria-current={isPlaybooksRoute ? "page" : undefined}
+			>
+				<FPlaybooksIcon class="rail-icon" />
+			</a>
+		</Tooltip>
+		<Tooltip label="Agents" side="right">
+			<a
+				class="rail-btn"
+				class:active={isAgentsRoute}
+				href={resolve("/(chat)/agents")}
+				aria-label="Agents"
+				aria-current={isAgentsRoute ? "page" : undefined}
+			>
+				<FAgentIcon class="rail-icon" />
+			</a>
+		</Tooltip>
+		<Tooltip label="Ontology" side="right">
+			<a
+				class="rail-btn"
+				class:active={isOntologyRoute}
+				href={resolve("/(chat)/ontology")}
+				aria-label="Ontology"
+				aria-current={isOntologyRoute ? "page" : undefined}
+			>
+				<FOntologyIcon class="rail-icon" />
+			</a>
+		</Tooltip>
 	</aside>
 
 	<div
@@ -1019,10 +1158,18 @@
 				</button>
 			{/if}
 
-			{#if isPlaybooksRoute}
+			{#if isThreadsRoute}
+				<ThreadsPage />
+			{:else if isPlaybooksRoute}
 				<PlaybooksPage />
 			{:else if isOntologyRoute}
 				<OntologyPage />
+			{:else if isAgentsRoute}
+				{#if page.params.id}
+					<AgentDetailPage />
+				{:else}
+					<AgentsPage />
+				{/if}
 			{:else if showChatLoading}
 				<section
 					class="chat-status"
@@ -1152,11 +1299,13 @@
 	}
 
 	.app-shell.sidebar-collapsed {
-		grid-template-columns: 0 minmax(0, 1fr);
+		grid-template-columns: 52px minmax(0, 1fr);
 	}
 
 	.workspace {
 		display: flex;
+		grid-column: 2;
+		grid-row: 1;
 		min-width: 0;
 		min-height: 0;
 		height: 100%;
@@ -1186,6 +1335,8 @@
 
 	.sidebar {
 		display: flex;
+		grid-column: 1;
+		grid-row: 1;
 		min-width: 0;
 		min-height: 0;
 		flex-direction: column;
@@ -1203,6 +1354,74 @@
 		opacity: 0;
 		pointer-events: none;
 		border-right-color: transparent;
+	}
+
+	/* Collapsed icon rail — stacks in the same grid cell as the full sidebar. */
+	.sidebar-rail {
+		display: none;
+		grid-column: 1;
+		grid-row: 1;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		min-height: 0;
+		padding: 14px 8px 12px;
+		overflow: hidden;
+		border-right: 1px solid
+			color-mix(in srgb, var(--color-line) 80%, transparent);
+		background: var(--color-sidebar);
+	}
+
+	.app-shell.sidebar-collapsed .sidebar-rail {
+		display: flex;
+	}
+
+	.rail-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 34px;
+		height: 34px;
+		border: 0;
+		border-radius: var(--radius-sm);
+		color: var(--color-text-3);
+		background: transparent;
+		font: inherit;
+		text-decoration: none;
+		cursor: pointer;
+		transition:
+			background 120ms ease,
+			color 120ms ease;
+	}
+
+	.rail-btn:hover {
+		color: var(--color-ink);
+		background: color-mix(in srgb, var(--color-elevate) 55%, transparent);
+	}
+
+	.rail-btn.active {
+		color: var(--color-ink);
+		background: color-mix(in srgb, var(--color-elevate) 78%, transparent);
+		box-shadow: inset 0 0 0 1px
+			color-mix(in srgb, var(--color-line) 70%, transparent);
+	}
+
+	.rail-btn :global(.rail-icon) {
+		font-size: 15px;
+		color: #71717a;
+	}
+
+	.rail-btn.active :global(.rail-icon) {
+		color: var(--color-ink);
+	}
+
+	.rail-divider {
+		width: 22px;
+		height: 1px;
+		margin: 4px 0;
+		background: color-mix(in srgb, var(--color-line) 70%, transparent);
 	}
 
 	.sidebar-top {
@@ -1227,8 +1446,8 @@
 		padding: 7px 10px;
 		border: 0;
 		border-radius: var(--radius-sm);
-		color: #3f3f46;
-		background: color-mix(in srgb, #fff 62%, transparent);
+		color: var(--color-text-2);
+		background: color-mix(in srgb, var(--color-elevate) 62%, transparent);
 		font: inherit;
 		font-size: 13px;
 		font-weight: 500;
@@ -1237,7 +1456,7 @@
 	}
 
 	.new-chat-btn:hover {
-		background: color-mix(in srgb, #fff 82%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 82%, transparent);
 	}
 
 	.new-chat-btn :global(svg) {
@@ -1272,6 +1491,36 @@
 		margin-top: 14px;
 	}
 
+	.sidebar-foot {
+		flex-shrink: 0;
+		margin-top: 8px;
+		padding-top: 8px;
+		border-top: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+	}
+
+	.theme-toggle {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 7px 9px;
+		border: 0;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: var(--color-text-3);
+		font: inherit;
+		font-size: 13px;
+		cursor: pointer;
+		transition:
+			background 120ms ease,
+			color 120ms ease;
+	}
+
+	.theme-toggle:hover {
+		background: color-mix(in srgb, var(--color-ink) 5%, transparent);
+		color: var(--color-ink);
+	}
+
 	.chat-list {
 		min-height: 0;
 		overflow-y: auto;
@@ -1283,10 +1532,10 @@
 		align-items: center;
 		gap: 8px;
 		width: 100%;
-		margin-bottom: 10px;
+		margin-bottom: 2px;
 		padding: 7px 10px;
 		border-radius: var(--radius-sm);
-		color: #52525b;
+		color: var(--color-text-3);
 		font-size: 12.5px;
 		font-weight: 500;
 		text-decoration: none;
@@ -1294,12 +1543,12 @@
 	}
 
 	.sidebar-nav-entry:hover {
-		background: color-mix(in srgb, #fff 55%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 55%, transparent);
 	}
 
 	.sidebar-nav-entry.active {
 		color: var(--color-ink);
-		background: color-mix(in srgb, #fff 78%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 78%, transparent);
 		box-shadow: inset 0 0 0 1px
 			color-mix(in srgb, var(--color-line) 70%, transparent);
 	}
@@ -1318,6 +1567,7 @@
 
 	.sidebar-nav-entry :global(.sidebar-nav-icon) {
 		flex-shrink: 0;
+		font-size: 14px;
 		color: #71717a;
 	}
 
@@ -1347,17 +1597,17 @@
 		gap: 2px;
 		width: 100%;
 		border-radius: var(--radius-sm);
-		color: #52525b;
+		color: var(--color-text-3);
 		transition: background 120ms ease;
 	}
 
 	.chat-row:hover {
-		background: color-mix(in srgb, #fff 55%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 55%, transparent);
 	}
 
 	.chat-row.active {
 		color: var(--color-ink);
-		background: color-mix(in srgb, #fff 78%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 78%, transparent);
 		box-shadow: inset 0 0 0 1px
 			color-mix(in srgb, var(--color-line) 70%, transparent);
 	}
@@ -1428,7 +1678,7 @@
 
 	.chat-menu-btn:hover:not(:disabled) {
 		color: var(--color-ink);
-		background: color-mix(in srgb, #fff 70%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 70%, transparent);
 	}
 
 	.chat-menu-btn:disabled {
@@ -1444,7 +1694,7 @@
 		padding: 3px;
 		border: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
 		border-radius: var(--radius-sm);
-		background: color-mix(in srgb, var(--color-paper) 96%, #fff);
+		background: color-mix(in srgb, var(--color-paper) 96%, var(--color-elevate));
 		box-shadow: 0 4px 14px rgba(15, 15, 20, 0.06);
 	}
 
@@ -1453,14 +1703,14 @@
 		width: 100%;
 		padding: 6px 8px;
 		border-radius: 5px;
-		color: #52525b;
+		color: var(--color-text-3);
 		font-size: 12px;
 		text-align: left;
 	}
 
 	.chat-menu-item:hover {
 		color: var(--color-ink);
-		background: color-mix(in srgb, #fff 70%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 70%, transparent);
 	}
 
 	.chat-row :global(.chat-opening-spinner),
@@ -1493,7 +1743,7 @@
 	}
 
 	.retry-btn:hover {
-		background: color-mix(in srgb, #fff 60%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 60%, transparent);
 	}
 
 	.chat-panel {
@@ -1525,6 +1775,14 @@
 
 	.panel-overlays-start {
 		left: 12px;
+	}
+
+	/* Desktop uses the collapsed icon rail, so the floating open/new buttons
+	   are only needed on the mobile drawer layout. */
+	@media (min-width: 781px) {
+		.panel-overlays-start {
+			display: none;
+		}
 	}
 
 	.panel-overlays .icon-ghost {
@@ -1603,7 +1861,7 @@
 	}
 
 	.icon-ghost:hover {
-		background: #f4f4f5;
+		background: var(--color-fill);
 	}
 
 	.conversation {
@@ -1617,8 +1875,12 @@
 		padding: 8px 0 24px;
 	}
 
-	.chat-panel.has-overlays .conversation-inner {
-		padding-top: 44px;
+	/* Only the mobile floating overlay overlaps the conversation; the desktop
+	   rail sits in its own column, so no extra top padding is needed there. */
+	@media (max-width: 780px) {
+		.chat-panel.has-overlays .conversation-inner {
+			padding-top: 44px;
+		}
 	}
 
 	.messages {
@@ -1644,12 +1906,12 @@
 		padding: 10px 14px;
 		border: 1px solid rgba(0, 0, 0, 0.06);
 		border-radius: 20px;
-		background: #fcfcfc;
+		background: var(--color-fill);
 		box-shadow: none;
 	}
 
 	.message.you .message-body {
-		color: #1a1a1c;
+		color: var(--color-ink);
 		font-size: 14px;
 		line-height: 1.45;
 		letter-spacing: -0.01em;
@@ -1669,7 +1931,7 @@
 
 	.message-body {
 		margin: 0;
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 14px;
 		line-height: 1.65;
 		white-space: pre-wrap;
@@ -1715,6 +1977,12 @@
 		.app-shell.sidebar-collapsed {
 			display: block;
 			grid-template-columns: unset;
+		}
+
+		/* Mobile keeps the slide-in drawer + floating open button, not the rail. */
+		.sidebar-rail,
+		.app-shell.sidebar-collapsed .sidebar-rail {
+			display: none;
 		}
 
 		.workspace {

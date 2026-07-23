@@ -15,6 +15,26 @@ function titleFor(chat: TextqlRpcPublicChatChat) {
 	return chat.summary?.trim() || chat.preview?.trim() || 'New chat';
 }
 
+const SOURCE_LABELS: Record<string, string> = {
+	CHAT_SOURCE_THREAD: 'Thread',
+	CHAT_SOURCE_PLAYBOOK: 'Playbook',
+	CHAT_SOURCE_SLACK: 'Slack',
+	CHAT_SOURCE_FEED: 'Feed',
+	CHAT_SOURCE_TEAMS: 'Teams',
+	CHAT_SOURCE_SMS: 'SMS',
+	CHAT_SOURCE_MCP: 'MCP',
+	CHAT_SOURCE_SYSTEM: 'System'
+};
+
+function sourceLabel(source: TextqlRpcPublicChatChat['source']): string | null {
+	if (typeof source !== 'string') return null;
+	return SOURCE_LABELS[source] ?? null;
+}
+
+function createdBy(chat: TextqlRpcPublicChatChat): string | null {
+	return chat.agentName?.trim() || chat.creatorEmail?.trim() || null;
+}
+
 export const GET: RequestHandler = async () => {
 	const { client } = textqlClients();
 
@@ -67,6 +87,9 @@ export const GET: RequestHandler = async () => {
 				.map((chat) => ({
 					id: chat.id,
 					title: titleFor(chat),
+					createdBy: createdBy(chat),
+					source: sourceLabel(chat.source),
+					lastMessageAt: (chat.updatedAt ?? chat.timestamp)?.toISOString() ?? null,
 					updatedAt: (chat.updatedAt ?? chat.timestamp)?.toISOString() ?? null
 				})),
 			totalCount: totalCount ?? chats.length

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { Snippet } from "svelte";
+	import type { Snippet } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
 
-	type Side = "top" | "bottom" | "left" | "right";
+	type Side = 'top' | 'bottom' | 'left' | 'right';
 
 	interface Props {
 		label: string;
@@ -10,7 +11,7 @@
 		children: Snippet;
 	}
 
-	let { label, shortcut, side = "bottom", children }: Props = $props();
+	let { label, shortcut, side = 'bottom', children }: Props = $props();
 
 	const GAP = 6;
 	let wrap = $state<HTMLElement>();
@@ -23,10 +24,9 @@
 		const el = wrap?.firstElementChild ?? wrap;
 		if (!el) return;
 		const r = el.getBoundingClientRect();
-		if (side === "bottom") (x = r.left + r.width / 2), (y = r.bottom + GAP);
-		else if (side === "top") (x = r.left + r.width / 2), (y = r.top - GAP);
-		else if (side === "right")
-			(x = r.right + GAP), (y = r.top + r.height / 2);
+		if (side === 'bottom') (x = r.left + r.width / 2), (y = r.bottom + GAP);
+		else if (side === 'top') (x = r.left + r.width / 2), (y = r.top - GAP);
+		else if (side === 'right') (x = r.right + GAP), (y = r.top + r.height / 2);
 		else (x = r.left - GAP), (y = r.top + r.height / 2);
 		clearTimeout(timer);
 		timer = setTimeout(() => (open = true), 300);
@@ -34,6 +34,24 @@
 	function hide() {
 		clearTimeout(timer);
 		open = false;
+	}
+
+	// Smooth reveal: fade + a small slide out of the trigger + a touch of scale.
+	// Centering lives on the CSS `translate` property so this `transform` is free.
+	const SLIDE: Record<Side, [number, number]> = {
+		bottom: [0, -5],
+		top: [0, 5],
+		right: [-5, 0],
+		left: [5, 0]
+	};
+	function reveal(_node: Element, { side }: { side: Side }) {
+		const [dx, dy] = SLIDE[side];
+		return {
+			duration: 160,
+			easing: cubicOut,
+			css: (t: number, u: number) =>
+				`opacity:${t};transform:translate(${dx * u}px,${dy * u}px) scale(${0.97 + 0.03 * t})`
+		};
 	}
 </script>
 
@@ -54,6 +72,7 @@
 		class="tooltip {side}"
 		role="tooltip"
 		style="left: {x}px; top: {y}px;"
+		transition:reveal={{ side }}
 	>
 		{label}
 		{#if shortcut}<kbd>{shortcut}</kbd>{/if}
@@ -79,19 +98,21 @@
 		background: var(--color-ink);
 		border-radius: var(--radius-xs, 6px);
 		box-shadow: 0 4px 12px rgb(0 0 0 / 0.16);
+		will-change: transform, opacity;
 	}
-	/* Anchor point is the measured (x, y); shift the bubble onto the right side. */
+	/* Centering via `translate` (not `transform`) so the reveal transition owns
+	   `transform`; the two compose cleanly. */
 	.tooltip.bottom {
-		transform: translateX(-50%);
+		translate: -50% 0;
 	}
 	.tooltip.top {
-		transform: translate(-50%, -100%);
+		translate: -50% -100%;
 	}
 	.tooltip.right {
-		transform: translateY(-50%);
+		translate: 0 -50%;
 	}
 	.tooltip.left {
-		transform: translate(-100%, -50%);
+		translate: -100% -50%;
 	}
 	kbd {
 		font: inherit;
@@ -100,5 +121,10 @@
 		border-radius: 4px;
 		background: color-mix(in srgb, var(--color-paper) 22%, transparent);
 		color: var(--color-paper);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.tooltip {
+			will-change: auto;
+		}
 	}
 </style>

@@ -183,7 +183,7 @@
 		padding: 10px 12px;
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-sm, 8px);
-		background: color-mix(in srgb, #fff 55%, transparent);
+		background: color-mix(in srgb, var(--color-elevate) 55%, transparent);
 	}
 
 	.cell-detail.errored {
@@ -281,7 +281,7 @@
 
 	.block-text {
 		margin: 0;
-		color: #27272a;
+		color: var(--color-text-strong);
 		font-size: 13px;
 		line-height: 1.55;
 		white-space: pre-wrap;

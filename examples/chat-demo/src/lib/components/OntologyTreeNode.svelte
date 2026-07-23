@@ -10,6 +10,7 @@
 	import FolderIcon from '@lucide/svelte/icons/folder';
 	import FolderOpenIcon from '@lucide/svelte/icons/folder-open';
 	import ImageIcon from '@lucide/svelte/icons/image';
+	import { pierreFileIconId, pierreIconsReady } from '$lib/pierreIcons.svelte';
 	import { isRecord } from '$lib/utils';
 	// Self-reference: a node renders its children as more nodes.
 	import Self from './OntologyTreeNode.svelte';
@@ -56,11 +57,14 @@
 		entry,
 		depth = 0,
 		selectedPath,
+		revealPath,
 		onSelect
 	}: {
 		entry: Entry;
 		depth?: number;
 		selectedPath: string | undefined;
+		/** Deep-link target: ancestor dirs of this path auto-expand to reveal it. */
+		revealPath?: string;
 		onSelect: (entry: Entry) => void;
 	} = $props();
 
@@ -68,6 +72,20 @@
 	let children = $state<Entry[] | null>(null);
 	let loading = $state(false);
 	let error = $state(false);
+
+	// Auto-expand once if this directory is an ancestor of the deep-linked path,
+	// cascading down as children mount.
+	let autoRevealed = false;
+	$effect(() => {
+		if (autoRevealed || !entry.isDir || !revealPath) return;
+		if (revealPath === entry.path || revealPath.startsWith(`${entry.path}/`)) {
+			autoRevealed = true;
+			if (!expanded) {
+				expanded = true;
+				if (children === null) void loadChildren();
+			}
+		}
+	});
 
 	// Children are fetched lazily the first time a directory is opened.
 	async function loadChildren() {
@@ -112,8 +130,13 @@
 		{/if}
 	{:else}
 		<span class="chev-spacer"></span>
-		{@const Icon = fileIcon(entry.name)}
-		<Icon size={15} strokeWidth={1.75} />
+		{@const pid = pierreIconsReady() ? pierreFileIconId(entry.name) : undefined}
+		{#if pid}
+			<svg class="file-icon" width="15" height="15" aria-hidden="true"><use href="#{pid}" /></svg>
+		{:else}
+			{@const Icon = fileIcon(entry.name)}
+			<Icon size={15} strokeWidth={1.75} />
+		{/if}
 	{/if}
 	<span class="node-name">{entry.name}</span>
 </button>
@@ -127,7 +150,7 @@
 		<p class="node-hint" style="padding-left: {indent + 14}px">Empty</p>
 	{:else if children}
 		{#each children as child (child.path)}
-			<Self entry={child} depth={depth + 1} {selectedPath} {onSelect} />
+			<Self entry={child} depth={depth + 1} {selectedPath} {revealPath} {onSelect} />
 		{/each}
 	{/if}
 {/if}
@@ -165,6 +188,9 @@
 	.chev-spacer {
 		display: inline-block;
 		width: 13px;
+		flex: 0 0 auto;
+	}
+	.file-icon {
 		flex: 0 0 auto;
 	}
 	.node-name {

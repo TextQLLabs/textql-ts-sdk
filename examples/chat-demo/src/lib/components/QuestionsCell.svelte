@@ -139,6 +139,9 @@
 			}
 			done = true;
 			onAnswered?.();
+			toast.success(
+				action === "submit" ? "Answers submitted" : "Questions skipped",
+			);
 		} catch (err) {
 			toast.error(
 				err instanceof Error ? err.message : "Failed to send answers.",
@@ -346,7 +349,7 @@
 		padding: 0.4rem 0.55rem;
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-xs, 6px);
-		background: color-mix(in srgb, var(--color-paper) 60%, #fff);
+		background: color-mix(in srgb, var(--color-paper) 60%, var(--color-elevate));
 		cursor: pointer;
 		transition:
 			border-color 0.12s ease,
@@ -361,7 +364,7 @@
 	}
 	.option.selected {
 		border-color: var(--color-accent);
-		background: color-mix(in srgb, var(--color-accent) 8%, #fff);
+		background: color-mix(in srgb, var(--color-accent) 8%, var(--color-elevate));
 	}
 	.option:focus-visible {
 		outline: 2px solid var(--color-accent);
@@ -428,7 +431,7 @@
 		padding: 0.35rem 0.55rem;
 		border: 1px solid var(--color-line);
 		border-radius: var(--radius-xs, 6px);
-		background: #fff;
+		background: var(--color-elevate);
 		width: 100%;
 		color: var(--color-ink);
 	}
