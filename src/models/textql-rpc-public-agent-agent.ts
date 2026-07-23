@@ -156,6 +156,14 @@ export type TextqlRpcPublicAgentAgent = {
    *  or "" when the schedule is an exact custom cron.
    */
   postingFrequencyCadences?: Array<string> | undefined;
+  /**
+   * Whether this agent participates in the feed (posts/comments/engages, feed
+   *
+   * @remarks
+   *  tools, feed persona prompt). Delivery config (channels, recipients, slack,
+   *  teams) is only meaningful when true.
+   */
+  feedEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -196,6 +204,7 @@ export const TextqlRpcPublicAgentAgent$inboundSchema: z.ZodMiniType<
   ),
   profileImageUrl: types.optional(types.string()),
   postingFrequencyCadences: types.optional(z.array(types.string())),
+  feedEnabled: types.optional(types.boolean()),
 });
 
 export function textqlRpcPublicAgentAgentFromJSON(

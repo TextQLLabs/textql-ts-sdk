@@ -13,12 +13,12 @@ import {
 } from "./textql-rpc-public-app-app-version.js";
 
 /**
- * Version history (mirrors dashboard.DashboardVersion). A snapshot of the
- *
- * @remarks
- *  published app at publish time; restore writes it back into the draft.
+ * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
  */
 export type TextqlRpcPublicAppListAppVersionsResponse = {
+  /**
+   * normalized relative path, forward slashes, no .. or leading /
+   */
   versions?: Array<TextqlRpcPublicAppAppVersion> | undefined;
   totalCount?: number | undefined;
 };

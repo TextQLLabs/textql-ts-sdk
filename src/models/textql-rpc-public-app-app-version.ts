@@ -26,12 +26,9 @@ import {
 
 export type TextqlRpcPublicAppAppVersion = {
   id?: string | undefined;
-  /**
-   * Routing observability: warm | warm_fallback | tql | sql.
-   */
   appId?: string | undefined;
   /**
-   * Whether this invoke paid phase-1 module definition (cold imports).
+   * JSON object, keys map to function kwargs
    */
   versionNumber?: number | undefined;
   code?: string | undefined;

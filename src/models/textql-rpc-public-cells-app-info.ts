@@ -8,13 +8,16 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
+ */
 export type TextqlRpcPublicCellsAppInfo = {
+  /**
+   * create | update | publish
+   */
   id?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
-  /**
-   * "draft" or "published" (derived from published_at)
-   */
   status?: string | undefined;
   creatorId?: string | undefined;
   /**

@@ -14,11 +14,11 @@ import {
 
 export type TextqlRpcPublicCellsListAppsCell = {
   searchTerm?: string | undefined;
-  /**
-   * Set for single-app lookup
-   */
   appId?: string | undefined;
   totalCount?: number | undefined;
+  /**
+   * "draft" or "published" (derived from published_at)
+   */
   errorMessage?: string | null | undefined;
   apps?: Array<TextqlRpcPublicCellsAppInfo> | undefined;
 };

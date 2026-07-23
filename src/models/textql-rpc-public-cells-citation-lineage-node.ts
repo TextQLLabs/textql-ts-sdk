@@ -10,25 +10,10 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsCitationLineageNode = {
   cellId?: string | undefined;
-  /**
-   * "sql" | "python"
-   */
   kind?: string | undefined;
-  /**
-   * Produced dataframe name, if applicable
-   */
   dataframeName?: string | null | undefined;
-  /**
-   * SQL only: connector ID; display name resolves client-side
-   */
   connectorId?: number | null | undefined;
-  /**
-   * SQL only: referenced tables
-   */
   tables?: Array<string> | undefined;
-  /**
-   * upstream cell(s), for graph lineage
-   */
   inputCellIds?: Array<string> | undefined;
 };
 

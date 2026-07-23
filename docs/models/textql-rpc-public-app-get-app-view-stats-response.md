@@ -1,7 +1,5 @@
 # TextqlRpcPublicAppGetAppViewStatsResponse
 
-View analytics
-
 ## Example Usage
 
 ```typescript

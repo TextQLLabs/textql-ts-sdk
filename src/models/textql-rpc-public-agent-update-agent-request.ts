@@ -46,6 +46,10 @@ export type TextqlRpcPublicAgentUpdateAgentRequest = {
    *  cron the backend generates; "" (or an empty list) means exact.
    */
   postingFrequencyCadences?: Array<string> | undefined;
+  /**
+   * Feed participation; nil = don't touch (mirrors fast_mode/is_stateful).
+   */
+  feedEnabled?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -70,6 +74,7 @@ export type TextqlRpcPublicAgentUpdateAgentRequest$Outbound = {
   teamsDmUserAadIds?: Array<string> | undefined;
   slackTrigger?: TextqlRpcPublicAgentSlackAgentTrigger$Outbound | undefined;
   postingFrequencyCadences?: Array<string> | undefined;
+  feedEnabled?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -102,6 +107,7 @@ export const TextqlRpcPublicAgentUpdateAgentRequest$outboundSchema:
       TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
     ),
     postingFrequencyCadences: z.optional(z.array(z.string())),
+    feedEnabled: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicAgentUpdateAgentRequestToJSON(
