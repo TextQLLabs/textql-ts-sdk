@@ -15,6 +15,7 @@
 		saveLastChatConfig,
 	} from "$lib/chatConfigPrefs";
 	import FAgentIcon from "$lib/assets/icons/FAgentIcon.svelte";
+	import FAppsIcon from "$lib/assets/icons/FAppsIcon.svelte";
 	import FOntologyIcon from "$lib/assets/icons/FOntologyIcon.svelte";
 	import FPlaybooksIcon from "$lib/assets/icons/FPlaybooksIcon.svelte";
 	import FThreadsIcon from "$lib/assets/icons/FThreadsIcon.svelte";
@@ -22,6 +23,8 @@
 	import { getCellCase, settleCells, type CellLike } from "$lib/cells";
 	import AgentDetailPage from "$lib/components/AgentDetailPage.svelte";
 	import AgentsPage from "$lib/components/AgentsPage.svelte";
+	import AppDetailPage from "$lib/components/AppDetailPage.svelte";
+	import AppsPage from "$lib/components/AppsPage.svelte";
 	import Composer from "$lib/components/Composer.svelte";
 	import OntologyPage from "$lib/components/OntologyPage.svelte";
 	import PlaybooksPage from "$lib/components/PlaybooksPage.svelte";
@@ -104,9 +107,16 @@
 		page.url.pathname === "/agents" ||
 			page.url.pathname.startsWith("/agents/"),
 	);
-	/** True on any full-panel section route (threads/playbooks/ontology/agents) — i.e. not chat. */
+	const isAppsRoute = $derived(
+		page.url.pathname === "/apps" || page.url.pathname.startsWith("/apps/"),
+	);
+	/** True on any full-panel section route (threads/playbooks/ontology/agents/apps) — i.e. not chat. */
 	const inSection = $derived(
-		isPlaybooksRoute || isOntologyRoute || isThreadsRoute || isAgentsRoute,
+		isPlaybooksRoute ||
+			isOntologyRoute ||
+			isThreadsRoute ||
+			isAgentsRoute ||
+			isAppsRoute,
 	);
 	const routeChatId = $derived(
 		inSection
@@ -231,7 +241,9 @@
 			page.url.pathname === "/threads" ||
 			page.url.pathname.startsWith("/threads/") ||
 			page.url.pathname === "/agents" ||
-			page.url.pathname.startsWith("/agents/")
+			page.url.pathname.startsWith("/agents/") ||
+			page.url.pathname === "/apps" ||
+			page.url.pathname.startsWith("/apps/")
 		) {
 			return;
 		}
@@ -905,6 +917,15 @@
 				</a>
 				<a
 					class="sidebar-nav-entry"
+					class:active={isAppsRoute}
+					href={resolve("/(chat)/apps")}
+					aria-current={isAppsRoute ? "page" : undefined}
+				>
+					<FAppsIcon class="sidebar-nav-icon" />
+					<span>Data apps</span>
+				</a>
+				<a
+					class="sidebar-nav-entry"
 					class:active={isOntologyRoute}
 					href={resolve("/(chat)/ontology")}
 					aria-current={isOntologyRoute ? "page" : undefined}
@@ -1029,80 +1050,88 @@
 		</div>
 	</aside>
 
-	<aside
-		class="sidebar-rail"
-		aria-label="Collapsed navigation"
-		aria-hidden={sidebarOpen}
-		inert={sidebarOpen ? true : undefined}
-	>
-		<Tooltip label="Open sidebar" shortcut="⌘S" side="right">
-			<button
-				type="button"
-				class="rail-btn"
-				aria-label="Open sidebar"
-				onclick={() => (sidebarOpen = true)}
-			>
-				<PanelLeft size={16} strokeWidth={1.75} />
-			</button>
-		</Tooltip>
-		<Tooltip label="New chat" side="right">
-			<button
-				type="button"
-				class="rail-btn"
-				aria-label="New chat"
-				onclick={newThread}
-			>
-				<Plus size={16} strokeWidth={2} />
-			</button>
-		</Tooltip>
+	{#if !sidebarOpen}
+		<aside class="sidebar-rail" aria-label="Collapsed navigation">
+			<Tooltip label="Open sidebar" shortcut="⌘S" side="right">
+				<button
+					type="button"
+					class="rail-btn"
+					aria-label="Open sidebar"
+					onclick={() => (sidebarOpen = true)}
+				>
+					<PanelLeft size={16} strokeWidth={1.75} />
+				</button>
+			</Tooltip>
+			<Tooltip label="New chat" side="right">
+				<button
+					type="button"
+					class="rail-btn"
+					aria-label="New chat"
+					onclick={newThread}
+				>
+					<Plus size={16} strokeWidth={2} />
+				</button>
+			</Tooltip>
 
-		<div class="rail-divider" role="presentation"></div>
+			<div class="rail-divider" role="presentation"></div>
 
-		<Tooltip label="Threads" side="right">
-			<a
-				class="rail-btn"
-				class:active={isThreadsRoute}
-				href={resolve("/(chat)/threads")}
-				aria-label="Threads"
-				aria-current={isThreadsRoute ? "page" : undefined}
-			>
-				<FThreadsIcon class="rail-icon" />
-			</a>
-		</Tooltip>
-		<Tooltip label="Playbooks" side="right">
-			<a
-				class="rail-btn"
-				class:active={isPlaybooksRoute}
-				href={resolve("/(chat)/playbooks")}
-				aria-label="Playbooks"
-				aria-current={isPlaybooksRoute ? "page" : undefined}
-			>
-				<FPlaybooksIcon class="rail-icon" />
-			</a>
-		</Tooltip>
-		<Tooltip label="Agents" side="right">
-			<a
-				class="rail-btn"
-				class:active={isAgentsRoute}
-				href={resolve("/(chat)/agents")}
-				aria-label="Agents"
-				aria-current={isAgentsRoute ? "page" : undefined}
-			>
-				<FAgentIcon class="rail-icon" />
-			</a>
-		</Tooltip>
-		<Tooltip label="Ontology" side="right">
-			<a
-				class="rail-btn"
-				class:active={isOntologyRoute}
-				href={resolve("/(chat)/ontology")}
-				aria-label="Ontology"
-				aria-current={isOntologyRoute ? "page" : undefined}
-			>
-				<FOntologyIcon class="rail-icon" />
-			</a>
-		</Tooltip>
-	</aside>
+			<Tooltip label="Threads" side="right">
+				<a
+					class="rail-btn"
+					class:active={isThreadsRoute}
+					href={resolve("/(chat)/threads")}
+					aria-label="Threads"
+					aria-current={isThreadsRoute ? "page" : undefined}
+				>
+					<FThreadsIcon class="rail-icon" />
+				</a>
+			</Tooltip>
+			<Tooltip label="Playbooks" side="right">
+				<a
+					class="rail-btn"
+					class:active={isPlaybooksRoute}
+					href={resolve("/(chat)/playbooks")}
+					aria-label="Playbooks"
+					aria-current={isPlaybooksRoute ? "page" : undefined}
+				>
+					<FPlaybooksIcon class="rail-icon" />
+				</a>
+			</Tooltip>
+			<Tooltip label="Agents" side="right">
+				<a
+					class="rail-btn"
+					class:active={isAgentsRoute}
+					href={resolve("/(chat)/agents")}
+					aria-label="Agents"
+					aria-current={isAgentsRoute ? "page" : undefined}
+				>
+					<FAgentIcon class="rail-icon" />
+				</a>
+			</Tooltip>
+			<Tooltip label="Data apps" side="right">
+				<a
+					class="rail-btn"
+					class:active={isAppsRoute}
+					href={resolve("/(chat)/apps")}
+					aria-label="Data apps"
+					aria-current={isAppsRoute ? "page" : undefined}
+				>
+					<FAppsIcon class="rail-icon" />
+				</a>
+			</Tooltip>
+			<Tooltip label="Ontology" side="right">
+				<a
+					class="rail-btn"
+					class:active={isOntologyRoute}
+					href={resolve("/(chat)/ontology")}
+					aria-label="Ontology"
+					aria-current={isOntologyRoute ? "page" : undefined}
+				>
+					<FOntologyIcon class="rail-icon" />
+				</a>
+			</Tooltip>
+		</aside>
+	{/if}
 
 	<div
 		class="workspace"
@@ -1169,6 +1198,12 @@
 					<AgentDetailPage />
 				{:else}
 					<AgentsPage />
+				{/if}
+			{:else if isAppsRoute}
+				{#if page.params.id}
+					<AppDetailPage />
+				{:else}
+					<AppsPage />
 				{/if}
 			{:else if showChatLoading}
 				<section
@@ -1351,14 +1386,12 @@
 	}
 
 	.app-shell.sidebar-collapsed .sidebar {
-		opacity: 0;
-		pointer-events: none;
-		border-right-color: transparent;
+		display: none;
 	}
 
-	/* Collapsed icon rail — stacks in the same grid cell as the full sidebar. */
+	/* Collapsed icon rail — only mounted when the full sidebar is closed. */
 	.sidebar-rail {
-		display: none;
+		display: flex;
 		grid-column: 1;
 		grid-row: 1;
 		flex-direction: column;
@@ -1371,10 +1404,6 @@
 		border-right: 1px solid
 			color-mix(in srgb, var(--color-line) 80%, transparent);
 		background: var(--color-sidebar);
-	}
-
-	.app-shell.sidebar-collapsed .sidebar-rail {
-		display: flex;
 	}
 
 	.rail-btn {
@@ -1980,8 +2009,7 @@
 		}
 
 		/* Mobile keeps the slide-in drawer + floating open button, not the rail. */
-		.sidebar-rail,
-		.app-shell.sidebar-collapsed .sidebar-rail {
+		.sidebar-rail {
 			display: none;
 		}
 
@@ -1994,6 +2022,7 @@
 			position: fixed;
 			inset: 0 auto 0 0;
 			z-index: 30;
+			display: flex;
 			width: min(300px, 90vw);
 			opacity: 1;
 			pointer-events: auto;
@@ -2002,13 +2031,8 @@
 		}
 
 		.app-shell.sidebar-collapsed .sidebar {
-			opacity: 1;
+			display: flex;
 			pointer-events: none;
-			border-right-color: color-mix(
-				in srgb,
-				var(--color-line) 80%,
-				transparent
-			);
 		}
 
 		.sidebar.open {

@@ -5,6 +5,7 @@
 	import Check from '@lucide/svelte/icons/check';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Plus from '@lucide/svelte/icons/plus';
+	import X from '@lucide/svelte/icons/x';
 	import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '$lib/chatModels';
 	import { connectorIconSrc } from '$lib/connectorIcons';
 	import { connectorsCache } from '$lib/connectorsCache.svelte';
@@ -214,7 +215,8 @@
 
 <svelte:window onkeydown={handleWindowKeydown} onpointerdown={handleWindowPointerDown} />
 
-<div class={['composer', docked && 'docked', className]}>
+<div class={['composer-shell', docked && 'docked', className]}>
+	<div class="composer">
 	<textarea
 		{@attach attachTextarea}
 		bind:value
@@ -238,45 +240,6 @@
 				>
 					<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
 				</button>
-			{/if}
-
-			{#if selectedChips.length > 0}
-				<div class="meta-row">
-					<div class="connector-stack" aria-label="Attached connectors">
-						{#each selectedChips.slice(0, 3) as chip (chip.id)}
-							{#if configLocked}
-								<span class="connector-dot" aria-label={chip.name}>
-									<img src={connectorIconSrc(chip.type)} alt="" />
-									<span class="connector-tip">{chip.name}</span>
-								</span>
-							{:else}
-								<button
-									type="button"
-									class="connector-dot"
-									aria-label={`Remove ${chip.name}`}
-									onclick={() => removeConnector(chip.id)}
-								>
-									<img src={connectorIconSrc(chip.type)} alt="" />
-									<span class="connector-tip">{chip.name}</span>
-								</button>
-							{/if}
-						{/each}
-						{#if selectedChips.length > 3}
-							<button
-								type="button"
-								class="connector-more"
-								aria-label={`${selectedChips.length - 3} more connectors`}
-								onclick={() => openMenu('connectors')}
-								disabled={configLocked}
-							>
-								+{selectedChips.length - 3}
-								<span class="connector-tip"
-									>{selectedChips.length - 3} more</span
-								>
-							</button>
-						{/if}
-					</div>
-				</div>
 			{/if}
 
 			{#if menuOpen && !configLocked}
@@ -414,12 +377,45 @@
 			</button>
 		</div>
 	</div>
+	</div>
+
+	{#if selectedChips.length > 0}
+		<div class="connector-tray" aria-label="Attached connectors">
+			{#each selectedChips as chip (chip.id)}
+				<span class="conn-pill" class:locked={configLocked}>
+					<img src={connectorIconSrc(chip.type)} alt="" />
+					<span class="conn-pill-name">{chip.name}</span>
+					{#if !configLocked}
+						<button
+							type="button"
+							class="conn-pill-remove"
+							aria-label={`Remove ${chip.name}`}
+							onclick={() => removeConnector(chip.id)}
+						>
+							<X size={12} strokeWidth={2} aria-hidden="true" />
+						</button>
+					{/if}
+				</span>
+			{/each}
+		</div>
+	{/if}
 </div>
 
 <style>
-	.composer {
+	.composer-shell {
 		display: flex;
 		width: min(640px, 100%);
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.composer-shell.docked {
+		width: min(720px, 100%);
+	}
+
+	.composer {
+		display: flex;
+		width: 100%;
 		flex-direction: column;
 		gap: 8px;
 		padding: 12px 14px 10px;
@@ -429,10 +425,6 @@
 		box-shadow:
 			0 1px 2px rgba(15, 15, 20, 0.03),
 			0 10px 28px rgba(15, 15, 20, 0.06);
-	}
-
-	.composer.docked {
-		width: min(720px, 100%);
 	}
 
 	.composer:focus-within {
@@ -491,8 +483,7 @@
 	.menu-row,
 	.retry-btn,
 	.connector-row,
-	.connector-dot,
-	.connector-more {
+	.conn-pill-remove {
 		border: 0;
 		font: inherit;
 		cursor: pointer;
@@ -531,114 +522,64 @@
 		pointer-events: none;
 	}
 
-	.meta-row {
-		display: inline-flex;
-		min-width: 0;
+	.connector-tray {
+		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
+		gap: 6px;
+		padding: 0 4px;
 	}
 
-	.connector-stack {
+	.conn-pill {
 		display: inline-flex;
+		max-width: 100%;
+		align-items: center;
+		gap: 6px;
+		padding: 3px 5px 3px 7px;
+		border: 1px solid var(--color-line);
+		border-radius: 7px;
+		background: var(--color-sidebar);
+		color: var(--color-text-strong);
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 1.2;
+	}
+
+	.conn-pill.locked {
+		padding-right: 9px;
+	}
+
+	.conn-pill img {
+		width: 14px;
+		height: 14px;
 		flex-shrink: 0;
-		align-items: center;
-	}
-
-	.connector-dot {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 22px;
-		height: 22px;
-		margin-left: -6px;
-		padding: 0;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--color-accent) 8%, var(--color-elevate));
-		box-shadow: 0 0 0 1.5px #fff;
-		transition:
-			transform 0.12s ease,
-			background 0.12s ease;
-	}
-
-	.connector-dot:first-child {
-		margin-left: 0;
-	}
-
-	.connector-dot img {
-		width: 13px;
-		height: 13px;
 		object-fit: contain;
 	}
 
-	.connector-dot:hover,
-	.connector-dot:focus-visible,
-	.connector-dot:active {
-		z-index: 2;
-		background: #e0e7ff;
-		transform: translateY(-1px) scale(1.06);
-	}
-
-	.connector-dot:active {
-		transform: translateY(0) scale(0.96);
-		background: #c7d2fe;
-	}
-
-	.connector-tip {
-		position: absolute;
-		bottom: calc(100% + 6px);
-		left: 50%;
-		z-index: 5;
-		padding: 3px 7px;
-		border-radius: 6px;
-		color: #fafafa;
-		background: #27272a;
-		font-size: 11px;
-		font-weight: 500;
-		line-height: 1.2;
+	.conn-pill-name {
+		overflow: hidden;
+		max-width: 180px;
+		text-overflow: ellipsis;
 		white-space: nowrap;
-		pointer-events: none;
-		opacity: 0;
-		transform: translateX(-50%) translateY(2px);
-		transition:
-			opacity 0.12s ease,
-			transform 0.12s ease;
 	}
 
-	.connector-dot:hover .connector-tip,
-	.connector-dot:focus-visible .connector-tip,
-	.connector-dot:active .connector-tip,
-	.connector-more:hover .connector-tip,
-	.connector-more:focus-visible .connector-tip {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0);
-	}
-
-	.connector-more {
-		position: relative;
-		margin-left: 4px;
-		padding: 0 2px;
+	.conn-pill-remove {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		padding: 0;
+		border-radius: 999px;
 		color: #a1a1aa;
 		background: transparent;
-		font-size: 11px;
-		font-weight: 600;
 	}
 
-	.connector-more:hover:not(:disabled) {
-		color: #71717a;
-	}
-
-	.connector-more:disabled {
-		cursor: default;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.connector-dot {
-			transition: none;
-		}
-
-		.connector-tip {
-			transition: none;
-		}
+	.conn-pill-remove:hover,
+	.conn-pill-remove:focus-visible {
+		color: #52525b;
+		background: color-mix(in srgb, var(--color-ink) 8%, transparent);
 	}
 
 	.menu-shell {

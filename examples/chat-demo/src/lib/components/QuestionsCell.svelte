@@ -32,6 +32,7 @@
 	let working = $state<Working[]>([]);
 	let submitting = $state(false);
 	let done = $state(false); // optimistic: hide the form as soon as we submit
+	let step = $state(0); // one-question-at-a-time cursor into `questions`
 
 	const blank = (q: Record<string, unknown>): Working => ({
 		selected: [],
@@ -44,13 +45,26 @@
 	$effect(() => {
 		const id = asString(cell.id);
 		const reset = id !== initId;
-		if (reset) initId = id;
+		if (reset) {
+			initId = id;
+			step = 0;
+		}
 		if (reset || working.length !== questions.length) {
 			working = questions.map((q, i) =>
 				reset ? blank(q) : (working[i] ?? blank(q)),
 			);
 		}
+		// keep the cursor in range if the question set shrinks
+		if (step > questions.length - 1) step = Math.max(0, questions.length - 1);
 	});
+
+	const isLast = $derived(step >= questions.length - 1);
+	function next() {
+		if (step < questions.length - 1) step += 1;
+	}
+	function back() {
+		if (step > 0) step -= 1;
+	}
 
 	function kindOf(
 		q: Record<string, unknown>,
@@ -163,116 +177,142 @@
 	</span>
 {/snippet}
 
-<section class="questions" class:resolved={!pending || done}>
-	{#if pending && !done}
-		<header class="questions-head">Please answer to continue</header>
+{#snippet questionCard(q: Record<string, unknown>, qi: number)}
+	{@const kind = kindOf(q)}
+	<div class="question">
+		<p class="question-title">{asString(q.question)}</p>
+		{#if asString(q.explanation)}
+			<p class="question-explain">{asString(q.explanation)}</p>
+		{/if}
 
-		{#each questions as q, qi (qi)}
-			{@const kind = kindOf(q)}
-			<div class="question">
-				<p class="question-title">{asString(q.question)}</p>
-				{#if asString(q.explanation)}
-					<p class="question-explain">{asString(q.explanation)}</p>
-				{/if}
-
-				{#if kind === "choice" || kind === "multichoice"}
-					{@const multi = kind === "multichoice"}
-					<div class="options">
-						{#each asRecords(q.options) as opt (asString(opt.name))}
-							{@const name = asString(opt.name)}
-							{@const chosen =
-								working[qi]?.selected.includes(name) ?? false}
-							<button
-								type="button"
-								class="option"
-								class:selected={chosen}
-								aria-pressed={chosen}
-								onclick={() =>
-									multi
-										? toggleMulti(qi, name)
-										: pickChoice(qi, name)}
-							>
-								{@render indicator(chosen, !multi)}
-								<span class="option-body">
-									<span class="option-name">{name}</span>
-									{#if asString(opt.description)}
-										<span class="option-desc"
-											>{asString(opt.description)}</span
-										>
-									{/if}
-								</span>
-							</button>
-						{/each}
-						{#if q.allowCustom === true}
-							{@const chosen = working[qi]?.other ?? false}
-							<button
-								type="button"
-								class="option"
-								class:selected={chosen}
-								aria-pressed={chosen}
-								onclick={() => pickOther(qi, multi)}
-							>
-								{@render indicator(chosen, !multi)}
-								<span class="option-body"
-									><span class="option-name">Other…</span
-									></span
+		{#if kind === "choice" || kind === "multichoice"}
+			{@const multi = kind === "multichoice"}
+			<div class="options">
+				{#each asRecords(q.options) as opt (asString(opt.name))}
+					{@const name = asString(opt.name)}
+					{@const chosen =
+						working[qi]?.selected.includes(name) ?? false}
+					<button
+						type="button"
+						class="option"
+						class:selected={chosen}
+						aria-pressed={chosen}
+						onclick={() =>
+							multi
+								? toggleMulti(qi, name)
+								: pickChoice(qi, name)}
+					>
+						{@render indicator(chosen, !multi)}
+						<span class="option-body">
+							<span class="option-name">{name}</span>
+							{#if asString(opt.description)}
+								<span class="option-desc"
+									>{asString(opt.description)}</span
 								>
-							</button>
-							{#if chosen}
-								<input
-									class="text-input"
-									bind:value={working[qi].custom}
-									placeholder="Type your answer"
-								/>
 							{/if}
-						{/if}
-					</div>
-				{:else}
-					<div class="inputs">
-						{#each asRecords(q.inputs) as input, ii (ii)}
-							{@const type = inputType(input)}
-							<label class="field">
-								<span class="field-label">
-									{asString(input.label)}
-									{#if asString(input.formPathLabel)}
-										<em class="option-desc"
-											>→ {asString(
-												input.formPathLabel,
-											)}</em
-										>
-									{/if}
-								</span>
-								{#if type === "multiline"}
-									<textarea
-										class="text-input"
-										rows="3"
-										bind:value={working[qi].inputs[ii]}
-									></textarea>
-								{:else}
-									<input
-										class="text-input"
-										type={type === "password"
-											? "password"
-											: "text"}
-										bind:value={working[qi].inputs[ii]}
-									/>
-								{/if}
-							</label>
-						{/each}
-					</div>
+						</span>
+					</button>
+				{/each}
+				{#if q.allowCustom === true}
+					{@const chosen = working[qi]?.other ?? false}
+					<button
+						type="button"
+						class="option"
+						class:selected={chosen}
+						aria-pressed={chosen}
+						onclick={() => pickOther(qi, multi)}
+					>
+						{@render indicator(chosen, !multi)}
+						<span class="option-body"
+							><span class="option-name">Other…</span
+							></span
+						>
+					</button>
+					{#if chosen}
+						<input
+							class="text-input"
+							bind:value={working[qi].custom}
+							placeholder="Type your answer"
+						/>
+					{/if}
 				{/if}
 			</div>
-		{/each}
+		{:else}
+			<div class="inputs">
+				{#each asRecords(q.inputs) as input, ii (ii)}
+					{@const type = inputType(input)}
+					<label class="field">
+						<span class="field-label">
+							{asString(input.label)}
+							{#if asString(input.formPathLabel)}
+								<em class="option-desc"
+									>→ {asString(input.formPathLabel)}</em
+								>
+							{/if}
+						</span>
+						{#if type === "multiline"}
+							<textarea
+								class="text-input"
+								rows="3"
+								bind:value={working[qi].inputs[ii]}
+							></textarea>
+						{:else}
+							<input
+								class="text-input"
+								type={type === "password" ? "password" : "text"}
+								bind:value={working[qi].inputs[ii]}
+							/>
+						{/if}
+					</label>
+				{/each}
+			</div>
+		{/if}
+	</div>
+{/snippet}
+
+<section class="questions" class:resolved={!pending || done}>
+	{#if pending && !done}
+		<header class="questions-head">
+			<span>Please answer to continue</span>
+			{#if questions.length > 1}
+				<span class="progress">{step + 1}/{questions.length}</span>
+			{/if}
+		</header>
+
+		{#if questions[step]}
+			{@render questionCard(questions[step], step)}
+		{/if}
 
 		<div class="actions">
-			<button
-				type="button"
-				class="btn-submit"
-				disabled={submitting}
-				onclick={() => send("submit")}
-			>
-				Submit
-			</button>
+			{#if step > 0}
+				<button
+					type="button"
+					class="btn-skip"
+					disabled={submitting}
+					onclick={back}
+				>
+					Back
+				</button>
+			{/if}
+			{#if isLast}
+				<button
+					type="button"
+					class="btn-submit"
+					disabled={submitting}
+					onclick={() => send("submit")}
+				>
+					Submit
+				</button>
+			{:else}
+				<button
+					type="button"
+					class="btn-submit"
+					disabled={submitting}
+					onclick={next}
+				>
+					Next
+				</button>
+			{/if}
 			<button
 				type="button"
 				class="btn-skip"
@@ -309,9 +349,19 @@
 		color: var(--color-ink);
 	}
 	.questions-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
 		font-weight: 600;
 		font-size: 12px;
 		letter-spacing: 0.01em;
+		color: var(--color-muted);
+	}
+	.progress {
+		flex: 0 0 auto;
+		font-variant-numeric: tabular-nums;
+		font-weight: 600;
 		color: var(--color-muted);
 	}
 	.question {
