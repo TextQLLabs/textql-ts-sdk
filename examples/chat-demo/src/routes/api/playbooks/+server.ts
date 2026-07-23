@@ -39,7 +39,8 @@ export const GET: RequestHandler = async () => {
 	const getPage = async (page: number) => {
 		const result = await client.playbooks.get({
 			body: {
-				memberOnly: true,
+				// Org-wide: surface everyone's playbooks, not just the caller's.
+				memberOnly: false,
 				limit: PAGE_SIZE,
 				offset: page * PAGE_SIZE,
 				sortBy: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldUpdatedAt,

@@ -11,15 +11,59 @@
 		type PreviewItem
 	} from '$lib/previewPanel.svelte';
 	import { toEmbeddablePreviewUrl } from '$lib/previewUrl';
+	import { CHART_FIT_SHIM } from '$lib/chartFitShim';
 	import Markdown from '$lib/components/Markdown.svelte';
 	import PierreCode from '$lib/components/PierreCode.svelte';
 
+	/** Chart-ish embeds we want to force-fit (not interactive data-apps). */
+	const CHART_TYPES = new Set(['chart', 'echarts', 'plotly', 'vega', 'visualization']);
+
 	const item = $derived(previewPanel.selected);
 	const tabs = $derived(previewPanel.tabs);
-	const embedUrl = $derived(toEmbeddablePreviewUrl(item?.url));
+	const rawEmbedUrl = $derived(toEmbeddablePreviewUrl(item?.url));
+	const isChart = $derived(item ? CHART_TYPES.has(previewKind(item)) : false);
+	// For proxied chart URLs, ask the proxy to inject the fit shim.
+	const embedUrl = $derived(
+		isChart && rawEmbedUrl?.startsWith('/api/preview-proxy')
+			? `${rawEmbedUrl}&fit=chart`
+			: rawEmbedUrl
+	);
 
 	let panelEl: HTMLElement | undefined = $state();
 	const resizing = $derived(previewPanel.resizing);
+
+	// Charts render at their natural size inside the iframe, report that size
+	// back via postMessage (see chartFitShim), and the whole iframe is then
+	// CSS-scaled to fit the panel width. This shows the entire chart with no
+	// overflow on either axis, and no dead space, regardless of the chart's
+	// authored size or renderer.
+	const CHART_W_DEFAULT = 1100;
+	const CHART_H_DEFAULT = 720;
+	let chartFitW = $state(0); // panel content width (the wrapper)
+	let chartNatW = $state(CHART_W_DEFAULT); // chart's reported natural width
+	let chartNatH = $state(CHART_H_DEFAULT); // chart's reported natural height
+	// Fit to width; never upscale past 1:1 so small charts stay crisp.
+	const chartScale = $derived(chartFitW > 0 ? Math.min(1, chartFitW / chartNatW) : 1);
+
+	// Reset to defaults when the shown item changes; the iframe re-reports.
+	$effect(() => {
+		item?.id;
+		chartNatW = CHART_W_DEFAULT;
+		chartNatH = CHART_H_DEFAULT;
+	});
+
+	// Receive the natural chart size from the injected shim.
+	$effect(() => {
+		function onMessage(event: MessageEvent) {
+			const d = event.data;
+			if (d && typeof d === 'object' && d.__chartFit && d.w > 0 && d.h > 0) {
+				chartNatW = d.w;
+				chartNatH = d.h;
+			}
+		}
+		window.addEventListener('message', onMessage);
+		return () => window.removeEventListener('message', onMessage);
+	});
 
 	/** Animate width so chat reflows with the drawer (fly alone would snap the grid). */
 	function drawerSlide(
@@ -139,6 +183,19 @@
 		event.preventDefault();
 		previewPanel.closeTab(id);
 	}
+
+	/**
+	 * Agent-authored chart HTML often renders ECharts at a fixed width wider
+	 * than the panel, so the axis labels get clipped. When we embed it via
+	 * srcdoc we can inject a small shim that (a) removes default body margins,
+	 * (b) caps content to the iframe width, and (c) tells any ECharts instance
+	 * to resize to fit — on load, on resize, and when the panel is dragged.
+	 */
+	function fitEmbedHtml(html: string): string {
+		return html.includes('</body>')
+			? html.replace('</body>', `${CHART_FIT_SHIM}</body>`)
+			: html + CHART_FIT_SHIM;
+	}
 </script>
 
 <aside
@@ -203,6 +260,22 @@
 			<p class="error">{item.error}</p>
 		{:else if isImage(item) && embedUrl}
 			<img class="preview-image" src={embedUrl} alt={item.name} />
+		{:else if isChart && (embedUrl || item.content)}
+			<div
+				class="chart-fit"
+				bind:clientWidth={chartFitW}
+				style="height:{Math.round(chartNatH * chartScale)}px"
+			>
+				<iframe
+					class="chart-frame"
+					title={item.name}
+					sandbox="allow-scripts"
+					referrerpolicy="no-referrer"
+					src={embedUrl ?? undefined}
+					srcdoc={!embedUrl && item.content ? fitEmbedHtml(item.content) : undefined}
+					style="width:{chartNatW}px;height:{chartNatH}px;transform:scale({chartScale})"
+				></iframe>
+			</div>
 		{:else if shouldIframe(item) && embedUrl}
 			<iframe
 				class="preview-frame"
@@ -216,7 +289,7 @@
 				class="preview-frame"
 				title={item.name}
 				sandbox="allow-scripts"
-				srcdoc={item.content}
+				srcdoc={fitEmbedHtml(item.content)}
 			></iframe>
 		{:else if isTable(item) && item.content}
 			<pre class="preview-table">{item.content}</pre>
@@ -443,8 +516,10 @@
 
 	.panel-body {
 		flex: 1;
+		min-width: 0;
 		min-height: 0;
-		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: auto;
 		padding: 12px;
 	}
 
@@ -479,6 +554,25 @@
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
 		background: var(--color-elevate);
+	}
+
+	/* Chart: scale a fixed-size iframe down to the panel so the whole chart
+	   shows with no overflow either axis. */
+	.chart-fit {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		border: 1px solid var(--color-line);
+		border-radius: 8px;
+		background: var(--color-elevate);
+	}
+
+	.chart-frame {
+		display: block;
+		border: 0;
+		background: var(--color-elevate);
+		transform-origin: top left;
 	}
 
 	.preview-table {

@@ -876,7 +876,7 @@
 				<Tooltip label="Close sidebar" shortcut="⌘S" side="bottom">
 					<button
 						type="button"
-						class="icon-ghost sidebar-toggle"
+						class="icon-ghost sidebar-close"
 						aria-label="Close sidebar"
 						onclick={() => (sidebarOpen = false)}
 					>
@@ -1171,21 +1171,19 @@
 				</div>
 			{/if}
 
-			{#if !inSection && hasAssets}
-				<button
-					type="button"
-					class="icon-ghost assets-toggle"
-					class:active={previewPanel.open}
-					aria-label="Open preview panel"
-					aria-pressed={previewPanel.open}
-					title={previewPanel.open
-						? "Preview open"
-						: `Preview (${chatAssets.length})`}
-					onclick={openAssetsPanel}
-				>
-					<PanelRight size={16} strokeWidth={1.75} />
-				</button>
-			{/if}
+			<div class="panel-overlays panel-overlays-end">
+				{#if !inSection && hasAssets && !previewPanel.open}
+					<button
+						type="button"
+						class="icon-ghost assets-toggle"
+						aria-label="Open preview panel"
+						title={`Preview (${chatAssets.length})`}
+						onclick={openAssetsPanel}
+					>
+						<PanelRight size={16} strokeWidth={1.75} />
+					</button>
+				{/if}
+			</div>
 
 			{#if isThreadsRoute}
 				<ThreadsPage />
@@ -1465,6 +1463,23 @@
 		gap: 4px;
 	}
 
+	.sidebar-close {
+		display: inline-flex;
+		width: 30px;
+		height: 30px;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+		padding: 7px;
+		border-radius: var(--radius-sm);
+		color: var(--color-text-3);
+		transition: background 120ms ease;
+	}
+
+	.sidebar-close:hover {
+		background: color-mix(in srgb, var(--color-elevate) 82%, transparent);
+	}
+
 	.new-chat-btn {
 		display: inline-flex;
 		align-items: center;
@@ -1489,10 +1504,6 @@
 	}
 
 	.new-chat-btn :global(svg) {
-		flex-shrink: 0;
-	}
-
-	.sidebar-header .sidebar-toggle {
 		flex-shrink: 0;
 	}
 
@@ -1806,6 +1817,10 @@
 		left: 12px;
 	}
 
+	.panel-overlays-end {
+		right: 12px;
+	}
+
 	/* Desktop uses the collapsed icon rail, so the floating open/new buttons
 	   are only needed on the mobile drawer layout. */
 	@media (min-width: 781px) {
@@ -1827,18 +1842,9 @@
 	}
 
 	.assets-toggle {
-		position: absolute;
-		top: 8px;
-		right: 12px;
-		z-index: 5;
 		margin: 0;
 		background: color-mix(in srgb, var(--color-paper) 88%, transparent);
 		backdrop-filter: blur(10px);
-	}
-
-	.assets-toggle.active {
-		color: var(--color-ink);
-		background: color-mix(in srgb, var(--color-ink) 6%, transparent);
 	}
 
 	.chat-status {
@@ -1901,7 +1907,7 @@
 	.conversation-inner {
 		width: min(720px, calc(100% - 48px));
 		margin: 0 auto;
-		padding: 8px 0 24px;
+		padding: 8px 0 20vh;
 	}
 
 	/* Only the mobile floating overlay overlaps the conversation; the desktop
@@ -1975,12 +1981,16 @@
 	.composer-dock {
 		display: flex;
 		justify-content: center;
-		padding: 0 24px 18px;
+		padding: 8px 24px 28px;
 		background: linear-gradient(
 			180deg,
 			transparent,
 			var(--color-paper) 28%
 		);
+	}
+
+	.composer-dock :global(.composer-shell) {
+		margin-inline: auto;
 	}
 
 	.scrim {

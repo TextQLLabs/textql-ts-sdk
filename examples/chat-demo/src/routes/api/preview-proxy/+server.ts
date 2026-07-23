@@ -1,6 +1,7 @@
 import { error } from '@sveltejs/kit';
 
 import { isAllowedPreviewHost } from '$lib/previewUrl';
+import { CHART_FIT_SHIM } from '$lib/chartFitShim';
 
 import type { RequestHandler } from './$types';
 
@@ -58,7 +59,14 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 	// Rewrite only the top-level HTML document; its sub-resources then load direct from upstream.
 	const contentType = upstream.headers.get('content-type') ?? '';
 	if (upstream.ok && contentType.includes('text/html')) {
-		const html = injectBaseHref(await upstream.text(), parsed.href);
+		let html = injectBaseHref(await upstream.text(), parsed.href);
+		// Chart previews: inject the fit shim so ECharts resizes to the panel
+		// instead of overflowing. Scoped to fit=chart so data-apps are untouched.
+		if (url.searchParams.get('fit') === 'chart') {
+			html = html.includes('</body>')
+				? html.replace('</body>', `${CHART_FIT_SHIM}</body>`)
+				: html + CHART_FIT_SHIM;
+		}
 		return new Response(html, { status: upstream.status, statusText: upstream.statusText, headers });
 	}
 
