@@ -2,6 +2,11 @@ export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+/** A trimmed string, or null when the value is absent, non-string, or blank. */
+export function trimmedOrNull(value: unknown): string | null {
+  return typeof value === 'string' && value.trim() ? value.trim() : null;
+}
+
 export function storageGet(key: string): string | null {
   if (typeof localStorage === 'undefined') return null;
   try {

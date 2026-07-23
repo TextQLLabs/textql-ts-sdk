@@ -9,6 +9,8 @@
  * anonymous-viewer context — so those calls are answered "not available" rather
  * than left hanging. Returns a teardown function.
  */
+import { isRecord } from '$lib/utils';
+
 const BRIDGE = 'ana/v1';
 
 type AppBridgeOptions = {
@@ -96,15 +98,13 @@ export function attachAppBridge(
 			});
 			const payload: unknown = await response.json();
 			if (detached) return;
-			if (!response.ok || !payload || typeof payload !== 'object') {
-				const error =
-					payload && typeof payload === 'object' && typeof (payload as Json).error === 'string'
-						? (payload as Json).error
-						: 'compute function failed';
+			const record = isRecord(payload) ? payload : null;
+			if (!response.ok || !record) {
+				const error = typeof record?.error === 'string' ? record.error : 'compute function failed';
 				postToApp({ type: 'compute.error', id, error });
 				return;
 			}
-			const resultJson = (payload as Json).resultJson;
+			const resultJson = record.resultJson;
 			let result: unknown = null;
 			if (typeof resultJson === 'string') {
 				try {

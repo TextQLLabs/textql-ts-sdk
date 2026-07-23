@@ -16,7 +16,7 @@
 	import { attachAppBridge } from "$lib/appBridge";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
 	import { toEmbeddablePreviewUrl } from "$lib/previewUrl";
-	import { isRecord } from "$lib/utils";
+	import { isRecord, trimmedOrNull } from "$lib/utils";
 
 	type DataSource = { type: string | null; name: string | null };
 	type ComputeFunction = {
@@ -94,23 +94,19 @@
 		return fallback;
 	}
 
-	function toStr(value: unknown): string | null {
-		return typeof value === "string" && value.trim() ? value.trim() : null;
-	}
-
 	function parseDetail(value: unknown): AppDetail | null {
 		if (!isRecord(value) || typeof value.id !== "string") return null;
 		const dataSources = Array.isArray(value.dataSources)
 			? value.dataSources.filter(isRecord).map(
-					(d): DataSource => ({ type: toStr(d.type), name: toStr(d.name) }),
+					(d): DataSource => ({ type: trimmedOrNull(d.type), name: trimmedOrNull(d.name) }),
 				)
 			: [];
 		const computeFunctions = Array.isArray(value.computeFunctions)
 			? value.computeFunctions.filter(isRecord).map(
 					(f): ComputeFunction => ({
-						name: toStr(f.name),
-						description: toStr(f.description),
-						returns: toStr(f.returns),
+						name: trimmedOrNull(f.name),
+						description: trimmedOrNull(f.description),
+						returns: trimmedOrNull(f.returns),
 						paramCount: typeof f.paramCount === "number" ? f.paramCount : 0,
 					}),
 				)
@@ -118,8 +114,8 @@
 		const capabilities = Array.isArray(value.capabilities)
 			? value.capabilities.filter(isRecord).map(
 					(c): Capability => ({
-						type: toStr(c.type),
-						name: toStr(c.name),
+						type: trimmedOrNull(c.type),
+						name: trimmedOrNull(c.name),
 						connectorId: typeof c.connectorId === "number" ? c.connectorId : null,
 					}),
 				)
@@ -136,18 +132,18 @@
 			: [];
 		return {
 			id: value.id,
-			name: toStr(value.name) ?? "Untitled app",
-			description: toStr(value.description),
+			name: trimmedOrNull(value.name) ?? "Untitled app",
+			description: trimmedOrNull(value.description),
 			code: typeof value.code === "string" ? value.code : "",
-			htmlUrl: toStr(value.htmlUrl),
-			publishedHtmlUrl: toStr(value.publishedHtmlUrl),
-			screenshotUrl: toStr(value.screenshotUrl),
-			chatId: toStr(value.chatId),
-			folderId: toStr(value.folderId),
+			htmlUrl: trimmedOrNull(value.htmlUrl),
+			publishedHtmlUrl: trimmedOrNull(value.publishedHtmlUrl),
+			screenshotUrl: trimmedOrNull(value.screenshotUrl),
+			chatId: trimmedOrNull(value.chatId),
+			folderId: trimmedOrNull(value.folderId),
 			isFavorited: value.isFavorited === true,
 			hasUnpublishedChanges: value.hasUnpublishedChanges === true,
 			scheduleEnabled: value.scheduleEnabled === true,
-			cronString: toStr(value.cronString),
+			cronString: trimmedOrNull(value.cronString),
 			consoleErrors: Array.isArray(value.consoleErrors)
 				? value.consoleErrors.filter((e): e is string => typeof e === "string")
 				: [],
@@ -155,10 +151,10 @@
 			computeFunctions,
 			capabilities,
 			files,
-			createdAt: toStr(value.createdAt),
-			updatedAt: toStr(value.updatedAt),
-			refreshedAt: toStr(value.refreshedAt),
-			publishedAt: toStr(value.publishedAt),
+			createdAt: trimmedOrNull(value.createdAt),
+			updatedAt: trimmedOrNull(value.updatedAt),
+			refreshedAt: trimmedOrNull(value.refreshedAt),
+			publishedAt: trimmedOrNull(value.publishedAt),
 		};
 	}
 

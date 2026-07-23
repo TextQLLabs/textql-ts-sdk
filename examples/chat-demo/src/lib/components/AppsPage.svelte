@@ -111,6 +111,7 @@
 		{:else}
 			<ul class="app-grid">
 				{#each apps as app (app.id)}
+					{@const updated = formatUpdated(app.updatedAt)}
 					<li>
 						<a
 							class="app-card"
@@ -168,8 +169,8 @@
 											>Draft</span
 										>
 									{/if}
-									{#if formatUpdated(app.updatedAt)}
-										<span class="app-updated">{formatUpdated(app.updatedAt)}</span>
+									{#if updated}
+										<span class="app-updated">{updated}</span>
 									{/if}
 								</span>
 							</span>

@@ -1,22 +1,28 @@
 <script lang="ts">
-	import ExternalLink from '@lucide/svelte/icons/external-link';
-	import PanelRightClose from '@lucide/svelte/icons/panel-right-close';
-	import X from '@lucide/svelte/icons/x';
-	import { cubicOut } from 'svelte/easing';
-	import type { TransitionConfig } from 'svelte/transition';
+	import ExternalLink from "@lucide/svelte/icons/external-link";
+	import PanelRightClose from "@lucide/svelte/icons/panel-right-close";
+	import X from "@lucide/svelte/icons/x";
+	import { cubicOut } from "svelte/easing";
+	import type { TransitionConfig } from "svelte/transition";
 	import {
 		clampPreviewWidth,
 		guessPreviewType,
 		previewPanel,
-		type PreviewItem
-	} from '$lib/previewPanel.svelte';
-	import { toEmbeddablePreviewUrl } from '$lib/previewUrl';
-	import { CHART_FIT_SHIM } from '$lib/chartFitShim';
-	import Markdown from '$lib/components/Markdown.svelte';
-	import PierreCode from '$lib/components/PierreCode.svelte';
+		type PreviewItem,
+	} from "$lib/previewPanel.svelte";
+	import { toEmbeddablePreviewUrl } from "$lib/previewUrl";
+	import { withChartFitShim } from "$lib/chartFitShim";
+	import Markdown from "$lib/components/Markdown.svelte";
+	import PierreCode from "$lib/components/PierreCode.svelte";
 
 	/** Chart-ish embeds we want to force-fit (not interactive data-apps). */
-	const CHART_TYPES = new Set(['chart', 'echarts', 'plotly', 'vega', 'visualization']);
+	const CHART_TYPES = new Set([
+		"chart",
+		"echarts",
+		"plotly",
+		"vega",
+		"visualization",
+	]);
 
 	const item = $derived(previewPanel.selected);
 	const tabs = $derived(previewPanel.tabs);
@@ -24,26 +30,22 @@
 	const isChart = $derived(item ? CHART_TYPES.has(previewKind(item)) : false);
 	// For proxied chart URLs, ask the proxy to inject the fit shim.
 	const embedUrl = $derived(
-		isChart && rawEmbedUrl?.startsWith('/api/preview-proxy')
+		isChart && rawEmbedUrl?.startsWith("/api/preview-proxy")
 			? `${rawEmbedUrl}&fit=chart`
-			: rawEmbedUrl
+			: rawEmbedUrl,
 	);
 
 	let panelEl: HTMLElement | undefined = $state();
 	const resizing = $derived(previewPanel.resizing);
 
-	// Charts render at their natural size inside the iframe, report that size
-	// back via postMessage (see chartFitShim), and the whole iframe is then
-	// CSS-scaled to fit the panel width. This shows the entire chart with no
-	// overflow on either axis, and no dead space, regardless of the chart's
-	// authored size or renderer.
 	const CHART_W_DEFAULT = 1100;
 	const CHART_H_DEFAULT = 720;
 	let chartFitW = $state(0); // panel content width (the wrapper)
 	let chartNatW = $state(CHART_W_DEFAULT); // chart's reported natural width
 	let chartNatH = $state(CHART_H_DEFAULT); // chart's reported natural height
-	// Fit to width; never upscale past 1:1 so small charts stay crisp.
-	const chartScale = $derived(chartFitW > 0 ? Math.min(1, chartFitW / chartNatW) : 1);
+	const chartScale = $derived(
+		chartFitW > 0 ? Math.min(1, chartFitW / chartNatW) : 1,
+	);
 
 	// Reset to defaults when the shown item changes; the iframe re-reports.
 	$effect(() => {
@@ -56,19 +58,25 @@
 	$effect(() => {
 		function onMessage(event: MessageEvent) {
 			const d = event.data;
-			if (d && typeof d === 'object' && d.__chartFit && d.w > 0 && d.h > 0) {
+			if (
+				d &&
+				typeof d === "object" &&
+				d.__chartFit &&
+				d.w > 0 &&
+				d.h > 0
+			) {
 				chartNatW = d.w;
 				chartNatH = d.h;
 			}
 		}
-		window.addEventListener('message', onMessage);
-		return () => window.removeEventListener('message', onMessage);
+		window.addEventListener("message", onMessage);
+		return () => window.removeEventListener("message", onMessage);
 	});
 
 	/** Animate width so chat reflows with the drawer (fly alone would snap the grid). */
 	function drawerSlide(
 		_node: HTMLElement,
-		{ duration = 220 }: { duration?: number } = {}
+		{ duration = 220 }: { duration?: number } = {},
 	): TransitionConfig {
 		const width = previewPanel.width;
 		return {
@@ -77,39 +85,44 @@
 			css: (t) => {
 				const w = Math.max(0, width * t);
 				return `width:${w}px;min-width:${w}px;max-width:${w}px;overflow:hidden;opacity:${0.88 + 0.12 * t}`;
-			}
+			},
 		};
 	}
 
 	function typeLabel(previewType: string): string {
-		if (!previewType) return 'File';
+		if (!previewType) return "File";
 		return previewType.charAt(0).toUpperCase() + previewType.slice(1);
 	}
 
 	/** Charts / HTML / echarts — always iframe, never navigate or download. */
 	const HTML_EMBED_TYPES = new Set([
-		'html',
-		'chart',
-		'echarts',
-		'plotly',
-		'vega',
-		'visualization',
-		'iframe',
-		'app'
+		"html",
+		"chart",
+		"echarts",
+		"plotly",
+		"vega",
+		"visualization",
+		"iframe",
+		"app",
 	]);
-	const TABLE_TYPES = new Set(['table', 'dataframe', 'csv']);
+	const TABLE_TYPES = new Set(["table", "dataframe", "csv"]);
 
 	/** Trust a recognized declared type; otherwise sniff the URL extension. */
 	function previewKind(preview: PreviewItem): string {
 		const t = preview.previewType.toLowerCase();
-		if (t === 'image' || t === 'pdf' || HTML_EMBED_TYPES.has(t) || TABLE_TYPES.has(t)) {
+		if (
+			t === "image" ||
+			t === "pdf" ||
+			HTML_EMBED_TYPES.has(t) ||
+			TABLE_TYPES.has(t)
+		) {
 			return t;
 		}
-		return guessPreviewType(preview.url ?? '', t || 'file');
+		return guessPreviewType(preview.url ?? "", t || "file");
 	}
 
 	function isImage(preview: PreviewItem): boolean {
-		return previewKind(preview) === 'image';
+		return previewKind(preview) === "image";
 	}
 
 	function isHtmlEmbed(preview: PreviewItem): boolean {
@@ -117,7 +130,7 @@
 	}
 
 	function isPdf(preview: PreviewItem): boolean {
-		return previewKind(preview) === 'pdf';
+		return previewKind(preview) === "pdf";
 	}
 
 	function isTable(preview: PreviewItem): boolean {
@@ -129,7 +142,10 @@
 		if (isImage(preview) || isTable(preview)) return false;
 		if (isHtmlEmbed(preview) || isPdf(preview)) return true;
 		// Unknown typed URL on the preview proxy — embed rather than <a download>.
-		return Boolean(embedUrl.startsWith('/asset/') || embedUrl.startsWith('/api/preview-proxy'));
+		return Boolean(
+			embedUrl.startsWith("/asset/") ||
+				embedUrl.startsWith("/api/preview-proxy"),
+		);
 	}
 
 	function onResizePointerDown(event: PointerEvent) {
@@ -138,7 +154,7 @@
 		(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
 		previewPanel.resizing = true;
 
-		const workspace = panelEl?.closest('.workspace') as HTMLElement | null;
+		const workspace = panelEl?.closest(".workspace") as HTMLElement | null;
 
 		const startX = event.clientX;
 		const startW = previewPanel.width;
@@ -150,7 +166,10 @@
 			raf = 0;
 			latestW = clampPreviewWidth(startW + (startX - latestX));
 			// Direct CSS var — skip Svelte width state until pointerup
-			workspace?.style.setProperty('--preview-panel-width', `${latestW}px`);
+			workspace?.style.setProperty(
+				"--preview-panel-width",
+				`${latestW}px`,
+			);
 		};
 
 		const onMove = (ev: PointerEvent) => {
@@ -164,18 +183,18 @@
 			previewPanel.setWidth(latestW);
 			previewPanel.commitWidth();
 			previewPanel.resizing = false;
-			window.removeEventListener('pointermove', onMove);
-			window.removeEventListener('pointerup', onUp);
-			window.removeEventListener('pointercancel', onUp);
-			document.body.style.removeProperty('cursor');
-			document.body.style.removeProperty('user-select');
+			window.removeEventListener("pointermove", onMove);
+			window.removeEventListener("pointerup", onUp);
+			window.removeEventListener("pointercancel", onUp);
+			document.body.style.removeProperty("cursor");
+			document.body.style.removeProperty("user-select");
 		};
 
-		document.body.style.cursor = 'col-resize';
-		document.body.style.userSelect = 'none';
-		window.addEventListener('pointermove', onMove);
-		window.addEventListener('pointerup', onUp);
-		window.addEventListener('pointercancel', onUp);
+		document.body.style.cursor = "col-resize";
+		document.body.style.userSelect = "none";
+		window.addEventListener("pointermove", onMove);
+		window.addEventListener("pointerup", onUp);
+		window.addEventListener("pointercancel", onUp);
 	}
 
 	function onTabClose(event: MouseEvent, id: string) {
@@ -184,17 +203,60 @@
 		previewPanel.closeTab(id);
 	}
 
-	/**
-	 * Agent-authored chart HTML often renders ECharts at a fixed width wider
-	 * than the panel, so the axis labels get clipped. When we embed it via
-	 * srcdoc we can inject a small shim that (a) removes default body margins,
-	 * (b) caps content to the iframe width, and (c) tells any ECharts instance
-	 * to resize to fit — on load, on resize, and when the panel is dragged.
-	 */
-	function fitEmbedHtml(html: string): string {
-		return html.includes('</body>')
-			? html.replace('</body>', `${CHART_FIT_SHIM}</body>`)
-			: html + CHART_FIT_SHIM;
+	/** Minimal, quote-aware CSV/TSV parser → rows of cells. */
+	function parseCsv(text: string): string[][] {
+		const firstLine = text.slice(0, text.indexOf("\n") + 1 || text.length);
+		const delim = firstLine.split("\t").length > firstLine.split(",").length ? "\t" : ",";
+		const rows: string[][] = [];
+		let row: string[] = [];
+		let field = "";
+		let quoted = false;
+		for (let i = 0; i < text.length; i++) {
+			const c = text[i];
+			if (quoted) {
+				if (c === '"' && text[i + 1] === '"') {
+					field += '"';
+					i++;
+				} else if (c === '"') quoted = false;
+				else field += c;
+			} else if (c === '"') quoted = true;
+			else if (c === delim) {
+				row.push(field);
+				field = "";
+			} else if (c === "\n" || c === "\r") {
+				if (c === "\r" && text[i + 1] === "\n") i++;
+				row.push(field);
+				rows.push(row);
+				row = [];
+				field = "";
+			} else field += c;
+		}
+		if (field !== "" || row.length) {
+			row.push(field);
+			rows.push(row);
+		}
+		return rows.filter((r) => r.length > 1 || (r[0] ?? "") !== "");
+	}
+
+	const NUM_RE = /^-?[$€£]?\s?[\d,]+(\.\d+)?%?$/;
+	const isNum = (v: string) => NUM_RE.test((v ?? "").trim());
+	const CSV_ROW_CAP = 500;
+
+	/** A column is numeric if every non-empty cell (in the shown rows) is a
+	 *  number — used to right-align the whole column, header included. */
+	function numericColumns(rows: string[][]): boolean[] {
+		const header = rows[0] ?? [];
+		const last = Math.min(rows.length, CSV_ROW_CAP + 1);
+		return header.map((_, col) => {
+			let seen = 0;
+			for (let r = 1; r < last; r++) {
+				const v = (rows[r]?.[col] ?? "").trim();
+				if (!v) continue;
+				seen++;
+				if (!isNum(v)) return false;
+			}
+			return seen > 0;
+		});
 	}
 </script>
 
@@ -215,7 +277,11 @@
 	<header class="panel-head">
 		<div class="tabs" role="tablist" aria-label="Open previews">
 			{#each tabs as tab (tab.id)}
-				<div class="tab" class:active={tab.id === item?.id} role="presentation">
+				<div
+					class="tab"
+					class:active={tab.id === item?.id}
+					role="presentation"
+				>
 					<button
 						type="button"
 						class="tab-main"
@@ -225,7 +291,9 @@
 						onclick={() => previewPanel.select(tab.id)}
 					>
 						<span class="tab-name">{tab.name}</span>
-						<span class="tab-type">{typeLabel(tab.previewType)}</span>
+						<span class="tab-type"
+							>{typeLabel(tab.previewType)}</span
+						>
 					</button>
 					<button
 						type="button"
@@ -272,7 +340,9 @@
 					sandbox="allow-scripts"
 					referrerpolicy="no-referrer"
 					src={embedUrl ?? undefined}
-					srcdoc={!embedUrl && item.content ? fitEmbedHtml(item.content) : undefined}
+					srcdoc={!embedUrl && item.content
+						? withChartFitShim(item.content)
+						: undefined}
 					style="width:{chartNatW}px;height:{chartNatH}px;transform:scale({chartScale})"
 				></iframe>
 			</div>
@@ -289,26 +359,32 @@
 				class="preview-frame"
 				title={item.name}
 				sandbox="allow-scripts"
-				srcdoc={fitEmbedHtml(item.content)}
+				srcdoc={item.content}
 			></iframe>
 		{:else if isTable(item) && item.content}
-			<pre class="preview-table">{item.content}</pre>
+			{@render csvTable(parseCsv(item.content), item.content)}
 		{:else if isTable(item) && embedUrl}
-			<iframe
-				class="preview-frame"
-				src={embedUrl}
-				title={item.name}
-				sandbox="allow-scripts"
-				referrerpolicy="no-referrer"
-			></iframe>
+			{#await fetch(embedUrl).then((r) => r.text())}
+				<p class="empty">Loading…</p>
+			{:then text}
+				{@render csvTable(parseCsv(text), text)}
+			{:catch}
+				<iframe
+					class="preview-frame"
+					src={embedUrl}
+					title={item.name}
+					sandbox="allow-scripts"
+					referrerpolicy="no-referrer"
+				></iframe>
+			{/await}
 		{:else if item.content}
-			{#if item.previewType === 'markdown' || item.previewType === 'md'}
+			{#if item.previewType === "markdown" || item.previewType === "md"}
 				<div class="preview-md">
 					<Markdown content={item.content} />
 				</div>
 			{:else}
 				<PierreCode
-					fileName={item.name || 'preview.txt'}
+					fileName={item.name || "preview.txt"}
 					contents={item.content}
 				/>
 			{/if}
@@ -332,6 +408,39 @@
 	{/if}
 </aside>
 
+{#snippet csvTable(rows: string[][], raw: string)}
+	{#if rows.length > 0 && rows[0].length > 1}
+		{@const numCols = numericColumns(rows)}
+		<div class="csv-wrap">
+			<table class="csv">
+				<thead>
+					<tr>
+						<th class="csv-rownum"></th>
+						{#each rows[0] as h, i}
+							<th class:num={numCols[i]} title={h}>{h}</th>
+						{/each}
+					</tr>
+				</thead>
+				<tbody>
+					{#each rows.slice(1, CSV_ROW_CAP + 1) as r, i}
+						<tr>
+							<td class="csv-rownum">{i + 1}</td>
+							{#each r as c, ci}
+								<td class:num={numCols[ci]} title={c}>{c}</td>
+							{/each}
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+		{#if rows.length - 1 > CSV_ROW_CAP}
+			<p class="csv-note">Showing first {CSV_ROW_CAP} of {rows.length - 1} rows</p>
+		{/if}
+	{:else}
+		<pre class="preview-table">{raw}</pre>
+	{/if}
+{/snippet}
+
 <style>
 	.preview-panel {
 		position: relative;
@@ -340,7 +449,8 @@
 		min-width: 0;
 		min-height: 0;
 		flex-direction: column;
-		border-left: 1px solid color-mix(in srgb, var(--color-line) 85%, transparent);
+		border-left: 1px solid
+			color-mix(in srgb, var(--color-line) 85%, transparent);
 		background: var(--color-fill);
 	}
 
@@ -384,7 +494,8 @@
 		gap: 4px;
 		min-height: 36px;
 		padding: 0 6px 0 0;
-		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
+		border-bottom: 1px solid
+			color-mix(in srgb, var(--color-line) 80%, transparent);
 		background: var(--color-elevate);
 	}
 
@@ -403,7 +514,8 @@
 		min-width: 88px;
 		flex-shrink: 0;
 		align-items: stretch;
-		border-right: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+		border-right: 1px solid
+			color-mix(in srgb, var(--color-line) 70%, transparent);
 		color: #71717a;
 		background: transparent;
 	}
@@ -508,7 +620,8 @@
 	.summary {
 		margin: 0;
 		padding: 8px 14px;
-		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 70%, transparent);
+		border-bottom: 1px solid
+			color-mix(in srgb, var(--color-line) 70%, transparent);
 		color: #71717a;
 		font-size: 12px;
 		line-height: 1.4;
@@ -561,7 +674,6 @@
 	.chart-fit {
 		position: relative;
 		width: 100%;
-		max-width: 100%;
 		overflow: hidden;
 		border: 1px solid var(--color-line);
 		border-radius: 8px;
@@ -588,6 +700,91 @@
 		white-space: pre;
 	}
 
+	.csv-wrap {
+		overflow: auto;
+		max-height: 100%;
+		border: 1px solid var(--color-line);
+		border-radius: 10px;
+		background: var(--color-elevate);
+	}
+
+	.csv {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		font-size: 12.5px;
+		color: var(--color-text-strong);
+	}
+
+	.csv th,
+	.csv td {
+		max-width: 260px;
+		overflow: hidden;
+		padding: 7px 12px;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* thin separators: rows get a bottom rule, columns a light right rule */
+	.csv td {
+		border-bottom: 1px solid color-mix(in srgb, var(--color-line) 55%, transparent);
+	}
+
+	.csv tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	.csv th {
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		border-bottom: 1px solid var(--color-line);
+		background: var(--color-fill);
+		color: var(--color-muted);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+
+	.csv td.num,
+	.csv th.num {
+		text-align: right;
+	}
+
+	.csv td.num {
+		font-variant-numeric: tabular-nums;
+	}
+
+	.csv tbody tr:hover td {
+		background: color-mix(in srgb, var(--color-ink) 3%, transparent);
+	}
+
+	/* muted row-number gutter */
+	.csv-rownum {
+		position: sticky;
+		left: 0;
+		width: 1%;
+		max-width: none;
+		border-right: 1px solid color-mix(in srgb, var(--color-line) 55%, transparent);
+		background: var(--color-fill);
+		color: var(--color-muted);
+		font-variant-numeric: tabular-nums;
+		text-align: right;
+		user-select: none;
+	}
+
+	thead .csv-rownum {
+		z-index: 2;
+	}
+
+	.csv-note {
+		margin: 8px 2px 0;
+		color: var(--color-muted);
+		font-size: 11px;
+	}
+
 	.preview-md {
 		padding: 4px 2px;
 	}
@@ -608,7 +805,8 @@
 
 	.panel-foot {
 		padding: 10px 14px;
-		border-top: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent);
+		border-top: 1px solid
+			color-mix(in srgb, var(--color-line) 80%, transparent);
 		background: var(--color-elevate);
 	}
 </style>

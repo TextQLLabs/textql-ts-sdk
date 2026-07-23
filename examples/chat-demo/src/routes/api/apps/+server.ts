@@ -1,4 +1,5 @@
 import { isConnectError, proxyError, textqlClients, toIsoString } from '$lib/server/textql';
+import { trimmedOrNull } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 import type { TextqlRpcPublicAppApp } from '@textql/sdk/models';
 
@@ -8,10 +9,9 @@ function toListItem(app: TextqlRpcPublicAppApp) {
 	if (typeof app.id !== 'string') return null;
 	return {
 		id: app.id,
-		name: app.name?.trim() || 'Untitled app',
-		description: typeof app.description === 'string' ? app.description.trim() || null : null,
-		screenshotUrl:
-			typeof app.screenshotUrl === 'string' ? app.screenshotUrl.trim() || null : null,
+		name: trimmedOrNull(app.name) ?? 'Untitled app',
+		description: trimmedOrNull(app.description),
+		screenshotUrl: trimmedOrNull(app.screenshotUrl),
 		isFavorited: app.isFavorited === true,
 		hasUnpublishedChanges: app.hasUnpublishedChanges === true,
 		scheduleEnabled: app.scheduleEnabled === true,

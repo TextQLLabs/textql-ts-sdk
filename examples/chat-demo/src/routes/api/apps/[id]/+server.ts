@@ -1,4 +1,5 @@
 import { isConnectError, proxyError, textqlClients, toIsoString } from '$lib/server/textql';
+import { trimmedOrNull } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 import type {
 	TextqlRpcPublicAppApp,
@@ -14,15 +15,15 @@ import type { RequestHandler } from './$types';
 function toDataSource(source: TextqlRpcPublicDashboardDataSource) {
 	return {
 		type: typeof source.type === 'string' ? source.type : null,
-		name: typeof source.name === 'string' ? source.name.trim() || null : null
+		name: trimmedOrNull(source.name)
 	};
 }
 
 function toComputeFunction(fn: TextqlRpcPublicAppComputeFunction) {
 	return {
-		name: typeof fn.name === 'string' ? fn.name.trim() || null : null,
-		description: typeof fn.description === 'string' ? fn.description.trim() || null : null,
-		returns: typeof fn.returns === 'string' ? fn.returns.trim() || null : null,
+		name: trimmedOrNull(fn.name),
+		description: trimmedOrNull(fn.description),
+		returns: trimmedOrNull(fn.returns),
 		paramCount: Array.isArray(fn.params) ? fn.params.length : 0
 	};
 }
@@ -30,34 +31,33 @@ function toComputeFunction(fn: TextqlRpcPublicAppComputeFunction) {
 function toCapability(cap: TextqlRpcPublicAppCapability) {
 	return {
 		type: typeof cap.type === 'string' ? cap.type : null,
-		name: typeof cap.name === 'string' ? cap.name.trim() || null : null,
+		name: trimmedOrNull(cap.name),
 		connectorId: typeof cap.connectorId === 'number' ? cap.connectorId : null
 	};
 }
 
 function toFile(file: TextqlRpcPublicAppAppFile) {
-	if (typeof file.path !== 'string' || !file.path.trim()) return null;
+	const path = trimmedOrNull(file.path);
+	if (!path) return null;
 	const content = typeof file.content === 'string' ? file.content : '';
-	return { path: file.path.trim(), size: content.length };
+	return { path, size: content.length };
 }
 
 function serializeApp(app: TextqlRpcPublicAppApp) {
 	return {
 		id: app.id,
-		name: app.name?.trim() || 'Untitled app',
-		description: typeof app.description === 'string' ? app.description.trim() || null : null,
+		name: trimmedOrNull(app.name) ?? 'Untitled app',
+		description: trimmedOrNull(app.description),
 		code: typeof app.code === 'string' ? app.code : '',
-		htmlUrl: typeof app.htmlUrl === 'string' ? app.htmlUrl.trim() || null : null,
-		publishedHtmlUrl:
-			typeof app.publishedHtmlUrl === 'string' ? app.publishedHtmlUrl.trim() || null : null,
-		screenshotUrl:
-			typeof app.screenshotUrl === 'string' ? app.screenshotUrl.trim() || null : null,
-		chatId: typeof app.chatId === 'string' ? app.chatId.trim() || null : null,
-		folderId: typeof app.folderId === 'string' ? app.folderId.trim() || null : null,
+		htmlUrl: trimmedOrNull(app.htmlUrl),
+		publishedHtmlUrl: trimmedOrNull(app.publishedHtmlUrl),
+		screenshotUrl: trimmedOrNull(app.screenshotUrl),
+		chatId: trimmedOrNull(app.chatId),
+		folderId: trimmedOrNull(app.folderId),
 		isFavorited: app.isFavorited === true,
 		hasUnpublishedChanges: app.hasUnpublishedChanges === true,
 		scheduleEnabled: app.scheduleEnabled === true,
-		cronString: typeof app.cronString === 'string' ? app.cronString.trim() || null : null,
+		cronString: trimmedOrNull(app.cronString),
 		consoleErrors: Array.isArray(app.consoleErrors)
 			? app.consoleErrors.filter((e): e is string => typeof e === 'string')
 			: [],

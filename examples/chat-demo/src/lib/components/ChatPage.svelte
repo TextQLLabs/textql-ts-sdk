@@ -1907,7 +1907,8 @@
 	.conversation-inner {
 		width: min(720px, calc(100% - 48px));
 		margin: 0 auto;
-		padding: 8px 0 20vh;
+		/* Generous tail so the last message can scroll up toward center, well clear of the composer. */
+		padding: 8px 0 28vh;
 	}
 
 	/* Only the mobile floating overlay overlaps the conversation; the desktop
