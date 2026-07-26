@@ -27,12 +27,12 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+ * Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
  *
  * @remarks
- * Duplicates an app the caller can view into a new draft app they own,
+ * Duplicates an app the caller can view into a new app they own,
  *  named "Copy of <name>". Copies code/files/data sources/compute functions/
- *  schedule; never carries over the source's published state or data snapshot.
+ *  schedule; never carries over the source's data snapshot.
  */
 export function appsDuplicate(
   client: TextqlCore,

@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatDashboardArtifactData
 
+File-based artifacts (images, PDFs, CSVs, HTML, text files)
+
 ## Example Usage
 
 ```typescript

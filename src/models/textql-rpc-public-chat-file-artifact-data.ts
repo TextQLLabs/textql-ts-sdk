@@ -13,9 +13,12 @@ import {
 } from "./textql-rpc-public-chat-artifact-type.js";
 
 /**
- * File-based artifacts (images, PDFs, CSVs, HTML, text files)
+ * Request full artifact data when item is selected
  */
 export type TextqlRpcPublicChatFileArtifactData = {
+  /**
+   * Cell ID or composite "cellId:type:url" for multi-artifact cells
+   */
   url?: string | undefined;
   /**
    * Artifact types for drawer items

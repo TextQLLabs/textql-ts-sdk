@@ -10,7 +10,7 @@ let value: TextqlRpcPublicChatAttachDashboardRequest = {};
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_minus_sign: | N/A                |
-| `dashboardId`      | *string*           | :heavy_minus_sign: | N/A                |
+| Field               | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `chatId`            | *string*            | :heavy_minus_sign:  | N/A                 |
+| `dashboardId`       | *string*            | :heavy_minus_sign:  | uses latest version |

@@ -27,11 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+ * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
  *
  * @remarks
- * Server stream of live activity batches + presence snapshots, driven by
- *  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+ * Cross-member live activity: rows from every member of the app after a seq,
+ *  each carrying member_id + display_name (resolved server-side; never email).
  */
 export function appServiceAppServicePresenceHeartbeat(
   client: TextqlCore,

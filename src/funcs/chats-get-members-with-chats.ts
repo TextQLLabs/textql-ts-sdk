@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * List distinct chat creators the user can access
- *
- * @remarks
- * List distinct chat creators the user can access
+ * GetMembersWithChats
  */
 export function chatsGetMembersWithChats(
   client: TextqlCore,

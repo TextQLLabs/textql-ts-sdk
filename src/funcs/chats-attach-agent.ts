@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * External API users
- *
- * @remarks
- * External API users
+ * AttachAgentToChat
  */
 export function chatsAttachAgent(
   client: TextqlCore,

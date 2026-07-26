@@ -5,12 +5,9 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Ontology change management
+ * Per-member auth resume
  */
 export type TextqlRpcPublicChatApproveOntologyChangeRequest = {
-  /**
-   * UUID
-   */
   cellId?: string | undefined;
 };
 

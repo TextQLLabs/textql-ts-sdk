@@ -19,13 +19,7 @@ import {
 export type TextqlRpcPublicChatCheckStreamlitHealthResponse = {
   status?: TextqlRpcPublicChatStreamlitHealthStatus | undefined;
   cell?: TextqlRpcPublicChatCell | undefined;
-  /**
-   * Dynamic URL from state manager
-   */
   embedUrl?: string | null | undefined;
-  /**
-   * Raw workerId:port format
-   */
   streamlitUrl?: string | null | undefined;
 };
 

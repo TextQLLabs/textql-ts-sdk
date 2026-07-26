@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Request all artifact summaries for a chat (for drawer dropdown)
- */
 export type TextqlRpcPublicChatGetChatArtifactsSummaryRequest = {
   chatId?: string | undefined;
 };

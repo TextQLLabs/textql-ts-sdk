@@ -14,13 +14,7 @@ import {
 
 export type TextqlRpcPublicChatEgressSummary = {
   totalCalls?: number | undefined;
-  /**
-   * outcome -> count (ok/denied/error)
-   */
   outcomeCounts?: { [k: string]: number } | undefined;
-  /**
-   * bounded; newest first
-   */
   calls?: Array<TextqlRpcPublicChatEgressCall> | undefined;
 };
 

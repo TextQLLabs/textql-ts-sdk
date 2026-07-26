@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * order is "most recent first"
- */
 export type TextqlRpcPublicChatHistoryRequest = {
   chatId?: string | undefined;
   limit?: number | null | undefined;

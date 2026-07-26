@@ -27,10 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * View analytics: reads the engagement views recorded on app page load.
+ * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  *
  * @remarks
- * View analytics: reads the engagement views recorded on app page load.
+ * Lists the calling member's favorited library items (apps, dashboards,
+ *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  */
 export function appsGetAppViewStats(
   client: TextqlCore,

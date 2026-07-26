@@ -7,12 +7,14 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicAppRestoreAppVersionRequest = {
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  commitId?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicAppRestoreAppVersionRequest$Outbound = {
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  commitId?: string | null | undefined;
 };
 
 /** @internal */
@@ -23,6 +25,7 @@ export const TextqlRpcPublicAppRestoreAppVersionRequest$outboundSchema:
   > = z.object({
     appId: z.optional(z.string()),
     versionNumber: z.optional(z.int()),
+    commitId: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicAppRestoreAppVersionRequestToJSON(

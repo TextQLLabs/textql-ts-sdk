@@ -16,6 +16,10 @@ import {
   TextqlRpcPublicObserveObservabilitySummary$inboundSchema,
 } from "./textql-rpc-public-observe-observability-summary.js";
 import {
+  TextqlRpcPublicObserveUsageHeatmapPoint,
+  TextqlRpcPublicObserveUsageHeatmapPoint$inboundSchema,
+} from "./textql-rpc-public-observe-usage-heatmap-point.js";
+import {
   TextqlRpcPublicObserveWarningTypeCount,
   TextqlRpcPublicObserveWarningTypeCount$inboundSchema,
 } from "./textql-rpc-public-observe-warning-type-count.js";
@@ -44,6 +48,14 @@ export type TextqlRpcPublicObserveGetObservabilityStatsResponse = {
   warningDailyDistribution?:
     | Array<TextqlRpcPublicObserveWarningTypeDailyCount>
     | undefined;
+  /**
+   * Chat counts bucketed by weekday x hour-of-day (in the request timezone,
+   *
+   * @remarks
+   *  UTC default) for the usage heatmap. Empty buckets are absent (the client
+   *  zero-fills the 7x24 grid).
+   */
+  usageHeatmap?: Array<TextqlRpcPublicObserveUsageHeatmapPoint> | undefined;
 };
 
 /** @internal */
@@ -64,6 +76,9 @@ export const TextqlRpcPublicObserveGetObservabilityStatsResponse$inboundSchema:
       ),
       warningDailyDistribution: types.optional(
         z.array(TextqlRpcPublicObserveWarningTypeDailyCount$inboundSchema),
+      ),
+      usageHeatmap: types.optional(
+        z.array(TextqlRpcPublicObserveUsageHeatmapPoint$inboundSchema),
       ),
     });
 

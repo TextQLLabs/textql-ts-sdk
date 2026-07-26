@@ -9,11 +9,19 @@ export type TextqlRpcPublicObserveGetObservabilityStatsRequest = {
    * time window: 7, 14, 30, 90
    */
   days?: number | undefined;
+  /**
+   * IANA timezone (e.g. "America/New_York") used to bucket the usage heatmap
+   *
+   * @remarks
+   *  by the viewer's local weekday/hour. Falls back to UTC when unset/invalid.
+   */
+  timezone?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicObserveGetObservabilityStatsRequest$Outbound = {
   days?: number | undefined;
+  timezone?: string | null | undefined;
 };
 
 /** @internal */
@@ -23,6 +31,7 @@ export const TextqlRpcPublicObserveGetObservabilityStatsRequest$outboundSchema:
     TextqlRpcPublicObserveGetObservabilityStatsRequest
   > = z.object({
     days: z.optional(z.int()),
+    timezone: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicObserveGetObservabilityStatsRequestToJSON(

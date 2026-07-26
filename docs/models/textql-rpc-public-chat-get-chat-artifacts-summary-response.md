@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatGetChatArtifactsSummaryResponse
 
+Lightweight summary for drawer item list (minimal data transfer)
+
 ## Example Usage
 
 ```typescript
@@ -18,4 +20,4 @@ let value: TextqlRpcPublicChatGetChatArtifactsSummaryResponse = {
 
 | Field                                                                                               | Type                                                                                                | Required                                                                                            | Description                                                                                         |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `artifacts`                                                                                         | [models.TextqlRpcPublicChatArtifactSummary](../models/textql-rpc-public-chat-artifact-summary.md)[] | :heavy_minus_sign:                                                                                  | Flat list, sorted by created_at DESC                                                                |
+| `artifacts`                                                                                         | [models.TextqlRpcPublicChatArtifactSummary](../models/textql-rpc-public-chat-artifact-summary.md)[] | :heavy_minus_sign:                                                                                  | cell_id or unique identifier                                                                        |

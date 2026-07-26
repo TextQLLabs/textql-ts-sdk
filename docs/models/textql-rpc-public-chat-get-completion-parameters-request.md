@@ -12,5 +12,5 @@ let value: TextqlRpcPublicChatGetCompletionParametersRequest = {};
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_minus_sign: | N/A                |
+| `chatId`           | *string*           | :heavy_minus_sign: | UUID               |
 | `cellId`           | *string*           | :heavy_minus_sign: | N/A                |

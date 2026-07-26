@@ -10,9 +10,6 @@ import {
 
 export type TextqlRpcPublicChatCheckHealthRequest = {
   model?: TextqlRpcPublicChatLlmModel | undefined;
-  /**
-   * if true, runs actual execution tests (expensive)
-   */
   functional?: boolean | null | undefined;
 };
 

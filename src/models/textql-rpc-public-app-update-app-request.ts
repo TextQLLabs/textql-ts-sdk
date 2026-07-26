@@ -31,7 +31,11 @@ export type TextqlRpcPublicAppUpdateAppRequest = {
   code?: string | null | undefined;
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
   replaceDataSources?: boolean | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   publish?: boolean | null | undefined;
+  stalenessWindowSeconds?: number | null | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   replaceComputeFunctions?: boolean | null | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
@@ -53,6 +57,7 @@ export type TextqlRpcPublicAppUpdateAppRequest$Outbound = {
   dataSources?: Array<TextqlRpcPublicDashboardDataSource$Outbound> | undefined;
   replaceDataSources?: boolean | null | undefined;
   publish?: boolean | null | undefined;
+  stalenessWindowSeconds?: number | null | undefined;
   computeFunctions?:
     | Array<TextqlRpcPublicAppComputeFunction$Outbound>
     | undefined;
@@ -81,6 +86,7 @@ export const TextqlRpcPublicAppUpdateAppRequest$outboundSchema: z.ZodMiniType<
   ),
   replaceDataSources: z.optional(z.nullable(z.boolean())),
   publish: z.optional(z.nullable(z.boolean())),
+  stalenessWindowSeconds: z.optional(z.nullable(z.int())),
   computeFunctions: z.optional(
     z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
   ),

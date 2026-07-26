@@ -12,9 +12,12 @@ import {
   TextqlRpcPublicChatArtifactSummary$inboundSchema,
 } from "./textql-rpc-public-chat-artifact-summary.js";
 
+/**
+ * Lightweight summary for drawer item list (minimal data transfer)
+ */
 export type TextqlRpcPublicChatGetChatArtifactsSummaryResponse = {
   /**
-   * Flat list, sorted by created_at DESC
+   * cell_id or unique identifier
    */
   artifacts?: Array<TextqlRpcPublicChatArtifactSummary> | undefined;
 };

@@ -27,27 +27,42 @@ import {
 
 export type Streamlit = {
   streamlit: TextqlRpcPublicChatStreamlitArtifactData;
+  /**
+   * Flat list, sorted by created_at DESC
+   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type Form = {
   form: TextqlRpcPublicChatFormArtifactData;
+  /**
+   * Flat list, sorted by created_at DESC
+   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type TextqlRpcPublicChatGetArtifactResponseFile = {
   /**
-   * File-based artifacts (images, PDFs, CSVs, HTML, text files)
+   * Request full artifact data when item is selected
    */
   file: TextqlRpcPublicChatFileArtifactData;
+  /**
+   * Flat list, sorted by created_at DESC
+   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type Dashboard = {
+  /**
+   * File-based artifacts (images, PDFs, CSVs, HTML, text files)
+   */
   dashboard: TextqlRpcPublicChatDashboardArtifactData;
+  /**
+   * Flat list, sorted by created_at DESC
+   */
   id?: string | undefined;
   name?: string | undefined;
 };

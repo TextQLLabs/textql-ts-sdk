@@ -12,9 +12,6 @@ export type TextqlRpcPublicChatRateChatCellRequest = {
   chatId?: string | undefined;
   cellId?: string | undefined;
   rating?: TextqlRpcPublicChatCellRating | undefined;
-  /**
-   * free-text "why" captured from the rating modal
-   */
   reason?: string | null | undefined;
 };
 

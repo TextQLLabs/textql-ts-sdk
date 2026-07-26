@@ -531,11 +531,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+      summary: Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
       description: |-
-        Duplicates an app the caller can view into a new draft app they own,
+        Duplicates an app the caller can view into a new app they own,
          named "Copy of <name>". Copies code/files/data sources/compute functions/
-         schedule; never carries over the source's published state or data snapshot.
+         schedule; never carries over the source's data snapshot.
       operationId: AppService_DuplicateApp
       parameters:
         - name: Connect-Protocol-Version
@@ -609,10 +609,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
-      description: |-
-        Staff-only (superadmin gated in-handler): publishes the embedded component
-         gallery as an app tree and returns its signed viewer URL.
+      summary: 'View analytics: reads the engagement views recorded on app page load.'
+      description: 'View analytics: reads the engagement views recorded on app page load.'
       operationId: AppService_GetAppMemberState
       parameters:
         - name: Connect-Protocol-Version
@@ -684,8 +682,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'View analytics: reads the engagement views recorded on app page load.'
-      description: 'View analytics: reads the engagement views recorded on app page load.'
+      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
+      description: |-
+        Lists the calling member's favorited library items (apps, dashboards,
+         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
       operationId: AppService_GetAppViewStats
       parameters:
         - name: Connect-Protocol-Version
@@ -797,7 +797,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: ListAppActivitySince
+      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+      description: |-
+        Append-only per-member activity log. Listing is own rows only; no
+         cross-member reads in this release.
       operationId: AppService_ListAppActivitySince
       parameters:
         - name: Connect-Protocol-Version
@@ -832,8 +835,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Version history: a snapshot is recorded on each publish; authors can list and restore.'
-      description: 'Version history: a snapshot is recorded on each publish; authors can list and restore.'
+      summary: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
+      description: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
       operationId: AppService_ListAppVersions
       parameters:
         - name: Connect-Protocol-Version
@@ -907,10 +910,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-      description: |-
-        Append-only per-member activity log. Listing is own rows only; no
-         cross-member reads in this release.
+      summary: ListMyAppMemberActivity
       operationId: AppService_ListMyAppMemberActivity
       parameters:
         - name: Connect-Protocol-Version
@@ -983,10 +983,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+      summary: 'Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).'
       description: |-
-        Server stream of live activity batches + presence snapshots, driven by
-         Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+        Cross-member live activity: rows from every member of the app after a seq,
+         each carrying member_id + display_name (resolved server-side; never email).
       operationId: AppService_PresenceHeartbeat
       parameters:
         - name: Connect-Protocol-Version
@@ -1021,7 +1021,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: RecordAppMemberActivity
+      summary: 'Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.'
+      description: |-
+        Per-member app state: one JSON blob per (app, member) so apps remember
+         settings/progress. Member always resolved server-side from auth context;
+         per-member persistence, so viewers with read access can save their own state.
       operationId: AppService_RecordAppMemberActivity
       parameters:
         - name: Connect-Protocol-Version
@@ -1131,11 +1135,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.'
+      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
       description: |-
-        Per-member app state: one JSON blob per (app, member) so apps remember
-         settings/progress. Member always resolved server-side from auth context;
-         per-member persistence, so viewers with read access can save their own state.
+        Staff-only (superadmin gated in-handler): publishes the embedded component
+         gallery as an app tree and returns its signed viewer URL.
       operationId: AppService_SetAppMemberState
       parameters:
         - name: Connect-Protocol-Version
@@ -1693,12 +1696,7 @@ paths:
     post:
       tags:
         - ChatService
-      summary: Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-      description: |-
-        Resolve a halted ask_approval form cell. Submit runs the form's submission
-         and continues the agent with the outcome; Reject discards it (passive, no
-         run); Dismiss treats it as a change request (no run, next message says what
-         to change). All three set the cell's outcome, like the other approve/deny cells.
+      summary: ApproveOntologyChange
       operationId: ChatService_ApproveOntologyChange
       parameters:
         - name: Connect-Protocol-Version
@@ -1735,8 +1733,7 @@ paths:
     post:
       tags:
         - ChatService
-      summary: External API users
-      description: External API users
+      summary: AttachAgentToChat
       operationId: ChatService_AttachAgentToChat
       parameters:
         - name: Connect-Protocol-Version
@@ -1847,7 +1844,8 @@ paths:
     post:
       tags:
         - ChatService
-      summary: AttachDataset
+      summary: RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+      description: RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
       operationId: ChatService_AttachDataset
       parameters:
         - name: Connect-Protocol-Version
@@ -2143,7 +2141,11 @@ paths:
     post:
       tags:
         - ChatService
-      summary: DismissQuestions
+      summary: Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+      description: |-
+        Resolve a halted questions cell. Submit hands the answers to the agent and
+         resumes it; Dismiss hands over only the answered count and does NOT resume
+         (the user's next message becomes the dismissal reason).
       operationId: ChatService_DismissQuestions
       parameters:
         - name: Connect-Protocol-Version
@@ -2476,7 +2478,8 @@ paths:
     post:
       tags:
         - ChatService
-      summary: GetCompletionParameters
+      summary: List distinct chat creators the user can access
+      description: List distinct chat creators the user can access
       operationId: ChatService_GetCompletionParameters
       parameters:
         - name: Connect-Protocol-Version
@@ -2587,8 +2590,7 @@ paths:
     post:
       tags:
         - ChatService
-      summary: List distinct chat creators the user can access
-      description: List distinct chat creators the user can access
+      summary: GetMembersWithChats
       operationId: ChatService_GetMembersWithChats
       parameters:
         - name: Connect-Protocol-Version
@@ -2736,8 +2738,7 @@ paths:
     post:
       tags:
         - ChatService
-      summary: RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
-      description: RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+      summary: RateChatCell
       operationId: ChatService_RateChatCell
       parameters:
         - name: Connect-Protocol-Version
@@ -2811,7 +2812,12 @@ paths:
     post:
       tags:
         - ChatService
-      summary: RejectOntologyChange
+      summary: Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
+      description: |-
+        Resolve a halted ask_approval form cell. Submit runs the form's submission
+         and continues the agent with the outcome; Reject discards it (passive, no
+         run); Dismiss treats it as a change request (no run, next message says what
+         to change). All three set the cell's outcome, like the other approve/deny cells.
       operationId: ChatService_RejectOntologyChange
       parameters:
         - name: Connect-Protocol-Version
@@ -2960,11 +2966,7 @@ paths:
     post:
       tags:
         - ChatService
-      summary: Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
-      description: |-
-        Resolve a halted questions cell. Submit hands the answers to the agent and
-         resumes it; Dismiss hands over only the answered count and does NOT resume
-         (the user's next message becomes the dismissal reason).
+      summary: SubmitQuestions
       operationId: ChatService_SubmitQuestions
       parameters:
         - name: Connect-Protocol-Version
@@ -16048,9 +16050,16 @@ components:
           type: string
           title: published_html_url
           nullable: true
+          deprecated: true
         hasUnpublishedChanges:
           type: boolean
           title: has_unpublished_changes
+          deprecated: true
+        stalenessWindowSeconds:
+          type: integer
+          title: staleness_window_seconds
+          format: int32
+          nullable: true
         computeFunctions:
           type: array
           items:
@@ -16110,6 +16119,7 @@ components:
         publishedAt:
           title: published_at
           nullable: true
+          deprecated: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: App
       additionalProperties: false
@@ -16205,7 +16215,7 @@ components:
         appId:
           type: string
           title: app_id
-          description: '''app'' | ''dashboard'''
+          description: '''app'' | ''dashboard'' | ''agent'''
       title: AppHeartbeatRequest
       additionalProperties: false
     textql.rpc.public.app.AppMemberActivityRow:
@@ -16301,6 +16311,11 @@ components:
           type: string
           title: published_html_url
           nullable: true
+        stalenessWindowSeconds:
+          type: integer
+          title: staleness_window_seconds
+          format: int32
+          nullable: true
         publishedBy:
           type: string
           title: published_by
@@ -16315,6 +16330,10 @@ components:
           title: publisher
           nullable: true
           $ref: '#/components/schemas/textql.rpc.identity.MemberPreview'
+        commitId:
+          type: string
+          title: commit_id
+          nullable: true
       title: AppVersion
       additionalProperties: false
     textql.rpc.public.app.AppViewerInfo:
@@ -16330,6 +16349,7 @@ components:
           type: integer
           title: view_count
           format: int32
+          description: Prefer this git commit SHA when set; else version_number selects a legacy db-backed row.
         displayName:
           type: string
           title: display_name
@@ -16564,11 +16584,15 @@ components:
           type: integer
           title: version_number
           format: int32
+        commitId:
+          type: string
+          title: commit_id
+          nullable: true
       title: GetAppVersionRequest
       additionalProperties: false
       description: |-
-        Version history (mirrors dashboard.DashboardVersion). A snapshot of the
-         published app at publish time; restore writes it back into the draft.
+        Version history entry. Git-backed apps derive one per library commit (published_by/at
+         carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
     textql.rpc.public.app.GetAppVersionResponse:
       type: object
       properties:
@@ -16876,6 +16900,10 @@ components:
           type: integer
           title: version_number
           format: int32
+        commitId:
+          type: string
+          title: commit_id
+          nullable: true
       title: RestoreAppVersionRequest
       additionalProperties: false
     textql.rpc.public.app.RestoreAppVersionResponse:
@@ -16977,6 +17005,12 @@ components:
         publish:
           type: boolean
           title: publish
+          nullable: true
+          deprecated: true
+        stalenessWindowSeconds:
+          type: integer
+          title: staleness_window_seconds
+          format: int32
           nullable: true
         computeFunctions:
           type: array
@@ -20223,13 +20257,11 @@ components:
         cellId:
           type: string
           title: cell_id
-          description: UUID
         editedContext:
           type: string
           title: edited_context
       title: ApproveContextPromptChangeRequest
       additionalProperties: false
-      description: context prompt change management
     textql.rpc.public.chat.ApproveContextPromptChangeResponse:
       type: object
       properties:
@@ -20239,15 +20271,25 @@ components:
         message:
           type: string
           title: message
+          description: 'range: [0, 1]'
         status:
           title: status
+          description: Estimated LLM-token cost (USD, list model prices). LLM only.
           $ref: '#/components/schemas/textql.rpc.public.cells.ContextPromptChangeStatus'
         resumed:
           type: boolean
           title: resumed
+          description: |-
+            Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
+             ACUs → USD at the org's effective rate. Add to estimated_cost for the
+             thread's total cost. Requires the console rate (0/omitted if unavailable).
         resumeError:
           type: string
           title: resume_error
+          description: |-
+            The chat's sandbox id ({orgID}-{chatID}), set when the thread used any
+             sandbox compute. Lets the UI deep-link to the sandbox detail. Empty/omitted
+             when the thread had no sandbox usage.
       title: ApproveContextPromptChangeResponse
       additionalProperties: false
     textql.rpc.public.chat.ApproveOntologyChangeRequest:
@@ -20256,10 +20298,9 @@ components:
         cellId:
           type: string
           title: cell_id
-          description: UUID
       title: ApproveOntologyChangeRequest
       additionalProperties: false
-      description: Ontology change management
+      description: Per-member auth resume
     textql.rpc.public.chat.ApproveOntologyChangeResponse:
       type: object
       properties:
@@ -20283,11 +20324,9 @@ components:
         id:
           type: string
           title: id
-          description: cell_id or unique identifier
         name:
           type: string
           title: name
-          description: Display name
         type:
           title: type
           $ref: '#/components/schemas/textql.rpc.public.chat.ArtifactType'
@@ -20297,11 +20336,10 @@ components:
         thumbnailUrl:
           type: string
           title: thumbnail_url
-          description: Small preview if available
           nullable: true
       title: ArtifactSummary
       additionalProperties: false
-      description: Lightweight summary for drawer item list (minimal data transfer)
+      description: Bookmark management
     textql.rpc.public.chat.ArtifactType:
       type: string
       title: ArtifactType
@@ -20371,6 +20409,7 @@ components:
         dashboardId:
           type: string
           title: dashboard_id
+          description: uses latest version
       title: AttachDashboardRequest
       additionalProperties: false
     textql.rpc.public.chat.AttachDashboardResponse:
@@ -20393,7 +20432,6 @@ components:
         datasetId:
           type: string
           title: dataset_id
-          description: uses latest version
       title: AttachDatasetRequest
       additionalProperties: false
     textql.rpc.public.chat.AttachDatasetResponse:
@@ -20415,7 +20453,7 @@ components:
           title: chat_id
       title: BookmarkChatRequest
       additionalProperties: false
-      description: Bookmark management
+      description: Simplified query request for external API users
     textql.rpc.public.chat.CancelStreamRequest:
       type: object
       properties:
@@ -21105,7 +21143,6 @@ components:
         role:
           type: string
           title: role
-          description: '"user" or "assistant"'
         content:
           type: string
           title: content
@@ -21164,14 +21201,12 @@ components:
           type: integer
           title: connector_id
           format: int32
-          description: 'Deprecated: use connector_ids instead'
           nullable: true
           deprecated: true
         ontologyId:
           type: integer
           title: ontology_id
           format: int32
-          description: 'Deprecated: use ontology_ids instead'
           nullable: true
           deprecated: true
         connectorIds:
@@ -21197,7 +21232,6 @@ components:
         functional:
           type: boolean
           title: functional
-          description: if true, runs actual execution tests (expensive)
           nullable: true
       title: CheckHealthRequest
       additionalProperties: false
@@ -21224,12 +21258,10 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.chat.HealthStatus'
         llmExecutionStatus:
           title: llm_execution_status
-          description: only populated if functional=true
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.chat.HealthStatus'
         sandboxExecutionStatus:
           title: sandbox_execution_status
-          description: only populated if functional=true
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.chat.HealthStatus'
         consoleStatus:
@@ -21253,6 +21285,7 @@ components:
       properties:
         status:
           title: status
+          description: All creators of chats user can see
           $ref: '#/components/schemas/textql.rpc.public.chat.StreamlitHealthStatus'
         cell:
           title: cell
@@ -21260,12 +21293,10 @@ components:
         embedUrl:
           type: string
           title: embed_url
-          description: Dynamic URL from state manager
           nullable: true
         streamlitUrl:
           type: string
           title: streamlit_url
-          description: Raw workerId:port format
           nullable: true
       title: CheckStreamlitHealthResponse
       additionalProperties: false
@@ -21342,6 +21373,7 @@ components:
           title: dashboard_id
       title: DashboardArtifactData
       additionalProperties: false
+      description: File-based artifacts (images, PDFs, CSVs, HTML, text files)
     textql.rpc.public.chat.DeleteChatRequest:
       type: object
       properties:
@@ -21362,7 +21394,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionAnswer'
           title: answers
-          description: partial answers
       title: DismissQuestionsRequest
       additionalProperties: false
     textql.rpc.public.chat.DismissQuestionsResponse:
@@ -21382,6 +21413,7 @@ components:
         chatId:
           type: string
           title: chat_id
+          description: '"user" or "assistant"'
         onlyIfDifferentOwner:
           type: boolean
           title: only_if_different_owner
@@ -21421,7 +21453,6 @@ components:
         outcome:
           type: string
           title: outcome
-          description: ok | denied | error
         durationMs:
           type:
             - integer
@@ -21443,21 +21474,17 @@ components:
         apiAccessKeyId:
           type: string
           title: api_access_key_id
-          description: connector attribution, empty old secret
         occurredAt:
           title: occurred_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         cellId:
           type: string
           title: cell_id
-          description: chat cell that made the request, empty if unknown
         interpretation:
           type: string
           title: interpretation
-          description: abstractive "what this call did", empty if unavailable
       title: EgressCall
       additionalProperties: false
-      description: EgressCall is a single outbound HTTP(S) request a chat's sandbox made,
     textql.rpc.public.chat.EgressSummary:
       type: object
       properties:
@@ -21472,13 +21499,11 @@ components:
             type: integer
             title: value
             format: int32
-          description: outcome -> count (ok/denied/error)
         calls:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.chat.EgressCall'
           title: calls
-          description: bounded; newest first
       title: EgressSummary
       additionalProperties: false
     textql.rpc.public.chat.EgressSummary.OutcomeCountsEntry:
@@ -21499,13 +21524,13 @@ components:
         url:
           type: string
           title: url
+          description: Cell ID or composite "cellId:type:url" for multi-artifact cells
         type:
           title: type
-          description: IMAGE, CSV, PDF, HTML, TEXT
           $ref: '#/components/schemas/textql.rpc.public.chat.ArtifactType'
       title: FileArtifactData
       additionalProperties: false
-      description: File-based artifacts (images, PDFs, CSVs, HTML, text files)
+      description: Request full artifact data when item is selected
     textql.rpc.public.chat.FormArtifactData:
       type: object
       properties:
@@ -21522,6 +21547,7 @@ components:
           title: chat_id
       title: GetAPIChatAnswerRequest
       additionalProperties: false
+      description: order is "most recent first"
     textql.rpc.public.chat.GetAPIChatAnswerResponse:
       type: object
       properties:
@@ -21542,13 +21568,12 @@ components:
         artifactId:
           type: string
           title: artifact_id
-          description: Cell ID or composite "cellId:type:url" for multi-artifact cells
         chatId:
           type: string
           title: chat_id
       title: GetArtifactRequest
       additionalProperties: false
-      description: Request full artifact data when item is selected
+      description: Request all artifact summaries for a chat (for drawer dropdown)
     textql.rpc.public.chat.GetArtifactResponse:
       type: object
       allOf:
@@ -21556,6 +21581,7 @@ components:
             id:
               type: string
               title: id
+              description: Flat list, sorted by created_at DESC
             name:
               type: string
               title: name
@@ -21598,7 +21624,6 @@ components:
           title: chat_id
       title: GetChatArtifactsSummaryRequest
       additionalProperties: false
-      description: Request all artifact summaries for a chat (for drawer dropdown)
     textql.rpc.public.chat.GetChatArtifactsSummaryResponse:
       type: object
       properties:
@@ -21607,9 +21632,10 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.chat.ArtifactSummary'
           title: artifacts
-          description: Flat list, sorted by created_at DESC
+          description: cell_id or unique identifier
       title: GetChatArtifactsSummaryResponse
       additionalProperties: false
+      description: Lightweight summary for drawer item list (minimal data transfer)
     textql.rpc.public.chat.GetChatExecutionTimingRequest:
       type: object
       properties:
@@ -21669,6 +21695,7 @@ components:
         chatId:
           type: string
           title: chat_id
+          description: whether to return only the user's chats or all of the org's chats
       title: GetChatRequest
       additionalProperties: false
     textql.rpc.public.chat.GetChatResponse:
@@ -21695,7 +21722,6 @@ components:
         memberOnly:
           type: boolean
           title: member_only
-          description: whether to return only the user's chats or all of the org's chats
         searchTerm:
           type: string
           title: search_term
@@ -21723,44 +21749,36 @@ components:
         bookmarkedOnly:
           type: boolean
           title: bookmarked_only
-          description: filter to only bookmarked chats
           nullable: true
         createdAfter:
           title: created_after
-          description: filter chats created after this time
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         createdBefore:
           title: created_before
-          description: filter chats created before this time
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         excludeBatchRuns:
           type: boolean
           title: exclude_batch_runs
-          description: exclude chats created from template batch runs
           nullable: true
         excludeUnusedPlaybooks:
           type: boolean
           title: exclude_unused_playbooks
-          description: exclude chats created from playbooks that have no user messages beyond the initial prompt
           nullable: true
         source:
           title: source
-          description: filter chats by source (single-select; superseded by `sources` when that is non-empty)
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.chat.ChatSource'
         hasThreadWarning:
           type: boolean
           title: has_thread_warning
-          description: When true (and thread_warning_types empty), only chats that have at least one thread_warning row of any type.
           nullable: true
         creatorMemberIds:
           type: array
           items:
             type: string
           title: creator_member_ids
-          description: Filter org chats to these creator member IDs (union). Ignored when empty. Supersedes creator_member_id when non-empty.
         sharedWithMe:
           type: boolean
           title: shared_with_me
@@ -21774,28 +21792,22 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.chat.ChatSource'
           title: sources
-          description: Filter chats by source (union). Ignored when empty. Supersedes the single `source` when non-empty.
         threadWarningTypes:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.chat.ThreadWarningType'
           title: thread_warning_types
-          description: Filter to chats with at least one thread_warning of any of these types (union).
         topicIds:
           type: array
           items:
             type: string
           title: topic_ids
-          description: |-
-            Only chats tagged with at least one of these custom topics
-             (verdict='tagged'). Ignored when empty.
         connectorIds:
           type: array
           items:
             type: integer
             format: int32
           title: connector_ids
-          description: Filter chats that have any of these connector IDs in their paradigm options (union). Ignored when empty.
       title: GetChatsRequest
       additionalProperties: false
     textql.rpc.public.chat.GetChatsResponse:
@@ -21853,6 +21865,7 @@ components:
         chatId:
           type: string
           title: chat_id
+          description: UUID
         cellId:
           type: string
           title: cell_id
@@ -21889,39 +21902,24 @@ components:
           type: number
           title: context_window_used
           format: double
-          description: 'range: [0, 1]'
         estimatedCost:
           type: number
           title: estimated_cost
           format: double
-          description: Estimated LLM-token cost (USD, list model prices). LLM only.
           nullable: true
         estimatedComputeCost:
           type: number
           title: estimated_compute_cost
           format: double
-          description: |-
-            Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
-             ACUs → USD at the org's effective rate. Add to estimated_cost for the
-             thread's total cost. Requires the console rate (0/omitted if unavailable).
           nullable: true
         sandboxId:
           type: string
           title: sandbox_id
-          description: |-
-            The chat's sandbox id ({orgID}-{chatID}), set when the thread used any
-             sandbox compute. Lets the UI deep-link to the sandbox detail. Empty/omitted
-             when the thread had no sandbox usage.
           nullable: true
         estimatedComputeAcus:
           type: number
           title: estimated_compute_acus
           format: double
-          description: |-
-            Sandbox compute usage for this chat in ACUs (sandbox-seconds / 3600 × ACUs
-             per instance-hour). The metered unit behind estimated_compute_cost; shown
-             alongside the dollars. Independent of the console $ rate, so present whenever
-             the thread used a sandbox.
           nullable: true
       title: GetLlmUsageResponse
       additionalProperties: false
@@ -21937,7 +21935,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.identity.MemberPreview'
           title: members
-          description: All creators of chats user can see
       title: GetMembersWithChatsResponse
       additionalProperties: false
     textql.rpc.public.chat.GetPlaybookChatsRequest:
@@ -21946,7 +21943,6 @@ components:
         playbookId:
           type: string
           title: playbook_id
-          description: UUID
         limit:
           type: integer
           title: limit
@@ -21992,7 +21988,6 @@ components:
           nullable: true
       title: HistoryRequest
       additionalProperties: false
-      description: order is "most recent first"
     textql.rpc.public.chat.HistoryResponse:
       type: object
       properties:
@@ -22088,6 +22083,7 @@ components:
         - MODEL_OPUS_4_8
         - MODEL_FABLE_5
         - MODEL_SONNET_5
+        - MODEL_OPUS_5
         - MODEL_GPT_5_6_SOL
         - MODEL_GEMINI_3_FLASH
         - MODEL_GEMINI_3_PRO
@@ -22118,6 +22114,7 @@ components:
             - string
           title: cache_creation_input_tokens
           format: int64
+          description: if true, runs actual execution tests (expensive)
         cacheReadInputTokens:
           type:
             - integer
@@ -22207,7 +22204,6 @@ components:
           nullable: true
       title: QueryOneShotRequest
       additionalProperties: false
-      description: Simplified query request for external API users
     textql.rpc.public.chat.QueryOneShotResponse:
       type: object
       properties:
@@ -22224,7 +22220,6 @@ components:
           title: cells
       title: QueryOneShotResponse
       additionalProperties: false
-      description: Simplified query response for external API users
     textql.rpc.public.chat.RateChatCellRequest:
       type: object
       properties:
@@ -22240,7 +22235,6 @@ components:
         reason:
           type: string
           title: reason
-          description: free-text "why" captured from the rating modal
           nullable: true
       title: RateChatCellRequest
       additionalProperties: false
@@ -22253,6 +22247,7 @@ components:
           description: UUID
       title: RejectContextPromptChangeRequest
       additionalProperties: false
+      description: context prompt change management
     textql.rpc.public.chat.RejectContextPromptChangeResponse:
       type: object
       properties:
@@ -22282,6 +22277,7 @@ components:
           description: UUID
       title: RejectOntologyChangeRequest
       additionalProperties: false
+      description: Ontology change management
     textql.rpc.public.chat.RejectOntologyChangeResponse:
       type: object
       properties:
@@ -22476,6 +22472,7 @@ components:
           title: chat_id
       title: UnbookmarkChatRequest
       additionalProperties: false
+      description: Simplified query response for external API users
     textql.rpc.public.chat.UpdateChatRequest:
       type: object
       properties:
@@ -24004,6 +24001,8 @@ components:
         - FEATURE_TYPE_REPORT
         - FEATURE_TYPE_PLAYBOOK
         - FEATURE_TYPE_DASHBOARD
+        - FEATURE_TYPE_DATA_APP
+        - FEATURE_TYPE_AGENT
       description: Feature types for nudge queries - identifies which feature a query promotes
     textql.rpc.public.connector.FireboltMetadata:
       type: object
@@ -28670,6 +28669,13 @@ components:
           title: days
           format: int32
           description: 'time window: 7, 14, 30, 90'
+        timezone:
+          type: string
+          title: timezone
+          description: |-
+            IANA timezone (e.g. "America/New_York") used to bucket the usage heatmap
+             by the viewer's local weekday/hour. Falls back to UTC when unset/invalid.
+          nullable: true
       title: GetObservabilityStatsRequest
       additionalProperties: false
     textql.rpc.public.observe.GetObservabilityStatsResponse:
@@ -28701,6 +28707,15 @@ components:
           description: |-
             Per-day, per-type warning counts for the warning-breakdown-over-time chart.
              Days/types with no warnings are absent (the client zero-fills the axis).
+        usageHeatmap:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.observe.UsageHeatmapPoint'
+          title: usage_heatmap
+          description: |-
+            Chat counts bucketed by weekday x hour-of-day (in the request timezone,
+             UTC default) for the usage heatmap. Empty buckets are absent (the client
+             zero-fills the 7x24 grid).
       title: GetObservabilityStatsResponse
       additionalProperties: false
     textql.rpc.public.observe.GetThreadWarningsRequest:
@@ -29275,6 +29290,28 @@ components:
           nullable: true
       title: UpdateCustomTopicRequest
       additionalProperties: false
+    textql.rpc.public.observe.UsageHeatmapPoint:
+      type: object
+      properties:
+        dow:
+          type: integer
+          title: dow
+          format: int32
+          description: 0=Sunday .. 6=Saturday (Postgres/JS convention)
+        hour:
+          type: integer
+          title: hour
+          format: int32
+          description: 0-23
+        total:
+          type: integer
+          title: total
+          format: int32
+      title: UsageHeatmapPoint
+      additionalProperties: false
+      description: |-
+        UsageHeatmapPoint is one (weekday, hour) bucket of chat volume, in the
+         timezone requested via GetObservabilityStatsRequest.timezone.
     textql.rpc.public.observe.WarningTypeCount:
       type: object
       properties:
@@ -30368,6 +30405,11 @@ components:
           title: last_used
           description: most recent of last_pulled or last_run
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        chatsCited:
+          type: integer
+          title: chats_cited
+          format: int32
+          description: chats that pulled this file AND where the agent declared it as a source
       title: FileUsage
       additionalProperties: false
     textql.rpc.public.patches.FinalizeOntologyFileUploadRequest:
@@ -30736,7 +30778,7 @@ components:
           type: number
           title: avg_hit_rate
           format: float
-          description: 0..1, averaged over pulled files
+          description: 0..1, averaged over pulled .tql files with chat-attributed pulls
         errorFiles:
           type: integer
           title: error_files
@@ -30749,6 +30791,25 @@ components:
           title: reclaimable_tokens
           format: int64
           description: estimated tokens held by dead files (~size/4)
+        tqlPulledFiles:
+          type: integer
+          title: tql_pulled_files
+          format: int32
+          description: .tql files behind avg_hit_rate; 0 = rate has no signal
+        avgDocCitedRate:
+          type: number
+          title: avg_doc_cited_rate
+          format: float
+          description: 0..1 cited-when-pulled over pulled docs (excludes .tql and config-managed .playbook/.dashboard)
+        docPulledFiles:
+          type: integer
+          title: doc_pulled_files
+          format: int32
+          description: docs behind avg_doc_cited_rate; 0 = rate has no signal
+        docCitationsEnabled:
+          type: boolean
+          title: doc_citations_enabled
+          description: source attribution active for this org (traces enabled)
       title: GetOntologyUsageSummaryResponse
       additionalProperties: false
       description: |-

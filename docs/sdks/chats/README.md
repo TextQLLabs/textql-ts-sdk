@@ -5,11 +5,11 @@
 ### Available Operations
 
 * [approveContextPromptChange](#approvecontextpromptchange) - ApproveContextPromptChange
-* [approveOntologyChange](#approveontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-* [attachAgent](#attachagent) - External API users
+* [approveOntologyChange](#approveontologychange) - ApproveOntologyChange
+* [attachAgent](#attachagent) - AttachAgentToChat
 * [attachApp](#attachapp) - AttachApp
 * [attachDashboard](#attachdashboard) - AttachDashboard
-* [attachDataset](#attachdataset) - AttachDataset
+* [attachDataset](#attachdataset) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 * [bookmark](#bookmark) - BookmarkChat
 * [cancelStream](#cancelstream) - CancelStream
 * [checkPermissions](#checkpermissions) - CheckChatPermissions
@@ -17,7 +17,7 @@
 * [checkStreamlitHealth](#checkstreamlithealth) - CheckStreamlitHealth
 * [createChat](#createchat) - CreateChat
 * [delete](#delete) - DeleteChat
-* [dismissQuestions](#dismissquestions) - DismissQuestions
+* [dismissQuestions](#dismissquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 * [duplicateChat](#duplicatechat) - DuplicateChat
 * [getApiAnswer](#getapianswer) - GetAPIChatAnswer
 * [getArtifact](#getartifact) - GetArtifact
@@ -26,20 +26,20 @@
 * [getChatExecutionTiming](#getchatexecutiontiming) - GetChatExecutionTiming
 * [getHistory](#gethistory) - GetChatHistory
 * [getAll](#getall) - GetChats
-* [getCompletionParameters](#getcompletionparameters) - GetCompletionParameters
+* [getCompletionParameters](#getcompletionparameters) - List distinct chat creators the user can access
 * [getCompletionParametersBatch](#getcompletionparametersbatch) - GetCompletionParametersBatch
 * [getLlmUsage](#getllmusage) - GetLlmUsage
-* [getMembersWithChats](#getmemberswithchats) - List distinct chat creators the user can access
+* [getMembersWithChats](#getmemberswithchats) - GetMembersWithChats
 * [getPlaybookChats](#getplaybookchats) - GetPlaybookChats
 * [pollEvents](#pollevents) - PollChatEvents
 * [queryOneShot](#queryoneshot) - QueryOneShot
-* [rateCell](#ratecell) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+* [rateCell](#ratecell) - RateChatCell
 * [rejectContextPromptChange](#rejectcontextpromptchange) - RejectContextPromptChange
-* [rejectOntologyChange](#rejectontologychange) - RejectOntologyChange
+* [rejectOntologyChange](#rejectontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
 * [run](#run) - RunChat
 * [send](#send) - SendMessage
 * [submitContextPromptChange](#submitcontextpromptchange) - SubmitContextPromptChange
-* [submitQuestions](#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+* [submitQuestions](#submitquestions) - SubmitQuestions
 * [unbookmark](#unbookmark) - UnbookmarkChat
 * [update](#update) - UpdateChat
 
@@ -118,10 +118,7 @@ run();
 
 ## approveOntologyChange
 
-Resolve a halted ask_approval form cell. Submit runs the form's submission
- and continues the agent with the outcome; Reject discards it (passive, no
- run); Dismiss treats it as a change request (no run, next message says what
- to change). All three set the cell's outcome, like the other approve/deny cells.
+ApproveOntologyChange
 
 ### Example Usage
 
@@ -194,7 +191,7 @@ run();
 
 ## attachAgent
 
-External API users
+AttachAgentToChat
 
 ### Example Usage
 
@@ -413,7 +410,7 @@ run();
 
 ## attachDataset
 
-AttachDataset
+RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 
 ### Example Usage
 
@@ -997,7 +994,9 @@ run();
 
 ## dismissQuestions
 
-DismissQuestions
+Resolve a halted questions cell. Submit hands the answers to the agent and
+ resumes it; Dismiss hands over only the answered count and does NOT resume
+ (the user's next message becomes the dismissal reason).
 
 ### Example Usage
 
@@ -1660,7 +1659,7 @@ run();
 
 ## getCompletionParameters
 
-GetCompletionParameters
+List distinct chat creators the user can access
 
 ### Example Usage
 
@@ -1879,7 +1878,7 @@ run();
 
 ## getMembersWithChats
 
-List distinct chat creators the user can access
+GetMembersWithChats
 
 ### Example Usage
 
@@ -2171,7 +2170,7 @@ run();
 
 ## rateCell
 
-RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+RateChatCell
 
 ### Example Usage
 
@@ -2317,7 +2316,10 @@ run();
 
 ## rejectOntologyChange
 
-RejectOntologyChange
+Resolve a halted ask_approval form cell. Submit runs the form's submission
+ and continues the agent with the outcome; Reject discards it (passive, no
+ run); Dismiss treats it as a change request (no run, next message says what
+ to change). All three set the cell's outcome, like the other approve/deny cells.
 
 ### Example Usage
 
@@ -2609,9 +2611,7 @@ run();
 
 ## submitQuestions
 
-Resolve a halted questions cell. Submit hands the answers to the agent and
- resumes it; Dismiss hands over only the answered count and does NOT resume
- (the user's next message becomes the dismissal reason).
+SubmitQuestions
 
 ### Example Usage
 

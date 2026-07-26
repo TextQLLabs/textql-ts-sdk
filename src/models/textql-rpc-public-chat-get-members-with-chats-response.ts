@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-identity-member-preview.js";
 
 export type TextqlRpcPublicChatGetMembersWithChatsResponse = {
-  /**
-   * All creators of chats user can see
-   */
   members?: Array<TextqlRpcIdentityMemberPreview> | undefined;
 };
 

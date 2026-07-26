@@ -1,7 +1,5 @@
 # TextqlRpcPublicChatGetChatArtifactsSummaryRequest
 
-Request all artifact summaries for a chat (for drawer dropdown)
-
 ## Example Usage
 
 ```typescript

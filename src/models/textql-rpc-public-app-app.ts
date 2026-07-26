@@ -36,8 +36,15 @@ export type TextqlRpcPublicAppApp = {
   screenshotUrl?: string | null | undefined;
   consoleErrors?: Array<string> | undefined;
   chatId?: string | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   publishedHtmlUrl?: string | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   hasUnpublishedChanges?: boolean | undefined;
+  stalenessWindowSeconds?: number | null | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
   scheduleEnabled?: boolean | undefined;
@@ -450,6 +457,7 @@ export const TextqlRpcPublicAppApp$inboundSchema: z.ZodMiniType<
   chatId: z.optional(z.nullable(types.string())),
   publishedHtmlUrl: z.optional(z.nullable(types.string())),
   hasUnpublishedChanges: types.optional(types.boolean()),
+  stalenessWindowSeconds: z.optional(z.nullable(types.number())),
   computeFunctions: types.optional(
     z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
   ),
