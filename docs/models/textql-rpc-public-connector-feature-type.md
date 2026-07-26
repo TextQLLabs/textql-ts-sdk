@@ -7,7 +7,7 @@ Feature types for nudge queries - identifies which feature a query promotes
 ```typescript
 import { TextqlRpcPublicConnectorFeatureType } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicConnectorFeatureType = "FEATURE_TYPE_UNSPECIFIED";
+let value: TextqlRpcPublicConnectorFeatureType = "FEATURE_TYPE_REPORT";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -15,5 +15,5 @@ let value: TextqlRpcPublicConnectorFeatureType = "FEATURE_TYPE_UNSPECIFIED";
 ## Values
 
 ```typescript
-"FEATURE_TYPE_UNSPECIFIED" | "FEATURE_TYPE_REPORT" | "FEATURE_TYPE_PLAYBOOK" | "FEATURE_TYPE_DASHBOARD" | Unrecognized<string>
+"FEATURE_TYPE_UNSPECIFIED" | "FEATURE_TYPE_REPORT" | "FEATURE_TYPE_PLAYBOOK" | "FEATURE_TYPE_DASHBOARD" | "FEATURE_TYPE_DATA_APP" | "FEATURE_TYPE_AGENT" | Unrecognized<string>
 ```

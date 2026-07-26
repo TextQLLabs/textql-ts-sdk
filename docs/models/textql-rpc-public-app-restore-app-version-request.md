@@ -14,3 +14,4 @@ let value: TextqlRpcPublicAppRestoreAppVersionRequest = {};
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `appId`            | *string*           | :heavy_minus_sign: | N/A                |
 | `versionNumber`    | *number*           | :heavy_minus_sign: | N/A                |
+| `commitId`         | *string*           | :heavy_minus_sign: | N/A                |

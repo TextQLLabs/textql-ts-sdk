@@ -1,7 +1,7 @@
 # TextqlRpcPublicAppGetAppVersionRequest
 
-Version history (mirrors dashboard.DashboardVersion). A snapshot of the
- published app at publish time; restore writes it back into the draft.
+Version history entry. Git-backed apps derive one per library commit (published_by/at
+ carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
 
 ## Example Usage
 
@@ -17,3 +17,4 @@ let value: TextqlRpcPublicAppGetAppVersionRequest = {};
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `appId`            | *string*           | :heavy_minus_sign: | N/A                |
 | `versionNumber`    | *number*           | :heavy_minus_sign: | N/A                |
+| `commitId`         | *string*           | :heavy_minus_sign: | N/A                |

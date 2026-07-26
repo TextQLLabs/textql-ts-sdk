@@ -4,13 +4,7 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * context prompt change management
- */
 export type TextqlRpcPublicChatApproveContextPromptChangeRequest = {
-  /**
-   * UUID
-   */
   cellId?: string | undefined;
   editedContext?: string | undefined;
 };

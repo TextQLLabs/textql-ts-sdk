@@ -8,17 +8,16 @@ AppService manages data apps: the generative app execution primitive.
 
 ### Available Operations
 
-* [appServiceGetAppMemberState](#appservicegetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
-* [appServiceListAppActivitySince](#appservicelistappactivitysince) - ListAppActivitySince
-* [appServiceListMyAppMemberActivity](#appservicelistmyappmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-* [appServicePresenceHeartbeat](#appservicepresenceheartbeat) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-* [appServiceRecordAppMemberActivity](#appservicerecordappmemberactivity) - RecordAppMemberActivity
-* [appServiceSetAppMemberState](#appservicesetappmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [appServiceGetAppMemberState](#appservicegetappmemberstate) - View analytics: reads the engagement views recorded on app page load.
+* [appServiceListAppActivitySince](#appservicelistappactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [appServiceListMyAppMemberActivity](#appservicelistmyappmemberactivity) - ListMyAppMemberActivity
+* [appServicePresenceHeartbeat](#appservicepresenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+* [appServiceRecordAppMemberActivity](#appservicerecordappmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [appServiceSetAppMemberState](#appservicesetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 
 ## appServiceGetAppMemberState
 
-Staff-only (superadmin gated in-handler): publishes the embedded component
- gallery as an app tree and returns its signed viewer URL.
+View analytics: reads the engagement views recorded on app page load.
 
 ### Example Usage
 
@@ -91,7 +90,8 @@ run();
 
 ## appServiceListAppActivitySince
 
-ListAppActivitySince
+Append-only per-member activity log. Listing is own rows only; no
+ cross-member reads in this release.
 
 ### Example Usage
 
@@ -164,8 +164,7 @@ run();
 
 ## appServiceListMyAppMemberActivity
 
-Append-only per-member activity log. Listing is own rows only; no
- cross-member reads in this release.
+ListMyAppMemberActivity
 
 ### Example Usage
 
@@ -238,8 +237,8 @@ run();
 
 ## appServicePresenceHeartbeat
 
-Server stream of live activity batches + presence snapshots, driven by
- Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+Cross-member live activity: rows from every member of the app after a seq,
+ each carrying member_id + display_name (resolved server-side; never email).
 
 ### Example Usage
 
@@ -312,7 +311,9 @@ run();
 
 ## appServiceRecordAppMemberActivity
 
-RecordAppMemberActivity
+Per-member app state: one JSON blob per (app, member) so apps remember
+ settings/progress. Member always resolved server-side from auth context;
+ per-member persistence, so viewers with read access can save their own state.
 
 ### Example Usage
 
@@ -385,9 +386,8 @@ run();
 
 ## appServiceSetAppMemberState
 
-Per-member app state: one JSON blob per (app, member) so apps remember
- settings/progress. Member always resolved server-side from auth context;
- per-member persistence, so viewers with read access can save their own state.
+Staff-only (superadmin gated in-handler): publishes the embedded component
+ gallery as an app tree and returns its signed viewer URL.
 
 ### Example Usage
 

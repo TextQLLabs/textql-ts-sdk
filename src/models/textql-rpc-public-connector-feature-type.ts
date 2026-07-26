@@ -14,6 +14,8 @@ export const TextqlRpcPublicConnectorFeatureType = {
   FeatureTypeReport: "FEATURE_TYPE_REPORT",
   FeatureTypePlaybook: "FEATURE_TYPE_PLAYBOOK",
   FeatureTypeDashboard: "FEATURE_TYPE_DASHBOARD",
+  FeatureTypeDataApp: "FEATURE_TYPE_DATA_APP",
+  FeatureTypeAgent: "FEATURE_TYPE_AGENT",
 } as const;
 /**
  * Feature types for nudge queries - identifies which feature a query promotes

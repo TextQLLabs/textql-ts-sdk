@@ -14,9 +14,26 @@ import {
 
 export type TextqlRpcPublicChatApproveContextPromptChangeResponse = {
   success?: boolean | undefined;
+  /**
+   * range: [0, 1]
+   */
   message?: string | undefined;
   status?: TextqlRpcPublicCellsContextPromptChangeStatus | undefined;
+  /**
+   * Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
+   *
+   * @remarks
+   *  ACUs → USD at the org's effective rate. Add to estimated_cost for the
+   *  thread's total cost. Requires the console rate (0/omitted if unavailable).
+   */
   resumed?: boolean | undefined;
+  /**
+   * The chat's sandbox id ({orgID}-{chatID}), set when the thread used any
+   *
+   * @remarks
+   *  sandbox compute. Lets the UI deep-link to the sandbox detail. Empty/omitted
+   *  when the thread had no sandbox usage.
+   */
   resumeError?: string | undefined;
 };
 

@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Ontology change management
+ */
 export type TextqlRpcPublicChatRejectOntologyChangeRequest = {
   /**
    * UUID

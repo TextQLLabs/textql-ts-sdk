@@ -69,12 +69,12 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+   * Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
    *
    * @remarks
-   * Duplicates an app the caller can view into a new draft app they own,
+   * Duplicates an app the caller can view into a new app they own,
    *  named "Copy of <name>". Copies code/files/data sources/compute functions/
-   *  schedule; never carries over the source's published state or data snapshot.
+   *  schedule; never carries over the source's data snapshot.
    */
   async duplicate(
     request: operations.AppServiceDuplicateAppRequest,
@@ -116,10 +116,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * View analytics: reads the engagement views recorded on app page load.
+   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    *
    * @remarks
-   * View analytics: reads the engagement views recorded on app page load.
+   * Lists the calling member's favorited library items (apps, dashboards,
+   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    */
   async getAppViewStats(
     request: operations.AppServiceGetAppViewStatsRequest,
@@ -164,10 +165,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Version history: a snapshot is recorded on each publish; authors can list and restore.
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
    *
    * @remarks
-   * Version history: a snapshot is recorded on each publish; authors can list and restore.
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
    */
   async listVersions(
     request: operations.AppServiceListAppVersionsRequest,

@@ -5,12 +5,9 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Request full artifact data when item is selected
+ * Request all artifact summaries for a chat (for drawer dropdown)
  */
 export type TextqlRpcPublicChatGetArtifactRequest = {
-  /**
-   * Cell ID or composite "cellId:type:url" for multi-artifact cells
-   */
   artifactId?: string | undefined;
   chatId?: string | undefined;
 };

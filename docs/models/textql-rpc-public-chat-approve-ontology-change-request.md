@@ -1,6 +1,6 @@
 # TextqlRpcPublicChatApproveOntologyChangeRequest
 
-Ontology change management
+Per-member auth resume
 
 ## Example Usage
 
@@ -14,4 +14,4 @@ let value: TextqlRpcPublicChatApproveOntologyChangeRequest = {};
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `cellId`           | *string*           | :heavy_minus_sign: | UUID               |
+| `cellId`           | *string*           | :heavy_minus_sign: | N/A                |

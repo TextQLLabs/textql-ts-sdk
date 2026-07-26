@@ -104,6 +104,9 @@ export type TextqlRpcPublicAppAppViewerInfo = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastViewed?: Date | undefined;
+  /**
+   * Prefer this git commit SHA when set; else version_number selects a legacy db-backed row.
+   */
   viewCount?: number | undefined;
   displayName?: string | null | undefined;
   recentViewTimes?: Array<Date> | undefined;

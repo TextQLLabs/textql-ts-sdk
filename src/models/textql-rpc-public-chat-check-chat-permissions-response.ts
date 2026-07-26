@@ -12,14 +12,10 @@ export type TextqlRpcPublicChatCheckChatPermissionsResponse = {
   hasWritePermission?: boolean | undefined;
   hasReadPermission?: boolean | undefined;
   /**
-   * Deprecated: use connector_ids instead
-   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   connectorId?: number | null | undefined;
   /**
-   * Deprecated: use ontology_ids instead
-   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   ontologyId?: number | null | undefined;

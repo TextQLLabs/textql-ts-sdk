@@ -38,6 +38,7 @@ export type TextqlRpcPublicAppAppVersion = {
   name?: string | undefined;
   description?: string | null | undefined;
   publishedHtmlUrl?: string | null | undefined;
+  stalenessWindowSeconds?: number | null | undefined;
   publishedBy?: string | undefined;
   label?: string | null | undefined;
   /**
@@ -135,6 +136,7 @@ export type TextqlRpcPublicAppAppVersion = {
    */
   publishedAt?: Date | undefined;
   publisher?: TextqlRpcIdentityMemberPreview | undefined;
+  commitId?: string | null | undefined;
 };
 
 /** @internal */
@@ -156,10 +158,12 @@ export const TextqlRpcPublicAppAppVersion$inboundSchema: z.ZodMiniType<
   name: types.optional(types.string()),
   description: z.optional(z.nullable(types.string())),
   publishedHtmlUrl: z.optional(z.nullable(types.string())),
+  stalenessWindowSeconds: z.optional(z.nullable(types.number())),
   publishedBy: types.optional(types.string()),
   label: z.optional(z.nullable(types.string())),
   publishedAt: types.optional(types.date()),
   publisher: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+  commitId: z.optional(z.nullable(types.string())),
 });
 
 export function textqlRpcPublicAppAppVersionFromJSON(

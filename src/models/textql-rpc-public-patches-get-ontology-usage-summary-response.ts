@@ -29,7 +29,7 @@ export type TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse = {
   pulledFiles?: number | undefined;
   deadFiles?: number | undefined;
   /**
-   * 0..1, averaged over pulled files
+   * 0..1, averaged over pulled .tql files with chat-attributed pulls
    */
   avgHitRate?: number | undefined;
   /**
@@ -40,6 +40,22 @@ export type TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse = {
    * estimated tokens held by dead files (~size/4)
    */
   reclaimableTokens?: number | string | undefined;
+  /**
+   * .tql files behind avg_hit_rate; 0 = rate has no signal
+   */
+  tqlPulledFiles?: number | undefined;
+  /**
+   * 0..1 cited-when-pulled over pulled docs (excludes .tql and config-managed .playbook/.dashboard)
+   */
+  avgDocCitedRate?: number | undefined;
+  /**
+   * docs behind avg_doc_cited_rate; 0 = rate has no signal
+   */
+  docPulledFiles?: number | undefined;
+  /**
+   * source attribution active for this org (traces enabled)
+   */
+  docCitationsEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -72,6 +88,10 @@ export const TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse$inboundSchema
     reclaimableTokens: types.optional(
       smartUnion([types.number(), types.string()]),
     ),
+    tqlPulledFiles: types.optional(types.number()),
+    avgDocCitedRate: types.optional(types.number()),
+    docPulledFiles: types.optional(types.number()),
+    docCitationsEnabled: types.optional(types.boolean()),
   });
 
 export function textqlRpcPublicPatchesGetOntologyUsageSummaryResponseFromJSON(

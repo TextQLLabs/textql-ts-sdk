@@ -662,6 +662,7 @@ export * from "./textql-rpc-public-observe-thread-warning.js";
 export * from "./textql-rpc-public-observe-topic-lifecycle-request.js";
 export * from "./textql-rpc-public-observe-topic-lifecycle-response.js";
 export * from "./textql-rpc-public-observe-update-custom-topic-request.js";
+export * from "./textql-rpc-public-observe-usage-heatmap-point.js";
 export * from "./textql-rpc-public-observe-warning-type-count.js";
 export * from "./textql-rpc-public-observe-warning-type-daily-count.js";
 export * from "./textql-rpc-public-observe-warning-type-meta.js";

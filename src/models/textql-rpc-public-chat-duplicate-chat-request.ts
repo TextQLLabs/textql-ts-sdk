@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatDuplicateChatRequest = {
+  /**
+   * "user" or "assistant"
+   */
   chatId?: string | undefined;
   onlyIfDifferentOwner?: boolean | null | undefined;
 };

@@ -21,9 +21,6 @@ import {
 } from "./textql-rpc-public-chat-thread-warning-type.js";
 
 export type TextqlRpcPublicChatGetChatsRequest = {
-  /**
-   * whether to return only the user's chats or all of the org's chats
-   */
   memberOnly?: boolean | undefined;
   searchTerm?: string | null | undefined;
   limit?: number | null | undefined;
@@ -31,9 +28,6 @@ export type TextqlRpcPublicChatGetChatsRequest = {
   creatorMemberId?: string | null | undefined;
   sortBy?: TextqlRpcPublicChatChatSortField | undefined;
   sortDirection?: TextqlRpcPublicChatChatSortDirection | undefined;
-  /**
-   * filter to only bookmarked chats
-   */
   bookmarkedOnly?: boolean | null | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -223,43 +217,16 @@ export type TextqlRpcPublicChatGetChatsRequest = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   createdBefore?: Date | undefined;
-  /**
-   * exclude chats created from template batch runs
-   */
   excludeBatchRuns?: boolean | null | undefined;
-  /**
-   * exclude chats created from playbooks that have no user messages beyond the initial prompt
-   */
   excludeUnusedPlaybooks?: boolean | null | undefined;
   source?: TextqlRpcPublicChatChatSource | undefined;
-  /**
-   * When true (and thread_warning_types empty), only chats that have at least one thread_warning row of any type.
-   */
   hasThreadWarning?: boolean | null | undefined;
-  /**
-   * Filter org chats to these creator member IDs (union). Ignored when empty. Supersedes creator_member_id when non-empty.
-   */
   creatorMemberIds?: Array<string> | undefined;
   sharedWithMe?: boolean | null | undefined;
   excludeFeed?: boolean | null | undefined;
-  /**
-   * Filter chats by source (union). Ignored when empty. Supersedes the single `source` when non-empty.
-   */
   sources?: Array<TextqlRpcPublicChatChatSource> | undefined;
-  /**
-   * Filter to chats with at least one thread_warning of any of these types (union).
-   */
   threadWarningTypes?: Array<TextqlRpcPublicChatThreadWarningType> | undefined;
-  /**
-   * Only chats tagged with at least one of these custom topics
-   *
-   * @remarks
-   *  (verdict='tagged'). Ignored when empty.
-   */
   topicIds?: Array<string> | undefined;
-  /**
-   * Filter chats that have any of these connector IDs in their paradigm options (union). Ignored when empty.
-   */
   connectorIds?: Array<number> | undefined;
 };
 

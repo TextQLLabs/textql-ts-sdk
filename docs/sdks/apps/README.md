@@ -7,13 +7,13 @@
 * [heartbeat](#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [createApp](#createapp) - CreateApp
 * [deleteApp](#deleteapp) - DeleteApp
-* [duplicate](#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+* [duplicate](#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](#get) - GetApp
 * [getAppVersion](#getappversion) - GetAppVersion
-* [getAppViewStats](#getappviewstats) - View analytics: reads the engagement views recorded on app page load.
+* [getAppViewStats](#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 * [getMembersWithApps](#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-* [listVersions](#listversions) - Version history: a snapshot is recorded on each publish; authors can list and restore.
+* [listVersions](#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [list](#list) - ListApps
 * [moveAppToFolder](#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
 * [refresh](#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
@@ -242,9 +242,9 @@ run();
 
 ## duplicate
 
-Duplicates an app the caller can view into a new draft app they own,
+Duplicates an app the caller can view into a new app they own,
  named "Copy of <name>". Copies code/files/data sources/compute functions/
- schedule; never carries over the source's published state or data snapshot.
+ schedule; never carries over the source's data snapshot.
 
 ### Example Usage
 
@@ -463,7 +463,8 @@ run();
 
 ## getAppViewStats
 
-View analytics: reads the engagement views recorded on app page load.
+Lists the calling member's favorited library items (apps, dashboards,
+ agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 
 ### Example Usage
 
@@ -682,7 +683,7 @@ run();
 
 ## listVersions
 
-Version history: a snapshot is recorded on each publish; authors can list and restore.
+Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 
 ### Example Usage
 

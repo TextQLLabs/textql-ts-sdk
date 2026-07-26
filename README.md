@@ -162,13 +162,13 @@ run();
 * [heartbeat](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [createApp](docs/sdks/apps/README.md#createapp) - CreateApp
 * [deleteApp](docs/sdks/apps/README.md#deleteapp) - DeleteApp
-* [duplicate](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
+* [duplicate](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](docs/sdks/apps/README.md#get) - GetApp
 * [getAppVersion](docs/sdks/apps/README.md#getappversion) - GetAppVersion
-* [getAppViewStats](docs/sdks/apps/README.md#getappviewstats) - View analytics: reads the engagement views recorded on app page load.
+* [getAppViewStats](docs/sdks/apps/README.md#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 * [getMembersWithApps](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](docs/sdks/apps/README.md#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-* [listVersions](docs/sdks/apps/README.md#listversions) - Version history: a snapshot is recorded on each publish; authors can list and restore.
+* [listVersions](docs/sdks/apps/README.md#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [list](docs/sdks/apps/README.md#list) - ListApps
 * [moveAppToFolder](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
 * [refresh](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
@@ -178,12 +178,12 @@ run();
 
 ### [AppService](docs/sdks/appservice/README.md)
 
-* [appServiceGetAppMemberState](docs/sdks/appservice/README.md#appservicegetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
-* [appServiceListAppActivitySince](docs/sdks/appservice/README.md#appservicelistappactivitysince) - ListAppActivitySince
-* [appServiceListMyAppMemberActivity](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-* [appServicePresenceHeartbeat](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-* [appServiceRecordAppMemberActivity](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - RecordAppMemberActivity
-* [appServiceSetAppMemberState](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [appServiceGetAppMemberState](docs/sdks/appservice/README.md#appservicegetappmemberstate) - View analytics: reads the engagement views recorded on app page load.
+* [appServiceListAppActivitySince](docs/sdks/appservice/README.md#appservicelistappactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [appServiceListMyAppMemberActivity](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - ListMyAppMemberActivity
+* [appServicePresenceHeartbeat](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+* [appServiceRecordAppMemberActivity](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [appServiceSetAppMemberState](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 
 ### [AuditLogs](docs/sdks/auditlogs/README.md)
 
@@ -202,11 +202,11 @@ run();
 ### [Chats](docs/sdks/chats/README.md)
 
 * [approveContextPromptChange](docs/sdks/chats/README.md#approvecontextpromptchange) - ApproveContextPromptChange
-* [approveOntologyChange](docs/sdks/chats/README.md#approveontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-* [attachAgent](docs/sdks/chats/README.md#attachagent) - External API users
+* [approveOntologyChange](docs/sdks/chats/README.md#approveontologychange) - ApproveOntologyChange
+* [attachAgent](docs/sdks/chats/README.md#attachagent) - AttachAgentToChat
 * [attachApp](docs/sdks/chats/README.md#attachapp) - AttachApp
 * [attachDashboard](docs/sdks/chats/README.md#attachdashboard) - AttachDashboard
-* [attachDataset](docs/sdks/chats/README.md#attachdataset) - AttachDataset
+* [attachDataset](docs/sdks/chats/README.md#attachdataset) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 * [bookmark](docs/sdks/chats/README.md#bookmark) - BookmarkChat
 * [cancelStream](docs/sdks/chats/README.md#cancelstream) - CancelStream
 * [checkPermissions](docs/sdks/chats/README.md#checkpermissions) - CheckChatPermissions
@@ -214,7 +214,7 @@ run();
 * [checkStreamlitHealth](docs/sdks/chats/README.md#checkstreamlithealth) - CheckStreamlitHealth
 * [createChat](docs/sdks/chats/README.md#createchat) - CreateChat
 * [delete](docs/sdks/chats/README.md#delete) - DeleteChat
-* [dismissQuestions](docs/sdks/chats/README.md#dismissquestions) - DismissQuestions
+* [dismissQuestions](docs/sdks/chats/README.md#dismissquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 * [duplicateChat](docs/sdks/chats/README.md#duplicatechat) - DuplicateChat
 * [getApiAnswer](docs/sdks/chats/README.md#getapianswer) - GetAPIChatAnswer
 * [getArtifact](docs/sdks/chats/README.md#getartifact) - GetArtifact
@@ -223,20 +223,20 @@ run();
 * [getChatExecutionTiming](docs/sdks/chats/README.md#getchatexecutiontiming) - GetChatExecutionTiming
 * [getHistory](docs/sdks/chats/README.md#gethistory) - GetChatHistory
 * [getAll](docs/sdks/chats/README.md#getall) - GetChats
-* [getCompletionParameters](docs/sdks/chats/README.md#getcompletionparameters) - GetCompletionParameters
+* [getCompletionParameters](docs/sdks/chats/README.md#getcompletionparameters) - List distinct chat creators the user can access
 * [getCompletionParametersBatch](docs/sdks/chats/README.md#getcompletionparametersbatch) - GetCompletionParametersBatch
 * [getLlmUsage](docs/sdks/chats/README.md#getllmusage) - GetLlmUsage
-* [getMembersWithChats](docs/sdks/chats/README.md#getmemberswithchats) - List distinct chat creators the user can access
+* [getMembersWithChats](docs/sdks/chats/README.md#getmemberswithchats) - GetMembersWithChats
 * [getPlaybookChats](docs/sdks/chats/README.md#getplaybookchats) - GetPlaybookChats
 * [pollEvents](docs/sdks/chats/README.md#pollevents) - PollChatEvents
 * [queryOneShot](docs/sdks/chats/README.md#queryoneshot) - QueryOneShot
-* [rateCell](docs/sdks/chats/README.md#ratecell) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+* [rateCell](docs/sdks/chats/README.md#ratecell) - RateChatCell
 * [rejectContextPromptChange](docs/sdks/chats/README.md#rejectcontextpromptchange) - RejectContextPromptChange
-* [rejectOntologyChange](docs/sdks/chats/README.md#rejectontologychange) - RejectOntologyChange
+* [rejectOntologyChange](docs/sdks/chats/README.md#rejectontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
 * [run](docs/sdks/chats/README.md#run) - RunChat
 * [send](docs/sdks/chats/README.md#send) - SendMessage
 * [submitContextPromptChange](docs/sdks/chats/README.md#submitcontextpromptchange) - SubmitContextPromptChange
-* [submitQuestions](docs/sdks/chats/README.md#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+* [submitQuestions](docs/sdks/chats/README.md#submitquestions) - SubmitQuestions
 * [unbookmark](docs/sdks/chats/README.md#unbookmark) - UnbookmarkChat
 * [update](docs/sdks/chats/README.md#update) - UpdateChat
 
@@ -650,21 +650,21 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`agentsUploadAgentAvatar`](docs/sdks/agents/README.md#uploadagentavatar) - UploadAgentAvatar
 - [`appsCreateApp`](docs/sdks/apps/README.md#createapp) - CreateApp
 - [`appsDeleteApp`](docs/sdks/apps/README.md#deleteapp) - DeleteApp
-- [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new draft app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's published state or data snapshot.
-- [`appServiceAppServiceGetAppMemberState`](docs/sdks/appservice/README.md#appservicegetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
-- [`appServiceAppServiceListAppActivitySince`](docs/sdks/appservice/README.md#appservicelistappactivitysince) - ListAppActivitySince
-- [`appServiceAppServiceListMyAppMemberActivity`](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-- [`appServiceAppServicePresenceHeartbeat`](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-- [`appServiceAppServiceRecordAppMemberActivity`](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - RecordAppMemberActivity
-- [`appServiceAppServiceSetAppMemberState`](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+- [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
+- [`appServiceAppServiceGetAppMemberState`](docs/sdks/appservice/README.md#appservicegetappmemberstate) - View analytics: reads the engagement views recorded on app page load.
+- [`appServiceAppServiceListAppActivitySince`](docs/sdks/appservice/README.md#appservicelistappactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+- [`appServiceAppServiceListMyAppMemberActivity`](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - ListMyAppMemberActivity
+- [`appServiceAppServicePresenceHeartbeat`](docs/sdks/appservice/README.md#appservicepresenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+- [`appServiceAppServiceRecordAppMemberActivity`](docs/sdks/appservice/README.md#appservicerecordappmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+- [`appServiceAppServiceSetAppMemberState`](docs/sdks/appservice/README.md#appservicesetappmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 - [`appsGet`](docs/sdks/apps/README.md#get) - GetApp
 - [`appsGetAppVersion`](docs/sdks/apps/README.md#getappversion) - GetAppVersion
-- [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - View analytics: reads the engagement views recorded on app page load.
+- [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 - [`appsGetMembersWithApps`](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 - [`appsHeartbeat`](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 - [`appsInvokeComputeFunction`](docs/sdks/apps/README.md#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 - [`appsList`](docs/sdks/apps/README.md#list) - ListApps
-- [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Version history: a snapshot is recorded on each publish; authors can list and restore.
+- [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 - [`appsMoveAppToFolder`](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
 - [`appsRefresh`](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 - [`appsRestoreAppVersion`](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
@@ -682,11 +682,11 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`auditLogsTriggerOtlpExport`](docs/sdks/auditlogs/README.md#triggerotlpexport) - TriggerOtlpExport
 - [`auditLogsTriggerS3Export`](docs/sdks/auditlogs/README.md#triggers3export) - TriggerS3Export
 - [`chatsApproveContextPromptChange`](docs/sdks/chats/README.md#approvecontextpromptchange) - ApproveContextPromptChange
-- [`chatsApproveOntologyChange`](docs/sdks/chats/README.md#approveontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-- [`chatsAttachAgent`](docs/sdks/chats/README.md#attachagent) - External API users
+- [`chatsApproveOntologyChange`](docs/sdks/chats/README.md#approveontologychange) - ApproveOntologyChange
+- [`chatsAttachAgent`](docs/sdks/chats/README.md#attachagent) - AttachAgentToChat
 - [`chatsAttachApp`](docs/sdks/chats/README.md#attachapp) - AttachApp
 - [`chatsAttachDashboard`](docs/sdks/chats/README.md#attachdashboard) - AttachDashboard
-- [`chatsAttachDataset`](docs/sdks/chats/README.md#attachdataset) - AttachDataset
+- [`chatsAttachDataset`](docs/sdks/chats/README.md#attachdataset) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 - [`chatsBookmark`](docs/sdks/chats/README.md#bookmark) - BookmarkChat
 - [`chatsCancelStream`](docs/sdks/chats/README.md#cancelstream) - CancelStream
 - [`chatsCheckHealth`](docs/sdks/chats/README.md#checkhealth) - CheckHealth
@@ -694,7 +694,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsCheckStreamlitHealth`](docs/sdks/chats/README.md#checkstreamlithealth) - CheckStreamlitHealth
 - [`chatsCreateChat`](docs/sdks/chats/README.md#createchat) - CreateChat
 - [`chatsDelete`](docs/sdks/chats/README.md#delete) - DeleteChat
-- [`chatsDismissQuestions`](docs/sdks/chats/README.md#dismissquestions) - DismissQuestions
+- [`chatsDismissQuestions`](docs/sdks/chats/README.md#dismissquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 - [`chatsDuplicateChat`](docs/sdks/chats/README.md#duplicatechat) - DuplicateChat
 - [`chatsGet`](docs/sdks/chats/README.md#get) - GetChat
 - [`chatsGetAll`](docs/sdks/chats/README.md#getall) - GetChats
@@ -702,21 +702,21 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsGetArtifact`](docs/sdks/chats/README.md#getartifact) - GetArtifact
 - [`chatsGetArtifactsSummary`](docs/sdks/chats/README.md#getartifactssummary) - GetChatArtifactsSummary
 - [`chatsGetChatExecutionTiming`](docs/sdks/chats/README.md#getchatexecutiontiming) - GetChatExecutionTiming
-- [`chatsGetCompletionParameters`](docs/sdks/chats/README.md#getcompletionparameters) - GetCompletionParameters
+- [`chatsGetCompletionParameters`](docs/sdks/chats/README.md#getcompletionparameters) - List distinct chat creators the user can access
 - [`chatsGetCompletionParametersBatch`](docs/sdks/chats/README.md#getcompletionparametersbatch) - GetCompletionParametersBatch
 - [`chatsGetHistory`](docs/sdks/chats/README.md#gethistory) - GetChatHistory
 - [`chatsGetLlmUsage`](docs/sdks/chats/README.md#getllmusage) - GetLlmUsage
-- [`chatsGetMembersWithChats`](docs/sdks/chats/README.md#getmemberswithchats) - List distinct chat creators the user can access
+- [`chatsGetMembersWithChats`](docs/sdks/chats/README.md#getmemberswithchats) - GetMembersWithChats
 - [`chatsGetPlaybookChats`](docs/sdks/chats/README.md#getplaybookchats) - GetPlaybookChats
 - [`chatsPollEvents`](docs/sdks/chats/README.md#pollevents) - PollChatEvents
 - [`chatsQueryOneShot`](docs/sdks/chats/README.md#queryoneshot) - QueryOneShot
-- [`chatsRateCell`](docs/sdks/chats/README.md#ratecell) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+- [`chatsRateCell`](docs/sdks/chats/README.md#ratecell) - RateChatCell
 - [`chatsRejectContextPromptChange`](docs/sdks/chats/README.md#rejectcontextpromptchange) - RejectContextPromptChange
-- [`chatsRejectOntologyChange`](docs/sdks/chats/README.md#rejectontologychange) - RejectOntologyChange
+- [`chatsRejectOntologyChange`](docs/sdks/chats/README.md#rejectontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
 - [`chatsRun`](docs/sdks/chats/README.md#run) - RunChat
 - [`chatsSend`](docs/sdks/chats/README.md#send) - SendMessage
 - [`chatsSubmitContextPromptChange`](docs/sdks/chats/README.md#submitcontextpromptchange) - SubmitContextPromptChange
-- [`chatsSubmitQuestions`](docs/sdks/chats/README.md#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+- [`chatsSubmitQuestions`](docs/sdks/chats/README.md#submitquestions) - SubmitQuestions
 - [`chatsUnbookmark`](docs/sdks/chats/README.md#unbookmark) - UnbookmarkChat
 - [`chatsUpdate`](docs/sdks/chats/README.md#update) - UpdateChat
 - [`connectorsCreate`](docs/sdks/connectors/README.md#create) - CreateConnector

@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatGetAPIChatAnswerRequest
 
+order is "most recent first"
+
 ## Example Usage
 
 ```typescript

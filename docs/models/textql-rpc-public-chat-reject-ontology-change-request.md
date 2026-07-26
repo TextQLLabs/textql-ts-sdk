@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatRejectOntologyChangeRequest
 
+Ontology change management
+
 ## Example Usage
 
 ```typescript

@@ -27,12 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
- *
- * @remarks
- * Resolve a halted questions cell. Submit hands the answers to the agent and
- *  resumes it; Dismiss hands over only the answered count and does NOT resume
- *  (the user's next message becomes the dismissal reason).
+ * SubmitQuestions
  */
 export function chatsSubmitQuestions(
   client: TextqlCore,

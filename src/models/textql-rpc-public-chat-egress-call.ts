@@ -15,9 +15,6 @@ export type TextqlRpcPublicChatEgressCallRequestBytes = number | string;
 
 export type TextqlRpcPublicChatEgressCallResponseBytes = number | string;
 
-/**
- * EgressCall is a single outbound HTTP(S) request a chat's sandbox made,
- */
 export type TextqlRpcPublicChatEgressCall = {
   id?: string | undefined;
   method?: string | undefined;
@@ -25,16 +22,10 @@ export type TextqlRpcPublicChatEgressCall = {
   host?: string | undefined;
   path?: string | undefined;
   statusCode?: number | undefined;
-  /**
-   * ok | denied | error
-   */
   outcome?: string | undefined;
   durationMs?: number | string | undefined;
   requestBytes?: number | string | undefined;
   responseBytes?: number | string | undefined;
-  /**
-   * connector attribution, empty old secret
-   */
   apiAccessKeyId?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -130,13 +121,7 @@ export type TextqlRpcPublicChatEgressCall = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   occurredAt?: Date | undefined;
-  /**
-   * chat cell that made the request, empty if unknown
-   */
   cellId?: string | undefined;
-  /**
-   * abstractive "what this call did", empty if unavailable
-   */
   interpretation?: string | undefined;
 };
 

@@ -27,13 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
- *
- * @remarks
- * Resolve a halted ask_approval form cell. Submit runs the form's submission
- *  and continues the agent with the outcome; Reject discards it (passive, no
- *  run); Dismiss treats it as a change request (no run, next message says what
- *  to change). All three set the cell's outcome, like the other approve/deny cells.
+ * ApproveOntologyChange
  */
 export function chatsApproveOntologyChange(
   client: TextqlCore,

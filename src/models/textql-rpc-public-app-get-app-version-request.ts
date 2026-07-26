@@ -5,20 +5,22 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Version history (mirrors dashboard.DashboardVersion). A snapshot of the
+ * Version history entry. Git-backed apps derive one per library commit (published_by/at
  *
  * @remarks
- *  published app at publish time; restore writes it back into the draft.
+ *  carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
  */
 export type TextqlRpcPublicAppGetAppVersionRequest = {
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  commitId?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicAppGetAppVersionRequest$Outbound = {
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  commitId?: string | null | undefined;
 };
 
 /** @internal */
@@ -29,6 +31,7 @@ export const TextqlRpcPublicAppGetAppVersionRequest$outboundSchema:
   > = z.object({
     appId: z.optional(z.string()),
     versionNumber: z.optional(z.int()),
+    commitId: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicAppGetAppVersionRequestToJSON(

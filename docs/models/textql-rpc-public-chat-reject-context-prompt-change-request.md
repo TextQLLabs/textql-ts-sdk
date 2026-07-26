@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatRejectContextPromptChangeRequest
 
+context prompt change management
+
 ## Example Usage
 
 ```typescript

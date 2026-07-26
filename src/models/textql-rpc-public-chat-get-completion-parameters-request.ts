@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetCompletionParametersRequest = {
+  /**
+   * UUID
+   */
   chatId?: string | undefined;
   cellId?: string | undefined;
 };

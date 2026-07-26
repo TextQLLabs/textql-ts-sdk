@@ -60,13 +60,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-   *
-   * @remarks
-   * Resolve a halted ask_approval form cell. Submit runs the form's submission
-   *  and continues the agent with the outcome; Reject discards it (passive, no
-   *  run); Dismiss treats it as a change request (no run, next message says what
-   *  to change). All three set the cell's outcome, like the other approve/deny cells.
+   * ApproveOntologyChange
    */
   async approveOntologyChange(
     request: operations.ChatServiceApproveOntologyChangeRequest,
@@ -80,10 +74,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * External API users
-   *
-   * @remarks
-   * External API users
+   * AttachAgentToChat
    */
   async attachAgent(
     request: operations.ChatServiceAttachAgentToChatRequest,
@@ -125,7 +116,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * AttachDataset
+   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+   *
+   * @remarks
+   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
    */
   async attachDataset(
     request: operations.ChatServiceAttachDatasetRequest,
@@ -237,7 +231,12 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * DismissQuestions
+   * Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+   *
+   * @remarks
+   * Resolve a halted questions cell. Submit hands the answers to the agent and
+   *  resumes it; Dismiss hands over only the answered count and does NOT resume
+   *  (the user's next message becomes the dismissal reason).
    */
   async dismissQuestions(
     request: operations.ChatServiceDismissQuestionsRequest,
@@ -363,7 +362,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * GetCompletionParameters
+   * List distinct chat creators the user can access
+   *
+   * @remarks
+   * List distinct chat creators the user can access
    */
   async getCompletionParameters(
     request: operations.ChatServiceGetCompletionParametersRequest,
@@ -405,10 +407,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * List distinct chat creators the user can access
-   *
-   * @remarks
-   * List distinct chat creators the user can access
+   * GetMembersWithChats
    */
   async getMembersWithChats(
     request: operations.ChatServiceGetMembersWithChatsRequest,
@@ -464,10 +463,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
-   *
-   * @remarks
-   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+   * RateChatCell
    */
   async rateCell(
     request: operations.ChatServiceRateChatCellRequest,
@@ -495,7 +491,13 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * RejectOntologyChange
+   * Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
+   *
+   * @remarks
+   * Resolve a halted ask_approval form cell. Submit runs the form's submission
+   *  and continues the agent with the outcome; Reject discards it (passive, no
+   *  run); Dismiss treats it as a change request (no run, next message says what
+   *  to change). All three set the cell's outcome, like the other approve/deny cells.
    */
   async rejectOntologyChange(
     request: operations.ChatServiceRejectOntologyChangeRequest,
@@ -551,12 +553,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
-   *
-   * @remarks
-   * Resolve a halted questions cell. Submit hands the answers to the agent and
-   *  resumes it; Dismiss hands over only the answered count and does NOT resume
-   *  (the user's next message becomes the dismissal reason).
+   * SubmitQuestions
    */
   async submitQuestions(
     request: operations.ChatServiceSubmitQuestionsRequest,

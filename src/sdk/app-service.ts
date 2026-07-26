@@ -14,11 +14,10 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class AppService extends ClientSDK {
   /**
-   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    *
    * @remarks
-   * Staff-only (superadmin gated in-handler): publishes the embedded component
-   *  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    */
   async appServiceGetAppMemberState(
     request: operations.AppServiceGetAppMemberStateRequest,
@@ -32,7 +31,11 @@ export class AppService extends ClientSDK {
   }
 
   /**
-   * ListAppActivitySince
+   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+   *
+   * @remarks
+   * Append-only per-member activity log. Listing is own rows only; no
+   *  cross-member reads in this release.
    */
   async appServiceListAppActivitySince(
     request: operations.AppServiceListAppActivitySinceRequest,
@@ -46,11 +49,7 @@ export class AppService extends ClientSDK {
   }
 
   /**
-   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-   *
-   * @remarks
-   * Append-only per-member activity log. Listing is own rows only; no
-   *  cross-member reads in this release.
+   * ListMyAppMemberActivity
    */
   async appServiceListMyAppMemberActivity(
     request: operations.AppServiceListMyAppMemberActivityRequest,
@@ -64,11 +63,11 @@ export class AppService extends ClientSDK {
   }
 
   /**
-   * Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+   * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
    *
    * @remarks
-   * Server stream of live activity batches + presence snapshots, driven by
-   *  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+   * Cross-member live activity: rows from every member of the app after a seq,
+   *  each carrying member_id + display_name (resolved server-side; never email).
    */
   async appServicePresenceHeartbeat(
     request: operations.AppServicePresenceHeartbeatRequest,
@@ -82,7 +81,12 @@ export class AppService extends ClientSDK {
   }
 
   /**
-   * RecordAppMemberActivity
+   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+   *
+   * @remarks
+   * Per-member app state: one JSON blob per (app, member) so apps remember
+   *  settings/progress. Member always resolved server-side from auth context;
+   *  per-member persistence, so viewers with read access can save their own state.
    */
   async appServiceRecordAppMemberActivity(
     request: operations.AppServiceRecordAppMemberActivityRequest,
@@ -96,12 +100,11 @@ export class AppService extends ClientSDK {
   }
 
   /**
-   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
    *
    * @remarks
-   * Per-member app state: one JSON blob per (app, member) so apps remember
-   *  settings/progress. Member always resolved server-side from auth context;
-   *  per-member persistence, so viewers with read access can save their own state.
+   * Staff-only (superadmin gated in-handler): publishes the embedded component
+   *  gallery as an app tree and returns its signed viewer URL.
    */
   async appServiceSetAppMemberState(
     request: operations.AppServiceSetAppMemberStateRequest,

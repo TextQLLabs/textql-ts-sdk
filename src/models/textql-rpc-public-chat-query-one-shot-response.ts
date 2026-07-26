@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicChatCell$inboundSchema,
 } from "./textql-rpc-public-chat-cell.js";
 
-/**
- * Simplified query response for external API users
- */
 export type TextqlRpcPublicChatQueryOneShotResponse = {
   chatId?: string | undefined;
   answer?: string | undefined;
