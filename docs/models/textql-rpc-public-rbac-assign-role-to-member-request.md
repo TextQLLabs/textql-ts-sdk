@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacAssignRoleToMemberRequest
 
-Member role management messages
-
 ## Example Usage
 
 ```typescript

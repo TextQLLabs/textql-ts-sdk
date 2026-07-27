@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Custom topics
- *
- * @remarks
- * Custom topics
+ * RefineTopicDraft
  */
 export function observabilityRefineDraft(
   client: TextqlCore,

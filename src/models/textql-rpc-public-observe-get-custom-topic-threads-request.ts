@@ -5,16 +5,16 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicObserveGetCustomTopicThreadsRequest = {
-  topicId?: string | undefined;
   /**
-   * 'tagged' (default) | 'excluded_manual'
+   * Optional trend window; when both are set each topic carries
+   *
+   * @remarks
+   *  daily_tag_counts over [trend_start, trend_end).
    */
+  topicId?: string | undefined;
   verdict?: string | undefined;
   pageToken?: string | undefined;
   pageSize?: number | undefined;
-  /**
-   * only threads owned by this member when set
-   */
   memberId?: string | undefined;
 };
 

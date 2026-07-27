@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Member role management messages
- */
 export type TextqlRpcPublicRbacAssignRoleToMemberRequest = {
   memberId?: string | undefined;
   roleId?: string | undefined;

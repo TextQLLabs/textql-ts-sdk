@@ -11,13 +11,10 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type ThreadCount = number | string;
 
-/**
- * One owner of a topic's tagged chats, ranked by how many they own.
- */
 export type TextqlRpcPublicObserveCustomTopicPerson = {
   memberId?: string | undefined;
   /**
-   * display name; falls back to the email, then the member id
+   * 'tagged' (default) | 'excluded_manual'
    */
   name?: string | undefined;
   email?: string | undefined;

@@ -31,13 +31,6 @@ export type TextqlRpcPublicRbacUpdateRoleRequest = {
    *  has no plan to be removed.
    */
   allowModelChoice?: boolean | undefined;
-  /**
-   * Set to true to clear allowed_model_ids back to "all models allowed".
-   *
-   * @remarks
-   *  Proto3 cannot distinguish an empty repeated field from an absent one,
-   *  so this explicit flag is required.
-   */
   clearAllowedModelIds?: boolean | undefined;
 };
 

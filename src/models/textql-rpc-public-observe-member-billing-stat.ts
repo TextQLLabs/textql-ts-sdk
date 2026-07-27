@@ -13,13 +13,7 @@ export type TextqlRpcPublicObserveMemberBillingStat = {
   memberName?: string | undefined;
   email?: string | undefined;
   totalAcu?: number | undefined;
-  /**
-   * llm_tokens, compute_hours, cell_execution
-   */
   acuByCategory?: { [k: string]: number } | undefined;
-  /**
-   * chat, feed, observability
-   */
   acuBySource?: { [k: string]: number } | undefined;
   profileImageUrl?: string | undefined;
   threadCount?: number | undefined;
@@ -27,13 +21,6 @@ export type TextqlRpcPublicObserveMemberBillingStat = {
   dashboardCount?: number | undefined;
   agentCount?: number | undefined;
   isFormerMember?: boolean | undefined;
-  /**
-   * Per-member signal quality over the same window. Signal counts are rows
-   *
-   * @remarks
-   *  (one thread can contribute several); flagged/analyzed count distinct
-   *  threads, so flagged/analyzed is the per-member flagged rate.
-   */
   positiveSignalCount?: number | undefined;
   negativeSignalCount?: number | undefined;
   flaggedThreadCount?: number | undefined;

@@ -10,8 +10,8 @@ let value: TextqlRpcPublicObserveRefineTopicDraftRequest = {};
 
 ## Fields
 
-| Field                          | Type                           | Required                       | Description                    |
-| ------------------------------ | ------------------------------ | ------------------------------ | ------------------------------ |
-| `prompt`                       | *string*                       | :heavy_minus_sign:             | N/A                            |
-| `examples`                     | *string*[]                     | :heavy_minus_sign:             | example questions users ask    |
-| `exclusions`                   | *string*[]                     | :heavy_minus_sign:             | "should NOT be tagged" phrases |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `prompt`           | *string*           | :heavy_minus_sign: | N/A                |
+| `examples`         | *string*[]         | :heavy_minus_sign: | N/A                |
+| `exclusions`       | *string*[]         | :heavy_minus_sign: | N/A                |

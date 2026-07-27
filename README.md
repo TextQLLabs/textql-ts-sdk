@@ -327,7 +327,7 @@ run();
 * [activateCustomTopic](docs/sdks/observability/README.md#activatecustomtopic) - ActivateCustomTopic
 * [backfillCustomTopic](docs/sdks/observability/README.md#backfillcustomtopic) - BackfillCustomTopic
 * [backfillThreadWarnings](docs/sdks/observability/README.md#backfillthreadwarnings) - BackfillThreadWarnings
-* [createCustomTopic](docs/sdks/observability/README.md#createcustomtopic) - CreateCustomTopic
+* [createCustomTopic](docs/sdks/observability/README.md#createcustomtopic) - Custom topics
 * [deactivateCustomTopic](docs/sdks/observability/README.md#deactivatecustomtopic) - DeactivateCustomTopic
 * [deleteCustomTopic](docs/sdks/observability/README.md#deletecustomtopic) - DeleteCustomTopic
 * [exportCsv](docs/sdks/observability/README.md#exportcsv) - ExportObservabilityCsv
@@ -350,7 +350,7 @@ run();
 * [getObservabilityStats](docs/sdks/observability/README.md#getobservabilitystats) - GetObservabilityStats
 * [getThreadWarnings](docs/sdks/observability/README.md#getthreadwarnings) - GetThreadWarnings
 * [listCustomTopics](docs/sdks/observability/README.md#listcustomtopics) - ListCustomTopics
-* [refineDraft](docs/sdks/observability/README.md#refinedraft) - Custom topics
+* [refineDraft](docs/sdks/observability/README.md#refinedraft) - RefineTopicDraft
 * [setTopicTagFeedback](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 * [updateCustomTopic](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
 
@@ -488,53 +488,26 @@ run();
 
 ### [Rbac](docs/sdks/rbac/README.md)
 
-* [addGroupMember](docs/sdks/rbac/README.md#addgroupmember) - AddGroupMember
-* [approveAccessRequest](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
 * [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
-* [convertRoleToGroup](docs/sdks/rbac/README.md#convertroletogroup) - ConvertRoleToGroup
-* [createApiKey](docs/sdks/rbac/README.md#createapikey) - API Key management
-* [createGroup](docs/sdks/rbac/README.md#creategroup) - CreateGroup
+* [createApiKey](docs/sdks/rbac/README.md#createapikey) - Group management. Internal only.
 * [createRole](docs/sdks/rbac/README.md#createrole) - Role management
-* [createServiceAccount](docs/sdks/rbac/README.md#createserviceaccount) - Service account management
-* [deleteGroup](docs/sdks/rbac/README.md#deletegroup) - DeleteGroup
+* [createServiceAccount](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
 * [deleteRole](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 * [deleteServiceAccount](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
-* [generateShareLink](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 * [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
 * [getEmbedUserApiKey](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
-* [getGroup](docs/sdks/rbac/README.md#getgroup) - GetGroup
-* [getMemberGroups](docs/sdks/rbac/README.md#getmembergroups) - GetMemberGroups
 * [getMemberRoles](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
-* [getObjectAccess](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 * [getRole](docs/sdks/rbac/README.md#getrole) - GetRole
 * [getRolePermissions](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
-* [hasObjectAccess](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
-* [listAccessRequests](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 * [listApiKeys](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
-* [listGroupConnectors](docs/sdks/rbac/README.md#listgroupconnectors) - ListGroupConnectors
-* [listGroups](docs/sdks/rbac/README.md#listgroups) - ListGroups
 * [listPermissions](docs/sdks/rbac/README.md#listpermissions) - Permission management
 * [listRoles](docs/sdks/rbac/README.md#listroles) - ListRoles
-* [listScimGroupMappings](docs/sdks/rbac/README.md#listscimgroupmappings) - ListScimGroupMappings
 * [listServiceAccounts](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-* [migrateAllScimGroupMappings](docs/sdks/rbac/README.md#migrateallscimgroupmappings) - MigrateAllScimGroupMappings
-* [migrateScimGroupMappingToGroup](docs/sdks/rbac/README.md#migratescimgroupmappingtogroup) - MigrateScimGroupMappingToGroup
-* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
-* [removeGroupMember](docs/sdks/rbac/README.md#removegroupmember) - RemoveGroupMember
 * [removePermissionFromRole](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
 * [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
-* [requestAccess](docs/sdks/rbac/README.md#requestaccess) - Access request management
-* [revertScimGroupMappingToRole](docs/sdks/rbac/README.md#revertscimgroupmappingtorole) - RevertScimGroupMappingToRole
 * [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
-* [revokeObjectAccess](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
 * [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
-* [shareObject](docs/sdks/rbac/README.md#shareobject) - Object sharing and access control
-* [shareWithGroup](docs/sdks/rbac/README.md#sharewithgroup) - ShareObjectWithGroup
-* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
-* [updateGroup](docs/sdks/rbac/README.md#updategroup) - UpdateGroup
-* [updateObjectAccess](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
-* [updateObjectVisibility](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](docs/sdks/rbac/README.md#updaterole) - UpdateRole
 
 ### [RBACService](docs/sdks/rbacservice/README.md)
@@ -789,7 +762,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityActivateCustomTopic`](docs/sdks/observability/README.md#activatecustomtopic) - ActivateCustomTopic
 - [`observabilityBackfillCustomTopic`](docs/sdks/observability/README.md#backfillcustomtopic) - BackfillCustomTopic
 - [`observabilityBackfillThreadWarnings`](docs/sdks/observability/README.md#backfillthreadwarnings) - BackfillThreadWarnings
-- [`observabilityCreateCustomTopic`](docs/sdks/observability/README.md#createcustomtopic) - CreateCustomTopic
+- [`observabilityCreateCustomTopic`](docs/sdks/observability/README.md#createcustomtopic) - Custom topics
 - [`observabilityDeactivateCustomTopic`](docs/sdks/observability/README.md#deactivatecustomtopic) - DeactivateCustomTopic
 - [`observabilityDeleteCustomTopic`](docs/sdks/observability/README.md#deletecustomtopic) - DeleteCustomTopic
 - [`observabilityExportCsv`](docs/sdks/observability/README.md#exportcsv) - ExportObservabilityCsv
@@ -812,7 +785,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityGetObservabilityStats`](docs/sdks/observability/README.md#getobservabilitystats) - GetObservabilityStats
 - [`observabilityGetThreadWarnings`](docs/sdks/observability/README.md#getthreadwarnings) - GetThreadWarnings
 - [`observabilityListCustomTopics`](docs/sdks/observability/README.md#listcustomtopics) - ListCustomTopics
-- [`observabilityRefineDraft`](docs/sdks/observability/README.md#refinedraft) - Custom topics
+- [`observabilityRefineDraft`](docs/sdks/observability/README.md#refinedraft) - RefineTopicDraft
 - [`observabilityServiceObservabilityServiceGetMemberSignalTrend`](docs/sdks/observabilityservice/README.md#observabilityservicegetmembersignaltrend) - GetMemberSignalTrend
 - [`observabilitySetTopicTagFeedback`](docs/sdks/observability/README.md#settopictagfeedback) - SetTopicTagFeedback
 - [`observabilityUpdateCustomTopic`](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
@@ -935,54 +908,27 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`powerbiSyncPowerBIItems`](docs/sdks/powerbi/README.md#syncpowerbiitems) - SyncPowerBIItems
 - [`powerbiTestConnection`](docs/sdks/powerbi/README.md#testconnection) - TestPowerBIConnection
 - [`powerbiUnsyncItems`](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
-- [`rbacAddGroupMember`](docs/sdks/rbac/README.md#addgroupmember) - AddGroupMember
-- [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 - [`rbacAssignPermissionToRole`](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
 - [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
-- [`rbacConvertRoleToGroup`](docs/sdks/rbac/README.md#convertroletogroup) - ConvertRoleToGroup
-- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - API Key management
-- [`rbacCreateGroup`](docs/sdks/rbac/README.md#creategroup) - CreateGroup
+- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - Group management. Internal only.
 - [`rbacCreateRole`](docs/sdks/rbac/README.md#createrole) - Role management
-- [`rbacCreateServiceAccount`](docs/sdks/rbac/README.md#createserviceaccount) - Service account management
-- [`rbacDeleteGroup`](docs/sdks/rbac/README.md#deletegroup) - DeleteGroup
+- [`rbacCreateServiceAccount`](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
 - [`rbacDeleteRole`](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 - [`rbacDeleteServiceAccount`](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
-- [`rbacGenerateShareLink`](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 - [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
 - [`rbacGetEmbedUserApiKey`](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
-- [`rbacGetGroup`](docs/sdks/rbac/README.md#getgroup) - GetGroup
-- [`rbacGetMemberGroups`](docs/sdks/rbac/README.md#getmembergroups) - GetMemberGroups
 - [`rbacGetMemberRoles`](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
-- [`rbacGetObjectAccess`](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 - [`rbacGetRole`](docs/sdks/rbac/README.md#getrole) - GetRole
 - [`rbacGetRolePermissions`](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
-- [`rbacHasObjectAccess`](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
-- [`rbacListAccessRequests`](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 - [`rbacListApiKeys`](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
-- [`rbacListGroupConnectors`](docs/sdks/rbac/README.md#listgroupconnectors) - ListGroupConnectors
-- [`rbacListGroups`](docs/sdks/rbac/README.md#listgroups) - ListGroups
 - [`rbacListPermissions`](docs/sdks/rbac/README.md#listpermissions) - Permission management
 - [`rbacListRoles`](docs/sdks/rbac/README.md#listroles) - ListRoles
-- [`rbacListScimGroupMappings`](docs/sdks/rbac/README.md#listscimgroupmappings) - ListScimGroupMappings
 - [`rbacListServiceAccounts`](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-- [`rbacMigrateAllScimGroupMappings`](docs/sdks/rbac/README.md#migrateallscimgroupmappings) - MigrateAllScimGroupMappings
-- [`rbacMigrateScimGroupMappingToGroup`](docs/sdks/rbac/README.md#migratescimgroupmappingtogroup) - MigrateScimGroupMappingToGroup
-- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
-- [`rbacRemoveGroupMember`](docs/sdks/rbac/README.md#removegroupmember) - RemoveGroupMember
 - [`rbacRemovePermissionFromRole`](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
 - [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
-- [`rbacRequestAccess`](docs/sdks/rbac/README.md#requestaccess) - Access request management
-- [`rbacRevertScimGroupMappingToRole`](docs/sdks/rbac/README.md#revertscimgroupmappingtorole) - RevertScimGroupMappingToRole
 - [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
-- [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
 - [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
 - [`rbacServiceRBACServiceSetRolePermissions`](docs/sdks/rbacservice/README.md#rbacservicesetrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Object sharing and access control
-- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
-- [`rbacShareWithGroup`](docs/sdks/rbac/README.md#sharewithgroup) - ShareObjectWithGroup
-- [`rbacUpdateGroup`](docs/sdks/rbac/README.md#updategroup) - UpdateGroup
-- [`rbacUpdateObjectAccess`](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
-- [`rbacUpdateObjectVisibility`](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 - [`rbacUpdateRole`](docs/sdks/rbac/README.md#updaterole) - UpdateRole
 - [`sandboxAdminGetSandbox`](docs/sdks/sandboxadmin/README.md#getsandbox) - GetSandbox
 - [`sandboxAdminList`](docs/sdks/sandboxadmin/README.md#list) - ListSandboxes

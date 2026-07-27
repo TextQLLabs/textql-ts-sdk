@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * API Key management
+ * Group management. Internal only.
  *
  * @remarks
- * API Key management
+ * Group management. Internal only.
  */
 export function rbacCreateApiKey(
   client: TextqlCore,
