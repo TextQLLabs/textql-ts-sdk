@@ -11,35 +11,17 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TagCount = number | string;
 
-/**
- * Distinct owners of the tagged chats (same population as tag_count).
- */
 export type PeopleCount = number | string;
 
 export type TextqlRpcPublicObserveCustomTopic = {
   id?: string | undefined;
   name?: string | undefined;
   userPrompt?: string | undefined;
-  /**
-   * completes "Topic covers threads where: ..."
-   */
   covers?: string | undefined;
-  /**
-   * completes "Topic excludes threads where: ..."
-   */
   excludes?: string | undefined;
-  /**
-   * 'active' | 'inactive'
-   */
   status?: string | undefined;
   createdByMemberId?: string | undefined;
-  /**
-   * the Ana scan thread
-   */
   backfillChatId?: string | null | undefined;
-  /**
-   * 'running' | 'completed' | 'failed'
-   */
   backfillStatus?: string | null | undefined;
   backfillError?: string | null | undefined;
   /**
@@ -231,21 +213,8 @@ export type TextqlRpcPublicObserveCustomTopic = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   updatedAt?: Date | undefined;
-  /**
-   * resolved from created_by_member_id; empty if the member is gone
-   */
   createdByEmail?: string | undefined;
-  /**
-   * Tagged chats per 24h bucket from the request's trend window start
-   *
-   * @remarks
-   *  (oldest first), bucketed by chat created_at — the same rule as the
-   *  overview daily-volume chart. Empty when the request had no window.
-   */
   dailyTagCounts?: Array<number> | undefined;
-  /**
-   * Distinct owners of the tagged chats (same population as tag_count).
-   */
   peopleCount?: number | string | undefined;
 };
 

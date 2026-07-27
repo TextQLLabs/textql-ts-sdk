@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicRbacApiKeyStatus$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key-status.js";
 
+/**
+ * Get current member roles and permissions messages
+ */
 export type TextqlRpcPublicRbacApiKey = {
   id?: string | undefined;
   memberId?: string | undefined;
@@ -111,13 +114,6 @@ export type TextqlRpcPublicRbacApiKey = {
    */
   createdAt?: Date | undefined;
   apiKeyShort?: string | null | undefined;
-  /**
-   * Role IDs (UUIDs) that this API key is scoped to. When set, authorization
-   *
-   * @remarks
-   *  is evaluated strictly against these roles. Returned as role IDs; use the
-   *  Role service (GetRole/ListRoles) to resolve to human-readable names.
-   */
   assumedRoles?: Array<string> | undefined;
   name?: string | null | undefined;
   /**
@@ -311,13 +307,6 @@ export type TextqlRpcPublicRbacApiKey = {
   status?: TextqlRpcPublicRbacApiKeyStatus | undefined;
   ownerDisplayName?: string | null | undefined;
   ownerEmail?: string | null | undefined;
-  /**
-   * When true, requests authenticated with this key skip the
-   *
-   * @remarks
-   *  @textql.com-email superadmin elevation branch. Lets a textql admin
-   *  preview a role's experience without superadmin permission leakage.
-   */
   suppressSuperadmin?: boolean | undefined;
 };
 

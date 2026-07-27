@@ -6,55 +6,11 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacCreateApiKeyRequest = {
   expirySeconds?: number | null | undefined;
-  /**
-   * Role IDs (UUIDs) to scope the new API key to. The service validates that
-   *
-   * @remarks
-   *  each ID exists in the caller's org. Non-admin callers may only specify
-   *  roles they already hold; assumed-role API key callers may only specify
-   *  a subset of their current assumed roles.
-   */
   assumedRoles?: Array<string> | undefined;
-  /**
-   * When true, the API key inherits all of the creating member's roles
-   *
-   * @remarks
-   *  (no assumed-role scoping). Callers must set this explicitly when
-   *  assumed_roles is empty; otherwise the request is rejected to prevent
-   *  accidentally creating over-privileged keys.
-   */
   inheritAllRoles?: boolean | null | undefined;
-  /**
-   * Optional display name for the API key.
-   */
   name?: string | null | undefined;
-  /**
-   * Optional owner override for the new API key.
-   *
-   * @remarks
-   *  If unset, the API key is created for the calling member.
-   *  If set, the API key is created for this member ID (target principal):
-   *  service-account targets require the caller to hold organization:write;
-   *  human targets require api_access_key:delegate, and the key is bounded
-   *  by the target member's roles with superadmin elevation always
-   *  suppressed.
-   */
   targetMemberId?: string | null | undefined;
-  /**
-   * Optional client metadata stored on the API key as client_id.
-   *
-   * @remarks
-   *  Prefer a JSON object string when using structured client attributes.
-   */
   clientId?: string | null | undefined;
-  /**
-   * When true, requests authenticated with this key skip the
-   *
-   * @remarks
-   *  @textql.com-email superadmin elevation branch. Only meaningful
-   *  when paired with assumed_roles so a textql admin can preview a
-   *  role's experience without superadmin permissions bleeding through.
-   */
   suppressSuperadmin?: boolean | undefined;
 };
 

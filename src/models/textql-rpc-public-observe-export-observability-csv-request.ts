@@ -4,6 +4,12 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * MemberActivity is one member's activity over the window: a daily event-count
+ *
+ * @remarks
+ *  series (oldest→newest, zero-filled) plus rollups for the users table.
+ */
 export type TextqlRpcPublicObserveExportObservabilityCsvRequest = {
   tab?: string | undefined;
   days?: number | undefined;

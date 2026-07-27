@@ -8,12 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * MemberActivity is one member's activity over the window: a daily event-count
- *
- * @remarks
- *  series (oldest→newest, zero-filled) plus rollups for the users table.
- */
 export type TextqlRpcPublicObserveMemberActivity = {
   memberId?: string | undefined;
   dailyActivity?: Array<number> | undefined;

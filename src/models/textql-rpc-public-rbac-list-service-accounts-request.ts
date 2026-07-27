@@ -6,6 +6,9 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacListServiceAccountsRequest = {
   searchTerm?: string | null | undefined;
+  /**
+   * owner, editor, viewer
+   */
   pageSize?: number | null | undefined;
   pageToken?: string | null | undefined;
 };

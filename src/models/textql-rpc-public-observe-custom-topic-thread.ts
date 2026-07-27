@@ -12,9 +12,6 @@ export type TextqlRpcPublicObserveCustomTopicThread = {
   chatId?: string | undefined;
   title?: string | undefined;
   memberId?: string | undefined;
-  /**
-   * 'live' | 'backfill' | 'manual'
-   */
   taggedBy?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-rbac-api-key.js";
 
 export type TextqlRpcPublicRbacRotateApiKeyResponse = {
+  /**
+   * Get current member roles and permissions messages
+   */
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
   apiKeySecret?: string | undefined;
   revokedApiKeyId?: string | undefined;

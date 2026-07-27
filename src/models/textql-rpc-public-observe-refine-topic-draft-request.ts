@@ -6,13 +6,7 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicObserveRefineTopicDraftRequest = {
   prompt?: string | undefined;
-  /**
-   * example questions users ask
-   */
   examples?: Array<string> | undefined;
-  /**
-   * "should NOT be tagged" phrases
-   */
   exclusions?: Array<string> | undefined;
 };
 

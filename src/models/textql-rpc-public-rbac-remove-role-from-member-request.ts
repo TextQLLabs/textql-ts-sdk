@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Member role management messages
+ */
 export type TextqlRpcPublicRbacRemoveRoleFromMemberRequest = {
   memberId?: string | undefined;
   roleId?: string | undefined;

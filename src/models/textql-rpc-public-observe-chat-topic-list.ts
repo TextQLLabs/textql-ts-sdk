@@ -12,6 +12,12 @@ import {
   TextqlRpcPublicObserveChatTopicRef$inboundSchema,
 } from "./textql-rpc-public-observe-chat-topic-ref.js";
 
+/**
+ * Chat → topics decoration (which live topics tag each chat), mirroring the
+ *
+ * @remarks
+ *  GetThreadWarnings batch shape.
+ */
 export type TextqlRpcPublicObserveChatTopicList = {
   topics?: Array<TextqlRpcPublicObserveChatTopicRef> | undefined;
 };

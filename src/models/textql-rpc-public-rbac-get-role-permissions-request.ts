@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Permission management requests/responses
+ */
 export type TextqlRpcPublicRbacGetRolePermissionsRequest = {
   roleId?: string | undefined;
 };

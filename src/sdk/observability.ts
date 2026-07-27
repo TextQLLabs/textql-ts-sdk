@@ -79,7 +79,10 @@ export class Observability extends ClientSDK {
   }
 
   /**
-   * CreateCustomTopic
+   * Custom topics
+   *
+   * @remarks
+   * Custom topics
    */
   async createCustomTopic(
     request: operations.ObservabilityServiceCreateCustomTopicRequest,
@@ -401,10 +404,7 @@ export class Observability extends ClientSDK {
   }
 
   /**
-   * Custom topics
-   *
-   * @remarks
-   * Custom topics
+   * RefineTopicDraft
    */
   async refineDraft(
     request: operations.ObservabilityServiceRefineTopicDraftRequest,

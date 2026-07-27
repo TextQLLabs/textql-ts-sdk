@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Role management requests/responses
- */
 export type TextqlRpcPublicRbacCreateRoleRequest = {
   name?: string | undefined;
   description?: string | undefined;

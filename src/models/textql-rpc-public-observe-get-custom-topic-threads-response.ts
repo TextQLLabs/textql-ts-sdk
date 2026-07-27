@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-observe-custom-topic-thread.js";
 
 export type TextqlRpcPublicObserveGetCustomTopicThreadsResponse = {
+  /**
+   * Keyed by chat id; chats with no tagged topics are absent.
+   */
   threads?: Array<TextqlRpcPublicObserveCustomTopicThread> | undefined;
   nextPageToken?: string | undefined;
 };

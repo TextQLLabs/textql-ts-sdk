@@ -5,10 +5,7 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Chat → topics decoration (which live topics tag each chat), mirroring the
- *
- * @remarks
- *  GetThreadWarnings batch shape.
+ * One owner of a topic's tagged chats, ranked by how many they own.
  */
 export type TextqlRpcPublicObserveGetChatTopicsRequest = {
   chatIds?: Array<string> | undefined;
