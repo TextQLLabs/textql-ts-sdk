@@ -1,4 +1,4 @@
-# TextQL Chat Demo
+# TextQL Chat Demo (Svelte)
 
 A full chat application built on the TextQL API with [`@textql/sdk`](https://www.npmjs.com/package/@textql/sdk):
 create chats, pick a model and data connectors, watch runs stream in live
@@ -11,6 +11,10 @@ https://screen.studio/share/i4hUljQU
 Built with SvelteKit. It doubles as the reference implementation for the SDK's
 [streaming client](../../STREAMING.md).
 
+> A feature-identical React port lives in
+> [`../react-demo`](../react-demo) — same API routes, same UI, Vite +
+> React Router instead of SvelteKit.
+
 ## Setup
 
 **1. Get a TextQL API key** — in the TextQL app under
@@ -20,7 +24,7 @@ Built with SvelteKit. It doubles as the reference implementation for the SDK's
 
 ```sh
 git clone https://github.com/TextQLLabs/textql-ts-sdk.git
-cd textql-ts-sdk/examples/chat-demo
+cd textql-ts-sdk/examples/svelte-demo
 npm install
 echo 'TEXTQL_API_KEY=your-key-here' > .env
 # On-prem only — otherwise omit (defaults to the cloud host):

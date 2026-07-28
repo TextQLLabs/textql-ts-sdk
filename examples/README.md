@@ -1,6 +1,9 @@
 # @textql/sdk Examples
 
-This directory contains example scripts demonstrating how to use the @textql/sdk SDK.
+Standalone scripts demonstrating the [`@textql/sdk`](https://www.npmjs.com/package/@textql/sdk) SDK.
+For a full application (live streaming UI, reload re-attach) see the chat demos —
+the same app in two frameworks: [`svelte-demo`](./svelte-demo) (SvelteKit)
+and [`react-demo`](./react-demo) (Vite + React).
 
 ## Prerequisites
 
@@ -10,6 +13,7 @@ This directory contains example scripts demonstrating how to use the @textql/sdk
 ## Setup
 
 1. Copy `.env.template` to `.env`:
+
    ```bash
    cp .env.template .env
    ```
@@ -27,5 +31,3 @@ npm run build && npx tsx example.ts
 ## Creating new examples
 
 Duplicate an existing example file, they won't be overwritten by the generation process.
-
-
