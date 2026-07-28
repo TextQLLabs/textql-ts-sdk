@@ -1,0 +1,319 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Ioskeley Mono';
+	src: url('/fonts/IoskeleyMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Ioskeley Mono';
+	src: url('/fonts/IoskeleyMono-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Geist Pixel';
+	src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@theme {
+	--font-sans:
+		ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--font-mono: 'Ioskeley Mono', ui-monospace, monospace;
+	--font-pixel: 'Geist Pixel', 'Ioskeley Mono', ui-monospace, monospace;
+	--default-font-family: var(--font-sans);
+
+	--color-paper: #f7f7f8;
+	--color-sidebar: #ececee;
+	--color-ink: #1a1a1c;
+	--color-muted: #8b8b93;
+	--color-line: #e2e2e6;
+	--color-accent: var(--color-blue-500);
+	/* Raised-surface / hover base. Components mix this into overlays and use it
+	   for cards, so flipping it (below, in dark mode) themes them all at once.
+	   Kept as pure white in light mode so existing color-mix()es are unchanged. */
+	--color-elevate: #ffffff;
+	--color-scroll: #c4c4c8;
+	/* Secondary text ramps — light values match the hex they replaced, so light
+	   mode is unchanged; the dark override below lifts them for contrast. */
+	--color-text-strong: #27272a;
+	--color-text-2: #3f3f46;
+	--color-text-3: #52525b;
+	/* Subtle inset fill (chips, code blocks, hovered rows). */
+	--color-fill: #f1f1f3;
+
+	--radius-xs: 6px;
+	--radius-sm: 10px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+
+	/* Entrances that replaced Svelte's `transition:` directives. Declaring them
+	   here makes each one an `animate-*` utility, so components stay in Tailwind
+	   instead of carrying a stylesheet just for one @keyframes block. */
+	--ease-reveal: cubic-bezier(0.33, 1, 0.68, 1);
+	--animate-modal-fade: modal-fade 160ms var(--ease-reveal);
+	--animate-modal-reveal: modal-reveal 180ms var(--ease-reveal);
+	--animate-tooltip-reveal: tooltip-reveal 160ms var(--ease-reveal);
+	--animate-select-in: select-in 120ms ease;
+	--animate-flyout-in: flyout-in 120ms ease;
+	--animate-preview-in: preview-in 220ms var(--ease-reveal);
+	--animate-status-ping: status-ping 1.6s ease-out infinite;
+	--animate-rule-draw: sidebar-rule-draw 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	--animate-rule-shine: sidebar-rule-shine 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+
+	@keyframes modal-fade {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes modal-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(6px) scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	/* Slides out of the trigger; direction comes from --tooltip-dx/dy per side. */
+	@keyframes tooltip-reveal {
+		from {
+			opacity: 0;
+			transform: translate(var(--tooltip-dx, 0), var(--tooltip-dy, 0)) scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: translate(0, 0) scale(1);
+		}
+	}
+
+	@keyframes select-in {
+		from {
+			opacity: 0;
+			transform: scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@keyframes flyout-in {
+		from {
+			opacity: 0;
+			transform: translateX(-4px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes preview-in {
+		from {
+			opacity: 0.88;
+			transform: translateX(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes status-ping {
+		0% {
+			opacity: 0.55;
+			transform: scale(0.85);
+		}
+		70%,
+		100% {
+			opacity: 0;
+			transform: scale(1.65);
+		}
+	}
+
+	@keyframes sidebar-rule-draw {
+		to {
+			transform: scaleY(1);
+		}
+	}
+
+	@keyframes sidebar-rule-shine {
+		0% {
+			opacity: 0;
+			transform: translateY(-120%);
+		}
+		18% {
+			opacity: 0.65;
+		}
+		70% {
+			opacity: 0.28;
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(280%);
+		}
+	}
+}
+
+@theme static {
+	--color-blue-50: #eff6ff;
+	--color-blue-100: #dbeafe;
+	--color-blue-200: #bfdbfe;
+	--color-blue-300: #93c5fd;
+	--color-blue-400: #60a5fa;
+	--color-blue-500: #3b82f6;
+	--color-blue-600: #2563eb;
+	--color-blue-700: #1d4ed8;
+	--color-blue-800: #1e40af;
+	--color-blue-900: #1e3a8a;
+}
+
+/* Element-level defaults live in @layer base so plain Tailwind utilities (which
+   land in @layer utilities) can override them. Unlayered rules would beat every
+   utility — e.g. `button { font: inherit }` would swallow `text-[12.5px]`. */
+@layer base {
+	:root {
+		font-family: var(--font-sans);
+		color: var(--color-ink);
+		background: var(--color-paper);
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		color-scheme: light;
+	}
+}
+
+/* Dark theme — flips the semantic tokens; everything built on var(--color-*)
+   (including --color-elevate overlays) follows automatically. Applied by
+   themePref.ts setting data-theme on <html>. */
+:root[data-theme="dark"] {
+	--color-paper: #141616;
+	--color-sidebar: #101414;
+	--color-ink: #ececee;
+	--color-muted: #8f8f98;
+	--color-line: #2b2e2e;
+	--color-elevate: #212121;
+	--color-scroll: #3a3f3f;
+	--color-text-strong: #e2e2e6;
+	--color-text-2: #cdced4;
+	--color-text-3: #a9a9b2;
+	--color-fill: #262828;
+	color-scheme: dark;
+}
+
+/* The Anthropic mark on model options is dark monochrome artwork — flip it to
+   white in dark mode. Scoped to that asset so colorful connector logos are
+   untouched. */
+:root[data-theme="dark"] img[src*="anthropic"] {
+	filter: brightness(0) invert(1);
+}
+
+@layer base {
+	* {
+		box-sizing: border-box;
+		scrollbar-width: thin;
+		scrollbar-color: var(--color-scroll) transparent;
+	}
+
+	html,
+	body {
+		margin: 0;
+		min-width: 320px;
+		min-height: 100%;
+		overflow-x: clip;
+		background: var(--color-paper);
+	}
+
+	body {
+		min-height: 100vh;
+	}
+
+	button,
+	input,
+	textarea {
+		font: inherit;
+	}
+
+	button,
+	a,
+	input,
+	textarea {
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	::selection {
+		color: var(--color-ink);
+		background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+	}
+
+	button:focus-visible,
+	input:focus-visible,
+	textarea:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+}
+
+@layer base {
+	/* Thin, muted scrollbars (Chromium/WebKit; Firefox uses scrollbar-* above) */
+	*::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+
+	*::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	*::-webkit-scrollbar-thumb {
+		border-radius: 999px;
+		background: var(--color-scroll);
+	}
+
+	*::-webkit-scrollbar-thumb:hover {
+		background: color-mix(in srgb, var(--color-scroll) 70%, var(--color-ink));
+	}
+}
+
+.shimmer {
+	background: linear-gradient(90deg, #a1a1aa 25%, #3f3f46 50%, #a1a1aa 75%);
+	background-size: 200% 100%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation: shimmer 1.6s linear infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.shimmer {
+		background: none;
+		-webkit-text-fill-color: currentColor;
+		animation: none;
+	}
+}

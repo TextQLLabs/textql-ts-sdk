@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="text-scale" content="scale" />
+	<meta name="theme-color" content="#f7f7f8" />
+	<link rel="icon" href="data:," />
+	<title>Chat</title>
+	<script>
+		// Apply saved theme before first paint to avoid a light-mode flash.
+		// Mirrors themePref.ts (key: "chat-demo.theme").
+		try {
+			var t = localStorage.getItem("chat-demo.theme");
+			var dark =
+				t === "dark" ||
+				((t === "system" || !t) &&
+					window.matchMedia("(prefers-color-scheme: dark)").matches);
+			document.documentElement.dataset.theme = dark ? "dark" : "light";
+		} catch (e) {}
+	</script>
+</head>
+
+<body>
+	<div id="app" style="display: contents"></div>
+	<script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
