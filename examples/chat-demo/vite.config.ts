@@ -1,4 +1,5 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapterAuto from '@sveltejs/adapter-auto';
+import adapterCloudflare from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import type { ProxyOptions } from 'vite';
@@ -20,6 +21,14 @@ function stripFrameBlockingHeaders(): NonNullable<ProxyOptions['configure']> {
 	};
 }
 
+/**
+ * This config runs in Node, but the project doesn't pull in @types/node — so
+ * reach the environment through globalThis rather than adding a dependency to
+ * read one variable.
+ */
+const nodeEnv: Record<string, string | undefined> =
+	(globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+
 const previewProxy = (target: string, ws = false): ProxyOptions => ({
 	target,
 	changeOrigin: true,
@@ -38,10 +47,15 @@ export default defineConfig({
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
 
-			// adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-			// If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
-			adapter: adapter()
+			// adapter-auto by default, so cloning this example gets you the same
+			// platform detection (Vercel, Netlify, Cloudflare Pages, …) it always
+			// had — nothing here presumes a host.
+			//
+			// `DEPLOY_TARGET=cloudflare` opts into a Cloudflare Workers build
+			// instead, which is what the hosted instance uses; see wrangler.jsonc.
+			// The SDK is pure fetch/Web Streams, so unary and streaming calls both
+			// run on workerd unchanged.
+			adapter: nodeEnv.DEPLOY_TARGET === 'cloudflare' ? adapterCloudflare() : adapterAuto()
 		})
 	],
 	server: {

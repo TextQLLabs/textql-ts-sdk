@@ -64,6 +64,27 @@ visitor brings their own key and the deployment holds no TextQL credentials.
 One thing to size for: live run streaming holds a response open for the length
 of a run, so a host that caps request duration will cut long runs short.
 
+### Cloudflare Workers
+
+Opt in with `DEPLOY_TARGET=cloudflare`, which is all the `cf:*` scripts do — the
+default `npm run build` is untouched. The SDK is pure `fetch` + Web Streams, so
+unary and streaming calls both run on `workerd` unchanged; no Node shims are
+needed for the API layer.
+
+```sh
+npx wrangler login
+npx wrangler secret put SESSION_SECRET   # paste `openssl rand -base64 32`
+npm run cf:deploy
+```
+
+`npm run cf:preview` runs the built Worker locally in `workerd` first.
+
+- Use a **Workers Paid** plan. Runs stream for as long as they take, and the
+  free tier's CPU limits will cut long ones short.
+- `wrangler.jsonc` ships with no account and no route, so `wrangler deploy`
+  simply prompts. To serve it from your own hostname, see the commented
+  `account_id` / `routes` block in that file.
+
 ## What it demonstrates
 
 | Capability | How |
