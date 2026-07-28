@@ -4,8 +4,8 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 /** Fetch a single ontology file's contents for the code viewer. */
-export const GET: RequestHandler = async ({ url }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ url, locals }) => {
+	const { client } = textqlClients(locals);
 	const path = url.searchParams.get('path');
 	if (!path) return json({ error: 'A file path is required.' }, { status: 400 });
 

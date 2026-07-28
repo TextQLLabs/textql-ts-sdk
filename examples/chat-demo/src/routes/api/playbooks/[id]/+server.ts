@@ -38,8 +38,8 @@ function serializePlaybook(playbook: TextqlRpcPublicPlaybookPlaybook) {
 	};
 }
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.playbooks.fetch({
@@ -60,8 +60,8 @@ export const GET: RequestHandler = async ({ params }) => {
 	}
 };
 
-export const PUT: RequestHandler = async ({ params, request }) => {
-	const { client } = textqlClients();
+export const PUT: RequestHandler = async ({ params, request, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const body: unknown = await request.json();
@@ -133,8 +133,8 @@ export const PUT: RequestHandler = async ({ params, request }) => {
 	}
 };
 
-export const DELETE: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const DELETE: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.playbooks.delete({

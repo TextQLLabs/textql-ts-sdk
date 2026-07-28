@@ -29,8 +29,8 @@ function universalParadigm(connectorIds: number[]): TextqlRpcPublicParadigmParad
 	};
 }
 
-export const POST: RequestHandler = async ({ request }) => {
-	const { client, streaming } = textqlClients();
+export const POST: RequestHandler = async ({ request, locals }) => {
+	const { client, streaming } = textqlClients(locals);
 
 	const parsed = ChatRequestSchema.safeParse(await request.json().catch(() => undefined));
 	if (!parsed.success) {

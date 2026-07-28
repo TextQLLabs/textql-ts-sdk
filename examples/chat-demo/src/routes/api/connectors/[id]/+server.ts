@@ -4,8 +4,8 @@ import { json } from '@sveltejs/kit';
 import type { TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	const connectorId = Number(params.id);
 	if (!Number.isInteger(connectorId) || connectorId <= 0) {

@@ -22,8 +22,8 @@ function nextOrTimeout(
 	]);
 }
 
-export const GET: RequestHandler = async ({ params, url, request }) => {
-	const { streaming } = textqlClients();
+export const GET: RequestHandler = async ({ params, url, request, locals }) => {
+	const { streaming } = textqlClients(locals);
 
 	const latestCompleteCellId = url.searchParams.get('latestCompleteCellId') ?? undefined;
 	const events = streaming.chats.watchChat(

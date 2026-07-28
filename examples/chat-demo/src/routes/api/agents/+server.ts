@@ -20,8 +20,8 @@ function toListItem(agent: TextqlRpcPublicAgentAgent) {
 	};
 }
 
-export const GET: RequestHandler = async () => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.agents.list({ body: { includeInactive: true } });

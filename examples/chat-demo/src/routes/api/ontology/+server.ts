@@ -4,8 +4,8 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
 /** List the ontology's entries at a directory path (scoped by the API key's org). */
-export const GET: RequestHandler = async ({ url }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ url, locals }) => {
+	const { client } = textqlClients(locals);
 	const path = url.searchParams.get('path') ?? '';
 	const recursive = url.searchParams.get('recursive') === '1';
 

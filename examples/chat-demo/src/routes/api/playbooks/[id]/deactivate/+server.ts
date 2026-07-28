@@ -3,8 +3,8 @@ import { json } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const POST: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.playbooks.deactivate({

@@ -17,8 +17,8 @@ const BodySchema = z.object({
 	answers: z.array(AnswerSchema).default([])
 });
 
-export const POST: RequestHandler = async ({ request }) => {
-	const { client } = textqlClients();
+export const POST: RequestHandler = async ({ request, locals }) => {
+	const { client } = textqlClients(locals);
 
 	const parsed = BodySchema.safeParse(await request.json().catch(() => undefined));
 	if (!parsed.success) {

@@ -76,8 +76,8 @@ function serializeApp(app: TextqlRpcPublicAppApp) {
 	};
 }
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.apps.get({ body: { appId: params.id } });
