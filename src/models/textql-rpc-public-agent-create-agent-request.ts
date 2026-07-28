@@ -44,7 +44,10 @@ export type TextqlRpcPublicAgentCreateAgentRequest = {
    */
   postingFrequencyCadences?: Array<string> | undefined;
   /**
-   * Feed participation. Unset defaults to true (new agents post to feed).
+   * Unset defaults to true: new agents are delegatable unless the caller opts
+   *
+   * @remarks
+   *  out. Mirrors allow_ad_hoc_subagents below.
    */
   feedEnabled?: boolean | null | undefined;
 };

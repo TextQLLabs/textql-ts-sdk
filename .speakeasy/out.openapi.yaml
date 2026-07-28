@@ -156,6 +156,76 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.agent.GetAgentResponse'
       x-speakeasy-group: agents
       x-speakeasy-name-override: getAgent
+  /textql.rpc.public.agent.AgentService/GetAgentDBSchema:
+    post:
+      tags:
+        - AgentService
+      summary: GetAgentDBSchema
+      operationId: AgentService_GetAgentDBSchema
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.agent.GetAgentDBSchemaRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.agent.GetAgentDBSchemaResponse'
+  /textql.rpc.public.agent.AgentService/GetAgentDBTablePreview:
+    post:
+      tags:
+        - AgentService
+      summary: GetAgentDBTablePreview
+      operationId: AgentService_GetAgentDBTablePreview
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.agent.GetAgentDBTablePreviewRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.agent.GetAgentDBTablePreviewResponse'
   /textql.rpc.public.agent.AgentService/GetAgentRun:
     post:
       tags:
@@ -605,6 +675,82 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.app.GetAppResponse'
       x-speakeasy-group: apps
       x-speakeasy-name-override: get
+  /textql.rpc.public.app.AppService/GetAppDBSchema:
+    post:
+      tags:
+        - AppService
+      summary: Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+      description: |-
+        Server stream of live activity batches + presence snapshots, driven by
+         Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+      operationId: AppService_GetAppDBSchema
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.app.GetAppDBSchemaRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.app.GetAppDBSchemaResponse'
+  /textql.rpc.public.app.AppService/GetAppDBTablePreview:
+    post:
+      tags:
+        - AppService
+      summary: 'Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app''s stream. Presence never touches Postgres and never exposes emails.'
+      description: |-
+        Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
+         the app's stream. Presence never touches Postgres and never exposes emails.
+      operationId: AppService_GetAppDBTablePreview
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.app.GetAppDBTablePreviewRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.app.GetAppDBTablePreviewResponse'
   /textql.rpc.public.app.AppService/GetAppMemberState:
     post:
       tags:
@@ -12732,6 +12878,181 @@ paths:
                 $ref: '#/components/schemas/textql.rpc.public.secret.UpdateSecretResponse'
       x-speakeasy-group: secrets
       x-speakeasy-name-override: update
+  /textql.rpc.public.settings.SettingsService/CheckMemberStatus:
+    post:
+      tags:
+        - SettingsService
+      summary: CheckMemberStatus
+      operationId: SettingsService_CheckMemberStatus
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.CheckMemberStatusRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.CheckMemberStatusResponse'
+  /textql.rpc.public.settings.SettingsService/DeleteOrganizationMember:
+    post:
+      tags:
+        - SettingsService
+      summary: DeleteOrganizationMember
+      operationId: SettingsService_DeleteOrganizationMember
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.DeleteOrganizationMemberRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.DeleteOrganizationMemberResponse'
+  /textql.rpc.public.settings.SettingsService/InviteOrganizationMember:
+    post:
+      tags:
+        - SettingsService
+      summary: InviteOrganizationMember
+      operationId: SettingsService_InviteOrganizationMember
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.InviteOrganizationMemberRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.InviteOrganizationMemberResponse'
+  /textql.rpc.public.settings.SettingsService/ListOrganizationMembers:
+    post:
+      tags:
+        - SettingsService
+      summary: ListOrganizationMembers
+      operationId: SettingsService_ListOrganizationMembers
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.ListOrganizationMembersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.ListOrganizationMembersResponse'
+  /textql.rpc.public.settings.SettingsService/UpdateOrganizationSettings:
+    post:
+      tags:
+        - SettingsService
+      summary: UpdateOrganizationSettings
+      operationId: SettingsService_UpdateOrganizationSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.UpdateOrganizationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.UpdateOrganizationSettingsResponse'
   /textql.rpc.public.slack.SlackService/CreateSlackUuid:
     post:
       tags:
@@ -14136,6 +14457,149 @@ components:
          variants. Absence of any variant indicates an error.
 
          The JSON representation for `Value` is JSON value.
+    textql.rpc.auth.Member:
+      type: object
+      properties:
+        id:
+          type: integer
+          title: id
+          format: int32
+        orgId:
+          type: string
+          title: org_id
+        memberId:
+          type: string
+          title: member_id
+        role:
+          type: string
+          title: role
+          nullable: true
+        preferredFirstName:
+          type: string
+          title: preferred_first_name
+          nullable: true
+        preferredLastName:
+          type: string
+          title: preferred_last_name
+          nullable: true
+        showCode:
+          type: boolean
+          title: show_code
+          nullable: true
+        profileImageUrl:
+          type: string
+          title: profile_image_url
+          nullable: true
+        emailAddress:
+          type: string
+          title: email_address
+        name:
+          type: string
+          title: name
+          nullable: true
+        isAdmin:
+          type: boolean
+          title: is_admin
+        selectedConnectorId:
+          type: integer
+          title: selected_connector_id
+          format: int32
+          nullable: true
+        roles:
+          type: array
+          items:
+            type: string
+          title: roles
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        paradigmParams:
+          title: paradigm_params
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        emailVerified:
+          type: boolean
+          title: email_verified
+        selectedConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: selected_connector_ids
+        isServiceAccount:
+          type: boolean
+          title: is_service_account
+        isScimManaged:
+          type: boolean
+          title: is_scim_managed
+        steering:
+          type: boolean
+          title: steering
+          nullable: true
+        phoneNumber:
+          type: string
+          title: phone_number
+          nullable: true
+        phoneVerified:
+          type: boolean
+          title: phone_verified
+          nullable: true
+        personalAgentId:
+          type: string
+          title: personal_agent_id
+          nullable: true
+        agentNumber:
+          type: string
+          title: agent_number
+          nullable: true
+        defaultMethodology:
+          type: integer
+          title: default_methodology
+          format: int32
+          description: |-
+            Per-member default response methodology for new chats, as a
+             textql.rpc.public.chat.Methodology enum value (int to avoid an import
+             cycle). 0 = UNKNOWN/unset -> fall back to the org default. Overrides the
+             org default when set.
+          nullable: true
+        defaultLlmModel:
+          type: integer
+          title: default_llm_model
+          format: int32
+          description: |-
+            Per-member default LLM model for new chats, as a
+             textql.rpc.public.chat.LlmModel enum value (int, matching the org-level
+             default_llm_model). 0/MODEL_DEFAULT = unset -> role/org/system resolution.
+          nullable: true
+        defaultFastMode:
+          type: boolean
+          title: default_fast_mode
+          description: |-
+            Per-member default fast-mode preference for new chats. Unset -> off. Only
+             applies when the org enables fast mode and the resolved model supports it.
+          nullable: true
+        firstName:
+          type: string
+          title: first_name
+          description: Identity (auth-provider) names, distinct from the user-set preferred names.
+          nullable: true
+        lastName:
+          type: string
+          title: last_name
+          nullable: true
+        themeMode:
+          type: string
+          title: theme_mode
+          description: |-
+            Per-member UI theme preference: "light" | "dark" | "system".
+             Unset -> the client falls back to its own default. Scoped to the
+             membership, so a user in multiple orgs sets this per org.
+          nullable: true
+      title: Member
+      additionalProperties: false
     textql.rpc.identity.MemberPreview:
       type: object
       properties:
@@ -14158,6 +14622,102 @@ components:
           title: member_picture_url
           nullable: true
       title: MemberPreview
+      additionalProperties: false
+    textql.rpc.paradigm_params.ParadigmParams:
+      type: object
+      properties:
+        webSearchEnabled:
+          type: boolean
+          title: web_search_enabled
+        sqlEnabled:
+          type: boolean
+          title: sql_enabled
+        ontologyEnabled:
+          type: boolean
+          title: ontology_enabled
+        pythonEnabled:
+          type: boolean
+          title: python_enabled
+        powerbiEnabled:
+          type: boolean
+          title: powerbi_enabled
+        googleDriveEnabled:
+          type: boolean
+          title: google_drive_enabled
+        formEditorEnabled:
+          type: boolean
+          title: form_editor_enabled
+        tableauEnabled:
+          type: boolean
+          title: tableau_enabled
+        fileUploadEnabled:
+          type: boolean
+          title: file_upload_enabled
+        multipleConnectorMode:
+          type: boolean
+          title: multiple_connector_mode
+          deprecated: true
+        playbookToolsEnabled:
+          type: boolean
+          title: playbook_tools_enabled
+        microsoft365Enabled:
+          type: boolean
+          title: microsoft_365_enabled
+        bashEnabled:
+          type: boolean
+          title: bash_enabled
+        javascriptEnabled:
+          type: boolean
+          title: javascript_enabled
+        modelSwitchingEnabled:
+          type: boolean
+          title: model_switching_enabled
+        feedExplorerEnabled:
+          type: boolean
+          title: feed_explorer_enabled
+        feedPostEnabled:
+          type: boolean
+          title: feed_post_enabled
+        feedCommentEnabled:
+          type: boolean
+          title: feed_comment_enabled
+        feedEngageEnabled:
+          type: boolean
+          title: feed_engage_enabled
+        compactionDisabled:
+          type: boolean
+          title: compaction_disabled
+        gmailEnabled:
+          type: boolean
+          title: gmail_enabled
+        chatHistorySearchEnabled:
+          type: boolean
+          title: chat_history_search_enabled
+        googleCalendarEnabled:
+          type: boolean
+          title: google_calendar_enabled
+        parallelToolsEnabled:
+          type: boolean
+          title: parallel_tools_enabled
+        emailOutputEnabled:
+          type: boolean
+          title: email_output_enabled
+        questionsToolEnabled:
+          type: boolean
+          title: questions_tool_enabled
+        powerbiSelections:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.powerbi_selection.PowerBISelection'
+          title: powerbi_selections
+        datasetId:
+          type: string
+          title: dataset_id
+          description: |-
+            Per-chat/agent options: registers the EmailCell tool (default off, opt-in).
+             Org tool_restrictions: allows the Email tool org-wide (default on).
+          nullable: true
+      title: ParadigmParams
       additionalProperties: false
     textql.rpc.paradigm_params.ParadigmType:
       type: string
@@ -14323,6 +14883,37 @@ components:
              tools, feed persona prompt). Delivery config (channels, recipients, slack,
              teams) is only meaningful when true.
       title: Agent
+      additionalProperties: false
+    textql.rpc.public.agent.AgentDBColumn:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        type:
+          type: string
+          title: type
+          description: DuckDB type name, e.g. "VARCHAR", "BIGINT"
+        nullable:
+          type: boolean
+          title: nullable
+        primaryKey:
+          type: boolean
+          title: primary_key
+      title: AgentDBColumn
+      additionalProperties: false
+    textql.rpc.public.agent.AgentDBTable:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.agent.AgentDBColumn'
+          title: columns
+      title: AgentDBTable
       additionalProperties: false
     textql.rpc.public.agent.AgentRun:
       type: object
@@ -14683,7 +15274,9 @@ components:
         feedEnabled:
           type: boolean
           title: feed_enabled
-          description: Feed participation. Unset defaults to true (new agents post to feed).
+          description: |-
+            Unset defaults to true: new agents are delegatable unless the caller opts
+             out. Mirrors allow_ad_hoc_subagents below.
           nullable: true
       title: CreateAgentRequest
       additionalProperties: false
@@ -14721,6 +15314,56 @@ components:
           title: agent
           $ref: '#/components/schemas/textql.rpc.public.agent.Agent'
       title: DuplicateAgentResponse
+      additionalProperties: false
+    textql.rpc.public.agent.GetAgentDBSchemaRequest:
+      type: object
+      properties:
+        agentId:
+          type: string
+          title: agent_id
+      title: GetAgentDBSchemaRequest
+      additionalProperties: false
+    textql.rpc.public.agent.GetAgentDBSchemaResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.agent.AgentDBTable'
+          title: tables
+        changeLogBytes:
+          type:
+            - integer
+            - string
+          title: change_log_bytes
+          format: int64
+          description: durable Postgres change-log size; the .duckdb cache is derived from this
+      title: GetAgentDBSchemaResponse
+      additionalProperties: false
+    textql.rpc.public.agent.GetAgentDBTablePreviewRequest:
+      type: object
+      properties:
+        agentId:
+          type: string
+          title: agent_id
+        tableName:
+          type: string
+          title: table_name
+        limit:
+          type: integer
+          title: limit
+          format: int32
+          description: clamped server-side; 0 uses the default
+      title: GetAgentDBTablePreviewRequest
+      additionalProperties: false
+    textql.rpc.public.agent.GetAgentDBTablePreviewResponse:
+      type: object
+      properties:
+        arrowData:
+          type: string
+          title: arrow_data
+          format: byte
+      title: GetAgentDBTablePreviewResponse
       additionalProperties: false
     textql.rpc.public.agent.GetAgentRequest:
       type: object
@@ -15196,6 +15839,37 @@ components:
       title: AppActivityStreamEvent
       additionalProperties: false
       description: 'One frame of the live stream: an activity batch, a presence snapshot, or a keepalive.'
+    textql.rpc.public.app.AppDBColumn:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        type:
+          type: string
+          title: type
+        nullable:
+          type: boolean
+          title: nullable
+        primaryKey:
+          type: boolean
+          title: primary_key
+      title: AppDBColumn
+      additionalProperties: false
+      description: View analytics
+    textql.rpc.public.app.AppDBTable:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.app.AppDBColumn'
+          title: columns
+      title: AppDBTable
+      additionalProperties: false
     textql.rpc.public.app.AppFile:
       type: object
       properties:
@@ -15534,6 +16208,55 @@ components:
           title: app
           $ref: '#/components/schemas/textql.rpc.public.app.App'
       title: DuplicateAppResponse
+      additionalProperties: false
+    textql.rpc.public.app.GetAppDBSchemaRequest:
+      type: object
+      properties:
+        appId:
+          type: string
+          title: app_id
+      title: GetAppDBSchemaRequest
+      additionalProperties: false
+    textql.rpc.public.app.GetAppDBSchemaResponse:
+      type: object
+      properties:
+        tables:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.app.AppDBTable'
+          title: tables
+        changeLogBytes:
+          type:
+            - integer
+            - string
+          title: change_log_bytes
+          format: int64
+          description: DuckDB type name, e.g. "VARCHAR", "BIGINT"
+      title: GetAppDBSchemaResponse
+      additionalProperties: false
+    textql.rpc.public.app.GetAppDBTablePreviewRequest:
+      type: object
+      properties:
+        appId:
+          type: string
+          title: app_id
+        tableName:
+          type: string
+          title: table_name
+        limit:
+          type: integer
+          title: limit
+          format: int32
+      title: GetAppDBTablePreviewRequest
+      additionalProperties: false
+    textql.rpc.public.app.GetAppDBTablePreviewResponse:
+      type: object
+      properties:
+        arrowData:
+          type: string
+          title: arrow_data
+          format: byte
+      title: GetAppDBTablePreviewResponse
       additionalProperties: false
     textql.rpc.public.app.GetAppMemberStateRequest:
       type: object
@@ -21096,6 +21819,7 @@ components:
         - MODEL_GLM_5_2
         - MODEL_KIMI_K2_7_CODE
         - MODEL_QWEN3_7_PLUS
+        - MODEL_KIMI_K3
         - MODEL_MUSE_SPARK_1_1
     textql.rpc.public.chat.LlmUsage:
       type: object
@@ -35429,6 +36153,170 @@ components:
       type: object
       title: UpdateSecretResponse
       additionalProperties: false
+    textql.rpc.public.settings.CheckMemberStatusRequest:
+      type: object
+      properties:
+        forceRefresh:
+          type: boolean
+          title: force_refresh
+      title: CheckMemberStatusRequest
+      additionalProperties: false
+    textql.rpc.public.settings.CheckMemberStatusResponse:
+      type: object
+      properties:
+        isSuspended:
+          type: boolean
+          title: is_suspended
+        consoleAccess:
+          type: boolean
+          title: console_access
+        isSuspendedManual:
+          type: boolean
+          title: is_suspended_manual
+        isSuspendedOverage:
+          type: boolean
+          title: is_suspended_overage
+        isSuspendedUsage:
+          type: boolean
+          title: is_suspended_usage
+        isSuspendedMemberUsage:
+          type: boolean
+          title: is_suspended_member_usage
+        suspensionMessage:
+          type: string
+          title: suspension_message
+        suspendedCostCenters:
+          type: array
+          items:
+            type: string
+          title: suspended_cost_centers
+        isSuspendedOrgLimit:
+          type: boolean
+          title: is_suspended_org_limit
+      title: CheckMemberStatusResponse
+      additionalProperties: false
+    textql.rpc.public.settings.DeleteOrganizationMemberRequest:
+      type: object
+      properties:
+        orgId:
+          type: string
+          title: org_id
+        memberId:
+          type: string
+          title: member_id
+        hardDelete:
+          type: boolean
+          title: hard_delete
+      title: DeleteOrganizationMemberRequest
+      additionalProperties: false
+    textql.rpc.public.settings.DeleteOrganizationMemberResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: DeleteOrganizationMemberResponse
+      additionalProperties: false
+    textql.rpc.public.settings.InviteOrganizationMemberRequest:
+      type: object
+      properties:
+        orgId:
+          type: string
+          title: org_id
+        email:
+          type: string
+          title: email
+        role:
+          type: string
+          title: role
+          nullable: true
+      title: InviteOrganizationMemberRequest
+      additionalProperties: false
+    textql.rpc.public.settings.InviteOrganizationMemberResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: InviteOrganizationMemberResponse
+      additionalProperties: false
+    textql.rpc.public.settings.ListOrganizationMembersRequest:
+      type: object
+      properties:
+        orgId:
+          type: string
+          title: org_id
+      title: ListOrganizationMembersRequest
+      additionalProperties: false
+    textql.rpc.public.settings.ListOrganizationMembersResponse:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.auth.Member'
+          title: members
+      title: ListOrganizationMembersResponse
+      additionalProperties: false
+    textql.rpc.public.settings.UpdateOrganizationSettingsRequest:
+      type: object
+      properties:
+        orgId:
+          type: string
+          title: org_id
+        hideExampleConnectors:
+          title: hide_example_connectors
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        paradigmParams:
+          title: paradigm_params
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        trainingMode:
+          title: training_mode
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        dashboardsEnabled:
+          title: dashboards_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        methodologyEnabled:
+          title: methodology_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        feedEnabled:
+          title: feed_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        observabilityEnabled:
+          title: observability_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        notificationsEnabled:
+          title: notifications_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        fastModeEnabled:
+          title: fast_mode_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        maxThinkingEnabled:
+          title: max_thinking_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        tracesEnabled:
+          title: traces_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        sandboxObservabilityEnabled:
+          title: sandbox_observability_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        dataAppsEnabled:
+          title: data_apps_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        toolRestrictions:
+          title: tool_restrictions
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        subagentsEnabled:
+          title: subagents_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+      title: UpdateOrganizationSettingsRequest
+      additionalProperties: false
+    textql.rpc.public.settings.UpdateOrganizationSettingsResponse:
+      type: object
+      title: UpdateOrganizationSettingsResponse
+      additionalProperties: false
     textql.rpc.public.slack.CreateSlackUuidResponse:
       type: object
       properties:
@@ -36192,6 +37080,7 @@ tags:
   - name: SandboxCapabilityService
   - name: ScimService
   - name: SecretService
+  - name: SettingsService
   - name: SlackService
   - name: TeamsService
 security:
