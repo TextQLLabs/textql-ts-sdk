@@ -31,6 +31,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelGlm52: "MODEL_GLM_5_2",
   ModelKimiK27Code: "MODEL_KIMI_K2_7_CODE",
   ModelQwen37Plus: "MODEL_QWEN3_7_PLUS",
+  ModelKimiK3: "MODEL_KIMI_K3",
   ModelMuseSpark11: "MODEL_MUSE_SPARK_1_1",
 } as const;
 export type TextqlRpcPublicChatLlmModel = OpenEnum<

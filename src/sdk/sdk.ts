@@ -3,6 +3,7 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { AgentService } from "./agent-service.js";
 import { Agents } from "./agents.js";
 import { AppService } from "./app-service.js";
 import { Apps } from "./apps.js";
@@ -25,6 +26,7 @@ import { SandboxCapabilityService } from "./sandbox-capability-service.js";
 import { Sandbox } from "./sandbox.js";
 import { Scim } from "./scim.js";
 import { Secrets } from "./secrets.js";
+import { SettingsService } from "./settings-service.js";
 import { Slack } from "./slack.js";
 import { Tableau } from "./tableau.js";
 import { Teams } from "./teams.js";
@@ -33,6 +35,11 @@ export class Textql extends ClientSDK {
   private _agents?: Agents;
   get agents(): Agents {
     return (this._agents ??= new Agents(this._options));
+  }
+
+  private _agentService?: AgentService;
+  get agentService(): AgentService {
+    return (this._agentService ??= new AgentService(this._options));
   }
 
   private _apps?: Apps;
@@ -144,6 +151,11 @@ export class Textql extends ClientSDK {
   private _secrets?: Secrets;
   get secrets(): Secrets {
     return (this._secrets ??= new Secrets(this._options));
+  }
+
+  private _settingsService?: SettingsService;
+  get settingsService(): SettingsService {
+    return (this._settingsService ??= new SettingsService(this._options));
   }
 
   private _slack?: Slack;

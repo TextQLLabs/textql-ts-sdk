@@ -157,6 +157,11 @@ run();
 * [update](docs/sdks/agents/README.md#update) - UpdateAgent
 * [uploadAgentAvatar](docs/sdks/agents/README.md#uploadagentavatar) - UploadAgentAvatar
 
+### [AgentService](docs/sdks/agentservice/README.md)
+
+* [agentServiceGetAgentDBSchema](docs/sdks/agentservice/README.md#agentservicegetagentdbschema) - GetAgentDBSchema
+* [agentServiceGetAgentDBTablePreview](docs/sdks/agentservice/README.md#agentservicegetagentdbtablepreview) - GetAgentDBTablePreview
+
 ### [Apps](docs/sdks/apps/README.md)
 
 * [heartbeat](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
@@ -178,6 +183,8 @@ run();
 
 ### [AppService](docs/sdks/appservice/README.md)
 
+* [appServiceGetAppDBSchema](docs/sdks/appservice/README.md#appservicegetappdbschema) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+* [appServiceGetAppDBTablePreview](docs/sdks/appservice/README.md#appservicegetappdbtablepreview) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
 * [appServiceGetAppMemberState](docs/sdks/appservice/README.md#appservicegetappmemberstate) - View analytics: reads the engagement views recorded on app page load.
 * [appServiceListAppActivitySince](docs/sdks/appservice/README.md#appservicelistappactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
 * [appServiceListMyAppMemberActivity](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - ListMyAppMemberActivity
@@ -554,6 +561,14 @@ run();
 * [putSecret](docs/sdks/secrets/README.md#putsecret) - PutSecret
 * [update](docs/sdks/secrets/README.md#update) - UpdateSecret
 
+### [SettingsService](docs/sdks/settingsservice/README.md)
+
+* [settingsServiceCheckMemberStatus](docs/sdks/settingsservice/README.md#settingsservicecheckmemberstatus) - CheckMemberStatus
+* [settingsServiceDeleteOrganizationMember](docs/sdks/settingsservice/README.md#settingsservicedeleteorganizationmember) - DeleteOrganizationMember
+* [settingsServiceInviteOrganizationMember](docs/sdks/settingsservice/README.md#settingsserviceinviteorganizationmember) - InviteOrganizationMember
+* [settingsServiceListOrganizationMembers](docs/sdks/settingsservice/README.md#settingsservicelistorganizationmembers) - ListOrganizationMembers
+* [settingsServiceUpdateOrganizationSettings](docs/sdks/settingsservice/README.md#settingsserviceupdateorganizationsettings) - UpdateOrganizationSettings
+
 ### [Slack](docs/sdks/slack/README.md)
 
 * [createUuid](docs/sdks/slack/README.md#createuuid) - CreateSlackUuid
@@ -613,6 +628,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`agentsCreate`](docs/sdks/agents/README.md#create) - CreateAgent
 - [`agentsDelete`](docs/sdks/agents/README.md#delete) - DeleteAgent
 - [`agentsDuplicate`](docs/sdks/agents/README.md#duplicate) - DuplicateAgent
+- [`agentServiceAgentServiceGetAgentDBSchema`](docs/sdks/agentservice/README.md#agentservicegetagentdbschema) - GetAgentDBSchema
+- [`agentServiceAgentServiceGetAgentDBTablePreview`](docs/sdks/agentservice/README.md#agentservicegetagentdbtablepreview) - GetAgentDBTablePreview
 - [`agentsGetAgent`](docs/sdks/agents/README.md#getagent) - GetAgent
 - [`agentsGetRun`](docs/sdks/agents/README.md#getrun) - GetAgentRun
 - [`agentsList`](docs/sdks/agents/README.md#list) - ListAgents
@@ -624,6 +641,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsCreateApp`](docs/sdks/apps/README.md#createapp) - CreateApp
 - [`appsDeleteApp`](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 - [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
+- [`appServiceAppServiceGetAppDBSchema`](docs/sdks/appservice/README.md#appservicegetappdbschema) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+- [`appServiceAppServiceGetAppDBTablePreview`](docs/sdks/appservice/README.md#appservicegetappdbtablepreview) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
 - [`appServiceAppServiceGetAppMemberState`](docs/sdks/appservice/README.md#appservicegetappmemberstate) - View analytics: reads the engagement views recorded on app page load.
 - [`appServiceAppServiceListAppActivitySince`](docs/sdks/appservice/README.md#appservicelistappactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
 - [`appServiceAppServiceListMyAppMemberActivity`](docs/sdks/appservice/README.md#appservicelistmyappmemberactivity) - ListMyAppMemberActivity
@@ -955,6 +974,11 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`secretsListSecrets`](docs/sdks/secrets/README.md#listsecrets) - ListSecrets
 - [`secretsPutSecret`](docs/sdks/secrets/README.md#putsecret) - PutSecret
 - [`secretsUpdate`](docs/sdks/secrets/README.md#update) - UpdateSecret
+- [`settingsServiceSettingsServiceCheckMemberStatus`](docs/sdks/settingsservice/README.md#settingsservicecheckmemberstatus) - CheckMemberStatus
+- [`settingsServiceSettingsServiceDeleteOrganizationMember`](docs/sdks/settingsservice/README.md#settingsservicedeleteorganizationmember) - DeleteOrganizationMember
+- [`settingsServiceSettingsServiceInviteOrganizationMember`](docs/sdks/settingsservice/README.md#settingsserviceinviteorganizationmember) - InviteOrganizationMember
+- [`settingsServiceSettingsServiceListOrganizationMembers`](docs/sdks/settingsservice/README.md#settingsservicelistorganizationmembers) - ListOrganizationMembers
+- [`settingsServiceSettingsServiceUpdateOrganizationSettings`](docs/sdks/settingsservice/README.md#settingsserviceupdateorganizationsettings) - UpdateOrganizationSettings
 - [`slackCreateUuid`](docs/sdks/slack/README.md#createuuid) - CreateSlackUuid
 - [`slackDeleteInstallation`](docs/sdks/slack/README.md#deleteinstallation) - DeleteInstallation
 - [`slackGetCurrentUser`](docs/sdks/slack/README.md#getcurrentuser) - GetCurrentUser
