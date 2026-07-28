@@ -7,12 +7,16 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
+		"cf:build": "DEPLOY_TARGET=cloudflare vite build",
+		"cf:deploy": "npm run cf:build && wrangler deploy",
+		"cf:preview": "npm run cf:build && wrangler dev",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.1",
+		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.3",
@@ -21,7 +25,8 @@
 		"svelte-check": "^4.6.0",
 		"tailwindcss": "^4.3.3",
 		"typescript": "^6.0.3",
-		"vite": "^8.0.16"
+		"vite": "^8.0.16",
+		"wrangler": "^4.114.0"
 	},
 	"dependencies": {
 		"@bufbuild/protobuf": "^2.13.0",

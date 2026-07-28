@@ -5,6 +5,21 @@ import { createStreamingClient } from '@textql/sdk/streaming';
 
 import type { Handle } from '@sveltejs/kit';
 
+/**
+ * `@connectrpc/connect-web` hardcodes `redirect: "error"` in its fetch init,
+ * and workerd rejects that outright ("Invalid redirect value…"), so every
+ * streaming RPC fails on Cloudflare while unary calls sail through.
+ *
+ * Nothing in the Connect protocol depends on it — a redirect mid-RPC is a
+ * protocol error either way — so downgrade to "manual" and let the transport
+ * fail on the unexpected status, which is what "error" was buying anyway.
+ *
+ * Fixed in the SDK itself by #17; keep this until a release carrying that
+ * lands, so the demo also runs against the published @textql/sdk.
+ */
+const edgeFetch: typeof globalThis.fetch = (input, init) =>
+	fetch(input, init?.redirect === 'error' ? { ...init, redirect: 'manual' } : init);
+
 /** Reachable without a session: the front door itself, plus static assets. */
 function isPublic(pathname: string): boolean {
 	return (
@@ -24,7 +39,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 		// so it must not outlive — or be reachable from — the request that carried
 		// it. Both clients are thin `fetch` wrappers, so this is cheap.
 		const client = new Textql({ apiKey: session.apiKey, serverURL: session.serverURL });
-		event.locals.textql = { client, streaming: createStreamingClient(client) };
+		// Built from options rather than from `client`, because only the options
+		// form lets us pass the patched fetch above.
+		const streaming = createStreamingClient({
+			apiKey: session.apiKey,
+			...(session.serverURL ? { serverURL: session.serverURL } : {}),
+			fetch: edgeFetch
+		});
+		event.locals.textql = { client, streaming };
 	}
 
 	event.locals.signedIn = Boolean(session);

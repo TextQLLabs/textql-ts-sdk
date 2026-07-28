@@ -1,0 +1,32 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "textql-chat",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2026-06-01",
+	// sanitize-html (and its postcss dependency) reach for node builtins.
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"observability": {
+		"enabled": true
+	}
+
+	// Deploying your own copy? `npx wrangler deploy` will prompt for an account
+	// and give you a *.workers.dev URL — nothing else here needs changing.
+	//
+	// To serve it from your own hostname, add the zone's account and a route.
+	// Adding a custom domain disables the workers.dev URL unless you keep it on
+	// explicitly, and the route creates the DNS record for you:
+	//
+	//   "account_id": "<your account id>",
+	//   "routes": [{ "pattern": "chat.example.com", "custom_domain": true }],
+	//   "workers_dev": true,
+	//
+	// Secrets are set out of band, never committed:
+	//   npx wrangler secret put SESSION_SECRET
+	//
+	// There is deliberately no TEXTQL_API_KEY binding — every visitor brings
+	// their own key, so the deployment holds no TextQL credentials at all.
+}
