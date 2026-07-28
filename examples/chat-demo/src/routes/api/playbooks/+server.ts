@@ -33,8 +33,8 @@ function toListItem(playbook: TextqlRpcPublicPlaybookPlaybook) {
 	};
 }
 
-export const GET: RequestHandler = async () => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ locals }) => {
+	const { client } = textqlClients(locals);
 
 	const getPage = async (page: number) => {
 		const result = await client.playbooks.get({
@@ -91,8 +91,8 @@ export const GET: RequestHandler = async () => {
 	}
 };
 
-export const POST: RequestHandler = async () => {
-	const { client } = textqlClients();
+export const POST: RequestHandler = async ({ locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const created = await client.playbooks.createPlaybook({ body: {} });

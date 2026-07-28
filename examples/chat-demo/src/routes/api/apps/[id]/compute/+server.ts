@@ -10,8 +10,8 @@ import type { RequestHandler } from './$types';
  * function name + params, this invokes it via the SDK and returns the raw
  * resultJson for the bridge to hand back to the sandboxed app.
  */
-export const POST: RequestHandler = async ({ params, request }) => {
-	const { client } = textqlClients();
+export const POST: RequestHandler = async ({ params, request, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const body: unknown = await request.json();

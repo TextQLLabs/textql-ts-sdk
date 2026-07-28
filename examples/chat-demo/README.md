@@ -22,9 +22,8 @@ Built with SvelteKit. It doubles as the reference implementation for the SDK's
 git clone https://github.com/TextQLLabs/textql-ts-sdk.git
 cd textql-ts-sdk/examples/chat-demo
 npm install
-echo 'TEXTQL_API_KEY=your-key-here' > .env
-# On-prem only — otherwise omit (defaults to the cloud host):
-echo 'TEXTQL_SERVER_URL=https://your-host.example.com' >> .env
+# Encrypts the API key held in each visitor's session cookie. Any 32+ random chars.
+echo "SESSION_SECRET=$(openssl rand -base64 32)" > .env
 ```
 
 **3. Run:**
@@ -33,11 +32,37 @@ echo 'TEXTQL_SERVER_URL=https://your-host.example.com' >> .env
 npm run dev -- --open
 ```
 
-That's it — the app opens at `http://localhost:5173`. Requires Node 18+.
+The app opens at `http://localhost:5173` and asks for your API key. Requires
+Node 22.12+.
 
-> On-prem deployments: set `TEXTQL_SERVER_URL` in `.env` to your plain host
-> (e.g. `https://your-host.example.com`).
-> mount itself, for both unary and streaming calls.
+> On-prem deployments: paste your host (e.g. `https://textql.your-company.com`)
+> into the **Using an on-prem deployment?** field on the sign-in screen. It is
+> stored with the key and used as the SDK's `serverURL` for both unary and
+> streaming calls.
+
+## Sign-in
+
+There is no user database. Each visitor pastes their own TextQL API key; the key
+is verified against the API, then sealed with AES-GCM under `SESSION_SECRET` and
+returned as an httpOnly cookie. Requests decrypt it, build per-request SDK
+clients (`src/hooks.server.ts`), and hand them to the route via `event.locals`.
+
+So the key lives in exactly two places: the visitor's browser, opaque to it, and
+the memory of the request using it. Nothing is persisted server-side, and
+rotating `SESSION_SECRET` signs everyone out.
+
+TextQL has no OAuth provider for third-party apps — an API key is the only
+credential the public API accepts, so it is the only one this demo asks for.
+
+## Deploying
+
+`npm run build` uses `adapter-auto`, so Vercel, Netlify, Cloudflare Pages and
+friends are detected the usual way. Wherever you deploy it, `SESSION_SECRET` is
+the only secret to set — there is deliberately no `TEXTQL_API_KEY`, since every
+visitor brings their own key and the deployment holds no TextQL credentials.
+
+One thing to size for: live run streaming holds a response open for the length
+of a run, so a host that caps request duration will cut long runs short.
 
 ## What it demonstrates
 
@@ -51,10 +76,11 @@ That's it — the app opens at `http://localhost:5173`. Requires Node 18+.
 
 ## How it's put together
 
-The API key never reaches the browser: SvelteKit server routes hold the SDK
-clients and proxy everything, forwarding stream events to the client as NDJSON
-lines of protojson-encoded `WatchChatEvent`s (the gRPC type is the wire
-contract — no bespoke event protocol).
+The API key is never usable by the browser: it rides along as an encrypted
+cookie, and only SvelteKit server routes hold the SDK clients. They proxy
+everything, forwarding stream events to the client as NDJSON lines of
+protojson-encoded `WatchChatEvent`s (the gRPC type is the wire contract — no
+bespoke event protocol).
 
 ```md
 Browser (ChatPage.svelte)
@@ -68,7 +94,9 @@ TextQL API
 
 Key files:
 
-- `src/lib/server/textql.ts` — shared per-process SDK clients (unary + streaming)
+- `src/hooks.server.ts` — the auth gate; builds per-request SDK clients from the session
+- `src/lib/server/session.ts` — sealing/unsealing the visitor's API key into a cookie
+- `src/lib/server/textql.ts` — pulls this request's SDK clients off `event.locals`
 - `src/routes/api/chat/+server.ts` — create/send, then stream the run via `watchChat`
 - `src/routes/api/chats/[id]/watch/+server.ts` — re-attach to a live run after reload
 - `src/lib/streamEvents.ts` — the typed NDJSON wire contract (protojson `WatchChatEvent` + zod envelope)

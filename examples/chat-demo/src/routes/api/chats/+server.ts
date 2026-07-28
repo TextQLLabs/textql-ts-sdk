@@ -35,8 +35,8 @@ function createdBy(chat: TextqlRpcPublicChatChat): string | null {
 	return chat.agentName?.trim() || chat.creatorEmail?.trim() || null;
 }
 
-export const GET: RequestHandler = async () => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ locals }) => {
+	const { client } = textqlClients(locals);
 
 	const getPage = async (page: number) => {
 		const result = await client.chats.getAll({

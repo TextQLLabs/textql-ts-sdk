@@ -26,8 +26,8 @@ function userTextContent(cell: Record<string, unknown>): string {
 	return '';
 }
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		// Independent lookups — run them concurrently.
@@ -103,8 +103,8 @@ export const GET: RequestHandler = async ({ params }) => {
 	}
 };
 
-export const DELETE: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const DELETE: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.chats.delete({ body: { chatId: params.id } });

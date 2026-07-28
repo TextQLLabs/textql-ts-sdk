@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Ellipsis from "@lucide/svelte/icons/ellipsis";
+	import LogOut from "@lucide/svelte/icons/log-out";
 	import Moon from "@lucide/svelte/icons/moon";
 	import PanelLeft from "@lucide/svelte/icons/panel-left";
 	import PanelLeftClose from "@lucide/svelte/icons/panel-left-close";
@@ -1047,6 +1048,14 @@
 					<span>Dark mode</span>
 				{/if}
 			</button>
+			<!-- A form POST so the session cookie is cleared server-side, and so
+			     SvelteKit's CSRF origin check applies. -->
+			<form method="POST" action="/logout">
+				<button type="submit" class="theme-toggle">
+					<LogOut size={15} strokeWidth={1.75} />
+					<span>Sign out</span>
+				</button>
+			</form>
 		</div>
 	</aside>
 

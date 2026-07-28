@@ -85,8 +85,8 @@ function serializeRun(run: TextqlRpcPublicAgentAgentRun) {
 	};
 }
 
-export const GET: RequestHandler = async ({ params }) => {
-	const { client } = textqlClients();
+export const GET: RequestHandler = async ({ params, locals }) => {
+	const { client } = textqlClients(locals);
 
 	try {
 		const result = await client.agents.getRun({ body: { runId: params.runId } });
