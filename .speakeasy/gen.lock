@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.791.0
   generationVersion: 2.924.0
-  releaseVersion: 1.3.5
-  configChecksum: 02d7656043c8e933251e6a3edfccf817
+  releaseVersion: 1.3.6
+  configChecksum: ad0c23182517f63809ba76e25592771a
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 47a067d9-0286-427e-b289-33da89877a8a
-  pristine_commit_hash: d5d8c271f0aa00c66854d9f1e815fd1040eaf813
-  pristine_tree_hash: 6e7b3c1707b3439b7627bc3e36dd32073b36e4c6
+  generation_id: 20b82545-77bd-4150-9799-fb5c3f5f9623
+  pristine_commit_hash: 2b5efd202f2a8ee7a8b181f175b96d60d19243a0
+  pristine_tree_hash: 75ea528289f48785bb79e7b4f77b3629725a1c6a
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -9376,12 +9376,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:5b6aed8ec2791c2dbc834f1cba87c9946c2ee500
-    pristine_git_object: 057f57c4c696dd5e8685171f1e7cde18a77d90e8
+    last_write_checksum: sha1:c5711f5267a549b7f7dc4788cf4dfdc2617fd74c
+    pristine_git_object: 9ddebc8e4c7b9f38b16e51026060af5f25fc1cfc
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:940b65b32749445b2002ce1cbf65669d339172de
-    pristine_git_object: 9ee1edec4b6818f99ddbc7fa7152cc2ef730667f
+    last_write_checksum: sha1:c83d9a62458e70529ad2f56989848f943c30f5a6
+    pristine_git_object: 8832fd879876d6d18ec000d173f2c8d5b8f32d20
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -10940,8 +10940,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:b2a87d64460b7837974f2aa28def56892c9fca79
-    pristine_git_object: 09ad7fbd9657a2493e2649b1e56caed1723aef2a
+    last_write_checksum: sha1:fea9724cc9868a5391f6f1d95f2d3506382d46cf
+    pristine_git_object: 5397bd30706ccdc90a30c659e10d420ed91fbca7
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -23374,4 +23374,3 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.agentService.agentServiceGetAgentDbSchema()`: **Added**\n* `textql.agentService.agentServiceGetAgentDbTablePreview()`: **Added**\n* `textql.appService.appServiceGetAppDbSchema()`: **Added**\n* `textql.appService.appServiceGetAppDbTablePreview()`: **Added**\n* `textql.settingsService.settingsServiceCheckMemberStatus()`: **Added**\n* `textql.settingsService.settingsServiceDeleteOrganizationMember()`: **Added**\n* `textql.settingsService.settingsServiceInviteOrganizationMember()`: **Added**\n* `textql.settingsService.settingsServiceListOrganizationMembers()`: **Added**\n* `textql.settingsService.settingsServiceUpdateOrganizationSettings()`: **Added**\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelKimiK3)` **Added**\n  *  `response.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelKimiK3)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelKimiK3)` **Added**\n  *  `response.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelKimiK3)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelKimiK3)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelKimiK3)` **Added**\n  *  `response.chat.model.enum(modelKimiK3)` **Added**\n* `textql.chats.duplicateChat()`:  `response.chat.model.enum(modelKimiK3)` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelKimiK3)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelKimiK3)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelKimiK3)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelKimiK3)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelKimiK3)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelKimiK3)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelKimiK3)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelKimiK3)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelKimiK3)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelKimiK3)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelKimiK3)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelKimiK3)` **Added**\n  *  `response.playbook.llmModel.enum(modelKimiK3)` **Added**\n"
