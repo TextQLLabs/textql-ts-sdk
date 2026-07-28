@@ -38,6 +38,18 @@ function optionsFromSource(source: StreamingClientSource): StreamingClientOption
   return source;
 }
 
+// connect-web sets `redirect: "error"` on every request, and some runtimes —
+// notably Cloudflare Workers/workerd — reject that value outright rather than
+// implement it ("Invalid redirect value, must be one of 'follow' or 'manual'"),
+// which fails every streaming RPC. A redirect mid-RPC is a protocol error
+// either way, so normalize to "manual" and let the transport fail on the
+// unexpected status, which is all "error" was buying.
+function redirectSafeFetch(inner?: typeof globalThis.fetch): typeof globalThis.fetch {
+  const base = inner ?? globalThis.fetch;
+  return (input, init) =>
+    base(input, init?.redirect === "error" ? { ...init, redirect: "manual" } : init);
+}
+
 function createTransport(options: StreamingClientOptions): Transport {
   const { apiKey } = options;
   const auth: Interceptor = (next) => async (req) => {
@@ -47,7 +59,9 @@ function createTransport(options: StreamingClientOptions): Transport {
   return createConnectTransport({
     baseUrl: rpcBaseUrl(options.serverURL ?? ServerList[0]),
     interceptors: [auth],
-    ...(options.fetch ? { fetch: options.fetch } : {}),
+    // Wrapped unconditionally so the fix also reaches callers that pass a
+    // ClientSDK, which has no way to supply its own fetch.
+    fetch: redirectSafeFetch(options.fetch),
   });
 }
 
