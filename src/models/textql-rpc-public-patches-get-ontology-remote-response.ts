@@ -16,6 +16,7 @@ export type TextqlRpcPublicPatchesGetOntologyRemoteResponse = {
   remote?: TextqlRpcPublicPatchesOntologyRemote | undefined;
   hostedGithubAppAvailable?: boolean | undefined;
   hostedGithubAppSlug?: string | null | undefined;
+  githubOauthAvailable?: boolean | undefined;
 };
 
 /** @internal */
@@ -27,6 +28,7 @@ export const TextqlRpcPublicPatchesGetOntologyRemoteResponse$inboundSchema:
       ),
       hostedGithubAppAvailable: types.optional(types.boolean()),
       hostedGithubAppSlug: z.optional(z.nullable(types.string())),
+      githubOauthAvailable: types.optional(types.boolean()),
     });
 
 export function textqlRpcPublicPatchesGetOntologyRemoteResponseFromJSON(

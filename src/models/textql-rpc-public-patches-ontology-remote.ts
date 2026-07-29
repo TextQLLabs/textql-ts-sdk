@@ -303,6 +303,8 @@ export type TextqlRpcPublicPatchesOntologyRemote = {
   githubAppInstallationId?: string | null | undefined;
   hasConflicts?: boolean | undefined;
   pushMode?: string | undefined;
+  openPrUrl?: string | null | undefined;
+  openPrNumber?: number | null | undefined;
 };
 
 /** @internal */
@@ -325,6 +327,8 @@ export const TextqlRpcPublicPatchesOntologyRemote$inboundSchema: z.ZodMiniType<
   githubAppInstallationId: z.optional(z.nullable(types.string())),
   hasConflicts: types.optional(types.boolean()),
   pushMode: types.optional(types.string()),
+  openPrUrl: z.optional(z.nullable(types.string())),
+  openPrNumber: z.optional(z.nullable(types.number())),
 });
 
 export function textqlRpcPublicPatchesOntologyRemoteFromJSON(

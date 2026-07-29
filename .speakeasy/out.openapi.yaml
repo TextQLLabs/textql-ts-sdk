@@ -12329,6 +12329,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxExecuteWriteResponse'
+  /textql.rpc.public.sandbox_capability.SandboxCapabilityService/PollAsk:
+    post:
+      tags:
+        - SandboxCapabilityService
+      summary: PollAsk
+      operationId: SandboxCapabilityService_PollAsk
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxPollAskRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxPollAskResponse'
   /textql.rpc.public.sandbox_capability.SandboxCapabilityService/PutAsset:
     post:
       tags:
@@ -12399,6 +12434,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxSendNotifyResponse'
+  /textql.rpc.public.sandbox_capability.SandboxCapabilityService/StartAsk:
+    post:
+      tags:
+        - SandboxCapabilityService
+      summary: StartAsk
+      operationId: SandboxCapabilityService_StartAsk
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxStartAskRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxStartAskResponse'
   /textql.rpc.public.sandbox_capability.SandboxCapabilityService/StateOp:
     post:
       tags:
@@ -16070,6 +16140,14 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.app.CapabilityParam'
           title: parameters
+        agentId:
+          type: string
+          title: agent_id
+          nullable: true
+        appDb:
+          type: string
+          title: app_db
+          nullable: true
       title: Capability
       additionalProperties: false
     textql.rpc.public.app.CapabilityParam:
@@ -20901,6 +20979,7 @@ components:
         - CHAT_SOURCE_SMS
         - CHAT_SOURCE_MCP
         - CHAT_SOURCE_SYSTEM
+        - CHAT_SOURCE_DATA_APP
     textql.rpc.public.chat.CheckChatPermissionsRequest:
       type: object
       properties:
@@ -30401,6 +30480,9 @@ components:
           type: string
           title: hosted_github_app_slug
           nullable: true
+        githubOauthAvailable:
+          type: boolean
+          title: github_oauth_available
       title: GetOntologyRemoteResponse
       additionalProperties: false
     textql.rpc.public.patches.GetOntologySizeTimelineRequest:
@@ -31219,6 +31301,15 @@ components:
         pushMode:
           type: string
           title: push_mode
+        openPrUrl:
+          type: string
+          title: open_pr_url
+          nullable: true
+        openPrNumber:
+          type: integer
+          title: open_pr_number
+          format: int32
+          nullable: true
       title: OntologyRemote
       additionalProperties: false
     textql.rpc.public.patches.OntologySizeDay:
@@ -32074,6 +32165,10 @@ components:
           type: integer
           title: sync_interval_minutes
           format: int32
+        pushMode:
+          type: string
+          title: push_mode
+          nullable: true
       title: UpdateOntologySyncConfigRequest
       additionalProperties: false
     textql.rpc.public.patches.UpdateOntologySyncConfigResponse:
@@ -35594,6 +35689,27 @@ components:
           title: success
       title: StopSandboxResponse
       additionalProperties: false
+    textql.rpc.public.sandbox_capability.AskBlock:
+      type: object
+      properties:
+        type:
+          type: string
+          title: type
+          description: markdown | chart | link
+        content:
+          type: string
+          title: content
+          description: 'markdown blocks: the markdown text'
+        url:
+          type: string
+          title: url
+          description: chart/link blocks
+        title:
+          type: string
+          title: title
+          description: chart/link blocks; optional
+      title: AskBlock
+      additionalProperties: false
     textql.rpc.public.sandbox_capability.SandboxExecuteWriteRequest:
       type: object
       properties:
@@ -35641,6 +35757,56 @@ components:
           title: refreshed_token
           nullable: true
       title: SandboxExecuteWriteResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_capability.SandboxPollAskRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        agentId:
+          type: string
+          title: agent_id
+        askId:
+          type: string
+          title: ask_id
+        cursor:
+          type: string
+          title: cursor
+        appDb:
+          type: string
+          title: app_db
+      title: SandboxPollAskRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_capability.SandboxPollAskResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: running | complete | error
+        cursor:
+          type: string
+          title: cursor
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.AskBlock'
+          title: blocks
+        chatId:
+          type: string
+          title: chat_id
+        chatUrl:
+          type: string
+          title: chat_url
+        error:
+          type: string
+          title: error
+        refreshedToken:
+          type: string
+          title: refreshed_token
+          nullable: true
+      title: SandboxPollAskResponse
       additionalProperties: false
     textql.rpc.public.sandbox_capability.SandboxPutAssetRequest:
       type: object
@@ -35706,6 +35872,52 @@ components:
           nullable: true
       title: SandboxSendNotifyResponse
       additionalProperties: false
+    textql.rpc.public.sandbox_capability.SandboxStartAskRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        agentId:
+          type: string
+          title: agent_id
+        prompt:
+          type: string
+          title: prompt
+        appDb:
+          type: string
+          title: app_db
+        continueAskId:
+          type: string
+          title: continue_ask_id
+          description: ask id of an earlier base-agent ask to follow up in; empty starts a new thread
+      title: SandboxStartAskRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_capability.SandboxStartAskResponse:
+      type: object
+      properties:
+        askId:
+          type: string
+          title: ask_id
+        chatId:
+          type: string
+          title: chat_id
+        chatUrl:
+          type: string
+          title: chat_url
+        cursor:
+          type: string
+          title: cursor
+        error:
+          type: string
+          title: error
+        refreshedToken:
+          type: string
+          title: refreshed_token
+          nullable: true
+      title: SandboxStartAskResponse
+      additionalProperties: false
+      description: ask_id is "chat:<chat_id>" for base-agent asks, "agent:<task_id>" for named-agent runs.
     textql.rpc.public.sandbox_capability.SandboxStateOpRequest:
       type: object
       properties:

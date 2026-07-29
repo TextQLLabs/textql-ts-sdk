@@ -14,3 +14,4 @@ let value: TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest = {};
 | --------------------- | --------------------- | --------------------- | --------------------- |
 | `syncEnabled`         | *boolean*             | :heavy_minus_sign:    | N/A                   |
 | `syncIntervalMinutes` | *number*              | :heavy_minus_sign:    | N/A                   |
+| `pushMode`            | *string*              | :heavy_minus_sign:    | N/A                   |

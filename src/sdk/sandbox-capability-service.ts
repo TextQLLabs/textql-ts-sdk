@@ -3,8 +3,10 @@
  */
 
 import { sandboxCapabilityServiceSandboxCapabilityServiceExecuteWrite } from "../funcs/sandbox-capability-service-sandbox-capability-service-execute-write.js";
+import { sandboxCapabilityServiceSandboxCapabilityServicePollAsk } from "../funcs/sandbox-capability-service-sandbox-capability-service-poll-ask.js";
 import { sandboxCapabilityServiceSandboxCapabilityServicePutAsset } from "../funcs/sandbox-capability-service-sandbox-capability-service-put-asset.js";
 import { sandboxCapabilityServiceSandboxCapabilityServiceSendNotify } from "../funcs/sandbox-capability-service-sandbox-capability-service-send-notify.js";
+import { sandboxCapabilityServiceSandboxCapabilityServiceStartAsk } from "../funcs/sandbox-capability-service-sandbox-capability-service-start-ask.js";
 import { sandboxCapabilityServiceSandboxCapabilityServiceStateOp } from "../funcs/sandbox-capability-service-sandbox-capability-service-state-op.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -25,6 +27,20 @@ export class SandboxCapabilityService extends ClientSDK {
         options,
       ),
     );
+  }
+
+  /**
+   * PollAsk
+   */
+  async sandboxCapabilityServicePollAsk(
+    request: operations.SandboxCapabilityServicePollAskRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SandboxCapabilityServicePollAskResponse> {
+    return unwrapAsync(sandboxCapabilityServiceSandboxCapabilityServicePollAsk(
+      this,
+      request,
+      options,
+    ));
   }
 
   /**
@@ -55,6 +71,20 @@ export class SandboxCapabilityService extends ClientSDK {
         options,
       ),
     );
+  }
+
+  /**
+   * StartAsk
+   */
+  async sandboxCapabilityServiceStartAsk(
+    request: operations.SandboxCapabilityServiceStartAskRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SandboxCapabilityServiceStartAskResponse> {
+    return unwrapAsync(sandboxCapabilityServiceSandboxCapabilityServiceStartAsk(
+      this,
+      request,
+      options,
+    ));
   }
 
   /**

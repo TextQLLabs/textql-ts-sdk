@@ -26,6 +26,8 @@ export type TextqlRpcPublicAppCapability = {
   subject?: string | null | undefined;
   body?: string | null | undefined;
   parameters?: Array<TextqlRpcPublicAppCapabilityParam> | undefined;
+  agentId?: string | null | undefined;
+  appDb?: string | null | undefined;
 };
 
 /** @internal */
@@ -43,6 +45,8 @@ export const TextqlRpcPublicAppCapability$inboundSchema: z.ZodMiniType<
   parameters: types.optional(
     z.array(TextqlRpcPublicAppCapabilityParam$inboundSchema),
   ),
+  agentId: z.optional(z.nullable(types.string())),
+  appDb: z.optional(z.nullable(types.string())),
 });
 /** @internal */
 export type TextqlRpcPublicAppCapability$Outbound = {
@@ -54,6 +58,8 @@ export type TextqlRpcPublicAppCapability$Outbound = {
   subject?: string | null | undefined;
   body?: string | null | undefined;
   parameters?: Array<TextqlRpcPublicAppCapabilityParam$Outbound> | undefined;
+  agentId?: string | null | undefined;
+  appDb?: string | null | undefined;
 };
 
 /** @internal */
@@ -71,6 +77,8 @@ export const TextqlRpcPublicAppCapability$outboundSchema: z.ZodMiniType<
   parameters: z.optional(
     z.array(TextqlRpcPublicAppCapabilityParam$outboundSchema),
   ),
+  agentId: z.optional(z.nullable(z.string())),
+  appDb: z.optional(z.nullable(z.string())),
 });
 
 export function textqlRpcPublicAppCapabilityToJSON(

@@ -16,6 +16,7 @@ export const TextqlRpcPublicChatChatSource = {
   ChatSourceSms: "CHAT_SOURCE_SMS",
   ChatSourceMcp: "CHAT_SOURCE_MCP",
   ChatSourceSystem: "CHAT_SOURCE_SYSTEM",
+  ChatSourceDataApp: "CHAT_SOURCE_DATA_APP",
 } as const;
 export type TextqlRpcPublicChatChatSource = OpenEnum<
   typeof TextqlRpcPublicChatChatSource
