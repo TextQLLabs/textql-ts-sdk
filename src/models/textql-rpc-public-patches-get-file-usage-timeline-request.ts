@@ -4,13 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * FileChatUsage is one chat that retrieved a ontology file inside the
- *
- * @remarks
- *  observation window. Only pulls attributed to a chat are listed — background
- *  or sandbox reads carry no chat id and are excluded.
- */
 export type TextqlRpcPublicPatchesGetFileUsageTimelineRequest = {
   pathPrefix?: string | null | undefined;
   /**

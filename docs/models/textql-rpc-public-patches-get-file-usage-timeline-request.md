@@ -1,9 +1,5 @@
 # TextqlRpcPublicPatchesGetFileUsageTimelineRequest
 
-FileChatUsage is one chat that retrieved a ontology file inside the
- observation window. Only pulls attributed to a chat are listed — background
- or sandbox reads carry no chat id and are excluded.
-
 ## Example Usage
 
 ```typescript

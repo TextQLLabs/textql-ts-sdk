@@ -14,7 +14,10 @@ import {
 
 export type TextqlRpcPublicPatchesGetFileUsageTimelineResponse = {
   /**
-   * most recent pull first
+   * most recent pull or run (imports included) inside the window; unset when
+   *
+   * @remarks
+   *  the file had no usage at all
    */
   days?: Array<TextqlRpcPublicPatchesDailyFileUsage> | undefined;
 };
