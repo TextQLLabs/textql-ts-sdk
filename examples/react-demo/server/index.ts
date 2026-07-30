@@ -5,7 +5,7 @@ import { HttpError, type RouteHandlers } from './kit';
 import { agentDetailRoute, agentRunRoute, agentsRoute } from './routes/agents';
 import { appComputeRoute, appDetailRoute, appsRoute } from './routes/apps';
 import { chatRoute } from './routes/chat';
-import { chatDetailRoute, chatWatchRoute, chatsRoute } from './routes/chats';
+import { chatDetailRoute, chatMembersRoute, chatWatchRoute, chatsRoute } from './routes/chats';
 import {
 	connectorDetailRoute,
 	connectorsRoute,
@@ -19,6 +19,7 @@ import {
 	playbookDeactivateRoute,
 	playbookDeployRoute,
 	playbookDetailRoute,
+	playbookMembersRoute,
 	playbooksRoute
 } from './routes/playbooks';
 
@@ -35,6 +36,7 @@ const ROUTES: { pattern: string[]; handlers: RouteHandlers }[] = [
 	{ pattern: ['api', 'apps', ':id', 'compute'], handlers: appComputeRoute },
 	{ pattern: ['api', 'chat'], handlers: chatRoute },
 	{ pattern: ['api', 'chats'], handlers: chatsRoute },
+	{ pattern: ['api', 'chats', 'members'], handlers: chatMembersRoute },
 	{ pattern: ['api', 'chats', ':id'], handlers: chatDetailRoute },
 	{ pattern: ['api', 'chats', ':id', 'watch'], handlers: chatWatchRoute },
 	{ pattern: ['api', 'connectors'], handlers: connectorsRoute },
@@ -42,6 +44,7 @@ const ROUTES: { pattern: string[]; handlers: RouteHandlers }[] = [
 	{ pattern: ['api', 'ontology'], handlers: ontologyRoute },
 	{ pattern: ['api', 'ontology', 'file'], handlers: ontologyFileRoute },
 	{ pattern: ['api', 'playbooks'], handlers: playbooksRoute },
+	{ pattern: ['api', 'playbooks', 'members'], handlers: playbookMembersRoute },
 	{ pattern: ['api', 'playbooks', ':id'], handlers: playbookDetailRoute },
 	{ pattern: ['api', 'playbooks', ':id', 'deploy'], handlers: playbookDeployRoute },
 	{ pattern: ['api', 'playbooks', ':id', 'deactivate'], handlers: playbookDeactivateRoute },

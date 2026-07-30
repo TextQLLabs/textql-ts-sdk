@@ -22,6 +22,8 @@ export const BOARD_GROUP_TITLE =
 export const BOARD_GROUP_COUNT = 'font-mono text-[11px] font-medium text-muted';
 export const BOARD_GROUP_HINT = 'm-0 text-[11.5px] leading-[1.4] text-muted';
 export const BOARD_LIST = 'm-0 flex list-none flex-col gap-0.5 p-0';
+export const BOARD_MORE = 'flex flex-col items-center gap-2 px-4 pt-3 pb-1 text-center';
+export const BOARD_END = 'm-0 px-4 pt-3 pb-1 text-center font-mono text-[11px] text-muted';
 
 export const STATE_BLOCK =
 	'flex flex-col items-center justify-center gap-2.5 px-4 py-12 text-center';

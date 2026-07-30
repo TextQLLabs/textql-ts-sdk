@@ -2,18 +2,24 @@ import { runErrorJson, watchEventJson, type StreamEventOut } from '../../src/lib
 import { isRecord } from '../../src/lib/utils';
 import { json } from '../kit';
 import type { RequestHandler, RouteHandlers } from '../kit';
-import { isConnectError, proxyError, textqlClients } from '../textql';
+import {
+	createdAfterFor,
+	isConnectError,
+	pagingFields,
+	proxyError,
+	readPaging,
+	textqlClients,
+	toIsoString
+} from '../textql';
 import type { WatchChatEvent } from '@textql/sdk/generated/connect/public/chat_pb.js';
 import {
 	TextqlRpcPublicChatChatSortDirection,
 	TextqlRpcPublicChatChatSortField,
+	TextqlRpcPublicChatChatSource,
 	type TextqlRpcPublicChatChat
 } from '@textql/sdk/models';
 
 // ─── /api/chats ─────────────────────────────────────────────────────────────
-
-const PAGE_SIZE = 100;
-const MAX_PAGES = 50;
 
 function titleFor(chat: TextqlRpcPublicChatChat) {
 	return chat.summary?.trim() || chat.preview?.trim() || 'New chat';
@@ -39,17 +45,50 @@ function createdBy(chat: TextqlRpcPublicChatChat): string | null {
 	return chat.agentName?.trim() || chat.creatorEmail?.trim() || null;
 }
 
-const listChats: RequestHandler = async () => {
+const SORT_FIELDS: Record<string, TextqlRpcPublicChatChatSortField> = {
+	updated: TextqlRpcPublicChatChatSortField.ChatSortFieldUpdatedAt,
+	created: TextqlRpcPublicChatChatSortField.ChatSortFieldCreatedAt,
+	name: TextqlRpcPublicChatChatSortField.ChatSortFieldName
+};
+
+const listChats: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 
-	const getPage = async (page: number) => {
+	const paging = readPaging(url);
+
+	// Facet values from the FilterToolbar, applied server-side so they span the
+	// whole list rather than the page already loaded.
+	const searchTerm = url.searchParams.get('q')?.trim() || undefined;
+	const creatorMemberIds = url.searchParams.getAll('creator').filter(Boolean);
+	// The facet sends raw enum names; drop anything the SDK doesn't know rather
+	// than passing it through to the RPC.
+	const knownSources = new Set<string>(Object.values(TextqlRpcPublicChatChatSource));
+	const sources = url.searchParams
+		.getAll('source')
+		.filter((source): source is TextqlRpcPublicChatChatSource => knownSources.has(source));
+	const scope = url.searchParams.getAll('scope');
+	const createdAfter = createdAfterFor(url.searchParams.get('date'));
+	const sortBy = SORT_FIELDS[url.searchParams.get('sort') ?? ''] ?? SORT_FIELDS.updated;
+	const sortDirection =
+		url.searchParams.get('dir') === 'asc'
+			? TextqlRpcPublicChatChatSortDirection.ChatSortDirectionAsc
+			: TextqlRpcPublicChatChatSortDirection.ChatSortDirectionDesc;
+
+	try {
 		const result = await client.chats.getAll({
 			body: {
-				memberOnly: true,
-				limit: PAGE_SIZE,
-				offset: page * PAGE_SIZE,
-				sortBy: TextqlRpcPublicChatChatSortField.ChatSortFieldUpdatedAt,
-				sortDirection: TextqlRpcPublicChatChatSortDirection.ChatSortDirectionDesc,
+				// Org-wide: surface everyone's threads, not just the caller's.
+				memberOnly: false,
+				limit: paging.pageSize,
+				offset: paging.offset,
+				sortBy,
+				sortDirection,
+				searchTerm,
+				...(creatorMemberIds.length ? { creatorMemberIds } : {}),
+				...(sources.length ? { sources } : {}),
+				bookmarkedOnly: scope.includes('bookmarked') || undefined,
+				sharedWithMe: scope.includes('shared') || undefined,
+				createdAfter,
 				excludeBatchRuns: true,
 				excludeUnusedPlaybooks: true,
 				excludeFeed: true
@@ -57,55 +96,60 @@ const listChats: RequestHandler = async () => {
 		});
 
 		// Proto3 JSON omits empty fields, so a member with no chats gets `{}` back.
-		return {
-			chats: 'chats' in result && Array.isArray(result.chats) ? result.chats : [],
-			totalCount: typeof result.totalCount === 'number' ? result.totalCount : undefined
-		};
-	};
+		const chats = 'chats' in result && Array.isArray(result.chats) ? result.chats : [];
+		const totalCount = typeof result.totalCount === 'number' ? result.totalCount : undefined;
 
-	try {
-		const first = await getPage(0);
-		const chats: TextqlRpcPublicChatChat[] = [...first.chats];
-		let totalCount = first.totalCount;
+		const items = chats
+			.filter(
+				(chat): chat is TextqlRpcPublicChatChat & { id: string } => typeof chat.id === 'string'
+			)
+			.map((chat) => ({
+				id: chat.id,
+				title: titleFor(chat),
+				createdBy: createdBy(chat),
+				source: sourceLabel(chat.source),
+				// Not always a Date at runtime — older rows come back as strings.
+				lastMessageAt: toIsoString(chat.updatedAt ?? chat.timestamp),
+				updatedAt: toIsoString(chat.updatedAt ?? chat.timestamp)
+			}));
 
-		if (totalCount !== undefined && totalCount > chats.length && first.chats.length === PAGE_SIZE) {
-			// Remaining pages are independent — fetch them concurrently.
-			const pageCount = Math.min(MAX_PAGES, Math.ceil(totalCount / PAGE_SIZE));
-			const rest = await Promise.all(
-				Array.from({ length: pageCount - 1 }, (_, i) => getPage(i + 1))
-			);
-			for (const page of rest) chats.push(...page.chats);
-		} else if (totalCount === undefined && first.chats.length === PAGE_SIZE) {
-			// No total reported: fall back to sequential paging until a short page.
-			for (let page = 1; page < MAX_PAGES; page += 1) {
-				const next = await getPage(page);
-				chats.push(...next.chats);
-				totalCount = next.totalCount ?? totalCount;
-				if (next.chats.length < PAGE_SIZE) break;
-			}
-		}
-
-		return json({
-			chats: chats
-				.filter(
-					(chat): chat is TextqlRpcPublicChatChat & { id: string } => typeof chat.id === 'string'
-				)
-				.map((chat) => ({
-					id: chat.id,
-					title: titleFor(chat),
-					createdBy: createdBy(chat),
-					source: sourceLabel(chat.source),
-					lastMessageAt: (chat.updatedAt ?? chat.timestamp)?.toISOString() ?? null,
-					updatedAt: (chat.updatedAt ?? chat.timestamp)?.toISOString() ?? null
-				})),
-			totalCount: totalCount ?? chats.length
-		});
+		return json({ chats: items, ...pagingFields(paging, totalCount, chats.length) });
 	} catch (error) {
 		return proxyError('Chat list request', error);
 	}
 };
 
 export const chatsRoute: RouteHandlers = { GET: listChats };
+
+// ─── /api/chats/members ─────────────────────────────────────────────────────
+
+/**
+ * Creator facet options for the threads toolbar. Every member who has authored
+ * a chat, so the facet lists people the list can actually be narrowed to.
+ */
+const listChatMembers: RequestHandler = async () => {
+	const { client } = textqlClients();
+
+	try {
+		const result = await client.chats.getMembersWithChats({ body: {} });
+		const members = 'members' in result && Array.isArray(result.members) ? result.members : [];
+
+		return json({
+			members: members
+				.filter((member) => typeof member.memberId === 'string')
+				.map((member) => ({
+					id: member.memberId,
+					name: member.memberName?.trim() || null,
+					email: member.memberEmail?.trim() || null,
+					pictureUrl: member.memberPictureUrl?.trim() || null
+				}))
+		});
+	} catch (error) {
+		return proxyError('Chat members request', error);
+	}
+};
+
+export const chatMembersRoute: RouteHandlers = { GET: listChatMembers };
 
 // ─── /api/chats/[id] ────────────────────────────────────────────────────────
 

@@ -1,20 +1,25 @@
 import { isRecord } from '../../src/lib/utils';
 import { json } from '../kit';
 import type { RequestHandler, RouteHandlers } from '../kit';
-import { isConnectError, proxyError, textqlClients, toIsoString } from '../textql';
+import {
+	isConnectError,
+	pagingFields,
+	proxyError,
+	readPaging,
+	textqlClients,
+	toIsoString
+} from '../textql';
 import {
 	TextqlRpcParadigmParamsParadigmType,
 	TextqlRpcPublicChatLlmModel,
 	TextqlRpcPublicCommonSortDirection,
 	TextqlRpcPublicPlaybookPlaybookSortField,
+	TextqlRpcPublicPlaybookPlaybookStatus,
 	TextqlRpcPublicPlaybookPlaybookTriggerType,
 	type TextqlRpcPublicPlaybookPlaybook
 } from '@textql/sdk/models';
 
 const LLM_MODELS = new Set<string>(Object.values(TextqlRpcPublicChatLlmModel));
-
-const PAGE_SIZE = 100;
-const MAX_PAGES = 50;
 
 // ─── /api/playbooks ─────────────────────────────────────────────────────────
 
@@ -40,63 +45,99 @@ function toListItem(playbook: TextqlRpcPublicPlaybookPlaybook) {
 	};
 }
 
-const listPlaybooks: RequestHandler = async () => {
+const SORT_FIELDS: Record<string, TextqlRpcPublicPlaybookPlaybookSortField> = {
+	updated: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldUpdatedAt,
+	created: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldCreatedAt,
+	name: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldName,
+	schedule: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldSchedule
+};
+
+const listPlaybooks: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 
-	const getPage = async (page: number) => {
+	const paging = readPaging(url);
+
+	// Facet values from the FilterToolbar, applied server-side so they span the
+	// whole list rather than the page already loaded.
+	const searchTerm = url.searchParams.get('q')?.trim() || undefined;
+	const creatorMemberIds = url.searchParams.getAll('creator').filter(Boolean);
+	const knownStatuses = new Set<string>(Object.values(TextqlRpcPublicPlaybookPlaybookStatus));
+	const statuses = url.searchParams
+		.getAll('status')
+		.filter((status): status is TextqlRpcPublicPlaybookPlaybookStatus =>
+			knownStatuses.has(status)
+		);
+	const scope = url.searchParams.getAll('scope');
+	const sortBy = SORT_FIELDS[url.searchParams.get('sort') ?? ''] ?? SORT_FIELDS.updated;
+	const sortDirection =
+		url.searchParams.get('dir') === 'asc'
+			? TextqlRpcPublicCommonSortDirection.SortDirectionAsc
+			: TextqlRpcPublicCommonSortDirection.SortDirectionDesc;
+
+	try {
 		const result = await client.playbooks.get({
 			body: {
 				// Org-wide: surface everyone's playbooks, not just the caller's.
 				memberOnly: false,
-				limit: PAGE_SIZE,
-				offset: page * PAGE_SIZE,
-				sortBy: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldUpdatedAt,
-				sortDirection: TextqlRpcPublicCommonSortDirection.SortDirectionDesc
+				limit: paging.pageSize,
+				offset: paging.offset,
+				sortBy,
+				sortDirection,
+				searchTerm,
+				...(creatorMemberIds.length ? { creatorMemberIds } : {}),
+				...(statuses.length ? { statuses } : {}),
+				onlySubscribed: scope.includes('subscribed') || undefined,
+				sharedWithMe: scope.includes('shared') || undefined
 			}
 		});
 
 		if (isConnectError(result)) {
-			throw new Error(result.message ?? 'Unable to list playbooks.');
+			return json({ error: result.message ?? 'Unable to list playbooks.' }, { status: 502 });
 		}
 
-		return {
-			playbooks: Array.isArray(result.playbooks) ? result.playbooks : [],
-			totalCount: typeof result.totalCount === 'number' ? result.totalCount : undefined
-		};
-	};
-
-	try {
-		const first = await getPage(0);
-		const playbooks: TextqlRpcPublicPlaybookPlaybook[] = [...first.playbooks];
-		let totalCount = first.totalCount;
-
-		if (
-			totalCount !== undefined &&
-			totalCount > playbooks.length &&
-			first.playbooks.length === PAGE_SIZE
-		) {
-			const pageCount = Math.min(MAX_PAGES, Math.ceil(totalCount / PAGE_SIZE));
-			const rest = await Promise.all(
-				Array.from({ length: pageCount - 1 }, (_, i) => getPage(i + 1))
-			);
-			for (const page of rest) playbooks.push(...page.playbooks);
-		} else if (totalCount === undefined && first.playbooks.length === PAGE_SIZE) {
-			for (let page = 1; page < MAX_PAGES; page += 1) {
-				const next = await getPage(page);
-				playbooks.push(...next.playbooks);
-				totalCount = next.totalCount ?? totalCount;
-				if (next.playbooks.length < PAGE_SIZE) break;
-			}
-		}
+		const playbooks: TextqlRpcPublicPlaybookPlaybook[] = Array.isArray(result.playbooks)
+			? result.playbooks
+			: [];
+		const totalCount = typeof result.totalCount === 'number' ? result.totalCount : undefined;
 
 		return json({
 			playbooks: playbooks.map(toListItem).filter((item) => item !== null),
-			totalCount: totalCount ?? playbooks.length
+			...pagingFields(paging, totalCount, playbooks.length)
 		});
 	} catch (error) {
 		return proxyError('Playbook list request', error);
 	}
 };
+
+// ─── /api/playbooks/members ─────────────────────────────────────────────────
+
+/**
+ * Creator facet options for the playbooks toolbar. Every member who owns a
+ * playbook, so the facet lists people the list can actually be narrowed to.
+ */
+const listPlaybookMembers: RequestHandler = async () => {
+	const { client } = textqlClients();
+
+	try {
+		const result = await client.playbooks.getMembersWith({ body: {} });
+		const members = 'members' in result && Array.isArray(result.members) ? result.members : [];
+
+		return json({
+			members: members
+				.filter((member) => typeof member.memberId === 'string')
+				.map((member) => ({
+					id: member.memberId,
+					name: member.memberName?.trim() || null,
+					email: member.memberEmail?.trim() || null,
+					pictureUrl: member.memberPictureUrl?.trim() || null
+				}))
+		});
+	} catch (error) {
+		return proxyError('Playbook members request', error);
+	}
+};
+
+export const playbookMembersRoute: RouteHandlers = { GET: listPlaybookMembers };
 
 const createPlaybook: RequestHandler = async () => {
 	const { client } = textqlClients();

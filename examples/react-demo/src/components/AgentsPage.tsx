@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { formatCron } from '../lib/cron';
 import { cx } from '../lib/cx';
+import { applyFilters, type ColumnFilter, type FilterableColumn } from '../lib/tableFilter';
+import { applySort, type SortableColumn, type SortEntry } from '../lib/tableSort';
 import { usePageDescription, usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Page } from '../primitives';
+import { FilterToolbar } from './filterToolbar';
+import type { FilterField } from './filterToolbar';
 import { AgentIdenticon } from './AgentIdenticon';
 import {
 	BOARD,
@@ -94,6 +98,11 @@ export function AgentsPage() {
 	usePageDescription('Browse the agents in your workspace.');
 
 	const [agents, setAgents] = useState<AgentListItem[]>([]);
+	const [search, setSearch] = useState('');
+	const [filters, setFilters] = useState<ColumnFilter[]>([]);
+	const [sortEntries, setSortEntries] = useState<SortEntry[]>([
+		{ columnId: 'lastPost', dir: 'desc' }
+	]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
@@ -123,8 +132,73 @@ export function AgentsPage() {
 		void loadAgents();
 	}, []);
 
-	const active = agents.filter((agent) => agent.isActive);
-	const inactive = agents.filter((agent) => !agent.isActive);
+	// ListAgents takes no search/sort/paging params, so this surface filters
+	// client-side: facet options come from the loaded rows via `items`.
+	const fields = useMemo<FilterField<AgentListItem>[]>(
+		() => [
+			{
+				id: 'lastPost',
+				header: 'Last post',
+				sortable: true,
+				sortType: 'date',
+				sortValue: (agent) => (agent.lastPostAt ? new Date(agent.lastPostAt) : null)
+			},
+			{ id: 'name', header: 'Name', sortable: true, sortType: 'text' },
+			{
+				id: 'status',
+				header: 'Status',
+				filterable: true,
+				filterValue: (agent) => (agent.isActive ? 'Active' : 'Inactive')
+			},
+			{
+				id: 'ownerName',
+				header: 'Owner',
+				filterable: true,
+				filterKind: 'people',
+				filterValue: (agent) => agent.ownerName ?? ''
+			},
+			{
+				id: 'llmModel',
+				header: 'Model',
+				filterable: true,
+				filterValue: (agent) => agent.llmModel ?? ''
+			},
+			{
+				id: 'schedule',
+				header: 'Schedule',
+				filterable: true,
+				filterValue: (agent) => (agent.schedules.length ? 'Scheduled' : 'No schedule')
+			}
+		],
+		[]
+	);
+
+	const fieldMap = useMemo(
+		() =>
+			new Map(fields.map((field) => [field.id, field])) as Map<
+				string,
+				FilterableColumn<AgentListItem> & SortableColumn<AgentListItem>
+			>,
+		[fields]
+	);
+
+	const narrowed = filters.length > 0 || search.trim().length > 0;
+
+	/** Search matches name, prompt and owner; facets and sort run on the result. */
+	const visibleAgents = useMemo(() => {
+		const q = search.trim().toLowerCase();
+		const searched = q
+			? agents.filter((agent) =>
+					[agent.name, agent.prompt, agent.ownerName ?? ''].some((text) =>
+						text.toLowerCase().includes(q)
+					)
+				)
+			: agents;
+		return applySort(applyFilters(searched, filters, fieldMap), sortEntries, fieldMap);
+	}, [agents, search, filters, sortEntries, fieldMap]);
+
+	const active = visibleAgents.filter((agent) => agent.isActive);
+	const inactive = visibleAgents.filter((agent) => !agent.isActive);
 	const groups: AgentGroup[] = [];
 	if (active.length) {
 		groups.push({ key: 'active', title: 'Active', hint: 'Currently running', agents: active });
@@ -140,6 +214,18 @@ export function AgentsPage() {
 
 	return (
 		<Page title="Agents" lead="Browse the agents in your workspace." wide>
+			<FilterToolbar
+				fields={fields}
+				items={agents}
+				placeholder="Search agents…"
+				search={search}
+				onSearchChange={setSearch}
+				filters={filters}
+				onFiltersChange={setFilters}
+				sortEntries={sortEntries}
+				onSortChange={setSortEntries}
+			/>
+
 			<section className={LIST_SECTION_SCROLL} aria-label="Agent list">
 				{loading ? (
 					<div className={STATE_BLOCK} aria-busy="true">
@@ -153,10 +239,26 @@ export function AgentsPage() {
 							Retry
 						</button>
 					</div>
-				) : agents.length === 0 ? (
+				) : visibleAgents.length === 0 ? (
 					<div className={STATE_BLOCK}>
-						<p className={STATE_TITLE}>No agents yet</p>
-						<p className={STATE_TEXT}>Agents you create will show up here.</p>
+						<p className={STATE_TITLE}>{narrowed ? 'No matching agents' : 'No agents yet'}</p>
+						<p className={STATE_TEXT}>
+							{narrowed
+								? 'Try clearing a filter or searching for something else.'
+								: 'Agents you create will show up here.'}
+						</p>
+						{narrowed && (
+							<button
+								type="button"
+								className={RETRY_BTN}
+								onClick={() => {
+									setFilters([]);
+									setSearch('');
+								}}
+							>
+								Clear filters
+							</button>
+						)}
 					</div>
 				) : (
 					<div className={BOARD}>

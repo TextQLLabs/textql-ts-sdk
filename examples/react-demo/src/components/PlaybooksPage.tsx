@@ -1,5 +1,5 @@
 import { Ellipsis, Eye, Hash, Pencil, Plus, X } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { CHAT_MODELS, DEFAULT_CHAT_MODEL, isKnownChatModel } from '../lib/chatModels';
@@ -19,17 +19,22 @@ import { cx } from '../lib/cx';
 import { promptViewPref, usePromptView } from '../lib/promptViewPref';
 import { slackChannelsCache, useSlackChannels } from '../lib/slackChannelsCache';
 import { usePageDescription, usePageTitle } from '../lib/usePageTitle';
+import { loadMemberOptions, usePagedList } from '../lib/usePagedList';
 import { isRecord } from '../lib/utils';
 import { Page, Select, confirm, toast, type SelectOption } from '../primitives';
 import { Markdown } from './Markdown';
+import { FilterToolbar } from './filterToolbar';
+import type { FilterField, FilterOption } from './filterToolbar';
 import {
 	BOARD,
+	BOARD_END,
 	BOARD_GROUP,
 	BOARD_GROUP_COUNT,
 	BOARD_GROUP_HEAD,
 	BOARD_GROUP_HINT,
 	BOARD_GROUP_TITLE,
 	BOARD_GROUP_TITLE_ROW,
+	BOARD_MORE,
 	LIST_SECTION_SCROLL,
 	MENU_BTN_BASE,
 	MENU_BTN_HIDDEN,
@@ -249,9 +254,55 @@ export function PlaybooksPage() {
 	const connectors = useConnectors();
 	const slack = useSlackChannels();
 
-	const [playbooks, setPlaybooks] = useState<PlaybookListItem[]>([]);
-	const [playbooksLoading, setPlaybooksLoading] = useState(true);
-	const [playbooksError, setPlaybooksError] = useState(false);
+	const [creatorOptions, setCreatorOptions] = useState<FilterOption[]>([]);
+
+	const list = usePagedList<PlaybookListItem>({
+		endpoint: '/api/playbooks',
+		rowsKey: 'playbooks',
+		defaultSort: [{ columnId: 'updated', dir: 'desc' }],
+		parse: parseListItem
+	});
+
+	const playbooks = list.items;
+	const setPlaybooks = list.setItems;
+
+	// Applied server-side by /api/playbooks, so the toolbar gets `items={[]}`
+	// and each facet declares its own options.
+	const fields = useMemo<FilterField[]>(
+		() => [
+			{ id: 'updated', header: 'Last updated', sortable: true, sortType: 'date' },
+			{ id: 'created', header: 'Created', sortable: true, sortType: 'date' },
+			{ id: 'name', header: 'Name', sortable: true, sortType: 'text' },
+			{ id: 'schedule', header: 'Schedule', sortable: true, sortType: 'text' },
+			{
+				id: 'creator',
+				header: 'Owner',
+				filterable: true,
+				filterKind: 'people',
+				filterOptions: creatorOptions
+			},
+			{
+				id: 'status',
+				header: 'Status',
+				filterable: true,
+				filterOptions: [
+					{ value: 'STATUS_ACTIVE', label: 'Active' },
+					{ value: 'STATUS_INACTIVE', label: 'Inactive' },
+					{ value: 'STATUS_EMPTY', label: 'Draft' }
+				]
+			},
+			{
+				id: 'scope',
+				header: 'Playbooks',
+				filterable: true,
+				filterOptions: [
+					{ value: 'subscribed', label: 'Subscribed' },
+					{ value: 'shared', label: 'Shared with me' }
+				]
+			}
+		],
+		[creatorOptions]
+	);
 	const [creating, setCreating] = useState(false);
 	const [menuPlaybookId, setMenuPlaybookId] = useState<string | undefined>();
 	const [deletingId, setDeletingId] = useState<string | undefined>();
@@ -456,29 +507,6 @@ export function PlaybooksPage() {
 		setActionError(undefined);
 	}, []);
 
-	async function loadPlaybooks() {
-		setPlaybooksLoading(true);
-		setPlaybooksError(false);
-
-		try {
-			const response = await fetch('/api/playbooks');
-			const payload: unknown = await response.json();
-
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.playbooks)) {
-				throw new Error('Unable to load playbooks.');
-			}
-
-			setPlaybooks(
-				payload.playbooks
-					.map(parseListItem)
-					.filter((item): item is PlaybookListItem => item !== null)
-			);
-		} catch {
-			setPlaybooksError(true);
-		} finally {
-			setPlaybooksLoading(false);
-		}
-	}
 
 	const loadPlaybookById = useCallback(
 		async (id: string, force = false) => {
@@ -514,6 +542,7 @@ export function PlaybooksPage() {
 
 				applyPlaybook(detail);
 				void connectorsCache.load();
+		void loadMemberOptions('/api/playbooks/members').then(setCreatorOptions);
 				void slackChannelsCache.load();
 			} catch (error) {
 				if (request.signal.aborted || request !== loadRequest.current) return;
@@ -531,7 +560,7 @@ export function PlaybooksPage() {
 	);
 
 	useEffect(() => {
-		void loadPlaybooks();
+		void list.load();
 		void connectorsCache.load();
 		void slackChannelsCache.load();
 	}, []);
@@ -571,7 +600,10 @@ export function PlaybooksPage() {
 			const created = parseListItem(payload.playbook);
 			if (!created) throw new Error('Unable to create playbook.');
 
-			setPlaybooks((current) => [created, ...current.filter((p) => p.id !== created.id)]);
+			setPlaybooks((current: PlaybookListItem[]) => [
+				created,
+				...current.filter((p) => p.id !== created.id)
+			]);
 			navigate(`/playbooks/${created.id}`);
 			toast.success('Playbook created');
 		} catch (error) {
@@ -769,7 +801,7 @@ export function PlaybooksPage() {
 				throw new Error(apiErrorDetail(payload, 'Unable to deploy playbook.'));
 			}
 			await loadPlaybookById(id, true);
-			void loadPlaybooks();
+			void list.load();
 			toast.success('Playbook deployed');
 		} catch (error) {
 			const detail = error instanceof Error ? error.message : 'Unable to deploy playbook.';
@@ -805,7 +837,7 @@ export function PlaybooksPage() {
 				throw new Error(apiErrorDetail(payload, 'Unable to deactivate playbook.'));
 			}
 			await loadPlaybookById(id, true);
-			void loadPlaybooks();
+			void list.load();
 			toast.success('Playbook deactivated');
 		} catch (error) {
 			const detail = error instanceof Error ? error.message : 'Unable to deactivate playbook.';
@@ -831,8 +863,7 @@ export function PlaybooksPage() {
 		if (!confirmed) return;
 
 		setDeletingId(id);
-		const previous = playbooks;
-		setPlaybooks(playbooks.filter((item) => item.id !== id));
+		const rollback = list.remove(id);
 
 		try {
 			const response = await fetch(`/api/playbooks/${encodeURIComponent(id)}`, {
@@ -846,7 +877,7 @@ export function PlaybooksPage() {
 			}
 			toast.success('Playbook deleted');
 		} catch {
-			setPlaybooks(previous);
+			rollback();
 			setActionError('Unable to delete playbook.');
 			toast.error("Couldn't delete playbook", {
 				description: 'Something went wrong. Please try again.'
@@ -933,27 +964,52 @@ export function PlaybooksPage() {
 	return (
 		<Page title={pageTitle} lead={pageLead} wide actions={actions}>
 			{showList ? (
+				<>
+				<FilterToolbar
+					fields={fields}
+					items={[]}
+					placeholder="Search playbooks…"
+					searching={list.searching}
+					search={list.search}
+					onSearchChange={list.setSearch}
+					filters={list.filters}
+					onFiltersChange={list.setFilters}
+					sortEntries={list.sortEntries}
+					onSortChange={list.setSortEntries}
+				/>
+
 				<section className={LIST_SECTION_SCROLL} aria-label="Playbook list">
 					{actionError && (
 						<p className="mx-0 mt-0 mb-1 text-[12.5px] text-[#b91c1c]">{actionError}</p>
 					)}
 
-					{playbooksLoading ? (
+					{list.loading ? (
 						<div className={STATE_BLOCK} aria-busy="true">
 							<UnicodeSpinner label="Loading playbooks" />
 							<p className={STATE_TEXT}>Loading playbooks…</p>
 						</div>
-					) : playbooksError ? (
+					) : list.error ? (
 						<div className={STATE_BLOCK}>
 							<p className={STATE_TEXT}>Unable to load playbooks.</p>
-							<button type="button" className={RETRY_BTN} onClick={loadPlaybooks}>
+							<button type="button" className={RETRY_BTN} onClick={() => void list.load()}>
 								Retry
 							</button>
 						</div>
-					) : playbooks.length === 0 ? (
+					) : list.items.length === 0 ? (
 						<div className={STATE_BLOCK}>
-							<p className={STATE_TITLE}>No playbooks yet</p>
-							<p className={STATE_TEXT}>Create one to schedule a recurring agent run.</p>
+							<p className={STATE_TITLE}>
+								{list.narrowed ? 'No matching playbooks' : 'No playbooks yet'}
+							</p>
+							<p className={STATE_TEXT}>
+								{list.narrowed
+									? 'Try clearing a filter or searching for something else.'
+									: 'Create one to schedule a recurring agent run.'}
+							</p>
+							{list.narrowed && (
+								<button type="button" className={RETRY_BTN} onClick={list.clearFilters}>
+									Clear filters
+								</button>
+							)}
 						</div>
 					) : (
 						<div className={BOARD}>
@@ -1121,9 +1177,33 @@ export function PlaybooksPage() {
 									</section>
 								);
 							})}
+
+							{list.hasMore || list.loadingMore ? (
+								<div className={BOARD_MORE} ref={list.sentinelRef}>
+									{list.moreError ? (
+										<>
+											<p className={STATE_TEXT}>Couldn't load more playbooks.</p>
+											<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+												Retry
+											</button>
+										</>
+									) : list.loadingMore ? (
+										<UnicodeSpinner label="Loading more playbooks" />
+									) : (
+										<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+											Load more
+										</button>
+									)}
+								</div>
+							) : (
+								<p className={BOARD_END}>
+									{list.items.length} of {list.totalCount} playbooks
+								</p>
+							)}
 						</div>
 					)}
 				</section>
+				</>
 			) : showLoading ? (
 				<section className={STATE_BLOCK} aria-label="Loading playbook" aria-busy="true">
 					<UnicodeSpinner label="Loading playbook" />

@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { cx } from '../lib/cx';
 import { usePageDescription, usePageTitle } from '../lib/usePageTitle';
+import { usePagedList } from '../lib/usePagedList';
 import { isRecord } from '../lib/utils';
 import { Page } from '../primitives';
-import { LIST_SECTION_SCROLL, RETRY_BTN, STATE_BLOCK, STATE_TEXT, STATE_TITLE } from './pageStyles';
+import { FilterToolbar } from './filterToolbar';
+import type { FilterField } from './filterToolbar';
+import { BOARD_END, BOARD_MORE, LIST_SECTION_SCROLL, RETRY_BTN, STATE_BLOCK, STATE_TEXT, STATE_TITLE } from './pageStyles';
 import { UnicodeSpinner } from './UnicodeSpinner';
 
 type AppListItem = {
@@ -59,53 +62,71 @@ export function AppsPage() {
 	usePageTitle('Data apps');
 	usePageDescription('Browse the data apps in your workspace.');
 
-	const [apps, setApps] = useState<AppListItem[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
+	const list = usePagedList<AppListItem>({
+		endpoint: '/api/apps',
+		rowsKey: 'apps',
+		parse: parseApp
+	});
 
-	async function loadApps() {
-		setLoading(true);
-		setError(false);
+	const apps = list.items;
 
-		try {
-			const response = await fetch('/api/apps');
-			const payload: unknown = await response.json();
-
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.apps)) {
-				throw new Error('Unable to load apps.');
-			}
-
-			setApps(payload.apps.map(parseApp).filter((item): item is AppListItem => item !== null));
-		} catch {
-			setError(true);
-		} finally {
-			setLoading(false);
+	// ListApps has no creator/date/sort params, so the toolbar only exposes the
+	// facets the RPC can honour — anything else would silently do nothing.
+	const fields: FilterField[] = [
+		{
+			id: 'scope',
+			header: 'Apps',
+			filterable: true,
+			filterOptions: [
+				{ value: 'shared', label: 'Shared with me' },
+				{ value: 'uncategorized', label: 'Uncategorized' }
+			]
 		}
-	}
-
-	useEffect(() => {
-		void loadApps();
-	}, []);
+	];
 
 	return (
 		<Page title="Data apps" lead="Browse the data apps in your workspace." wide>
+			<FilterToolbar
+				fields={fields}
+				items={[]}
+				placeholder="Search apps…"
+				searching={list.searching}
+				search={list.search}
+				onSearchChange={list.setSearch}
+				filters={list.filters}
+				onFiltersChange={list.setFilters}
+				sortEntries={list.sortEntries}
+				onSortChange={list.setSortEntries}
+			/>
+
 			<section className={LIST_SECTION_SCROLL} aria-label="Data app list">
-				{loading ? (
+				{list.loading ? (
 					<div className={STATE_BLOCK} aria-busy="true">
 						<UnicodeSpinner label="Loading apps" />
 						<p className={STATE_TEXT}>Loading apps…</p>
 					</div>
-				) : error ? (
+				) : list.error ? (
 					<div className={STATE_BLOCK}>
 						<p className={STATE_TEXT}>Unable to load apps.</p>
-						<button type="button" className={RETRY_BTN} onClick={loadApps}>
+						<button type="button" className={RETRY_BTN} onClick={() => void list.load()}>
 							Retry
 						</button>
 					</div>
-				) : apps.length === 0 ? (
+				) : list.items.length === 0 ? (
 					<div className={STATE_BLOCK}>
-						<p className={STATE_TITLE}>No data apps yet</p>
-						<p className={STATE_TEXT}>Data apps you create will show up here.</p>
+						<p className={STATE_TITLE}>
+							{list.narrowed ? 'No matching data apps' : 'No data apps yet'}
+						</p>
+						<p className={STATE_TEXT}>
+							{list.narrowed
+								? 'Try clearing a filter or searching for something else.'
+								: 'Data apps you create will show up here.'}
+						</p>
+						{list.narrowed && (
+							<button type="button" className={RETRY_BTN} onClick={list.clearFilters}>
+								Clear filters
+							</button>
+						)}
 					</div>
 				) : (
 					<ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-3 p-0">
@@ -201,6 +222,31 @@ export function AppsPage() {
 						})}
 					</ul>
 				)}
+
+				{!list.loading &&
+					!list.error &&
+					(list.hasMore || list.loadingMore ? (
+						<div className={BOARD_MORE} ref={list.sentinelRef}>
+							{list.moreError ? (
+								<>
+									<p className={STATE_TEXT}>Couldn't load more apps.</p>
+									<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+										Retry
+									</button>
+								</>
+							) : list.loadingMore ? (
+								<UnicodeSpinner label="Loading more apps" />
+							) : (
+								<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+									Load more
+								</button>
+							)}
+						</div>
+					) : (
+						<p className={BOARD_END}>
+							{apps.length} of {list.totalCount} apps
+						</p>
+					))}
 			</section>
 		</Page>
 	);

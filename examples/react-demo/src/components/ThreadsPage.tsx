@@ -1,20 +1,27 @@
-import { Ellipsis, Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Bookmark, Ellipsis, Plus, Share2 } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { cx } from '../lib/cx';
+import type { ColumnFilter } from '../lib/tableFilter';
+import type { SortEntry } from '../lib/tableSort';
 import { usePageTitle } from '../lib/usePageTitle';
+import { loadMemberOptions, usePagedList } from '../lib/usePagedList';
 import { isRecord } from '../lib/utils';
+import { FilterToolbar } from './filterToolbar';
+import type { FilterField, FilterOption } from './filterToolbar';
 import { Page, confirm, toast } from '../primitives';
 import {
 	BOARD,
+	BOARD_END,
 	BOARD_GROUP,
 	BOARD_GROUP_COUNT,
 	BOARD_GROUP_HEAD,
 	BOARD_GROUP_TITLE,
 	BOARD_GROUP_TITLE_ROW,
 	BOARD_LIST,
-	LIST_SECTION,
+	BOARD_MORE,
+	LIST_SECTION_SCROLL,
 	MENU_BTN_BASE,
 	MENU_BTN_HIDDEN,
 	MENU_BTN_SHOWN,
@@ -38,6 +45,23 @@ type ThreadListItem = {
 	lastMessageAt: string | null;
 	updatedAt: string | null;
 };
+
+const DATE_PRESETS = [
+	{ value: 'today', label: 'Today' },
+	{ value: 'week', label: 'Last 7 days' },
+	{ value: 'month', label: 'Last 30 days' },
+	{ value: 'quarter', label: 'Last 90 days' }
+];
+
+const SOURCE_OPTIONS: FilterOption[] = [
+	{ value: 'CHAT_SOURCE_THREAD', label: 'Thread' },
+	{ value: 'CHAT_SOURCE_PLAYBOOK', label: 'Playbook' },
+	{ value: 'CHAT_SOURCE_SLACK', label: 'Slack' },
+	{ value: 'CHAT_SOURCE_TEAMS', label: 'Teams' },
+	{ value: 'CHAT_SOURCE_SMS', label: 'Text' },
+	{ value: 'CHAT_SOURCE_MCP', label: 'MCP' },
+	{ value: 'CHAT_SOURCE_SYSTEM', label: 'System' }
+];
 
 type ThreadGroup = {
 	key: string;
@@ -92,14 +116,62 @@ export function ThreadsPage() {
 	usePageTitle('Threads');
 	const navigate = useNavigate();
 
-	const [threads, setThreads] = useState<ThreadListItem[]>([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(false);
 	const [openingId, setOpeningId] = useState<string | undefined>();
 	const [deletingId, setDeletingId] = useState<string | undefined>();
 	const [menuThreadId, setMenuThreadId] = useState<string | undefined>();
+	const [creatorOptions, setCreatorOptions] = useState<FilterOption[]>([]);
+
+	const list = usePagedList<ThreadListItem>({
+		endpoint: '/api/chats',
+		rowsKey: 'chats',
+		defaultSort: [{ columnId: 'updated', dir: 'desc' }],
+		parse: (item) =>
+			typeof item.id === 'string' && typeof item.title === 'string'
+				? {
+						id: item.id,
+						title: item.title,
+						createdBy: typeof item.createdBy === 'string' ? item.createdBy : null,
+						source: typeof item.source === 'string' ? item.source : null,
+						lastMessageAt: typeof item.lastMessageAt === 'string' ? item.lastMessageAt : null,
+						updatedAt: typeof item.updatedAt === 'string' ? item.updatedAt : null
+					}
+				: null
+	});
+
+	const threads = list.items;
 
 	const busy = openingId !== undefined || deletingId !== undefined;
+
+	// Every facet here is applied server-side, so the toolbar gets `items={[]}`
+	// and each facet declares its own options rather than deriving them from the
+	// one page of rows currently loaded.
+	const fields = useMemo<FilterField[]>(
+		() => [
+			{ id: 'updated', header: 'Last message', sortable: true, sortType: 'date' },
+			{ id: 'created', header: 'Created', sortable: true, sortType: 'date' },
+			{ id: 'name', header: 'Title', sortable: true, sortType: 'text' },
+			{
+				id: 'creator',
+				header: 'Creator',
+				filterable: true,
+				filterKind: 'people',
+				filterOptions: creatorOptions
+			},
+			{
+				id: 'scope',
+				header: 'Threads',
+				filterable: true,
+				filterOptions: [
+					{ value: 'bookmarked', label: 'Bookmarked', icon: Bookmark },
+					{ value: 'shared', label: 'Shared with me', icon: Share2 }
+				]
+			},
+			{ id: 'source', header: 'Source', filterable: true, filterOptions: SOURCE_OPTIONS },
+			{ id: 'date', header: 'Created', filterable: true, filterKind: 'date' }
+		],
+		[creatorOptions]
+	);
+
 
 	const groups: ThreadGroup[] = [];
 	for (const thread of threads) {
@@ -109,42 +181,8 @@ export function ThreadsPage() {
 		else groups.push({ key, label: shortDate(thread.lastMessageAt), threads: [thread] });
 	}
 
-	async function loadThreads() {
-		setLoading(true);
-		setError(false);
-
-		try {
-			const response = await fetch('/api/chats');
-			const payload: unknown = await response.json();
-
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.chats)) {
-				throw new Error('Unable to load threads.');
-			}
-
-			setThreads(
-				payload.chats
-					.filter(
-						(item): item is Record<string, unknown> =>
-							isRecord(item) && typeof item.id === 'string' && typeof item.title === 'string'
-					)
-					.map((item) => ({
-						id: item.id as string,
-						title: item.title as string,
-						createdBy: typeof item.createdBy === 'string' ? item.createdBy : null,
-						source: typeof item.source === 'string' ? item.source : null,
-						lastMessageAt: typeof item.lastMessageAt === 'string' ? item.lastMessageAt : null,
-						updatedAt: typeof item.updatedAt === 'string' ? item.updatedAt : null
-					}))
-			);
-		} catch {
-			setError(true);
-		} finally {
-			setLoading(false);
-		}
-	}
-
 	useEffect(() => {
-		void loadThreads();
+		void loadMemberOptions('/api/chats/members').then(setCreatorOptions);
 	}, []);
 
 	useEffect(() => {
@@ -200,15 +238,14 @@ export function ThreadsPage() {
 		if (!confirmed) return;
 
 		setDeletingId(id);
-		const previous = threads;
-		setThreads(threads.filter((thread) => thread.id !== id));
+		const rollback = list.remove(id);
 
 		try {
 			const response = await fetch(`/api/chats/${encodeURIComponent(id)}`, { method: 'DELETE' });
 			if (!response.ok) throw new Error('Unable to delete thread.');
 			toast.success('Thread deleted');
 		} catch {
-			setThreads(previous);
+			rollback();
 			toast.error("Couldn't delete thread", {
 				description: 'Something went wrong. Please try again.'
 			});
@@ -229,23 +266,52 @@ export function ThreadsPage() {
 				</button>
 			}
 		>
-			<section className={LIST_SECTION} aria-label="Thread list">
-				{loading ? (
+			<FilterToolbar
+				fields={fields}
+				items={[]}
+				datePresets={DATE_PRESETS}
+				placeholder="Search threads…"
+				searching={list.searching}
+				search={list.search}
+				onSearchChange={list.setSearch}
+				filters={list.filters}
+				onFiltersChange={list.setFilters}
+				sortEntries={list.sortEntries}
+				onSortChange={list.setSortEntries}
+			/>
+
+			<section className={LIST_SECTION_SCROLL} aria-label="Thread list">
+				{list.loading ? (
 					<div className={STATE_BLOCK} aria-busy="true">
 						<UnicodeSpinner label="Loading threads" />
 						<p className={STATE_TEXT}>Loading threads…</p>
 					</div>
-				) : error ? (
+				) : list.error ? (
 					<div className={STATE_BLOCK}>
 						<p className={STATE_TEXT}>Unable to load threads.</p>
-						<button type="button" className={RETRY_BTN} onClick={loadThreads}>
+						<button type="button" className={RETRY_BTN} onClick={() => void list.load()}>
 							Retry
 						</button>
 					</div>
 				) : threads.length === 0 ? (
 					<div className={STATE_BLOCK}>
-						<p className={STATE_TITLE}>No threads yet</p>
-						<p className={STATE_TEXT}>Start a chat to see it here.</p>
+						<p className={STATE_TITLE}>
+							{list.narrowed ? 'No matching threads' : 'No threads yet'}
+						</p>
+						<p className={STATE_TEXT}>
+							{list.narrowed
+								? 'Try clearing a filter or searching for something else.'
+								: 'Start a chat to see it here.'}
+						</p>
+						{list.narrowed && (
+							<button
+								type="button"
+								className={RETRY_BTN}
+								onClick={list.clearFilters}
+							>
+								Clear filters
+							</button>
+						)}
 					</div>
 				) : (
 					<div className={BOARD}>
@@ -342,6 +408,29 @@ export function ThreadsPage() {
 								</ul>
 							</section>
 						))}
+
+						{list.hasMore || list.loadingMore ? (
+							<div className={BOARD_MORE} ref={list.sentinelRef}>
+								{list.moreError ? (
+									<>
+										<p className={STATE_TEXT}>Couldn't load more threads.</p>
+										<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+											Retry
+										</button>
+									</>
+								) : list.loadingMore ? (
+									<UnicodeSpinner label="Loading more threads" />
+								) : (
+									<button type="button" className={RETRY_BTN} onClick={list.loadMore}>
+										Load more
+									</button>
+								)}
+							</div>
+						) : (
+							<p className={BOARD_END}>
+								{threads.length} of {list.totalCount} threads
+							</p>
+						)}
 					</div>
 				)}
 			</section>
