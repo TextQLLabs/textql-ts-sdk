@@ -17,7 +17,8 @@
 		"noEmit": true,
 		"isolatedModules": true,
 		"verbatimModuleSyntax": true,
-		"baseUrl": ".",
+		// Mirrors the `$lib` alias in vite.config.ts. No `baseUrl` — it is
+		// deprecated in TS 6, and `./`-relative `paths` resolve against this file.
 		"paths": {
 			"$lib/*": ["./src/lib/*"]
 		}

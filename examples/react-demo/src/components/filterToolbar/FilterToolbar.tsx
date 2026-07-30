@@ -49,9 +49,12 @@ type Props = {
 	datePresets?: { value: string; label: string }[];
 };
 
+/** Stable identity for server-filtered surfaces, which derive no facet options from rows. */
+const NO_ITEMS: unknown[] = [];
+
 export function FilterToolbar({
 	fields,
-	items = [],
+	items = NO_ITEMS,
 	search,
 	onSearchChange,
 	filters,

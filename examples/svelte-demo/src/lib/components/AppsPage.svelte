@@ -87,23 +87,7 @@
 
 	$effect(() => list.watchQuery());
 
-	// Auto-advance when the sentinel scrolls into view; the button below it stays
-	// as the keyboard-reachable and post-error path.
-	$effect(() => {
-		const target = sentinel;
-		if (!target) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries.some((entry) => entry.isIntersecting) && !list.moreError) {
-					void list.loadMore();
-				}
-			},
-			{ rootMargin: "320px" },
-		);
-		observer.observe(target);
-		return () => observer.disconnect();
-	});
+	$effect(() => list.watchSentinel(sentinel));
 </script>
 
 <svelte:head>

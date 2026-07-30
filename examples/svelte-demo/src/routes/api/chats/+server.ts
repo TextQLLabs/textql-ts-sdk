@@ -46,6 +46,8 @@ const SORT_FIELDS: Record<string, TextqlRpcPublicChatChatSortField> = {
 	name: TextqlRpcPublicChatChatSortField.ChatSortFieldName
 };
 
+const KNOWN_SOURCES = new Set<string>(Object.values(TextqlRpcPublicChatChatSource));
+
 export const GET: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 
@@ -57,10 +59,9 @@ export const GET: RequestHandler = async ({ url }) => {
 	const creatorMemberIds = url.searchParams.getAll('creator').filter(Boolean);
 	// The facet sends raw enum names; drop anything the SDK doesn't know rather
 	// than passing it through to the RPC.
-	const knownSources = new Set<string>(Object.values(TextqlRpcPublicChatChatSource));
 	const sources = url.searchParams
 		.getAll('source')
-		.filter((source): source is TextqlRpcPublicChatChatSource => knownSources.has(source));
+		.filter((source): source is TextqlRpcPublicChatChatSource => KNOWN_SOURCES.has(source));
 	const scope = url.searchParams.getAll('scope');
 	const createdAfter = createdAfterFor(url.searchParams.get('date'));
 	const sortBy = SORT_FIELDS[url.searchParams.get('sort') ?? ''] ?? SORT_FIELDS.updated;

@@ -171,25 +171,22 @@ export function usePagedList<T extends { id: string }>({
 		);
 		observer.observe(target);
 		return () => observer.disconnect();
-	});
+	}, [hasMore, moreError, loadMore]);
 
 	/** Drop a row optimistically; returns a rollback for the failure path. */
-	const remove = useCallback((id: string) => {
-		let previousItems: T[] = [];
-		let previousTotal = 0;
-		setItems((current) => {
-			previousItems = current;
-			return current.filter((item) => item.id !== id);
-		});
-		setTotalCount((current) => {
-			previousTotal = current;
-			return Math.max(0, current - 1);
-		});
-		return () => {
-			setItems(previousItems);
-			setTotalCount(previousTotal);
-		};
-	}, []);
+	const remove = useCallback(
+		(id: string) => {
+			const previousItems = items;
+			const previousTotal = totalCount;
+			setItems(items.filter((item) => item.id !== id));
+			setTotalCount(Math.max(0, totalCount - 1));
+			return () => {
+				setItems(previousItems);
+				setTotalCount(previousTotal);
+			};
+		},
+		[items, totalCount]
+	);
 
 	const narrowed = filters.length > 0 || search.trim().length > 0;
 

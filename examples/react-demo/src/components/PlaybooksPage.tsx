@@ -266,8 +266,8 @@ export function PlaybooksPage() {
 	const playbooks = list.items;
 	const setPlaybooks = list.setItems;
 
-	// Applied server-side by /api/playbooks, so the toolbar gets `items={[]}`
-	// and each facet declares its own options.
+	// Applied server-side by /api/playbooks, so the toolbar gets no rows and each
+	// facet declares its own options.
 	const fields = useMemo<FilterField[]>(
 		() => [
 			{ id: 'updated', header: 'Last updated', sortable: true, sortType: 'date' },
@@ -542,7 +542,6 @@ export function PlaybooksPage() {
 
 				applyPlaybook(detail);
 				void connectorsCache.load();
-		void loadMemberOptions('/api/playbooks/members').then(setCreatorOptions);
 				void slackChannelsCache.load();
 			} catch (error) {
 				if (request.signal.aborted || request !== loadRequest.current) return;
@@ -560,7 +559,7 @@ export function PlaybooksPage() {
 	);
 
 	useEffect(() => {
-		void list.load();
+		void loadMemberOptions('/api/playbooks/members').then(setCreatorOptions);
 		void connectorsCache.load();
 		void slackChannelsCache.load();
 	}, []);
@@ -967,7 +966,6 @@ export function PlaybooksPage() {
 				<>
 				<FilterToolbar
 					fields={fields}
-					items={[]}
 					placeholder="Search playbooks…"
 					searching={list.searching}
 					search={list.search}

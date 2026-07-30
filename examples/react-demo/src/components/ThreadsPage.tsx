@@ -1,13 +1,11 @@
 import { Bookmark, Ellipsis, Plus, Share2 } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { cx } from '../lib/cx';
-import type { ColumnFilter } from '../lib/tableFilter';
-import type { SortEntry } from '../lib/tableSort';
+import { DATE_PRESETS } from '../lib/tableFilter';
 import { usePageTitle } from '../lib/usePageTitle';
 import { loadMemberOptions, usePagedList } from '../lib/usePagedList';
-import { isRecord } from '../lib/utils';
 import { FilterToolbar } from './filterToolbar';
 import type { FilterField, FilterOption } from './filterToolbar';
 import { Page, confirm, toast } from '../primitives';
@@ -45,13 +43,6 @@ type ThreadListItem = {
 	lastMessageAt: string | null;
 	updatedAt: string | null;
 };
-
-const DATE_PRESETS = [
-	{ value: 'today', label: 'Today' },
-	{ value: 'week', label: 'Last 7 days' },
-	{ value: 'month', label: 'Last 30 days' },
-	{ value: 'quarter', label: 'Last 90 days' }
-];
 
 const SOURCE_OPTIONS: FilterOption[] = [
 	{ value: 'CHAT_SOURCE_THREAD', label: 'Thread' },
@@ -142,9 +133,9 @@ export function ThreadsPage() {
 
 	const busy = openingId !== undefined || deletingId !== undefined;
 
-	// Every facet here is applied server-side, so the toolbar gets `items={[]}`
-	// and each facet declares its own options rather than deriving them from the
-	// one page of rows currently loaded.
+	// Every facet here is applied server-side, so the toolbar gets no rows and
+	// each facet declares its own options rather than deriving them from the one
+	// page of rows currently loaded.
 	const fields = useMemo<FilterField[]>(
 		() => [
 			{ id: 'updated', header: 'Last message', sortable: true, sortType: 'date' },
@@ -171,7 +162,6 @@ export function ThreadsPage() {
 		],
 		[creatorOptions]
 	);
-
 
 	const groups: ThreadGroup[] = [];
 	for (const thread of threads) {
@@ -268,7 +258,6 @@ export function ThreadsPage() {
 		>
 			<FilterToolbar
 				fields={fields}
-				items={[]}
 				datePresets={DATE_PRESETS}
 				placeholder="Search threads…"
 				searching={list.searching}

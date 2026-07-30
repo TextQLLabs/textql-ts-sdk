@@ -8,21 +8,23 @@
 export type ColumnFilter = { columnId: string; values: string[] };
 export const SINCE_PREFIX = 'since:';
 
+/**
+ * Date facet vocabulary, shared by the UI and the list routes. `days` is what
+ * the server turns into a lower bound, so a preset added here can never render
+ * as a filter the server silently ignores.
+ */
+export const DATE_PRESETS: { value: string; label: string; days: number }[] = [
+  { value: 'today', label: 'Today', days: 1 },
+  { value: 'week', label: 'Last 7 days', days: 7 },
+  { value: 'month', label: 'Last 30 days', days: 30 },
+  { value: 'quarter', label: 'Last 90 days', days: 90 }
+];
+
 /** Minimal field shape the filter helpers need. */
 export interface FilterableColumn<Row> {
   id: string;
   filterValue?: (row: Row) => unknown;
   accessor?: (row: Row) => unknown;
-}
-
-/** Resolve the string a row contributes for a field's filtering/faceting. */
-export function filterTextOf<Row>(column: FilterableColumn<Row>, row: Row): string {
-  const v = column.filterValue
-    ? column.filterValue(row)
-    : column.accessor
-      ? column.accessor(row)
-      : (row as Record<string, unknown>)[column.id];
-  return v === null || v === undefined ? '' : String(v);
 }
 
 /**

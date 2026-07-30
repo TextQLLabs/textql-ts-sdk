@@ -45,6 +45,8 @@ const SORT_FIELDS: Record<string, TextqlRpcPublicPlaybookPlaybookSortField> = {
 	schedule: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldSchedule
 };
 
+const KNOWN_STATUSES = new Set<string>(Object.values(TextqlRpcPublicPlaybookPlaybookStatus));
+
 export const GET: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 

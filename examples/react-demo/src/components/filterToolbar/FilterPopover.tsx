@@ -199,11 +199,16 @@ export function FilterPopover({
 		};
 	}, [open, place]);
 
-	const allOptions = activeField ? optionsFor(activeField) : [];
+	const allOptions = useMemo(
+		() => (activeField ? optionsFor(activeField) : []),
+		[activeField, optionsFor]
+	);
 	const q = query.trim().toLowerCase();
 	const visibleOptions = q
 		? allOptions.filter((option) => option.label.toLowerCase().includes(q))
 		: allOptions;
+	/** A date facet holds at most one value — the selected preset or `since:` bound. */
+	const dateValue = activeField ? valuesFor(activeField.id)[0] : undefined;
 
 	return (
 		<div className="relative shrink-0" data-filter-popover>
@@ -319,29 +324,24 @@ export function FilterPopover({
 							{activeField.filterNote && <p className={NOTE}>{activeField.filterNote}</p>}
 
 							{activeField.filterKind === 'date' ? (
-								(() => {
-									const value = valuesFor(activeField.id)[0];
-									return (
-										<DateRangeFilter
-											presets={datePresets}
-											isAllTime={value === undefined}
-											isPresetSelected={(preset) => value === preset}
-											onSelectAllTime={() => setValues(activeField.id, [])}
-											onSelectPreset={(preset) =>
-												setValues(activeField.id, value === preset ? [] : [preset])
-											}
-											sinceValue={
-												value?.startsWith(SINCE_PREFIX)
-													? value.slice(SINCE_PREFIX.length)
-													: undefined
-											}
-											maxValue={today}
-											onSelectSince={(date) =>
-												setValues(activeField.id, date ? [`${SINCE_PREFIX}${date}`] : [])
-											}
-										/>
-									);
-								})()
+								<DateRangeFilter
+									presets={datePresets}
+									isAllTime={dateValue === undefined}
+									isPresetSelected={(preset) => dateValue === preset}
+									onSelectAllTime={() => setValues(activeField.id, [])}
+									onSelectPreset={(preset) =>
+										setValues(activeField.id, dateValue === preset ? [] : [preset])
+									}
+									sinceValue={
+										dateValue?.startsWith(SINCE_PREFIX)
+											? dateValue.slice(SINCE_PREFIX.length)
+											: undefined
+									}
+									maxValue={today}
+									onSelectSince={(date) =>
+										setValues(activeField.id, date ? [`${SINCE_PREFIX}${date}`] : [])
+									}
+								/>
 							) : (
 								<>
 									{allOptions.length > 8 && (

@@ -1,5 +1,4 @@
 import { CalendarClock, Database, Star } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cx } from '../lib/cx';
@@ -26,6 +25,20 @@ type AppListItem = {
 
 const TAG =
 	'inline-flex items-center gap-1 rounded-full bg-line/30 px-[7px] py-px text-[10.5px] font-medium text-muted';
+
+// ListApps has no creator/date/sort params, so the toolbar only exposes the
+// facets the RPC can honour — anything else would silently do nothing.
+const FIELDS: FilterField[] = [
+	{
+		id: 'scope',
+		header: 'Apps',
+		filterable: true,
+		filterOptions: [
+			{ value: 'shared', label: 'Shared with me' },
+			{ value: 'uncategorized', label: 'Uncategorized' }
+		]
+	}
+];
 
 function monogram(name: string): string {
 	return name?.trim().charAt(0).toUpperCase() || 'A';
@@ -70,25 +83,10 @@ export function AppsPage() {
 
 	const apps = list.items;
 
-	// ListApps has no creator/date/sort params, so the toolbar only exposes the
-	// facets the RPC can honour — anything else would silently do nothing.
-	const fields: FilterField[] = [
-		{
-			id: 'scope',
-			header: 'Apps',
-			filterable: true,
-			filterOptions: [
-				{ value: 'shared', label: 'Shared with me' },
-				{ value: 'uncategorized', label: 'Uncategorized' }
-			]
-		}
-	];
-
 	return (
 		<Page title="Data apps" lead="Browse the data apps in your workspace." wide>
 			<FilterToolbar
-				fields={fields}
-				items={[]}
+				fields={FIELDS}
 				placeholder="Search apps…"
 				searching={list.searching}
 				search={list.search}

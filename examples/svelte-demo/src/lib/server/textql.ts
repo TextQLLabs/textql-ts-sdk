@@ -1,8 +1,15 @@
 import { env } from '$env/dynamic/private';
 import { error, json } from '@sveltejs/kit';
 import { Textql } from '@textql/sdk';
-import type { ConnectError, TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
+import type {
+	ConnectError,
+	TextqlRpcIdentityMemberPreview,
+	TextqlRpcPublicConnectorConnector
+} from '@textql/sdk/models';
 import { createStreamingClient, type StreamingClient } from '@textql/sdk/streaming';
+
+import { DATE_PRESETS, SINCE_PREFIX } from '$lib/tableFilter';
+import { trimmedOrNull } from '$lib/utils';
 
 type Clients = { client: Textql; streaming: StreamingClient };
 
@@ -24,9 +31,10 @@ export function isConnectError(response: object): response is ConnectError {
 }
 
 const DEFAULT_PAGE_SIZE = 50;
-const MAX_PAGE_SIZE = 200;
+/** The backend clamps list `limit` to 100; asking for more silently skips rows. */
+const MAX_PAGE_SIZE = 100;
 
-export function clampInt(raw: string | null, fallback: number, min: number, max: number) {
+function clampInt(raw: string | null, fallback: number, min: number, max: number) {
 	const parsed = Number(raw);
 	if (raw === null || !Number.isFinite(parsed)) return fallback;
 	return Math.min(max, Math.max(min, Math.trunc(parsed)));
@@ -54,7 +62,7 @@ export function pagingFields(
 	};
 }
 
-export const SINCE_PREFIX = 'since:';
+const PRESET_DAYS = new Map(DATE_PRESETS.map((preset) => [preset.value, preset.days]));
 
 /** Date facet value — a preset id or `since:YYYY-MM-DD` — to a lower bound. */
 export function createdAfterFor(value: string | null): Date | undefined {
@@ -65,11 +73,11 @@ export function createdAfterFor(value: string | null): Date | undefined {
 		return Number.isNaN(parsed.getTime()) ? undefined : parsed;
 	}
 
-	const days: Record<string, number> = { today: 1, week: 7, month: 30, quarter: 90 };
-	if (!(value in days)) return undefined;
+	const days = PRESET_DAYS.get(value);
+	if (days === undefined) return undefined;
 	const since = new Date();
 	since.setHours(0, 0, 0, 0);
-	since.setDate(since.getDate() - (days[value] - 1));
+	since.setDate(since.getDate() - (days - 1));
 	return since;
 }
 
@@ -83,6 +91,24 @@ export function toIsoString(value: unknown): string | null {
 		return Number.isNaN(parsed.getTime()) ? value : parsed.toISOString();
 	}
 	return null;
+}
+
+/** Creator-facet options from a `getMembersWith*` response. */
+export function memberOptions(members: unknown) {
+	// The RPC returns a `Response | ConnectError` union, so the member list is
+	// only `unknown` here — narrow at the boundary rather than casting.
+	if (!Array.isArray(members)) return [];
+	return members
+		.filter(
+			(member): member is TextqlRpcIdentityMemberPreview =>
+				!!member && typeof member === 'object' && typeof member.memberId === 'string'
+		)
+		.map((member) => ({
+			id: member.memberId,
+			name: trimmedOrNull(member.memberName),
+			email: trimmedOrNull(member.memberEmail),
+			pictureUrl: trimmedOrNull(member.memberPictureUrl)
+		}));
 }
 
 export function proxyError(label: string, cause: unknown): Response {

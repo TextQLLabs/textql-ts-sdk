@@ -1,5 +1,4 @@
-import { proxyError, textqlClients } from '$lib/server/textql';
-import { trimmedOrNull } from '$lib/utils';
+import { memberOptions, proxyError, textqlClients } from '$lib/server/textql';
 import { json } from '@sveltejs/kit';
 
 import type { RequestHandler } from './$types';
@@ -13,18 +12,8 @@ export const GET: RequestHandler = async () => {
 
 	try {
 		const result = await client.playbooks.getMembersWith({ body: {} });
-		const members = 'members' in result && Array.isArray(result.members) ? result.members : [];
 
-		return json({
-			members: members
-				.filter((member) => typeof member.memberId === 'string')
-				.map((member) => ({
-					id: member.memberId,
-					name: trimmedOrNull(member.memberName),
-					email: trimmedOrNull(member.memberEmail),
-					pictureUrl: trimmedOrNull(member.memberPictureUrl)
-				}))
-		});
+		return json({ members: memberOptions('members' in result ? result.members : undefined) });
 	} catch (error) {
 		return proxyError('Playbook members request', error);
 	}

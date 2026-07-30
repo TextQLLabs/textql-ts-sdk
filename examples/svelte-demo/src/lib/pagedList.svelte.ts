@@ -160,6 +160,26 @@ export class PagedList<T extends { id: string }> {
     const timer = setTimeout(() => void this.load(), 250);
     return () => clearTimeout(timer);
   }
+
+  /**
+   * Call inside an `$effect` with the sentinel node. Auto-advances when it
+   * scrolls into view; the caller's button stays as the keyboard-reachable and
+   * post-error path.
+   */
+  watchSentinel(node: HTMLElement | undefined): (() => void) | undefined {
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting) && !this.moreError) {
+          void this.loadMore();
+        }
+      },
+      { rootMargin: '320px' }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }
 }
 
 /** Load `{ members: [...] }` from a facet endpoint into FilterOption shape. */

@@ -1,7 +1,13 @@
 import { Textql } from '@textql/sdk';
-import type { ConnectError, TextqlRpcPublicConnectorConnector } from '@textql/sdk/models';
+import type {
+	ConnectError,
+	TextqlRpcIdentityMemberPreview,
+	TextqlRpcPublicConnectorConnector
+} from '@textql/sdk/models';
 import { createStreamingClient, type StreamingClient } from '@textql/sdk/streaming';
 
+import { DATE_PRESETS, SINCE_PREFIX } from '../src/lib/tableFilter';
+import { trimmedOrNull } from '../src/lib/utils';
 import { error, json } from './kit';
 
 type Clients = { client: Textql; streaming: StreamingClient };
@@ -24,9 +30,10 @@ export function isConnectError(response: object): response is ConnectError {
 }
 
 const DEFAULT_PAGE_SIZE = 50;
-const MAX_PAGE_SIZE = 200;
+/** The backend clamps list `limit` to 100; asking for more silently skips rows. */
+const MAX_PAGE_SIZE = 100;
 
-export function clampInt(raw: string | null, fallback: number, min: number, max: number) {
+function clampInt(raw: string | null, fallback: number, min: number, max: number) {
 	const parsed = Number(raw);
 	if (raw === null || !Number.isFinite(parsed)) return fallback;
 	return Math.min(max, Math.max(min, Math.trunc(parsed)));
@@ -54,7 +61,7 @@ export function pagingFields(
 	};
 }
 
-export const SINCE_PREFIX = 'since:';
+const PRESET_DAYS = new Map(DATE_PRESETS.map((preset) => [preset.value, preset.days]));
 
 /** Date facet value — a preset id or `since:YYYY-MM-DD` — to a lower bound. */
 export function createdAfterFor(value: string | null): Date | undefined {
@@ -65,11 +72,11 @@ export function createdAfterFor(value: string | null): Date | undefined {
 		return Number.isNaN(parsed.getTime()) ? undefined : parsed;
 	}
 
-	const days: Record<string, number> = { today: 1, week: 7, month: 30, quarter: 90 };
-	if (!(value in days)) return undefined;
+	const days = PRESET_DAYS.get(value);
+	if (days === undefined) return undefined;
 	const since = new Date();
 	since.setHours(0, 0, 0, 0);
-	since.setDate(since.getDate() - (days[value] - 1));
+	since.setDate(since.getDate() - (days - 1));
 	return since;
 }
 
@@ -85,44 +92,22 @@ export function toIsoString(value: unknown): string | null {
 	return null;
 }
 
-/** Backend list RPCs default to 20 rows and reject anything above 100. */
-export const LIST_PAGE_SIZE = 100;
-const MAX_LIST_PAGES = 50;
-
-type ListPage<T> = { items: T[]; totalCount?: number };
-
-/**
- * Drains an offset-paginated list RPC so callers get the whole collection.
- * Pages after the first are fetched in parallel when the RPC reports a
- * totalCount, and sequentially otherwise; MAX_LIST_PAGES bounds both paths.
- */
-export async function fetchAllPages<T>(
-	getPage: (offset: number, limit: number) => Promise<ListPage<T>>
-): Promise<{ items: T[]; totalCount: number }> {
-	const first = await getPage(0, LIST_PAGE_SIZE);
-	const items = [...first.items];
-	let totalCount = first.totalCount;
-
-	if (first.items.length === LIST_PAGE_SIZE) {
-		if (totalCount !== undefined && totalCount > items.length) {
-			const pageCount = Math.min(MAX_LIST_PAGES, Math.ceil(totalCount / LIST_PAGE_SIZE));
-			const rest = await Promise.all(
-				Array.from({ length: pageCount - 1 }, (_, i) =>
-					getPage((i + 1) * LIST_PAGE_SIZE, LIST_PAGE_SIZE)
-				)
-			);
-			for (const page of rest) items.push(...page.items);
-		} else if (totalCount === undefined) {
-			for (let page = 1; page < MAX_LIST_PAGES; page += 1) {
-				const next = await getPage(page * LIST_PAGE_SIZE, LIST_PAGE_SIZE);
-				items.push(...next.items);
-				totalCount = next.totalCount ?? totalCount;
-				if (next.items.length < LIST_PAGE_SIZE) break;
-			}
-		}
-	}
-
-	return { items, totalCount: totalCount ?? items.length };
+/** Creator-facet options from a `getMembersWith*` response. */
+export function memberOptions(members: unknown) {
+	// The RPC returns a `Response | ConnectError` union, so the member list is
+	// only `unknown` here — narrow at the boundary rather than casting.
+	if (!Array.isArray(members)) return [];
+	return members
+		.filter(
+			(member): member is TextqlRpcIdentityMemberPreview =>
+				!!member && typeof member === 'object' && typeof member.memberId === 'string'
+		)
+		.map((member) => ({
+			id: member.memberId,
+			name: trimmedOrNull(member.memberName),
+			email: trimmedOrNull(member.memberEmail),
+			pictureUrl: trimmedOrNull(member.memberPictureUrl)
+		}));
 }
 
 export function proxyError(label: string, cause: unknown): Response {

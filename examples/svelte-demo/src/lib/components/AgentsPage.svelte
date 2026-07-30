@@ -6,8 +6,8 @@
 	import { formatCron } from "$lib/cron";
 	import { FilterToolbar, Page } from "$lib/primitives";
 	import type { FilterField } from "$lib/primitives";
-	import { applyFilters, type ColumnFilter, type FilterableColumn } from "$lib/tableFilter";
-	import { applySort, type SortEntry, type SortableColumn } from "$lib/tableSort";
+	import { applyFilters, type ColumnFilter } from "$lib/tableFilter";
+	import { applySort, type SortEntry } from "$lib/tableSort";
 	import { isRecord } from "$lib/utils";
 
 	type AgentListItem = {
@@ -75,12 +75,7 @@
 		},
 	];
 
-	const fieldMap = $derived(
-		new Map(fields.map((field) => [field.id, field])) as Map<
-			string,
-			FilterableColumn<AgentListItem> & SortableColumn<AgentListItem>
-		>,
-	);
+	const fieldMap = $derived(new Map(fields.map((field) => [field.id, field])));
 
 	const narrowed = $derived(filters.length > 0 || search.trim().length > 0);
 

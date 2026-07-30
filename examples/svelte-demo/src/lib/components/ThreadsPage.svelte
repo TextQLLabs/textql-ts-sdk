@@ -10,6 +10,7 @@
 	import { PagedList, loadMemberOptions } from "$lib/pagedList.svelte";
 	import { FilterToolbar, Page, confirm, toast } from "$lib/primitives";
 	import type { FilterField, FilterOption } from "$lib/primitives";
+	import { DATE_PRESETS } from "$lib/tableFilter";
 
 	type ThreadListItem = {
 		id: string;
@@ -51,13 +52,6 @@
 	});
 
 	const threads = $derived(list.items);
-
-	const DATE_PRESETS = [
-		{ value: "today", label: "Today" },
-		{ value: "week", label: "Last 7 days" },
-		{ value: "month", label: "Last 30 days" },
-		{ value: "quarter", label: "Last 90 days" },
-	];
 
 	const SOURCE_OPTIONS: FilterOption[] = [
 		{ value: "CHAT_SOURCE_THREAD", label: "Thread" },
@@ -253,23 +247,7 @@
 		}
 	}
 
-	// Auto-advance when the sentinel scrolls into view; the button below it stays
-	// as the keyboard-reachable and post-error path.
-	$effect(() => {
-		const target = sentinel;
-		if (!target) return;
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries.some((entry) => entry.isIntersecting) && !list.moreError) {
-					void list.loadMore();
-				}
-			},
-			{ rootMargin: "320px" },
-		);
-		observer.observe(target);
-		return () => observer.disconnect();
-	});
+	$effect(() => list.watchSentinel(sentinel));
 </script>
 
 <svelte:window onkeydown={onWindowKeydown} onpointerdown={onWindowPointerDown} />

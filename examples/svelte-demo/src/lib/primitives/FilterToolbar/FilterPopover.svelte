@@ -65,12 +65,12 @@
     filters.reduce((total, filter) => total + filter.values.length, 0),
   );
 
+  const allOptions = $derived(activeField ? optionsFor(activeField) : []);
+
   const visibleOptions = $derived.by(() => {
-    if (!activeField) return [];
-    const all = optionsFor(activeField);
     const q = query.trim().toLowerCase();
-    if (!q) return all;
-    return all.filter((option) => option.label.toLowerCase().includes(q));
+    if (!q) return allOptions;
+    return allOptions.filter((option) => option.label.toLowerCase().includes(q));
   });
 
   function valuesFor(fieldId: string): string[] {
@@ -296,7 +296,7 @@
               setValues(activeField.id, date ? [`${SINCE_PREFIX}${date}`] : [])}
           />
         {:else}
-          {#if optionsFor(activeField).length > 8}
+          {#if allOptions.length > 8}
             <div class="search">
               <Search size={13} strokeWidth={2} />
               <input

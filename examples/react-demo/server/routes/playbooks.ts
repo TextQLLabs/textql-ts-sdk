@@ -3,6 +3,7 @@ import { json } from '../kit';
 import type { RequestHandler, RouteHandlers } from '../kit';
 import {
 	isConnectError,
+	memberOptions,
 	pagingFields,
 	proxyError,
 	readPaging,
@@ -52,6 +53,8 @@ const SORT_FIELDS: Record<string, TextqlRpcPublicPlaybookPlaybookSortField> = {
 	schedule: TextqlRpcPublicPlaybookPlaybookSortField.SortFieldSchedule
 };
 
+const KNOWN_STATUSES = new Set<string>(Object.values(TextqlRpcPublicPlaybookPlaybookStatus));
+
 const listPlaybooks: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 
@@ -61,11 +64,10 @@ const listPlaybooks: RequestHandler = async ({ url }) => {
 	// whole list rather than the page already loaded.
 	const searchTerm = url.searchParams.get('q')?.trim() || undefined;
 	const creatorMemberIds = url.searchParams.getAll('creator').filter(Boolean);
-	const knownStatuses = new Set<string>(Object.values(TextqlRpcPublicPlaybookPlaybookStatus));
 	const statuses = url.searchParams
 		.getAll('status')
 		.filter((status): status is TextqlRpcPublicPlaybookPlaybookStatus =>
-			knownStatuses.has(status)
+			KNOWN_STATUSES.has(status)
 		);
 	const scope = url.searchParams.getAll('scope');
 	const sortBy = SORT_FIELDS[url.searchParams.get('sort') ?? ''] ?? SORT_FIELDS.updated;
@@ -120,18 +122,8 @@ const listPlaybookMembers: RequestHandler = async () => {
 
 	try {
 		const result = await client.playbooks.getMembersWith({ body: {} });
-		const members = 'members' in result && Array.isArray(result.members) ? result.members : [];
 
-		return json({
-			members: members
-				.filter((member) => typeof member.memberId === 'string')
-				.map((member) => ({
-					id: member.memberId,
-					name: member.memberName?.trim() || null,
-					email: member.memberEmail?.trim() || null,
-					pictureUrl: member.memberPictureUrl?.trim() || null
-				}))
-		});
+		return json({ members: memberOptions('members' in result ? result.members : undefined) });
 	} catch (error) {
 		return proxyError('Playbook members request', error);
 	}

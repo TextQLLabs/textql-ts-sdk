@@ -79,13 +79,14 @@ The toolbar is client-side by default: facet options come from
 For a surface whose filtering and pagination happen on the server (Threads),
 invert it:
 
-- Pass `items={[]}` — options derived from one loaded page would be wrong, and
+- Omit `items` — options derived from one loaded page would be wrong, and
   filtering client-side would only ever touch that page.
 - Declare every facet's `filterOptions` explicitly.
 - Turn `filters` / `sortEntries` / `search` into request params and refetch from
-  page 0. `ThreadsPage.tsx` is the reference conversion: it builds a
-  `queryString` and debounces the refetch by 250ms, since `search` changes on
-  every keystroke.
+  page 0. `usePagedList` (`src/lib/usePagedList.ts`) does this for you: it builds
+  the `queryString`, debounces the refetch by 250ms since `search` changes on
+  every keystroke, and owns the infinite-scroll sentinel. `ThreadsPage.tsx` is
+  the reference caller.
 
 Skip `persistKey` on these surfaces if the caller already persists its own sort
 — two sources of truth drift.
@@ -101,4 +102,4 @@ slots, agent identicons, and the multi-key sort menu (sort is single-key via
 of the calendar.
 
 `tableFilter.ts` and `tableSort.ts` are near-verbatim ports and stay
-framework-agnostic — the React demo uses the same two files.
+framework-agnostic — the Svelte demo uses the same two files.

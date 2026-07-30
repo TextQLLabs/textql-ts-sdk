@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { formatCron } from '../lib/cron';
 import { cx } from '../lib/cx';
-import { applyFilters, type ColumnFilter, type FilterableColumn } from '../lib/tableFilter';
-import { applySort, type SortableColumn, type SortEntry } from '../lib/tableSort';
+import { applyFilters, type ColumnFilter } from '../lib/tableFilter';
+import { applySort, type SortEntry } from '../lib/tableSort';
 import { usePageDescription, usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Page } from '../primitives';
@@ -173,14 +173,7 @@ export function AgentsPage() {
 		[]
 	);
 
-	const fieldMap = useMemo(
-		() =>
-			new Map(fields.map((field) => [field.id, field])) as Map<
-				string,
-				FilterableColumn<AgentListItem> & SortableColumn<AgentListItem>
-			>,
-		[fields]
-	);
+	const fieldMap = useMemo(() => new Map(fields.map((field) => [field.id, field])), [fields]);
 
 	const narrowed = filters.length > 0 || search.trim().length > 0;
 
