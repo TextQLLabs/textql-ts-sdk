@@ -5,7 +5,9 @@
 	import { onMount } from "svelte";
 	import { resolve } from "$app/paths";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
-	import { Page } from "$lib/primitives";
+	import { PagedList } from "$lib/pagedList.svelte";
+	import { FilterToolbar, Page } from "$lib/primitives";
+	import type { FilterField } from "$lib/primitives";
 	import { isRecord } from "$lib/utils";
 
 	type AppListItem = {
@@ -20,9 +22,29 @@
 		updatedAt: string | null;
 	};
 
-	let apps = $state<AppListItem[]>([]);
-	let loading = $state(true);
-	let error = $state(false);
+	let sentinel = $state<HTMLDivElement | undefined>();
+
+	const list = new PagedList<AppListItem>({
+		endpoint: "/api/apps",
+		rowsKey: "apps",
+		parse: parseApp,
+	});
+
+	const apps = $derived(list.items);
+
+	// ListApps has no creator/date/sort params, so the toolbar only exposes the
+	// facets the RPC can honour — anything else would silently do nothing.
+	const fields: FilterField[] = [
+		{
+			id: "scope",
+			header: "Apps",
+			filterable: true,
+			filterOptions: [
+				{ value: "shared", label: "Shared with me" },
+				{ value: "uncategorized", label: "Uncategorized" },
+			],
+		},
+	];
 
 	function monogram(name: string): string {
 		return name?.trim().charAt(0).toUpperCase() || "A";
@@ -59,30 +81,28 @@
 		};
 	}
 
-	async function loadApps() {
-		loading = true;
-		error = false;
-
-		try {
-			const response = await fetch("/api/apps");
-			const payload: unknown = await response.json();
-
-			if (!response.ok || !isRecord(payload) || !Array.isArray(payload.apps)) {
-				throw new Error("Unable to load apps.");
-			}
-
-			apps = payload.apps
-				.map(parseApp)
-				.filter((item): item is AppListItem => item !== null);
-		} catch {
-			error = true;
-		} finally {
-			loading = false;
-		}
-	}
-
 	onMount(() => {
-		void loadApps();
+		void list.load();
+	});
+
+	$effect(() => list.watchQuery());
+
+	// Auto-advance when the sentinel scrolls into view; the button below it stays
+	// as the keyboard-reachable and post-error path.
+	$effect(() => {
+		const target = sentinel;
+		if (!target) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting) && !list.moreError) {
+					void list.loadMore();
+				}
+			},
+			{ rootMargin: "320px" },
+		);
+		observer.observe(target);
+		return () => observer.disconnect();
 	});
 </script>
 
@@ -92,21 +112,42 @@
 </svelte:head>
 
 <Page title="Data apps" lead="Browse the data apps in your workspace." wide>
+	<FilterToolbar
+		{fields}
+		items={[]}
+		placeholder="Search apps…"
+		searching={list.searching}
+		bind:search={list.search}
+		bind:filters={list.filters}
+		bind:sortEntries={list.sortEntries}
+	/>
+
 	<section class="list-section" aria-label="Data app list">
-		{#if loading}
+		{#if list.loading}
 			<div class="state-block" aria-busy="true">
 				<UnicodeSpinner label="Loading apps" />
 				<p class="state-text">Loading apps…</p>
 			</div>
-		{:else if error}
+		{:else if list.error}
 			<div class="state-block">
 				<p class="state-text">Unable to load apps.</p>
-				<button type="button" class="retry-btn" onclick={loadApps}>Retry</button>
+				<button type="button" class="retry-btn" onclick={list.load}>Retry</button>
 			</div>
 		{:else if apps.length === 0}
 			<div class="state-block">
-				<p class="state-title">No data apps yet</p>
-				<p class="state-text">Data apps you create will show up here.</p>
+				<p class="state-title">
+					{list.narrowed ? "No matching data apps" : "No data apps yet"}
+				</p>
+				<p class="state-text">
+					{list.narrowed
+						? "Try clearing a filter or searching for something else."
+						: "Data apps you create will show up here."}
+				</p>
+				{#if list.narrowed}
+					<button type="button" class="retry-btn" onclick={() => list.clearFilters()}
+						>Clear filters</button
+					>
+				{/if}
 			</div>
 		{:else}
 			<ul class="app-grid">
@@ -178,6 +219,21 @@
 					</li>
 				{/each}
 			</ul>
+
+			{#if list.hasMore || list.loadingMore}
+				<div class="board-more" bind:this={sentinel}>
+					{#if list.moreError}
+						<p class="state-text">Couldn't load more apps.</p>
+						<button type="button" class="retry-btn" onclick={list.loadMore}>Retry</button>
+					{:else if list.loadingMore}
+						<UnicodeSpinner label="Loading more apps" />
+					{:else}
+						<button type="button" class="retry-btn" onclick={list.loadMore}>Load more</button>
+					{/if}
+				</div>
+			{:else}
+				<p class="board-end">{apps.length} of {list.totalCount} apps</p>
+			{/if}
 		{/if}
 	</section>
 </Page>
@@ -191,6 +247,24 @@
 		flex: 1;
 		min-height: 0;
 		overflow-y: auto;
+	}
+
+	.board-more {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 16px 4px;
+		text-align: center;
+	}
+
+	.board-end {
+		margin: 0;
+		padding: 12px 16px 4px;
+		color: var(--color-muted);
+		font-family: var(--font-mono, ui-monospace, monospace);
+		font-size: 11px;
+		text-align: center;
 	}
 
 	.app-grid {

@@ -1,12 +1,15 @@
 <script lang="ts">
+	import Bookmark from "@lucide/svelte/icons/bookmark";
 	import Ellipsis from "@lucide/svelte/icons/ellipsis";
 	import Plus from "@lucide/svelte/icons/plus";
+	import Share2 from "@lucide/svelte/icons/share-2";
 	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
-	import { Page, confirm, toast } from "$lib/primitives";
-	import { isRecord } from "$lib/utils";
+	import { PagedList, loadMemberOptions } from "$lib/pagedList.svelte";
+	import { FilterToolbar, Page, confirm, toast } from "$lib/primitives";
+	import type { FilterField, FilterOption } from "$lib/primitives";
 
 	type ThreadListItem = {
 		id: string;
@@ -23,12 +26,75 @@
 		threads: ThreadListItem[];
 	};
 
-	let threads = $state<ThreadListItem[]>([]);
-	let loading = $state(true);
-	let error = $state(false);
 	let openingId = $state<string | undefined>();
 	let deletingId = $state<string | undefined>();
 	let menuThreadId = $state<string | undefined>();
+	let sentinel = $state<HTMLDivElement | undefined>();
+	let creatorOptions = $state<FilterOption[]>([]);
+
+	const list = new PagedList<ThreadListItem>({
+		endpoint: "/api/chats",
+		rowsKey: "chats",
+		defaultSort: [{ columnId: "updated", dir: "desc" }],
+		parse: (item) =>
+			typeof item.id === "string" && typeof item.title === "string"
+				? {
+						id: item.id,
+						title: item.title,
+						createdBy: typeof item.createdBy === "string" ? item.createdBy : null,
+						source: typeof item.source === "string" ? item.source : null,
+						lastMessageAt:
+							typeof item.lastMessageAt === "string" ? item.lastMessageAt : null,
+						updatedAt: typeof item.updatedAt === "string" ? item.updatedAt : null,
+					}
+				: null,
+	});
+
+	const threads = $derived(list.items);
+
+	const DATE_PRESETS = [
+		{ value: "today", label: "Today" },
+		{ value: "week", label: "Last 7 days" },
+		{ value: "month", label: "Last 30 days" },
+		{ value: "quarter", label: "Last 90 days" },
+	];
+
+	const SOURCE_OPTIONS: FilterOption[] = [
+		{ value: "CHAT_SOURCE_THREAD", label: "Thread" },
+		{ value: "CHAT_SOURCE_PLAYBOOK", label: "Playbook" },
+		{ value: "CHAT_SOURCE_SLACK", label: "Slack" },
+		{ value: "CHAT_SOURCE_TEAMS", label: "Teams" },
+		{ value: "CHAT_SOURCE_SMS", label: "Text" },
+		{ value: "CHAT_SOURCE_MCP", label: "MCP" },
+		{ value: "CHAT_SOURCE_SYSTEM", label: "System" },
+	];
+
+	// Every facet here is applied server-side, so the toolbar gets `items={[]}`
+	// and each facet declares its own options rather than deriving them from the
+	// one page of rows currently loaded.
+	const fields = $derived<FilterField[]>([
+		{ id: "updated", header: "Last message", sortable: true, sortType: "date" },
+		{ id: "created", header: "Created", sortable: true, sortType: "date" },
+		{ id: "name", header: "Title", sortable: true, sortType: "text" },
+		{
+			id: "creator",
+			header: "Creator",
+			filterable: true,
+			filterKind: "people",
+			filterOptions: creatorOptions,
+		},
+		{
+			id: "scope",
+			header: "Threads",
+			filterable: true,
+			filterOptions: [
+				{ value: "bookmarked", label: "Bookmarked", icon: Bookmark },
+				{ value: "shared", label: "Shared with me", icon: Share2 },
+			],
+		},
+		{ id: "source", header: "Source", filterable: true, filterOptions: SOURCE_OPTIONS },
+		{ id: "date", header: "Created", filterable: true, filterKind: "date" },
+	]);
 
 	const busy = $derived(openingId !== undefined || deletingId !== undefined);
 
@@ -109,53 +175,14 @@
 		return result;
 	});
 
-	async function loadThreads() {
-		loading = true;
-		error = false;
+	onMount(() => {
+		void list.load();
+		void loadMemberOptions("/api/chats/members").then((options) => {
+			creatorOptions = options;
+		});
+	});
 
-		try {
-			const response = await fetch("/api/chats");
-			const payload: unknown = await response.json();
-
-			if (
-				!response.ok ||
-				!isRecord(payload) ||
-				!Array.isArray(payload.chats)
-			) {
-				throw new Error("Unable to load threads.");
-			}
-
-			threads = payload.chats
-				.filter(
-					(item): item is Record<string, unknown> =>
-						isRecord(item) &&
-						typeof item.id === "string" &&
-						typeof item.title === "string",
-				)
-				.map((item) => ({
-					id: item.id as string,
-					title: item.title as string,
-					createdBy:
-						typeof item.createdBy === "string"
-							? item.createdBy
-							: null,
-					source:
-						typeof item.source === "string" ? item.source : null,
-					lastMessageAt:
-						typeof item.lastMessageAt === "string"
-							? item.lastMessageAt
-							: null,
-					updatedAt:
-						typeof item.updatedAt === "string"
-							? item.updatedAt
-							: null,
-				}));
-		} catch {
-			error = true;
-		} finally {
-			loading = false;
-		}
-	}
+	$effect(() => list.watchQuery());
 
 	function openThread(id: string) {
 		if (busy) return;
@@ -191,8 +218,7 @@
 		if (!confirmed) return;
 
 		deletingId = id;
-		const previous = threads;
-		threads = threads.filter((thread) => thread.id !== id);
+		const rollback = list.remove(id);
 
 		try {
 			const response = await fetch(
@@ -204,7 +230,7 @@
 			}
 			toast.success("Thread deleted");
 		} catch {
-			threads = previous;
+			rollback();
 			toast.error("Couldn't delete thread", {
 				description: "Something went wrong. Please try again.",
 			});
@@ -227,8 +253,22 @@
 		}
 	}
 
-	onMount(() => {
-		void loadThreads();
+	// Auto-advance when the sentinel scrolls into view; the button below it stays
+	// as the keyboard-reachable and post-error path.
+	$effect(() => {
+		const target = sentinel;
+		if (!target) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting) && !list.moreError) {
+					void list.loadMore();
+				}
+			},
+			{ rootMargin: "320px" },
+		);
+		observer.observe(target);
+		return () => observer.disconnect();
 	});
 </script>
 
@@ -252,23 +292,46 @@
 		</button>
 	{/snippet}
 
+	<FilterToolbar
+		{fields}
+		items={[]}
+		datePresets={DATE_PRESETS}
+		placeholder="Search threads…"
+		searching={list.searching}
+		bind:search={list.search}
+		bind:filters={list.filters}
+		bind:sortEntries={list.sortEntries}
+	/>
+
 	<section class="list-section" aria-label="Thread list">
-		{#if loading}
+		{#if list.loading}
 			<div class="state-block" aria-busy="true">
 				<UnicodeSpinner label="Loading threads" />
 				<p class="state-text">Loading threads…</p>
 			</div>
-		{:else if error}
+		{:else if list.error}
 			<div class="state-block">
 				<p class="state-text">Unable to load threads.</p>
-				<button type="button" class="retry-btn" onclick={loadThreads}
+				<button type="button" class="retry-btn" onclick={list.load}
 					>Retry</button
 				>
 			</div>
 		{:else if threads.length === 0}
+			{@const narrowed = list.narrowed}
 			<div class="state-block">
-				<p class="state-title">No threads yet</p>
-				<p class="state-text">Start a chat to see it here.</p>
+				<p class="state-title">{narrowed ? "No matching threads" : "No threads yet"}</p>
+				<p class="state-text">
+					{narrowed
+						? "Try clearing a filter or searching for something else."
+						: "Start a chat to see it here."}
+				</p>
+				{#if narrowed}
+					<button
+						type="button"
+						class="retry-btn"
+						onclick={() => list.clearFilters()}>Clear filters</button
+					>
+				{/if}
 			</div>
 		{:else}
 			<div class="board">
@@ -383,6 +446,33 @@
 						</ul>
 					</section>
 				{/each}
+
+				{#if list.hasMore || list.loadingMore}
+					<div class="board-more" bind:this={sentinel}>
+						{#if list.moreError}
+							<p class="state-text">Couldn't load more threads.</p>
+							<button
+								type="button"
+								class="retry-btn"
+								onclick={list.loadMore}>Retry</button
+							>
+						{:else if list.loadingMore}
+							<UnicodeSpinner label="Loading more threads" />
+						{:else}
+							<button
+								type="button"
+								class="retry-btn"
+								onclick={list.loadMore}
+							>
+								Load more
+							</button>
+						{/if}
+					</div>
+				{:else}
+					<p class="board-end">
+						{threads.length} of {list.totalCount} threads
+					</p>
+				{/if}
 			</div>
 		{/if}
 	</section>
@@ -434,6 +524,9 @@
 		flex-direction: column;
 		gap: 14px;
 		width: 100%;
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
 	}
 
 	.board {
@@ -656,6 +749,24 @@
 	.thread-row :global(.row-spinner) {
 		flex-shrink: 0;
 		opacity: 0.85;
+	}
+
+	.board-more {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 16px 4px;
+		text-align: center;
+	}
+
+	.board-end {
+		margin: 0;
+		padding: 12px 16px 4px;
+		color: var(--color-muted);
+		font-family: var(--font-mono, ui-monospace, monospace);
+		font-size: 11px;
+		text-align: center;
 	}
 
 	.state-block {

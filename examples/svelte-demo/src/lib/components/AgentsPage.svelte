@@ -4,7 +4,10 @@
 	import AgentIdenticon from "$lib/components/AgentIdenticon.svelte";
 	import UnicodeSpinner from "$lib/components/UnicodeSpinner.svelte";
 	import { formatCron } from "$lib/cron";
-	import { Page } from "$lib/primitives";
+	import { FilterToolbar, Page } from "$lib/primitives";
+	import type { FilterField } from "$lib/primitives";
+	import { applyFilters, type ColumnFilter, type FilterableColumn } from "$lib/tableFilter";
+	import { applySort, type SortEntry, type SortableColumn } from "$lib/tableSort";
 	import { isRecord } from "$lib/utils";
 
 	type AgentListItem = {
@@ -29,6 +32,70 @@
 	let agents = $state<AgentListItem[]>([]);
 	let loading = $state(true);
 	let error = $state(false);
+
+	let search = $state("");
+	let filters = $state<ColumnFilter[]>([]);
+	let sortEntries = $state<SortEntry[]>([{ columnId: "lastPost", dir: "desc" }]);
+
+	// ListAgents takes no search/sort/paging params, so this surface filters
+	// client-side: facet options come from the loaded rows via `items`.
+	const fields: FilterField<AgentListItem>[] = [
+		{
+			id: "lastPost",
+			header: "Last post",
+			sortable: true,
+			sortType: "date",
+			sortValue: (agent) => (agent.lastPostAt ? new Date(agent.lastPostAt) : null),
+		},
+		{ id: "name", header: "Name", sortable: true, sortType: "text" },
+		{
+			id: "status",
+			header: "Status",
+			filterable: true,
+			filterValue: (agent) => (agent.isActive ? "Active" : "Inactive"),
+		},
+		{
+			id: "ownerName",
+			header: "Owner",
+			filterable: true,
+			filterKind: "people",
+			filterValue: (agent) => agent.ownerName ?? "",
+		},
+		{
+			id: "llmModel",
+			header: "Model",
+			filterable: true,
+			filterValue: (agent) => agent.llmModel ?? "",
+		},
+		{
+			id: "schedule",
+			header: "Schedule",
+			filterable: true,
+			filterValue: (agent) => (agent.schedules.length ? "Scheduled" : "No schedule"),
+		},
+	];
+
+	const fieldMap = $derived(
+		new Map(fields.map((field) => [field.id, field])) as Map<
+			string,
+			FilterableColumn<AgentListItem> & SortableColumn<AgentListItem>
+		>,
+	);
+
+	const narrowed = $derived(filters.length > 0 || search.trim().length > 0);
+
+	/** Search matches name, prompt and owner; facets and sort run on the result. */
+	const visibleAgents = $derived.by(() => {
+		const q = search.trim().toLowerCase();
+		const searched = q
+			? agents.filter((agent) =>
+					[agent.name, agent.prompt, agent.ownerName ?? ""].some((text) =>
+						text.toLowerCase().includes(q),
+					),
+				)
+			: agents;
+		return applySort(applyFilters(searched, filters, fieldMap), sortEntries, fieldMap);
+	});
 
 	function formatLastPost(value: string | null) {
 		if (!value) return "Never posted";
@@ -71,7 +138,7 @@
 	const groups = $derived.by((): AgentGroup[] => {
 		const active: AgentListItem[] = [];
 		const inactive: AgentListItem[] = [];
-		for (const agent of agents) {
+		for (const agent of visibleAgents) {
 			if (agent.isActive) active.push(agent);
 			else inactive.push(agent);
 		}
@@ -162,6 +229,15 @@
 </svelte:head>
 
 <Page title="Agents" lead="Browse the agents in your workspace." wide>
+	<FilterToolbar
+		{fields}
+		items={agents}
+		placeholder="Search agents…"
+		bind:search
+		bind:filters
+		bind:sortEntries
+	/>
+
 	<section class="list-section" aria-label="Agent list">
 		{#if loading}
 			<div class="state-block" aria-busy="true">
@@ -175,12 +251,26 @@
 					>Retry</button
 				>
 			</div>
-		{:else if agents.length === 0}
+		{:else if visibleAgents.length === 0}
 			<div class="state-block">
-				<p class="state-title">No agents yet</p>
-				<p class="state-text">
-					Agents you create will show up here.
+				<p class="state-title">
+					{narrowed ? "No matching agents" : "No agents yet"}
 				</p>
+				<p class="state-text">
+					{narrowed
+						? "Try clearing a filter or searching for something else."
+						: "Agents you create will show up here."}
+				</p>
+				{#if narrowed}
+					<button
+						type="button"
+						class="retry-btn"
+						onclick={() => {
+							filters = [];
+							search = "";
+						}}>Clear filters</button
+					>
+				{/if}
 			</div>
 		{:else}
 			<div class="board">

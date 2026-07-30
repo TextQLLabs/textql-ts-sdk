@@ -8,5 +8,6 @@ export * from './Layout';
 export * from './Toaster';
 export * from './Modal';
 export * from './Select';
+export * from './FilterToolbar';
 export * from './Switch';
 export * from './Tooltip';

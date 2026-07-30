@@ -19,6 +19,7 @@
 	import { promptViewPref } from "$lib/promptViewPref.svelte";
 	import { connectorIconSrc } from "$lib/connectorIcons";
 	import { connectorsCache } from "$lib/connectorsCache.svelte";
+	import { PagedList, loadMemberOptions } from "$lib/pagedList.svelte";
 	import { formatCron, cronToHuman } from "$lib/cron";
 	import {
 		cronToSchedule,
@@ -30,7 +31,9 @@
 		type ScheduleFrequency,
 	} from "$lib/cronSchedule";
 	import { slackChannelsCache } from "$lib/slackChannelsCache.svelte";
+	import type { FilterField, FilterOption } from "$lib/primitives";
 	import {
+		FilterToolbar,
 		Page,
 		Select,
 		type SelectOption,
@@ -68,9 +71,15 @@
 	const PLAYBOOK_UUID_RE =
 		/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-	let playbooks = $state<PlaybookListItem[]>([]);
-	let playbooksLoading = $state(true);
-	let playbooksError = $state(false);
+	let creatorOptions = $state<FilterOption[]>([]);
+	let sentinel = $state<HTMLDivElement | undefined>();
+
+	const list = new PagedList<PlaybookListItem>({
+		endpoint: "/api/playbooks",
+		rowsKey: "playbooks",
+		defaultSort: [{ columnId: "updated", dir: "desc" }],
+		parse: parseListItem,
+	});
 	let creating = $state(false);
 	let menuPlaybookId = $state<string | undefined>();
 	let deletingId = $state<string | undefined>();
@@ -329,7 +338,7 @@
 		const active: PlaybookListItem[] = [];
 		const draft: PlaybookListItem[] = [];
 		const inactive: PlaybookListItem[] = [];
-		for (const item of playbooks) {
+		for (const item of list.items) {
 			const tone = statusTone(item.status);
 			if (tone === "active") active.push(item);
 			else if (tone === "inactive") inactive.push(item);
@@ -396,6 +405,38 @@
 		slackChannelId = "";
 		actionError = undefined;
 	}
+
+	// Applied server-side by /api/playbooks, so the toolbar gets `items={[]}`
+	// and each facet declares its own options.
+	const STATUS_OPTIONS: FilterOption[] = [
+		{ value: "STATUS_ACTIVE", label: "Active" },
+		{ value: "STATUS_INACTIVE", label: "Inactive" },
+		{ value: "STATUS_EMPTY", label: "Draft" },
+	];
+
+	const fields = $derived<FilterField[]>([
+		{ id: "updated", header: "Last updated", sortable: true, sortType: "date" },
+		{ id: "created", header: "Created", sortable: true, sortType: "date" },
+		{ id: "name", header: "Name", sortable: true, sortType: "text" },
+		{ id: "schedule", header: "Schedule", sortable: true, sortType: "text" },
+		{
+			id: "creator",
+			header: "Owner",
+			filterable: true,
+			filterKind: "people",
+			filterOptions: creatorOptions,
+		},
+		{ id: "status", header: "Status", filterable: true, filterOptions: STATUS_OPTIONS },
+		{
+			id: "scope",
+			header: "Playbooks",
+			filterable: true,
+			filterOptions: [
+				{ value: "subscribed", label: "Subscribed" },
+				{ value: "shared", label: "Shared with me" },
+			],
+		},
+	]);
 
 	function parseListItem(item: unknown): PlaybookListItem | null {
 		if (
@@ -470,32 +511,6 @@
 					? item.createdAt
 					: null,
 		};
-	}
-
-	async function loadPlaybooks() {
-		playbooksLoading = true;
-		playbooksError = false;
-
-		try {
-			const response = await fetch("/api/playbooks");
-			const payload: unknown = await response.json();
-
-			if (
-				!response.ok ||
-				!isRecord(payload) ||
-				!Array.isArray(payload.playbooks)
-			) {
-				throw new Error("Unable to load playbooks.");
-			}
-
-			playbooks = payload.playbooks
-				.map(parseListItem)
-				.filter((item): item is PlaybookListItem => item !== null);
-		} catch {
-			playbooksError = true;
-		} finally {
-			playbooksLoading = false;
-		}
 	}
 
 	async function setPlaybookRoute(id: string | undefined, replace = false) {
@@ -627,9 +642,9 @@
 				throw new Error("Unable to create playbook.");
 			}
 
-			playbooks = [
+			list.items = [
 				created,
-				...playbooks.filter((p) => p.id !== created.id),
+				...list.items.filter((p) => p.id !== created.id),
 			];
 			await setPlaybookRoute(created.id);
 			toast.success("Playbook created");
@@ -769,7 +784,7 @@
 			const detail = parseDetail(payload.playbook);
 			if (!detail) throw new Error("Unable to save playbook.");
 			applyPlaybook(detail);
-			playbooks = playbooks.map((item) =>
+			list.items = list.items.map((item) =>
 				item.id === detail.id
 					? {
 							...item,
@@ -832,7 +847,7 @@
 				);
 			}
 			await loadPlaybookById(id, true);
-			void loadPlaybooks();
+			void list.load();
 			toast.success("Playbook deployed");
 		} catch (error) {
 			const detail =
@@ -874,7 +889,7 @@
 				);
 			}
 			await loadPlaybookById(id, true);
-			void loadPlaybooks();
+			void list.load();
 			toast.success("Playbook deactivated");
 		} catch (error) {
 			const detail =
@@ -906,8 +921,7 @@
 		if (!confirmed) return;
 
 		deletingId = id;
-		const previous = playbooks;
-		playbooks = playbooks.filter((item) => item.id !== id);
+		const rollback = list.remove(id);
 
 		try {
 			const response = await fetch(
@@ -924,7 +938,7 @@
 			}
 			toast.success("Playbook deleted");
 		} catch {
-			playbooks = previous;
+			rollback();
 			actionError = "Unable to delete playbook.";
 			toast.error("Couldn't delete playbook", {
 				description: "Something went wrong. Please try again.",
@@ -935,9 +949,32 @@
 	}
 
 	onMount(() => {
-		void loadPlaybooks();
+		void list.load();
 		void connectorsCache.load();
 		void slackChannelsCache.load();
+		void loadMemberOptions("/api/playbooks/members").then((options) => {
+			creatorOptions = options;
+		});
+	});
+
+	$effect(() => list.watchQuery());
+
+	// Auto-advance when the sentinel scrolls into view; the button below it stays
+	// as the keyboard-reachable and post-error path.
+	$effect(() => {
+		const target = sentinel;
+		if (!target) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting) && !list.moreError) {
+					void list.loadMore();
+				}
+			},
+			{ rootMargin: "320px" },
+		);
+		observer.observe(target);
+		return () => observer.disconnect();
 	});
 
 	afterNavigate(() => {
@@ -1033,31 +1070,50 @@
 	{/snippet}
 
 		{#if showList}
+			<FilterToolbar
+				{fields}
+				items={[]}
+				placeholder="Search playbooks…"
+				searching={list.searching}
+				bind:search={list.search}
+				bind:filters={list.filters}
+				bind:sortEntries={list.sortEntries}
+			/>
+
 			<section class="list-section" aria-label="Playbook list">
 				{#if actionError}
 					<p class="form-error">{actionError}</p>
 				{/if}
 
-				{#if playbooksLoading}
+				{#if list.loading}
 					<div class="state-block" aria-busy="true">
 						<UnicodeSpinner label="Loading playbooks" />
 						<p class="state-text">Loading playbooks…</p>
 					</div>
-				{:else if playbooksError}
+				{:else if list.error}
 					<div class="state-block">
 						<p class="state-text">Unable to load playbooks.</p>
 						<button
 							type="button"
 							class="retry-btn"
-							onclick={loadPlaybooks}>Retry</button
+							onclick={list.load}>Retry</button
 						>
 					</div>
-				{:else if playbooks.length === 0}
+				{:else if list.items.length === 0}
 					<div class="state-block">
-						<p class="state-title">No playbooks yet</p>
-						<p class="state-text">
-							Create one to schedule a recurring agent run.
+						<p class="state-title">
+							{list.narrowed ? "No matching playbooks" : "No playbooks yet"}
 						</p>
+						<p class="state-text">
+							{list.narrowed
+								? "Try clearing a filter or searching for something else."
+								: "Create one to schedule a recurring agent run."}
+						</p>
+						{#if list.narrowed}
+							<button type="button" class="retry-btn" onclick={() => list.clearFilters()}
+								>Clear filters</button
+							>
+						{/if}
 					</div>
 				{:else}
 					<div class="board">
@@ -1233,6 +1289,27 @@
 								</ul>
 							</section>
 						{/each}
+
+						{#if list.hasMore || list.loadingMore}
+							<div class="board-more" bind:this={sentinel}>
+								{#if list.moreError}
+									<p class="state-text">Couldn't load more playbooks.</p>
+									<button type="button" class="retry-btn" onclick={list.loadMore}
+										>Retry</button
+									>
+								{:else if list.loadingMore}
+									<UnicodeSpinner label="Loading more playbooks" />
+								{:else}
+									<button type="button" class="retry-btn" onclick={list.loadMore}
+										>Load more</button
+									>
+								{/if}
+							</div>
+						{:else}
+							<p class="board-end">
+								{list.items.length} of {list.totalCount} playbooks
+							</p>
+						{/if}
 					</div>
 				{/if}
 			</section>
@@ -1965,6 +2042,24 @@
 			opacity: 0;
 			transform: scale(1.65);
 		}
+	}
+
+	.board-more {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 16px 4px;
+		text-align: center;
+	}
+
+	.board-end {
+		margin: 0;
+		padding: 12px 16px 4px;
+		color: var(--color-muted);
+		font-family: var(--font-mono, ui-monospace, monospace);
+		font-size: 11px;
+		text-align: center;
 	}
 
 	.state-block {
