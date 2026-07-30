@@ -16,44 +16,13 @@ import { Textql } from "@textql/sdk";
 import {
   TextqlRpcParadigmParamsParadigmType,
   TextqlRpcPublicChatLlmModel,
-  type ConnectError,
 } from "@textql/sdk/models";
 import { createStreamingClient } from "@textql/sdk/streaming";
-// Streaming rides on protobuf-es message types (not the Zod models), so Cell
-// comes from the generated Connect stubs.
-import type { Cell } from "@textql/sdk/generated/connect/public/chat_pb.js";
+import { cellText, isConnectError } from "./shared.js";
 
 dotenv.config(); // examples/.env when run from here
 // Fall back to the repo-root .env (resolved relative to this file, not cwd).
 dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
-
-const isConnectError = (r: object): r is ConnectError => "code" in r || "details" in r;
-
-/** Pull the human-readable text out of a Cell (a oneof over ~50 cell types). */
-function cellText(cell: Cell): string {
-  const p = cell.value;
-  switch (p.case) {
-    case "mdCell":
-    case "ansCell":
-    case "textCell":
-    case "thinkingCell":
-      return p.value.content || `(${p.case})`;
-    case "summaryCell":
-      return p.value.summary || `(${p.case})`;
-    case "sqlCell":
-      return p.value.query || `(${p.case})`;
-    case "pyCell":
-      return p.value.code || `(${p.case})`;
-    case "previewCell":
-      return p.value.url
-        ? p.value.name
-          ? `${p.value.name}: ${p.value.url}`
-          : p.value.url
-        : `(${p.case})`;
-    default:
-      return p.case ? `(${p.case})` : "(empty)";
-  }
-}
 
 async function main() {
   const message = process.argv[2] ?? "plot sinx";
