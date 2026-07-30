@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 07c46326d5489fb86ea2371a030ce581
+  docChecksum: 63f3c8d9c48e42b9c9eeecfb7bc76a34
   docVersion: 1.0.0
   speakeasyVersion: 1.791.0
   generationVersion: 2.924.0
-  releaseVersion: 1.3.6
-  configChecksum: ad0c23182517f63809ba76e25592771a
+  releaseVersion: 1.3.7
+  configChecksum: 795d3863ecc5642157db5f8f8b57196e
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 20b82545-77bd-4150-9799-fb5c3f5f9623
-  pristine_commit_hash: 2b5efd202f2a8ee7a8b181f175b96d60d19243a0
-  pristine_tree_hash: 75ea528289f48785bb79e7b4f77b3629725a1c6a
+  generation_id: 9a737dd9-5d29-4f97-a3d4-d4abdd458303
+  pristine_commit_hash: ebe503e6ad9f8a02a2095c9eab7904714bd74364
+  pristine_tree_hash: 783cecb894166e93ad82bdeb0c29b92d2ae8c2d8
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -3298,6 +3298,14 @@ trackedFiles:
     id: 971681d0fd9a
     last_write_checksum: sha1:2ef377ef4dc9b037247af8aff259e09fb3ffdafb
     pristine_git_object: c701a29d0dda19ba7cbd49239e3299b465052fad
+  docs/models/operations/sandbox-capability-service-poll-ask-request.md:
+    id: b9d02ba5944d
+    last_write_checksum: sha1:a140d63c362152e534e5f712e7090bde95c4928f
+    pristine_git_object: f53b221ed21e8ffefd4dfd30bf646ebd2e0bc175
+  docs/models/operations/sandbox-capability-service-poll-ask-response.md:
+    id: 0e91c571a99f
+    last_write_checksum: sha1:aed490cec144a597be447c2b25427ede88139d53
+    pristine_git_object: 655b8575c870c0c10aa11be1d7a30e044564d715
   docs/models/operations/sandbox-capability-service-put-asset-request.md:
     id: 3ce80545cdac
     last_write_checksum: sha1:7ddac488d9925d94489dd2957e8527535ea94d30
@@ -3314,6 +3322,14 @@ trackedFiles:
     id: 1ebc872cafaa
     last_write_checksum: sha1:60e6de734818945582aef5b8aede7872fc18626d
     pristine_git_object: dfd103cc2e70a589fdef74dba01fbb3499b51af0
+  docs/models/operations/sandbox-capability-service-start-ask-request.md:
+    id: 4695f45b82c8
+    last_write_checksum: sha1:23e28410b6952c6bc09a58a83c10de9b35542dd9
+    pristine_git_object: faa084db764bc905475ecd5c28eccdfcbc8d77a3
+  docs/models/operations/sandbox-capability-service-start-ask-response.md:
+    id: 88ea5b2e1968
+    last_write_checksum: sha1:1e4dda3451737123815742f04f56cb6b74ae0e93
+    pristine_git_object: 3784547b87b2d4cf31afaf13ce1dc2afb4e5042b
   docs/models/operations/sandbox-capability-service-state-op-request.md:
     id: f32fea04ce86
     last_write_checksum: sha1:3a6e429e374799e2af5483bb0b7fe748fd5fc9a6
@@ -4144,8 +4160,8 @@ trackedFiles:
     pristine_git_object: fc5919fc49cf86dc91d4738639feb89828ac3e27
   docs/models/textql-rpc-public-app-capability.md:
     id: ca997a9df607
-    last_write_checksum: sha1:e3baa9ae32aee527fb4315a2dfc92c6b7cae2949
-    pristine_git_object: 4af1612556c8285bf40c9c9dfdebc852659fe2d8
+    last_write_checksum: sha1:19dd8f925f8b04e6b4a3d938bf9c8523e173617e
+    pristine_git_object: f420904a274f64a1a6116cec2357c48046652c89
   docs/models/textql-rpc-public-app-compute-function-param.md:
     id: f067cb585a58
     last_write_checksum: sha1:906f5a7be669bc999d03eacbc540ba44553b80ef
@@ -5272,8 +5288,8 @@ trackedFiles:
     pristine_git_object: 75af7868c177ca4f703ec4cf80558196aa07e8b0
   docs/models/textql-rpc-public-chat-chat-source.md:
     id: 309db0c0d03b
-    last_write_checksum: sha1:183c759c3ddfa1a16533aa364ce8919195fe6d3e
-    pristine_git_object: 7fb10441c41637d60ff860db97c74c10270610c0
+    last_write_checksum: sha1:d716566902f5feb6e0149c88147945af03e7e3e9
+    pristine_git_object: 5172a480364cf0b5514b50e8ab9f5bbfbe15b5a3
   docs/models/textql-rpc-public-chat-chat.md:
     id: 42b2d9b3025b
     last_write_checksum: sha1:ff3bc1f0dffb1029dce8a861ea6b84675b864c38
@@ -7348,8 +7364,8 @@ trackedFiles:
     pristine_git_object: ad3982c89a4f0ca8389444f47e4e06a7dc7ca229
   docs/models/textql-rpc-public-patches-get-ontology-remote-response.md:
     id: 41a26bb5b2d0
-    last_write_checksum: sha1:cdc7d6555f8d59fdbdd4a4ec5f950072465b5f85
-    pristine_git_object: e6ac3e193f245c4f8b601e3f173efeef4c1e887e
+    last_write_checksum: sha1:99e8b5a6f5287719a65700ebe7a2dc7a46baea56
+    pristine_git_object: 58451816ac4c37f01ee5698df24362553b81b73e
   docs/models/textql-rpc-public-patches-get-ontology-size-timeline-request.md:
     id: dcbb479f17d5
     last_write_checksum: sha1:11f150122575156c5f68db92e27be21be7c04409
@@ -7580,8 +7596,8 @@ trackedFiles:
     pristine_git_object: e26209650a6b86a65bfbd7d25805c9087b6e9b77
   docs/models/textql-rpc-public-patches-ontology-remote.md:
     id: 68923e9d0cd1
-    last_write_checksum: sha1:85c5c68962d65c15a09decb30ca80cfc839cd1d7
-    pristine_git_object: fb78b73d1777c2c0722b034fc9912abc39458c98
+    last_write_checksum: sha1:466fe5e482f3861c87762f8a9c6a119d81f9d29f
+    pristine_git_object: 924e8ee7eba31d41575418b54711fcc676e3d38a
   docs/models/textql-rpc-public-patches-ontology-size-day.md:
     id: ca3a58ad86e0
     last_write_checksum: sha1:abe60362dc8c41739437514eef0716aa487627ca
@@ -7780,8 +7796,8 @@ trackedFiles:
     pristine_git_object: 5359d90d894c36ab05785c118118c033a23373e6
   docs/models/textql-rpc-public-patches-update-ontology-sync-config-request.md:
     id: 88f2fb3045d3
-    last_write_checksum: sha1:5246c95af3efe0aebec1413b9dbe13d2bd02ca43
-    pristine_git_object: 761f662f89e0bfa3efc575b847f1a4ebd2ab02c1
+    last_write_checksum: sha1:b3b60e25e531761412e68e6c7c3b6fe67a84d9d4
+    pristine_git_object: 00a4da1978e434bfbc831a2a8b0a543f2b2264b1
   docs/models/textql-rpc-public-patches-update-ontology-sync-config-response.md:
     id: 0ebc8ec76f10
     last_write_checksum: sha1:63f4ede6e43aac6ab72fe523402c45be2efa0314
@@ -8710,6 +8726,10 @@ trackedFiles:
     id: 844474b60778
     last_write_checksum: sha1:58f4328718e0ea950420fcb5c0bd4b909a325e2f
     pristine_git_object: b5a26bd253a586f96401ea86b4ea078944e94abc
+  docs/models/textql-rpc-public-sandbox-capability-ask-block.md:
+    id: 18366320bf00
+    last_write_checksum: sha1:d50540f3bcdeb378907be6fd98b4bc2e306037b8
+    pristine_git_object: 1313a7023dc4008ae63c50b5545019ced86abd96
   docs/models/textql-rpc-public-sandbox-capability-sandbox-execute-write-request-max-rows.md:
     id: c4a6fe44f2ef
     last_write_checksum: sha1:281711794cc0aafca824219cd3ac90dd07c57fa5
@@ -8726,6 +8746,14 @@ trackedFiles:
     id: 6478152f6526
     last_write_checksum: sha1:23a2dc1cbc2a37dd9269f81383997081c991272f
     pristine_git_object: 2d1358e5fe18d2c7f71b3e22ad71662e919f8b28
+  docs/models/textql-rpc-public-sandbox-capability-sandbox-poll-ask-request.md:
+    id: e6185f139c56
+    last_write_checksum: sha1:97b004777137f570b33a3d875b875e2acd968705
+    pristine_git_object: fd80c084f7c20565b7db3239379132dc35c01c7c
+  docs/models/textql-rpc-public-sandbox-capability-sandbox-poll-ask-response.md:
+    id: 5f7bcbf9eb48
+    last_write_checksum: sha1:6b419a76a46d432f8193a1bcf78f7cce244f6a2d
+    pristine_git_object: 4e4c209fb8464420951c36510883237117ebe715
   docs/models/textql-rpc-public-sandbox-capability-sandbox-put-asset-request.md:
     id: c274787ab880
     last_write_checksum: sha1:41f215695b03cf4a5d27e5cf756363a7076b9087
@@ -8742,6 +8770,14 @@ trackedFiles:
     id: 4d52438308a4
     last_write_checksum: sha1:10348caeaf824ed521863373a05feb660b8fd6e5
     pristine_git_object: 6969df37e34ba5f3eca2d0a9523c4eb569f87d42
+  docs/models/textql-rpc-public-sandbox-capability-sandbox-start-ask-request.md:
+    id: 979e91a3f0ef
+    last_write_checksum: sha1:368b549c8e763d354edc202e29f7268586877985
+    pristine_git_object: 073a4a4c8e0fe8f1ba2a2a4e98346eec514d795c
+  docs/models/textql-rpc-public-sandbox-capability-sandbox-start-ask-response.md:
+    id: d11444668556
+    last_write_checksum: sha1:bdbe1227b8bbc5fde90713184a59a989fa5c3f24
+    pristine_git_object: b9dc0e632ca0ed4dd169de989def4b61ebff64f9
   docs/models/textql-rpc-public-sandbox-capability-sandbox-state-op-request.md:
     id: 6859f43ba164
     last_write_checksum: sha1:de22354a24434787c45ee88e563b326c685f0877
@@ -9332,8 +9368,8 @@ trackedFiles:
     pristine_git_object: dda9d21e5bac2164f174c8be2f9816349889f5b1
   docs/sdks/sandboxcapabilityservice/README.md:
     id: db55c122484f
-    last_write_checksum: sha1:863d07472e5eccc9d70197fb47f53b02a7a47c67
-    pristine_git_object: fb24917891a191784e4ac6bddc793add13c74c36
+    last_write_checksum: sha1:674f8ff856e3f67740c812651a4f9f86eea6fbe2
+    pristine_git_object: 7314f2ef96edc911ac04d04fd5fcb223d68e0cee
   docs/sdks/scim/README.md:
     id: 1d60f0a72b05
     last_write_checksum: sha1:d454cddff12cef70c2c92b7883c5e1b437dc4945
@@ -9376,12 +9412,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:c5711f5267a549b7f7dc4788cf4dfdc2617fd74c
-    pristine_git_object: 9ddebc8e4c7b9f38b16e51026060af5f25fc1cfc
+    last_write_checksum: sha1:568cf0abc0518dca84d10c180c0df5f290e1313a
+    pristine_git_object: fe5f63cfd2af09d8ac72c980dcdcca29fa81e801
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:c83d9a62458e70529ad2f56989848f943c30f5a6
-    pristine_git_object: 8832fd879876d6d18ec000d173f2c8d5b8f32d20
+    last_write_checksum: sha1:f849c17b9112e3f9e0d44ccc98889f99a4cb3899
+    pristine_git_object: 5c6baf522a7ff5aa7973ea84beb10f46033fbd91
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -10722,6 +10758,10 @@ trackedFiles:
     id: c75d0111ab99
     last_write_checksum: sha1:ec815013e700761dea3da6ea4fc0940c3c1eb638
     pristine_git_object: e3cf062a3bc6f6c53d666915018984bb16858aa3
+  src/funcs/sandbox-capability-service-sandbox-capability-service-poll-ask.ts:
+    id: 4a0037089641
+    last_write_checksum: sha1:ab01e834ef90c6c0e9718b947d65ea806b7ee1b5
+    pristine_git_object: 0160f6430ef3f990b075e2942788bcd1767343db
   src/funcs/sandbox-capability-service-sandbox-capability-service-put-asset.ts:
     id: 87e4d842f11d
     last_write_checksum: sha1:b16745a3d55fd4fd6fd21b7b21a1c5a1412168b4
@@ -10730,6 +10770,10 @@ trackedFiles:
     id: 068a9fb4c03d
     last_write_checksum: sha1:4b413b605d2216a1e27251289f1ceac12b807985
     pristine_git_object: 5fd78bb3812f4bf7944de76bf397b63916272409
+  src/funcs/sandbox-capability-service-sandbox-capability-service-start-ask.ts:
+    id: de1af6d0ba75
+    last_write_checksum: sha1:20b08a7f11aaa60311c46f9f635d8b4afecef49a
+    pristine_git_object: d4fae95a6dad5456ec12783b0719ba070c0e31d0
   src/funcs/sandbox-capability-service-sandbox-capability-service-state-op.ts:
     id: 43c6b073010e
     last_write_checksum: sha1:7d955b7085443f72f189904f6396dca8c9a054df
@@ -10940,8 +10984,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:fea9724cc9868a5391f6f1d95f2d3506382d46cf
-    pristine_git_object: 5397bd30706ccdc90a30c659e10d420ed91fbca7
+    last_write_checksum: sha1:3a856e1a983b2d8582de20da83c45093557d12ab
+    pristine_git_object: 828a014b3eb13bf2ea99078f7cfa2bb4280eaac1
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -11032,8 +11076,8 @@ trackedFiles:
     pristine_git_object: dd5a3e5928ce11eb841d3267cd97c0da405d92d0
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:26c22fe520338a5d28f039006ca76481f794589c
-    pristine_git_object: 204f88f3e611c5c24439a6f854c72aee4f395d80
+    last_write_checksum: sha1:5dc8404d2ee1137e1d1127b755d73a13b8fd08b2
+    pristine_git_object: 6698e9ba2507b3fe28856750b2a6a3ba9348e72b
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:e159e3a4e22d0fa5bc724eaaf0438eb903522d3f
@@ -11600,8 +11644,8 @@ trackedFiles:
     pristine_git_object: fe653ee3b7287acd373c25531bdae78b95b9277f
   src/models/operations/index.ts:
     id: 0d9ffaf774d2
-    last_write_checksum: sha1:48a086e68c9caaa4275e3608adc1fd777d929d61
-    pristine_git_object: 01db45ef18b5785996f2ca4bac5f4bf02d7ef8da
+    last_write_checksum: sha1:ec956dcabfa57e4b6caf1cc09bf2d1f5710c2024
+    pristine_git_object: 3b482bc1791bb247cc873b0d111f155ce66af0b2
   src/models/operations/mcp-service-clear-o-auth-token.ts:
     id: 22f21a173140
     last_write_checksum: sha1:23b7fd79741f93952dc0e7e257ac6cd2981fb38c
@@ -12374,6 +12418,10 @@ trackedFiles:
     id: 590224be2e4a
     last_write_checksum: sha1:83f3fecf2b3675bd06e21e9e18d7e0c15a9e44b7
     pristine_git_object: 908efd66c020a43a7cbeebd8c9f8855bc327af28
+  src/models/operations/sandbox-capability-service-poll-ask.ts:
+    id: a277ee5c02ac
+    last_write_checksum: sha1:631fa89966f75f1a0deaa858dcec0b0751dd73db
+    pristine_git_object: 868a76a14b71614de27cc3849881d2c0328cbf42
   src/models/operations/sandbox-capability-service-put-asset.ts:
     id: 146082e6e06a
     last_write_checksum: sha1:85234a20bc9eee54cf298de66a15c729a387dfbb
@@ -12382,6 +12430,10 @@ trackedFiles:
     id: 830e8e908ca0
     last_write_checksum: sha1:1009925789295fad8f35641e90d2d3dbe9d4fc6f
     pristine_git_object: d4ffa69efb380d80aa9771d729c9d68b09bf3fc7
+  src/models/operations/sandbox-capability-service-start-ask.ts:
+    id: e2ec69fbd300
+    last_write_checksum: sha1:8ccd49aa3693a3976495c9039c2ae14ffae0d730
+    pristine_git_object: dd0a9f3a8bed797802ec2997a4e1e1a07c514401
   src/models/operations/sandbox-capability-service-state-op.ts:
     id: 6f2439e48efc
     last_write_checksum: sha1:955b5479eaf4fcf3b89d627e08ce81a7da19669e
@@ -12780,8 +12832,8 @@ trackedFiles:
     pristine_git_object: 3ebeedb0800c3fece3997d9c9449bacaec39d1d1
   src/models/textql-rpc-public-app-capability.ts:
     id: c23c59f0499e
-    last_write_checksum: sha1:1d151be947948c7fe6f8e8529fe37c073178e82c
-    pristine_git_object: 051dd5b5b0dc7ae4e322c5dfd0b70a74f5847dda
+    last_write_checksum: sha1:1eec14e19c78c6e6b7ce57a1698e8be9ce7cb94a
+    pristine_git_object: 7d1220564b0fe1e5cb2ff0dd8e916a1d550f5a8c
   src/models/textql-rpc-public-app-compute-function-param.ts:
     id: cc42951e33bd
     last_write_checksum: sha1:7dbfff0a1ca0f5801c07e68bfd88d5cbdf098428
@@ -13620,8 +13672,8 @@ trackedFiles:
     pristine_git_object: e53d96d7966c3226c2153c173ff8dd9ca98925bb
   src/models/textql-rpc-public-chat-chat-source.ts:
     id: 6f74bbddc530
-    last_write_checksum: sha1:cb1d95e0f025428f5b709491583ad007e9f77972
-    pristine_git_object: 5eb4d5f504c1c4d9c48c160b5553f93099aa979f
+    last_write_checksum: sha1:b5cf87080ff16a1d303b804b0c373ac3c17bfd36
+    pristine_git_object: a5958df718d6e84c222501e6b4d38a2a76bf832c
   src/models/textql-rpc-public-chat-chat.ts:
     id: 3cc8b24fd546
     last_write_checksum: sha1:5b8b8663563d1ece09c92a64c82ef4e89bc0667a
@@ -15572,8 +15624,8 @@ trackedFiles:
     pristine_git_object: 6debf0384e395c4f5e61b42cd8908b4b5c21c7bf
   src/models/textql-rpc-public-patches-get-ontology-remote-response.ts:
     id: b3b039fa4873
-    last_write_checksum: sha1:81389bba678c0c1ff0919e88f55323a3d1c4d089
-    pristine_git_object: 3419d5a4797049741879cf2dc800581ba3dc7b15
+    last_write_checksum: sha1:1a6635a48e883352b3da7f1eb3d1c6d41c52d9e8
+    pristine_git_object: 754b751c883b6a8736cbeaacf7d78b9e41dcb8f2
   src/models/textql-rpc-public-patches-get-ontology-size-timeline-request.ts:
     id: d9e2974ce6a4
     last_write_checksum: sha1:bea97217c17b44d99be053d1a1a3f02cda505dbd
@@ -15796,8 +15848,8 @@ trackedFiles:
     pristine_git_object: 1cf8246b7414d94a7ac541b9c0d2a56635bd7872
   src/models/textql-rpc-public-patches-ontology-remote.ts:
     id: 41193c978c55
-    last_write_checksum: sha1:9fe1b57bc11febf66421ff55056d9ffff51e1d5e
-    pristine_git_object: 88f06752b6a312473015f616d683551c528267d1
+    last_write_checksum: sha1:5c5e73367a46ff2bca9f07926bbb4ac8ee1e83a7
+    pristine_git_object: e27010e7fc38d3d784c79497407db7ca39d9f65b
   src/models/textql-rpc-public-patches-ontology-size-day.ts:
     id: d0e9ae51b266
     last_write_checksum: sha1:e750642ff541fccc89b10205792b5827d64a87c4
@@ -15996,8 +16048,8 @@ trackedFiles:
     pristine_git_object: 12bd423bf850aba220512100d88c244618f4694c
   src/models/textql-rpc-public-patches-update-ontology-sync-config-request.ts:
     id: b07601de5c5f
-    last_write_checksum: sha1:ffca9cb3296bb264eee1d708d2a0cd132ea7830b
-    pristine_git_object: 449b52cc874ff3e9d70e81fbe3b263b599f36439
+    last_write_checksum: sha1:29ccc82a43eb19d55711feadf0f57ae3ae24a04f
+    pristine_git_object: f3cf876c26f237f854ad7ad806da1596ed315ce2
   src/models/textql-rpc-public-patches-update-ontology-sync-config-response.ts:
     id: a0905e5df406
     last_write_checksum: sha1:f287434d198ccc5d804182489417e0cb7eaf1cc7
@@ -16878,6 +16930,10 @@ trackedFiles:
     id: 114abd17a88c
     last_write_checksum: sha1:cbc8034b5398d81be18496e820a43317ff1f39fd
     pristine_git_object: c4c3df791fabd9d07d6afa024ff344227389e0a1
+  src/models/textql-rpc-public-sandbox-capability-ask-block.ts:
+    id: a111718e33c7
+    last_write_checksum: sha1:7e57533b91c229c35009b8e96d3aa22d998c748e
+    pristine_git_object: 37e67d065f78f6a5dd488c9b6e0071935a9b3cca
   src/models/textql-rpc-public-sandbox-capability-sandbox-execute-write-request.ts:
     id: af4fd84e2b00
     last_write_checksum: sha1:a4b8bc1da99a3f5e4302381d21d127d3af1af422
@@ -16886,6 +16942,14 @@ trackedFiles:
     id: b32d2750a101
     last_write_checksum: sha1:eebbf3c44dd491d42eae1199d2c09194ea763fac
     pristine_git_object: f57c54a60275317d74685c670529bff77a362f34
+  src/models/textql-rpc-public-sandbox-capability-sandbox-poll-ask-request.ts:
+    id: d07d47e872b1
+    last_write_checksum: sha1:7db7708b5dee96947d267c1472fd6f4e0623ea12
+    pristine_git_object: 7fdbdfefd99d8fe0d596a637cb0525b2a99e1e33
+  src/models/textql-rpc-public-sandbox-capability-sandbox-poll-ask-response.ts:
+    id: 0222c53212c5
+    last_write_checksum: sha1:44bd981dbdcbdf48cffaf31c5c6aabe8aef28acb
+    pristine_git_object: 6e46ae3689642eb7a13a7000f03aad4aff6fcc61
   src/models/textql-rpc-public-sandbox-capability-sandbox-put-asset-request.ts:
     id: 033b7b550895
     last_write_checksum: sha1:855c489b7aeea2740140afdbc1260c38136734bc
@@ -16902,6 +16966,14 @@ trackedFiles:
     id: 1096599ec326
     last_write_checksum: sha1:b18f519753b467e26db0b99b6d0fd8fd714937af
     pristine_git_object: 31073451e76c66f6e18a0099a5e198be3b288778
+  src/models/textql-rpc-public-sandbox-capability-sandbox-start-ask-request.ts:
+    id: 1874b0990355
+    last_write_checksum: sha1:becd8a3d6a7233e39944a730a5543ef2c780317d
+    pristine_git_object: 0d43fb21dfcfb46a5505eebc19ab60557f56f004
+  src/models/textql-rpc-public-sandbox-capability-sandbox-start-ask-response.ts:
+    id: e3f7755a4c9a
+    last_write_checksum: sha1:fcb8b1b0cee4f46573afde75098eda4ed0a89f68
+    pristine_git_object: b81e2c3e0b279eef48695ab168a1b8b48bb42c95
   src/models/textql-rpc-public-sandbox-capability-sandbox-state-op-request.ts:
     id: 137b81b8693e
     last_write_checksum: sha1:cad7bc740db6dc3b1b41379769022a2ef2d61217
@@ -17380,8 +17452,8 @@ trackedFiles:
     pristine_git_object: 9356e7602fb1ab033cccff0aedce7f69f790ee96
   src/sdk/sandbox-capability-service.ts:
     id: b0acf95f6764
-    last_write_checksum: sha1:90f222a00ea8640264cc1b2ae99ae1eb9039bb9d
-    pristine_git_object: 0b7fa52325ddc906418fbc280d1a8abb48705a14
+    last_write_checksum: sha1:5274ca404cb9124a1aff28ff8173baf1c9d80405
+    pristine_git_object: 277e27b07fbdf62a847a7bafc4cd1cf30af8b10e
   src/sdk/sandbox.ts:
     id: 28b1b2376421
     last_write_checksum: sha1:148bd71276a0b4c74d52f543220a95d912e7b8ab
@@ -23373,4 +23445,29 @@ examples:
           application/json: {}
         default:
           application/json: {"code": "not_found"}
+  SandboxCapabilityService_PollAsk:
+    speakeasy-default-sandbox-capability-service-poll-ask:
+      parameters:
+        header:
+          Connect-Protocol-Version: 1
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        default:
+          application/json: {"code": "not_found"}
+  SandboxCapabilityService_StartAsk:
+    speakeasy-default-sandbox-capability-service-start-ask:
+      parameters:
+        header:
+          Connect-Protocol-Version: 1
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        default:
+          application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.sandboxCapabilityService.sandboxCapabilityServicePollAsk()`: **Added**\n* `textql.sandboxCapabilityService.sandboxCapabilityServiceStartAsk()`: **Added**\n* `textql.apps.createApp()`: \n  *  `request.body.capabilities[]` **Changed**\n  *  `response.app.capabilities[]` **Changed**\n* `textql.apps.duplicate()`:  `response.app.capabilities[]` **Changed**\n* `textql.apps.get()`:  `response.app.capabilities[]` **Changed**\n* `textql.apps.list()`:  `response.apps[].capabilities[]` **Changed**\n* `textql.apps.moveAppToFolder()`:  `response.app.capabilities[]` **Changed**\n* `textql.apps.refresh()`:  `response.app.capabilities[]` **Changed**\n* `textql.apps.restoreAppVersion()`:  `response.app.capabilities[]` **Changed**\n* `textql.apps.update()`: \n  *  `request.body.capabilities[]` **Changed**\n  *  `response.app.capabilities[]` **Changed**\n* `textql.chats.attachAgent()`:  `response.chat.source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.attachApp()`:  `response.app.capabilities[]` **Changed**\n* `textql.chats.createChat()`:  `response.chat.source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.duplicateChat()`:  `response.chat.source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.get()`:  `response.chat.source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.getAll()`: \n  *  `request.body.source.enum(chatSourceDataApp)` **Added**\n  *  `response.chats[].source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].source.enum(chatSourceDataApp)` **Added**\n* `textql.chats.update()`:  `response.chat.source.enum(chatSourceDataApp)` **Added**\n* `textql.observability.getChatSourceStats()`:  `response.orgBySource[].source.enum(chatSourceDataApp)` **Added**\n* `textql.ontologyManagementService.ontologyManagementServiceConfigureOntologyRemote()`:  `response.remote` **Changed**\n* `textql.ontologyManagementService.ontologyManagementServiceGetOntologyRemote()`:  `response` **Changed**\n* `textql.ontologyManagementService.ontologyManagementServiceUpdateOntologySyncConfig()`: \n  *  `request.body.pushMode` **Added**\n  *  `response.remote` **Changed**\n"

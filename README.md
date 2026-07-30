@@ -540,8 +540,10 @@ run();
 ### [SandboxCapabilityService](docs/sdks/sandboxcapabilityservice/README.md)
 
 * [sandboxCapabilityServiceExecuteWrite](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceexecutewrite) - ExecuteWrite
+* [sandboxCapabilityServicePollAsk](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicepollask) - PollAsk
 * [sandboxCapabilityServicePutAsset](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceputasset) - PutAsset
 * [sandboxCapabilityServiceSendNotify](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicesendnotify) - SendNotify
+* [sandboxCapabilityServiceStartAsk](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestartask) - StartAsk
 * [sandboxCapabilityServiceStateOp](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestateop) - StateOp
 
 ### [Scim](docs/sdks/scim/README.md)
@@ -959,8 +961,10 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`sandboxAdminRestartSandbox`](docs/sdks/sandboxadmin/README.md#restartsandbox) - Restart a stopped/reaped sandbox by re-acquiring a worker for the same  sandbox_id, preserving the original owner. Same scoping as StopSandbox  (owner, or sandbox:write_private for org-wide).
 - [`sandboxAdminStop`](docs/sdks/sandboxadmin/README.md#stop) - StopSandbox
 - [`sandboxCapabilityServiceSandboxCapabilityServiceExecuteWrite`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceexecutewrite) - ExecuteWrite
+- [`sandboxCapabilityServiceSandboxCapabilityServicePollAsk`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicepollask) - PollAsk
 - [`sandboxCapabilityServiceSandboxCapabilityServicePutAsset`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityserviceputasset) - PutAsset
 - [`sandboxCapabilityServiceSandboxCapabilityServiceSendNotify`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicesendnotify) - SendNotify
+- [`sandboxCapabilityServiceSandboxCapabilityServiceStartAsk`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestartask) - StartAsk
 - [`sandboxCapabilityServiceSandboxCapabilityServiceStateOp`](docs/sdks/sandboxcapabilityservice/README.md#sandboxcapabilityservicestateop) - StateOp
 - [`sandboxExecuteQuery`](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 - [`scimCreateOAuthClient`](docs/sdks/scim/README.md#createoauthclient) - CreateScimOAuthClient

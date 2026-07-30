@@ -7,12 +7,14 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest = {
   syncEnabled?: boolean | undefined;
   syncIntervalMinutes?: number | undefined;
+  pushMode?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest$Outbound = {
   syncEnabled?: boolean | undefined;
   syncIntervalMinutes?: number | undefined;
+  pushMode?: string | null | undefined;
 };
 
 /** @internal */
@@ -23,6 +25,7 @@ export const TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest$outboundSchem
   > = z.object({
     syncEnabled: z.optional(z.boolean()),
     syncIntervalMinutes: z.optional(z.int()),
+    pushMode: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicPatchesUpdateOntologySyncConfigRequestToJSON(
