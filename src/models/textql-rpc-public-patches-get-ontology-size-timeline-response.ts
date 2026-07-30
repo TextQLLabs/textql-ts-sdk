@@ -14,7 +14,7 @@ import {
 
 export type TextqlRpcPublicPatchesGetOntologySizeTimelineResponse = {
   /**
-   * default 90d, capped at 365d
+   * most recent pull first
    */
   days?: Array<TextqlRpcPublicPatchesOntologySizeDay> | undefined;
 };

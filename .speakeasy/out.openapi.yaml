@@ -29959,6 +29959,7 @@ components:
       properties:
         date:
           title: date
+          description: default 7d
           $ref: '#/components/schemas/textql.rpc.public.patches.Date'
         averageTokens:
           type: integer
@@ -30116,20 +30117,27 @@ components:
           type: string
           title: chat_id
           description: |-
-            most recent pull or run (imports included) inside the window; unset when
-             the file had no usage at all
+            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+             a year.
         title:
           type: string
           title: title
-          description: one entry per UTC day in the window, oldest first; idle days zero-filled
+          description: |-
+            Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+             month and day.
         lastPulled:
           title: last_pulled
+          description: |-
+            Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+             to specify a year by itself or a year and month where the day isn't
+             significant.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         used:
           type: boolean
           title: used
       title: FileChatUsage
       additionalProperties: false
+      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.FileUsage:
       type: object
       properties:
@@ -30171,13 +30179,11 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         lastUsed:
           title: last_used
-          description: most recent of last_pulled or last_run
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         chatsCited:
           type: integer
           title: chats_cited
           format: int32
-          description: chats that pulled this file AND where the agent declared it as a source
       title: FileUsage
       additionalProperties: false
     textql.rpc.public.patches.FinalizeOntologyFileUploadRequest:
@@ -30293,7 +30299,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.UsageOrderBy'
         observationPeriod:
           title: observation_period
-          description: default 7d
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
         pageCursor:
@@ -30304,7 +30309,6 @@ components:
           type: integer
           title: page_size
           format: int32
-          description: default 1000, capped at 1000
           nullable: true
       title: GetFileUsageRequest
       additionalProperties: false
@@ -30331,15 +30335,11 @@ components:
           nullable: true
         observationPeriod:
           title: observation_period
-          description: empty for untitled chats
+          description: default 7d
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetFileUsageTimelineRequest
       additionalProperties: false
-      description: |-
-        FileChatUsage is one chat that retrieved a ontology file inside the
-         observation window. Only pulls attributed to a chat are listed — background
-         or sandbox reads carry no chat id and are excluded.
     textql.rpc.public.patches.GetFileUsageTimelineResponse:
       type: object
       properties:
@@ -30348,7 +30348,9 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.DailyFileUsage'
           title: days
-          description: most recent pull first
+          description: |-
+            most recent pull or run (imports included) inside the window; unset when
+             the file had no usage at all
       title: GetFileUsageTimelineResponse
       additionalProperties: false
     textql.rpc.public.patches.GetOntologyAnaConfigRequest:
@@ -30490,7 +30492,6 @@ components:
       properties:
         observationPeriod:
           title: observation_period
-          description: Restrict to files under this prefix; the whole ontology when unset.
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetOntologySizeTimelineRequest
@@ -30503,7 +30504,7 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.OntologySizeDay'
           title: days
-          description: default 90d, capped at 365d
+          description: most recent pull first
       title: GetOntologySizeTimelineResponse
       additionalProperties: false
     textql.rpc.public.patches.GetOntologySyncConflictsRequest:
@@ -30525,7 +30526,6 @@ components:
       properties:
         observationPeriod:
           title: observation_period
-          description: default 7d
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetOntologyUsageSummaryRequest
@@ -30549,47 +30549,33 @@ components:
           type: number
           title: avg_hit_rate
           format: float
-          description: 0..1, averaged over pulled .tql files with chat-attributed pulls
         errorFiles:
           type: integer
           title: error_files
           format: int32
-          description: files with at least one errored pull in the window
         reclaimableTokens:
           type:
             - integer
             - string
           title: reclaimable_tokens
           format: int64
-          description: estimated tokens held by dead files (~size/4)
         tqlPulledFiles:
           type: integer
           title: tql_pulled_files
           format: int32
-          description: .tql files behind avg_hit_rate; 0 = rate has no signal
         avgDocCitedRate:
           type: number
           title: avg_doc_cited_rate
           format: float
-          description: 0..1 cited-when-pulled over pulled docs (excludes .tql and config-managed .playbook/.dashboard)
         docPulledFiles:
           type: integer
           title: doc_pulled_files
           format: int32
-          description: docs behind avg_doc_cited_rate; 0 = rate has no signal
         docCitationsEnabled:
           type: boolean
           title: doc_citations_enabled
-          description: source attribution active for this org (traces enabled)
       title: GetOntologyUsageSummaryResponse
       additionalProperties: false
-      description: |-
-        Aggregate ontology-usage health for the window — the roll-ups the Ontology
-         Health hero needs without paging every file to the client. pulled_files,
-         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
-         total_files, dead_files, and reclaimable_tokens come from the current git
-         tree diffed against the set of pulled paths (a dead file is one present in
-         the ontology but never pulled in the window).
     textql.rpc.public.patches.GetPatchByNumberRequest:
       type: object
       properties:
@@ -30654,19 +30640,19 @@ components:
         filePath:
           type: string
           title: file_path
-          description: |-
-            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-             a year.
         observationPeriod:
           title: observation_period
-          description: |-
-            Month of a year. Must be from 1 to 12, or 0 to specify a year without a
-             month and day.
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetUsageDetailsForFileRequest
       additionalProperties: false
-      description: copied from google.type.Date; not available in buf's google/protobuf/*
+      description: |-
+        Aggregate ontology-usage health for the window — the roll-ups the Ontology
+         Health hero needs without paging every file to the client. pulled_files,
+         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
+         total_files, dead_files, and reclaimable_tokens come from the current git
+         tree diffed against the set of pulled paths (a dead file is one present in
+         the ontology but never pulled in the window).
     textql.rpc.public.patches.GetUsageDetailsForFileResponse:
       type: object
       properties:
@@ -30755,7 +30741,6 @@ components:
           title: file_path
         observationPeriod:
           title: observation_period
-          description: default 7d
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
         limit:
@@ -31317,7 +31302,6 @@ components:
       properties:
         date:
           title: date
-          description: one entry per UTC day in the window, oldest first; idle days zero-filled
           $ref: '#/components/schemas/textql.rpc.public.patches.Date'
         totalBytes:
           type:
@@ -31325,12 +31309,17 @@ components:
             - string
           title: total_bytes
           format: int64
+          description: empty for untitled chats
         fileCount:
           type: integer
           title: file_count
           format: int32
       title: OntologySizeDay
       additionalProperties: false
+      description: |-
+        FileChatUsage is one chat that retrieved a ontology file inside the
+         observation window. Only pulls attributed to a chat are listed — background
+         or sandbox reads carry no chat id and are excluded.
     textql.rpc.public.patches.OntologySubmodule:
       type: object
       properties:

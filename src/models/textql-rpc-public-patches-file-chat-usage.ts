@@ -8,16 +8,22 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * copied from google.type.Date; not available in buf's google/protobuf/*
+ */
 export type TextqlRpcPublicPatchesFileChatUsage = {
   /**
-   * most recent pull or run (imports included) inside the window; unset when
+   * Year of the date. Must be from 1 to 9999, or 0 to specify a date without
    *
    * @remarks
-   *  the file had no usage at all
+   *  a year.
    */
   chatId?: string | undefined;
   /**
-   * one entry per UTC day in the window, oldest first; idle days zero-filled
+   * Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+   *
+   * @remarks
+   *  month and day.
    */
   title?: string | undefined;
   /**
