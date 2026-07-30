@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Embedded Data App</title>
+		<script type="module" src="./embed.js"></script>
+		<style>
+			html,
+			body {
+				height: 100%;
+			}
+			body {
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				font: 15px/1.6 system-ui, -apple-system, sans-serif;
+				color: #111827;
+				background: #fff;
+			}
+			header {
+				flex: none;
+				padding: 12px 20px;
+				border-bottom: 1px solid #e5e7eb;
+			}
+			h1 {
+				font-size: 15px;
+				font-weight: 600;
+				margin: 0;
+			}
+			/*
+			 * Data Apps lay out against the full viewport, the same as the
+			 * `absolute inset-0` region they get in TextQL. Give the element a
+			 * narrow column and the app's own layout is what breaks, not this page.
+			 */
+			textql-app {
+				flex: 1;
+				min-height: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1 id="title">Loading…</h1>
+		</header>
+
+		<textql-app api-base="/textql"></textql-app>
+
+		<script type="module">
+			const element = document.querySelector('textql-app');
+			const title = document.getElementById('title');
+
+			function showName({ name }) {
+				title.textContent = name;
+				document.title = name;
+			}
+
+			// The fetch can land before this script parses, so read what's there
+			// as well as subscribing.
+			element.addEventListener('app-meta', (event) => showName(event.detail));
+			if (element.meta) showName(element.meta);
+		</script>
+	</body>
+</html>
