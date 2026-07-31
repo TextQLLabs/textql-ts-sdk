@@ -8,9 +8,15 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
 
-import 'dotenv/config';
+import { config } from 'dotenv';
 import { createEmbedHandler, toNodeHandler } from '@textql/sdk/embed';
+
+// The SDK repo's root .env, shared by every example. Resolved from this file
+// rather than the cwd, so it does not matter where you launch from.
+const ENV_FILE = fileURLToPath(new URL('../../.env', import.meta.url));
+const { error: envError } = config({ path: ENV_FILE, override: true });
 
 const PORT = Number(process.env.PORT ?? 4180);
 
@@ -37,14 +43,10 @@ const PAGE = `<!doctype html>
 	}
 	header {
 		flex: none;
-		display: flex;
-		align-items: baseline;
-		gap: 12px;
 		padding: 12px 20px;
 		border-bottom: 1px solid #e5e7eb;
 	}
 	h1 { font-size: 15px; font-weight: 600; margin: 0; }
-	#bridge { font-size: 13px; color: #6b7280; }
 	/* Data Apps lay out against the full viewport; a narrow column breaks the
 	   app's own layout, not this page. */
 	textql-app { flex: 1; min-height: 0; }
@@ -53,7 +55,6 @@ const PAGE = `<!doctype html>
 <body>
 	<header>
 		<h1 id="title">Loading…</h1>
-		<span id="bridge"></span>
 	</header>
 
 	<textql-app></textql-app>
@@ -61,27 +62,15 @@ const PAGE = `<!doctype html>
 	<script type="module">
 		const element = document.querySelector('textql-app');
 		const title = document.getElementById('title');
-		const bridge = document.getElementById('bridge');
 
-		function showMeta({ name, functions }) {
+		function showName({ name }) {
 			title.textContent = name;
 			document.title = name;
-			bridge.textContent = functions.length
-				? \`\${functions.length} compute functions: \${functions.join(', ')}\`
-				: 'no compute functions — document only';
 		}
 
 		// The fetch can land before this script parses.
-		element.addEventListener('app-meta', (event) => showMeta(event.detail));
-		if (element.meta) showMeta(element.meta);
-
-		element.addEventListener('app-ready', () => {
-			bridge.textContent += ' · bridge connected';
-		});
-
-		element.addEventListener('app-error', (event) => {
-			bridge.textContent = \`app error: \${event.detail.message}\`;
-		});
+		element.addEventListener('app-meta', (event) => showName(event.detail));
+		if (element.meta) showName(element.meta);
 	</script>
 </body>
 </html>
@@ -110,6 +99,7 @@ const server = createServer((req, res) => {
 
 server.listen(PORT, () => {
 	console.log(`Embed demo on http://localhost:${PORT}`);
+	console.log(envError ? `No env file at ${ENV_FILE}` : `Env from ${ENV_FILE}`);
 	for (const name of ['TEXTQL_API_KEY', 'TEXTQL_APP_ID']) {
 		if (!process.env[name]) console.warn(`${name} is not set — requests will 503.`);
 	}
