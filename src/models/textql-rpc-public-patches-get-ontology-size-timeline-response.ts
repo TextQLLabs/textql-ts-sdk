@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-patches-ontology-size-day.js";
 
 export type TextqlRpcPublicPatchesGetOntologySizeTimelineResponse = {
-  /**
-   * most recent pull first
-   */
   days?: Array<TextqlRpcPublicPatchesOntologySizeDay> | undefined;
 };
 

@@ -117,20 +117,7 @@ export type TextqlRpcPublicPatchesOntologyEntry = {
   canWrite?: boolean | undefined;
   canRead?: boolean | undefined;
   configSyncStatus?: TextqlRpcPublicConfigSourceConfigSyncStatus | undefined;
-  /**
-   * config_object_id is the id of the object this file defines (the playbook
-   *
-   * @remarks
-   *  id), enabling file -> object links. Empty when no object is materialized yet.
-   */
   configObjectId?: string | null | undefined;
-  /**
-   * config_sync_error is the latest sync failure message for a config-managed
-   *
-   * @remarks
-   *  entry whose status is ERROR; empty otherwise. Lets the file view surface the
-   *  error inline without a second fetch.
-   */
   configSyncError?: string | null | undefined;
 };
 

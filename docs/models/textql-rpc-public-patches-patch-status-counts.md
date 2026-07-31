@@ -1,5 +1,10 @@
 # TextqlRpcPublicPatchesPatchStatusCounts
 
+PatchCapabilities describes which patch actions the calling member is
+ permitted to perform. This is a read-only mirror of the authority checks in
+ ApprovePatch and DenyPatch; computing it has no side effects and emits no
+ audit log.
+
 ## Example Usage
 
 ```typescript

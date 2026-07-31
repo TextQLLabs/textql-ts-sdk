@@ -10,12 +10,14 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
    */
   chatId?: string | undefined;
   onlyIfDifferentOwner?: boolean | null | undefined;
+  upToCellId?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatDuplicateChatRequest$Outbound = {
   chatId?: string | undefined;
   onlyIfDifferentOwner?: boolean | null | undefined;
+  upToCellId?: string | null | undefined;
 };
 
 /** @internal */
@@ -26,6 +28,7 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
   > = z.object({
     chatId: z.optional(z.string()),
     onlyIfDifferentOwner: z.optional(z.nullable(z.boolean())),
+    upToCellId: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicChatDuplicateChatRequestToJSON(

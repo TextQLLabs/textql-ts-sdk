@@ -10,27 +10,12 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicPatchesAutoAttachEntry = {
   path?: string | undefined;
-  /**
-   * deprecated: use connector_ids
-   */
   connectorId?: number | undefined;
   apiConnectorIds?: Array<string> | undefined;
   roleIds?: Array<string> | undefined;
-  /**
-   * multiple connectors (OR logic); overrides connector_id when non-empty
-   */
   connectorIds?: Array<number> | undefined;
-  /**
-   * true = only match when no connector is active
-   */
   matchNoConnector?: boolean | undefined;
-  /**
-   * true = only match when no API connector is active
-   */
   matchNoApiConnector?: boolean | undefined;
-  /**
-   * true = always attach regardless of other conditions
-   */
   matchAll?: boolean | undefined;
 };
 

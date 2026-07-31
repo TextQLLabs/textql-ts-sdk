@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicRbacApiKeyStatus$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key-status.js";
 
-/**
- * Get current member roles and permissions messages
- */
 export type TextqlRpcPublicRbacApiKey = {
   id?: string | undefined;
   memberId?: string | undefined;

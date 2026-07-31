@@ -7,14 +7,6 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicPatchesDeleteOntologyDirectoryRequest = {
   path?: string | undefined;
   commitMessage?: string | null | undefined;
-  /**
-   * When true, delete the directory and all of its contents (files and
-   *
-   * @remarks
-   *  subdirectories) in a single atomic commit. The caller must have write
-   *  access to every nested subdirectory. When false (default), the directory
-   *  must be empty of non-reserved entries.
-   */
   recursive?: boolean | undefined;
 };
 

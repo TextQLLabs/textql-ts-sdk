@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicPatchesRestorePatchRequest = {
+  /**
+   * Code owners first, then admins, matching the sidebar's display order.
+   */
   patchId?: string | undefined;
   expectedGitRef?: string | undefined;
 };

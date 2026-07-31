@@ -13,12 +13,6 @@ import {
 } from "./textql-rpc-public-patches-daily-file-usage.js";
 
 export type TextqlRpcPublicPatchesGetFileUsageTimelineResponse = {
-  /**
-   * most recent pull or run (imports included) inside the window; unset when
-   *
-   * @remarks
-   *  the file had no usage at all
-   */
   days?: Array<TextqlRpcPublicPatchesDailyFileUsage> | undefined;
 };
 

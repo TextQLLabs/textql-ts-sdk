@@ -178,3 +178,12 @@ Based on:
 - No OpenAPI or generator change; every client now resolves `TEXTQL_SERVER_URL`.
 ### Generated
 - [typescript v1.4.1] .
+
+
+## 2026-07-31 17:25:33
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.791.0 (2.924.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.4.2] .

@@ -34,7 +34,7 @@ generation:
     generateNewTests: true
     skipResponseBodyAssertions: false
 typescript:
-  version: 1.4.1
+  version: 1.4.2
   acceptHeaderEnum: false
   additionalDependencies:
     dependencies:
@@ -43,29 +43,25 @@ typescript:
       '@connectrpc/connect-web': ^2.0.0
     devDependencies:
       '@types/react': ^19.2.18
-    # Only `@textql/sdk/embed/react` needs it, so it is optional below.
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
   additionalPackageJSON:
-    peerDependenciesMeta:
-      react:
-        optional: true
-    # `embed/element` exists only to call customElements.define, so the default
-    # `sideEffects: false` lets bundlers drop the bare import EMBED.md documents
-    # and <textql-app> silently never upgrades.
-    sideEffects:
-      - ./esm/embed/element.js
-      - ./src/embed/element.ts
     bugs:
       url: https://github.com/TextQLLabs/textql-ts-sdk/issues
     description: Official TypeScript SDK for the TextQL API.
     homepage: https://github.com/TextQLLabs/textql-ts-sdk#readme
     license: Apache-2.0
+    peerDependenciesMeta:
+      react:
+        optional: true
     publishConfig:
       access: public
     repository:
       type: git
       url: https://github.com/TextQLLabs/textql-ts-sdk.git
+    sideEffects:
+      - ./esm/embed/element.js
+      - ./src/embed/element.ts
   additionalScripts: {}
   alwaysIncludeInboundAndOutbound: false
   apiPromiseHelpers: false

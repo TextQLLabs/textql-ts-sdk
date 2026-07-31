@@ -7,9 +7,6 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicPatchesListOntologyEntriesRequest = {
   path?: string | undefined;
   recursive?: boolean | null | undefined;
-  /**
-   * when true, reserved files like OWNERS are included
-   */
   includeDebugFiles?: boolean | undefined;
 };
 

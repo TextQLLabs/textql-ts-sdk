@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-patches-golden-entry.js";
 
 export type TextqlRpcPublicPatchesListGoldenFilesResponse = {
+  /**
+   * full active list after the change
+   */
   golden?: Array<TextqlRpcPublicPatchesGoldenEntry> | undefined;
 };
 

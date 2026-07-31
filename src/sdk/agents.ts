@@ -6,6 +6,8 @@ import { agentsCreate } from "../funcs/agents-create.js";
 import { agentsDelete } from "../funcs/agents-delete.js";
 import { agentsDuplicate } from "../funcs/agents-duplicate.js";
 import { agentsGetAgent } from "../funcs/agents-get-agent.js";
+import { agentsGetDBSchema } from "../funcs/agents-get-db-schema.js";
+import { agentsGetDBTablePreview } from "../funcs/agents-get-db-table-preview.js";
 import { agentsGetRun } from "../funcs/agents-get-run.js";
 import { agentsListRuns } from "../funcs/agents-list-runs.js";
 import { agentsList } from "../funcs/agents-list.js";
@@ -68,6 +70,34 @@ export class Agents extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.AgentServiceGetAgentResponse> {
     return unwrapAsync(agentsGetAgent(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetAgentDBSchema
+   */
+  async getDBSchema(
+    request: operations.AgentServiceGetAgentDBSchemaRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AgentServiceGetAgentDBSchemaResponse> {
+    return unwrapAsync(agentsGetDBSchema(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetAgentDBTablePreview
+   */
+  async getDBTablePreview(
+    request: operations.AgentServiceGetAgentDBTablePreviewRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AgentServiceGetAgentDBTablePreviewResponse> {
+    return unwrapAsync(agentsGetDBTablePreview(
       this,
       request,
       options,
