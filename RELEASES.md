@@ -157,3 +157,10 @@ Based on:
 - Speakeasy CLI 1.791.0 (2.924.0) https://github.com/speakeasy-api/speakeasy
 ### Generated
 - [typescript v1.3.8] .
+
+## 2026-07-31 02:04:34
+### Changes
+Based on:
+- No OpenAPI or generator change; hand-written `src/embed.ts` fixes released directly.
+### Generated
+- [typescript v1.3.9] .
