@@ -61,7 +61,6 @@ export const { GET, POST } = createEmbedHandler({
 | `rehostDocument` | `true` | See below. |
 
 On-prem: set `TEXTQL_SERVER_URL` to the plain host; the SDK appends
-`/rpc/public` itself.
 
 ## Sizing
 
@@ -131,8 +130,7 @@ app.use(async (req, res, next) => {
 ```
 
 Without a bundler, serve the element from the package, on a route of your own.
-It is one self-contained file — it imports nothing, and the only request it
-makes goes back to your `basePath`:
+It is one self-contained file — it imports nothing, so serving it is a copy:
 
 ```ts
 const ELEMENT_JS = createRequire(import.meta.url).resolve("@textql/sdk/embed/element");
@@ -148,7 +146,7 @@ yourself keeps the version pinned in your lockfile, where your existing review
 and scanning already look. A CDN saves the route for a prototype:
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@textql/sdk@1.4.0/esm/embed/element.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@textql/sdk@1.4.1/esm/embed/element.js"></script>
 ```
 
 Pin the version if you do, and don't ship that form to a restricted network: it
@@ -212,9 +210,11 @@ entry document from your origin, but the scripts and styles inside it still load
 from wherever your instance stores rendered apps — your own object storage
 on-prem, TextQL's CDN against cloud.
 
-With the element self-hosted and `rehostDocument` on, the host page needs only
-`script-src 'self'` and `frame-src 'self'`: the iframe's `src` is your own
-`{basePath}/document`. Add the asset origin to `img-src` for the poster.
+With the element self-hosted and `rehostDocument` on, the host page needs
+`script-src 'self'` and `frame-src 'self'` -- the iframe's `src` is your own
+`{basePath}/document` -- plus `style-src 'unsafe-inline'`, because the element
+writes its shadow-DOM stylesheet as an inline `<style>`. Add the asset origin to
+`img-src` for the poster.
 
 ## What the bridge leaves out
 
