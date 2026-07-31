@@ -3,7 +3,7 @@
  *
  * The embed is `createEmbedHandler` plus `<textql-app>` in PAGE. The rest is a
  * page to put the element on and a route to hand the browser the element —
- * your app already has both.
+ * your app already has both, and with a bundler both go away entirely.
  */
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -24,56 +24,23 @@ const embed = toNodeHandler(createEmbedHandler());
 
 const ELEMENT_JS = createRequire(import.meta.url).resolve('@textql/sdk/embed/element');
 
+// The element styles itself — `:host` is already `display: block; height: 100%`
+// — so the page's only job is giving that percentage something to resolve
+// against. Charset comes from the response header, not a <meta>.
 const PAGE = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Embedded Data App</title>
+<style>html, body { height: 100%; margin: 0 }</style>
 <script type="module" src="/element.js"></script>
-<style>
-	html, body { height: 100%; }
-	body {
-		margin: 0;
-		display: flex;
-		flex-direction: column;
-		font: 15px/1.6 system-ui, -apple-system, sans-serif;
-		color: #111827;
-		background: #fff;
-	}
-	header {
-		flex: none;
-		padding: 12px 20px;
-		border-bottom: 1px solid #e5e7eb;
-	}
-	h1 { font-size: 15px; font-weight: 600; margin: 0; }
-	/* Data Apps lay out against the full viewport; a narrow column breaks the
-	   app's own layout, not this page. */
-	textql-app { flex: 1; min-height: 0; }
-</style>
-</head>
-<body>
-	<header>
-		<h1 id="title">Loading…</h1>
-	</header>
 
-	<textql-app></textql-app>
+<textql-app></textql-app>
 
-	<script type="module">
-		const element = document.querySelector('textql-app');
-		const title = document.getElementById('title');
-
-		function showName({ name }) {
-			title.textContent = name;
-			document.title = name;
-		}
-
-		// The fetch can land before this script parses.
-		element.addEventListener('app-meta', (event) => showName(event.detail));
-		if (element.meta) showName(element.meta);
-	</script>
-</body>
-</html>
+<script type="module">
+	// The one optional block: app-meta needs no bridge, so the title lands
+	// before the app is up. Delete it and the embed still works.
+	const element = document.querySelector('textql-app');
+	const title = ({ name }) => (document.title = name);
+	element.addEventListener('app-meta', (event) => title(event.detail));
+	if (element.meta) title(element.meta); // the fetch can beat this script
+</script>
 `;
 
 const server = createServer((req, res) => {
