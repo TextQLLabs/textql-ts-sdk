@@ -1,0 +1,157 @@
+# Embedding a Data App
+
+Render a TextQL Data App inside your own web app. Two imports and two env vars.
+
+```sh
+TEXTQL_API_KEY=...   # Settings → Developers → API Keys (must have access to corresponding data app)
+TEXTQL_APP_ID=...    # from the app's URL in TextQL: /app/<id>
+```
+
+**Server** — one catch-all route:
+
+```ts
+// app/api/textql/[...path]/route.ts
+import { createEmbedHandler } from '@textql/sdk/embed';
+
+export const { GET, POST } = createEmbedHandler();
+```
+
+**Browser** — importing the element defines it:
+
+```tsx
+import '@textql/sdk/embed/element';
+
+<textql-app style={{ height: '80vh' }} />;
+```
+
+That's the whole integration. The element defaults to `/api/textql`, which is
+where the handler mounts, so nothing needs configuring on the happy path.
+
+## The API key never reaches the browser
+
+The key is org-wide, so it stays on your server and the element talks only to
+your routes. The browser is never told which app it renders and cannot ask for
+a different one.
+
+That also means **your routes are the access control**. Nothing here knows who
+the caller is:
+
+```ts
+export const { GET, POST } = createEmbedHandler({
+  authorize: async (request) => (await getSession(request)) !== null
+});
+```
+
+## Options
+
+| Option | Default | |
+| --- | --- | --- |
+| `appId` | `TEXTQL_APP_ID` | A function `(request) => string` picks per request — from a session, tenant header, or route param. |
+| `client` | built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL` | Pass your own `Textql` instance. |
+| `basePath` | `/api/textql` | Where the handler is mounted. Must match the element's `api-base`. |
+| `authorize` | none | Return `false` or throw to reject. |
+| `rehostDocument` | `true` | See below. |
+
+On-prem: set `TEXTQL_SERVER_URL` to the plain host; the SDK appends
+`/rpc/public` itself.
+
+## Sizing
+
+The element has no intrinsic size, like an iframe. Data Apps also lay out
+against the full viewport — the same region they get inside TextQL — so a
+narrow content column breaks the app's own layout, not the element. Full-bleed
+width and a real height are the safe defaults.
+
+## Events
+
+| Event | Fires when | `detail` |
+| --- | --- | --- |
+| `app-meta` | metadata arrives | `{ name, screenshotUrl, functions }` |
+| `app-ready` | the app's runtime completes its handshake | the same metadata |
+| `app-error` | the app reports a runtime error | the error message |
+
+Use `app-meta` to title your own chrome — it depends only on your server, not
+on the bridge. `element.meta` holds the same value for a listener that attached
+late.
+
+## Other frameworks
+
+It's a custom element, so there is no framework binding to install.
+
+```svelte
+<script>import '@textql/sdk/embed/element';</script>
+<textql-app style="height: 80vh" />
+```
+
+TypeScript in JSX needs the tag declared once:
+
+```ts
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'textql-app': { 'api-base'?: string; style?: React.CSSProperties };
+    }
+  }
+}
+```
+
+Express, Fastify, or bare `node:http` predate Web `Request`:
+
+```ts
+import { createEmbedHandler, toNodeHandler } from '@textql/sdk/embed';
+
+const embed = toNodeHandler(createEmbedHandler());
+app.use(async (req, res, next) => {
+  if (!(await embed(req, res))) next();
+});
+```
+
+Without a bundler, serve the element from the package or a CDN:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/@textql/sdk/esm/embed/element.js"></script>
+<textql-app></textql-app>
+```
+
+## Why the document is served from your origin
+
+TextQL pins a published app to the one origin it was published for, twice over:
+
+| Pin | Set by | Effect elsewhere |
+| --- | --- | --- |
+| `frame-ancestors` CSP header | `PREVIEW_CSP` / `WEB_URL` | the browser refuses to frame the document at all |
+| `ANA_RUNTIME_CONFIG.hostOrigin`, baked into the HTML at publish time | `WEB_URL` | the only origin the app's runtime will `postMessage` or accept messages from, so the bridge is inert |
+
+So `GET {basePath}/document` fetches the app's HTML server-side and re-serves it
+from your origin: your response carries no `frame-ancestors`, and `hostOrigin`
+is rewritten to your origin. A `<base href>` keeps every subresource loading
+from the CDN, which already serves them with `Access-Control-Allow-Origin: *`.
+
+**This is a workaround.** Costs worth knowing:
+
+- Every document load proxies through your server, `no-store`, so the entry
+  document is not CDN-cached. Subresources still are.
+- The rewrite is pinned to a string literal emitted by TextQL's app shell. If
+  that shape changes, the handler throws a 502 telling you to upgrade rather
+  than serving a document whose bridge will never connect.
+- The document response carries `content-security-policy: sandbox
+  allow-scripts`. Untrusted third-party HTML is being served from *your*
+  origin; that header is what keeps it out of your cookies and `localStorage`.
+  If you reimplement this route, keep it.
+
+Set `rehostDocument: false` to point the iframe straight at the signed CDN URL
+instead. That is the better path, and it works once your origin is allowed
+platform-side — at which point this whole section goes away.
+
+## What the bridge leaves out
+
+The full host inside TextQL also carries per-member state, activity logging,
+presence, deep-link routing, realtime sockets, and asking the agent. The
+element declares all of them off in its `hello`, which is a supported
+configuration. Apps that render data and call compute functions work unchanged;
+apps built around member state render but lose those features.
+
+Compute calls are relayed through `POST {basePath}/compute`, which refuses any
+function name the app does not declare. TextQL rate-limits compute server-side
+and returns `resource_exhausted`; a production host should retry that with
+backoff.
