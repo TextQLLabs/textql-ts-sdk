@@ -3,18 +3,22 @@
 A runnable version of [`EMBED.md`](../../EMBED.md) — the whole embed is two
 imports from `@textql/sdk`.
 
+The whole example is one file. Server half:
+
 ```ts
-// server.ts
 const embed = toNodeHandler(createEmbedHandler());
 ```
+
+Browser half, in the `PAGE` string:
+
 ```html
-<!-- public/index.html -->
-<script type="module" src="./element.js"></script>
+<script type="module" src="/element.js"></script>
 <textql-app></textql-app>
 ```
 
-Everything else in `server.ts` is a static file server so the example runs
-under bare `node`. Your app already has one.
+Everything else in `server.ts` exists because the example runs under bare
+`node`: a route to hand the browser the element, and a route to serve the page
+holding it. Your app already has both.
 
 ## Run it
 
@@ -39,10 +43,9 @@ them renders exactly the same but never calls back to your server, so the
 
 ## What to look at
 
-| | |
-| --- | --- |
-| `server.ts` | mounting the handler, and serving the element without a bundler |
-| `public/index.html` | the element, plus `app-meta` / `app-ready` / `app-error` driving the header |
+`server.ts` is the whole thing: mounting the handler, serving the element
+without a bundler, and the `PAGE` string where `<textql-app>` sits with
+`app-meta` / `app-ready` / `app-error` driving the header.
 
 The header names the app's compute functions and says when the bridge connects.
 Those are the two halves worth seeing: the document renders off `/document`,
@@ -59,5 +62,5 @@ The routes the handler serves, the `authorize` hook to add before you ship, why
 the app document is re-served from your origin, and snippets for
 React/Svelte/Express are all in [`EMBED.md`](../../EMBED.md).
 
-With a bundler, none of `server.ts`'s static-file plumbing applies — the browser
-half is just `import '@textql/sdk/embed/element'`.
+With a bundler, the `/element.js` route and the `PAGE` string both go away —
+the browser half is just `import '@textql/sdk/embed/element'`.

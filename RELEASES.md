@@ -164,3 +164,10 @@ Based on:
 - No OpenAPI or generator change; hand-written `src/embed.ts` fixes released directly.
 ### Generated
 - [typescript v1.3.9] .
+
+## 2026-07-31 02:30:00
+### Changes
+Based on:
+- No OpenAPI or generator change; adds the hand-written `@textql/sdk/embed/react` entrypoint.
+### Generated
+- [typescript v1.4.0] .

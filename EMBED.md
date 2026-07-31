@@ -16,16 +16,24 @@ import { createEmbedHandler } from '@textql/sdk/embed';
 export const { GET, POST } = createEmbedHandler();
 ```
 
-**Browser** — importing the element defines it:
+**Browser** — in React, one import and one tag:
 
 ```tsx
-import '@textql/sdk/embed/element';
+import { TextqlApp } from '@textql/sdk/embed/react';
 
-<textql-app style={{ height: '80vh' }} />;
+<TextqlApp style={{ height: '80vh' }} />;
 ```
 
-That's the whole integration. The element defaults to `/api/textql`, which is
-where the handler mounts, so nothing needs configuring on the happy path.
+Anywhere else, import the custom element and use it directly:
+
+```ts
+import '@textql/sdk/embed/element';
+
+<textql-app style="height: 80vh"></textql-app>
+```
+
+That's the whole integration. Both default to `/api/textql`, which is where
+the handler mounts, so nothing needs configuring on the happy path.
 
 ## The API key never reaches the browser
 
@@ -74,6 +82,34 @@ Use `app-meta` to title your own chrome — it depends only on your server, not
 on the bridge. `element.meta` holds the same value for a listener that attached
 late.
 
+`<TextqlApp />` surfaces the same three as props, so React needs no refs:
+
+```tsx
+<TextqlApp
+  apiBase="/api/textql"
+  style={{ height: '80vh' }}
+  onMeta={(meta) => setTitle(meta.name)}
+  onReady={(meta) => console.log('bridge up', meta)}
+  onError={(error) => console.error(error.message)}
+/>
+```
+
+## React
+
+`@textql/sdk/embed/react` is a thin wrapper over the same element. Prefer it to
+the raw tag: JSX has no type for a custom element, and React cannot bind
+`app-meta` and friends because they are CustomEvents.
+
+It is also the only safe form under SSR. `@textql/sdk/embed/element` defines a
+class extending `HTMLElement` at module scope, so importing it on a server
+throws `HTMLElement is not defined` — that will break a Next.js render even
+inside a `'use client'` component. `<TextqlApp />` carries the `'use client'`
+directive and loads the element in an effect, so it server-renders to an inert
+`<textql-app>` tag and upgrades on the client. That also code-splits the
+element out of your initial bundle.
+
+`react` is an optional peer dependency; nothing else in the SDK needs it.
+
 ## Other frameworks
 
 It's a custom element, so there is no framework binding to install.
@@ -81,18 +117,6 @@ It's a custom element, so there is no framework binding to install.
 ```svelte
 <script>import '@textql/sdk/embed/element';</script>
 <textql-app style="height: 80vh" />
-```
-
-TypeScript in JSX needs the tag declared once:
-
-```ts
-declare module 'react' {
-  namespace JSX {
-    interface IntrinsicElements {
-      'textql-app': { 'api-base'?: string; style?: React.CSSProperties };
-    }
-  }
-}
 ```
 
 Express, Fastify, or bare `node:http` predate Web `Request`:
