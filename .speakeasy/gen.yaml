@@ -34,7 +34,7 @@ generation:
     generateNewTests: true
     skipResponseBodyAssertions: false
 typescript:
-  version: 1.3.8
+  version: 1.3.9
   acceptHeaderEnum: false
   additionalDependencies:
     dependencies:
@@ -44,6 +44,12 @@ typescript:
     devDependencies: {}
     peerDependencies: {}
   additionalPackageJSON:
+    # `embed/element` exists only to call customElements.define, so the default
+    # `sideEffects: false` lets bundlers drop the bare import EMBED.md documents
+    # and <textql-app> silently never upgrades.
+    sideEffects:
+      - ./esm/embed/element.js
+      - ./src/embed/element.ts
     bugs:
       url: https://github.com/TextQLLabs/textql-ts-sdk/issues
     description: Official TypeScript SDK for the TextQL API.

@@ -228,12 +228,33 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
+/**
+ * The platform reports failures as a JSON body — `{ code, message }` — carried
+ * on the thrown error. Read structurally so this needs no error-class import.
+ */
+function upstreamMessage(cause: unknown): string | null {
+  const body = (cause as { body?: unknown })?.body;
+  if (typeof body !== "string") return null;
+  try {
+    const { message } = JSON.parse(body) as { message?: unknown };
+    return typeof message === "string" && message ? message : null;
+  } catch {
+    return null;
+  }
+}
+
 function errorResponse(cause: unknown): Response {
   if (cause instanceof EmbedError) return json({ error: cause.message }, cause.status);
   const status = (cause as { statusCode?: unknown })?.statusCode;
   // The SDK throws on non-2xx rather than returning the union, so a bad key is
   // a 401 here, not an opaque 500.
-  if (typeof status === "number") return json({ error: `TextQL returned ${status}.` }, status);
+  if (typeof status === "number") {
+    // The status alone is undebuggable: a compute call that raised inside the
+    // app is a bare 400, and the Python traceback naming the bad argument —
+    // the entire diagnosis — is in this message. These are the platform's
+    // developer-facing strings, so they reach the browser as-is.
+    return json({ error: upstreamMessage(cause) ?? `TextQL returned ${status}.` }, status);
+  }
   return json({ error: "The embed request failed." }, 500);
 }
 
