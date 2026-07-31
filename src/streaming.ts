@@ -2,6 +2,7 @@ import type { DescService } from "@bufbuild/protobuf";
 import { type Client, createClient, type Interceptor, type Transport } from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-web";
 
+import { serverURLFromEnv } from "./env-config.js";
 import { ServerList } from "./lib/config.js";
 import { ClientSDK } from "./lib/sdks.js";
 import { AgentService } from "./generated/connect/public/agent_pb.js";
@@ -12,7 +13,7 @@ import { PlaybookService } from "./generated/connect/public/playbook_pb.js";
 
 export interface StreamingClientOptions {
   apiKey: string | (() => Promise<string>);
-  serverURL?: string;
+  serverURL?: string | undefined;
   fetch?: typeof globalThis.fetch;
 }
 
@@ -32,7 +33,7 @@ function optionsFromSource(source: StreamingClientSource): StreamingClientOption
   if (source instanceof ClientSDK) {
     return {
       apiKey: source._options.apiKey ?? "",
-      serverURL: source._baseURL?.toString() ?? ServerList[0],
+      serverURL: source._baseURL?.toString(),
     };
   }
   return source;
@@ -57,7 +58,7 @@ function createTransport(options: StreamingClientOptions): Transport {
     return next(req);
   };
   return createConnectTransport({
-    baseUrl: rpcBaseUrl(options.serverURL ?? ServerList[0]),
+    baseUrl: rpcBaseUrl(options.serverURL ?? serverURLFromEnv() ?? ServerList[0]),
     interceptors: [auth],
     // Wrapped unconditionally so the fix also reaches callers that pass a
     // ClientSDK, which has no way to supply its own fetch.

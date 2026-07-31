@@ -171,3 +171,10 @@ Based on:
 - No OpenAPI or generator change; adds the hand-written `@textql/sdk/embed/react` entrypoint.
 ### Generated
 - [typescript v1.4.0] .
+
+## 2026-07-31 16:00:00
+### Changes
+Based on:
+- No OpenAPI or generator change; every client now resolves `TEXTQL_SERVER_URL`.
+### Generated
+- [typescript v1.4.1] .

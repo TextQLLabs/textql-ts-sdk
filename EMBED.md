@@ -130,12 +130,30 @@ app.use(async (req, res, next) => {
 });
 ```
 
-Without a bundler, serve the element from the package or a CDN:
+Without a bundler, serve the element from the package, on a route of your own.
+It is one self-contained file — it imports nothing, and the only request it
+makes goes back to your `basePath`:
+
+```ts
+const ELEMENT_JS = createRequire(import.meta.url).resolve("@textql/sdk/embed/element");
+```
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@textql/sdk/esm/embed/element.js"></script>
+<script type="module" src="/element.js"></script>
 <textql-app></textql-app>
 ```
+
+`examples/embed-app` does exactly this in ~10 lines of bare `node`. Serving it
+yourself keeps the version pinned in your lockfile, where your existing review
+and scanning already look. A CDN saves the route for a prototype:
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/@textql/sdk@1.4.0/esm/embed/element.js"></script>
+```
+
+Pin the version if you do, and don't ship that form to a restricted network: it
+puts a third-party host in your `script-src`, adds an outbound request on every
+page load, and does not resolve air-gapped.
 
 ## Why the document is served from your origin
 
@@ -166,6 +184,37 @@ from the CDN, which already serves them with `Access-Control-Allow-Origin: *`.
 Set `rehostDocument: false` to point the iframe straight at the signed CDN URL
 instead. That is the better path, and it works once your origin is allowed
 platform-side — at which point this whole section goes away.
+
+## On-premise and restricted networks
+
+Nothing in the integration needs a TextQL-operated origin at runtime. Point the
+handler at your instance and serve the element yourself, and every host the
+browser reaches is one you run:
+
+```sh
+TEXTQL_SERVER_URL=https://textql.internal.example.com
+```
+
+Every client reads it — the embed handler, a bare `new Textql()`, and
+`createStreamingClient` — so the host is named once rather than at each
+construction site. An explicit `serverURL` still wins. The plain host is what
+belongs there; the RPC prefix hook appends `/rpc/public`.
+
+| What the browser loads | From |
+| --- | --- |
+| the element script | your origin, served off the resolved package path |
+| `{basePath}/app`, `/document`, `/compute` | your origin — the handler's three routes |
+| the app document's subresources | the asset origin your instance signs URLs for, via the injected `<base href>` |
+| the poster screenshot, before the app loads | the same asset origin |
+
+Check that last pair before assuming air-gapped. `rehostDocument` re-serves the
+entry document from your origin, but the scripts and styles inside it still load
+from wherever your instance stores rendered apps — your own object storage
+on-prem, TextQL's CDN against cloud.
+
+With the element self-hosted and `rehostDocument` on, the host page needs only
+`script-src 'self'` and `frame-src 'self'`: the iframe's `src` is your own
+`{basePath}/document`. Add the asset origin to `img-src` for the poster.
 
 ## What the bridge leaves out
 

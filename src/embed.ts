@@ -8,6 +8,7 @@
  * server, and because a published app has to be re-served from your origin —
  * see `appDocument` below.
  */
+import { readEnv } from "./env-config.js";
 import { Textql } from "./sdk/sdk.js";
 import type { ConnectError } from "./models/connect-error.js";
 import type { TextqlRpcPublicAppApp } from "./models/textql-rpc-public-app-app.js";
@@ -68,12 +69,7 @@ const PUBLISHED_CONFIG =
   /<script>window\.ANA_RUNTIME_CONFIG\s*=\s*\{[^}]*\};?<\/script>/;
 
 function envAppId(): string {
-  const globals = globalThis as {
-    Deno?: { env?: { get?: (key: string) => string | undefined } };
-    process?: { env?: Record<string, string | undefined> };
-  };
-  const value = globals.Deno?.env?.get?.("TEXTQL_APP_ID")
-    ?? globals.process?.env?.["TEXTQL_APP_ID"];
+  const value = readEnv("TEXTQL_APP_ID");
   if (!value) {
     throw new EmbedError(
       503,
@@ -114,7 +110,8 @@ class Embed {
 
   private sdk(): Textql {
     // Built lazily so a missing key surfaces as a 503 on the first request
-    // rather than a throw at import time.
+    // rather than a throw at import time. `TEXTQL_SERVER_URL` is applied by
+    // the SDK init hook, so a bare client already points on-prem.
     this.client ??= this.options.client ?? new Textql();
     return this.client;
   }

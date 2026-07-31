@@ -1,4 +1,6 @@
-import { BeforeRequestContext, BeforeRequestHook, Hooks } from "./types.js";
+import { SDKOptions } from "../lib/config.js";
+import { serverURLFromEnv } from "../env-config.js";
+import { BeforeRequestContext, BeforeRequestHook, Hooks, SDKInitHook } from "./types.js";
 
 /*
  * This file is only ever generated once on the first generation and then is free to be modified.
@@ -19,9 +21,25 @@ class RPCPublicPrefixHook implements BeforeRequestHook {
   }
 }
 
+/**
+ * Points every client at `TEXTQL_SERVER_URL`, so an on-prem deployment names
+ * its host once rather than at each construction site. This runs before
+ * `serverURLFromOptions` resolves a base, so precedence is an explicit
+ * `serverURL`/`serverIdx`, then the environment, then the generated default —
+ * which is `app.textql.com` and is the wrong answer everywhere on-prem.
+ */
+class ServerURLFromEnvHook implements SDKInitHook {
+  sdkInit(opts: SDKOptions): SDKOptions {
+    if (opts.serverURL || opts.serverIdx != null) return opts;
+    const serverURL = serverURLFromEnv();
+    return serverURL ? { ...opts, serverURL } : opts;
+  }
+}
+
 export function initHooks(hooks: Hooks) {
   // Add hooks by calling hooks.register{ClientInit/BeforeCreateRequest/BeforeRequest/AfterSuccess/AfterError}Hook
   // with an instance of a hook that implements that specific Hook interface
   // Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance
+  hooks.registerSDKInitHook(new ServerURLFromEnvHook());
   hooks.registerBeforeRequestHook(new RPCPublicPrefixHook());
 }
