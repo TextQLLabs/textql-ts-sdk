@@ -16,8 +16,10 @@ as one batch, propose a default for each, and wait for the reply.
 1. **Server framework?** Next.js App Router / Next.js Pages / SvelteKit / Remix /
    Express / Fastify / bare `node:http` / other. Determines the route shape.
 2. **Browser layer?** React, or a non-React framework using the custom element.
-3. **Which app?** One fixed app for everyone (`TEXTQL_APP_ID`), or chosen
-   per request — per tenant, per session, per route param.
+3. **How many apps, and who picks?** One fixed app for everyone
+   (`TEXTQL_APP_ID`); several fixed apps, possibly on one page; or chosen per
+   request from the session/tenant. See "Rendering more than one app" — the
+   answer changes the route layout, not just a config value.
 4. **Who is allowed to see it?** This is not optional; see the warning below.
    Get the name of their session/auth helper so `authorize` calls the real thing.
 5. **TextQL cloud or on-prem?** On-prem needs `TEXTQL_SERVER_URL`.
@@ -43,6 +45,79 @@ Two environment variables, server-side only:
 TEXTQL_API_KEY=...   # Settings → Developers → API Keys (admin only)
 TEXTQL_APP_ID=...    # from the app's URL in TextQL: /app/<id>
 ```
+
+## Preflight: prove the configuration before writing routes
+
+Run this **first**, before wiring anything. Checking that the variables merely
+exist is not enough — a present-but-wrong key, an app ID from another org, an
+app that has never been rendered, and a silently-ignored `TEXTQL_SERVER_URL` all
+pass a presence check and then fail later as an opaque 503, 404, or 502.
+
+Write `preflight.mjs` in the project root:
+
+```js
+// Run: node --env-file=.env preflight.mjs   (Node 20.6+)
+import { Textql } from "@textql/sdk";
+
+const ok = (m) => console.log(`ok    ${m}`);
+const fail = (m) => { console.error(`FAIL  ${m}`); process.exitCode = 1; };
+
+const key = process.env.TEXTQL_API_KEY;
+const appId = process.env.TEXTQL_APP_ID;
+const serverURL = process.env.TEXTQL_SERVER_URL;
+
+key ? ok(`TEXTQL_API_KEY set (${key.length} chars)`)
+    : fail("TEXTQL_API_KEY unset — every request will 503");
+appId ? ok(`TEXTQL_APP_ID=${appId}`)
+      : fail("TEXTQL_APP_ID unset — every request will 503");
+serverURL?.includes("/rpc/public")
+  ? fail("TEXTQL_SERVER_URL must be the plain host; the SDK appends /rpc/public")
+  : ok(`TEXTQL_SERVER_URL ${serverURL ?? "unset → app.textql.com (correct for cloud)"}`);
+if (process.exitCode) process.exit(1);
+
+// Record where the request actually goes. This is what catches an on-prem host
+// that is set but ignored — the check above cannot tell you that.
+let target;
+const inner = globalThis.fetch;
+globalThis.fetch = (input, init) => {
+  target ??= typeof input === "string" ? input : input.url;
+  return inner(input, init);
+};
+
+let result;
+try {
+  result = await new Textql().apps.get({ body: { appId } });
+} catch (error) {
+  fail(`could not reach the API: ${error.message}`);
+  console.error(`      attempted: ${target ?? "(no request was made)"}`);
+  process.exit(1);
+}
+
+ok(`requests go to ${target ? new URL(target).origin : "(unknown)"}`);
+
+// Unary RPCs resolve to a ConnectError rather than rejecting.
+if ("code" in result || "details" in result) {
+  fail(`API rejected the call: ${result.message ?? result.code}`);
+  console.error("      usually a bad or revoked TEXTQL_API_KEY");
+  process.exit(1);
+}
+if (!result.app) {
+  fail(`no app ${appId} visible to this key — wrong ID, or key from another org`);
+  process.exit(1);
+}
+
+ok(`app "${result.app.name}"`);
+result.app.htmlUrl
+  ? ok("app is rendered — {basePath}/document will work")
+  : fail("app has never been rendered — {basePath}/document will 404");
+
+const fns = (result.app.computeFunctions ?? []).map((f) => f.name).filter(Boolean);
+ok(fns.length ? `compute functions: ${fns.join(", ")}` : "no compute functions (fine)");
+```
+
+Every line is conclusive: it either names the misconfiguration or confirms the
+thing works. Do not proceed until it exits 0. Report its output verbatim rather
+than summarising it.
 
 ## Server: one catch-all route
 
@@ -137,13 +212,80 @@ against the full viewport — the same region they get inside TextQL — so a na
 content column breaks the app's own layout, not the element. Full-bleed width
 and a real height are the safe defaults.
 
-## Choosing the app per request
+## Rendering more than one app
+
+**The element cannot tell the server which app to render, by design.** Its
+`api-base` is concatenated with the route suffix, so a query string there
+(`/api/textql?app=x`) produces `/api/textql?app=x/app`, which matches nothing
+and 404s. Path segments are the only lever the browser has. Pick by who decides:
+
+**1 — The server decides from the session.** One handler, one URL, a different
+app per user or tenant. Safest: the client has no say.
 
 ```ts
 export const { GET, POST } = createEmbedHandler({
   appId: async (request) => (await getTenant(request)).textqlAppId,
 });
 ```
+
+**2 — A handful of fixed apps.** One handler each, on its own `basePath`.
+
+```ts
+// app/api/textql/sales/[...path]/route.ts
+export const { GET, POST } = createEmbedHandler({
+  appId: SALES_APP_ID,
+  basePath: "/api/textql/sales",
+  authorize: canViewSales,
+});
+```
+
+```tsx
+<TextqlApp apiBase="/api/textql/sales" style={{ height: "80vh" }} />
+<TextqlApp apiBase="/api/textql/ops"   style={{ height: "80vh" }} />
+```
+
+Nested base paths are safe: a handler mounted at `/api/textql` computes the
+suffix `/sales/app` for that route, matches none of its three, and returns
+`null` rather than stealing it. Several embeds on one page each fetch
+independently.
+
+**3 — The client picks by path.** Map an opaque key to an ID through an
+allowlist, and cache the handlers — each lazily builds its own SDK client, so
+constructing one per request is wasted work.
+
+```ts
+const APPS: Record<string, string> = { sales: "…", ops: "…" };
+const handlers = new Map<string, ReturnType<typeof createEmbedHandler>>();
+
+function handlerFor(key: string) {
+  if (!(key in APPS)) return null; // allowlist, never passthrough
+  if (!handlers.has(key)) {
+    handlers.set(key, createEmbedHandler({
+      appId: APPS[key],
+      basePath: `/api/textql/${key}`,
+      authorize: (request) => canView(request, key),
+    }));
+  }
+  return handlers.get(key) ?? null;
+}
+
+async function route(request: Request, ctx: { params: Promise<{ app: string }> }) {
+  const handler = handlerFor((await ctx.params).app);
+  if (!handler) return new Response("Unknown app", { status: 404 });
+  return (await handler(request)) ?? new Response("Not found", { status: 404 });
+}
+
+export { route as GET, route as POST };
+```
+
+> Never write `appId: (request) => new URL(request.url).pathname.split("/").pop()`.
+> The API key is org-wide, so a passthrough turns the route into an oracle that
+> renders **any** app in the org. Authorize against the key, not the resolved ID.
+
+The app ID is not a credential — nothing can be done with one without the org's
+API key, and the browser never receives it (`{basePath}/app` returns only
+`name`, `screenshotUrl`, and `functions`). Hardcoding it server-side is fine.
+The rule is only that the *server* must decide which app it is.
 
 ## On-prem
 
@@ -196,79 +338,6 @@ declare**, so the route cannot become a generic runner. Declared names arrive as
 
 TextQL rate-limits compute server-side and returns `resource_exhausted`. A
 production host should retry that with backoff.
-
-## Preflight: prove the configuration before writing routes
-
-Run this **first**, before wiring anything. Checking that the variables merely
-exist is not enough — a present-but-wrong key, an app ID from another org, an
-app that has never been rendered, and a silently-ignored `TEXTQL_SERVER_URL` all
-pass a presence check and then fail later as an opaque 503, 404, or 502.
-
-Write `preflight.mjs` in the project root:
-
-```js
-// Run: node --env-file=.env preflight.mjs   (Node 20.6+)
-import { Textql } from "@textql/sdk";
-
-const ok = (m) => console.log(`ok    ${m}`);
-const fail = (m) => { console.error(`FAIL  ${m}`); process.exitCode = 1; };
-
-const key = process.env.TEXTQL_API_KEY;
-const appId = process.env.TEXTQL_APP_ID;
-const serverURL = process.env.TEXTQL_SERVER_URL;
-
-key ? ok(`TEXTQL_API_KEY set (${key.length} chars)`)
-    : fail("TEXTQL_API_KEY unset — every request will 503");
-appId ? ok(`TEXTQL_APP_ID=${appId}`)
-      : fail("TEXTQL_APP_ID unset — every request will 503");
-serverURL?.includes("/rpc/public")
-  ? fail("TEXTQL_SERVER_URL must be the plain host; the SDK appends /rpc/public")
-  : ok(`TEXTQL_SERVER_URL ${serverURL ?? "unset → app.textql.com (correct for cloud)"}`);
-if (process.exitCode) process.exit(1);
-
-// Record where the request actually goes. This is what catches an on-prem host
-// that is set but ignored — the check above cannot tell you that.
-let target;
-const inner = globalThis.fetch;
-globalThis.fetch = (input, init) => {
-  target ??= typeof input === "string" ? input : input.url;
-  return inner(input, init);
-};
-
-let result;
-try {
-  result = await new Textql().apps.get({ body: { appId } });
-} catch (error) {
-  fail(`could not reach the API: ${error.message}`);
-  console.error(`      attempted: ${target ?? "(no request was made)"}`);
-  process.exit(1);
-}
-
-ok(`requests go to ${target ? new URL(target).origin : "(unknown)"}`);
-
-// Unary RPCs resolve to a ConnectError rather than rejecting.
-if ("code" in result || "details" in result) {
-  fail(`API rejected the call: ${result.message ?? result.code}`);
-  console.error("      usually a bad or revoked TEXTQL_API_KEY");
-  process.exit(1);
-}
-if (!result.app) {
-  fail(`no app ${appId} visible to this key — wrong ID, or key from another org`);
-  process.exit(1);
-}
-
-ok(`app "${result.app.name}"`);
-result.app.htmlUrl
-  ? ok("app is rendered — {basePath}/document will work")
-  : fail("app has never been rendered — {basePath}/document will 404");
-
-const fns = (result.app.computeFunctions ?? []).map((f) => f.name).filter(Boolean);
-ok(fns.length ? `compute functions: ${fns.join(", ")}` : "no compute functions (fine)");
-```
-
-Every line is conclusive: it either names the misconfiguration or confirms the
-thing works. Do not proceed until it exits 0. Report its output verbatim rather
-than summarising it.
 
 ## Verify the running integration
 
