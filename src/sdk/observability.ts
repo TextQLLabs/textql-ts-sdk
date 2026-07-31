@@ -25,6 +25,7 @@ import { observabilityGetCustomTopicThreads } from "../funcs/observability-get-c
 import { observabilityGetCustomTopic } from "../funcs/observability-get-custom-topic.js";
 import { observabilityGetEngagementSpectrum } from "../funcs/observability-get-engagement-spectrum.js";
 import { observabilityGetMemberActivity } from "../funcs/observability-get-member-activity.js";
+import { observabilityGetMemberSignalTrend } from "../funcs/observability-get-member-signal-trend.js";
 import { observabilityGetObservabilityStats } from "../funcs/observability-get-observability-stats.js";
 import { observabilityGetThreadWarnings } from "../funcs/observability-get-thread-warnings.js";
 import { observabilityListCustomTopics } from "../funcs/observability-list-custom-topics.js";
@@ -355,6 +356,20 @@ export class Observability extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ObservabilityServiceGetMemberActivityResponse> {
     return unwrapAsync(observabilityGetMemberActivity(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetMemberSignalTrend
+   */
+  async getMemberSignalTrend(
+    request: operations.ObservabilityServiceGetMemberSignalTrendRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ObservabilityServiceGetMemberSignalTrendResponse> {
+    return unwrapAsync(observabilityGetMemberSignalTrend(
       this,
       request,
       options,

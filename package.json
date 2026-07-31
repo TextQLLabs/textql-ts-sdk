@@ -1,6 +1,6 @@
 {
   "name": "@textql/sdk",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": "TextQL Labs",
   "bugs": {
     "url": "https://github.com/TextQLLabs/textql-ts-sdk/issues"
@@ -8,6 +8,11 @@
   "description": "Official TypeScript SDK for the TextQL API.",
   "homepage": "https://github.com/TextQLLabs/textql-ts-sdk#readme",
   "license": "Apache-2.0",
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -15,6 +20,10 @@
     "type": "git",
     "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
   },
+  "sideEffects": [
+    "./esm/embed/element.js",
+    "./src/embed/element.ts"
+  ],
   "type": "module",
   "main": "./esm/index.js",
   "exports": {
@@ -55,10 +64,11 @@
       "default": "./esm/*.js"
     }
   },
-  "sideEffects": [
-    "./esm/embed/element.js",
-    "./src/embed/element.ts"
-  ],
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
+  },
   "scripts": {
     "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
     "build": "tsgo",
@@ -66,11 +76,6 @@
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

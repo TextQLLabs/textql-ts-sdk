@@ -9,12 +9,6 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse = {
-  /**
-   * True ⇒ the org's live Ontology HEAD differed from the last reconciled commit,
-   *
-   * @remarks
-   *  so a catch-up reconcile was enqueued. False ⇒ already converged (no-op).
-   */
   drifted?: boolean | undefined;
 };
 

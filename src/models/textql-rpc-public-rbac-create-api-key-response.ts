@@ -16,9 +16,6 @@ import {
  * Object access management messages
  */
 export type TextqlRpcPublicRbacCreateApiKeyResponse = {
-  /**
-   * Get current member roles and permissions messages
-   */
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
   apiKeySecret?: string | undefined;
   /**

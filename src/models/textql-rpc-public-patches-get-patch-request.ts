@@ -4,6 +4,15 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * GetConfigExportCapabilities tells the UI whether to offer "Save as config":
+ *
+ * @remarks
+ *  which object types currently have a working exporter (registered AND its
+ *  dependencies — e.g. the ontology parser — reachable), and whether the caller
+ *  holds the permission SaveObjectAsConfig requires. Authn-only: the response
+ *  carries the authorization answer instead of failing the call.
+ */
 export type TextqlRpcPublicPatchesGetPatchRequest = {
   patchId?: string | undefined;
   revision?: number | null | undefined;

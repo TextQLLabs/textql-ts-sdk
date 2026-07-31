@@ -326,6 +326,7 @@ export * from "./rbac-service-revoke-api-key.js";
 export * from "./rbac-service-rotate-api-key.js";
 export * from "./rbac-service-set-role-permissions.js";
 export * from "./rbac-service-update-role.js";
+export * from "./rbac-service-who-am-i.js";
 export * from "./sandbox-admin-service-get-sandbox.js";
 export * from "./sandbox-admin-service-list-sandbox-egress.js";
 export * from "./sandbox-admin-service-list-sandbox-executions.js";

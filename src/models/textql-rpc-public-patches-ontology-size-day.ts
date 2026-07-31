@@ -14,21 +14,14 @@ import {
 } from "./textql-rpc-public-patches-date.js";
 
 /**
- * empty for untitled chats
+ * one entry per UTC day in the window, oldest first; idle days zero-filled
  */
 export type TotalBytes = number | string;
 
-/**
- * FileChatUsage is one chat that retrieved a ontology file inside the
- *
- * @remarks
- *  observation window. Only pulls attributed to a chat are listed — background
- *  or sandbox reads carry no chat id and are excluded.
- */
 export type TextqlRpcPublicPatchesOntologySizeDay = {
   date?: TextqlRpcPublicPatchesDate | undefined;
   /**
-   * empty for untitled chats
+   * one entry per UTC day in the window, oldest first; idle days zero-filled
    */
   totalBytes?: number | string | undefined;
   fileCount?: number | undefined;

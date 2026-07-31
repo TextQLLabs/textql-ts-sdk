@@ -7,16 +7,24 @@ import { appsDeleteApp } from "../funcs/apps-delete-app.js";
 import { appsDuplicate } from "../funcs/apps-duplicate.js";
 import { appsGetAppVersion } from "../funcs/apps-get-app-version.js";
 import { appsGetAppViewStats } from "../funcs/apps-get-app-view-stats.js";
+import { appsGetDBSchema } from "../funcs/apps-get-db-schema.js";
+import { appsGetDBTablePreview } from "../funcs/apps-get-db-table-preview.js";
+import { appsGetMemberState } from "../funcs/apps-get-member-state.js";
 import { appsGetMembersWithApps } from "../funcs/apps-get-members-with-apps.js";
 import { appsGet } from "../funcs/apps-get.js";
 import { appsHeartbeat } from "../funcs/apps-heartbeat.js";
 import { appsInvokeComputeFunction } from "../funcs/apps-invoke-compute-function.js";
+import { appsListActivitySince } from "../funcs/apps-list-activity-since.js";
+import { appsListMyMemberActivity } from "../funcs/apps-list-my-member-activity.js";
 import { appsListVersions } from "../funcs/apps-list-versions.js";
 import { appsList } from "../funcs/apps-list.js";
 import { appsMoveAppToFolder } from "../funcs/apps-move-app-to-folder.js";
+import { appsPresenceHeartbeat } from "../funcs/apps-presence-heartbeat.js";
+import { appsRecordMemberActivity } from "../funcs/apps-record-member-activity.js";
 import { appsRefresh } from "../funcs/apps-refresh.js";
 import { appsRestoreAppVersion } from "../funcs/apps-restore-app-version.js";
 import { appsSetFavorite } from "../funcs/apps-set-favorite.js";
+import { appsSetMemberState } from "../funcs/apps-set-member-state.js";
 import { appsUpdate } from "../funcs/apps-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -102,6 +110,59 @@ export class Apps extends ClientSDK {
   }
 
   /**
+   * Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+   *
+   * @remarks
+   * Server stream of live activity batches + presence snapshots, driven by
+   *  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+   */
+  async getDBSchema(
+    request: operations.AppServiceGetAppDBSchemaRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceGetAppDBSchemaResponse> {
+    return unwrapAsync(appsGetDBSchema(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
+   *
+   * @remarks
+   * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
+   *  the app's stream. Presence never touches Postgres and never exposes emails.
+   */
+  async getDBTablePreview(
+    request: operations.AppServiceGetAppDBTablePreviewRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceGetAppDBTablePreviewResponse> {
+    return unwrapAsync(appsGetDBTablePreview(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * View analytics: reads the engagement views recorded on app page load.
+   *
+   * @remarks
+   * View analytics: reads the engagement views recorded on app page load.
+   */
+  async getMemberState(
+    request: operations.AppServiceGetAppMemberStateRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceGetAppMemberStateResponse> {
+    return unwrapAsync(appsGetMemberState(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * GetAppVersion
    */
   async getAppVersion(
@@ -165,6 +226,24 @@ export class Apps extends ClientSDK {
   }
 
   /**
+   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+   *
+   * @remarks
+   * Append-only per-member activity log. Listing is own rows only; no
+   *  cross-member reads in this release.
+   */
+  async listActivitySince(
+    request: operations.AppServiceListAppActivitySinceRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceListAppActivitySinceResponse> {
+    return unwrapAsync(appsListActivitySince(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
    *
    * @remarks
@@ -196,6 +275,20 @@ export class Apps extends ClientSDK {
   }
 
   /**
+   * ListMyAppMemberActivity
+   */
+  async listMyMemberActivity(
+    request: operations.AppServiceListMyAppMemberActivityRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceListMyAppMemberActivityResponse> {
+    return unwrapAsync(appsListMyMemberActivity(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * Moves an app into a library folder (or to root when folder_id is empty).
    *
    * @remarks
@@ -206,6 +299,43 @@ export class Apps extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.AppServiceMoveAppToFolderResponse> {
     return unwrapAsync(appsMoveAppToFolder(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+   *
+   * @remarks
+   * Cross-member live activity: rows from every member of the app after a seq,
+   *  each carrying member_id + display_name (resolved server-side; never email).
+   */
+  async presenceHeartbeat(
+    request: operations.AppServicePresenceHeartbeatRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServicePresenceHeartbeatResponse> {
+    return unwrapAsync(appsPresenceHeartbeat(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+   *
+   * @remarks
+   * Per-member app state: one JSON blob per (app, member) so apps remember
+   *  settings/progress. Member always resolved server-side from auth context;
+   *  per-member persistence, so viewers with read access can save their own state.
+   */
+  async recordMemberActivity(
+    request: operations.AppServiceRecordAppMemberActivityRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceRecordAppMemberActivityResponse> {
+    return unwrapAsync(appsRecordMemberActivity(
       this,
       request,
       options,
@@ -237,6 +367,24 @@ export class Apps extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.AppServiceRestoreAppVersionResponse> {
     return unwrapAsync(appsRestoreAppVersion(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   *
+   * @remarks
+   * Staff-only (superadmin gated in-handler): publishes the embedded component
+   *  gallery as an app tree and returns its signed viewer URL.
+   */
+  async setMemberState(
+    request: operations.AppServiceSetAppMemberStateRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceSetAppMemberStateResponse> {
+    return unwrapAsync(appsSetMemberState(
       this,
       request,
       options,

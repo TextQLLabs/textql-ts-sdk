@@ -14,4 +14,4 @@ let value: TextqlRpcPublicPatchesDate = {};
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `year`             | *number*           | :heavy_minus_sign: | N/A                |
 | `month`            | *number*           | :heavy_minus_sign: | N/A                |
-| `day`              | *number*           | :heavy_minus_sign: | N/A                |
+| `day`              | *number*           | :heavy_minus_sign: | default 7d         |

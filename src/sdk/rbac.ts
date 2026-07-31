@@ -22,7 +22,9 @@ import { rbacRemovePermissionFromRole } from "../funcs/rbac-remove-permission-fr
 import { rbacRemoveRoleFromMember } from "../funcs/rbac-remove-role-from-member.js";
 import { rbacRevokeApiKey } from "../funcs/rbac-revoke-api-key.js";
 import { rbacRotateApiKey } from "../funcs/rbac-rotate-api-key.js";
+import { rbacSetRolePermissions } from "../funcs/rbac-set-role-permissions.js";
 import { rbacUpdateRole } from "../funcs/rbac-update-role.js";
+import { rbacWhoAmI } from "../funcs/rbac-who-am-i.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -326,6 +328,23 @@ export class Rbac extends ClientSDK {
   }
 
   /**
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   *
+   * @remarks
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   */
+  async setRolePermissions(
+    request: operations.RBACServiceSetRolePermissionsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceSetRolePermissionsResponse> {
+    return unwrapAsync(rbacSetRolePermissions(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * UpdateRole
    */
   async updateRole(
@@ -333,6 +352,23 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceUpdateRoleResponse> {
     return unwrapAsync(rbacUpdateRole(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Describe what a key is allowed to do.
+   *
+   * @remarks
+   * Describe what a key is allowed to do.
+   */
+  async whoAmI(
+    request: operations.RBACServiceWhoAmIRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceWhoAmIResponse> {
+    return unwrapAsync(rbacWhoAmI(
       this,
       request,
       options,

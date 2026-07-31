@@ -3,9 +3,7 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
-import { AgentService } from "./agent-service.js";
 import { Agents } from "./agents.js";
-import { AppService } from "./app-service.js";
 import { Apps } from "./apps.js";
 import { AuditLogs } from "./audit-logs.js";
 import { Chats } from "./chats.js";
@@ -14,19 +12,17 @@ import { Dashboards } from "./dashboards.js";
 import { Datasets } from "./datasets.js";
 import { Mcp } from "./mcp.js";
 import { MetricsExports } from "./metrics-exports.js";
-import { ObservabilityService } from "./observability-service.js";
 import { Observability } from "./observability.js";
-import { OntologyManagementService } from "./ontology-management-service.js";
+import { Ontology } from "./ontology.js";
 import { Playbooks } from "./playbooks.js";
 import { Powerbi } from "./powerbi.js";
-import { RBACService } from "./rbac-service.js";
 import { Rbac } from "./rbac.js";
 import { SandboxAdmin } from "./sandbox-admin.js";
-import { SandboxCapabilityService } from "./sandbox-capability-service.js";
+import { SandboxCapabilities } from "./sandbox-capabilities.js";
 import { Sandbox } from "./sandbox.js";
 import { Scim } from "./scim.js";
 import { Secrets } from "./secrets.js";
-import { SettingsService } from "./settings-service.js";
+import { Settings } from "./settings.js";
 import { Slack } from "./slack.js";
 import { Tableau } from "./tableau.js";
 import { Teams } from "./teams.js";
@@ -37,19 +33,9 @@ export class Textql extends ClientSDK {
     return (this._agents ??= new Agents(this._options));
   }
 
-  private _agentService?: AgentService;
-  get agentService(): AgentService {
-    return (this._agentService ??= new AgentService(this._options));
-  }
-
   private _apps?: Apps;
   get apps(): Apps {
     return (this._apps ??= new Apps(this._options));
-  }
-
-  private _appService?: AppService;
-  get appService(): AppService {
-    return (this._appService ??= new AppService(this._options));
   }
 
   private _auditLogs?: AuditLogs;
@@ -92,18 +78,9 @@ export class Textql extends ClientSDK {
     return (this._observability ??= new Observability(this._options));
   }
 
-  private _observabilityService?: ObservabilityService;
-  get observabilityService(): ObservabilityService {
-    return (this._observabilityService ??= new ObservabilityService(
-      this._options,
-    ));
-  }
-
-  private _ontologyManagementService?: OntologyManagementService;
-  get ontologyManagementService(): OntologyManagementService {
-    return (this._ontologyManagementService ??= new OntologyManagementService(
-      this._options,
-    ));
+  private _ontology?: Ontology;
+  get ontology(): Ontology {
+    return (this._ontology ??= new Ontology(this._options));
   }
 
   private _playbooks?: Playbooks;
@@ -121,19 +98,14 @@ export class Textql extends ClientSDK {
     return (this._rbac ??= new Rbac(this._options));
   }
 
-  private _rbacService?: RBACService;
-  get rbacService(): RBACService {
-    return (this._rbacService ??= new RBACService(this._options));
-  }
-
   private _sandboxAdmin?: SandboxAdmin;
   get sandboxAdmin(): SandboxAdmin {
     return (this._sandboxAdmin ??= new SandboxAdmin(this._options));
   }
 
-  private _sandboxCapabilityService?: SandboxCapabilityService;
-  get sandboxCapabilityService(): SandboxCapabilityService {
-    return (this._sandboxCapabilityService ??= new SandboxCapabilityService(
+  private _sandboxCapabilities?: SandboxCapabilities;
+  get sandboxCapabilities(): SandboxCapabilities {
+    return (this._sandboxCapabilities ??= new SandboxCapabilities(
       this._options,
     ));
   }
@@ -153,9 +125,9 @@ export class Textql extends ClientSDK {
     return (this._secrets ??= new Secrets(this._options));
   }
 
-  private _settingsService?: SettingsService;
-  get settingsService(): SettingsService {
-    return (this._settingsService ??= new SettingsService(this._options));
+  private _settings?: Settings;
+  get settings(): Settings {
+    return (this._settings ??= new Settings(this._options));
   }
 
   private _slack?: Slack;

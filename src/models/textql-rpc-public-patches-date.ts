@@ -11,6 +11,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicPatchesDate = {
   year?: number | undefined;
   month?: number | undefined;
+  /**
+   * default 7d
+   */
   day?: number | undefined;
 };
 

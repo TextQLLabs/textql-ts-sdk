@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-patches-config-diagnostic-class.js";
 
 export type TextqlRpcPublicPatchesConfigDiagnostic = {
-  /**
-   * path is the config file the finding is attributed to.
-   */
   path?: string | undefined;
   message?: string | undefined;
   /**

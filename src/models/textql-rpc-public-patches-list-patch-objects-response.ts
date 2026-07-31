@@ -12,7 +12,13 @@ import {
   TextqlRpcPublicPatchesPatchObject$inboundSchema,
 } from "./textql-rpc-public-patches-patch-object.js";
 
+/**
+ * ListPatchObjectsRequest inspects the config objects at a patch's git ref.
+ */
 export type TextqlRpcPublicPatchesListPatchObjectsResponse = {
+  /**
+   * git ref of the patch to inspect
+   */
   objects?: Array<TextqlRpcPublicPatchesPatchObject> | undefined;
 };
 

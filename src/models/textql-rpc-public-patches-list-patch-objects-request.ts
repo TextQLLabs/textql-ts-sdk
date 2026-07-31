@@ -4,12 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * ListPatchObjectsRequest inspects the config objects at a patch's git ref.
- */
 export type TextqlRpcPublicPatchesListPatchObjectsRequest = {
   /**
-   * git ref of the patch to inspect
+   * path is the config file the finding is attributed to.
    */
   patchRef?: string | undefined;
 };

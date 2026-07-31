@@ -4,12 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
- *
- * @remarks
- *  working-tree source is served by the Ana chat-cell tool, not this RPC.
- */
 export type TextqlRpcPublicPatchesValidateConfigRequest = {
   patchId?: string | undefined;
 };
