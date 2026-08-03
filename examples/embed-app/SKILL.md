@@ -278,6 +278,9 @@ async function route(request: Request, ctx: { params: Promise<{ app: string }> }
 export { route as GET, route as POST };
 ```
 
+`examples/embed-list` is this pattern running: a list of two apps, click into
+one, back out.
+
 > Never write `appId: (request) => new URL(request.url).pathname.split("/").pop()`.
 > The API key is org-wide, so a passthrough turns the route into an oracle that
 > renders **any** app in the org. Authorize against the key, not the resolved ID.
