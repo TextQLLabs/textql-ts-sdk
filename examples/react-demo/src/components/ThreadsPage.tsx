@@ -250,10 +250,19 @@ export function ThreadsPage() {
 			lead="Browse and open all your conversations."
 			wide
 			actions={
-				<button type="button" className={NEW_BTN} disabled={busy} onClick={newThread}>
-					<Plus size={15} strokeWidth={2} />
-					<span>New chat</span>
-				</button>
+				<>
+					{/* `totalCount` spans the whole (filtered) list, so this is the only
+					    place the size is visible before the last page has loaded. */}
+					{!list.loading && !list.error && list.totalCount > 0 && (
+						<span className={BOARD_GROUP_COUNT}>
+							{threads.length.toLocaleString()} of {list.totalCount.toLocaleString()} threads
+						</span>
+					)}
+					<button type="button" className={NEW_BTN} disabled={busy} onClick={newThread}>
+						<Plus size={15} strokeWidth={2} />
+						<span>New chat</span>
+					</button>
+				</>
 			}
 		>
 			<FilterToolbar
