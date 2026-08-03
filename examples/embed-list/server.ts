@@ -75,7 +75,6 @@ const PAGE = `<!doctype html>
 		object-fit: cover; background: #f3f4f6; border-bottom: 1px solid #e5e7eb;
 	}
 	.card p { margin: 0; padding: 12px 14px; font-weight: 500; }
-	.card small { display: block; font-weight: 400; color: #6b7280; }
 	textql-app { height: 100% }
 </style>
 
@@ -112,13 +111,9 @@ const PAGE = `<!doctype html>
 					const poster = meta.screenshotUrl
 						? \`<img src="\${meta.screenshotUrl}" alt="">\`
 						: '<div class="blank"></div>';
-					const functions = meta.functions.length === 1
-						? '1 compute function'
-						: \`\${meta.functions.length} compute functions\`;
 					card.innerHTML = \`\${poster}<p></p>\`;
-					card.querySelector('p').append(meta.name, Object.assign(
-						document.createElement('small'), { textContent: functions }
-					));
+					// textContent, not innerHTML: the name is the app's, not ours.
+					card.querySelector('p').textContent = meta.name;
 				})
 				.catch((cause) => (card.querySelector('p').textContent = cause.message));
 		}
