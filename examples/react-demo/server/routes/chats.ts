@@ -69,6 +69,10 @@ const listChats: RequestHandler = async ({ url }) => {
 		.getAll('source')
 		.filter((source): source is TextqlRpcPublicChatChatSource => KNOWN_SOURCES.has(source));
 	const scope = url.searchParams.getAll('scope');
+	const connectorIds = url.searchParams
+		.getAll('connector')
+		.map((value) => Number(value))
+		.filter((value) => Number.isInteger(value));
 	const createdAfter = createdAfterFor(url.searchParams.get('date'));
 	const sortBy = SORT_FIELDS[url.searchParams.get('sort') ?? ''] ?? SORT_FIELDS.updated;
 	const sortDirection =
@@ -88,12 +92,11 @@ const listChats: RequestHandler = async ({ url }) => {
 				searchTerm,
 				...(creatorMemberIds.length ? { creatorMemberIds } : {}),
 				...(sources.length ? { sources } : {}),
+				...(connectorIds.length ? { connectorIds } : {}),
 				bookmarkedOnly: scope.includes('bookmarked') || undefined,
 				sharedWithMe: scope.includes('shared') || undefined,
 				createdAfter,
-				excludeBatchRuns: true,
-				excludeUnusedPlaybooks: true,
-				excludeFeed: true
+				excludeBatchRuns: true
 			}
 		});
 

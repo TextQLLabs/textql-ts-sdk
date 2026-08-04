@@ -44,11 +44,15 @@ type ThreadListItem = {
 	updatedAt: string | null;
 };
 
+// Mirrors demo2's source facet. Feed belongs here because the list route no
+// longer sends `excludeFeed` — offering a filter for rows the query drops would
+// be a dead option.
 const SOURCE_OPTIONS: FilterOption[] = [
 	{ value: 'CHAT_SOURCE_THREAD', label: 'Thread' },
 	{ value: 'CHAT_SOURCE_PLAYBOOK', label: 'Playbook' },
 	{ value: 'CHAT_SOURCE_SLACK', label: 'Slack' },
 	{ value: 'CHAT_SOURCE_TEAMS', label: 'Teams' },
+	{ value: 'CHAT_SOURCE_FEED', label: 'Feed' },
 	{ value: 'CHAT_SOURCE_SMS', label: 'Text' },
 	{ value: 'CHAT_SOURCE_MCP', label: 'MCP' },
 	{ value: 'CHAT_SOURCE_SYSTEM', label: 'System' }
@@ -158,6 +162,11 @@ export function ThreadsPage() {
 				]
 			},
 			{ id: 'source', header: 'Source', filterable: true, filterOptions: SOURCE_OPTIONS },
+			// demo2 has a Connector facet here and /api/chats accepts `connector`,
+			// but GetChats 500s on any non-empty connectorIds — the count query hits
+			// `could not determine data type of parameter` (SQLSTATE 42P18) in
+			// compute/pkg/db/chat.go connectorFilterExpr. Restore this once that is
+			// fixed; until then it would only ever show an error state.
 			{ id: 'date', header: 'Created', filterable: true, filterKind: 'date' }
 		],
 		[creatorOptions]
