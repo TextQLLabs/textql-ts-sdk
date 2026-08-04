@@ -27,11 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
+ * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
  *
  * @remarks
- * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
- *  the app's stream. Presence never touches Postgres and never exposes emails.
+ * Cross-member live activity: rows from every member of the app after a seq,
+ *  each carrying member_id + display_name (resolved server-side; never email).
  */
 export function appsGetDBTablePreview(
   client: TextqlCore,

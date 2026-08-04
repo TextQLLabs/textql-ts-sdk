@@ -10,6 +10,6 @@ let value: TextqlRpcPublicAppAppHeartbeatRequest = {};
 
 ## Fields
 
-| Field                         | Type                          | Required                      | Description                   |
-| ----------------------------- | ----------------------------- | ----------------------------- | ----------------------------- |
-| `appId`                       | *string*                      | :heavy_minus_sign:            | 'app' \| 'dashboard' \| 'agent' |
+| Field                                   | Type                                    | Required                                | Description                             |
+| --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| `appId`                                 | *string*                                | :heavy_minus_sign:                      | full replacement for the calling member |

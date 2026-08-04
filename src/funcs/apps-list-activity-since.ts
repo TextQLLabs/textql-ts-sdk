@@ -27,11 +27,12 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+ * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
  *
  * @remarks
- * Append-only per-member activity log. Listing is own rows only; no
- *  cross-member reads in this release.
+ * Per-member app state: one JSON blob per (app, member) so apps remember
+ *  settings/progress. Member always resolved server-side from auth context;
+ *  per-member persistence, so viewers with read access can save their own state.
  */
 export function appsListActivitySince(
   client: TextqlCore,

@@ -27,11 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
- *
- * @remarks
- * Server stream of live activity batches + presence snapshots, driven by
- *  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+ * GetAppDBSchema
  */
 export function appsGetDBSchema(
   client: TextqlCore,

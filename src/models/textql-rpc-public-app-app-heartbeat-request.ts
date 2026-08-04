@@ -6,7 +6,7 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppAppHeartbeatRequest = {
   /**
-   * 'app' | 'dashboard' | 'agent'
+   * full replacement for the calling member
    */
   appId?: string | undefined;
 };

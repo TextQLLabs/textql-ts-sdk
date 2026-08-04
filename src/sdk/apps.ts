@@ -110,11 +110,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-   *
-   * @remarks
-   * Server stream of live activity batches + presence snapshots, driven by
-   *  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+   * GetAppDBSchema
    */
   async getDBSchema(
     request: operations.AppServiceGetAppDBSchemaRequest,
@@ -128,11 +124,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
+   * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
    *
    * @remarks
-   * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
-   *  the app's stream. Presence never touches Postgres and never exposes emails.
+   * Cross-member live activity: rows from every member of the app after a seq,
+   *  each carrying member_id + display_name (resolved server-side; never email).
    */
   async getDBTablePreview(
     request: operations.AppServiceGetAppDBTablePreviewRequest,
@@ -146,10 +142,13 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * View analytics: reads the engagement views recorded on app page load.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
    *
    * @remarks
-   * View analytics: reads the engagement views recorded on app page load.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per
+   *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+   *  Membership truth stays in library_favorite / chat bookmarks; this persists
+   *  only the drag-and-drop order.
    */
   async getMemberState(
     request: operations.AppServiceGetAppMemberStateRequest,
@@ -226,11 +225,12 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
    *
    * @remarks
-   * Append-only per-member activity log. Listing is own rows only; no
-   *  cross-member reads in this release.
+   * Per-member app state: one JSON blob per (app, member) so apps remember
+   *  settings/progress. Member always resolved server-side from auth context;
+   *  per-member persistence, so viewers with read access can save their own state.
    */
   async listActivitySince(
     request: operations.AppServiceListAppActivitySinceRequest,
@@ -275,7 +275,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * ListMyAppMemberActivity
+   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   *
+   * @remarks
+   * Staff-only (superadmin gated in-handler): publishes the embedded component
+   *  gallery as an app tree and returns its signed viewer URL.
    */
   async listMyMemberActivity(
     request: operations.AppServiceListMyAppMemberActivityRequest,
@@ -306,11 +310,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
    *
    * @remarks
-   * Cross-member live activity: rows from every member of the app after a seq,
-   *  each carrying member_id + display_name (resolved server-side; never email).
+   * Append-only per-member activity log. Listing is own rows only; no
+   *  cross-member reads in this release.
    */
   async presenceHeartbeat(
     request: operations.AppServicePresenceHeartbeatRequest,
@@ -324,12 +328,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+   * View analytics: reads the engagement views recorded on app page load.
    *
    * @remarks
-   * Per-member app state: one JSON blob per (app, member) so apps remember
-   *  settings/progress. Member always resolved server-side from auth context;
-   *  per-member persistence, so viewers with read access can save their own state.
+   * View analytics: reads the engagement views recorded on app page load.
    */
   async recordMemberActivity(
     request: operations.AppServiceRecordAppMemberActivityRequest,
@@ -374,11 +376,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   * Replaces the calling member's entire ordering; capped server-side.
    *
    * @remarks
-   * Staff-only (superadmin gated in-handler): publishes the embedded component
-   *  gallery as an app tree and returns its signed viewer URL.
+   * Replaces the calling member's entire ordering; capped server-side.
    */
   async setMemberState(
     request: operations.AppServiceSetAppMemberStateRequest,

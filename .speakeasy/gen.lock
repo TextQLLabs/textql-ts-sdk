@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: f7799c3642243d1d3ca199fefeed91a2
+  docChecksum: d5248ecf0f593a80864b33e889ee78b1
   docVersion: 1.0.0
-  speakeasyVersion: 1.791.0
-  generationVersion: 2.924.0
-  releaseVersion: 1.4.3
-  configChecksum: 4640513a4836affcaf544e1bbc1f0292
+  speakeasyVersion: 1.791.1
+  generationVersion: 2.926.2
+  releaseVersion: 1.4.4
+  configChecksum: 918015e29e3b52071788b0a2b98a8af0
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 56222398-dd2a-46af-846c-83f8b3ecaf56
-  pristine_commit_hash: c6288b3b0bfb9d5eb7334e200a740da055d22eca
-  pristine_tree_hash: 970c5c020a5b5131e20d0cc9bd7a5fde08f38287
+  generation_id: f9340871-328a-4aff-9a05-7b43fcc1264b
+  pristine_commit_hash: d3c42970779b547752bdc41a4afdeb3c6d09f4c1
+  pristine_tree_hash: e890dd97e7d27168cf6f3bc596cf2349b0e662a6
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -4140,8 +4140,8 @@ trackedFiles:
     pristine_git_object: bbb180c5be280f78de0ac3f3075003bae37dec56
   docs/models/textql-rpc-public-app-app-heartbeat-request.md:
     id: f567fc858168
-    last_write_checksum: sha1:b35a55115e8272e03a066390f27d25ae22449b30
-    pristine_git_object: 594003229ff537ca05e1c4ecf72c3b6888e1d964
+    last_write_checksum: sha1:3e61831c89d700f0dd00e4c96ee82dced16d66a0
+    pristine_git_object: 180ce46786139ea1b7138d88f8fb294e038f3ac2
   docs/models/textql-rpc-public-app-app-member-activity-row-seq.md:
     id: ce1f9e685bc0
     last_write_checksum: sha1:d660af3898af996c71b4d8ffa70edc53d333c5f3
@@ -5500,8 +5500,8 @@ trackedFiles:
     pristine_git_object: e0b0ccbee14c9fead35e70a4cfc68d259cd5c616
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:1f146f0b8d3aba0e95ba33bd51c7ce7085453f5d
-    pristine_git_object: d4562fa11be4bb0c5992d74f83af211b9d99afbd
+    last_write_checksum: sha1:9ca48dab7c6698af25ad706c6533af4861b5546e
+    pristine_git_object: ec95822fad6b22bd10ea493d39a5ba35bf9ef841
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:734ef8bd75c7d62327aa20e7bc09b8350217c50b
@@ -9320,8 +9320,8 @@ trackedFiles:
     pristine_git_object: a2d0c534fa89e00375069db253abee17936fe922
   docs/sdks/apps/README.md:
     id: 9c9c1a6527a3
-    last_write_checksum: sha1:5e60902a3e627104914f45db2abb315b72224206
-    pristine_git_object: fac552fe7582ceb407deff2b4ae12755ae295750
+    last_write_checksum: sha1:894e14c7992b435da4b727c3e625727ab99084f4
+    pristine_git_object: 7cd359827fa52c4a5a5d7727cf72b6c0bdf4d21a
   docs/sdks/auditlogs/README.md:
     id: 4ed8509e422e
     last_write_checksum: sha1:38d5d2006c4729a36a3232e791b20de5037794f9
@@ -9424,12 +9424,12 @@ trackedFiles:
     pristine_git_object: 14202505bc84a1df38208be05c3524447351500b
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:0bb60e9995795d0e900162620784c7b407c9e2fc
-    pristine_git_object: 78019a122286dbb4fc2969b9034bcac6881f8d8a
+    last_write_checksum: sha1:5bbb45ea78c9ce9dc0c717e740a46c21705d9d74
+    pristine_git_object: 584a027e19ac9ba8bd4d9ca53aa7eb84bce6bc49
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:559b80bf986d71ff29839cea03269005a1a20479
-    pristine_git_object: fa8ca79c7a549ab18a16cc6805941ee0337a13a6
+    last_write_checksum: sha1:f40fac3ac5701f857ddc0affde293fcc8c3e6348
+    pristine_git_object: ac5d9eb069392dc17ad195625f06aa65fa2ca86c
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -9508,16 +9508,16 @@ trackedFiles:
     pristine_git_object: 7a532fffd7f12161db86de45b6b810feb1c6d18e
   src/funcs/apps-get-db-schema.ts:
     id: c10727c784e3
-    last_write_checksum: sha1:53fdd79c2dc222f3b0099b344e7824325767eeee
-    pristine_git_object: 89cdf718b07f8ba37abc2030cd23ed5c9f369fc1
+    last_write_checksum: sha1:76e6cf0ac8762041b5adf35c351d9b6aa48e208c
+    pristine_git_object: 5dad4c5469cc1aba3e43db7767ca9fc7887f7d31
   src/funcs/apps-get-db-table-preview.ts:
     id: af7ebf5bd01e
-    last_write_checksum: sha1:40aa5ae966281994bb2a43d452221413f666d1a4
-    pristine_git_object: 961b897d1c78fd5062d0bdd72bb9f6d468841625
+    last_write_checksum: sha1:fa87a9beba2940765aca76cb6c5620476bb97b38
+    pristine_git_object: a9e5031e4779fa0356cf08587daa95e7782a0dff
   src/funcs/apps-get-member-state.ts:
     id: 31452c5e8c86
-    last_write_checksum: sha1:1433f96a635ffa7933a39e7ae02c518f26bb5128
-    pristine_git_object: e087e02b726a60130b805f2f616db1fe5dbf5aa6
+    last_write_checksum: sha1:6d88c16383e5aeb2cbb53365227ee9b002af7918
+    pristine_git_object: 5658793fc5280533abec9d4dd4a9456b6f0ef76a
   src/funcs/apps-get-members-with-apps.ts:
     id: 21398619469f
     last_write_checksum: sha1:d7e5d3224f93308af7ccafdc726c0bcf88cd99f2
@@ -9536,12 +9536,12 @@ trackedFiles:
     pristine_git_object: 55161f34e0f47414f677727e60a6cea0f37d1e41
   src/funcs/apps-list-activity-since.ts:
     id: ad966c3bfd53
-    last_write_checksum: sha1:917a6a76f77eb24c8434696a02173eb406e8ff46
-    pristine_git_object: 34d5200ff783a97aff26630b304f1067ff115609
+    last_write_checksum: sha1:e03f9edd65c888cb7263cbd8719076a076181b8e
+    pristine_git_object: 4c8e3ce00c17082f0bee534b40292d46aeb25177
   src/funcs/apps-list-my-member-activity.ts:
     id: cfb681f7eab9
-    last_write_checksum: sha1:bf22dce3961d6f68ba3088851e2593fb39f22adb
-    pristine_git_object: f7a91fdc5da94158b1d3e1ec7ca20c890b260535
+    last_write_checksum: sha1:0b270f983456dcc3b960df7514d44e4014783794
+    pristine_git_object: 6579ce1cc943c74277c8f1f7b0ea8d997328e4b6
   src/funcs/apps-list-versions.ts:
     id: 9e8724339348
     last_write_checksum: sha1:0101cfdbeea40b95415f105e5cfd096c574d0b2c
@@ -9556,12 +9556,12 @@ trackedFiles:
     pristine_git_object: bd542adf72eebe82fd174071c80d28d1c521bcfd
   src/funcs/apps-presence-heartbeat.ts:
     id: 0125be832161
-    last_write_checksum: sha1:c9c63d5e02fd0e5490904a73024c482971c3a5ab
-    pristine_git_object: 760810fcf9b94bc520ca13040f23b53133372179
+    last_write_checksum: sha1:f34e196a34c4d3896a26bb3f3057f11b7b284c3a
+    pristine_git_object: 1e73f11d4fc69fbddae4ab467b73bfd6ab4994be
   src/funcs/apps-record-member-activity.ts:
     id: 058608bf1bfb
-    last_write_checksum: sha1:b9f28239ba3fe34deb4c6a08e98246bb5fdb5276
-    pristine_git_object: 75fc1711f12d324ec108f2a165efa0cbd59f2b76
+    last_write_checksum: sha1:5dbf0bf159201aea13d22c6e0a7c51f3b78a5c19
+    pristine_git_object: a8d3e5d7f53855e0b41060a6f46ac90903becfce
   src/funcs/apps-refresh.ts:
     id: 93a8d89e30d4
     last_write_checksum: sha1:fca688002c15f2af8ba7e9a27642ed9297b4c159
@@ -9576,8 +9576,8 @@ trackedFiles:
     pristine_git_object: ba26018c1c5a57c37cc03e698ed5e24285b2ead4
   src/funcs/apps-set-member-state.ts:
     id: ae34f30bf120
-    last_write_checksum: sha1:43b4fd9889a6c6fcc98c263d21a390b316a9f766
-    pristine_git_object: 0c61488ea548e616453b77453d95865d735bbf77
+    last_write_checksum: sha1:59af6962fba2cd5c443f1106fdabe4d102435a8d
+    pristine_git_object: beac38d46cc274d5e1b0dcff67894083082531dd
   src/funcs/apps-update.ts:
     id: a4b4cdc5c147
     last_write_checksum: sha1:eac7cd0cd58240c6ca6bb6ff15c5f1795a81b316
@@ -11000,8 +11000,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:043a94d11f0156ca145d8f50533a862551cdfb51
-    pristine_git_object: a0541a4fe73c4f0b73b823398a9072967000a846
+    last_write_checksum: sha1:f863dbba1ee617c27b28a4149cbfa5564fe012de
+    pristine_git_object: 8e02f9c21993dbab89554695ef2fea307ac09220
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -12828,8 +12828,8 @@ trackedFiles:
     pristine_git_object: ca9596daf1c4d53f0686505b83b732bb486e5230
   src/models/textql-rpc-public-app-app-heartbeat-request.ts:
     id: 24157b1aa511
-    last_write_checksum: sha1:44bee2bd542f86dd14fec5329fcc71112118efd9
-    pristine_git_object: fdbe042b88c8d6ef6ba43afca68a77f0f19fddd9
+    last_write_checksum: sha1:1d9d18843422cb5701f9374061bea64b9d32e358
+    pristine_git_object: c7c63119e5ff97eddad216bfbf925897d451bff0
   src/models/textql-rpc-public-app-app-member-activity-row.ts:
     id: bf2794a2ef8f
     last_write_checksum: sha1:004233adc8a65aea66f83e0bc359cf9a4940d5a6
@@ -13876,8 +13876,8 @@ trackedFiles:
     pristine_git_object: 69f15a5c681165af62ef10572fa3ca6c78ec9c25
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:875ca3449c4681c8e7626e026c39a2d2dba1e65d
-    pristine_git_object: a5d130d4a347edafb7b7213440b2c6c82f63a650
+    last_write_checksum: sha1:690e7814d32d8d1e29f1bfb77cb836a76443f44d
+    pristine_git_object: 436c7afb332740286e2c1f9835064765e8a71a03
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:08749962dde2aaa6f8c665fc006a320d071b6a61
@@ -17416,8 +17416,8 @@ trackedFiles:
     pristine_git_object: 9fb89dae60d037226c9c4e157d78c7bdf9fcece5
   src/sdk/apps.ts:
     id: a40cb2e73373
-    last_write_checksum: sha1:32ea9b080eaaf4d6548a9e5f3f56b4473502b6cf
-    pristine_git_object: 193dc490baac6f7641d4d23baefaed108965bd14
+    last_write_checksum: sha1:a1afb49c7cd74e883cadd79859efe53eb44cf341
+    pristine_git_object: 8ee08db4da15c149e471c22d4fe74f7ce206ed8a
   src/sdk/audit-logs.ts:
     id: bfe8457f7354
     last_write_checksum: sha1:7799f5d7a347ca720521aac116377a97dd407162
@@ -23506,3 +23506,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.chat.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.duplicateChat()`:  `response.chat.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n  *  `response.playbook.llmModel.enum(modelDeepseekV4Flash0731)` **Added**\n* `textql.rbac.whoAmI()`:  `response.modelAccess.allowedModels[].enum(modelDeepseekV4Flash0731)` **Added**\n"

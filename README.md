@@ -166,23 +166,23 @@ run();
 * [deleteApp](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 * [duplicate](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](docs/sdks/apps/README.md#get) - GetApp
-* [getDBSchema](docs/sdks/apps/README.md#getdbschema) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-* [getDBTablePreview](docs/sdks/apps/README.md#getdbtablepreview) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
-* [getMemberState](docs/sdks/apps/README.md#getmemberstate) - View analytics: reads the engagement views recorded on app page load.
+* [getDBSchema](docs/sdks/apps/README.md#getdbschema) - GetAppDBSchema
+* [getDBTablePreview](docs/sdks/apps/README.md#getdbtablepreview) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+* [getMemberState](docs/sdks/apps/README.md#getmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
 * [getAppVersion](docs/sdks/apps/README.md#getappversion) - GetAppVersion
 * [getAppViewStats](docs/sdks/apps/README.md#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 * [getMembersWithApps](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](docs/sdks/apps/README.md#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-* [listActivitySince](docs/sdks/apps/README.md#listactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [listActivitySince](docs/sdks/apps/README.md#listactivitysince) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
 * [listVersions](docs/sdks/apps/README.md#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [list](docs/sdks/apps/README.md#list) - ListApps
-* [listMyMemberActivity](docs/sdks/apps/README.md#listmymemberactivity) - ListMyAppMemberActivity
+* [listMyMemberActivity](docs/sdks/apps/README.md#listmymemberactivity) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 * [moveAppToFolder](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-* [presenceHeartbeat](docs/sdks/apps/README.md#presenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
-* [recordMemberActivity](docs/sdks/apps/README.md#recordmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [presenceHeartbeat](docs/sdks/apps/README.md#presenceheartbeat) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [recordMemberActivity](docs/sdks/apps/README.md#recordmemberactivity) - View analytics: reads the engagement views recorded on app page load.
 * [refresh](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 * [restoreAppVersion](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
-* [setMemberState](docs/sdks/apps/README.md#setmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [setMemberState](docs/sdks/apps/README.md#setmemberstate) - Replaces the calling member's entire ordering; capped server-side.
 * [setFavorite](docs/sdks/apps/README.md#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [update](docs/sdks/apps/README.md#update) - UpdateApp
 
@@ -635,23 +635,23 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsGet`](docs/sdks/apps/README.md#get) - GetApp
 - [`appsGetAppVersion`](docs/sdks/apps/README.md#getappversion) - GetAppVersion
 - [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
-- [`appsGetDBSchema`](docs/sdks/apps/README.md#getdbschema) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-- [`appsGetDBTablePreview`](docs/sdks/apps/README.md#getdbtablepreview) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
-- [`appsGetMemberState`](docs/sdks/apps/README.md#getmemberstate) - View analytics: reads the engagement views recorded on app page load.
+- [`appsGetDBSchema`](docs/sdks/apps/README.md#getdbschema) - GetAppDBSchema
+- [`appsGetDBTablePreview`](docs/sdks/apps/README.md#getdbtablepreview) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+- [`appsGetMemberState`](docs/sdks/apps/README.md#getmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
 - [`appsGetMembersWithApps`](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 - [`appsHeartbeat`](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 - [`appsInvokeComputeFunction`](docs/sdks/apps/README.md#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 - [`appsList`](docs/sdks/apps/README.md#list) - ListApps
-- [`appsListActivitySince`](docs/sdks/apps/README.md#listactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-- [`appsListMyMemberActivity`](docs/sdks/apps/README.md#listmymemberactivity) - ListMyAppMemberActivity
+- [`appsListActivitySince`](docs/sdks/apps/README.md#listactivitysince) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+- [`appsListMyMemberActivity`](docs/sdks/apps/README.md#listmymemberactivity) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 - [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 - [`appsMoveAppToFolder`](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-- [`appsPresenceHeartbeat`](docs/sdks/apps/README.md#presenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
-- [`appsRecordMemberActivity`](docs/sdks/apps/README.md#recordmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+- [`appsPresenceHeartbeat`](docs/sdks/apps/README.md#presenceheartbeat) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+- [`appsRecordMemberActivity`](docs/sdks/apps/README.md#recordmemberactivity) - View analytics: reads the engagement views recorded on app page load.
 - [`appsRefresh`](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 - [`appsRestoreAppVersion`](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
 - [`appsSetFavorite`](docs/sdks/apps/README.md#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-- [`appsSetMemberState`](docs/sdks/apps/README.md#setmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+- [`appsSetMemberState`](docs/sdks/apps/README.md#setmemberstate) - Replaces the calling member's entire ordering; capped server-side.
 - [`appsUpdate`](docs/sdks/apps/README.md#update) - UpdateApp
 - [`auditLogsConfigureOtlpExport`](docs/sdks/auditlogs/README.md#configureotlpexport) - ConfigureOtlpExport
 - [`auditLogsConfigureS3Export`](docs/sdks/auditlogs/README.md#configures3export) - ConfigureS3Export

@@ -27,12 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+ * View analytics: reads the engagement views recorded on app page load.
  *
  * @remarks
- * Per-member app state: one JSON blob per (app, member) so apps remember
- *  settings/progress. Member always resolved server-side from auth context;
- *  per-member persistence, so viewers with read access can save their own state.
+ * View analytics: reads the engagement views recorded on app page load.
  */
 export function appsRecordMemberActivity(
   client: TextqlCore,
