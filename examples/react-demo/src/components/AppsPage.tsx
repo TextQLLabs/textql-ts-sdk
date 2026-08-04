@@ -458,9 +458,10 @@ export function AppsPage() {
 						</button>
 					</div>
 				) : visibleItems.length === 0 ? (
-					// Subfolder tiles above already give the view content, so an empty
-					// grid under them doesn't warrant the full empty state.
-					visibleFolders.length === 0 && (
+					// Subfolder tiles are content in their own right, so an untouched
+					// view doesn't need the empty state on top of them. A filter that
+					// matched nothing always says so — otherwise it reads as a blank page.
+					(narrowed || visibleFolders.length === 0) && (
 						<div className={STATE_BLOCK}>
 							<p className={STATE_TITLE}>
 								{narrowed ? 'No matching items' : openFolder ? 'This folder is empty' : 'Nothing here yet'}
