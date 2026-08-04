@@ -1,6 +1,6 @@
 {
   "name": "@textql/sdk",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "author": "TextQL Labs",
   "bugs": {
     "url": "https://github.com/TextQLLabs/textql-ts-sdk/issues"
@@ -17,8 +17,8 @@
     "access": "public"
   },
   "repository": {
-    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git",
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
   },
   "sideEffects": [
     "./esm/embed/element.js",
