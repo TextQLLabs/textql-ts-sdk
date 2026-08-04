@@ -9,23 +9,23 @@
 * [deleteApp](#deleteapp) - DeleteApp
 * [duplicate](#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](#get) - GetApp
-* [getDBSchema](#getdbschema) - Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-* [getDBTablePreview](#getdbtablepreview) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
-* [getMemberState](#getmemberstate) - View analytics: reads the engagement views recorded on app page load.
+* [getDBSchema](#getdbschema) - GetAppDBSchema
+* [getDBTablePreview](#getdbtablepreview) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+* [getMemberState](#getmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
 * [getAppVersion](#getappversion) - GetAppVersion
 * [getAppViewStats](#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 * [getMembersWithApps](#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-* [listActivitySince](#listactivitysince) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [listActivitySince](#listactivitysince) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
 * [listVersions](#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [list](#list) - ListApps
-* [listMyMemberActivity](#listmymemberactivity) - ListMyAppMemberActivity
+* [listMyMemberActivity](#listmymemberactivity) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
 * [moveAppToFolder](#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-* [presenceHeartbeat](#presenceheartbeat) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
-* [recordMemberActivity](#recordmemberactivity) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [presenceHeartbeat](#presenceheartbeat) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [recordMemberActivity](#recordmemberactivity) - View analytics: reads the engagement views recorded on app page load.
 * [refresh](#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 * [restoreAppVersion](#restoreappversion) - RestoreAppVersion
-* [setMemberState](#setmemberstate) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [setMemberState](#setmemberstate) - Replaces the calling member's entire ordering; capped server-side.
 * [setFavorite](#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [update](#update) - UpdateApp
 
@@ -398,8 +398,7 @@ run();
 
 ## getDBSchema
 
-Server stream of live activity batches + presence snapshots, driven by
- Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+GetAppDBSchema
 
 ### Example Usage
 
@@ -472,8 +471,8 @@ run();
 
 ## getDBTablePreview
 
-Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
- the app's stream. Presence never touches Postgres and never exposes emails.
+Cross-member live activity: rows from every member of the app after a seq,
+ each carrying member_id + display_name (resolved server-side; never email).
 
 ### Example Usage
 
@@ -546,7 +545,10 @@ run();
 
 ## getMemberState
 
-View analytics: reads the engagement views recorded on app page load.
+Ordering overlay for the sidebar Bookmarks section: one position list per
+ member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+ Membership truth stays in library_favorite / chat bookmarks; this persists
+ only the drag-and-drop order.
 
 ### Example Usage
 
@@ -912,8 +914,9 @@ run();
 
 ## listActivitySince
 
-Append-only per-member activity log. Listing is own rows only; no
- cross-member reads in this release.
+Per-member app state: one JSON blob per (app, member) so apps remember
+ settings/progress. Member always resolved server-side from auth context;
+ per-member persistence, so viewers with read access can save their own state.
 
 ### Example Usage
 
@@ -1132,7 +1135,8 @@ run();
 
 ## listMyMemberActivity
 
-ListMyAppMemberActivity
+Staff-only (superadmin gated in-handler): publishes the embedded component
+ gallery as an app tree and returns its signed viewer URL.
 
 ### Example Usage
 
@@ -1278,8 +1282,8 @@ run();
 
 ## presenceHeartbeat
 
-Cross-member live activity: rows from every member of the app after a seq,
- each carrying member_id + display_name (resolved server-side; never email).
+Append-only per-member activity log. Listing is own rows only; no
+ cross-member reads in this release.
 
 ### Example Usage
 
@@ -1352,9 +1356,7 @@ run();
 
 ## recordMemberActivity
 
-Per-member app state: one JSON blob per (app, member) so apps remember
- settings/progress. Member always resolved server-side from auth context;
- per-member persistence, so viewers with read access can save their own state.
+View analytics: reads the engagement views recorded on app page load.
 
 ### Example Usage
 
@@ -1573,8 +1575,7 @@ run();
 
 ## setMemberState
 
-Staff-only (superadmin gated in-handler): publishes the embedded component
- gallery as an app tree and returns its signed viewer URL.
+Replaces the calling member's entire ordering; capped server-side.
 
 ### Example Usage
 

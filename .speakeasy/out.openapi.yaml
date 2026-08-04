@@ -683,10 +683,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Server stream of live activity batches + presence snapshots, driven by  Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
-      description: |-
-        Server stream of live activity batches + presence snapshots, driven by
-         Valkey nudges over the app_activity:{app_id} channel; Postgres stays SSoT.
+      summary: GetAppDBSchema
       operationId: AppService_GetAppDBSchema
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBSchema
@@ -723,10 +720,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app''s stream. Presence never touches Postgres and never exposes emails.'
+      summary: 'Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).'
       description: |-
-        Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
-         the app's stream. Presence never touches Postgres and never exposes emails.
+        Cross-member live activity: rows from every member of the app after a seq,
+         each carrying member_id + display_name (resolved server-side; never email).
       operationId: AppService_GetAppDBTablePreview
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBTablePreview
@@ -763,8 +760,12 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'View analytics: reads the engagement views recorded on app page load.'
-      description: 'View analytics: reads the engagement views recorded on app page load.'
+      summary: 'Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks (''<kind>:<id>'' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.'
+      description: |-
+        Ordering overlay for the sidebar Bookmarks section: one position list per
+         member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+         Membership truth stays in library_favorite / chat bookmarks; this persists
+         only the drag-and-drop order.
       operationId: AppService_GetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: getMemberState
@@ -953,10 +954,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+      summary: 'Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.'
       description: |-
-        Append-only per-member activity log. Listing is own rows only; no
-         cross-member reads in this release.
+        Per-member app state: one JSON blob per (app, member) so apps remember
+         settings/progress. Member always resolved server-side from auth context;
+         per-member persistence, so viewers with read access can save their own state.
       operationId: AppService_ListAppActivitySince
       x-speakeasy-group: apps
       x-speakeasy-name-override: listActivitySince
@@ -1068,7 +1070,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: ListMyAppMemberActivity
+      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
+      description: |-
+        Staff-only (superadmin gated in-handler): publishes the embedded component
+         gallery as an app tree and returns its signed viewer URL.
       operationId: AppService_ListMyAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: listMyMemberActivity
@@ -1143,10 +1148,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).'
+      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
       description: |-
-        Cross-member live activity: rows from every member of the app after a seq,
-         each carrying member_id + display_name (resolved server-side; never email).
+        Append-only per-member activity log. Listing is own rows only; no
+         cross-member reads in this release.
       operationId: AppService_PresenceHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: presenceHeartbeat
@@ -1183,11 +1188,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.'
-      description: |-
-        Per-member app state: one JSON blob per (app, member) so apps remember
-         settings/progress. Member always resolved server-side from auth context;
-         per-member persistence, so viewers with read access can save their own state.
+      summary: 'View analytics: reads the engagement views recorded on app page load.'
+      description: 'View analytics: reads the engagement views recorded on app page load.'
       operationId: AppService_RecordAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: recordMemberActivity
@@ -1299,10 +1301,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
-      description: |-
-        Staff-only (superadmin gated in-handler): publishes the embedded component
-         gallery as an app tree and returns its signed viewer URL.
+      summary: Replaces the calling member's entire ordering; capped server-side.
+      description: Replaces the calling member's entire ordering; capped server-side.
       operationId: AppService_SetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: setMemberState
@@ -16181,7 +16181,7 @@ components:
         appId:
           type: string
           title: app_id
-          description: '''app'' | ''dashboard'' | ''agent'''
+          description: full replacement for the calling member
       title: AppHeartbeatRequest
       additionalProperties: false
     textql.rpc.public.app.AppMemberActivityRow:
@@ -22128,6 +22128,7 @@ components:
         - MODEL_KIMI_K2_7_CODE
         - MODEL_QWEN3_7_PLUS
         - MODEL_KIMI_K3
+        - MODEL_DEEPSEEK_V4_FLASH_0731
         - MODEL_MUSE_SPARK_1_1
     textql.rpc.public.chat.LlmUsage:
       type: object

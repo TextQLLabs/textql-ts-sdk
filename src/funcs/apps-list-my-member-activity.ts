@@ -27,7 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ListMyAppMemberActivity
+ * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+ *
+ * @remarks
+ * Staff-only (superadmin gated in-handler): publishes the embedded component
+ *  gallery as an app tree and returns its signed viewer URL.
  */
 export function appsListMyMemberActivity(
   client: TextqlCore,
