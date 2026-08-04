@@ -1,28 +1,64 @@
 import { isRecord, trimmedOrNull } from '../../src/lib/utils';
 import { json } from '../kit';
 import type { RequestHandler, RouteHandlers } from '../kit';
-import {
-	isConnectError,
-	pagingFields,
-	proxyError,
-	readPaging,
-	textqlClients,
-	toIsoString
-} from '../textql';
+import { isConnectError, memberOptions, proxyError, textqlClients, toIsoString } from '../textql';
 import type {
 	TextqlRpcPublicAppApp,
 	TextqlRpcPublicAppAppFile,
 	TextqlRpcPublicAppCapability,
 	TextqlRpcPublicAppComputeFunction,
+	TextqlRpcPublicDashboardDashboard,
+	TextqlRpcPublicDashboardDashboardFolder,
 	TextqlRpcPublicDashboardDataSource
 } from '@textql/sdk/models';
 
 // ─── /api/apps ──────────────────────────────────────────────────────────────
 
-function toListItem(app: TextqlRpcPublicAppApp) {
+/**
+ * The library merges two RPCs whose filter surfaces barely overlap: ListApps
+ * takes only searchTerm/folderId/uncategorizedOnly/sharedWithMe — no creator,
+ * date or sort — while ListDashboards takes creator and sort but not the same
+ * shape. Rather than expose the intersection (one facet, no sort), this route
+ * loads the whole library once and the page filters and sorts it client-side,
+ * which is what demo2's library page does.
+ *
+ * `sharedWithMe` is the one facet that stays server-side — nothing on an item
+ * says whether it reached you by a grant, so only the backend can answer it.
+ * Folders come back as a tree the page navigates rather than an RPC-side
+ * `folderId` / `uncategorizedOnly`, so descending into one costs no round trip.
+ */
+
+/** Both list RPCs clamp `limit` to 100, so a full library takes several calls. */
+const PAGE = 100;
+/** Ceiling on the merged list — the page renders every row it is handed. */
+const LIBRARY_MAX = 1000;
+
+/** Page an offset-based list RPC until it is exhausted or the cap is reached. */
+async function fetchAll<T>(
+	fetchPage: (offset: number) => Promise<{ rows: T[]; totalCount?: number }>
+): Promise<{ rows: T[]; totalCount: number; truncated: boolean }> {
+	const rows: T[] = [];
+	let totalCount = 0;
+
+	for (let offset = 0; offset < LIBRARY_MAX; offset += PAGE) {
+		const page = await fetchPage(offset);
+		rows.push(...page.rows);
+		if (page.totalCount !== undefined) totalCount = page.totalCount;
+		if (page.rows.length < PAGE) break;
+	}
+
+	// Without a totalCount the backend still told us how many rows it handed over.
+	if (totalCount < rows.length) totalCount = rows.length;
+	return { rows, totalCount, truncated: totalCount > rows.length };
+}
+
+type LibraryScope = { sharedWithMe?: boolean };
+
+function toAppItem(app: TextqlRpcPublicAppApp) {
 	if (typeof app.id !== 'string') return null;
 	return {
 		id: app.id,
+		kind: 'app' as const,
 		name: trimmedOrNull(app.name) ?? 'Untitled app',
 		description: trimmedOrNull(app.description),
 		screenshotUrl: trimmedOrNull(app.screenshotUrl),
@@ -30,48 +66,214 @@ function toListItem(app: TextqlRpcPublicAppApp) {
 		hasUnpublishedChanges: app.hasUnpublishedChanges === true,
 		scheduleEnabled: app.scheduleEnabled === true,
 		dataSourceCount: Array.isArray(app.dataSources) ? app.dataSources.length : 0,
+		creatorId: trimmedOrNull(app.creatorId),
+		// Apps carry only a creator id; the toolbar resolves it to a name via
+		// /api/apps/members. Dashboards embed the member, so they fill this in.
+		creatorName: null as string | null,
+		folderId: trimmedOrNull(app.folderId),
+		href: `/apps/${app.id}`,
+		createdAt: toIsoString(app.createdAt),
 		updatedAt: toIsoString(app.updatedAt)
 	};
 }
 
-const listApps: RequestHandler = async ({ url }) => {
+function dashboardCreator(dashboard: TextqlRpcPublicDashboardDashboard): string | null {
+	const creator = dashboard.creator;
+	if (!creator) return null;
+	return trimmedOrNull(creator.memberName) ?? trimmedOrNull(creator.memberEmail);
+}
+
+function toDashboardItem(dashboard: TextqlRpcPublicDashboardDashboard) {
+	if (typeof dashboard.id !== 'string') return null;
+	return {
+		id: dashboard.id,
+		kind: 'dashboard' as const,
+		name: trimmedOrNull(dashboard.name) ?? 'Untitled dashboard',
+		description: trimmedOrNull(dashboard.description),
+		screenshotUrl: trimmedOrNull(dashboard.screenshotUrl),
+		isFavorited: dashboard.isFavorited === true,
+		hasUnpublishedChanges: dashboard.hasUnpublishedChanges === true,
+		scheduleEnabled: dashboard.scheduleEnabled === true,
+		dataSourceCount: Array.isArray(dashboard.dataSources) ? dashboard.dataSources.length : 0,
+		creatorId: trimmedOrNull(dashboard.creatorId),
+		creatorName: dashboardCreator(dashboard),
+		folderId: trimmedOrNull(dashboard.folderId),
+		// The demo has no dashboard detail route, so a card opens the backend's
+		// rendered URL when there is one and is inert otherwise.
+		href: trimmedOrNull(dashboard.htmlUrl) ?? trimmedOrNull(dashboard.streamlitUrl),
+		createdAt: toIsoString(dashboard.createdAt),
+		updatedAt: toIsoString(dashboard.updatedAt)
+	};
+}
+
+function loadApps(client: ReturnType<typeof textqlClients>['client'], scope: LibraryScope) {
+	return fetchAll(async (offset) => {
+		const result = await client.apps.list({ body: { limit: PAGE, offset, ...scope } });
+		if (isConnectError(result)) throw new Error(result.message ?? 'Unable to list apps.');
+		return {
+			rows: Array.isArray(result.apps) ? result.apps : [],
+			totalCount: typeof result.totalCount === 'number' ? result.totalCount : undefined
+		};
+	});
+}
+
+function loadDashboards(client: ReturnType<typeof textqlClients>['client'], scope: LibraryScope) {
+	return fetchAll(async (offset) => {
+		const result = await client.dashboards.list({ body: { limit: PAGE, offset, ...scope } });
+		if (isConnectError(result)) throw new Error(result.message ?? 'Unable to list dashboards.');
+		return {
+			rows: Array.isArray(result.dashboards) ? result.dashboards : [],
+			totalCount: typeof result.totalCount === 'number' ? result.totalCount : undefined
+		};
+	});
+}
+
+type FolderNode = {
+	id: string;
+	name: string;
+	parentId: string | null;
+	appCount: number;
+	dashboardCount: number;
+	children: FolderNode[];
+};
+
+function count(value: unknown): number {
+	return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
+
+/**
+ * Folders are a dashboards-side RPC, but apps carry `folderId` from the same
+ * namespace — `appCount` on the folder message is what makes that explicit.
+ *
+ * The response may arrive already nested or flat with `parentId`, so this
+ * flattens whatever it gets and rebuilds the tree from ids. Doing it one way
+ * keeps the page from having to handle both shapes.
+ */
+async function loadFolders(
+	client: ReturnType<typeof textqlClients>['client']
+): Promise<FolderNode[]> {
+	const result = await client.dashboards.listFolders({ body: {} });
+	if (isConnectError(result)) throw new Error(result.message ?? 'Unable to list folders.');
+
+	const flat = new Map<string, FolderNode>();
+	const walk = (folders: TextqlRpcPublicDashboardDashboardFolder[]) => {
+		for (const folder of folders) {
+			const name = trimmedOrNull(folder.name);
+			if (typeof folder.id === 'string' && name && !flat.has(folder.id)) {
+				flat.set(folder.id, {
+					id: folder.id,
+					name,
+					parentId: trimmedOrNull(folder.parentId),
+					appCount: count(folder.totalAppCount) || count(folder.appCount),
+					dashboardCount: count(folder.totalDashboardCount) || count(folder.dashboardCount),
+					children: []
+				});
+			}
+			if (Array.isArray(folder.children)) walk(folder.children);
+		}
+	};
+	walk(Array.isArray(result.folders) ? result.folders : []);
+
+	const roots: FolderNode[] = [];
+	for (const node of flat.values()) {
+		// A parent outside the response would orphan the node, so it surfaces at
+		// the root rather than disappearing.
+		const parent = node.parentId ? flat.get(node.parentId) : undefined;
+		if (parent) parent.children.push(node);
+		else roots.push(node);
+	}
+
+	const byName = (a: FolderNode, b: FolderNode) => a.name.localeCompare(b.name);
+	for (const node of flat.values()) node.children.sort(byName);
+	return roots.sort(byName);
+}
+
+const listLibrary: RequestHandler = async ({ url }) => {
 	const { client } = textqlClients();
 
-	const paging = readPaging(url);
-
-	// ListApps has no creator/date/sort params, so the toolbar exposes only the
-	// facets the RPC can actually honour; the rest would silently do nothing.
-	const searchTerm = url.searchParams.get('q')?.trim() || undefined;
-	const scope = url.searchParams.getAll('scope');
+	const scope: LibraryScope = {
+		sharedWithMe: url.searchParams.getAll('scope').includes('shared') || undefined
+	};
 
 	try {
-		const result = await client.apps.list({
-			body: {
-				limit: paging.pageSize,
-				offset: paging.offset,
-				searchTerm,
-				sharedWithMe: scope.includes('shared') || undefined,
-				uncategorizedOnly: scope.includes('uncategorized') || undefined
-			}
-		});
+		// A dashboards or folders outage shouldn't blank the apps half of the
+		// library, so the three settle independently.
+		const [appsResult, dashboardsResult, foldersResult] = await Promise.allSettled([
+			loadApps(client, scope),
+			loadDashboards(client, scope),
+			loadFolders(client)
+		]);
 
-		if (isConnectError(result)) {
-			return json({ error: result.message ?? 'Unable to list apps.' }, { status: 502 });
+		if (appsResult.status === 'rejected') {
+			return proxyError('App list request', appsResult.reason);
+		}
+		if (dashboardsResult.status === 'rejected') {
+			console.error('Dashboard list request', dashboardsResult.reason);
+		}
+		if (foldersResult.status === 'rejected') {
+			console.error('Folder list request', foldersResult.reason);
 		}
 
-		const apps = Array.isArray(result.apps) ? result.apps : [];
-		const totalCount = typeof result.totalCount === 'number' ? result.totalCount : undefined;
+		const dashboards =
+			dashboardsResult.status === 'fulfilled'
+				? dashboardsResult.value
+				: { rows: [], totalCount: 0, truncated: false };
+		// Losing the folder tree flattens the page to a single level rather than
+		// breaking it — every item is still reachable from the root.
+		const folders = foldersResult.status === 'fulfilled' ? foldersResult.value : [];
+
+		const items = [
+			...appsResult.value.rows.map(toAppItem),
+			...dashboards.rows.map(toDashboardItem)
+		].filter((item) => item !== null);
 
 		return json({
-			apps: apps.map(toListItem).filter((item) => item !== null),
-			...pagingFields(paging, totalCount, apps.length)
+			apps: items,
+			folders,
+			totalCount: appsResult.value.totalCount + dashboards.totalCount,
+			truncated: appsResult.value.truncated || dashboards.truncated,
+			dashboardsAvailable: dashboardsResult.status === 'fulfilled'
 		});
 	} catch (error) {
-		return proxyError('App list request', error);
+		return proxyError('Library list request', error);
 	}
 };
 
-export const appsRoute: RouteHandlers = { GET: listApps };
+export const appsRoute: RouteHandlers = { GET: listLibrary };
+
+// ─── /api/apps/members ──────────────────────────────────────────────────────
+
+/**
+ * Creator facet options for the library toolbar — the union of members who own
+ * an app and members who own a dashboard, mirroring the merged list.
+ */
+const listLibraryMembers: RequestHandler = async () => {
+	const { client } = textqlClients();
+
+	try {
+		const [apps, dashboards] = await Promise.all([
+			client.apps.getMembersWithApps({ body: {} }),
+			client.dashboards.getMembersWithDashboards({ body: {} })
+		]);
+
+		const merged = new Map<string, ReturnType<typeof memberOptions>[number]>();
+		for (const member of [
+			...memberOptions('members' in apps ? apps.members : undefined),
+			...memberOptions('members' in dashboards ? dashboards.members : undefined)
+		]) {
+			if (!member.id) continue;
+			// First writer wins unless the later record actually knows a name.
+			const existing = merged.get(member.id);
+			if (!existing || (!existing.name && member.name)) merged.set(member.id, member);
+		}
+
+		return json({ members: [...merged.values()] });
+	} catch (error) {
+		return proxyError('Library members request', error);
+	}
+};
+
+export const appsMembersRoute: RouteHandlers = { GET: listLibraryMembers };
 
 // ─── /api/apps/[id] ─────────────────────────────────────────────────────────
 

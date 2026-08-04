@@ -97,7 +97,11 @@ export function FilterToolbar({
 		for (const filter of filters) {
 			const field = fieldsById.get(filter.columnId);
 			if (!field) continue;
-			const options = (field.filterOptions ?? []).map(toOption);
+			// A date facet declares no `filterOptions` — its vocabulary is the preset
+			// list — so without this its chip would read `Created: month`.
+			const options = (
+				field.filterKind === 'date' ? datePresets : (field.filterOptions ?? [])
+			).map(toOption);
 			for (const value of filter.values) {
 				const match = options.find((option) => option.value === value);
 				const label = match
@@ -109,7 +113,7 @@ export function FilterToolbar({
 			}
 		}
 		return result;
-	}, [filters, fieldsById]);
+	}, [filters, fieldsById, datePresets]);
 
 	function removeChip(fieldId: string, value: string) {
 		onFiltersChange(

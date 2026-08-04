@@ -20,6 +20,31 @@ export const DATE_PRESETS: { value: string; label: string; days: number }[] = [
   { value: 'quarter', label: 'Last 90 days', days: 90 }
 ];
 
+const PRESET_DAYS = new Map(DATE_PRESETS.map((preset) => [preset.value, preset.days]));
+
+/**
+ * Date facet value — a preset id or `since:YYYY-MM-DD` — to a lower bound.
+ *
+ * Lives here rather than in the server helpers because both sides need it: the
+ * list routes turn it into an RPC `createdAfter`, and the surfaces that filter
+ * client-side compare row timestamps against it. Two copies would drift.
+ */
+export function createdAfterFor(value: string | null | undefined): Date | undefined {
+  if (!value) return undefined;
+
+  if (value.startsWith(SINCE_PREFIX)) {
+    const parsed = new Date(`${value.slice(SINCE_PREFIX.length)}T00:00:00`);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+  }
+
+  const days = PRESET_DAYS.get(value);
+  if (days === undefined) return undefined;
+  const since = new Date();
+  since.setHours(0, 0, 0, 0);
+  since.setDate(since.getDate() - (days - 1));
+  return since;
+}
+
 /** Minimal field shape the filter helpers need. */
 export interface FilterableColumn<Row> {
   id: string;

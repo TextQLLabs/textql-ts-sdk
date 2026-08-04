@@ -89,7 +89,8 @@ const listPlaybooks: RequestHandler = async ({ url }) => {
 				...(creatorMemberIds.length ? { creatorMemberIds } : {}),
 				...(statuses.length ? { statuses } : {}),
 				onlySubscribed: scope.includes('subscribed') || undefined,
-				sharedWithMe: scope.includes('shared') || undefined
+				sharedWithMe: scope.includes('shared') || undefined,
+				includeSharedDrafts: scope.includes('drafts') || undefined
 			}
 		});
 

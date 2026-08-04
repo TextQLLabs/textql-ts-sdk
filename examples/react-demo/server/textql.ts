@@ -6,7 +6,6 @@ import type {
 } from '@textql/sdk/models';
 import { createStreamingClient, type StreamingClient } from '@textql/sdk/streaming';
 
-import { DATE_PRESETS, SINCE_PREFIX } from '../src/lib/tableFilter';
 import { trimmedOrNull } from '../src/lib/utils';
 import { error, json } from './kit';
 
@@ -61,24 +60,9 @@ export function pagingFields(
 	};
 }
 
-const PRESET_DAYS = new Map(DATE_PRESETS.map((preset) => [preset.value, preset.days]));
-
-/** Date facet value — a preset id or `since:YYYY-MM-DD` — to a lower bound. */
-export function createdAfterFor(value: string | null): Date | undefined {
-	if (!value) return undefined;
-
-	if (value.startsWith(SINCE_PREFIX)) {
-		const parsed = new Date(`${value.slice(SINCE_PREFIX.length)}T00:00:00`);
-		return Number.isNaN(parsed.getTime()) ? undefined : parsed;
-	}
-
-	const days = PRESET_DAYS.get(value);
-	if (days === undefined) return undefined;
-	const since = new Date();
-	since.setHours(0, 0, 0, 0);
-	since.setDate(since.getDate() - (days - 1));
-	return since;
-}
+// Date facet value → lower bound. Defined next to the facet vocabulary so the
+// surfaces that filter client-side share this exact implementation.
+export { createdAfterFor } from '../src/lib/tableFilter';
 
 /** Normalize SDK timestamps that may arrive as Date or ISO string. */
 export function toIsoString(value: unknown): string | null {

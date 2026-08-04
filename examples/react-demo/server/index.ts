@@ -3,7 +3,7 @@ import { Readable } from 'node:stream';
 
 import { HttpError, type RouteHandlers } from './kit';
 import { agentDetailRoute, agentRunRoute, agentsRoute } from './routes/agents';
-import { appComputeRoute, appDetailRoute, appsRoute } from './routes/apps';
+import { appComputeRoute, appDetailRoute, appsMembersRoute, appsRoute } from './routes/apps';
 import { chatRoute } from './routes/chat';
 import { chatDetailRoute, chatMembersRoute, chatWatchRoute, chatsRoute } from './routes/chats';
 import {
@@ -32,6 +32,7 @@ const ROUTES: { pattern: string[]; handlers: RouteHandlers }[] = [
 	{ pattern: ['api', 'agents', ':id'], handlers: agentDetailRoute },
 	{ pattern: ['api', 'agents', ':id', 'run', ':runId'], handlers: agentRunRoute },
 	{ pattern: ['api', 'apps'], handlers: appsRoute },
+	{ pattern: ['api', 'apps', 'members'], handlers: appsMembersRoute },
 	{ pattern: ['api', 'apps', ':id'], handlers: appDetailRoute },
 	{ pattern: ['api', 'apps', ':id', 'compute'], handlers: appComputeRoute },
 	{ pattern: ['api', 'chat'], handlers: chatRoute },

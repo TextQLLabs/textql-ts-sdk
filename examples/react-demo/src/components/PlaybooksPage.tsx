@@ -1,4 +1,4 @@
-import { Ellipsis, Eye, Hash, Pencil, Plus, X } from 'lucide-react';
+import { Bell, Ellipsis, Eye, FilePen, Hash, Pencil, Plus, Share2, X } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -296,8 +296,11 @@ export function PlaybooksPage() {
 				header: 'Playbooks',
 				filterable: true,
 				filterOptions: [
-					{ value: 'subscribed', label: 'Subscribed' },
-					{ value: 'shared', label: 'Shared with me' }
+					{ value: 'shared', label: 'Shared with me', icon: Share2 },
+					{ value: 'subscribed', label: 'Subscribed', icon: Bell },
+					// Orthogonal to `shared`: widens *draft* visibility to any member/role
+					// share, where `shared` excludes anything you authored.
+					{ value: 'drafts', label: 'Include shared drafts', icon: FilePen }
 				]
 			}
 		],
