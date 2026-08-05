@@ -84,9 +84,7 @@ const listOntology: RequestHandler = async ({ url }) => {
 	const recursive = url.searchParams.get('recursive') === '1';
 
 	try {
-		const res = await client.ontologyManagementService.ontologyManagementServiceListOntologyEntries(
-			{ body: { path, recursive } }
-		);
+		const res = await client.ontology.listEntries({ body: { path, recursive } });
 		if (isConnectError(res)) {
 			return json({ error: res.message ?? 'Failed to list the ontology.' }, { status: 502 });
 		}
@@ -116,9 +114,7 @@ const getOntologyFile: RequestHandler = async ({ url }) => {
 	if (!path) return json({ error: 'A file path is required.' }, { status: 400 });
 
 	try {
-		const res = await client.ontologyManagementService.ontologyManagementServiceGetOntologyFile({
-			body: { path }
-		});
+		const res = await client.ontology.getFile({ body: { path } });
 		if (isConnectError(res)) {
 			return json({ error: res.message ?? 'Failed to read the file.' }, { status: 502 });
 		}
