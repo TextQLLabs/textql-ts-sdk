@@ -18,7 +18,8 @@ That check is the whole security model here. The API key is org-wide, so a
 handler that took the segment on trust would render *any* app in the org.
 
 `appIds` also turns on the list route at `/api/textql`, which is where the cards
-come from — one request for the whole grid, rather than one per card.
+come from — the browser fetches the whole grid once, and the server resolves the
+ids behind it.
 
 ## Run it
 
@@ -61,20 +62,47 @@ An id that is in `TEXTQL_APP_IDS` but missing from the grid means the key cannot
 see that app, not that the route is wrong. Confirm with
 `GET /api/textql/<id>/app`, which says so with a status.
 
-## `excludeOwn`
+## App ids in the source
 
-`createEmbedHandler` takes an `excludeOwn` option, wired here to
-`TEXTQL_EXCLUDE_OWN=1`. It drops apps authored by the member your API key
-belongs to, which is what "shared with me" usually means in practice.
+`TEXTQL_APP_IDS` is read from the environment here only so you can point the
+demo at your own apps without editing it. Hardcoding the ids would be equally
+fine:
 
-It compares `creator_id` from the list, so it works no matter how you got access
-— by role, by grant, or by being an admin.
+```ts
+const APP_IDS = ['7f3c1a2e-...', 'b91d44c8-...'];
+```
 
-It is not `ListApps`' `shared_with_me`, which also requires an explicit grant and
-therefore returns nothing for most keys. See [`EMBED.md`](../../EMBED.md#excludeown)
-for why that flag is not exposed here.
+Data App ids are not secrets. They appear in TextQL's own URLs, they are in the
+`api-base` the browser sends on every request, and knowing one grants nothing —
+reading an app needs the API key, which stays on the server. The allowlist
+protects the *set* of apps this handler will serve, not the ids in it.
+
+`TEXTQL_API_KEY` is the value that must never reach the browser.
+
+## `excludeOwn` — "shared with me"
+
+Drops apps authored by the member your API key belongs to, leaving the ones that
+reached it some other way. Wired here to `TEXTQL_EXCLUDE_OWN=1`:
+
+```ts
+createEmbedHandler({
+	appIds: APP_IDS,
+	basePath: `${API_BASE}/:appId`,
+	excludeOwn: EXCLUDE_OWN
+});
+```
+
+With `appIds`, it narrows the grid to apps you did not write. Without `appIds`
+it becomes a feed of everything the key can see that it did not write, though
+the cards are not clickable then — serving an app still needs an allowlist.
 
 An empty grid with this on means every app in your allowlist is one you wrote.
+That is the common case for a service-account key that created its own apps.
+
+It compares `creator_id`, so it works no matter how access was granted — role,
+grant, or admin. It is deliberately not `ListApps`' `shared_with_me`, which also
+demands an explicit grant and so returns nothing for most keys. See
+[`EMBED.md`](../../EMBED.md#why-not-listapps-shared_with_me) for that comparison.
 
 ## Everything else
 

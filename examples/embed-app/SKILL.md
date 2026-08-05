@@ -1,12 +1,26 @@
 ---
 name: textql-embed
-description: Set up a TextQL Data App embed in a web application — the server handler, the browser element, access control, and on-prem/CSP configuration. Use when the user wants to embed a TextQL Data App, or mentions @textql/sdk/embed, createEmbedHandler, or <textql-app>.
+description: Set up a TextQL Data App embed in a web application — the server handler, the browser element, one app or a browsable list of many, access control, and on-prem/CSP configuration. Use when the user wants to embed a TextQL Data App, list Data Apps in their own UI, or mentions @textql/sdk/embed, createEmbedHandler, appIds, or <textql-app>.
 ---
 
 # Embed a TextQL Data App
 
 Two pieces: one catch-all route on the user's server (the only place the API key
 lives) and one element in their page. Everything else is configuration.
+
+## Installing this skill
+
+Copy this file into the project you are embedding into, then start a session
+there:
+
+```bash
+mkdir -p .claude/skills/textql-embed
+curl -o .claude/skills/textql-embed/SKILL.md \
+  https://raw.githubusercontent.com/TextQLLabs/textql-ts-sdk/main/examples/embed-app/SKILL.md
+```
+
+`~/.claude/skills/textql-embed/SKILL.md` instead makes it available in every
+project. Nothing else is needed — the file is self-contained.
 
 ## Ask first, then build
 
@@ -17,9 +31,10 @@ as one batch, propose a default for each, and wait for the reply.
    Express / Fastify / bare `node:http` / other. Determines the route shape.
 2. **Browser layer?** React, or a non-React framework using the custom element.
 3. **How many apps, and who picks?** One fixed app for everyone
-   (`TEXTQL_APP_ID`); several fixed apps, possibly on one page; or chosen per
-   request from the session/tenant. See "Rendering more than one app" — the
-   answer changes the route layout, not just a config value.
+   (`TEXTQL_APP_ID`); several on one page; a set the user picks from, with or
+   without a list to browse; or chosen per request from the session/tenant. See
+   "Rendering more than one app" — the answer changes the route layout, not just
+   a config value.
 4. **Who is allowed to see it?** This is not optional; see the warning below.
    Get the name of their session/auth helper so `authorize` calls the real thing.
 5. **TextQL cloud or on-prem?** On-prem needs `TEXTQL_SERVER_URL`.
@@ -37,7 +52,8 @@ npm install @textql/sdk
 ```
 
 Version floors: server handler v1.3.8+, `<TextqlApp />` v1.4.0+,
-`TEXTQL_SERVER_URL` v1.4.1+.
+`TEXTQL_SERVER_URL` v1.4.1+, `basePath` placeholders / `appIds` / the list route
+/ `excludeOwn` v1.5.0+.
 
 Two environment variables, server-side only:
 
@@ -151,6 +167,7 @@ else, so it composes with existing routing:
 | `GET {basePath}/app` | name, screenshot, and declared compute functions |
 | `GET {basePath}/document` | the app's HTML, re-served from your origin |
 | `POST {basePath}/compute` | runs one declared compute function |
+| `GET {listPath}` | only with `appIds` — see "Rendering more than one app" |
 
 ## Access control — do not skip
 
@@ -249,46 +266,95 @@ suffix `/sales/app` for that route, matches none of its three, and returns
 `null` rather than stealing it. Several embeds on one page each fetch
 independently.
 
-**3 — The client picks by path.** Map an opaque key to an ID through an
-allowlist, and cache the handlers — each lazily builds its own SDK client, so
-constructing one per request is wasted work.
+**3 — The client picks from a set.** Put a placeholder in `basePath` and the
+allowed ids in `appIds`. One handler, no map to maintain:
 
 ```ts
-const APPS: Record<string, string> = { sales: "…", ops: "…" };
-const handlers = new Map<string, ReturnType<typeof createEmbedHandler>>();
+const APP_IDS = ["7f3c1a2e-…", "b91d44c8-…"];
 
-function handlerFor(key: string) {
-  if (!(key in APPS)) return null; // allowlist, never passthrough
-  if (!handlers.has(key)) {
-    handlers.set(key, createEmbedHandler({
-      appId: APPS[key],
-      basePath: `/api/textql/${key}`,
-      authorize: (request) => canView(request, key),
-    }));
-  }
-  return handlers.get(key) ?? null;
-}
-
-async function route(request: Request, ctx: { params: Promise<{ app: string }> }) {
-  const handler = handlerFor((await ctx.params).app);
-  if (!handler) return new Response("Unknown app", { status: 404 });
-  return (await handler(request)) ?? new Response("Not found", { status: 404 });
-}
-
-export { route as GET, route as POST };
+export const { GET, POST } = createEmbedHandler({
+  appIds: APP_IDS,
+  basePath: "/api/textql/:appId",
+  authorize: canView,
+});
 ```
 
-`examples/embed-list` is this pattern running: a list of two apps, click into
-one, back out.
+```tsx
+<TextqlApp apiBase={`/api/textql/${appId}`} style={{ height: "80vh" }} />
+```
+
+In Next.js the file is `app/api/textql/[appId]/[...path]/route.ts`; `basePath`
+still describes the whole mount, placeholder included.
+
+The captured segment is checked against `appIds` before anything is fetched.
+Without either `appIds` or an `appId` resolver a placeholder is a 500, not a
+passthrough — this fails closed on purpose.
 
 > Never write `appId: (request) => new URL(request.url).pathname.split("/").pop()`.
 > The API key is org-wide, so a passthrough turns the route into an oracle that
-> renders **any** app in the org. Authorize against the key, not the resolved ID.
+> renders **any** app in the org. Use `appIds`, or authorize against the key.
 
-The app ID is not a credential — nothing can be done with one without the org's
-API key, and the browser never receives it (`{basePath}/app` returns only
-`name`, `screenshotUrl`, and `functions`). Hardcoding it server-side is fine.
-The rule is only that the *server* must decide which app it is.
+App ids are not credentials. They appear in TextQL's own URLs, and the browser
+sends one on every request, so hardcode them, commit them, put them in markup.
+What `appIds` protects is the *set* of apps this handler will serve, not the
+secrecy of the ids in it. `TEXTQL_API_KEY` is the only value that must stay
+server-side.
+
+### The list route
+
+`appIds` also mounts a list route on the static part of `basePath` — for
+`/api/textql/:appId` that is `/api/textql`. It returns enough to render cards, in
+the order the ids were given:
+
+```json
+[{ "id": "7f3c1a2e-…", "name": "Revenue", "screenshotUrl": "https://…" }]
+```
+
+```ts
+const apps = await fetch("/api/textql").then((r) => r.json());
+```
+
+`screenshotUrl` is signed and expires, so fetch it when you render rather than
+caching it for the day. There is no `functions` field; `GET {basePath}/app` has
+those.
+
+An id the key cannot see is **dropped from the list rather than reported** —
+naming it back would defeat the allowlist. A blank grid with ids configured means
+the key cannot see them; `GET {basePath}/<id>/app` will say why with a status.
+Only 400/403/404 are treated that way: a bad key or a 5xx fails the whole
+request instead of quietly returning a short list.
+
+### `excludeOwn` — "shared with me"
+
+Drops apps authored by the member the **API key** belongs to:
+
+```ts
+createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId", excludeOwn: true });
+```
+
+With no `appIds` it becomes a feed of everything the key can see that it did not
+write — but that form is read-only, since serving an app still needs the
+allowlist. `false` only declines to filter and never mounts the list route by
+itself, so a boolean can be passed straight through from a flag.
+
+Two things to tell the user before they wire it up:
+
+- **"Own" is the key's member, never their visitor.** Keys are
+  `base64("<member_id>:<token>")` and the member is read off the key. Pass
+  `memberId` for a key of another shape, such as an embed JWT. For a per-user
+  list, pass a function to `appIds` and answer from their own sharing model.
+- **Empty is the common result.** If the key is a service account that created
+  the apps it serves, everything is "own" and the list is empty.
+
+Do not reach for `ListApps`' own `shared_with_me` flag instead. It additionally
+requires an explicit `object_access` grant, so access that comes from a role —
+an admin, most service accounts — satisfies "someone else wrote it" and fails the
+grant test, returning nothing while the unfiltered list returns the whole org.
+`excludeOwn` compares `creator_id` and behaves the same however access was
+granted. For grant-only semantics, call `client.apps.list({ body: { sharedWithMe: true } })`
+directly.
+
+`examples/embed-list` is all of this running: a grid, click into an app, back out.
 
 ## On-prem
 
@@ -375,7 +441,12 @@ Then, in order:
 | Element renders but stays blank/collapsed | no height set, or CSP blocked the inline `<style>` |
 | 502 telling you to upgrade | the app-shell rewrite drifted; upgrade the SDK |
 | Compute call rejected | the app does not declare that function name |
+| List is empty, ids are configured | the key cannot see them — call `{basePath}/<id>/app` for the status |
+| `Data App exists in a different organization` | the id belongs to another org; an API key cannot cross orgs |
+| `You don't have permission to read this Data App` | the key's member has no access to that one app |
+| `excludeOwn` returns nothing | every app in scope was authored by the key's own member |
+| Placeholder route 500s about `appIds` | a `:name` in `basePath` with no allowlist and no `appId` resolver |
 
-A runnable reference implementation is `examples/embed-app` in the
-`@textql/sdk` repository — one file of bare `node`, including serving the
-element off its own route.
+Runnable references in the `@textql/sdk` repository: `examples/embed-app` for a
+single app — one file of bare `node`, including serving the element off its own
+route — and `examples/embed-list` for the allowlist, the list route, and the grid.

@@ -116,39 +116,128 @@ list.
 `appIds` can be a function of the request, which is where a per-user list comes
 from — your own sharing table, a tenant column, whatever you already have.
 
-### `excludeOwn`
+### App ids are not secrets
 
-The practical reading of "shared with me": drop the apps this key's own member
-wrote.
+Hardcode them. Commit them. Ship them to the browser. A Data App id already
+appears in TextQL's own URL for the app (`/app/<id>`), and knowing one authorizes
+nothing: reading an app takes the API key, which never leaves your server, plus
+whatever `authorize` decides.
+
+```ts
+// Fine. This is the normal shape.
+const APP_IDS = ["7f3c1a2e-...", "b91d44c8-..."];
+
+createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId" });
+```
+
+```html
+<!-- Also fine. A real id in your markup. -->
+<textql-app api-base="/api/textql/7f3c1a2e-..."></textql-app>
+```
+
+What `appIds` protects is the *set*, not the ids in it. The API key is org-wide,
+so a handler that resolved whatever id showed up in the path would serve every
+app in the organisation. The allowlist is what stops that, and it keeps working
+whether or not anyone can guess an id.
+
+The one value that must stay server-side is `TEXTQL_API_KEY`. That is the entire
+reason these routes exist.
+
+### `excludeOwn` — "shared with me"
+
+Drops apps the key's own member wrote, leaving the ones that reached it some
+other way. This is the useful reading of "shared with me".
+
+**Filtering an allowlist.** Of the apps you named, show only those someone else
+authored:
+
+```ts
+createEmbedHandler({
+  appIds: APP_IDS,
+  basePath: "/api/textql/:appId",
+  excludeOwn: true,
+});
+```
+
+**As a feed.** With no `appIds`, the list route returns every app the key can see
+that it did not write:
 
 ```ts
 createEmbedHandler({ basePath: "/api/textql/:appId", excludeOwn: true });
 ```
 
-It compares `creator_id`, which `ListApps` already returns on every row, so it
-works however access was granted.
+That form is read-only: the list works, but serving one of those apps still
+needs `appIds` or your own `appId` resolver, because the allowlist is what gates
+the per-app routes. Pair the two if you want the feed to be clickable:
 
-This is deliberately *not* `ListApps`' own `shared_with_me` flag. That one adds
-a second condition — an explicit `object_access` grant — on top of "someone else
-wrote it". Access that comes from a role satisfies the first and not the second,
-so for an admin, or for most service-account keys, it returns nothing at all
-while the default list returns the whole org. If you want those exact semantics,
-call `apps.list({ sharedWithMe: true })` directly; the embed list route does not
-expose it, because in an embed context it is almost always empty.
+```ts
+const shared = await listSharedAppIds();          // your own query, cached
 
-"Own" means the member the API key belongs to, never your end user. Keys are
-`base64("<member_id>:<token>")`, so the member is read off the key itself; pass
-`memberId` if your key is not in that shape, such as an embed JWT. For a list
-that follows the *visitor*, pass a function to `appIds` and answer from your own
-sharing model.
+createEmbedHandler({
+  appIds: shared,
+  basePath: "/api/textql/:appId",
+  excludeOwn: true,
+});
+```
 
-`appIds` turns the list route on, and so does `excludeOwn: true`. `false` only
-declines to filter, so it never creates a list by itself — which means
-`excludeOwn: someBoolean` is safe to pass straight through from a flag.
+**From a flag.** `false` only declines to filter — it never creates a list route
+by itself — so a boolean can go straight through:
 
-`excludeOwn` alone gives a read-only view: serving one of those apps still needs
-`appIds`, or your own `appId` resolver, because the allowlist is what gates the
-per-app routes.
+```ts
+createEmbedHandler({
+  appIds: APP_IDS,
+  basePath: "/api/textql/:appId",
+  excludeOwn: process.env.SHOW_ONLY_SHARED === "1",
+});
+```
+
+#### What "own" means
+
+The member the **API key** belongs to — never your end user. Keys are
+`base64("<member_id>:<token>")`, so the member is read off the key itself. Pass
+`memberId` explicitly for a key that is not in that shape, such as an embed JWT:
+
+```ts
+createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId", excludeOwn: true, memberId });
+```
+
+Two consequences worth planning around:
+
+- An empty result means every app in scope was authored by the key's member. If
+  your key is a service account that created the apps it serves, `excludeOwn`
+  will always be empty.
+- It cannot follow your *visitor*. For a genuinely per-user list, pass a function
+  to `appIds` and answer from your own sharing model — the SDK has no way to know
+  who is looking at your page.
+
+#### Why not `ListApps`' `shared_with_me`
+
+The RPC has its own `shared_with_me` filter and the embed list route does not use
+it. That one adds a second condition on top of "someone else wrote it": an
+explicit `object_access` grant. Access that comes from a *role* satisfies the
+first and not the second, so for an admin — or most service-account keys — it
+returns nothing at all while the unfiltered list returns the whole org.
+
+`excludeOwn` compares `creator_id`, which every list row already carries, so it
+behaves the same however access was granted. If you specifically want grant-only
+semantics, call the RPC directly:
+
+```ts
+await client.apps.list({ body: { sharedWithMe: true, limit: 100 } });
+```
+
+## Using this with an agent
+
+`examples/embed-app/SKILL.md` in this repository is a Claude Code skill covering
+everything here as a build procedure — intake questions, a preflight script that
+proves the credentials before any routes are written, and a failure-mode table.
+Drop it into a project to have an agent do the integration:
+
+```bash
+mkdir -p .claude/skills/textql-embed
+curl -o .claude/skills/textql-embed/SKILL.md \
+  https://raw.githubusercontent.com/TextQLLabs/textql-ts-sdk/main/examples/embed-app/SKILL.md
+```
 
 ## Sizing
 
