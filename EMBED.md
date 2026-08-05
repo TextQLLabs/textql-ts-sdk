@@ -54,13 +54,190 @@ export const { GET, POST } = createEmbedHandler({
 
 | Option | Default | |
 | --- | --- | --- |
-| `appId` | `TEXTQL_APP_ID` | A function `(request) => string` picks per request — from a session, tenant header, or route param. |
+| `appId` | `TEXTQL_APP_ID` | A function `(request, params) => string` picks per request — from a session, tenant header, or a `basePath` placeholder. |
+| `appIds` | none | The apps this handler serves. Turns on the list route, and is the allowlist a `basePath` placeholder is checked against. |
+| `excludeOwn` | `false` | Drop apps the key's own member authored from the list route — see below. |
+| `memberId` | parsed from `TEXTQL_API_KEY` | The key's member, for `excludeOwn`. |
 | `client` | built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL` | Pass your own `Textql` instance. |
-| `basePath` | `/api/textql` | Where the handler is mounted. Must match the element's `api-base`. |
+| `basePath` | `/api/textql` | Where the handler is mounted. Must match the element's `api-base`. A `:name` segment captures that part of the path. |
 | `authorize` | none | Return `false` or throw to reject. |
 | `rehostDocument` | `true` | See below. |
 
 On-prem: set `TEXTQL_SERVER_URL` to the plain host; the SDK appends
+
+## Several apps
+
+One handler serves any number of apps. Put a placeholder in `basePath` and list
+the apps in `appIds`:
+
+```ts
+const embed = createEmbedHandler({
+  appIds: ["app-id-1", "app-id-2"],
+  basePath: "/api/textql/:appId",
+});
+```
+
+The captured segment is the app, checked against `appIds` first. That check is
+the point: the API key is org-wide, so a handler that took the segment on trust
+would render *any* app in the org for anyone who could guess an id. Without
+either `appIds` or your own `appId` resolver, a placeholder is a 500 rather than
+a passthrough.
+
+Point the element at one of them:
+
+```html
+<textql-app api-base="/api/textql/app-id-1"></textql-app>
+```
+
+`appIds` also turns on the list route, on the static part of `basePath` — here
+`/api/textql`. It answers with the apps behind those ids, in that order:
+
+```json
+[{ "id": "app-id-1", "name": "Hop Road", "screenshotUrl": "https://..." }]
+```
+
+Enough to render cards. `screenshotUrl` is signed and expires, so fetch the list
+when you render it rather than caching it for the day. There is no `functions`
+here; `GET {basePath}/app` has them.
+
+How that list is read depends on whether you gave one. With `appIds`, each app
+is fetched by id, a few at a time — `ListApps` cannot filter by id, so walking it
+to find a known handful would cost the whole org for an O(allowlist) answer, and
+could not stop early precisely when one of the ids is unreadable. Without
+`appIds`, there is nothing to look up, so it pages through `ListApps` instead:
+the first page carries `totalCount` and the rest go out together.
+
+Either way an id the key cannot see is dropped from the list rather than
+reported — naming it is what `appIds` exists to prevent. Only "no such app for
+you" is treated that way: a `400`, `403` or `404` costs that one app, while a bad
+key or a `5xx` fails the whole request rather than quietly returning a short
+list.
+
+`appIds` can be a function of the request, which is where a per-user list comes
+from — your own sharing table, a tenant column, whatever you already have.
+
+### App ids are not secrets
+
+Hardcode them. Commit them. Ship them to the browser. A Data App id already
+appears in TextQL's own URL for the app (`/app/<id>`), and knowing one authorizes
+nothing: reading an app takes the API key, which never leaves your server, plus
+whatever `authorize` decides.
+
+```ts
+// Fine. This is the normal shape.
+const APP_IDS = ["7f3c1a2e-...", "b91d44c8-..."];
+
+createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId" });
+```
+
+```html
+<!-- Also fine. A real id in your markup. -->
+<textql-app api-base="/api/textql/7f3c1a2e-..."></textql-app>
+```
+
+What `appIds` protects is the *set*, not the ids in it. The API key is org-wide,
+so a handler that resolved whatever id showed up in the path would serve every
+app in the organisation. The allowlist is what stops that, and it keeps working
+whether or not anyone can guess an id.
+
+The one value that must stay server-side is `TEXTQL_API_KEY`. That is the entire
+reason these routes exist.
+
+### `excludeOwn` — "shared with me"
+
+Drops apps the key's own member wrote, leaving the ones that reached it some
+other way. This is the useful reading of "shared with me".
+
+**Filtering an allowlist.** Of the apps you named, show only those someone else
+authored:
+
+```ts
+createEmbedHandler({
+  appIds: APP_IDS,
+  basePath: "/api/textql/:appId",
+  excludeOwn: true,
+});
+```
+
+**As a feed.** With no `appIds`, the list route returns every app the key can see
+that it did not write:
+
+```ts
+createEmbedHandler({ basePath: "/api/textql/:appId", excludeOwn: true });
+```
+
+That form is read-only: the list works, but serving one of those apps still
+needs `appIds` or your own `appId` resolver, because the allowlist is what gates
+the per-app routes. Pair the two if you want the feed to be clickable:
+
+```ts
+const shared = await listSharedAppIds();          // your own query, cached
+
+createEmbedHandler({
+  appIds: shared,
+  basePath: "/api/textql/:appId",
+  excludeOwn: true,
+});
+```
+
+**From a flag.** `false` only declines to filter — it never creates a list route
+by itself — so a boolean can go straight through:
+
+```ts
+createEmbedHandler({
+  appIds: APP_IDS,
+  basePath: "/api/textql/:appId",
+  excludeOwn: process.env.SHOW_ONLY_SHARED === "1",
+});
+```
+
+#### What "own" means
+
+The member the **API key** belongs to — never your end user. Keys are
+`base64("<member_id>:<token>")`, so the member is read off the key itself. Pass
+`memberId` explicitly for a key that is not in that shape, such as an embed JWT:
+
+```ts
+createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId", excludeOwn: true, memberId });
+```
+
+Two consequences worth planning around:
+
+- An empty result means every app in scope was authored by the key's member. If
+  your key is a service account that created the apps it serves, `excludeOwn`
+  will always be empty.
+- It cannot follow your *visitor*. For a genuinely per-user list, pass a function
+  to `appIds` and answer from your own sharing model — the SDK has no way to know
+  who is looking at your page.
+
+#### Why not `ListApps`' `shared_with_me`
+
+The RPC has its own `shared_with_me` filter and the embed list route does not use
+it. That one adds a second condition on top of "someone else wrote it": an
+explicit `object_access` grant. Access that comes from a *role* satisfies the
+first and not the second, so for an admin — or most service-account keys — it
+returns nothing at all while the unfiltered list returns the whole org.
+
+`excludeOwn` compares `creator_id`, which every list row already carries, so it
+behaves the same however access was granted. If you specifically want grant-only
+semantics, call the RPC directly:
+
+```ts
+await client.apps.list({ body: { sharedWithMe: true, limit: 100 } });
+```
+
+## Using this with an agent
+
+`examples/embed-app/SKILL.md` in this repository is a Claude Code skill covering
+everything here as a build procedure — intake questions, a preflight script that
+proves the credentials before any routes are written, and a failure-mode table.
+Drop it into a project to have an agent do the integration:
+
+```bash
+mkdir -p .claude/skills/textql-embed
+curl -o .claude/skills/textql-embed/SKILL.md \
+  https://raw.githubusercontent.com/TextQLLabs/textql-ts-sdk/main/examples/embed-app/SKILL.md
+```
 
 ## Sizing
 
@@ -201,7 +378,8 @@ belongs there; the RPC prefix hook appends `/rpc/public`.
 | What the browser loads | From |
 | --- | --- |
 | the element script | your origin, served off the resolved package path |
-| `{basePath}/app`, `/document`, `/compute` | your origin — the handler's three routes |
+| `{basePath}/app`, `/document`, `/compute` | your origin — the handler's per-app routes |
+| `{listPath}`, with `appIds` set | your origin — the list route |
 | the app document's subresources | the asset origin your instance signs URLs for, via the injected `<base href>` |
 | the poster screenshot, before the app loads | the same asset origin |
 

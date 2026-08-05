@@ -4,28 +4,22 @@ Several apps, a list to pick from, and the app itself in place. The multi-app
 form of [`embed-app`](../embed-app), which is the same thing for one app and
 smaller.
 
-The element cannot tell the server which app to render — `api-base` is
-concatenated with the route suffix, so a query string there produces
-`/api/textql?app=x/app` and matches nothing. Path segments are the only lever
-the browser has, so mount one handler per app:
+One handler serves all of them. `basePath` carries a placeholder, so the segment
+in the path picks the app, and `appIds` is what that segment is checked against:
 
 ```ts
-const handlers = new Map(
-	Object.entries(APPS).map(([key, appId]) => [
-		key,
-		toNodeHandler(createEmbedHandler({ appId, basePath: `/api/textql/${key}` }))
-	])
-);
+const embed = createEmbedHandler({
+	appIds: APP_IDS,
+	basePath: '/api/textql/:appId'
+});
 ```
 
-and point the element at one of them:
+That check is the whole security model here. The API key is org-wide, so a
+handler that took the segment on trust would render *any* app in the org.
 
-```html
-<textql-app api-base="/api/textql/app-1"></textql-app>
-```
-
-`APPS` maps a URL segment to an app ID. That map is the allowlist, and the IDs
-never leave the server.
+`appIds` also turns on the list route at `/api/textql`, which is where the cards
+come from — the browser fetches the whole grid once, and the server resolves the
+ids behind it.
 
 ## Run it
 
@@ -36,6 +30,7 @@ there is no per-example env file:
 TEXTQL_API_KEY=...      # Settings → Developers → API Keys (must reach every app)
 TEXTQL_APP_IDS=...      # the apps to list, comma-separated; falls back to TEXTQL_APP_ID
 TEXTQL_SERVER_URL=...   # on-prem only; the plain host, the SDK appends /rpc/public
+TEXTQL_EXCLUDE_OWN=1    # optional; hides apps your key's member authored
 ```
 
 ```sh
@@ -45,33 +40,77 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:4181`. The server prints each mount and the app behind it
-on startup. The IDs are read once, at startup — a new app in `TEXTQL_APP_IDS`
-needs a restart, but a change to an app itself only needs a browser refresh.
+Open `http://localhost:4181`. The ids are read once, at startup — a new app in
+`TEXTQL_APP_IDS` needs a restart, but a change to an app itself only needs a
+browser refresh.
 
 ## What to look at
 
-`server.ts` is the whole thing. Three parts:
+`server.ts` is the whole thing, and most of it is the page. Three parts:
 
-- **`APPS` and `handlers`** — the allowlist, and one handler per app built once.
-  Each lazily builds its own SDK client, so building them per request is wasted
-  work. Never resolve an ID straight out of the path: the API key is org-wide,
-  so a passthrough renders *any* app in the org.
-- **The dispatch in `createServer`** — it picks the handler by path segment
-  rather than offering the request to each in turn. `toNodeHandler` drains the
-  body to build a `Request`, so a handler that declines a `POST` has already
-  eaten it, and `POST /compute` would arrive empty at the next one.
-- **`list()` in the page script** — cards read `GET {basePath}/app`, the same
-  route the element calls, which returns only `{ name, screenshotUrl,
-  functions }`. The list needs no route of its own.
+- **The handler** — one of them, built once, holding one SDK client. Everything
+  that distinguishes the apps is `appIds` plus the `:appId` placeholder.
+- **`GET /api/textql`** — the SDK's list route, returning
+  `[{ id, name, screenshotUrl }]` for the allowlisted apps, in the order given.
+  Because the ids are known, it reads them one at a time rather than paging
+  through the org. An id the key cannot see is simply absent, so the grid shows
+  what resolved rather than a card that errors.
+- **`route()` in the page script** — the hash is checked against the list before
+  the element is pointed at it, so a hand-typed id falls back to the grid.
 
-Nothing here authorizes anyone. `createEmbedHandler` takes an `authorize` hook
-per app, which is where a real host answers "may this caller see *this* app":
+An id that is in `TEXTQL_APP_IDS` but missing from the grid means the key cannot
+see that app, not that the route is wrong. Confirm with
+`GET /api/textql/<id>/app`, which says so with a status.
+
+## App ids in the source
+
+`TEXTQL_APP_IDS` is read from the environment here only so you can point the
+demo at your own apps without editing it. Hardcoding the ids would be equally
+fine:
 
 ```ts
-createEmbedHandler({ appId, basePath: `/api/textql/${key}`, authorize: (request) => canView(request, key) });
+const APP_IDS = ['7f3c1a2e-...', 'b91d44c8-...'];
 ```
 
-Everything else — the routes the handler serves, why the app document is
-re-served from your origin, React/Svelte/Express snippets — is in
-[`EMBED.md`](../../EMBED.md).
+Data App ids are not secrets. They appear in TextQL's own URLs, they are in the
+`api-base` the browser sends on every request, and knowing one grants nothing —
+reading an app needs the API key, which stays on the server. The allowlist
+protects the *set* of apps this handler will serve, not the ids in it.
+
+`TEXTQL_API_KEY` is the value that must never reach the browser.
+
+## `excludeOwn` — "shared with me"
+
+Drops apps authored by the member your API key belongs to, leaving the ones that
+reached it some other way. Wired here to `TEXTQL_EXCLUDE_OWN=1`:
+
+```ts
+createEmbedHandler({
+	appIds: APP_IDS,
+	basePath: `${API_BASE}/:appId`,
+	excludeOwn: EXCLUDE_OWN
+});
+```
+
+With `appIds`, it narrows the grid to apps you did not write. Without `appIds`
+it becomes a feed of everything the key can see that it did not write, though
+the cards are not clickable then — serving an app still needs an allowlist.
+
+An empty grid with this on means every app in your allowlist is one you wrote.
+That is the common case for a service-account key that created its own apps.
+
+It compares `creator_id`, so it works no matter how access was granted — role,
+grant, or admin. It is deliberately not `ListApps`' `shared_with_me`, which also
+demands an explicit grant and so returns nothing for most keys. See
+[`EMBED.md`](../../EMBED.md#why-not-listapps-shared_with_me) for that comparison.
+
+## Everything else
+
+The routes the handler serves, why the app document is re-served from your
+origin, React/Svelte/Express snippets — [`EMBED.md`](../../EMBED.md). Nothing
+here authorizes anyone; `createEmbedHandler` takes an `authorize` hook, which is
+where a real host answers "may this caller see this app":
+
+```ts
+createEmbedHandler({ appIds, basePath, authorize: (request) => canView(request) });
+```
