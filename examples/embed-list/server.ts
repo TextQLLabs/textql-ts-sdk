@@ -1,9 +1,10 @@
 /**
  * Embedding several Data Apps with `@textql/sdk/embed`: a list, then the app.
  *
- * The element cannot tell the server which app to render, so path segments are
- * the only lever the browser has — one `createEmbedHandler` per app, each on
- * its own `basePath`, and `api-base` picks between them. See `examples/embed-app`
+ * One handler for all of them. `basePath` carries a `:appId` placeholder, so
+ * the segment the browser puts in the path picks the app, checked against the
+ * `appIds` allowlist. That same allowlist turns on the list route, which walks
+ * `ListApps` server-side and returns just these apps. See `examples/embed-app`
  * for the single-app version, which is smaller.
  */
 import { createServer } from 'node:http';
@@ -22,28 +23,29 @@ const { error: envError } = config({ path: ENV_FILE, override: true });
 const PORT = Number(process.env.PORT ?? 4181);
 const API_BASE = '/api/textql';
 
-// Keyed by the segment that appears in the URL. This map is the allowlist and
-// the keys are all the browser ever sees; never resolve an ID out of the path,
-// or the org-wide key makes the route an oracle for every app in the org.
-const APPS: Record<string, string> = Object.fromEntries(
-	(process.env.TEXTQL_APP_IDS ?? process.env.TEXTQL_APP_ID ?? '')
-		.split(',')
-		.map((id) => id.trim())
-		.filter(Boolean)
-		.map((id, index) => [`app-${index + 1}`, id])
-);
+// The allowlist. Ids reach the browser — they are in TextQL's own URLs — but
+// only these are served, so the org-wide key cannot be walked through the path.
+const APP_IDS = (process.env.TEXTQL_APP_IDS ?? process.env.TEXTQL_APP_ID ?? '')
+	.split(',')
+	.map((id) => id.trim())
+	.filter(Boolean);
 
-const handlers = new Map(
-	Object.entries(APPS).map(([key, appId]) => [
-		key,
-		toNodeHandler(createEmbedHandler({ appId, basePath: `${API_BASE}/${key}` }))
-	])
+// Off by default, and it narrows rather than widens — an empty grid with this
+// on is the filter working, not the list breaking. See the README.
+const SHARED_WITH_ME = process.env.TEXTQL_SHARED_WITH_ME === '1';
+
+const embed = toNodeHandler(
+	createEmbedHandler({
+		appIds: APP_IDS,
+		basePath: `${API_BASE}/:appId`,
+		sharedWithMe: SHARED_WITH_ME
+	})
 );
 
 const ELEMENT_JS = createRequire(import.meta.url).resolve('@textql/sdk/embed/element');
 
-// The list and the app are one page. Cards read `{basePath}/app` — the same
-// route the element calls — so the list needs no server route of its own.
+// The list and the app are one page. `GET /api/textql` is the SDK's list route:
+// one call for every card, rather than one per card.
 const PAGE = `<!doctype html>
 <title>Data apps</title>
 <style>
@@ -75,6 +77,7 @@ const PAGE = `<!doctype html>
 		object-fit: cover; background: #f3f4f6; border-bottom: 1px solid #e5e7eb;
 	}
 	.card p { margin: 0; padding: 12px 14px; font-weight: 500; }
+	.empty { padding: 24px; color: #6b7280; }
 	textql-app { height: 100% }
 </style>
 
@@ -86,48 +89,67 @@ const PAGE = `<!doctype html>
 
 <script type="module" src="/element.js"></script>
 <script type="module">
-	const KEYS = __KEYS__;
+	const API_BASE = ${JSON.stringify(API_BASE)};
 	const main = document.querySelector('#main');
 	const title = document.querySelector('#title');
 	const back = document.querySelector('#back');
 
-	const apiBase = (key) => \`${API_BASE}/\${key}\`;
+	const apiBase = (id) => \`\${API_BASE}/\${encodeURIComponent(id)}\`;
 
-	function list() {
-		const grid = document.createElement('div');
-		grid.className = 'grid';
-
-		for (const key of KEYS) {
-			const card = document.createElement('button');
-			card.className = 'card';
-			card.innerHTML = '<div class="blank"></div><p>Loading&hellip;</p>';
-			card.addEventListener('click', () => (location.hash = key));
-			grid.append(card);
-
-			fetch(\`\${apiBase(key)}/app\`)
-				.then((response) => response.json())
-				.then((meta) => {
-					if (meta.error) throw new Error(meta.error);
-					const poster = meta.screenshotUrl
-						? \`<img src="\${meta.screenshotUrl}" alt="">\`
-						: '<div class="blank"></div>';
-					card.innerHTML = \`\${poster}<p></p>\`;
-					// textContent, not innerHTML: the name is the app's, not ours.
-					card.querySelector('p').textContent = meta.name;
-				})
-				.catch((cause) => (card.querySelector('p').textContent = cause.message));
-		}
-
-		title.textContent = 'Data apps';
-		back.hidden = true;
-		main.replaceChildren(grid);
+	// Resolved once and reused, so going back to the list does not re-fetch.
+	let apps = null;
+	async function load() {
+		if (apps) return apps;
+		const response = await fetch(API_BASE);
+		const body = await response.json();
+		if (!response.ok) throw new Error(body.error ?? \`The list returned \${response.status}.\`);
+		apps = body;
+		return apps;
 	}
 
-	function app(key) {
+	function card(app) {
+		const button = document.createElement('button');
+		button.className = 'card';
+		button.innerHTML = app.screenshotUrl
+			? \`<img src="\${encodeURI(app.screenshotUrl)}" alt="">\`
+			: '<div class="blank"></div>';
+		const name = document.createElement('p');
+		// textContent, not innerHTML: the name is the app's, not ours.
+		name.textContent = app.name;
+		button.append(name);
+		button.addEventListener('click', () => (location.hash = app.id));
+		return button;
+	}
+
+	function note(text) {
+		const element = document.createElement('p');
+		element.className = 'empty';
+		element.textContent = text;
+		return element;
+	}
+
+	async function list() {
+		title.textContent = 'Data apps';
+		back.hidden = true;
+		main.replaceChildren(note('Loading\\u2026'));
+
+		try {
+			const found = await load();
+			if (!found.length) return main.replaceChildren(note('No apps to show.'));
+			const grid = document.createElement('div');
+			grid.className = 'grid';
+			grid.append(...found.map(card));
+			main.replaceChildren(grid);
+		} catch (cause) {
+			main.replaceChildren(note(cause.message));
+		}
+	}
+
+	function app(id) {
 		// A fresh element rather than retargeting the old one, so api-base is set
 		// before it is inserted and its first load is already the right app.
 		const element = document.createElement('textql-app');
-		element.setAttribute('api-base', apiBase(key));
+		element.setAttribute('api-base', apiBase(id));
 		element.addEventListener('app-meta', ({ detail }) => (title.textContent = detail.name));
 
 		title.textContent = 'Loading\\u2026';
@@ -135,25 +157,25 @@ const PAGE = `<!doctype html>
 		main.replaceChildren(element);
 	}
 
-	const route = () => {
-		const key = location.hash.slice(1);
-		KEYS.includes(key) ? app(key) : list();
-	};
+	// The hash is checked against the list rather than passed straight through,
+	// so a hand-typed id shows the list instead of a 404 from the element.
+	async function route() {
+		const id = location.hash.slice(1);
+		if (!id) return list();
+		const found = await load().catch(() => []);
+		found.some((entry) => entry.id === id) ? app(id) : list();
+	}
+
 	addEventListener('hashchange', route);
 	route();
 </script>
-`.replace('__KEYS__', JSON.stringify(Object.keys(APPS)));
+`;
 
 const server = createServer((req, res) => {
 	void (async () => {
-		const path = new URL(req.url ?? '/', `http://${req.headers.host}`).pathname;
+		if (await embed(req, res)) return;
 
-		// Dispatched on the segment rather than offered to each handler in turn:
-		// toNodeHandler drains the body to build a `Request`, so a handler that
-		// declines a POST has already eaten it.
-		const segment = path.startsWith(`${API_BASE}/`) && path.slice(API_BASE.length + 1).split('/')[0];
-		const handler = segment ? handlers.get(segment) : undefined;
-		if (handler && (await handler(req, res))) return;
+		const path = new URL(req.url ?? '/', `http://${req.headers.host}`).pathname;
 
 		if (path === '/element.js') {
 			res.writeHead(200, { 'content-type': 'text/javascript; charset=utf-8' });
@@ -173,7 +195,7 @@ const server = createServer((req, res) => {
 server.listen(PORT, () => {
 	console.log(`Embed list demo on http://localhost:${PORT}`);
 	console.log(envError ? `No env file at ${ENV_FILE}` : `Env from ${ENV_FILE}`);
-	for (const [key, appId] of Object.entries(APPS)) console.log(`  ${API_BASE}/${key} → ${appId}`);
+	console.log(`  ${API_BASE} → ${APP_IDS.length} app(s)`);
 	if (!process.env['TEXTQL_API_KEY']) console.warn('TEXTQL_API_KEY is not set — requests will 503.');
-	if (!Object.keys(APPS).length) console.warn('TEXTQL_APP_IDS is not set — there is nothing to list.');
+	if (!APP_IDS.length) console.warn('TEXTQL_APP_IDS is not set — there is nothing to list.');
 });

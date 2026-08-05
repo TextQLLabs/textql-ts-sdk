@@ -24,15 +24,58 @@ export interface EmbedAppMeta {
   functions: string[];
 }
 
+/**
+ * One entry from the list route. No `functions`: `ListApps` does not populate
+ * them, and an empty array here would read as "this app has none".
+ */
+export interface EmbedAppSummary {
+  id: string;
+  name: string;
+  screenshotUrl: string | null;
+}
+
 export interface EmbedOptions {
   /**
    * The app to serve. Defaults to `TEXTQL_APP_ID`. Pass a function to pick per
-   * request — from your session, a tenant header, a route param.
+   * request — from your session, a tenant header, a `basePath` placeholder.
+   *
+   * With a placeholder and `appIds` set, leave this alone: the captured segment
+   * is checked against `appIds` and used as the app.
    */
-  appId?: string | ((request: Request) => string | Promise<string>) | undefined;
+  appId?:
+    | string
+    | ((request: Request, params: Record<string, string>) => string | Promise<string>)
+    | undefined;
+  /**
+   * The apps this handler will serve, which turns on the list route. Also the
+   * allowlist a `basePath` placeholder is checked against — the API key is
+   * org-wide, so without it a placeholder renders *any* app in the org.
+   */
+  appIds?:
+    | readonly string[]
+    | ((request: Request) => readonly string[] | Promise<readonly string[]>)
+    | undefined;
+  /**
+   * Passed to `ListApps` by the list route. Read the semantics before reaching
+   * for it: it is *exclusive*, not additive — `true` returns only apps authored
+   * by someone else and explicitly granted to you, and leaving it unset already
+   * includes apps shared with you.
+   *
+   * "You" is the member who created the API key, never your end user, so this
+   * cannot answer "what may this visitor see". That is what `appIds` as a
+   * function is for. A member who reaches every app through a role rather than
+   * a grant — an admin, typically — gets an empty list from `true`.
+   */
+  sharedWithMe?: boolean | undefined;
   /** Defaults to a client built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL`. */
   client?: Textql | undefined;
-  /** Where the handler is mounted. Must match the element's `api-base`. */
+  /**
+   * Where the handler is mounted. Must match the element's `api-base`.
+   *
+   * A `:name` segment captures that part of the path, so one handler can serve
+   * many apps — `/api/textql/:appId` matches `/api/textql/<id>/app`. The list
+   * route then sits on the static part above it, at `/api/textql`.
+   */
   basePath?: string | undefined;
   /**
    * Called before every request. Return false (or throw) to reject. Nothing
@@ -98,14 +141,69 @@ function toMeta(app: TextqlRpcPublicAppApp): EmbedAppMeta {
   };
 }
 
+/** `ListApps` caps `limit` server-side, so asking for more than this wastes a field. */
+const LIST_PAGE_SIZE = 100;
+
+/** A page short of `LIST_PAGE_SIZE` ends the walk; this only bounds a server that never sends one. */
+const LIST_MAX_PAGES = 100;
+
+/** The trailing route name, and whatever the `basePath` placeholders captured. */
+interface RouteMatch {
+  route: string;
+  params: Record<string, string>;
+}
+
 class Embed {
   readonly basePath: string;
+  /** Where the list route answers: the `basePath` up to its first placeholder. */
+  readonly listPath: string;
+  private readonly segments: string[];
   private readonly options: EmbedOptions;
   private client: Textql | undefined;
 
   constructor(options: EmbedOptions) {
     this.options = options;
     this.basePath = (options.basePath ?? DEFAULT_BASE_PATH).replace(/\/+$/, "");
+    this.segments = this.basePath.split("/");
+
+    const placeholder = this.segments.findIndex((segment) => segment.startsWith(":"));
+    this.listPath = placeholder === -1
+      ? this.basePath
+      : this.segments.slice(0, placeholder).join("/");
+  }
+
+  /**
+   * `appIds` means "there is a list here"; so does asking for the shared ones.
+   * `sharedWithMe: false` is only a decision not to filter, so it never creates
+   * a list on its own — that way `sharedWithMe: someBoolean` is safe to pass.
+   *
+   * `sharedWithMe` alone gives a read-only view: serving one of those apps
+   * still needs `appIds` or an `appId` resolver to check the path against.
+   */
+  get listable(): boolean {
+    return !!this.options.appIds || this.options.sharedWithMe === true;
+  }
+
+  /**
+   * `null` when the path is not one of ours. Requires exactly one segment past
+   * the base path, which is the route name — `/app`, `/document`, `/compute`.
+   */
+  match(pathname: string): RouteMatch | null {
+    const parts = pathname.split("/");
+    if (parts.length !== this.segments.length + 1) return null;
+
+    const params: Record<string, string> = {};
+    for (const [index, segment] of this.segments.entries()) {
+      const value = parts[index] ?? "";
+      if (!segment.startsWith(":")) {
+        if (segment !== value) return null;
+        continue;
+      }
+      if (!value) return null;
+      params[segment.slice(1)] = decodeURIComponent(value);
+    }
+
+    return { route: parts[this.segments.length] ?? "", params };
   }
 
   private sdk(): Textql {
@@ -116,14 +214,46 @@ class Embed {
     return this.client;
   }
 
-  private async appId(request: Request): Promise<string> {
-    const configured = this.options.appId;
-    if (typeof configured === "function") return configured(request);
-    return configured ?? envAppId();
+  private async allowedIds(request: Request): Promise<readonly string[] | null> {
+    const configured = this.options.appIds;
+    if (!configured) return null;
+    return typeof configured === "function" ? configured(request) : configured;
   }
 
-  private async fetchApp(request: Request): Promise<TextqlRpcPublicAppApp> {
-    const appId = await this.appId(request);
+  private async appId(request: Request, pathParams: Record<string, string>): Promise<string> {
+    const configured = this.options.appId;
+    if (typeof configured === "function") return configured(request, pathParams);
+    if (configured) return configured;
+
+    const captured = Object.values(pathParams);
+    if (!captured.length) return envAppId();
+    if (captured.length > 1) {
+      throw new EmbedError(
+        500,
+        "More than one basePath placeholder needs an `appId` resolver to say which is the app.",
+      );
+    }
+
+    // Taking the segment on trust would make this route an oracle for the whole
+    // org: one org-wide key, and the path as the only gate.
+    const allowed = await this.allowedIds(request);
+    if (!allowed) {
+      throw new EmbedError(
+        500,
+        "A basePath placeholder needs `appIds` to check it against, or an `appId` resolver.",
+      );
+    }
+
+    const appId = captured[0] ?? "";
+    if (!allowed.includes(appId)) throw new EmbedError(404, "That app does not exist.");
+    return appId;
+  }
+
+  private async fetchApp(
+    request: Request,
+    pathParams: Record<string, string>,
+  ): Promise<TextqlRpcPublicAppApp> {
+    const appId = await this.appId(request, pathParams);
     const result = unwrap(
       await this.sdk().apps.get({ body: { appId } }),
       "Unable to load the app.",
@@ -133,13 +263,57 @@ class Embed {
     return app;
   }
 
-  async meta(request: Request): Promise<EmbedAppMeta> {
-    return toMeta(await this.fetchApp(request));
+  async meta(request: Request, pathParams: Record<string, string>): Promise<EmbedAppMeta> {
+    return toMeta(await this.fetchApp(request, pathParams));
+  }
+
+  /**
+   * The apps behind `appIds`, as the list route returns them.
+   *
+   * `ListApps` has no filter by id, so this walks the org a page at a time and
+   * keeps the ones asked for. Ids the key cannot see are simply absent —
+   * reporting them back would tell the browser they exist.
+   */
+  async list(request: Request): Promise<EmbedAppSummary[]> {
+    const allowed = await this.allowedIds(request);
+    const wanted = allowed && new Set(allowed);
+    const found = new Map<string, EmbedAppSummary>();
+
+    for (let page = 0; page < LIST_MAX_PAGES; page++) {
+      const result = unwrap(
+        await this.sdk().apps.list({
+          body: {
+            limit: LIST_PAGE_SIZE,
+            offset: page * LIST_PAGE_SIZE,
+            sharedWithMe: this.options.sharedWithMe,
+          },
+        }),
+        "Unable to list the apps.",
+      );
+
+      const apps = result.apps ?? [];
+      for (const app of apps) {
+        const id = app.id;
+        if (!id || (wanted && !wanted.has(id))) continue;
+        const { name, screenshotUrl } = toMeta(app);
+        found.set(id, { id, name, screenshotUrl });
+      }
+
+      if (apps.length < LIST_PAGE_SIZE) break;
+      if (wanted && found.size === wanted.size) break;
+    }
+
+    // Returned in the order they were asked for rather than the server's
+    // favourites-then-recency order, so a fixed `appIds` gives a fixed list.
+    if (!allowed) return [...found.values()];
+    return allowed
+      .map((id) => found.get(id))
+      .filter((app): app is EmbedAppSummary => !!app);
   }
 
   /** The signed, expiring CDN URL. Only used when rehosting is off. */
-  async documentUrl(request: Request): Promise<string> {
-    const app = await this.fetchApp(request);
+  async documentUrl(request: Request, pathParams: Record<string, string>): Promise<string> {
+    const app = await this.fetchApp(request, pathParams);
     if (!app.htmlUrl) throw new EmbedError(404, "That app has not been rendered yet.");
     return app.htmlUrl;
   }
@@ -153,8 +327,12 @@ class Embed {
    * first; rewriting the config clears the second. `<base href>` keeps
    * subresources on the CDN, which already serves them with `ACAO: *`.
    */
-  async document(request: Request, hostOrigin: string): Promise<string> {
-    const app = await this.fetchApp(request);
+  async document(
+    request: Request,
+    pathParams: Record<string, string>,
+    hostOrigin: string,
+  ): Promise<string> {
+    const app = await this.fetchApp(request, pathParams);
     if (!app.htmlUrl) throw new EmbedError(404, "That app has not been rendered yet.");
     const url = app.htmlUrl;
 
@@ -184,7 +362,11 @@ class Embed {
     return rewritten.replace(/<head[^>]*>/i, (head) => head + injected);
   }
 
-  async compute(request: Request, body: unknown): Promise<unknown> {
+  async compute(
+    request: Request,
+    pathParams: Record<string, string>,
+    body: unknown,
+  ): Promise<unknown> {
     const name = (body as { name?: unknown } | null)?.name;
     const params = (body as { params?: unknown } | null)?.params;
     if (typeof name !== "string" || !name) {
@@ -193,7 +375,7 @@ class Embed {
 
     // The iframe can post any name it likes; without this the route is a
     // generic runner for anything the org's key can reach.
-    const app = await this.fetchApp(request);
+    const app = await this.fetchApp(request, pathParams);
     if (!toMeta(app).functions.includes(name)) {
       throw new EmbedError(403, `${name} is not a compute function of this app.`);
     }
@@ -201,7 +383,7 @@ class Embed {
     const result = unwrap(
       await this.sdk().apps.invokeComputeFunction({
         body: {
-          appId: app.id ?? (await this.appId(request)),
+          appId: app.id ?? (await this.appId(request, pathParams)),
           functionName: name,
           paramsJson: JSON.stringify(params ?? {}),
         },
@@ -255,12 +437,18 @@ function errorResponse(cause: unknown): Response {
   return json({ error: "The embed request failed." }, 500);
 }
 
+const ROUTES = new Set(["app", "document", "compute"]);
+
 /**
- * Handles the three routes `<textql-app>` calls, under `basePath`:
+ * Handles the routes `<textql-app>` calls, under `basePath`:
  *
  *   GET  {basePath}/app       → { name, screenshotUrl, functions }
  *   GET  {basePath}/document  → the app's HTML, served from your origin
  *   POST {basePath}/compute   → { result }
+ *
+ * With `appIds` set, one more, on the static part of `basePath`:
+ *
+ *   GET  {listPath}           → [{ id, name, screenshotUrl }]
  *
  * Returns `null` for anything else, so it composes with your own routing.
  */
@@ -269,46 +457,67 @@ export function createEmbedHandler(
 ): EmbedHandler & { GET: EmbedHandler; POST: EmbedHandler } {
   const embed = new Embed(options);
 
-  const handler: EmbedHandler = async (request) => {
-    const route = new URL(request.url).pathname.replace(/\/+$/, "");
-    if (!route.startsWith(embed.basePath)) return null;
-    const suffix = route.slice(embed.basePath.length);
-    if (suffix !== "/app" && suffix !== "/document" && suffix !== "/compute") return null;
-
+  // Every route is behind `authorize`, the list included: it names the apps.
+  const guarded = async (request: Request, run: () => Promise<Response>): Promise<Response> => {
     try {
       if (options.authorize && (await options.authorize(request)) === false) {
         throw new EmbedError(403, "Not allowed to view this app.");
       }
-
-      if (suffix === "/app" && request.method === "GET") {
-        return json(await embed.meta(request));
-      }
-
-      if (suffix === "/document" && request.method === "GET") {
-        if (options.rehostDocument === false) {
-          return Response.redirect(await embed.documentUrl(request), 302);
-        }
-        const html = await embed.document(request, new URL(request.url).origin);
-        return new Response(html, {
-          headers: {
-            "content-type": "text/html; charset=utf-8",
-            // Untrusted HTML on your origin; without this it is same-origin
-            // with the host page even when framed.
-            "content-security-policy": "sandbox allow-scripts",
-            "cache-control": "no-store",
-          },
-        });
-      }
-
-      if (suffix === "/compute" && request.method === "POST") {
-        const body = await request.json().catch(() => null);
-        return json({ result: await embed.compute(request, body) });
-      }
-
-      return json({ error: `${request.method} is not allowed here.` }, 405);
+      return await run();
     } catch (cause) {
       return errorResponse(cause);
     }
+  };
+
+  const serve = async (
+    request: Request,
+    { route, params: pathParams }: RouteMatch,
+  ): Promise<Response> => {
+    if (route === "app" && request.method === "GET") {
+      return json(await embed.meta(request, pathParams));
+    }
+
+    if (route === "document" && request.method === "GET") {
+      if (options.rehostDocument === false) {
+        return Response.redirect(await embed.documentUrl(request, pathParams), 302);
+      }
+      const html = await embed.document(request, pathParams, new URL(request.url).origin);
+      return new Response(html, {
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          // Untrusted HTML on your origin; without this it is same-origin
+          // with the host page even when framed.
+          "content-security-policy": "sandbox allow-scripts",
+          "cache-control": "no-store",
+        },
+      });
+    }
+
+    if (route === "compute" && request.method === "POST") {
+      const body = await request.json().catch(() => null);
+      return json({ result: await embed.compute(request, pathParams, body) });
+    }
+
+    return json({ error: `${request.method} is not allowed here.` }, 405);
+  };
+
+  const handler: EmbedHandler = async (request) => {
+    const pathname = new URL(request.url).pathname.replace(/\/+$/, "");
+
+    const matched = embed.match(pathname);
+    if (matched) {
+      if (!ROUTES.has(matched.route)) return null;
+      return guarded(request, () => serve(request, matched));
+    }
+
+    if (embed.listable && pathname === embed.listPath) {
+      if (request.method !== "GET") {
+        return json({ error: `${request.method} is not allowed here.` }, 405);
+      }
+      return guarded(request, async () => json(await embed.list(request)));
+    }
+
+    return null;
   };
 
   // Next.js and friends want a named export per method; both point here.

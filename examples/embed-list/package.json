@@ -8,7 +8,7 @@
 		"start": "tsx server.ts"
 	},
 	"dependencies": {
-		"@textql/sdk": "^1.4.3"
+		"@textql/sdk": "file:../.."
 	},
 	"devDependencies": {
 		"@types/node": "^22.10.2",
