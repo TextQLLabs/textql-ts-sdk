@@ -29,7 +29,7 @@ there is no per-example env file:
 TEXTQL_API_KEY=...      # Settings → Developers → API Keys (must reach every app)
 TEXTQL_APP_IDS=...      # the apps to list, comma-separated; falls back to TEXTQL_APP_ID
 TEXTQL_SERVER_URL=...   # on-prem only; the plain host, the SDK appends /rpc/public
-TEXTQL_SHARED_WITH_ME=1 # optional; narrows the list, see below. Expect an empty grid.
+TEXTQL_EXCLUDE_OWN=1    # optional; hides apps your key's member authored
 ```
 
 ```sh
@@ -51,8 +51,9 @@ browser refresh.
   that distinguishes the apps is `appIds` plus the `:appId` placeholder.
 - **`GET /api/textql`** — the SDK's list route, returning
   `[{ id, name, screenshotUrl }]` for the allowlisted apps, in the order given.
-  An id the key cannot see is simply absent, so the grid shows what actually
-  resolved rather than a card that errors.
+  Because the ids are known, it reads them one at a time rather than paging
+  through the org. An id the key cannot see is simply absent, so the grid shows
+  what resolved rather than a card that errors.
 - **`route()` in the page script** — the hash is checked against the list before
   the element is pointed at it, so a hand-typed id falls back to the grid.
 
@@ -60,22 +61,20 @@ An id that is in `TEXTQL_APP_IDS` but missing from the grid means the key cannot
 see that app, not that the route is wrong. Confirm with
 `GET /api/textql/<id>/app`, which says so with a status.
 
-## Trying `sharedWithMe`
+## `excludeOwn`
 
-`createEmbedHandler` takes a `sharedWithMe` option, which the list route passes
-to `ListApps`. `TEXTQL_SHARED_WITH_ME=1` sets it here so you can see what it
-does, and what it does is probably not what you want.
+`createEmbedHandler` takes an `excludeOwn` option, wired here to
+`TEXTQL_EXCLUDE_OWN=1`. It drops apps authored by the member your API key
+belongs to, which is what "shared with me" usually means in practice.
 
-It **narrows**. It returns only apps authored by someone else *and* explicitly
-granted to you — the default list already includes apps shared with you, so this
-is always a smaller list, never a bigger one. "You" is the member who created
-the API key, never the person looking at your page. And it reads explicit grants
-only, so a member who reaches apps through a role — an admin — gets nothing back
-from it while seeing the whole org by default.
+It compares `creator_id` from the list, so it works no matter how you got access
+— by role, by grant, or by being an admin.
 
-Against this repo's key the grid comes back empty for exactly that reason. For a
-list that follows your visitor, pass a function to `appIds` and answer from your
-own sharing model.
+It is not `ListApps`' `shared_with_me`, which also requires an explicit grant and
+therefore returns nothing for most keys. See [`EMBED.md`](../../EMBED.md#excludeown)
+for why that flag is not exposed here.
+
+An empty grid with this on means every app in your allowlist is one you wrote.
 
 ## Everything else
 

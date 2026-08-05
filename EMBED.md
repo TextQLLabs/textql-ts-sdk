@@ -56,7 +56,8 @@ export const { GET, POST } = createEmbedHandler({
 | --- | --- | --- |
 | `appId` | `TEXTQL_APP_ID` | A function `(request, params) => string` picks per request — from a session, tenant header, or a `basePath` placeholder. |
 | `appIds` | none | The apps this handler serves. Turns on the list route, and is the allowlist a `basePath` placeholder is checked against. |
-| `sharedWithMe` | unset | Passed to `ListApps` by the list route. Exclusive, and about the key's member — see below. |
+| `excludeOwn` | `false` | Drop apps the key's own member authored from the list route — see below. |
+| `memberId` | parsed from `TEXTQL_API_KEY` | The key's member, for `excludeOwn`. |
 | `client` | built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL` | Pass your own `Textql` instance. |
 | `basePath` | `/api/textql` | Where the handler is mounted. Must match the element's `api-base`. A `:name` segment captures that part of the path. |
 | `authorize` | none | Return `false` or throw to reject. |
@@ -95,63 +96,59 @@ Point the element at one of them:
 [{ "id": "app-id-1", "name": "Hop Road", "screenshotUrl": "https://..." }]
 ```
 
-Enough to render cards, and one request rather than one per card. `screenshotUrl`
-is signed and expires, so fetch the list when you render it rather than caching
-it for the day. There is no `functions` here — `ListApps` does not return them;
-`GET {basePath}/app` does.
+Enough to render cards. `screenshotUrl` is signed and expires, so fetch the list
+when you render it rather than caching it for the day. There is no `functions`
+here; `GET {basePath}/app` has them.
+
+How that list is read depends on whether you gave one. With `appIds`, each app
+is fetched by id, a few at a time — `ListApps` cannot filter by id, so walking it
+to find a known handful would cost the whole org for an O(allowlist) answer, and
+could not stop early precisely when one of the ids is unreadable. Without
+`appIds`, there is nothing to look up, so it pages through `ListApps` instead:
+the first page carries `totalCount` and the rest go out together.
+
+Either way an id the key cannot see is dropped from the list rather than
+reported — naming it is what `appIds` exists to prevent. Only "no such app for
+you" is treated that way: a `400`, `403` or `404` costs that one app, while a bad
+key or a `5xx` fails the whole request rather than quietly returning a short
+list.
 
 `appIds` can be a function of the request, which is where a per-user list comes
 from — your own sharing table, a tenant column, whatever you already have.
 
-### `sharedWithMe`
+### `excludeOwn`
 
-The list route passes this straight to `ListApps`, and it is worth knowing what
-it does before you set it.
+The practical reading of "shared with me": drop the apps this key's own member
+wrote.
 
 ```ts
-createEmbedHandler({ basePath: "/api/textql/:appId", sharedWithMe: true });
+createEmbedHandler({ basePath: "/api/textql/:appId", excludeOwn: true });
 ```
 
-It **narrows** rather than widens. `true` returns only apps authored by someone
-else *and* explicitly granted to you — leaving it unset already includes apps
-shared with you, alongside everything else you can reach. So `true` is a
-strictly smaller list than the default, never a larger one.
+It compares `creator_id`, which `ListApps` already returns on every row, so it
+works however access was granted.
 
-"You" is the member who created the API key. Keys are `member_id:token`, so
-every per-caller filter on `ListApps` describes that member, never the person
-looking at your page. It also reads explicit grants only, so a member who
-reaches apps through a role — an admin, typically — gets an empty list from
-`true` even while seeing the whole org by default. An empty list here usually
-means "this member holds no grants", not "nothing is shared".
+This is deliberately *not* `ListApps`' own `shared_with_me` flag. That one adds
+a second condition — an explicit `object_access` grant — on top of "someone else
+wrote it". Access that comes from a role satisfies the first and not the second,
+so for an admin, or for most service-account keys, it returns nothing at all
+while the default list returns the whole org. If you want those exact semantics,
+call `apps.list({ sharedWithMe: true })` directly; the embed list route does not
+expose it, because in an embed context it is almost always empty.
 
-For a list that follows your *visitor*, none of this helps: pass a function to
-`appIds` and answer from your own model.
+"Own" means the member the API key belongs to, never your end user. Keys are
+`base64("<member_id>:<token>")`, so the member is read off the key itself; pass
+`memberId` if your key is not in that shape, such as an embed JWT. For a list
+that follows the *visitor*, pass a function to `appIds` and answer from your own
+sharing model.
 
-`appIds` turns the list route on, and so does `sharedWithMe: true`. `false` only
+`appIds` turns the list route on, and so does `excludeOwn: true`. `false` only
 declines to filter, so it never creates a list by itself — which means
-`sharedWithMe: someBoolean` is safe to pass straight through from a flag.
+`excludeOwn: someBoolean` is safe to pass straight through from a flag.
 
-`sharedWithMe` alone gives a read-only view: serving one of those apps still
-needs `appIds`, or your own `appId` resolver, because the allowlist is what
-gates the per-app routes.
-
-App ids do reach the browser this way — they are in TextQL's own URLs too, and
-the allowlist, not their secrecy, is what gates access. To keep them off the
-wire anyway, resolve opaque keys in `appId` and write your own list route; the
-built-in one returns real ids by definition.
-
-```ts
-const APPS: Record<string, string> = { sales: "app-id-1", ops: "app-id-2" };
-
-createEmbedHandler({
-  basePath: "/api/textql/:key",
-  appId: (request, { key }) => {
-    const appId = APPS[key];
-    if (!appId) throw new EmbedError(404, "That app does not exist.");
-    return appId;
-  },
-});
-```
+`excludeOwn` alone gives a read-only view: serving one of those apps still needs
+`appIds`, or your own `appId` resolver, because the allowlist is what gates the
+per-app routes.
 
 ## Sizing
 

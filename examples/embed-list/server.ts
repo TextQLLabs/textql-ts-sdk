@@ -1,11 +1,9 @@
 /**
  * Embedding several Data Apps with `@textql/sdk/embed`: a list, then the app.
  *
- * One handler for all of them. `basePath` carries a `:appId` placeholder, so
- * the segment the browser puts in the path picks the app, checked against the
- * `appIds` allowlist. That same allowlist turns on the list route, which walks
- * `ListApps` server-side and returns just these apps. See `examples/embed-app`
- * for the single-app version, which is smaller.
+ * One handler serves all of them. The `:appId` placeholder in `basePath` picks
+ * which, checked against the `appIds` allowlist, and that same allowlist turns
+ * on the list route the grid reads. See `examples/embed-app` for one app.
  */
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -15,37 +13,47 @@ import { fileURLToPath } from 'node:url';
 import { config } from 'dotenv';
 import { createEmbedHandler, toNodeHandler } from '@textql/sdk/embed';
 
-// The SDK repo's root .env, shared by every example. Resolved from this file
-// rather than the cwd, so it does not matter where you launch from.
+// The repo root .env, shared by every example. Resolved from this file, not the cwd.
 const ENV_FILE = fileURLToPath(new URL('../../.env', import.meta.url));
 const { error: envError } = config({ path: ENV_FILE, override: true });
 
 const PORT = Number(process.env.PORT ?? 4181);
 const API_BASE = '/api/textql';
 
-// The allowlist. Ids reach the browser — they are in TextQL's own URLs — but
-// only these are served, so the org-wide key cannot be walked through the path.
+// The allowlist. Ids reach the browser, but only these are ever served.
 const APP_IDS = (process.env.TEXTQL_APP_IDS ?? process.env.TEXTQL_APP_ID ?? '')
 	.split(',')
 	.map((id) => id.trim())
 	.filter(Boolean);
 
-// Off by default, and it narrows rather than widens — an empty grid with this
-// on is the filter working, not the list breaking. See the README.
-const SHARED_WITH_ME = process.env.TEXTQL_SHARED_WITH_ME === '1';
+// Hides apps the key's own member authored — "shared with me", practically.
+const EXCLUDE_OWN = process.env.TEXTQL_EXCLUDE_OWN === '1';
 
-const embed = toNodeHandler(
-	createEmbedHandler({
-		appIds: APP_IDS,
-		basePath: `${API_BASE}/:appId`,
-		sharedWithMe: SHARED_WITH_ME
-	})
-);
+const handler = createEmbedHandler({
+	appIds: APP_IDS,
+	basePath: `${API_BASE}/:appId`,
+	excludeOwn: EXCLUDE_OWN
+});
+
+const embed = toNodeHandler(handler);
+
+/** The list route drops unreadable ids silently; at a terminal, say why. */
+async function reportUnresolved(): Promise<void> {
+	const origin = `http://localhost:${PORT}`;
+	const listed = await handler(new Request(`${origin}${API_BASE}`));
+	if (!listed?.ok) return;
+
+	const found = new Set(((await listed.json()) as { id: string }[]).map((app) => app.id));
+	for (const id of APP_IDS.filter((id) => !found.has(id))) {
+		const response = await handler(new Request(`${origin}${API_BASE}/${id}/app`));
+		const { error } = ((await response?.json()) ?? {}) as { error?: string };
+		console.warn(`  ${id} is not listed: ${error ?? 'reason unknown'}`);
+	}
+}
 
 const ELEMENT_JS = createRequire(import.meta.url).resolve('@textql/sdk/embed/element');
 
-// The list and the app are one page. `GET /api/textql` is the SDK's list route:
-// one call for every card, rather than one per card.
+// One page for both. `GET /api/textql` is the SDK's list route.
 const PAGE = `<!doctype html>
 <title>Data apps</title>
 <style>
@@ -113,8 +121,8 @@ const PAGE = `<!doctype html>
 		button.innerHTML = app.screenshotUrl
 			? \`<img src="\${encodeURI(app.screenshotUrl)}" alt="">\`
 			: '<div class="blank"></div>';
-		const name = document.createElement('p');
 		// textContent, not innerHTML: the name is the app's, not ours.
+		const name = document.createElement('p');
 		name.textContent = app.name;
 		button.append(name);
 		button.addEventListener('click', () => (location.hash = app.id));
@@ -146,8 +154,7 @@ const PAGE = `<!doctype html>
 	}
 
 	function app(id) {
-		// A fresh element rather than retargeting the old one, so api-base is set
-		// before it is inserted and its first load is already the right app.
+		// Fresh element, so api-base is set before insertion and the first load is right.
 		const element = document.createElement('textql-app');
 		element.setAttribute('api-base', apiBase(id));
 		element.addEventListener('app-meta', ({ detail }) => (title.textContent = detail.name));
@@ -157,8 +164,7 @@ const PAGE = `<!doctype html>
 		main.replaceChildren(element);
 	}
 
-	// The hash is checked against the list rather than passed straight through,
-	// so a hand-typed id shows the list instead of a 404 from the element.
+	// Checked against the list, so a hand-typed id shows the grid, not a 404.
 	async function route() {
 		const id = location.hash.slice(1);
 		if (!id) return list();
@@ -198,4 +204,5 @@ server.listen(PORT, () => {
 	console.log(`  ${API_BASE} → ${APP_IDS.length} app(s)`);
 	if (!process.env['TEXTQL_API_KEY']) console.warn('TEXTQL_API_KEY is not set — requests will 503.');
 	if (!APP_IDS.length) console.warn('TEXTQL_APP_IDS is not set — there is nothing to list.');
+	void reportUnresolved();
 });

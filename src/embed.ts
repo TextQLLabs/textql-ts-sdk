@@ -1,13 +1,10 @@
 /**
- * Embed a Data App in your own web app.
+ * Embed a Data App in your own web app. See EMBED.md.
  *
- * Pair this with `@textql/sdk/embed/element`, which registers the
- * `<textql-app>` element that talks to these routes. See EMBED.md.
- *
- * The routes exist because the API key is org-wide and must stay on your
- * server, and because a published app has to be re-served from your origin —
- * see `appDocument` below.
+ * Pair with `@textql/sdk/embed/element`, which registers the `<textql-app>`
+ * element that calls these routes.
  */
+import { stringFromBase64 } from "./lib/base64.js";
 import { readEnv } from "./env-config.js";
 import { Textql } from "./sdk/sdk.js";
 import type { ConnectError } from "./models/connect-error.js";
@@ -24,10 +21,7 @@ export interface EmbedAppMeta {
   functions: string[];
 }
 
-/**
- * One entry from the list route. No `functions`: `ListApps` does not populate
- * them, and an empty array here would read as "this app has none".
- */
+/** One entry from the list route. `ListApps` returns no compute functions. */
 export interface EmbedAppSummary {
   id: string;
   name: string;
@@ -36,57 +30,50 @@ export interface EmbedAppSummary {
 
 export interface EmbedOptions {
   /**
-   * The app to serve. Defaults to `TEXTQL_APP_ID`. Pass a function to pick per
-   * request — from your session, a tenant header, a `basePath` placeholder.
-   *
-   * With a placeholder and `appIds` set, leave this alone: the captured segment
-   * is checked against `appIds` and used as the app.
+   * The app to serve. Defaults to `TEXTQL_APP_ID`. A function picks per request.
+   * With a `basePath` placeholder and `appIds`, leave this unset.
    */
   appId?:
     | string
     | ((request: Request, params: Record<string, string>) => string | Promise<string>)
     | undefined;
   /**
-   * The apps this handler will serve, which turns on the list route. Also the
-   * allowlist a `basePath` placeholder is checked against — the API key is
-   * org-wide, so without it a placeholder renders *any* app in the org.
+   * The apps this handler serves. Turns on the list route, and is the allowlist
+   * a `basePath` placeholder is checked against. The API key is org-wide, so
+   * without it a placeholder would render any app in the org.
    */
   appIds?:
     | readonly string[]
     | ((request: Request) => readonly string[] | Promise<readonly string[]>)
     | undefined;
   /**
-   * Passed to `ListApps` by the list route. Read the semantics before reaching
-   * for it: it is *exclusive*, not additive — `true` returns only apps authored
-   * by someone else and explicitly granted to you, and leaving it unset already
-   * includes apps shared with you.
-   *
-   * "You" is the member who created the API key, never your end user, so this
-   * cannot answer "what may this visitor see". That is what `appIds` as a
-   * function is for. A member who reaches every app through a role rather than
-   * a grant — an admin, typically — gets an empty list from `true`.
+   * Drop apps the key's own member authored from the list route, by `creator_id`.
+   * Not `ListApps`' `shared_with_me`, which also demands an explicit grant and so
+   * returns nothing for role-derived access. Still the key's member, not your end
+   * user — for that, pass a function to `appIds`.
    */
-  sharedWithMe?: boolean | undefined;
+  excludeOwn?: boolean | undefined;
+  /**
+   * The key's member, for `excludeOwn`. Parsed from `TEXTQL_API_KEY` when
+   * omitted; set it for a key that is not `base64("<member_id>:<token>")`.
+   */
+  memberId?: string | undefined;
   /** Defaults to a client built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL`. */
   client?: Textql | undefined;
   /**
-   * Where the handler is mounted. Must match the element's `api-base`.
-   *
-   * A `:name` segment captures that part of the path, so one handler can serve
-   * many apps — `/api/textql/:appId` matches `/api/textql/<id>/app`. The list
-   * route then sits on the static part above it, at `/api/textql`.
+   * Where the handler is mounted. Must match the element's `api-base`. A `:name`
+   * segment captures that path part, so one handler serves many apps; the list
+   * route then sits on the static part above it.
    */
   basePath?: string | undefined;
   /**
-   * Called before every request. Return false (or throw) to reject. Nothing
-   * else here knows who the caller is, so without this the app is visible to
-   * anyone who can reach the route.
+   * Called before every request; return false or throw to reject. Nothing else
+   * here knows who the caller is, so without it the routes are open.
    */
   authorize?: (request: Request) => boolean | Promise<boolean>;
   /**
-   * Serve the app document from your origin. On by default because a published
-   * app is pinned to the origin it was published for and will not frame
-   * anywhere else. Turn off only once your origin is allowed platform-side.
+   * Serve the app document from your origin. On by default: a published app is
+   * pinned to its publish origin and will not frame anywhere else.
    */
   rehostDocument?: boolean | undefined;
 }
@@ -104,12 +91,20 @@ export class EmbedError extends Error {
   }
 }
 
-/**
- * The published `hostOrigin` tag, as written by compute's `pkg/app/shell.go`.
- * A literal from another repo, so `appDocument` fails loudly if it drifts.
- */
+/** As written by compute's `pkg/app/shell.go`; `document` fails loudly if it drifts. */
 const PUBLISHED_CONFIG =
   /<script>window\.ANA_RUNTIME_CONFIG\s*=\s*\{[^}]*\};?<\/script>/;
+
+/** Keys are `base64("<member_id>:<token>")`. `null` for anything else, such as an embed JWT. */
+function memberIdFromApiKey(apiKey: string | undefined): string | null {
+  if (!apiKey) return null;
+  try {
+    const [memberId, token] = stringFromBase64(apiKey.trim()).split(":", 2);
+    return memberId && token ? memberId : null;
+  } catch {
+    return null;
+  }
+}
 
 function envAppId(): string {
   const value = readEnv("TEXTQL_APP_ID");
@@ -141,11 +136,24 @@ function toMeta(app: TextqlRpcPublicAppApp): EmbedAppMeta {
   };
 }
 
-/** `ListApps` caps `limit` server-side, so asking for more than this wastes a field. */
+/** `ListApps` caps `limit` server-side; asking for more than this wastes a field. */
 const LIST_PAGE_SIZE = 100;
 
-/** A page short of `LIST_PAGE_SIZE` ends the walk; this only bounds a server that never sends one. */
-const LIST_MAX_PAGES = 100;
+/** Fan-out for both list strategies: a few requests at a time, never all at once. */
+const LIST_CONCURRENCY = 4;
+
+/** "Not this app", as opposed to "the request failed" — the latter must stay loud. */
+const MISSING_APP_STATUSES = new Set([400, 403, 404]);
+
+function isMissingApp(cause: unknown): boolean {
+  const status = cause instanceof EmbedError
+    ? cause.status
+    : (cause as { statusCode?: unknown })?.statusCode;
+  return typeof status === "number" && MISSING_APP_STATUSES.has(status);
+}
+
+/** Bounds the walk if `totalCount` ever comes back implausible. 100k apps. */
+const LIST_MAX_PAGES = 1000;
 
 /** The trailing route name, and whatever the `basePath` placeholders captured. */
 interface RouteMatch {
@@ -172,22 +180,12 @@ class Embed {
       : this.segments.slice(0, placeholder).join("/");
   }
 
-  /**
-   * `appIds` means "there is a list here"; so does asking for the shared ones.
-   * `sharedWithMe: false` is only a decision not to filter, so it never creates
-   * a list on its own — that way `sharedWithMe: someBoolean` is safe to pass.
-   *
-   * `sharedWithMe` alone gives a read-only view: serving one of those apps
-   * still needs `appIds` or an `appId` resolver to check the path against.
-   */
+  /** `excludeOwn: false` only declines to filter, so it never creates a list. */
   get listable(): boolean {
-    return !!this.options.appIds || this.options.sharedWithMe === true;
+    return !!this.options.appIds || this.options.excludeOwn === true;
   }
 
-  /**
-   * `null` when the path is not one of ours. Requires exactly one segment past
-   * the base path, which is the route name — `/app`, `/document`, `/compute`.
-   */
+  /** `null` unless the path is the base path plus exactly one segment: the route name. */
   match(pathname: string): RouteMatch | null {
     const parts = pathname.split("/");
     if (parts.length !== this.segments.length + 1) return null;
@@ -207,9 +205,7 @@ class Embed {
   }
 
   private sdk(): Textql {
-    // Built lazily so a missing key surfaces as a 503 on the first request
-    // rather than a throw at import time. `TEXTQL_SERVER_URL` is applied by
-    // the SDK init hook, so a bare client already points on-prem.
+    // Lazy, so a missing key is a 503 on first request, not a throw at import.
     this.client ??= this.options.client ?? new Textql();
     return this.client;
   }
@@ -234,8 +230,7 @@ class Embed {
       );
     }
 
-    // Taking the segment on trust would make this route an oracle for the whole
-    // org: one org-wide key, and the path as the only gate.
+    // Taking the segment on trust makes the route an oracle for the whole org.
     const allowed = await this.allowedIds(request);
     if (!allowed) {
       throw new EmbedError(
@@ -267,48 +262,103 @@ class Embed {
     return toMeta(await this.fetchApp(request, pathParams));
   }
 
-  /**
-   * The apps behind `appIds`, as the list route returns them.
-   *
-   * `ListApps` has no filter by id, so this walks the org a page at a time and
-   * keeps the ones asked for. Ids the key cannot see are simply absent —
-   * reporting them back would tell the browser they exist.
-   */
-  async list(request: Request): Promise<EmbedAppSummary[]> {
-    const allowed = await this.allowedIds(request);
-    const wanted = allowed && new Set(allowed);
-    const found = new Map<string, EmbedAppSummary>();
+  private async listPage(page: number) {
+    return unwrap(
+      await this.sdk().apps.list({
+        body: { limit: LIST_PAGE_SIZE, offset: page * LIST_PAGE_SIZE },
+      }),
+      "Unable to list the apps.",
+    );
+  }
 
-    for (let page = 0; page < LIST_MAX_PAGES; page++) {
-      const result = unwrap(
-        await this.sdk().apps.list({
-          body: {
-            limit: LIST_PAGE_SIZE,
-            offset: page * LIST_PAGE_SIZE,
-            sharedWithMe: this.options.sharedWithMe,
-          },
-        }),
-        "Unable to list the apps.",
+  /** Only resolved when `excludeOwn` is on; other key shapes are fine otherwise. */
+  private ownMemberId(): string {
+    const configured = this.options.memberId?.trim();
+    if (configured) return configured;
+
+    const memberId = memberIdFromApiKey(readEnv("TEXTQL_API_KEY"));
+    if (!memberId) {
+      throw new EmbedError(
+        500,
+        "`excludeOwn` needs to know the key's member: set `memberId`, or use a TEXTQL_API_KEY of the form base64(\"<member_id>:<token>\").",
       );
+    }
+    return memberId;
+  }
 
-      const apps = result.apps ?? [];
-      for (const app of apps) {
-        const id = app.id;
-        if (!id || (wanted && !wanted.has(id))) continue;
-        const { name, screenshotUrl } = toMeta(app);
-        found.set(id, { id, name, screenshotUrl });
+  /**
+   * One app at a time. `ListApps` cannot filter by id, so walking it for a known
+   * handful costs the whole org. Unreadable ids drop out; naming them back is
+   * what `appIds` exists to prevent.
+   */
+  private async fetchEach(appIds: readonly string[]): Promise<TextqlRpcPublicAppApp[]> {
+    const found: TextqlRpcPublicAppApp[] = [];
+
+    for (let index = 0; index < appIds.length; index += LIST_CONCURRENCY) {
+      const batch = appIds.slice(index, index + LIST_CONCURRENCY).map(async (appId) => {
+        try {
+          const result = unwrap(
+            await this.sdk().apps.get({ body: { appId } }),
+            "Unable to load the app.",
+          );
+          return result.app ?? null;
+        } catch (cause) {
+          if (isMissingApp(cause)) return null;
+          throw cause;
+        }
+      });
+
+      for (const app of await Promise.all(batch)) {
+        if (app) found.push(app);
       }
-
-      if (apps.length < LIST_PAGE_SIZE) break;
-      if (wanted && found.size === wanted.size) break;
     }
 
-    // Returned in the order they were asked for rather than the server's
-    // favourites-then-recency order, so a fixed `appIds` gives a fixed list.
-    if (!allowed) return [...found.values()];
-    return allowed
-      .map((id) => found.get(id))
-      .filter((app): app is EmbedAppSummary => !!app);
+    return found;
+  }
+
+  /**
+   * Every app the key can see, for when there is no allowlist to look up. The
+   * first page carries `totalCount`, so the rest go out together.
+   */
+  private async walkAll(): Promise<TextqlRpcPublicAppApp[]> {
+    const first = await this.listPage(0);
+    const all: TextqlRpcPublicAppApp[] = [...(first.apps ?? [])];
+
+    const pages = Math.min(
+      Math.ceil((first.totalCount ?? 0) / LIST_PAGE_SIZE),
+      LIST_MAX_PAGES,
+    );
+
+    for (let page = 1; page < pages; page += LIST_CONCURRENCY) {
+      const batch = [];
+      for (let n = page; n < Math.min(page + LIST_CONCURRENCY, pages); n++) {
+        batch.push(this.listPage(n));
+      }
+      for (const result of await Promise.all(batch)) all.push(...(result.apps ?? []));
+    }
+
+    return all;
+  }
+
+  /** What the list route returns: allowlist order, or the server's when there is none. */
+  async list(request: Request): Promise<EmbedAppSummary[]> {
+    const allowed = await this.allowedIds(request);
+    const own = this.options.excludeOwn ? this.ownMemberId() : null;
+
+    const apps = allowed
+      ? await this.fetchEach([...new Set(allowed)])
+      : await this.walkAll();
+
+    // Keyed by id because offset paging can repeat a row that moved between pages.
+    const found = new Map<string, EmbedAppSummary>();
+    for (const app of apps) {
+      const id = app.id;
+      if (!id || (own && app.creatorId === own)) continue;
+      const { name, screenshotUrl } = toMeta(app);
+      found.set(id, { id, name, screenshotUrl });
+    }
+
+    return [...found.values()];
   }
 
   /** The signed, expiring CDN URL. Only used when rehosting is off. */
@@ -319,13 +369,11 @@ class Embed {
   }
 
   /**
-   * Re-serves the app's HTML from your origin, because a published app is
-   * pinned to one origin twice over: a `frame-ancestors` header
-   * (`pkg/remote/proxy/assets.go`) that stops the frame rendering at all, and a
-   * baked-in `ANA_RUNTIME_CONFIG.hostOrigin` (`pkg/app/shell.go`) that is the
-   * only origin its runtime will postMessage. Serving it ourselves clears the
-   * first; rewriting the config clears the second. `<base href>` keeps
-   * subresources on the CDN, which already serves them with `ACAO: *`.
+   * A published app is pinned to one origin twice: `frame-ancestors`
+   * (`pkg/remote/proxy/assets.go`) stops it framing, and a baked-in
+   * `ANA_RUNTIME_CONFIG.hostOrigin` (`pkg/app/shell.go`) is the only origin its
+   * runtime will postMessage. Serving it here clears the first, rewriting the
+   * config clears the second, and `<base href>` keeps subresources on the CDN.
    */
   async document(
     request: Request,
@@ -407,10 +455,7 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-/**
- * The platform reports failures as a JSON body — `{ code, message }` — carried
- * on the thrown error. Read structurally so this needs no error-class import.
- */
+/** Failures arrive as a `{ code, message }` body on the error. Read structurally. */
 function upstreamMessage(cause: unknown): string | null {
   const body = (cause as { body?: unknown })?.body;
   if (typeof body !== "string") return null;
@@ -425,13 +470,10 @@ function upstreamMessage(cause: unknown): string | null {
 function errorResponse(cause: unknown): Response {
   if (cause instanceof EmbedError) return json({ error: cause.message }, cause.status);
   const status = (cause as { statusCode?: unknown })?.statusCode;
-  // The SDK throws on non-2xx rather than returning the union, so a bad key is
-  // a 401 here, not an opaque 500.
   if (typeof status === "number") {
-    // The status alone is undebuggable: a compute call that raised inside the
-    // app is a bare 400, and the Python traceback naming the bad argument —
-    // the entire diagnosis — is in this message. These are the platform's
-    // developer-facing strings, so they reach the browser as-is.
+    // The status alone is undebuggable — a compute call that raised inside the
+    // app is a bare 400, and the traceback naming the bad argument is in the
+    // message. Platform strings, so they reach the browser as-is.
     return json({ error: upstreamMessage(cause) ?? `TextQL returned ${status}.` }, status);
   }
   return json({ error: "The embed request failed." }, 500);
@@ -457,7 +499,7 @@ export function createEmbedHandler(
 ): EmbedHandler & { GET: EmbedHandler; POST: EmbedHandler } {
   const embed = new Embed(options);
 
-  // Every route is behind `authorize`, the list included: it names the apps.
+  // The list is behind `authorize` too — it names the apps.
   const guarded = async (request: Request, run: () => Promise<Response>): Promise<Response> => {
     try {
       if (options.authorize && (await options.authorize(request)) === false) {
