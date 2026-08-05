@@ -1,0 +1,11 @@
+# Hand-written, not produced by Speakeasy. Without this they are unmanaged
+# files sitting in a generated tree, preserved only because the generator has
+# not pruned them yet.
+src/embed.ts
+src/embed/
+src/streaming.ts
+src/env-config.ts
+EMBED.md
+STREAMING.md
+FUNCTIONS.md
+examples/

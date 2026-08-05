@@ -53,7 +53,7 @@ npm install @textql/sdk
 
 Version floors: server handler v1.3.8+, `<TextqlApp />` v1.4.0+,
 `TEXTQL_SERVER_URL` v1.4.1+, `basePath` placeholders / `appIds` / the list route
-/ `excludeOwn` v1.5.0+.
+/ `excludeOwn` v1.4.6+.
 
 Two environment variables, server-side only:
 
