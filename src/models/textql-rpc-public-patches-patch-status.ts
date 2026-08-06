@@ -13,6 +13,7 @@ export const TextqlRpcPublicPatchesPatchStatus = {
   PatchStatusOpen: "PATCH_STATUS_OPEN",
   PatchStatusApproved: "PATCH_STATUS_APPROVED",
   PatchStatusDenied: "PATCH_STATUS_DENIED",
+  PatchStatusAwaitingRemoteMerge: "PATCH_STATUS_AWAITING_REMOTE_MERGE",
 } as const;
 export type TextqlRpcPublicPatchesPatchStatus = OpenEnum<
   typeof TextqlRpcPublicPatchesPatchStatus

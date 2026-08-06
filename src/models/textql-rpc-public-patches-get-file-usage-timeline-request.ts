@@ -4,16 +4,7 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * copied from google.type.Date; not available in buf's google/protobuf/*
- */
 export type TextqlRpcPublicPatchesGetFileUsageTimelineRequest = {
-  /**
-   * Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-   *
-   * @remarks
-   *  a year.
-   */
   pathPrefix?: string | null | undefined;
   /**
    * A Duration represents a signed, fixed-length span of time represented

@@ -222,3 +222,12 @@ Based on:
 - [typescript v1.4.6] .
 ### Releases
 - [NPM v1.4.6] https://www.npmjs.com/package/@textql/sdk/v/1.4.6 - Embed: serve many apps from one handler via a `basePath` placeholder and an `appIds` allowlist, a list route for rendering app cards, and `excludeOwn` / `memberId` for hiding apps the key's own member authored.
+
+
+## 2026-08-06 14:55:35
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.791.4 (2.926.8) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.4.6] .

@@ -64,8 +64,13 @@
       "default": "./esm/*.js"
     }
   },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TextQLLabs/textql-ts-sdk.git"
+  },
   "scripts": {
-    "lint": "oxlint --max-warnings=0 --deny-warnings src/**/*.ts src/**/*.tsx",
+    "lint": "oxlint --max-warnings=0 --deny-warnings --no-error-on-unmatched-pattern src",
     "build": "tsgo",
     "prepublishOnly": "npm run build"
   },

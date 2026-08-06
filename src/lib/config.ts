@@ -11,7 +11,7 @@ import { Params, pathToFunc } from "./url.js";
  * Contains the list of servers available to the SDK
  */
 export const ServerList = [
-  "https://app.textql.com",
+  "https://app.textql.com/rpc/public",
 ] as const;
 
 export type SDKOptions = {
@@ -58,7 +58,7 @@ export function serverURLFromOptions(options: SDKOptions): URL | null {
 export const SDK_METADATA = {
   language: "typescript",
   openapiDocVersion: "1.0.0",
-  sdkVersion: "1.4.5",
-  genVersion: "2.926.2",
-  userAgent: "speakeasy-sdk/typescript 1.4.5 2.926.2 1.0.0 @textql/sdk",
+  sdkVersion: "1.4.6",
+  genVersion: "2.926.8",
+  userAgent: "speakeasy-sdk/typescript 1.4.6 2.926.8 1.0.0 @textql/sdk",
 } as const;

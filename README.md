@@ -379,11 +379,11 @@ run();
 * [getFileUsage](docs/sdks/ontology/README.md#getfileusage) - GetFileUsage
 * [getFileUsageTimeline](docs/sdks/ontology/README.md#getfileusagetimeline) - GetFileUsageTimeline
 * [getAnaConfig](docs/sdks/ontology/README.md#getanaconfig) - GetOntologyAnaConfig
-* [getFile](docs/sdks/ontology/README.md#getfile) - GetOntologyFile
+* [getFile](docs/sdks/ontology/README.md#getfile) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
 * [getGithubOAuthURL](docs/sdks/ontology/README.md#getgithuboauthurl) - GetOntologyGithubOAuthURL
 * [getHistoryFileDiff](docs/sdks/ontology/README.md#gethistoryfilediff) - GetOntologyHistoryFileDiff
 * [getOwners](docs/sdks/ontology/README.md#getowners) - GetOntologyOwners
-* [getRemote](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
+* [getRemote](docs/sdks/ontology/README.md#getremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
 * [getSizeTimeline](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
 * [getSyncConflicts](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
 * [getUsageSummary](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary
@@ -404,12 +404,12 @@ run();
 * [listPatchObjects](docs/sdks/ontology/README.md#listpatchobjects) - ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
 * [listPatchReviewers](docs/sdks/ontology/README.md#listpatchreviewers) - ListPatchReviewers
 * [listPatches](docs/sdks/ontology/README.md#listpatches) - ListPatches
-* [listSkills](docs/sdks/ontology/README.md#listskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+* [listSkills](docs/sdks/ontology/README.md#listskills) - ListSkills
 * [planMerge](docs/sdks/ontology/README.md#planmerge) - PlanOntologyMerge
-* [previewPullFromRemote](docs/sdks/ontology/README.md#previewpullfromremote) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [previewPullFromRemote](docs/sdks/ontology/README.md#previewpullfromremote) - PreviewOntologyPullFromRemote
 * [pullFromRemote](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
-* [recover](docs/sdks/ontology/README.md#recover) - RecoverOntology
+* [recover](docs/sdks/ontology/README.md#recover) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [removeRemote](docs/sdks/ontology/README.md#removeremote) - RemoveOntologyRemote
 * [removeSubmodule](docs/sdks/ontology/README.md#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](docs/sdks/ontology/README.md#renamefile) - RenameOntologyFile
@@ -818,7 +818,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyGetCodeownerCoverage`](docs/sdks/ontology/README.md#getcodeownercoverage) - GetCodeownerCoverage
 - [`ontologyGetConfigExportCapabilities`](docs/sdks/ontology/README.md#getconfigexportcapabilities) - GetConfigExportCapabilities
 - [`ontologyGetEffectiveOwners`](docs/sdks/ontology/README.md#geteffectiveowners) - GetEffectiveOntologyOwners
-- [`ontologyGetFile`](docs/sdks/ontology/README.md#getfile) - GetOntologyFile
+- [`ontologyGetFile`](docs/sdks/ontology/README.md#getfile) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
 - [`ontologyGetFileUsage`](docs/sdks/ontology/README.md#getfileusage) - GetFileUsage
 - [`ontologyGetFileUsageTimeline`](docs/sdks/ontology/README.md#getfileusagetimeline) - GetFileUsageTimeline
 - [`ontologyGetGithubOAuthURL`](docs/sdks/ontology/README.md#getgithuboauthurl) - GetOntologyGithubOAuthURL
@@ -828,7 +828,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyGetPatchByNumber`](docs/sdks/ontology/README.md#getpatchbynumber) - GetPatchByNumber
 - [`ontologyGetPatchCapabilities`](docs/sdks/ontology/README.md#getpatchcapabilities) - GetPatchCapabilities
 - [`ontologyGetRawPatch`](docs/sdks/ontology/README.md#getrawpatch) - GetRawPatch
-- [`ontologyGetRemote`](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
+- [`ontologyGetRemote`](docs/sdks/ontology/README.md#getremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
 - [`ontologyGetSizeTimeline`](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
 - [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
 - [`ontologyGetUsageDetailsForFile`](docs/sdks/ontology/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
@@ -843,14 +843,14 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyListPatches`](docs/sdks/ontology/README.md#listpatches) - ListPatches
 - [`ontologyListPatchObjects`](docs/sdks/ontology/README.md#listpatchobjects) - ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
 - [`ontologyListPatchReviewers`](docs/sdks/ontology/README.md#listpatchreviewers) - ListPatchReviewers
-- [`ontologyListSkills`](docs/sdks/ontology/README.md#listskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+- [`ontologyListSkills`](docs/sdks/ontology/README.md#listskills) - ListSkills
 - [`ontologyListSubmodules`](docs/sdks/ontology/README.md#listsubmodules) - ListOntologySubmodules
 - [`ontologyListSyncRuns`](docs/sdks/ontology/README.md#listsyncruns) - ListOntologySyncRuns
 - [`ontologyPlanMerge`](docs/sdks/ontology/README.md#planmerge) - PlanOntologyMerge
-- [`ontologyPreviewPullFromRemote`](docs/sdks/ontology/README.md#previewpullfromremote) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+- [`ontologyPreviewPullFromRemote`](docs/sdks/ontology/README.md#previewpullfromremote) - PreviewOntologyPullFromRemote
 - [`ontologyPullFromRemote`](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 - [`ontologyPushToRemote`](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
-- [`ontologyRecover`](docs/sdks/ontology/README.md#recover) - RecoverOntology
+- [`ontologyRecover`](docs/sdks/ontology/README.md#recover) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 - [`ontologyRemoveRemote`](docs/sdks/ontology/README.md#removeremote) - RemoveOntologyRemote
 - [`ontologyRemoveSubmodule`](docs/sdks/ontology/README.md#removesubmodule) - RemoveOntologySubmodule
 - [`ontologyRenameFile`](docs/sdks/ontology/README.md#renamefile) - RenameOntologyFile
@@ -1148,7 +1148,7 @@ The default server can be overridden globally by passing a URL to the `serverURL
 import { Textql } from "@textql/sdk";
 
 const textql = new Textql({
-  serverURL: "https://app.textql.com",
+  serverURL: "https://app.textql.com/rpc/public",
   apiKey: process.env["TEXTQL_API_KEY"] ?? "",
 });
 

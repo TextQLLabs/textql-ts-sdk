@@ -6,7 +6,7 @@ info:
     TextQL public API. Generated from protobuf service definitions; internal
     endpoints are excluded via google.api.visibility / file_visibility.
 servers:
-  - url: https://app.textql.com
+  - url: https://app.textql.com/rpc/public
 paths:
   /textql.rpc.public.agent.AgentService/CreateAgent:
     post:
@@ -7631,7 +7631,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: GetOntologyFile
+      summary: Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+      description: |-
+        Streams how many folders and files a subtree holds, so the UI can report the
+         size of the whole Ontology rather than only the directories it has lazily
+         listed. Counts rise monotonically across frames; the last frame sets
+         `final`. A cache hit emits a single `final` frame with `from_cache` set.
       operationId: OntologyManagementService_GetOntologyFile
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getFile
@@ -7779,7 +7784,11 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: GetOntologyRemote
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+      description: |-
+        Lists the skills under the ontology's flat skills/ root that the caller can
+         read (OWNERS-filtered). Returns display metadata only — never instruction
+         bodies — feeding the chat composer's `/` autocomplete.
       operationId: OntologyManagementService_GetOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getRemote
@@ -8563,11 +8572,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-      description: |-
-        Lists the skills under the ontology's flat skills/ root that the caller can
-         read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete.
+      summary: ListSkills
       operationId: OntologyManagementService_ListSkills
       x-speakeasy-group: ontology
       x-speakeasy-name-override: listSkills
@@ -8641,12 +8646,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
-      description: |-
-        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-         caller's org: if the Ontology repo's live HEAD differs from the last
-         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-         equivalent of waiting for the periodic drift scan.
+      summary: PreviewOntologyPullFromRemote
       operationId: OntologyManagementService_PreviewOntologyPullFromRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: previewPullFromRemote
@@ -8757,7 +8757,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: RecoverOntology
+      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
+      description: |-
+        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+         caller's org: if the Ontology repo's live HEAD differs from the last
+         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+         equivalent of waiting for the periodic drift scan.
       operationId: OntologyManagementService_RecoverOntology
       x-speakeasy-group: ontology
       x-speakeasy-name-override: recover
@@ -22108,6 +22113,7 @@ components:
         - MODEL_DEFAULT
         - MODEL_DEFAULT_LARGE
         - MODEL_DEFAULT_REASONING
+        - MODEL_DEFAULT_SYSTEM
         - MODEL_HAIKU_4_5
         - MODEL_OPUS_4_8
         - MODEL_FABLE_5
@@ -25587,6 +25593,10 @@ components:
           title: total_app_count
           format: int32
           description: Including nested folders
+        isFavorited:
+          type: boolean
+          title: is_favorited
+          description: per-caller pin state (enriched, not stored on the folder)
       title: DashboardFolder
       additionalProperties: false
       description: Dashboard folder for hierarchical organization
@@ -29899,6 +29909,13 @@ components:
         alreadyApproved:
           type: boolean
           title: already_approved
+        awaitingRemoteMerge:
+          type: boolean
+          title: awaiting_remote_merge
+        remotePrUrl:
+          type: string
+          title: remote_pr_url
+          nullable: true
       title: ApprovePatchResponse
       additionalProperties: false
     textql.rpc.public.patches.AutoAttachEntry:
@@ -30178,6 +30195,10 @@ components:
           title: upload_key
       title: CreateOntologyFileUploadUrlResponse
       additionalProperties: false
+      description: |-
+        Counts of the entries a caller may see beneath a subtree. Excludes the subtree
+         root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
+         are bookkeeping rather than Ontology content.
     textql.rpc.public.patches.DailyFileUsage:
       type: object
       properties:
@@ -30228,7 +30249,6 @@ components:
           type: integer
           title: day
           format: int32
-          description: default 7d
       title: Date
       additionalProperties: false
     textql.rpc.public.patches.DeleteApprovalRuleRequest:
@@ -30291,6 +30311,13 @@ components:
           nullable: true
       title: DeleteOntologyOwnersRequest
       additionalProperties: false
+      description: |-
+        Returns the *effective* owners for a directory after walking ancestor
+         OWNERS files: for every role in the org, the resolved permission the
+         role would have on this directory (per `permissionForDirWithRoles`).
+         Use this when you need to compare permissions across paths — the
+         literal GetOntologyOwners only reflects the OWNERS file at the exact
+         path, missing inheritance.
     textql.rpc.public.patches.DenyPatchRequest:
       type: object
       properties:
@@ -30335,6 +30362,7 @@ components:
         chatId:
           type: string
           title: chat_id
+          description: default 7d
         title:
           type: string
           title: title
@@ -30527,20 +30555,13 @@ components:
         pathPrefix:
           type: string
           title: path_prefix
-          description: |-
-            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-             a year.
           nullable: true
         observationPeriod:
           title: observation_period
-          description: |-
-            Month of a year. Must be from 1 to 12, or 0 to specify a year without a
-             month and day.
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetFileUsageTimelineRequest
       additionalProperties: false
-      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.GetFileUsageTimelineResponse:
       type: object
       properties:
@@ -30690,10 +30711,14 @@ components:
       properties:
         observationPeriod:
           title: observation_period
+          description: |-
+            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+             a year.
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetOntologySizeTimelineRequest
       additionalProperties: false
+      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.GetOntologySizeTimelineResponse:
       type: object
       properties:
@@ -30856,7 +30881,6 @@ components:
       properties:
         lastUsed:
           title: last_used
-          description: default 7d
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         days:
           type: array
@@ -30948,13 +30972,6 @@ components:
           nullable: true
       title: ListChatsForFileRequest
       additionalProperties: false
-      description: |-
-        Aggregate ontology-usage health for the window — the roll-ups the Ontology
-         Health hero needs without paging every file to the client. pulled_files,
-         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
-         total_files, dead_files, and reclaimable_tokens come from the current git
-         tree diffed against the set of pulled paths (a dead file is one present in
-         the ontology but never pulled in the window).
     textql.rpc.public.patches.ListChatsForFileResponse:
       type: object
       properties:
@@ -30965,6 +30982,13 @@ components:
           title: chats
       title: ListChatsForFileResponse
       additionalProperties: false
+      description: |-
+        Aggregate ontology-usage health for the window — the roll-ups the Ontology
+         Health hero needs without paging every file to the client. pulled_files,
+         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
+         total_files, dead_files, and reclaimable_tokens come from the current git
+         tree diffed against the set of pulled paths (a dead file is one present in
+         the ontology but never pulled in the window).
     textql.rpc.public.patches.ListContextPatchAutoApproveRulesRequest:
       type: object
       title: ListContextPatchAutoApproveRulesRequest
@@ -31499,9 +31523,6 @@ components:
       properties:
         date:
           title: date
-          description: |-
-            most recent pull or run (imports included) inside the window; unset when
-             the file had no usage at all
           $ref: '#/components/schemas/textql.rpc.public.patches.Date'
         totalBytes:
           type:
@@ -31509,7 +31530,6 @@ components:
             - string
           title: total_bytes
           format: int64
-          description: one entry per UTC day in the window, oldest first; idle days zero-filled
         fileCount:
           type: integer
           title: file_count
@@ -31691,6 +31711,15 @@ components:
           items:
             type: string
           title: requested_reviewer_member_ids
+        remotePrUrl:
+          type: string
+          title: remote_pr_url
+          nullable: true
+        remotePrNumber:
+          type: integer
+          title: remote_pr_number
+          format: int32
+          nullable: true
       title: Patch
       additionalProperties: false
     textql.rpc.public.patches.PatchCapabilities:
@@ -31917,6 +31946,7 @@ components:
         - PATCH_STATUS_OPEN
         - PATCH_STATUS_APPROVED
         - PATCH_STATUS_DENIED
+        - PATCH_STATUS_AWAITING_REMOTE_MERGE
     textql.rpc.public.patches.PatchStatusCounts:
       type: object
       properties:
@@ -32422,13 +32452,6 @@ components:
           nullable: true
       title: UpsertOntologyOwnersRequest
       additionalProperties: false
-      description: |-
-        Returns the *effective* owners for a directory after walking ancestor
-         OWNERS files: for every role in the org, the resolved permission the
-         role would have on this directory (per `permissionForDirWithRoles`).
-         Use this when you need to compare permissions across paths — the
-         literal GetOntologyOwners only reflects the OWNERS file at the exact
-         path, missing inheritance.
     textql.rpc.public.patches.UpsertOntologyOwnersResponse:
       type: object
       properties:

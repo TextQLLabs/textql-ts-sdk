@@ -235,6 +235,8 @@ export type TextqlRpcPublicPatchesPatch = {
     | Array<TextqlRpcPublicPatchesPatchCodeownerStatus>
     | undefined;
   requestedReviewerMemberIds?: Array<string> | undefined;
+  remotePrUrl?: string | null | undefined;
+  remotePrNumber?: number | null | undefined;
 };
 
 /** @internal */
@@ -268,6 +270,8 @@ export const TextqlRpcPublicPatchesPatch$inboundSchema: z.ZodMiniType<
     z.array(TextqlRpcPublicPatchesPatchCodeownerStatus$inboundSchema),
   ),
   requestedReviewerMemberIds: types.optional(z.array(types.string())),
+  remotePrUrl: z.optional(z.nullable(types.string())),
+  remotePrNumber: z.optional(z.nullable(types.number())),
 });
 
 export function textqlRpcPublicPatchesPatchFromJSON(
