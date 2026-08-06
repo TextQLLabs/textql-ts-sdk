@@ -13,6 +13,8 @@ export type TextqlRpcPublicPatchesApprovePatchResponse = {
   approvalCount?: number | undefined;
   requiredApprovals?: number | undefined;
   alreadyApproved?: boolean | undefined;
+  awaitingRemoteMerge?: boolean | undefined;
+  remotePrUrl?: string | null | undefined;
 };
 
 /** @internal */
@@ -23,6 +25,8 @@ export const TextqlRpcPublicPatchesApprovePatchResponse$inboundSchema:
       approvalCount: types.optional(types.number()),
       requiredApprovals: types.optional(types.number()),
       alreadyApproved: types.optional(types.boolean()),
+      awaitingRemoteMerge: types.optional(types.boolean()),
+      remotePrUrl: z.optional(z.nullable(types.string())),
     },
   );
 

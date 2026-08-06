@@ -13,16 +13,10 @@ import {
   TextqlRpcPublicPatchesDate$inboundSchema,
 } from "./textql-rpc-public-patches-date.js";
 
-/**
- * one entry per UTC day in the window, oldest first; idle days zero-filled
- */
 export type TotalBytes = number | string;
 
 export type TextqlRpcPublicPatchesOntologySizeDay = {
   date?: TextqlRpcPublicPatchesDate | undefined;
-  /**
-   * one entry per UTC day in the window, oldest first; idle days zero-filled
-   */
   totalBytes?: number | string | undefined;
   fileCount?: number | undefined;
 };

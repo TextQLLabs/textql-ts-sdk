@@ -25,11 +25,11 @@
 * [getFileUsage](#getfileusage) - GetFileUsage
 * [getFileUsageTimeline](#getfileusagetimeline) - GetFileUsageTimeline
 * [getAnaConfig](#getanaconfig) - GetOntologyAnaConfig
-* [getFile](#getfile) - GetOntologyFile
+* [getFile](#getfile) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
 * [getGithubOAuthURL](#getgithuboauthurl) - GetOntologyGithubOAuthURL
 * [getHistoryFileDiff](#gethistoryfilediff) - GetOntologyHistoryFileDiff
 * [getOwners](#getowners) - GetOntologyOwners
-* [getRemote](#getremote) - GetOntologyRemote
+* [getRemote](#getremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
 * [getSizeTimeline](#getsizetimeline) - GetOntologySizeTimeline
 * [getSyncConflicts](#getsyncconflicts) - GetOntologySyncConflicts
 * [getUsageSummary](#getusagesummary) - GetOntologyUsageSummary
@@ -50,12 +50,12 @@
 * [listPatchObjects](#listpatchobjects) - ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
 * [listPatchReviewers](#listpatchreviewers) - ListPatchReviewers
 * [listPatches](#listpatches) - ListPatches
-* [listSkills](#listskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+* [listSkills](#listskills) - ListSkills
 * [planMerge](#planmerge) - PlanOntologyMerge
-* [previewPullFromRemote](#previewpullfromremote) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [previewPullFromRemote](#previewpullfromremote) - PreviewOntologyPullFromRemote
 * [pullFromRemote](#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](#pushtoremote) - PushOntologyToRemote
-* [recover](#recover) - RecoverOntology
+* [recover](#recover) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [removeRemote](#removeremote) - RemoveOntologyRemote
 * [removeSubmodule](#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](#renamefile) - RenameOntologyFile
@@ -1610,7 +1610,10 @@ run();
 
 ## getFile
 
-GetOntologyFile
+Streams how many folders and files a subtree holds, so the UI can report the
+ size of the whole Ontology rather than only the directories it has lazily
+ listed. Counts rise monotonically across frames; the last frame sets
+ `final`. A cache hit emits a single `final` frame with `from_cache` set.
 
 ### Example Usage
 
@@ -1902,7 +1905,9 @@ run();
 
 ## getRemote
 
-GetOntologyRemote
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete.
 
 ### Example Usage
 
@@ -3440,9 +3445,7 @@ run();
 
 ## listSkills
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete.
+ListSkills
 
 ### Example Usage
 
@@ -3588,10 +3591,7 @@ run();
 
 ## previewPullFromRemote
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+PreviewOntologyPullFromRemote
 
 ### Example Usage
 
@@ -3810,7 +3810,10 @@ run();
 
 ## recover
 
-RecoverOntology
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 

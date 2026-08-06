@@ -222,6 +222,10 @@ export type TextqlRpcPublicDashboardDashboardFolder = {
    * Including nested folders
    */
   totalAppCount?: number | undefined;
+  /**
+   * per-caller pin state (enriched, not stored on the folder)
+   */
+  isFavorited?: boolean | undefined;
 };
 
 /** @internal */
@@ -243,6 +247,7 @@ export const TextqlRpcPublicDashboardDashboardFolder$inboundSchema:
     ),
     appCount: types.optional(types.number()),
     totalAppCount: types.optional(types.number()),
+    isFavorited: types.optional(types.boolean()),
   });
 
 export function textqlRpcPublicDashboardDashboardFolderFromJSON(

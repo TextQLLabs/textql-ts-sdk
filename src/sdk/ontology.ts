@@ -399,7 +399,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * GetOntologyFile
+   * Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+   *
+   * @remarks
+   * Streams how many folders and files a subtree holds, so the UI can report the
+   *  size of the whole Ontology rather than only the directories it has lazily
+   *  listed. Counts rise monotonically across frames; the last frame sets
+   *  `final`. A cache hit emits a single `final` frame with `from_cache` set.
    */
   async getFile(
     request: operations.OntologyManagementServiceGetOntologyFileRequest,
@@ -461,7 +467,12 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * GetOntologyRemote
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+   *
+   * @remarks
+   * Lists the skills under the ontology's flat skills/ root that the caller can
+   *  read (OWNERS-filtered). Returns display metadata only — never instruction
+   *  bodies — feeding the chat composer's `/` autocomplete.
    */
   async getRemote(
     request: operations.OntologyManagementServiceGetOntologyRemoteRequest,
@@ -777,12 +788,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-   *
-   * @remarks
-   * Lists the skills under the ontology's flat skills/ root that the caller can
-   *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete.
+   * ListSkills
    */
   async listSkills(
     request: operations.OntologyManagementServiceListSkillsRequest,
@@ -810,13 +816,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-   *
-   * @remarks
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-   *  caller's org: if the Ontology repo's live HEAD differs from the last
-   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-   *  equivalent of waiting for the periodic drift scan.
+   * PreviewOntologyPullFromRemote
    */
   async previewPullFromRemote(
     request:
@@ -863,7 +863,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * RecoverOntology
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+   *
+   * @remarks
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+   *  caller's org: if the Ontology repo's live HEAD differs from the last
+   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+   *  equivalent of waiting for the periodic drift scan.
    */
   async recover(
     request: operations.OntologyManagementServiceRecoverOntologyRequest,

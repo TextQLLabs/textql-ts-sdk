@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * copied from google.type.Date; not available in buf's google/protobuf/*
+ */
 export type TextqlRpcPublicPatchesGetOntologySizeTimelineRequest = {
   /**
    * A Duration represents a signed, fixed-length span of time represented

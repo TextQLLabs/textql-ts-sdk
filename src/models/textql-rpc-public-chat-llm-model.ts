@@ -12,6 +12,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelDefault: "MODEL_DEFAULT",
   ModelDefaultLarge: "MODEL_DEFAULT_LARGE",
   ModelDefaultReasoning: "MODEL_DEFAULT_REASONING",
+  ModelDefaultSystem: "MODEL_DEFAULT_SYSTEM",
   ModelHaiku45: "MODEL_HAIKU_4_5",
   ModelOpus48: "MODEL_OPUS_4_8",
   ModelFable5: "MODEL_FABLE_5",
