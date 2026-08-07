@@ -27,11 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
- *
- * @remarks
- * Cross-member live activity: rows from every member of the app after a seq,
- *  each carrying member_id + display_name (resolved server-side; never email).
+ * GetAppDBTablePreview
  */
 export function appsGetDBTablePreview(
   client: TextqlCore,

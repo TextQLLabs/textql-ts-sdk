@@ -6,11 +6,11 @@
 
 * [addSubmodule](#addsubmodule) - AddOntologySubmodule
 * [approvePatch](#approvepatch) - ApprovePatch
-* [configureRemote](#configureremote) - ConfigureOntologyRemote
+* [configureRemote](#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
 * [createApprovalRule](#createapprovalrule) - CreateApprovalRule
 * [createContextPatchAutoApproveRule](#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 * [createDirectory](#createdirectory) - CreateOntologyDirectory
-* [createFileUploadUrl](#createfileuploadurl) - CreateOntologyFileUploadUrl
+* [createFileUploadUrl](#createfileuploadurl) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
 * [deleteApprovalRule](#deleteapprovalrule) - DeleteApprovalRule
 * [deleteContextPatchAutoApproveRule](#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
 * [deleteDirectory](#deletedirectory) - DeleteOntologyDirectory
@@ -25,17 +25,17 @@
 * [getFileUsage](#getfileusage) - GetFileUsage
 * [getFileUsageTimeline](#getfileusagetimeline) - GetFileUsageTimeline
 * [getAnaConfig](#getanaconfig) - GetOntologyAnaConfig
-* [getFile](#getfile) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+* [getFile](#getfile) - GetOntologyFile
 * [getGithubOAuthURL](#getgithuboauthurl) - GetOntologyGithubOAuthURL
 * [getHistoryFileDiff](#gethistoryfilediff) - GetOntologyHistoryFileDiff
 * [getOwners](#getowners) - GetOntologyOwners
-* [getRemote](#getremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+* [getRemote](#getremote) - GetOntologyRemote
 * [getSizeTimeline](#getsizetimeline) - GetOntologySizeTimeline
 * [getSyncConflicts](#getsyncconflicts) - GetOntologySyncConflicts
 * [getUsageSummary](#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](#getpatch) - GetPatch
 * [getPatchByNumber](#getpatchbynumber) - GetPatchByNumber
-* [getPatchCapabilities](#getpatchcapabilities) - GetPatchCapabilities
+* [getPatchCapabilities](#getpatchcapabilities) - PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
 * [getRawPatch](#getrawpatch) - GetRawPatch
 * [getUsageDetailsForFile](#getusagedetailsforfile) - GetUsageDetailsForFile
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
@@ -55,7 +55,7 @@
 * [previewPullFromRemote](#previewpullfromremote) - PreviewOntologyPullFromRemote
 * [pullFromRemote](#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](#pushtoremote) - PushOntologyToRemote
-* [recover](#recover) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [recover](#recover) - RecoverOntology
 * [removeRemote](#removeremote) - RemoveOntologyRemote
 * [removeSubmodule](#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](#renamefile) - RenameOntologyFile
@@ -69,7 +69,7 @@
 * [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-* [updateSyncConfig](#updatesyncconfig) - UpdateOntologySyncConfig
+* [updateSyncConfig](#updatesyncconfig) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [upsertAnaConfig](#upsertanaconfig) - UpsertOntologyAnaConfig
 * [upsertFile](#upsertfile) - UpsertOntologyFile
 * [upsertOwners](#upsertowners) - UpsertOntologyOwners
@@ -223,7 +223,9 @@ run();
 
 ## configureRemote
 
-ConfigureOntologyRemote
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete.
 
 ### Example Usage
 
@@ -515,7 +517,10 @@ run();
 
 ## createFileUploadUrl
 
-CreateOntologyFileUploadUrl
+Streams how many folders and files a subtree holds, so the UI can report the
+ size of the whole Ontology rather than only the directories it has lazily
+ listed. Counts rise monotonically across frames; the last frame sets
+ `final`. A cache hit emits a single `final` frame with `from_cache` set.
 
 ### Example Usage
 
@@ -1610,10 +1615,7 @@ run();
 
 ## getFile
 
-Streams how many folders and files a subtree holds, so the UI can report the
- size of the whole Ontology rather than only the directories it has lazily
- listed. Counts rise monotonically across frames; the last frame sets
- `final`. A cache hit emits a single `final` frame with `from_cache` set.
+GetOntologyFile
 
 ### Example Usage
 
@@ -1905,9 +1907,7 @@ run();
 
 ## getRemote
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete.
+GetOntologyRemote
 
 ### Example Usage
 
@@ -2345,7 +2345,11 @@ run();
 
 ## getPatchCapabilities
 
-GetPatchCapabilities
+PlanConfigMigration reports what the lazy config migration WOULD do to this
+ org's objects, and writes nothing. Admin-only, internal: it exists so a
+ release manager can warn the specific orgs a rollout will affect — notably
+ the objects that will stop running because adoption binds a Runner who can
+ no longer run them.
 
 ### Example Usage
 
@@ -3810,10 +3814,7 @@ run();
 
 ## recover
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+RecoverOntology
 
 ### Example Usage
 
@@ -4835,7 +4836,10 @@ run();
 
 ## updateSyncConfig
 
-UpdateOntologySyncConfig
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 

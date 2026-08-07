@@ -27,7 +27,13 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * UpdateOntologySyncConfig
+ * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+ *
+ * @remarks
+ * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ *  caller's org: if the Ontology repo's live HEAD differs from the last
+ *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ *  equivalent of waiting for the periodic drift scan.
  */
 export function ontologyUpdateSyncConfig(
   client: TextqlCore,

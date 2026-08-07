@@ -27,7 +27,13 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * CreateOntologyFileUploadUrl
+ * Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+ *
+ * @remarks
+ * Streams how many folders and files a subtree holds, so the UI can report the
+ *  size of the whole Ontology rather than only the directories it has lazily
+ *  listed. Counts rise monotonically across frames; the last frame sets
+ *  `final`. A cache hit emits a single `final` frame with `from_cache` set.
  */
 export function ontologyCreateFileUploadUrl(
   client: TextqlCore,

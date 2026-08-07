@@ -27,13 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+ * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  *
  * @remarks
- * Ordering overlay for the sidebar Bookmarks section: one position list per
- *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
- *  Membership truth stays in library_favorite / chat bookmarks; this persists
- *  only the drag-and-drop order.
+ * Lists the calling member's favorited library items (apps, dashboards,
+ *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  */
 export function appsGetMemberState(
   client: TextqlCore,

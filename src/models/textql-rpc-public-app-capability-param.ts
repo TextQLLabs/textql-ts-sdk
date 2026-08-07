@@ -9,6 +9,9 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicAppCapabilityParam = {
+  /**
+   * False when the document predates tree publishing and has no runtime to overwrite.
+   */
   name?: string | undefined;
   type?: string | null | undefined;
   description?: string | null | undefined;

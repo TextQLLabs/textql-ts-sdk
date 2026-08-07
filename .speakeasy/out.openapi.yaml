@@ -493,8 +493,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
-      description: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+      summary: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+      description: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
       operationId: AppService_AppHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: heartbeat
@@ -683,7 +683,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: GetAppDBSchema
+      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+      description: |-
+        Append-only per-member activity log. Listing is own rows only; no
+         cross-member reads in this release.
       operationId: AppService_GetAppDBSchema
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBSchema
@@ -720,10 +723,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).'
-      description: |-
-        Cross-member live activity: rows from every member of the app after a seq,
-         each carrying member_id + display_name (resolved server-side; never email).
+      summary: GetAppDBTablePreview
       operationId: AppService_GetAppDBTablePreview
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBTablePreview
@@ -760,12 +760,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks (''<kind>:<id>'' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.'
+      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
       description: |-
-        Ordering overlay for the sidebar Bookmarks section: one position list per
-         member covering favorites and thread bookmarks ('<kind>:<id>' keys).
-         Membership truth stays in library_favorite / chat bookmarks; this persists
-         only the drag-and-drop order.
+        Lists the calling member's favorited library items (apps, dashboards,
+         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
       operationId: AppService_GetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: getMemberState
@@ -802,7 +800,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: GetAppVersion
+      summary: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
+      description: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
       operationId: AppService_GetAppVersion
       x-speakeasy-group: apps
       x-speakeasy-name-override: getAppVersion
@@ -839,10 +838,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
+      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
       description: |-
-        Lists the calling member's favorited library items (apps, dashboards,
-         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+        Favorite/unfavorite a library item (app or dashboard) for the calling member.
+         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+         since the merged library page pins apps and dashboards through one client.
       operationId: AppService_GetAppViewStats
       x-speakeasy-group: apps
       x-speakeasy-name-override: getAppViewStats
@@ -916,8 +916,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-      description: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+      summary: InvokeAppComputeFunction
       operationId: AppService_InvokeAppComputeFunction
       x-speakeasy-group: apps
       x-speakeasy-name-override: invokeComputeFunction
@@ -954,11 +953,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.'
+      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
       description: |-
-        Per-member app state: one JSON blob per (app, member) so apps remember
-         settings/progress. Member always resolved server-side from auth context;
-         per-member persistence, so viewers with read access can save their own state.
+        Staff-only (superadmin gated in-handler): publishes the embedded component
+         gallery as an app tree and returns its signed viewer URL.
       operationId: AppService_ListAppActivitySince
       x-speakeasy-group: apps
       x-speakeasy-name-override: listActivitySince
@@ -995,8 +993,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
-      description: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
+      summary: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+      description: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
       operationId: AppService_ListAppVersions
       x-speakeasy-group: apps
       x-speakeasy-name-override: listVersions
@@ -1070,10 +1068,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
-      description: |-
-        Staff-only (superadmin gated in-handler): publishes the embedded component
-         gallery as an app tree and returns its signed viewer URL.
+      summary: 'View analytics: reads the engagement views recorded on app page load.'
+      description: 'View analytics: reads the engagement views recorded on app page load.'
       operationId: AppService_ListMyAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: listMyMemberActivity
@@ -1148,10 +1144,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-      description: |-
-        Append-only per-member activity log. Listing is own rows only; no
-         cross-member reads in this release.
+      summary: PresenceHeartbeat
       operationId: AppService_PresenceHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: presenceHeartbeat
@@ -1188,8 +1181,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'View analytics: reads the engagement views recorded on app page load.'
-      description: 'View analytics: reads the engagement views recorded on app page load.'
+      summary: Replaces the calling member's entire ordering; capped server-side.
+      description: Replaces the calling member's entire ordering; capped server-side.
       operationId: AppService_RecordAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: recordMemberActivity
@@ -1301,8 +1294,12 @@ paths:
     post:
       tags:
         - AppService
-      summary: Replaces the calling member's entire ordering; capped server-side.
-      description: Replaces the calling member's entire ordering; capped server-side.
+      summary: 'Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks (''<kind>:<id>'' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.'
+      description: |-
+        Ordering overlay for the sidebar Bookmarks section: one position list per
+         member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+         Membership truth stays in library_favorite / chat bookmarks; this persists
+         only the drag-and-drop order.
       operationId: AppService_SetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: setMemberState
@@ -1339,11 +1336,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-      description: |-
-        Favorite/unfavorite a library item (app or dashboard) for the calling member.
-         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-         since the merged library page pins apps and dashboards through one client.
+      summary: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+      description: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
       operationId: AppService_SetFavorite
       x-speakeasy-group: apps
       x-speakeasy-name-override: setFavorite
@@ -6928,7 +6922,11 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: ConfigureOntologyRemote
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+      description: |-
+        Lists the skills under the ontology's flat skills/ root that the caller can
+         read (OWNERS-filtered). Returns display metadata only — never instruction
+         bodies — feeding the chat composer's `/` autocomplete.
       operationId: OntologyManagementService_ConfigureOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: configureRemote
@@ -7076,7 +7074,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: CreateOntologyFileUploadUrl
+      summary: Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+      description: |-
+        Streams how many folders and files a subtree holds, so the UI can report the
+         size of the whole Ontology rather than only the directories it has lazily
+         listed. Counts rise monotonically across frames; the last frame sets
+         `final`. A cache hit emits a single `final` frame with `from_cache` set.
       operationId: OntologyManagementService_CreateOntologyFileUploadUrl
       x-speakeasy-group: ontology
       x-speakeasy-name-override: createFileUploadUrl
@@ -7631,12 +7634,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
-      description: |-
-        Streams how many folders and files a subtree holds, so the UI can report the
-         size of the whole Ontology rather than only the directories it has lazily
-         listed. Counts rise monotonically across frames; the last frame sets
-         `final`. A cache hit emits a single `final` frame with `from_cache` set.
+      summary: GetOntologyFile
       operationId: OntologyManagementService_GetOntologyFile
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getFile
@@ -7784,11 +7782,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-      description: |-
-        Lists the skills under the ontology's flat skills/ root that the caller can
-         read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete.
+      summary: GetOntologyRemote
       operationId: OntologyManagementService_GetOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getRemote
@@ -8010,7 +8004,13 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: GetPatchCapabilities
+      summary: 'PlanConfigMigration reports what the lazy config migration WOULD do to this  org''s objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.'
+      description: |-
+        PlanConfigMigration reports what the lazy config migration WOULD do to this
+         org's objects, and writes nothing. Admin-only, internal: it exists so a
+         release manager can warn the specific orgs a rollout will affect — notably
+         the objects that will stop running because adoption binds a Runner who can
+         no longer run them.
       operationId: OntologyManagementService_GetPatchCapabilities
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getPatchCapabilities
@@ -8757,12 +8757,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
-      description: |-
-        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-         caller's org: if the Ontology repo's live HEAD differs from the last
-         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-         equivalent of waiting for the periodic drift scan.
+      summary: RecoverOntology
       operationId: OntologyManagementService_RecoverOntology
       x-speakeasy-group: ontology
       x-speakeasy-name-override: recover
@@ -9280,7 +9275,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: UpdateOntologySyncConfig
+      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
+      description: |-
+        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+         caller's org: if the Ontology repo's live HEAD differs from the last
+         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+         equivalent of waiting for the periodic drift scan.
       operationId: OntologyManagementService_UpdateOntologySyncConfig
       x-speakeasy-group: ontology
       x-speakeasy-name-override: updateSyncConfig
@@ -16385,6 +16385,7 @@ components:
         name:
           type: string
           title: name
+          description: False when the document predates tree publishing and has no runtime to overwrite.
         type:
           type: string
           title: type
