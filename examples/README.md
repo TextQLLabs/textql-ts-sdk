@@ -10,6 +10,7 @@ This directory contains example scripts demonstrating how to use the @textql/sdk
 ## Setup
 
 1. Copy `.env.template` to `.env`:
+
    ```bash
    cp .env.template .env
    ```
@@ -28,4 +29,4 @@ npm run build && npx tsx example.ts
 
 Duplicate an existing example file, they won't be overwritten by the generation process.
 
-
+Look at how textql-ts-sdk/examples/embed-list-dynamic-key at main · TextQLLabs/textql-ts-sdk implements the JS Text SDK -  please copy that into here and re write the implementations we have in @embed-textql.js
