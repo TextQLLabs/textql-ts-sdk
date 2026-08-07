@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Data apps</title>
+		<style>
+			html, body { height: 100%; margin: 0 }
+			body {
+				display: flex; flex-direction: column;
+				font: 14px/1.5 system-ui, -apple-system, sans-serif; color: #374151;
+			}
+			header {
+				display: flex; align-items: center; gap: 12px;
+				padding: 16px 24px; border-bottom: 1px solid #e5e7eb;
+			}
+			h1 { margin: 0; font-size: 15px; font-weight: 600; }
+			a { color: inherit; text-decoration: none; }
+			a:hover { text-decoration: underline; }
+			main { flex: 1; min-height: 0; }
+			.grid {
+				display: grid; gap: 16px; padding: 24px;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+			}
+			.card {
+				display: block; overflow: hidden; text-align: left; padding: 0;
+				border: 1px solid #e5e7eb; border-radius: 8px; background: #fff;
+				font: inherit; color: inherit; cursor: pointer;
+			}
+			.card:hover { border-color: #9ca3af; }
+			.card img, .card .blank {
+				display: block; width: 100%; aspect-ratio: 16 / 10;
+				object-fit: cover; background: #f3f4f6; border-bottom: 1px solid #e5e7eb;
+			}
+			.card p { margin: 0; padding: 12px 14px; font-weight: 500; }
+			.empty { padding: 24px; color: #6b7280; }
+			textql-app { height: 100% }
+		</style>
+	</head>
+	<body>
+		<header>
+			<a id="back" href="#" hidden>&larr; All apps</a>
+			<h1 id="title">Data apps</h1>
+		</header>
+		<main id="main"></main>
+
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>

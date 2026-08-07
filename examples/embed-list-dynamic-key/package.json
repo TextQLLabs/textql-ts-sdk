@@ -3,17 +3,15 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
-	"scripts": {
-		"dev": "tsx watch server.ts",
-		"start": "tsx server.ts"
-	},
 	"dependencies": {
-		"@textql/sdk": "file:../.."
+		"@textql/sdk": "file:../..",
+		"dotenv": "^16.4.5"
+	},
+	"scripts": {
+		"dev": "vite",
+		"preview": "vite preview"
 	},
 	"devDependencies": {
-		"@types/node": "^22.10.2",
-		"dotenv": "^17.4.2",
-		"tsx": "^4.19.2",
-		"typescript": "^5.9.2"
+		"vite": "^7.0.0"
 	}
 }
