@@ -1,0 +1,19 @@
+{
+	"name": "embed-list-dynamic-key",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch server.ts",
+		"start": "tsx server.ts"
+	},
+	"dependencies": {
+		"@textql/sdk": "file:../.."
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.2",
+		"dotenv": "^17.4.2",
+		"tsx": "^4.19.2",
+		"typescript": "^5.9.2"
+	}
+}

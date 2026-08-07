@@ -1,0 +1,14 @@
+node_modules
+
+# OS
+.DS_Store
+Thumbs.db
+
+# The API key, and any copy of it. Never commit these.
+secrets.txt*
+!secrets.txt.example
+
+# Env
+.env
+.env.*
+!.env.example
