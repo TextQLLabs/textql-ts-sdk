@@ -106,7 +106,12 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * ConfigureOntologyRemote
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+   *
+   * @remarks
+   * Lists the skills under the ontology's flat skills/ root that the caller can
+   *  read (OWNERS-filtered). Returns display metadata only — never instruction
+   *  bodies — feeding the chat composer's `/` autocomplete.
    */
   async configureRemote(
     request: operations.OntologyManagementServiceConfigureOntologyRemoteRequest,
@@ -169,7 +174,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * CreateOntologyFileUploadUrl
+   * Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+   *
+   * @remarks
+   * Streams how many folders and files a subtree holds, so the UI can report the
+   *  size of the whole Ontology rather than only the directories it has lazily
+   *  listed. Counts rise monotonically across frames; the last frame sets
+   *  `final`. A cache hit emits a single `final` frame with `from_cache` set.
    */
   async createFileUploadUrl(
     request:
@@ -399,13 +410,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
-   *
-   * @remarks
-   * Streams how many folders and files a subtree holds, so the UI can report the
-   *  size of the whole Ontology rather than only the directories it has lazily
-   *  listed. Counts rise monotonically across frames; the last frame sets
-   *  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+   * GetOntologyFile
    */
   async getFile(
     request: operations.OntologyManagementServiceGetOntologyFileRequest,
@@ -467,12 +472,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
-   *
-   * @remarks
-   * Lists the skills under the ontology's flat skills/ root that the caller can
-   *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete.
+   * GetOntologyRemote
    */
   async getRemote(
     request: operations.OntologyManagementServiceGetOntologyRemoteRequest,
@@ -563,7 +563,14 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * GetPatchCapabilities
+   * PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
+   *
+   * @remarks
+   * PlanConfigMigration reports what the lazy config migration WOULD do to this
+   *  org's objects, and writes nothing. Admin-only, internal: it exists so a
+   *  release manager can warn the specific orgs a rollout will affect — notably
+   *  the objects that will stop running because adoption binds a Runner who can
+   *  no longer run them.
    */
   async getPatchCapabilities(
     request: operations.OntologyManagementServiceGetPatchCapabilitiesRequest,
@@ -863,13 +870,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-   *
-   * @remarks
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-   *  caller's org: if the Ontology repo's live HEAD differs from the last
-   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-   *  equivalent of waiting for the periodic drift scan.
+   * RecoverOntology
    */
   async recover(
     request: operations.OntologyManagementServiceRecoverOntologyRequest,
@@ -1080,7 +1081,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * UpdateOntologySyncConfig
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+   *
+   * @remarks
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+   *  caller's org: if the Ontology repo's live HEAD differs from the last
+   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+   *  equivalent of waiting for the periodic drift scan.
    */
   async updateSyncConfig(
     request:

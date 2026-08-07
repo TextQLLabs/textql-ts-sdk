@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * View analytics: reads the engagement views recorded on app page load.
+ * Replaces the calling member's entire ordering; capped server-side.
  *
  * @remarks
- * View analytics: reads the engagement views recorded on app page load.
+ * Replaces the calling member's entire ordering; capped server-side.
  */
 export function appsRecordMemberActivity(
   client: TextqlCore,

@@ -27,10 +27,13 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Replaces the calling member's entire ordering; capped server-side.
+ * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
  *
  * @remarks
- * Replaces the calling member's entire ordering; capped server-side.
+ * Ordering overlay for the sidebar Bookmarks section: one position list per
+ *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+ *  Membership truth stays in library_favorite / chat bookmarks; this persists
+ *  only the drag-and-drop order.
  */
 export function appsSetMemberState(
   client: TextqlCore,

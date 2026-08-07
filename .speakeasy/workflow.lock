@@ -2,8 +2,8 @@ speakeasyVersion: 1.791.4
 sources:
     TextQL API:
         sourceNamespace: textql-api
-        sourceRevisionDigest: sha256:e70bb83c356635bdf77450794133487dd554a69c8494f7fbd9c91748dcd58954
-        sourceBlobDigest: sha256:bd54fb405356d9767b09e669bbb1e5d91bba430b341a082eebc66bddb994b5e3
+        sourceRevisionDigest: sha256:76e6616dae4a4ca48d0bc9aedc9bdc77face5bcae603c860a17dc9e2bf103811
+        sourceBlobDigest: sha256:b9df87977ba101dbef4722f29e892071c50e1d09968cbfe955a03f4218afdf6a
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     textql:
         source: TextQL API
         sourceNamespace: textql-api
-        sourceRevisionDigest: sha256:e70bb83c356635bdf77450794133487dd554a69c8494f7fbd9c91748dcd58954
-        sourceBlobDigest: sha256:bd54fb405356d9767b09e669bbb1e5d91bba430b341a082eebc66bddb994b5e3
+        sourceRevisionDigest: sha256:76e6616dae4a4ca48d0bc9aedc9bdc77face5bcae603c860a17dc9e2bf103811
+        sourceBlobDigest: sha256:b9df87977ba101dbef4722f29e892071c50e1d09968cbfe955a03f4218afdf6a
         codeSamplesNamespace: textql-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:bd959e2c79a5e6030698f04985240ab0d03a3b3bb372c90677b2d28eadcba239
+        codeSamplesRevisionDigest: sha256:d667bf3f92d0e9faba981d72a7d66a6fb813fdab6140fdebc8ea5188ddc69773
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

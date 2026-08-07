@@ -4,34 +4,34 @@
 
 ### Available Operations
 
-* [heartbeat](#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+* [heartbeat](#heartbeat) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 * [createApp](#createapp) - CreateApp
 * [deleteApp](#deleteapp) - DeleteApp
 * [duplicate](#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](#get) - GetApp
-* [getDBSchema](#getdbschema) - GetAppDBSchema
-* [getDBTablePreview](#getdbtablepreview) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
-* [getMemberState](#getmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
-* [getAppVersion](#getappversion) - GetAppVersion
-* [getAppViewStats](#getappviewstats) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+* [getDBSchema](#getdbschema) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [getDBTablePreview](#getdbtablepreview) - GetAppDBTablePreview
+* [getMemberState](#getmemberstate) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+* [getAppVersion](#getappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+* [getAppViewStats](#getappviewstats) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [getMembersWithApps](#getmemberswithapps) - GetMembersWithApps
-* [invokeComputeFunction](#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-* [listActivitySince](#listactivitysince) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
-* [listVersions](#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+* [invokeComputeFunction](#invokecomputefunction) - InvokeAppComputeFunction
+* [listActivitySince](#listactivitysince) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [listVersions](#listversions) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
 * [list](#list) - ListApps
-* [listMyMemberActivity](#listmymemberactivity) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [listMyMemberActivity](#listmymemberactivity) - View analytics: reads the engagement views recorded on app page load.
 * [moveAppToFolder](#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-* [presenceHeartbeat](#presenceheartbeat) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-* [recordMemberActivity](#recordmemberactivity) - View analytics: reads the engagement views recorded on app page load.
+* [presenceHeartbeat](#presenceheartbeat) - PresenceHeartbeat
+* [recordMemberActivity](#recordmemberactivity) - Replaces the calling member's entire ordering; capped server-side.
 * [refresh](#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 * [restoreAppVersion](#restoreappversion) - RestoreAppVersion
-* [setMemberState](#setmemberstate) - Replaces the calling member's entire ordering; capped server-side.
-* [setFavorite](#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+* [setMemberState](#setmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+* [setFavorite](#setfavorite) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [update](#update) - UpdateApp
 
 ## heartbeat
 
-Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 
 ### Example Usage
 
@@ -398,7 +398,8 @@ run();
 
 ## getDBSchema
 
-GetAppDBSchema
+Append-only per-member activity log. Listing is own rows only; no
+ cross-member reads in this release.
 
 ### Example Usage
 
@@ -471,8 +472,7 @@ run();
 
 ## getDBTablePreview
 
-Cross-member live activity: rows from every member of the app after a seq,
- each carrying member_id + display_name (resolved server-side; never email).
+GetAppDBTablePreview
 
 ### Example Usage
 
@@ -545,10 +545,8 @@ run();
 
 ## getMemberState
 
-Ordering overlay for the sidebar Bookmarks section: one position list per
- member covering favorites and thread bookmarks ('<kind>:<id>' keys).
- Membership truth stays in library_favorite / chat bookmarks; this persists
- only the drag-and-drop order.
+Lists the calling member's favorited library items (apps, dashboards,
+ agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 
 ### Example Usage
 
@@ -621,7 +619,7 @@ run();
 
 ## getAppVersion
 
-GetAppVersion
+Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 
 ### Example Usage
 
@@ -694,8 +692,9 @@ run();
 
 ## getAppViewStats
 
-Lists the calling member's favorited library items (apps, dashboards,
- agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+Favorite/unfavorite a library item (app or dashboard) for the calling member.
+ Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+ since the merged library page pins apps and dashboards through one client.
 
 ### Example Usage
 
@@ -841,7 +840,7 @@ run();
 
 ## invokeComputeFunction
 
-Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+InvokeAppComputeFunction
 
 ### Example Usage
 
@@ -914,9 +913,8 @@ run();
 
 ## listActivitySince
 
-Per-member app state: one JSON blob per (app, member) so apps remember
- settings/progress. Member always resolved server-side from auth context;
- per-member persistence, so viewers with read access can save their own state.
+Staff-only (superadmin gated in-handler): publishes the embedded component
+ gallery as an app tree and returns its signed viewer URL.
 
 ### Example Usage
 
@@ -989,7 +987,7 @@ run();
 
 ## listVersions
 
-Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
 
 ### Example Usage
 
@@ -1135,8 +1133,7 @@ run();
 
 ## listMyMemberActivity
 
-Staff-only (superadmin gated in-handler): publishes the embedded component
- gallery as an app tree and returns its signed viewer URL.
+View analytics: reads the engagement views recorded on app page load.
 
 ### Example Usage
 
@@ -1282,8 +1279,7 @@ run();
 
 ## presenceHeartbeat
 
-Append-only per-member activity log. Listing is own rows only; no
- cross-member reads in this release.
+PresenceHeartbeat
 
 ### Example Usage
 
@@ -1356,7 +1352,7 @@ run();
 
 ## recordMemberActivity
 
-View analytics: reads the engagement views recorded on app page load.
+Replaces the calling member's entire ordering; capped server-side.
 
 ### Example Usage
 
@@ -1575,7 +1571,10 @@ run();
 
 ## setMemberState
 
-Replaces the calling member's entire ordering; capped server-side.
+Ordering overlay for the sidebar Bookmarks section: one position list per
+ member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+ Membership truth stays in library_favorite / chat bookmarks; this persists
+ only the drag-and-drop order.
 
 ### Example Usage
 
@@ -1648,9 +1647,7 @@ run();
 
 ## setFavorite
 
-Favorite/unfavorite a library item (app or dashboard) for the calling member.
- Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
- since the merged library page pins apps and dashboards through one client.
+Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 
 ### Example Usage
 

@@ -32,10 +32,10 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class Apps extends ClientSDK {
   /**
-   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
    *
    * @remarks
-   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
    */
   async heartbeat(
     request: operations.AppServiceAppHeartbeatRequest,
@@ -110,7 +110,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * GetAppDBSchema
+   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+   *
+   * @remarks
+   * Append-only per-member activity log. Listing is own rows only; no
+   *  cross-member reads in this release.
    */
   async getDBSchema(
     request: operations.AppServiceGetAppDBSchemaRequest,
@@ -124,11 +128,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
-   *
-   * @remarks
-   * Cross-member live activity: rows from every member of the app after a seq,
-   *  each carrying member_id + display_name (resolved server-side; never email).
+   * GetAppDBTablePreview
    */
   async getDBTablePreview(
     request: operations.AppServiceGetAppDBTablePreviewRequest,
@@ -142,13 +142,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    *
    * @remarks
-   * Ordering overlay for the sidebar Bookmarks section: one position list per
-   *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
-   *  Membership truth stays in library_favorite / chat bookmarks; this persists
-   *  only the drag-and-drop order.
+   * Lists the calling member's favorited library items (apps, dashboards,
+   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    */
   async getMemberState(
     request: operations.AppServiceGetAppMemberStateRequest,
@@ -162,7 +160,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * GetAppVersion
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   *
+   * @remarks
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
    */
   async getAppVersion(
     request: operations.AppServiceGetAppVersionRequest,
@@ -176,11 +177,12 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
    *
    * @remarks
-   * Lists the calling member's favorited library items (apps, dashboards,
-   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
+   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+   *  since the merged library page pins apps and dashboards through one client.
    */
   async getAppViewStats(
     request: operations.AppServiceGetAppViewStatsRequest,
@@ -208,10 +210,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-   *
-   * @remarks
-   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+   * InvokeAppComputeFunction
    */
   async invokeComputeFunction(
     request: operations.AppServiceInvokeAppComputeFunctionRequest,
@@ -225,12 +224,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
    *
    * @remarks
-   * Per-member app state: one JSON blob per (app, member) so apps remember
-   *  settings/progress. Member always resolved server-side from auth context;
-   *  per-member persistence, so viewers with read access can save their own state.
+   * Staff-only (superadmin gated in-handler): publishes the embedded component
+   *  gallery as an app tree and returns its signed viewer URL.
    */
   async listActivitySince(
     request: operations.AppServiceListAppActivitySinceRequest,
@@ -244,10 +242,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
    *
    * @remarks
-   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
    */
   async listVersions(
     request: operations.AppServiceListAppVersionsRequest,
@@ -275,11 +273,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    *
    * @remarks
-   * Staff-only (superadmin gated in-handler): publishes the embedded component
-   *  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    */
   async listMyMemberActivity(
     request: operations.AppServiceListMyAppMemberActivityRequest,
@@ -310,11 +307,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-   *
-   * @remarks
-   * Append-only per-member activity log. Listing is own rows only; no
-   *  cross-member reads in this release.
+   * PresenceHeartbeat
    */
   async presenceHeartbeat(
     request: operations.AppServicePresenceHeartbeatRequest,
@@ -328,10 +321,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * View analytics: reads the engagement views recorded on app page load.
+   * Replaces the calling member's entire ordering; capped server-side.
    *
    * @remarks
-   * View analytics: reads the engagement views recorded on app page load.
+   * Replaces the calling member's entire ordering; capped server-side.
    */
   async recordMemberActivity(
     request: operations.AppServiceRecordAppMemberActivityRequest,
@@ -376,10 +369,13 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
    *
    * @remarks
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per
+   *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+   *  Membership truth stays in library_favorite / chat bookmarks; this persists
+   *  only the drag-and-drop order.
    */
   async setMemberState(
     request: operations.AppServiceSetAppMemberStateRequest,
@@ -393,12 +389,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
    *
    * @remarks
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
-   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-   *  since the merged library page pins apps and dashboards through one client.
+   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
    */
   async setFavorite(
     request: operations.AppServiceSetFavoriteRequest,
