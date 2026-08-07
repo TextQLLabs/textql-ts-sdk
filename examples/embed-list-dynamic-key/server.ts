@@ -1,9 +1,8 @@
-/** `embed-list`, with the key read from `secrets.txt` per request rather than from the
- * environment at boot. Same handler; its client's `apiKey` is a function. */
+/** `embed-list`, configured entirely from `secrets.txt` rather than the environment.
+ * The key and the allowlist are functions, so both are re-read as the file changes. */
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { join } from 'node:path';
 
 import { parse } from 'dotenv';
 
@@ -12,36 +11,51 @@ import { createEmbedHandler, EmbedError, toNodeHandler } from '@textql/sdk/embed
 
 import { renderPage } from './page.js';
 
-// No dotenv `config()` call, unlike the other examples: nothing is loaded into env.
-const PORT = Number(process.env.PORT ?? 4182);
 const API_BASE = '/api/textql';
 
-// The allowlist. Ids reach the browser, but only these are ever served.
-const APP_IDS = (process.env.TEXTQL_APP_IDS ?? process.env.TEXTQL_APP_ID ?? '')
-	.split(',')
-	.map((id) => id.trim())
-	.filter(Boolean);
+// Relative to the cwd, which npm sets to this directory for `npm start`/`dev`.
+const SETTINGS_FILE = 'secrets.txt';
 
-const KEY_FILE = process.env.TEXTQL_API_KEY_FILE ?? join(import.meta.dirname, 'secrets.txt');
+/** dotenv's `parse`, not its `config`: quotes, comments and `export` are handled,
+ * and nothing is written to `process.env`. Re-read every call, so edits take effect. */
+async function settings(): Promise<Record<string, string>> {
+	return parse(await readFile(SETTINGS_FILE, 'utf8'));
+}
 
-async function secret(name: string): Promise<string> {
-	let contents: string;
+/** For values a request cannot proceed without: the 503 says which name is missing. */
+async function required(name: string): Promise<string> {
+	let found: Record<string, string>;
 	try {
-		contents = await readFile(KEY_FILE, 'utf8');
+		found = await settings();
 	} catch (cause) {
 		throw new EmbedError(503, `No ${name}: ${(cause as Error).message}`);
 	}
 
-	const value = parse(contents)[name]?.trim();
-	if (!value) throw new EmbedError(503, `No ${name}: ${KEY_FILE} does not set it.`);
+	const value = found[name]?.trim();
+	if (!value) throw new EmbedError(503, `No ${name}: ${SETTINGS_FILE} does not set it.`);
 	return value;
 }
 
-const apiKey = () => secret('TEXTQL_API_KEY');
+/** For the two read at startup. Never throws: a missing file must not stop the boot. */
+async function optional(name: string): Promise<string | undefined> {
+	const found = await settings().catch(() => ({}) as Record<string, string>);
+	return found[name]?.trim() || undefined;
+}
+
+const PORT = Number(await optional('PORT')) || 4182;
+
+// The allowlist, and a function, so an id added to the file needs no restart. Ids
+// reach the browser, but only these are ever served.
+const appIds = async () =>
+	(await required('TEXTQL_APP_IDS')).split(',').map((id) => id.trim()).filter(Boolean);
 
 const handler = createEmbedHandler({
-	client: new Textql({ apiKey }),
-	appIds: APP_IDS,
+	client: new Textql({
+		apiKey: () => required('TEXTQL_API_KEY'),
+		// Boot-time: the SDK takes a base URL, not a resolver.
+		serverURL: await optional('TEXTQL_SERVER_URL')
+	}),
+	appIds,
 	basePath: `${API_BASE}/:appId`
 });
 
@@ -54,7 +68,7 @@ async function reportUnresolved(): Promise<void> {
 	if (!listed?.ok) return;
 
 	const found = new Set(((await listed.json()) as { id: string }[]).map((app) => app.id));
-	for (const id of APP_IDS.filter((id) => !found.has(id))) {
+	for (const id of (await appIds()).filter((id) => !found.has(id))) {
 		const response = await handler(new Request(`${origin}${API_BASE}/${id}/app`));
 		const { error } = ((await response?.json()) ?? {}) as { error?: string };
 		console.warn(`  ${id} is not listed: ${error ?? 'reason unknown'}`);
@@ -78,7 +92,10 @@ const server = createServer((req, res) => {
 
 		// Reads the key on purpose: a process that cannot is up but serving nothing.
 		if (path === '/healthz') {
-			const failure = await apiKey().then(() => null, (cause: Error) => cause.message);
+			const failure = await required('TEXTQL_API_KEY').then(
+			() => null,
+			(cause: Error) => cause.message
+		);
 			res.writeHead(failure ? 503 : 200, { 'content-type': 'application/json' });
 			return res.end(JSON.stringify(failure ? { error: failure } : { ok: true }));
 		}
@@ -93,14 +110,16 @@ const server = createServer((req, res) => {
 	})();
 });
 
-server.listen(PORT, () => {
-	console.log(`Embed list (key from a file) demo on http://localhost:${PORT}`);
-	console.log(`  ${API_BASE} → ${APP_IDS.length} app(s)`);
-	console.log(`  key from ${KEY_FILE}, re-read on every request`);
-	void apiKey().then(
-		() => console.log('  key resolved'),
-		(cause: Error) => console.warn(`  no key yet: ${cause.message} — requests will fail`)
-	);
-	if (!APP_IDS.length) console.warn('TEXTQL_APP_IDS is not set — there is nothing to list.');
+server.listen(PORT, async () => {
+	console.log(`Embed list demo on http://localhost:${PORT}`);
+	console.log(`  everything from ./${SETTINGS_FILE}, re-read on every request`);
+
+	for (const name of ['TEXTQL_API_KEY', 'TEXTQL_APP_IDS'] as const) {
+		await required(name).then(
+			(value) => console.log(`  ${name} → ${name.endsWith('KEY') ? 'set' : value}`),
+			(cause: Error) => console.warn(`  ${cause.message} — requests will fail`)
+		);
+	}
+
 	void reportUnresolved();
 });
