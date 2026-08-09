@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicRbacRole$inboundSchema,
 } from "./textql-rpc-public-rbac-role.js";
 
+/**
+ * Role management requests/responses
+ */
 export type TextqlRpcPublicRbacCreateRoleResponse = {
   role?: TextqlRpcPublicRbacRole | undefined;
 };

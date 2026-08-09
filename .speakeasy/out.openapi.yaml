@@ -6922,11 +6922,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
       description: |-
         Lists the skills under the ontology's flat skills/ root that the caller can
          read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete.
+         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+         omitted unless include_unlisted is set.
       operationId: OntologyManagementService_ConfigureOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: configureRemote
@@ -11296,6 +11297,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.powerbi.UnsyncPowerBIItemsResponse'
+  /textql.rpc.public.rbac.RBACService/ApproveAccessRequest:
+    post:
+      tags:
+        - RBACService
+      summary: 'SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.'
+      description: |-
+        SCIM group-mapping migration tooling: one-time role<->group conversion,
+         internal only.
+      operationId: RBACService_ApproveAccessRequest
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: approveAccessRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.ApproveAccessRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.ApproveAccessRequestResponse'
   /textql.rpc.public.rbac.RBACService/AssignPermissionToRole:
     post:
       tags:
@@ -11375,8 +11416,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Group management. Internal only.
-      description: Group management. Internal only.
+      summary: CreateApiKey
       operationId: RBACService_CreateApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: createApiKey
@@ -11558,6 +11598,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.DeleteServiceAccountResponse'
+  /textql.rpc.public.rbac.RBACService/GenerateShareLink:
+    post:
+      tags:
+        - RBACService
+      summary: GenerateShareLink
+      operationId: RBACService_GenerateShareLink
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: generateShareLink
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.GenerateShareLinkRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.GenerateShareLinkResponse'
   /textql.rpc.public.rbac.RBACService/GetCurrentMemberRolesAndPermissions:
     post:
       tags:
@@ -11670,6 +11747,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.GetMemberRolesResponse'
+  /textql.rpc.public.rbac.RBACService/GetObjectAccess:
+    post:
+      tags:
+        - RBACService
+      summary: GetObjectAccess
+      operationId: RBACService_GetObjectAccess
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: getObjectAccess
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.GetObjectAccessRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.GetObjectAccessResponse'
   /textql.rpc.public.rbac.RBACService/GetRole:
     post:
       tags:
@@ -11744,6 +11858,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.GetRolePermissionsResponse'
+  /textql.rpc.public.rbac.RBACService/HasObjectAccess:
+    post:
+      tags:
+        - RBACService
+      summary: HasObjectAccess
+      operationId: RBACService_HasObjectAccess
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: hasObjectAccess
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.HasObjectAccessRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.HasObjectAccessResponse'
+  /textql.rpc.public.rbac.RBACService/ListAccessRequests:
+    post:
+      tags:
+        - RBACService
+      summary: ListAccessRequests
+      operationId: RBACService_ListAccessRequests
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: listAccessRequests
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.ListAccessRequestsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.ListAccessRequestsResponse'
   /textql.rpc.public.rbac.RBACService/ListApiKeys:
     post:
       tags:
@@ -11893,6 +12081,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.ListServiceAccountsResponse'
+  /textql.rpc.public.rbac.RBACService/RejectAccessRequest:
+    post:
+      tags:
+        - RBACService
+      summary: RejectAccessRequest
+      operationId: RBACService_RejectAccessRequest
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: rejectAccessRequest
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.RejectAccessRequestRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.RejectAccessRequestResponse'
   /textql.rpc.public.rbac.RBACService/RemovePermissionFromRole:
     post:
       tags:
@@ -11967,6 +12192,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.RemoveRoleFromMemberResponse'
+  /textql.rpc.public.rbac.RBACService/RequestAccess:
+    post:
+      tags:
+        - RBACService
+      summary: RequestAccess
+      operationId: RBACService_RequestAccess
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: requestAccess
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.RequestAccessRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.RequestAccessResponse'
   /textql.rpc.public.rbac.RBACService/RevokeApiKey:
     post:
       tags:
@@ -12004,11 +12266,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.RevokeApiKeyResponse'
+  /textql.rpc.public.rbac.RBACService/RevokeObjectAccess:
+    post:
+      tags:
+        - RBACService
+      summary: RevokeObjectAccess
+      operationId: RBACService_RevokeObjectAccess
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: revokeObjectAccess
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.RevokeObjectAccessRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.RevokeObjectAccessResponse'
   /textql.rpc.public.rbac.RBACService/RotateApiKey:
     post:
       tags:
         - RBACService
-      summary: RotateApiKey
+      summary: Object sharing and access control
+      description: Object sharing and access control
       operationId: RBACService_RotateApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: rotateApiKey
@@ -12079,6 +12379,155 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.SetRolePermissionsResponse'
+  /textql.rpc.public.rbac.RBACService/ShareObject:
+    post:
+      tags:
+        - RBACService
+      summary: Group management. Internal only.
+      description: Group management. Internal only.
+      operationId: RBACService_ShareObject
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: shareObject
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.ShareObjectRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.ShareObjectResponse'
+  /textql.rpc.public.rbac.RBACService/ShareObjectWithRole:
+    post:
+      tags:
+        - RBACService
+      summary: ShareObjectWithRole
+      operationId: RBACService_ShareObjectWithRole
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: shareObjectWithRole
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.ShareObjectWithRoleRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.ShareObjectWithRoleResponse'
+  /textql.rpc.public.rbac.RBACService/UpdateObjectAccess:
+    post:
+      tags:
+        - RBACService
+      summary: UpdateObjectAccess
+      operationId: RBACService_UpdateObjectAccess
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateObjectAccess
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.UpdateObjectAccessRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.UpdateObjectAccessResponse'
+  /textql.rpc.public.rbac.RBACService/UpdateObjectVisibility:
+    post:
+      tags:
+        - RBACService
+      summary: UpdateObjectVisibility
+      operationId: RBACService_UpdateObjectVisibility
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: updateObjectVisibility
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.UpdateObjectVisibilityRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.UpdateObjectVisibilityResponse'
   /textql.rpc.public.rbac.RBACService/UpdateRole:
     post:
       tags:
@@ -31214,6 +31663,11 @@ components:
       additionalProperties: false
     textql.rpc.public.patches.ListSkillsRequest:
       type: object
+      properties:
+        includeUnlisted:
+          type: boolean
+          title: include_unlisted
+          description: Picker callers leave unset so hidden skills stay hidden; tooling opts in.
       title: ListSkillsRequest
       additionalProperties: false
     textql.rpc.public.patches.ListSkillsResponse:
@@ -32279,6 +32733,10 @@ components:
           type: string
           title: path
           description: ontology-relative path, e.g. "skills/forecast"
+        unlisted:
+          type: boolean
+          title: unlisted
+          description: 'frontmatter listed: false — invocable by trigger, hidden from the picker'
       title: Skill
       additionalProperties: false
       description: |-
@@ -34532,6 +34990,53 @@ components:
           nullable: true
       title: UnsyncPowerBIItemsResponse
       additionalProperties: false
+    textql.rpc.public.rbac.AccessRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        orgId:
+          type: string
+          title: org_id
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        memberId:
+          type: string
+          title: member_id
+        requestedAccessType:
+          type: string
+          title: requested_access_type
+        justification:
+          type: string
+          title: justification
+        requestMessage:
+          type: string
+          title: request_message
+          nullable: true
+        status:
+          type: string
+          title: status
+        reviewedBy:
+          type: string
+          title: reviewed_by
+          nullable: true
+        rejectionReason:
+          type: string
+          title: rejection_reason
+          nullable: true
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: AccessRequest
+      additionalProperties: false
     textql.rpc.public.rbac.ApiKey:
       type: object
       properties:
@@ -34608,6 +35113,22 @@ components:
         - API_KEY_STATUS_ACTIVE
         - API_KEY_STATUS_EXPIRED
         - API_KEY_STATUS_REVOKED
+    textql.rpc.public.rbac.ApproveAccessRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+      title: ApproveAccessRequestRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.ApproveAccessRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: ApproveAccessRequestResponse
+      additionalProperties: false
     textql.rpc.public.rbac.AssignPermissionToRoleRequest:
       type: object
       properties:
@@ -34646,6 +35167,7 @@ components:
           title: success
       title: AssignRoleToMemberResponse
       additionalProperties: false
+      description: Member role management messages
     textql.rpc.public.rbac.CallerCredential:
       type: object
       properties:
@@ -34687,6 +35209,7 @@ components:
           title: scopes
       title: CallerCredential
       additionalProperties: false
+      description: WhoAmI messages
     textql.rpc.public.rbac.CallerModelAccess:
       type: object
       properties:
@@ -34703,7 +35226,7 @@ components:
           title: restricted
       title: CallerModelAccess
       additionalProperties: false
-      description: WhoAmI messages
+      description: The credential that authenticated the request.
     textql.rpc.public.rbac.CreateApiKeyRequest:
       type: object
       properties:
@@ -34752,7 +35275,6 @@ components:
           deprecated: true
       title: CreateApiKeyResponse
       additionalProperties: false
-      description: Object access management messages
     textql.rpc.public.rbac.CreateRoleRequest:
       type: object
       properties:
@@ -34772,6 +35294,7 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.rbac.Role'
       title: CreateRoleResponse
       additionalProperties: false
+      description: Role management requests/responses
     textql.rpc.public.rbac.CreateServiceAccountRequest:
       type: object
       properties:
@@ -34836,6 +35359,25 @@ components:
           title: success
       title: DeleteServiceAccountResponse
       additionalProperties: false
+    textql.rpc.public.rbac.GenerateShareLinkRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+      title: GenerateShareLinkRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.GenerateShareLinkResponse:
+      type: object
+      properties:
+        shareLink:
+          type: string
+          title: share_link
+      title: GenerateShareLinkResponse
+      additionalProperties: false
     textql.rpc.public.rbac.GetCurrentMemberRolesAndPermissionsRequest:
       type: object
       title: GetCurrentMemberRolesAndPermissionsRequest
@@ -34855,6 +35397,7 @@ components:
           title: permissions
       title: GetCurrentMemberRolesAndPermissionsResponse
       additionalProperties: false
+      description: Get current member roles and permissions messages
     textql.rpc.public.rbac.GetEmbedUserApiKeyRequest:
       type: object
       properties:
@@ -34909,6 +35452,27 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.rbac.MemberRoles'
       title: MemberRolesEntry
       additionalProperties: false
+    textql.rpc.public.rbac.GetObjectAccessRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+      title: GetObjectAccessRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.GetObjectAccessResponse:
+      type: object
+      properties:
+        accessEntries:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.rbac.ObjectAccess'
+          title: access_entries
+      title: GetObjectAccessResponse
+      additionalProperties: false
     textql.rpc.public.rbac.GetRolePermissionsRequest:
       type: object
       properties:
@@ -34917,7 +35481,6 @@ components:
           title: role_id
       title: GetRolePermissionsRequest
       additionalProperties: false
-      description: Permission management requests/responses
     textql.rpc.public.rbac.GetRolePermissionsResponse:
       type: object
       properties:
@@ -34936,7 +35499,6 @@ components:
           title: role_id
       title: GetRoleRequest
       additionalProperties: false
-      description: Role management requests/responses
     textql.rpc.public.rbac.GetRoleResponse:
       type: object
       properties:
@@ -34944,6 +35506,60 @@ components:
           title: role
           $ref: '#/components/schemas/textql.rpc.public.rbac.Role'
       title: GetRoleResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.HasObjectAccessRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        memberId:
+          type: string
+          title: member_id
+          nullable: true
+        roleId:
+          type: string
+          title: role_id
+          nullable: true
+      title: HasObjectAccessRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.HasObjectAccessResponse:
+      type: object
+      properties:
+        hasAccess:
+          type: boolean
+          title: has_access
+      title: HasObjectAccessResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.ListAccessRequestsRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+          nullable: true
+        objectId:
+          type: string
+          title: object_id
+          nullable: true
+        status:
+          type: string
+          title: status
+          nullable: true
+      title: ListAccessRequestsRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.ListAccessRequestsResponse:
+      type: object
+      properties:
+        requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.rbac.AccessRequest'
+          title: requests
+      title: ListAccessRequestsResponse
       additionalProperties: false
     textql.rpc.public.rbac.ListApiKeysRequest:
       type: object
@@ -35010,6 +35626,7 @@ components:
           title: permissions
       title: ListPermissionsResponse
       additionalProperties: false
+      description: Permission management requests/responses
     textql.rpc.public.rbac.ListRolesRequest:
       type: object
       title: ListRolesRequest
@@ -35034,7 +35651,6 @@ components:
         pageSize:
           type: integer
           title: page_size
-          description: owner, editor, viewer
           nullable: true
         pageToken:
           type: string
@@ -35066,6 +35682,55 @@ components:
           title: roles
       title: MemberRoles
       additionalProperties: false
+    textql.rpc.public.rbac.ObjectAccess:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        orgId:
+          type: string
+          title: org_id
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        createdBy:
+          type: string
+          title: created_by
+          nullable: true
+        isPublic:
+          type: boolean
+          title: is_public
+        memberId:
+          type: string
+          title: member_id
+          nullable: true
+        roleId:
+          type: string
+          title: role_id
+          nullable: true
+        accessType:
+          type: string
+          title: access_type
+        grantedBy:
+          type: string
+          title: granted_by
+          nullable: true
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ObjectAccess
+      additionalProperties: false
     textql.rpc.public.rbac.Permission:
       type: object
       properties:
@@ -35085,6 +35750,26 @@ components:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: Permission
+      additionalProperties: false
+    textql.rpc.public.rbac.RejectAccessRequestRequest:
+      type: object
+      properties:
+        requestId:
+          type: string
+          title: request_id
+        rejectionReason:
+          type: string
+          title: rejection_reason
+          nullable: true
+      title: RejectAccessRequestRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.RejectAccessRequestResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: RejectAccessRequestResponse
       additionalProperties: false
     textql.rpc.public.rbac.RemovePermissionFromRoleRequest:
       type: object
@@ -35116,7 +35801,6 @@ components:
           title: role_id
       title: RemoveRoleFromMemberRequest
       additionalProperties: false
-      description: Member role management messages
     textql.rpc.public.rbac.RemoveRoleFromMemberResponse:
       type: object
       properties:
@@ -35125,6 +35809,39 @@ components:
           title: success
       title: RemoveRoleFromMemberResponse
       additionalProperties: false
+    textql.rpc.public.rbac.RequestAccessRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        requestedAccessType:
+          type: string
+          title: requested_access_type
+        justification:
+          type: string
+          title: justification
+        requestMessage:
+          type: string
+          title: request_message
+          nullable: true
+      title: RequestAccessRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.RequestAccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+        requestId:
+          type: string
+          title: request_id
+      title: RequestAccessResponse
+      additionalProperties: false
+      description: Access request management messages
     textql.rpc.public.rbac.RevokeApiKeyRequest:
       type: object
       properties:
@@ -35140,6 +35857,33 @@ components:
           type: boolean
           title: success
       title: RevokeApiKeyResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.RevokeObjectAccessRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        memberId:
+          type: string
+          title: member_id
+          nullable: true
+        roleId:
+          type: string
+          title: role_id
+          nullable: true
+      title: RevokeObjectAccessRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.RevokeObjectAccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: RevokeObjectAccessResponse
       additionalProperties: false
     textql.rpc.public.rbac.Role:
       type: object
@@ -35262,6 +36006,71 @@ components:
           title: success
       title: SetRolePermissionsResponse
       additionalProperties: false
+    textql.rpc.public.rbac.ShareObjectRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        memberId:
+          type: string
+          title: member_id
+        accessType:
+          type: string
+          title: access_type
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        isPublic:
+          type: boolean
+          title: is_public
+      title: ShareObjectRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.ShareObjectResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: ShareObjectResponse
+      additionalProperties: false
+      description: Object access management messages
+    textql.rpc.public.rbac.ShareObjectWithRoleRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        roleId:
+          type: string
+          title: role_id
+        accessType:
+          type: string
+          title: access_type
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        isPublic:
+          type: boolean
+          title: is_public
+      title: ShareObjectWithRoleRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.ShareObjectWithRoleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: ShareObjectWithRoleResponse
+      additionalProperties: false
     textql.rpc.public.rbac.SharedObject:
       type: object
       properties:
@@ -35291,7 +36100,52 @@ components:
           nullable: true
       title: SharedObject
       additionalProperties: false
-      description: The credential that authenticated the request.
+      description: Which LLM models the caller may run.
+    textql.rpc.public.rbac.UpdateObjectAccessRequest:
+      type: object
+      properties:
+        accessId:
+          type: string
+          title: access_id
+        accessType:
+          type: string
+          title: access_type
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: UpdateObjectAccessRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.UpdateObjectAccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: UpdateObjectAccessResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.UpdateObjectVisibilityRequest:
+      type: object
+      properties:
+        objectType:
+          type: string
+          title: object_type
+        objectId:
+          type: string
+          title: object_id
+        isPublic:
+          type: boolean
+          title: is_public
+      title: UpdateObjectVisibilityRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.UpdateObjectVisibilityResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+      title: UpdateObjectVisibilityResponse
+      additionalProperties: false
     textql.rpc.public.rbac.UpdateRoleRequest:
       type: object
       properties:
@@ -35334,7 +36188,6 @@ components:
       type: object
       title: WhoAmIRequest
       additionalProperties: false
-      description: Get current member roles and permissions messages
     textql.rpc.public.rbac.WhoAmIResponse:
       type: object
       properties:
@@ -35374,7 +36227,6 @@ components:
           title: shared_access_truncated
       title: WhoAmIResponse
       additionalProperties: false
-      description: Which LLM models the caller may run.
     textql.rpc.public.reports.CardBlock:
       type: object
       properties:

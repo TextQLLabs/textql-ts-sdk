@@ -360,7 +360,7 @@ run();
 
 * [addSubmodule](docs/sdks/ontology/README.md#addsubmodule) - AddOntologySubmodule
 * [approvePatch](docs/sdks/ontology/README.md#approvepatch) - ApprovePatch
-* [configureRemote](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+* [configureRemote](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [createApprovalRule](docs/sdks/ontology/README.md#createapprovalrule) - CreateApprovalRule
 * [createContextPatchAutoApproveRule](docs/sdks/ontology/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 * [createDirectory](docs/sdks/ontology/README.md#createdirectory) - CreateOntologyDirectory
@@ -486,27 +486,39 @@ run();
 
 ### [Rbac](docs/sdks/rbac/README.md)
 
+* [approveAccessRequest](docs/sdks/rbac/README.md#approveaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 * [assignPermissionToRole](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
 * [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
-* [createApiKey](docs/sdks/rbac/README.md#createapikey) - Group management. Internal only.
+* [createApiKey](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
 * [createRole](docs/sdks/rbac/README.md#createrole) - Role management
 * [createServiceAccount](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
 * [deleteRole](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 * [deleteServiceAccount](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
+* [generateShareLink](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 * [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
 * [getEmbedUserApiKey](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
 * [getMemberRoles](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
+* [getObjectAccess](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 * [getRole](docs/sdks/rbac/README.md#getrole) - GetRole
 * [getRolePermissions](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
+* [hasObjectAccess](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
+* [listAccessRequests](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 * [listApiKeys](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
 * [listPermissions](docs/sdks/rbac/README.md#listpermissions) - Permission management
 * [listRoles](docs/sdks/rbac/README.md#listroles) - ListRoles
 * [listServiceAccounts](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
+* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
 * [removePermissionFromRole](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
 * [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
+* [requestAccess](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
 * [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
-* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
+* [revokeObjectAccess](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
+* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
 * [setRolePermissions](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+* [shareObject](docs/sdks/rbac/README.md#shareobject) - Group management. Internal only.
+* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
+* [updateObjectAccess](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
+* [updateObjectVisibility](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](docs/sdks/rbac/README.md#updaterole) - UpdateRole
 * [whoAmI](docs/sdks/rbac/README.md#whoami) - Describe what a key is allowed to do.
 
@@ -801,7 +813,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityUpdateCustomTopic`](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
 - [`ontologyAddSubmodule`](docs/sdks/ontology/README.md#addsubmodule) - AddOntologySubmodule
 - [`ontologyApprovePatch`](docs/sdks/ontology/README.md#approvepatch) - ApprovePatch
-- [`ontologyConfigureRemote`](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+- [`ontologyConfigureRemote`](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 - [`ontologyCreateApprovalRule`](docs/sdks/ontology/README.md#createapprovalrule) - CreateApprovalRule
 - [`ontologyCreateContextPatchAutoApproveRule`](docs/sdks/ontology/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 - [`ontologyCreateDirectory`](docs/sdks/ontology/README.md#createdirectory) - CreateOntologyDirectory
@@ -918,27 +930,39 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`powerbiSyncPowerBIItems`](docs/sdks/powerbi/README.md#syncpowerbiitems) - SyncPowerBIItems
 - [`powerbiTestConnection`](docs/sdks/powerbi/README.md#testconnection) - TestPowerBIConnection
 - [`powerbiUnsyncItems`](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
+- [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 - [`rbacAssignPermissionToRole`](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
 - [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
-- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - Group management. Internal only.
+- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
 - [`rbacCreateRole`](docs/sdks/rbac/README.md#createrole) - Role management
 - [`rbacCreateServiceAccount`](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
 - [`rbacDeleteRole`](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 - [`rbacDeleteServiceAccount`](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
+- [`rbacGenerateShareLink`](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 - [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
 - [`rbacGetEmbedUserApiKey`](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
 - [`rbacGetMemberRoles`](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
+- [`rbacGetObjectAccess`](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 - [`rbacGetRole`](docs/sdks/rbac/README.md#getrole) - GetRole
 - [`rbacGetRolePermissions`](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
+- [`rbacHasObjectAccess`](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
+- [`rbacListAccessRequests`](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 - [`rbacListApiKeys`](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
 - [`rbacListPermissions`](docs/sdks/rbac/README.md#listpermissions) - Permission management
 - [`rbacListRoles`](docs/sdks/rbac/README.md#listroles) - ListRoles
 - [`rbacListServiceAccounts`](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
+- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
 - [`rbacRemovePermissionFromRole`](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
 - [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
+- [`rbacRequestAccess`](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
 - [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
-- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
+- [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
+- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
 - [`rbacSetRolePermissions`](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Group management. Internal only.
+- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
+- [`rbacUpdateObjectAccess`](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
+- [`rbacUpdateObjectVisibility`](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 - [`rbacUpdateRole`](docs/sdks/rbac/README.md#updaterole) - UpdateRole
 - [`rbacWhoAmI`](docs/sdks/rbac/README.md#whoami) - Describe what a key is allowed to do.
 - [`sandboxAdminGetSandbox`](docs/sdks/sandboxadmin/README.md#getsandbox) - GetSandbox

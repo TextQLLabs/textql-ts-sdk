@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacCreateApiKeyResponse
 
-Object access management messages
-
 ## Example Usage
 
 ```typescript
