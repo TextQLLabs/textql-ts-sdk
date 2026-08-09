@@ -13,7 +13,7 @@ import {
 } from "./textql-rpc-public-chat-llm-model.js";
 
 /**
- * WhoAmI messages
+ * The credential that authenticated the request.
  */
 export type TextqlRpcPublicRbacCallerModelAccess = {
   allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;

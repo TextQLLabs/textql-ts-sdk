@@ -4,17 +4,26 @@
 
 import * as z from "zod/v4-mini";
 
-export type TextqlRpcPublicPatchesListSkillsRequest = {};
+export type TextqlRpcPublicPatchesListSkillsRequest = {
+  /**
+   * Picker callers leave unset so hidden skills stay hidden; tooling opts in.
+   */
+  includeUnlisted?: boolean | undefined;
+};
 
 /** @internal */
-export type TextqlRpcPublicPatchesListSkillsRequest$Outbound = {};
+export type TextqlRpcPublicPatchesListSkillsRequest$Outbound = {
+  includeUnlisted?: boolean | undefined;
+};
 
 /** @internal */
 export const TextqlRpcPublicPatchesListSkillsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListSkillsRequest$Outbound,
     TextqlRpcPublicPatchesListSkillsRequest
-  > = z.object({});
+  > = z.object({
+    includeUnlisted: z.optional(z.boolean()),
+  });
 
 export function textqlRpcPublicPatchesListSkillsRequestToJSON(
   textqlRpcPublicPatchesListSkillsRequest:

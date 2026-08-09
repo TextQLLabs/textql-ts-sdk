@@ -106,12 +106,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete.
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
    *
    * @remarks
    * Lists the skills under the ontology's flat skills/ root that the caller can
    *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete.
+   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+   *  omitted unless include_unlisted is set.
    */
   async configureRemote(
     request: operations.OntologyManagementServiceConfigureOntologyRemoteRequest,

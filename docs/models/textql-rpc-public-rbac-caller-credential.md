@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacCallerCredential
 
+WhoAmI messages
+
 ## Example Usage
 
 ```typescript

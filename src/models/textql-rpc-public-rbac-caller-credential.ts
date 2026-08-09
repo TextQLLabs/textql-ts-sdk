@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicRbacApiKeyStatus$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key-status.js";
 
+/**
+ * WhoAmI messages
+ */
 export type TextqlRpcPublicRbacCallerCredential = {
   authMethod?: string | undefined;
   apiKeyId?: string | null | undefined;

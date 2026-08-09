@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicRbacApiKey$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key.js";
 
-/**
- * Object access management messages
- */
 export type TextqlRpcPublicRbacCreateApiKeyResponse = {
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
   apiKeySecret?: string | undefined;

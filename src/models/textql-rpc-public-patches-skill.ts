@@ -32,6 +32,10 @@ export type TextqlRpcPublicPatchesSkill = {
    * ontology-relative path, e.g. "skills/forecast"
    */
   path?: string | undefined;
+  /**
+   * frontmatter listed: false — invocable by trigger, hidden from the picker
+   */
+  unlisted?: boolean | undefined;
 };
 
 /** @internal */
@@ -43,6 +47,7 @@ export const TextqlRpcPublicPatchesSkill$inboundSchema: z.ZodMiniType<
   name: types.optional(types.string()),
   description: types.optional(types.string()),
   path: types.optional(types.string()),
+  unlisted: types.optional(types.boolean()),
 });
 
 export function textqlRpcPublicPatchesSkillFromJSON(
