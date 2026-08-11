@@ -12,6 +12,7 @@ export type TextqlRpcPublicRbacCreateApiKeyRequest = {
   targetMemberId?: string | null | undefined;
   clientId?: string | null | undefined;
   suppressSuperadmin?: boolean | undefined;
+  fullMemberAccess?: boolean | undefined;
 };
 
 /** @internal */
@@ -23,6 +24,7 @@ export type TextqlRpcPublicRbacCreateApiKeyRequest$Outbound = {
   targetMemberId?: string | null | undefined;
   clientId?: string | null | undefined;
   suppressSuperadmin?: boolean | undefined;
+  fullMemberAccess?: boolean | undefined;
 };
 
 /** @internal */
@@ -38,6 +40,7 @@ export const TextqlRpcPublicRbacCreateApiKeyRequest$outboundSchema:
     targetMemberId: z.optional(z.nullable(z.string())),
     clientId: z.optional(z.nullable(z.string())),
     suppressSuperadmin: z.optional(z.boolean()),
+    fullMemberAccess: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicRbacCreateApiKeyRequestToJSON(

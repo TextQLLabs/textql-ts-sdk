@@ -27,10 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Replaces the calling member's entire ordering; capped server-side.
+ * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
  *
  * @remarks
- * Replaces the calling member's entire ordering; capped server-side.
+ * Watcher management: app owners/editors and org admins list the app's
+ *  subscribers and add/remove members (Upsert/Delete with member_id).
  */
 export function appsRecordMemberActivity(
   client: TextqlCore,

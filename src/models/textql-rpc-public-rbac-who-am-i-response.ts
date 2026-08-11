@@ -28,19 +28,19 @@ import {
   TextqlRpcPublicRbacSharedObject$inboundSchema,
 } from "./textql-rpc-public-rbac-shared-object.js";
 
+/**
+ * The credential that authenticated the request.
+ */
 export type TextqlRpcPublicRbacWhoAmIResponse = {
   memberId?: string | undefined;
   orgId?: string | undefined;
   email?: string | null | undefined;
   /**
-   * WhoAmI messages
+   * Get current member roles and permissions messages
    */
   credential?: TextqlRpcPublicRbacCallerCredential | undefined;
   roles?: Array<TextqlRpcPublicRbacRole> | undefined;
   permissions?: Array<TextqlRpcPublicRbacPermission> | undefined;
-  /**
-   * The credential that authenticated the request.
-   */
   modelAccess?: TextqlRpcPublicRbacCallerModelAccess | undefined;
   sharedAccess?: Array<TextqlRpcPublicRbacSharedObject> | undefined;
   sharedAccessTruncated?: boolean | undefined;

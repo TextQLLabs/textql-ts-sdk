@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * UpsertOntologyAnaConfig
+ * Deprecated: use SetOntologyOwners with the complete desired entry set.
+ *
+ * @remarks
+ * Deprecated: use SetOntologyOwners with the complete desired entry set.
  */
 export function ontologyUpsertAnaConfig(
   client: TextqlCore,

@@ -27,15 +27,15 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * UpsertOntologyOwners
+ * CreateServiceAccountApiKey
  */
-export function ontologyUpsertOwners(
+export function rbacCreateServiceAccountApiKey(
   client: TextqlCore,
-  request: operations.OntologyManagementServiceUpsertOntologyOwnersRequest,
+  request: operations.RBACServiceCreateServiceAccountApiKeyRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.OntologyManagementServiceUpsertOntologyOwnersResponse,
+    operations.RBACServiceCreateServiceAccountApiKeyResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -55,12 +55,12 @@ export function ontologyUpsertOwners(
 
 async function $do(
   client: TextqlCore,
-  request: operations.OntologyManagementServiceUpsertOntologyOwnersRequest,
+  request: operations.RBACServiceCreateServiceAccountApiKeyRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.OntologyManagementServiceUpsertOntologyOwnersResponse,
+      operations.RBACServiceCreateServiceAccountApiKeyResponse,
       | TextqlError
       | ResponseValidationError
       | ConnectionError
@@ -77,8 +77,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        operations
-          .OntologyManagementServiceUpsertOntologyOwnersRequest$outboundSchema,
+        operations.RBACServiceCreateServiceAccountApiKeyRequest$outboundSchema,
         value,
       ),
     "Input validation failed",
@@ -90,7 +89,7 @@ async function $do(
   const body = encodeJSON("body", payload.body, { explode: true });
 
   const path = pathToFunc(
-    "/textql.rpc.public.patches.OntologyManagementService/UpsertOntologyOwners",
+    "/textql.rpc.public.rbac.RBACService/CreateServiceAccountApiKey",
   )();
 
   const headers = new Headers(compactMap({
@@ -115,7 +114,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "OntologyManagementService_UpsertOntologyOwners",
+    operationID: "RBACService_CreateServiceAccountApiKey",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -155,7 +154,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    operations.OntologyManagementServiceUpsertOntologyOwnersResponse,
+    operations.RBACServiceCreateServiceAccountApiKeyResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -167,15 +166,13 @@ async function $do(
   >(
     M.json(
       200,
-      operations
-        .OntologyManagementServiceUpsertOntologyOwnersResponse$inboundSchema,
+      operations.RBACServiceCreateServiceAccountApiKeyResponse$inboundSchema,
     ),
     M.fail("4XX"),
     M.fail("5XX"),
     M.json(
       "default",
-      operations
-        .OntologyManagementServiceUpsertOntologyOwnersResponse$inboundSchema,
+      operations.RBACServiceCreateServiceAccountApiKeyResponse$inboundSchema,
     ),
   )(response, req);
   if (!result.ok) {

@@ -6,7 +6,7 @@
 
 * [addSubmodule](#addsubmodule) - AddOntologySubmodule
 * [approvePatch](#approvepatch) - ApprovePatch
-* [configureRemote](#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [configureRemote](#configureremote) - ConfigureOntologyRemote
 * [createApprovalRule](#createapprovalrule) - CreateApprovalRule
 * [createContextPatchAutoApproveRule](#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 * [createDirectory](#createdirectory) - CreateOntologyDirectory
@@ -15,9 +15,8 @@
 * [deleteContextPatchAutoApproveRule](#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
 * [deleteDirectory](#deletedirectory) - DeleteOntologyDirectory
 * [deleteFile](#deletefile) - DeleteOntologyFile
-* [deleteOwners](#deleteowners) - DeleteOntologyOwners
 * [denyPatch](#denypatch) - DenyPatch
-* [exchangeGithubCode](#exchangegithubcode) - ExchangeOntologyGithubCode
+* [exchangeGithubCode](#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [finalizeFileUpload](#finalizefileupload) - FinalizeOntologyFileUpload
 * [getCodeownerCoverage](#getcodeownercoverage) - GetCodeownerCoverage
 * [getConfigExportCapabilities](#getconfigexportcapabilities) - GetConfigExportCapabilities
@@ -31,7 +30,7 @@
 * [getOwners](#getowners) - GetOntologyOwners
 * [getRemote](#getremote) - GetOntologyRemote
 * [getSizeTimeline](#getsizetimeline) - GetOntologySizeTimeline
-* [getSyncConflicts](#getsyncconflicts) - GetOntologySyncConflicts
+* [getSyncConflicts](#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [getUsageSummary](#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](#getpatch) - GetPatch
 * [getPatchByNumber](#getpatchbynumber) - GetPatchByNumber
@@ -65,14 +64,14 @@
 * [revertPatch](#revertpatch) - RevertPatch
 * [saveAllObjectsAsConfig](#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 * [saveObjectAsConfig](#saveobjectasconfig) - SaveObjectAsConfig
-* [setFileGolden](#setfilegolden) - SetOntologyFileGolden
+* [setFileGolden](#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [setOwners](#setowners) - SetOntologyOwners
 * [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-* [updateSyncConfig](#updatesyncconfig) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-* [upsertAnaConfig](#upsertanaconfig) - UpsertOntologyAnaConfig
+* [updateSyncConfig](#updatesyncconfig) - UpdateOntologySyncConfig
+* [upsertAnaConfig](#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 * [upsertFile](#upsertfile) - UpsertOntologyFile
-* [upsertOwners](#upsertowners) - UpsertOntologyOwners
 * [validateConfig](#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 
 ## addSubmodule
@@ -223,10 +222,7 @@ run();
 
 ## configureRemote
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
- omitted unless include_unlisted is set.
+ConfigureOntologyRemote
 
 ### Example Usage
 
@@ -884,79 +880,6 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## deleteOwners
-
-DeleteOntologyOwners
-
-### Example Usage
-
-<!-- UsageSnippet language="typescript" operationID="OntologyManagementService_DeleteOntologyOwners" method="post" path="/textql.rpc.public.patches.OntologyManagementService/DeleteOntologyOwners" -->
-```typescript
-import { Textql } from "@textql/sdk";
-
-const textql = new Textql({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const result = await textql.ontology.deleteOwners({
-    body: {},
-  });
-
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { TextqlCore } from "@textql/sdk/core.js";
-import { ontologyDeleteOwners } from "@textql/sdk/funcs/ontology-delete-owners.js";
-
-// Use `TextqlCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const textql = new TextqlCore({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const res = await ontologyDeleteOwners(textql, {
-    body: {},
-  });
-  if (res.ok) {
-    const { value: result } = res;
-    console.log(result);
-  } else {
-    console.log("ontologyDeleteOwners failed:", res.error);
-  }
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.OntologyManagementServiceDeleteOntologyOwnersRequest](../../models/operations/ontology-management-service-delete-ontology-owners-request.md)                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[operations.OntologyManagementServiceDeleteOntologyOwnersResponse](../../models/operations/ontology-management-service-delete-ontology-owners-response.md)\>**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
-
 ## denyPatch
 
 DenyPatch
@@ -1032,7 +955,10 @@ run();
 
 ## exchangeGithubCode
 
-ExchangeOntologyGithubCode
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+ omitted unless include_unlisted is set.
 
 ### Example Usage
 
@@ -2054,7 +1980,10 @@ run();
 
 ## getSyncConflicts
 
-GetOntologySyncConflicts
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 
@@ -4545,7 +4474,8 @@ run();
 
 ## setFileGolden
 
-SetOntologyFileGolden
+Deprecated: use SetOntologyOwners with the desired entry set. An empty
+ desired set is not currently supported, so retain this RPC for deletion.
 
 ### Example Usage
 
@@ -4609,6 +4539,79 @@ run();
 ### Response
 
 **Promise\<[operations.OntologyManagementServiceSetOntologyFileGoldenResponse](../../models/operations/ontology-management-service-set-ontology-file-golden-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## setOwners
+
+SetOntologyOwners
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="OntologyManagementService_SetOntologyOwners" method="post" path="/textql.rpc.public.patches.OntologyManagementService/SetOntologyOwners" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.ontology.setOwners({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { ontologySetOwners } from "@textql/sdk/funcs/ontology-set-owners.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await ontologySetOwners(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ontologySetOwners failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.OntologyManagementServiceSetOntologyOwnersRequest](../../models/operations/ontology-management-service-set-ontology-owners-request.md)                             | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.OntologyManagementServiceSetOntologyOwnersResponse](../../models/operations/ontology-management-service-set-ontology-owners-response.md)\>**
 
 ### Errors
 
@@ -4837,10 +4840,7 @@ run();
 
 ## updateSyncConfig
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+UpdateOntologySyncConfig
 
 ### Example Usage
 
@@ -4913,7 +4913,7 @@ run();
 
 ## upsertAnaConfig
 
-UpsertOntologyAnaConfig
+Deprecated: use SetOntologyOwners with the complete desired entry set.
 
 ### Example Usage
 
@@ -5050,79 +5050,6 @@ run();
 ### Response
 
 **Promise\<[operations.OntologyManagementServiceUpsertOntologyFileResponse](../../models/operations/ontology-management-service-upsert-ontology-file-response.md)\>**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
-
-## upsertOwners
-
-UpsertOntologyOwners
-
-### Example Usage
-
-<!-- UsageSnippet language="typescript" operationID="OntologyManagementService_UpsertOntologyOwners" method="post" path="/textql.rpc.public.patches.OntologyManagementService/UpsertOntologyOwners" -->
-```typescript
-import { Textql } from "@textql/sdk";
-
-const textql = new Textql({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const result = await textql.ontology.upsertOwners({
-    body: {},
-  });
-
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { TextqlCore } from "@textql/sdk/core.js";
-import { ontologyUpsertOwners } from "@textql/sdk/funcs/ontology-upsert-owners.js";
-
-// Use `TextqlCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const textql = new TextqlCore({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const res = await ontologyUpsertOwners(textql, {
-    body: {},
-  });
-  if (res.ok) {
-    const { value: result } = res;
-    console.log(result);
-  } else {
-    console.log("ontologyUpsertOwners failed:", res.error);
-  }
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.OntologyManagementServiceUpsertOntologyOwnersRequest](../../models/operations/ontology-management-service-upsert-ontology-owners-request.md)                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[operations.OntologyManagementServiceUpsertOntologyOwnersResponse](../../models/operations/ontology-management-service-upsert-ontology-owners-response.md)\>**
 
 ### Errors
 

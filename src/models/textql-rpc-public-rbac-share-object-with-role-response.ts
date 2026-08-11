@@ -8,6 +8,9 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Object access management messages
+ */
 export type TextqlRpcPublicRbacShareObjectWithRoleResponse = {
   success?: boolean | undefined;
 };

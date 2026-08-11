@@ -1,12 +1,12 @@
-# OntologyManagementServiceUpsertOntologyOwnersResponse
+# OntologyManagementServiceSetOntologyOwnersResponse
 
 
 ## Supported Types
 
-### `models.TextqlRpcPublicPatchesUpsertOntologyOwnersResponse`
+### `models.TextqlRpcPublicPatchesSetOntologyOwnersResponse`
 
 ```typescript
-const value: models.TextqlRpcPublicPatchesUpsertOntologyOwnersResponse = {
+const value: models.TextqlRpcPublicPatchesSetOntologyOwnersResponse = {
   owners: {
     updatedAt: new Date("2023-01-15T01:30:15.01Z"),
   },

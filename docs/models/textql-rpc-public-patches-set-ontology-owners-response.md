@@ -1,11 +1,11 @@
-# TextqlRpcPublicPatchesUpsertOntologyOwnersResponse
+# TextqlRpcPublicPatchesSetOntologyOwnersResponse
 
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicPatchesUpsertOntologyOwnersResponse } from "@textql/sdk/models";
+import { TextqlRpcPublicPatchesSetOntologyOwnersResponse } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicPatchesUpsertOntologyOwnersResponse = {
+let value: TextqlRpcPublicPatchesSetOntologyOwnersResponse = {
   owners: {
     updatedAt: new Date("2023-01-15T01:30:15.01Z"),
   },

@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * RevokeApiKey
+ * Object sharing and access control
+ *
+ * @remarks
+ * Object sharing and access control
  */
 export function rbacRevokeApiKey(
   client: TextqlCore,

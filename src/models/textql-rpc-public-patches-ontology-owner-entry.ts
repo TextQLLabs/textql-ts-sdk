@@ -10,11 +10,13 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
   TextqlRpcPublicPatchesOntologyPermission,
   TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
+  TextqlRpcPublicPatchesOntologyPermission$outboundSchema,
 } from "./textql-rpc-public-patches-ontology-permission.js";
 
 export type TextqlRpcPublicPatchesOntologyOwnerEntry = {
   roleId?: string | undefined;
   permission?: TextqlRpcPublicPatchesOntologyPermission | undefined;
+  memberId?: string | null | undefined;
 };
 
 /** @internal */
@@ -24,8 +26,38 @@ export const TextqlRpcPublicPatchesOntologyOwnerEntry$inboundSchema:
     permission: types.optional(
       TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
     ),
+    memberId: z.optional(z.nullable(types.string())),
+  });
+/** @internal */
+export type TextqlRpcPublicPatchesOntologyOwnerEntry$Outbound = {
+  roleId?: string | undefined;
+  permission?: string | undefined;
+  memberId?: string | null | undefined;
+};
+
+/** @internal */
+export const TextqlRpcPublicPatchesOntologyOwnerEntry$outboundSchema:
+  z.ZodMiniType<
+    TextqlRpcPublicPatchesOntologyOwnerEntry$Outbound,
+    TextqlRpcPublicPatchesOntologyOwnerEntry
+  > = z.object({
+    roleId: z.optional(z.string()),
+    permission: z.optional(
+      TextqlRpcPublicPatchesOntologyPermission$outboundSchema,
+    ),
+    memberId: z.optional(z.nullable(z.string())),
   });
 
+export function textqlRpcPublicPatchesOntologyOwnerEntryToJSON(
+  textqlRpcPublicPatchesOntologyOwnerEntry:
+    TextqlRpcPublicPatchesOntologyOwnerEntry,
+): string {
+  return JSON.stringify(
+    TextqlRpcPublicPatchesOntologyOwnerEntry$outboundSchema.parse(
+      textqlRpcPublicPatchesOntologyOwnerEntry,
+    ),
+  );
+}
 export function textqlRpcPublicPatchesOntologyOwnerEntryFromJSON(
   jsonString: string,
 ): SafeParseResult<

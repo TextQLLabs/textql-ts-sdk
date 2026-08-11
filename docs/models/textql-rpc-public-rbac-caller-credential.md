@@ -1,6 +1,6 @@
 # TextqlRpcPublicRbacCallerCredential
 
-WhoAmI messages
+Get current member roles and permissions messages
 
 ## Example Usage
 

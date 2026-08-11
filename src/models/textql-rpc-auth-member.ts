@@ -261,6 +261,14 @@ export type TextqlRpcAuthMember = {
    *  membership, so a user in multiple orgs sets this per org.
    */
   themeMode?: string | null | undefined;
+  /**
+   * When this member creates a data app from a chat, share that builder chat
+   *
+   * @remarks
+   *  (read-only) with everyone who can view the app. Unset -> off (opt-in).
+   *  Snapshotted onto the app at creation time; later toggles only affect future apps.
+   */
+  shareAppBuilderChat?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -301,6 +309,7 @@ export const TextqlRpcAuthMember$inboundSchema: z.ZodMiniType<
   firstName: z.optional(z.nullable(types.string())),
   lastName: z.optional(z.nullable(types.string())),
   themeMode: z.optional(z.nullable(types.string())),
+  shareAppBuilderChat: z.optional(z.nullable(types.boolean())),
 });
 
 export function textqlRpcAuthMemberFromJSON(

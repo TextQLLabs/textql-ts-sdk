@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicChatLlmModel$inboundSchema,
 } from "./textql-rpc-public-chat-llm-model.js";
 
-/**
- * The credential that authenticated the request.
- */
 export type TextqlRpcPublicRbacCallerModelAccess = {
   allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
   defaultModel?: TextqlRpcPublicChatLlmModel | undefined;

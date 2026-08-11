@@ -9,7 +9,7 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * Which LLM models the caller may run.
+ * WhoAmI messages
  */
 export type TextqlRpcPublicRbacSharedObject = {
   objectType?: string | undefined;

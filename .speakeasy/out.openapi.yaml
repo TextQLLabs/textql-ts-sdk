@@ -683,10 +683,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-      description: |-
-        Append-only per-member activity log. Listing is own rows only; no
-         cross-member reads in this release.
+      summary: 'View analytics: reads the engagement views recorded on app page load.'
+      description: 'View analytics: reads the engagement views recorded on app page load.'
       operationId: AppService_GetAppDBSchema
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBSchema
@@ -723,7 +721,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: GetAppDBTablePreview
+      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
+      description: |-
+        Staff-only (superadmin gated in-handler): publishes the embedded component
+         gallery as an app tree and returns its signed viewer URL.
       operationId: AppService_GetAppDBTablePreview
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBTablePreview
@@ -760,10 +761,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
-      description: |-
-        Lists the calling member's favorited library items (apps, dashboards,
-         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+      summary: GetAppMemberState
       operationId: AppService_GetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: getMemberState
@@ -838,11 +836,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-      description: |-
-        Favorite/unfavorite a library item (app or dashboard) for the calling member.
-         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-         since the merged library page pins apps and dashboards through one client.
+      summary: Per-member notification subscription to an app ("watch this app").
+      description: Per-member notification subscription to an app ("watch this app").
       operationId: AppService_GetAppViewStats
       x-speakeasy-group: apps
       x-speakeasy-name-override: getAppViewStats
@@ -953,10 +948,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
+      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
       description: |-
-        Staff-only (superadmin gated in-handler): publishes the embedded component
-         gallery as an app tree and returns its signed viewer URL.
+        Lists the calling member's favorited library items (apps, dashboards,
+         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
       operationId: AppService_ListAppActivitySince
       x-speakeasy-group: apps
       x-speakeasy-name-override: listActivitySince
@@ -1068,8 +1063,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'View analytics: reads the engagement views recorded on app page load.'
-      description: 'View analytics: reads the engagement views recorded on app page load.'
+      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+      description: |-
+        Favorite/unfavorite a library item (app or dashboard) for the calling member.
+         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+         since the merged library page pins apps and dashboards through one client.
       operationId: AppService_ListMyAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: listMyMemberActivity
@@ -1144,7 +1142,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: PresenceHeartbeat
+      summary: Replaces the calling member's entire ordering; capped server-side.
+      description: Replaces the calling member's entire ordering; capped server-side.
       operationId: AppService_PresenceHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: presenceHeartbeat
@@ -1181,8 +1180,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: Replaces the calling member's entire ordering; capped server-side.
-      description: Replaces the calling member's entire ordering; capped server-side.
+      summary: 'Watcher management: app owners/editors and org admins list the app''s  subscribers and add/remove members (Upsert/Delete with member_id).'
+      description: |-
+        Watcher management: app owners/editors and org admins list the app's
+         subscribers and add/remove members (Upsert/Delete with member_id).
       operationId: AppService_RecordAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: recordMemberActivity
@@ -1294,12 +1295,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks (''<kind>:<id>'' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.'
-      description: |-
-        Ordering overlay for the sidebar Bookmarks section: one position list per
-         member covering favorites and thread bookmarks ('<kind>:<id>' keys).
-         Membership truth stays in library_favorite / chat bookmarks; this persists
-         only the drag-and-drop order.
+      summary: SetAppMemberState
       operationId: AppService_SetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: setMemberState
@@ -6922,12 +6918,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-      description: |-
-        Lists the skills under the ontology's flat skills/ root that the caller can
-         read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-         omitted unless include_unlisted is set.
+      summary: ConfigureOntologyRemote
       operationId: OntologyManagementService_ConfigureOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: configureRemote
@@ -7261,43 +7252,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/google.protobuf.Empty'
-  /textql.rpc.public.patches.OntologyManagementService/DeleteOntologyOwners:
-    post:
-      tags:
-        - OntologyManagementService
-      summary: DeleteOntologyOwners
-      operationId: OntologyManagementService_DeleteOntologyOwners
-      x-speakeasy-group: ontology
-      x-speakeasy-name-override: deleteOwners
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.patches.DeleteOntologyOwnersRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/google.protobuf.Empty'
   /textql.rpc.public.patches.OntologyManagementService/DenyPatch:
     post:
       tags:
@@ -7339,7 +7293,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: ExchangeOntologyGithubCode
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+      description: |-
+        Lists the skills under the ontology's flat skills/ root that the caller can
+         read (OWNERS-filtered). Returns display metadata only — never instruction
+         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+         omitted unless include_unlisted is set.
       operationId: OntologyManagementService_ExchangeOntologyGithubCode
       x-speakeasy-group: ontology
       x-speakeasy-name-override: exchangeGithubCode
@@ -7857,7 +7816,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: GetOntologySyncConflicts
+      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
+      description: |-
+        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+         caller's org: if the Ontology repo's live HEAD differs from the last
+         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+         equivalent of waiting for the periodic drift scan.
       operationId: OntologyManagementService_GetOntologySyncConflicts
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getSyncConflicts
@@ -9128,7 +9092,10 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: SetOntologyFileGolden
+      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.'
+      description: |-
+        Deprecated: use SetOntologyOwners with the desired entry set. An empty
+         desired set is not currently supported, so retain this RPC for deletion.
       operationId: OntologyManagementService_SetOntologyFileGolden
       x-speakeasy-group: ontology
       x-speakeasy-name-override: setFileGolden
@@ -9161,6 +9128,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.patches.SetOntologyFileGoldenResponse'
+  /textql.rpc.public.patches.OntologyManagementService/SetOntologyOwners:
+    post:
+      tags:
+        - OntologyManagementService
+      summary: SetOntologyOwners
+      operationId: OntologyManagementService_SetOntologyOwners
+      x-speakeasy-group: ontology
+      x-speakeasy-name-override: setOwners
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.patches.SetOntologyOwnersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.patches.SetOntologyOwnersResponse'
   /textql.rpc.public.patches.OntologyManagementService/TriggerConfigDriftReconcile:
     post:
       tags:
@@ -9276,12 +9280,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
-      description: |-
-        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-         caller's org: if the Ontology repo's live HEAD differs from the last
-         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-         equivalent of waiting for the periodic drift scan.
+      summary: UpdateOntologySyncConfig
       operationId: OntologyManagementService_UpdateOntologySyncConfig
       x-speakeasy-group: ontology
       x-speakeasy-name-override: updateSyncConfig
@@ -9318,7 +9317,8 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: UpsertOntologyAnaConfig
+      summary: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
+      description: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
       operationId: OntologyManagementService_UpsertOntologyAnaConfig
       x-speakeasy-group: ontology
       x-speakeasy-name-override: upsertAnaConfig
@@ -9388,43 +9388,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.patches.UpsertOntologyFileResponse'
-  /textql.rpc.public.patches.OntologyManagementService/UpsertOntologyOwners:
-    post:
-      tags:
-        - OntologyManagementService
-      summary: UpsertOntologyOwners
-      operationId: OntologyManagementService_UpsertOntologyOwners
-      x-speakeasy-group: ontology
-      x-speakeasy-name-override: upsertOwners
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.patches.UpsertOntologyOwnersRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.patches.UpsertOntologyOwnersResponse'
   /textql.rpc.public.patches.OntologyManagementService/ValidateConfig:
     post:
       tags:
@@ -11301,10 +11264,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: 'SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.'
-      description: |-
-        SCIM group-mapping migration tooling: one-time role<->group conversion,
-         internal only.
+      summary: ApproveAccessRequest
       operationId: RBACService_ApproveAccessRequest
       x-speakeasy-group: rbac
       x-speakeasy-name-override: approveAccessRequest
@@ -11378,8 +11338,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Member role assignment
-      description: Member role assignment
+      summary: AssignRoleToMember
       operationId: RBACService_AssignRoleToMember
       x-speakeasy-group: rbac
       x-speakeasy-name-override: assignRoleToMember
@@ -11449,6 +11408,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.CreateApiKeyResponse'
+  /textql.rpc.public.rbac.RBACService/CreatePersonalApiKey:
+    post:
+      tags:
+        - RBACService
+      summary: CreatePersonalApiKey
+      operationId: RBACService_CreatePersonalApiKey
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createPersonalApiKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.CreatePersonalApiKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.CreateApiKeyResult'
   /textql.rpc.public.rbac.RBACService/CreateRole:
     post:
       tags:
@@ -11524,6 +11520,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.CreateServiceAccountResponse'
+  /textql.rpc.public.rbac.RBACService/CreateServiceAccountApiKey:
+    post:
+      tags:
+        - RBACService
+      summary: CreateServiceAccountApiKey
+      operationId: RBACService_CreateServiceAccountApiKey
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: createServiceAccountApiKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.CreateServiceAccountApiKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.CreateApiKeyResult'
   /textql.rpc.public.rbac.RBACService/DeleteRole:
     post:
       tags:
@@ -11639,8 +11672,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Get current member roles and permissions
-      description: Get current member roles and permissions
+      summary: GetCurrentMemberRolesAndPermissions
       operationId: RBACService_GetCurrentMemberRolesAndPermissions
       x-speakeasy-group: rbac
       x-speakeasy-name-override: getCurrentMemberRolesAndPermissions
@@ -12085,7 +12117,10 @@ paths:
     post:
       tags:
         - RBACService
-      summary: RejectAccessRequest
+      summary: 'SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.'
+      description: |-
+        SCIM group-mapping migration tooling: one-time role<->group conversion,
+         internal only.
       operationId: RBACService_RejectAccessRequest
       x-speakeasy-group: rbac
       x-speakeasy-name-override: rejectAccessRequest
@@ -12159,7 +12194,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: RemoveRoleFromMember
+      summary: Member role assignment
+      description: Member role assignment
       operationId: RBACService_RemoveRoleFromMember
       x-speakeasy-group: rbac
       x-speakeasy-name-override: removeRoleFromMember
@@ -12233,7 +12269,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: RevokeApiKey
+      summary: Object sharing and access control
+      description: Object sharing and access control
       operationId: RBACService_RevokeApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: revokeApiKey
@@ -12307,8 +12344,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Object sharing and access control
-      description: Object sharing and access control
+      summary: RotateApiKey
       operationId: RBACService_RotateApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: rotateApiKey
@@ -12383,8 +12419,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Group management. Internal only.
-      description: Group management. Internal only.
+      summary: Describe what a key is allowed to do.
+      description: Describe what a key is allowed to do.
       operationId: RBACService_ShareObject
       x-speakeasy-group: rbac
       x-speakeasy-name-override: shareObject
@@ -12421,7 +12457,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: ShareObjectWithRole
+      summary: Group management. Internal only.
+      description: Group management. Internal only.
       operationId: RBACService_ShareObjectWithRole
       x-speakeasy-group: rbac
       x-speakeasy-name-override: shareObjectWithRole
@@ -12569,8 +12606,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Describe what a key is allowed to do.
-      description: Describe what a key is allowed to do.
+      summary: Get current member roles and permissions
+      description: Get current member roles and permissions
       operationId: RBACService_WhoAmI
       x-speakeasy-group: rbac
       x-speakeasy-name-override: whoAmI
@@ -15345,6 +15382,14 @@ components:
             Per-member UI theme preference: "light" | "dark" | "system".
              Unset -> the client falls back to its own default. Scoped to the
              membership, so a user in multiple orgs sets this per org.
+          nullable: true
+        shareAppBuilderChat:
+          type: boolean
+          title: share_app_builder_chat
+          description: |-
+            When this member creates a data app from a chat, share that builder chat
+             (read-only) with everyone who can view the app. Unset -> off (opt-in).
+             Snapshotted onto the app at creation time; later toggles only affect future apps.
           nullable: true
       title: Member
       additionalProperties: false
@@ -20837,6 +20882,7 @@ components:
         - ARTIFACT_TYPE_APP
         - ARTIFACT_TYPE_DASHBOARD_PREVIEW
         - ARTIFACT_TYPE_SKILL
+        - ARTIFACT_TYPE_PATCH_DIFF
       description: Artifact types for drawer items
     textql.rpc.public.chat.AttachAgentToChatRequest:
       type: object
@@ -21901,6 +21947,18 @@ components:
         upToCellId:
           type: string
           title: up_to_cell_id
+          nullable: true
+        paradigmOptions:
+          title: paradigm_options
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.paradigm.ParadigmOptions'
+        model:
+          title: model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+        fastMode:
+          type: boolean
+          title: fast_mode
           nullable: true
       title: DuplicateChatRequest
       additionalProperties: false
@@ -28318,6 +28376,14 @@ components:
         isPublished:
           type: boolean
           title: is_published
+        llmAcu:
+          type: number
+          title: llm_acu
+          format: double
+        totalAcu:
+          type: number
+          title: total_acu
+          format: double
       title: AppBillingStat
       additionalProperties: false
     textql.rpc.public.observe.BackfillCustomTopicRequest:
@@ -28903,6 +28969,10 @@ components:
         acuRatePer1000Usd:
           type: number
           title: acu_rate_per_1000_usd
+          format: double
+        unattributedAppLlmAcu:
+          type: number
+          title: unattributed_app_llm_acu
           format: double
       title: GetBillingStatsResponse
       additionalProperties: false
@@ -30499,6 +30569,7 @@ components:
           title: use_hosted_github_app
       title: ConfigureOntologyRemoteRequest
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersRequest when empty desired sets are supported.'
     textql.rpc.public.patches.ConfigureOntologyRemoteResponse:
       type: object
       properties:
@@ -30744,30 +30815,6 @@ components:
           nullable: true
       title: DeleteOntologyFileRequest
       additionalProperties: false
-    textql.rpc.public.patches.DeleteOntologyOwnersRequest:
-      type: object
-      properties:
-        path:
-          type: string
-          title: path
-        roleIds:
-          type: array
-          items:
-            type: string
-          title: role_ids
-        commitMessage:
-          type: string
-          title: commit_message
-          nullable: true
-      title: DeleteOntologyOwnersRequest
-      additionalProperties: false
-      description: |-
-        Returns the *effective* owners for a directory after walking ancestor
-         OWNERS files: for every role in the org, the resolved permission the
-         role would have on this directory (per `permissionForDirWithRoles`).
-         Use this when you need to compare permissions across paths — the
-         literal GetOntologyOwners only reflects the OWNERS file at the exact
-         path, missing inheritance.
     textql.rpc.public.patches.DenyPatchRequest:
       type: object
       properties:
@@ -30957,6 +31004,9 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwnerEntry'
           title: entries
+        unlistedPrincipalPermission:
+          title: unlisted_principal_permission
+          $ref: '#/components/schemas/textql.rpc.public.patches.OntologyPermission'
       title: GetEffectiveOntologyOwnersResponse
       additionalProperties: false
     textql.rpc.public.patches.GetFileUsageRequest:
@@ -31877,6 +31927,10 @@ components:
         permission:
           title: permission
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyPermission'
+        memberId:
+          type: string
+          title: member_id
+          nullable: true
       title: OntologyOwnerEntry
       additionalProperties: false
     textql.rpc.public.patches.OntologyOwners:
@@ -31973,6 +32027,7 @@ components:
           nullable: true
       title: OntologyRemote
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersResponse.'
     textql.rpc.public.patches.OntologySizeDay:
       type: object
       properties:
@@ -32714,6 +32769,38 @@ components:
           title: golden
       title: SetOntologyFileGoldenResponse
       additionalProperties: false
+    textql.rpc.public.patches.SetOntologyOwnersRequest:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwnerEntry'
+          title: entries
+        commitMessage:
+          type: string
+          title: commit_message
+          nullable: true
+      title: SetOntologyOwnersRequest
+      additionalProperties: false
+      description: |-
+        Returns the *effective* owners for a directory after walking ancestor
+         OWNERS files: for every role in the org, the resolved permission the
+         role would have on this directory (per `permissionForDirWithRoles`).
+         Use this when you need to compare permissions across paths — the
+         literal GetOntologyOwners only reflects the OWNERS file at the exact
+         path, missing inheritance.
+    textql.rpc.public.patches.SetOntologyOwnersResponse:
+      type: object
+      properties:
+        owners:
+          title: owners
+          $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwners'
+      title: SetOntologyOwnersResponse
+      additionalProperties: false
     textql.rpc.public.patches.Skill:
       type: object
       properties:
@@ -32888,36 +32975,6 @@ components:
           title: file
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyFile'
       title: UpsertOntologyFileResponse
-      additionalProperties: false
-    textql.rpc.public.patches.UpsertOntologyOwnersRequest:
-      type: object
-      properties:
-        path:
-          type: string
-          title: path
-        roleIds:
-          type: array
-          items:
-            type: string
-          title: role_ids
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.patches.OntologyPermission'
-          title: permissions
-        commitMessage:
-          type: string
-          title: commit_message
-          nullable: true
-      title: UpsertOntologyOwnersRequest
-      additionalProperties: false
-    textql.rpc.public.patches.UpsertOntologyOwnersResponse:
-      type: object
-      properties:
-        owners:
-          title: owners
-          $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwners'
-      title: UpsertOntologyOwnersResponse
       additionalProperties: false
     textql.rpc.public.patches.UsageOrderBy:
       type: string
@@ -35167,7 +35224,6 @@ components:
           title: success
       title: AssignRoleToMemberResponse
       additionalProperties: false
-      description: Member role management messages
     textql.rpc.public.rbac.CallerCredential:
       type: object
       properties:
@@ -35209,7 +35265,7 @@ components:
           title: scopes
       title: CallerCredential
       additionalProperties: false
-      description: WhoAmI messages
+      description: Get current member roles and permissions messages
     textql.rpc.public.rbac.CallerModelAccess:
       type: object
       properties:
@@ -35226,7 +35282,6 @@ components:
           title: restricted
       title: CallerModelAccess
       additionalProperties: false
-      description: The credential that authenticated the request.
     textql.rpc.public.rbac.CreateApiKeyRequest:
       type: object
       properties:
@@ -35258,6 +35313,9 @@ components:
         suppressSuperadmin:
           type: boolean
           title: suppress_superadmin
+        fullMemberAccess:
+          type: boolean
+          title: full_member_access
       title: CreateApiKeyRequest
       additionalProperties: false
     textql.rpc.public.rbac.CreateApiKeyResponse:
@@ -35274,6 +35332,49 @@ components:
           title: api_key_hash
           deprecated: true
       title: CreateApiKeyResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.CreateApiKeyResult:
+      type: object
+      properties:
+        apiKey:
+          title: api_key
+          $ref: '#/components/schemas/textql.rpc.public.rbac.ApiKey'
+        apiKeySecret:
+          type: string
+          title: api_key_secret
+      title: CreateApiKeyResult
+      additionalProperties: false
+    textql.rpc.public.rbac.CreatePersonalApiKeyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+          nullable: true
+        expirySeconds:
+          type: integer
+          title: expiry_seconds
+          nullable: true
+        assumedRoles:
+          type: array
+          items:
+            type: string
+          title: assumed_roles
+        inheritAllRoles:
+          type: boolean
+          title: inherit_all_roles
+          nullable: true
+        clientId:
+          type: string
+          title: client_id
+          nullable: true
+        fullMemberAccess:
+          type: boolean
+          title: full_member_access
+        suppressSuperadmin:
+          type: boolean
+          title: suppress_superadmin
+      title: CreatePersonalApiKeyRequest
       additionalProperties: false
     textql.rpc.public.rbac.CreateRoleRequest:
       type: object
@@ -35295,6 +35396,38 @@ components:
       title: CreateRoleResponse
       additionalProperties: false
       description: Role management requests/responses
+    textql.rpc.public.rbac.CreateServiceAccountApiKeyRequest:
+      type: object
+      properties:
+        serviceAccountMemberId:
+          type: string
+          title: service_account_member_id
+        name:
+          type: string
+          title: name
+          nullable: true
+        expirySeconds:
+          type: integer
+          title: expiry_seconds
+          nullable: true
+        assumedRoles:
+          type: array
+          items:
+            type: string
+          title: assumed_roles
+        inheritAllRoles:
+          type: boolean
+          title: inherit_all_roles
+          nullable: true
+        clientId:
+          type: string
+          title: client_id
+          nullable: true
+        fullMemberAccess:
+          type: boolean
+          title: full_member_access
+      title: CreateServiceAccountApiKeyRequest
+      additionalProperties: false
     textql.rpc.public.rbac.CreateServiceAccountRequest:
       type: object
       properties:
@@ -35397,7 +35530,6 @@ components:
           title: permissions
       title: GetCurrentMemberRolesAndPermissionsResponse
       additionalProperties: false
-      description: Get current member roles and permissions messages
     textql.rpc.public.rbac.GetEmbedUserApiKeyRequest:
       type: object
       properties:
@@ -35561,6 +35693,7 @@ components:
           title: requests
       title: ListAccessRequestsResponse
       additionalProperties: false
+      description: Access request management messages
     textql.rpc.public.rbac.ListApiKeysRequest:
       type: object
       properties:
@@ -35809,6 +35942,7 @@ components:
           title: success
       title: RemoveRoleFromMemberResponse
       additionalProperties: false
+      description: Member role management messages
     textql.rpc.public.rbac.RequestAccessRequest:
       type: object
       properties:
@@ -35841,7 +35975,6 @@ components:
           title: request_id
       title: RequestAccessResponse
       additionalProperties: false
-      description: Access request management messages
     textql.rpc.public.rbac.RevokeApiKeyRequest:
       type: object
       properties:
@@ -36030,6 +36163,7 @@ components:
           title: is_public
       title: ShareObjectRequest
       additionalProperties: false
+      description: Which LLM models the caller may run.
     textql.rpc.public.rbac.ShareObjectResponse:
       type: object
       properties:
@@ -36038,7 +36172,6 @@ components:
           title: success
       title: ShareObjectResponse
       additionalProperties: false
-      description: Object access management messages
     textql.rpc.public.rbac.ShareObjectWithRoleRequest:
       type: object
       properties:
@@ -36071,6 +36204,7 @@ components:
           title: success
       title: ShareObjectWithRoleResponse
       additionalProperties: false
+      description: Object access management messages
     textql.rpc.public.rbac.SharedObject:
       type: object
       properties:
@@ -36100,7 +36234,7 @@ components:
           nullable: true
       title: SharedObject
       additionalProperties: false
-      description: Which LLM models the caller may run.
+      description: WhoAmI messages
     textql.rpc.public.rbac.UpdateObjectAccessRequest:
       type: object
       properties:
@@ -36227,6 +36361,7 @@ components:
           title: shared_access_truncated
       title: WhoAmIResponse
       additionalProperties: false
+      description: The credential that authenticated the request.
     textql.rpc.public.reports.CardBlock:
       type: object
       properties:

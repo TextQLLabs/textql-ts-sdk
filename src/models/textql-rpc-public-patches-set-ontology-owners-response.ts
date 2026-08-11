@@ -12,31 +12,31 @@ import {
   TextqlRpcPublicPatchesOntologyOwners$inboundSchema,
 } from "./textql-rpc-public-patches-ontology-owners.js";
 
-export type TextqlRpcPublicPatchesUpsertOntologyOwnersResponse = {
+export type TextqlRpcPublicPatchesSetOntologyOwnersResponse = {
   owners?: TextqlRpcPublicPatchesOntologyOwners | undefined;
 };
 
 /** @internal */
-export const TextqlRpcPublicPatchesUpsertOntologyOwnersResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesUpsertOntologyOwnersResponse, unknown> = z
+export const TextqlRpcPublicPatchesSetOntologyOwnersResponse$inboundSchema:
+  z.ZodMiniType<TextqlRpcPublicPatchesSetOntologyOwnersResponse, unknown> = z
     .object({
       owners: types.optional(
         TextqlRpcPublicPatchesOntologyOwners$inboundSchema,
       ),
     });
 
-export function textqlRpcPublicPatchesUpsertOntologyOwnersResponseFromJSON(
+export function textqlRpcPublicPatchesSetOntologyOwnersResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<
-  TextqlRpcPublicPatchesUpsertOntologyOwnersResponse,
+  TextqlRpcPublicPatchesSetOntologyOwnersResponse,
   SDKValidationError
 > {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicPatchesUpsertOntologyOwnersResponse$inboundSchema.parse(
+      TextqlRpcPublicPatchesSetOntologyOwnersResponse$inboundSchema.parse(
         JSON.parse(x),
       ),
-    `Failed to parse 'TextqlRpcPublicPatchesUpsertOntologyOwnersResponse' from JSON`,
+    `Failed to parse 'TextqlRpcPublicPatchesSetOntologyOwnersResponse' from JSON`,
   );
 }

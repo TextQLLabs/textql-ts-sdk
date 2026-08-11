@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ShareObjectWithRole
+ * Group management. Internal only.
+ *
+ * @remarks
+ * Group management. Internal only.
  */
 export function rbacShareObjectWithRole(
   client: TextqlCore,

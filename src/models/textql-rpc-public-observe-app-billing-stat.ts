@@ -112,6 +112,8 @@ export type TextqlRpcPublicObserveAppBillingStat = {
   lastViewedAt?: Date | undefined;
   dailyViewCounts?: Array<number> | undefined;
   isPublished?: boolean | undefined;
+  llmAcu?: number | undefined;
+  totalAcu?: number | undefined;
 };
 
 /** @internal */
@@ -129,6 +131,8 @@ export const TextqlRpcPublicObserveAppBillingStat$inboundSchema: z.ZodMiniType<
   lastViewedAt: types.optional(types.date()),
   dailyViewCounts: types.optional(z.array(types.number())),
   isPublished: types.optional(types.boolean()),
+  llmAcu: types.optional(types.number()),
+  totalAcu: types.optional(types.number()),
 });
 
 export function textqlRpcPublicObserveAppBillingStatFromJSON(

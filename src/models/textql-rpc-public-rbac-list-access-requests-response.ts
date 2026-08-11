@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicRbacAccessRequest$inboundSchema,
 } from "./textql-rpc-public-rbac-access-request.js";
 
+/**
+ * Access request management messages
+ */
 export type TextqlRpcPublicRbacListAccessRequestsResponse = {
   requests?: Array<TextqlRpcPublicRbacAccessRequest> | undefined;
 };

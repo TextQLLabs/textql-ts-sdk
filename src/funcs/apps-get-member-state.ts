@@ -27,11 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
- *
- * @remarks
- * Lists the calling member's favorited library items (apps, dashboards,
- *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+ * GetAppMemberState
  */
 export function appsGetMemberState(
   client: TextqlCore,

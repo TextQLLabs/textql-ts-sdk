@@ -11,10 +11,17 @@ import {
   TextqlRpcPublicPatchesOntologyOwnerEntry,
   TextqlRpcPublicPatchesOntologyOwnerEntry$inboundSchema,
 } from "./textql-rpc-public-patches-ontology-owner-entry.js";
+import {
+  TextqlRpcPublicPatchesOntologyPermission,
+  TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
+} from "./textql-rpc-public-patches-ontology-permission.js";
 
 export type TextqlRpcPublicPatchesGetEffectiveOntologyOwnersResponse = {
   path?: string | undefined;
   entries?: Array<TextqlRpcPublicPatchesOntologyOwnerEntry> | undefined;
+  unlistedPrincipalPermission?:
+    | TextqlRpcPublicPatchesOntologyPermission
+    | undefined;
 };
 
 /** @internal */
@@ -26,6 +33,9 @@ export const TextqlRpcPublicPatchesGetEffectiveOntologyOwnersResponse$inboundSch
     path: types.optional(types.string()),
     entries: types.optional(
       z.array(TextqlRpcPublicPatchesOntologyOwnerEntry$inboundSchema),
+    ),
+    unlistedPrincipalPermission: types.optional(
+      TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
     ),
   });
 

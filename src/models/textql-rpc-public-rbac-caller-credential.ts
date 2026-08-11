@@ -13,7 +13,7 @@ import {
 } from "./textql-rpc-public-rbac-api-key-status.js";
 
 /**
- * WhoAmI messages
+ * Get current member roles and permissions messages
  */
 export type TextqlRpcPublicRbacCallerCredential = {
   authMethod?: string | undefined;

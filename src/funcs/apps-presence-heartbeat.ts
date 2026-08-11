@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * PresenceHeartbeat
+ * Replaces the calling member's entire ordering; capped server-side.
+ *
+ * @remarks
+ * Replaces the calling member's entire ordering; capped server-side.
  */
 export function appsPresenceHeartbeat(
   client: TextqlCore,

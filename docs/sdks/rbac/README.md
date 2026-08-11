@@ -4,16 +4,18 @@
 
 ### Available Operations
 
-* [approveAccessRequest](#approveaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+* [approveAccessRequest](#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](#assignpermissiontorole) - AssignPermissionToRole
-* [assignRoleToMember](#assignroletomember) - Member role assignment
+* [assignRoleToMember](#assignroletomember) - AssignRoleToMember
 * [createApiKey](#createapikey) - CreateApiKey
+* [createPersonalApiKey](#createpersonalapikey) - CreatePersonalApiKey
 * [createRole](#createrole) - Role management
 * [createServiceAccount](#createserviceaccount) - CreateServiceAccount
+* [createServiceAccountApiKey](#createserviceaccountapikey) - CreateServiceAccountApiKey
 * [deleteRole](#deleterole) - DeleteRole
 * [deleteServiceAccount](#deleteserviceaccount) - DeleteServiceAccount
 * [generateShareLink](#generatesharelink) - GenerateShareLink
-* [getCurrentMemberRolesAndPermissions](#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
+* [getCurrentMemberRolesAndPermissions](#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 * [getEmbedUserApiKey](#getembeduserapikey) - GetEmbedUserApiKey
 * [getMemberRoles](#getmemberroles) - GetMemberRoles
 * [getObjectAccess](#getobjectaccess) - GetObjectAccess
@@ -25,25 +27,24 @@
 * [listPermissions](#listpermissions) - Permission management
 * [listRoles](#listroles) - ListRoles
 * [listServiceAccounts](#listserviceaccounts) - ListServiceAccounts
-* [rejectAccessRequest](#rejectaccessrequest) - RejectAccessRequest
+* [rejectAccessRequest](#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 * [removePermissionFromRole](#removepermissionfromrole) - RemovePermissionFromRole
-* [removeRoleFromMember](#removerolefrommember) - RemoveRoleFromMember
+* [removeRoleFromMember](#removerolefrommember) - Member role assignment
 * [requestAccess](#requestaccess) - RequestAccess
-* [revokeApiKey](#revokeapikey) - RevokeApiKey
+* [revokeApiKey](#revokeapikey) - Object sharing and access control
 * [revokeObjectAccess](#revokeobjectaccess) - RevokeObjectAccess
-* [rotateApiKey](#rotateapikey) - Object sharing and access control
+* [rotateApiKey](#rotateapikey) - RotateApiKey
 * [setRolePermissions](#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-* [shareObject](#shareobject) - Group management. Internal only.
-* [shareObjectWithRole](#shareobjectwithrole) - ShareObjectWithRole
+* [shareObject](#shareobject) - Describe what a key is allowed to do.
+* [shareObjectWithRole](#shareobjectwithrole) - Group management. Internal only.
 * [updateObjectAccess](#updateobjectaccess) - UpdateObjectAccess
 * [updateObjectVisibility](#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](#updaterole) - UpdateRole
-* [whoAmI](#whoami) - Describe what a key is allowed to do.
+* [whoAmI](#whoami) - Get current member roles and permissions
 
 ## approveAccessRequest
 
-SCIM group-mapping migration tooling: one-time role<->group conversion,
- internal only.
+ApproveAccessRequest
 
 ### Example Usage
 
@@ -189,7 +190,7 @@ run();
 
 ## assignRoleToMember
 
-Member role assignment
+AssignRoleToMember
 
 ### Example Usage
 
@@ -326,6 +327,79 @@ run();
 ### Response
 
 **Promise\<[operations.RBACServiceCreateApiKeyResponse](../../models/operations/rbac-service-create-api-key-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## createPersonalApiKey
+
+CreatePersonalApiKey
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="RBACService_CreatePersonalApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/CreatePersonalApiKey" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.rbac.createPersonalApiKey({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreatePersonalApiKey } from "@textql/sdk/funcs/rbac-create-personal-api-key.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await rbacCreatePersonalApiKey(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("rbacCreatePersonalApiKey failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RBACServiceCreatePersonalApiKeyRequest](../../models/operations/rbac-service-create-personal-api-key-request.md)                                                   | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.RBACServiceCreatePersonalApiKeyResponse](../../models/operations/rbac-service-create-personal-api-key-response.md)\>**
 
 ### Errors
 
@@ -472,6 +546,79 @@ run();
 ### Response
 
 **Promise\<[operations.RBACServiceCreateServiceAccountResponse](../../models/operations/rbac-service-create-service-account-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## createServiceAccountApiKey
+
+CreateServiceAccountApiKey
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="RBACService_CreateServiceAccountApiKey" method="post" path="/textql.rpc.public.rbac.RBACService/CreateServiceAccountApiKey" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.rbac.createServiceAccountApiKey({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateServiceAccountApiKey } from "@textql/sdk/funcs/rbac-create-service-account-api-key.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await rbacCreateServiceAccountApiKey(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("rbacCreateServiceAccountApiKey failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RBACServiceCreateServiceAccountApiKeyRequest](../../models/operations/rbac-service-create-service-account-api-key-request.md)                                      | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.RBACServiceCreateServiceAccountApiKeyResponse](../../models/operations/rbac-service-create-service-account-api-key-response.md)\>**
 
 ### Errors
 
@@ -700,7 +847,7 @@ run();
 
 ## getCurrentMemberRolesAndPermissions
 
-Get current member roles and permissions
+GetCurrentMemberRolesAndPermissions
 
 ### Example Usage
 
@@ -1576,7 +1723,8 @@ run();
 
 ## rejectAccessRequest
 
-RejectAccessRequest
+SCIM group-mapping migration tooling: one-time role<->group conversion,
+ internal only.
 
 ### Example Usage
 
@@ -1722,7 +1870,7 @@ run();
 
 ## removeRoleFromMember
 
-RemoveRoleFromMember
+Member role assignment
 
 ### Example Usage
 
@@ -1868,7 +2016,7 @@ run();
 
 ## revokeApiKey
 
-RevokeApiKey
+Object sharing and access control
 
 ### Example Usage
 
@@ -2014,7 +2162,7 @@ run();
 
 ## rotateApiKey
 
-Object sharing and access control
+RotateApiKey
 
 ### Example Usage
 
@@ -2160,7 +2308,7 @@ run();
 
 ## shareObject
 
-Group management. Internal only.
+Describe what a key is allowed to do.
 
 ### Example Usage
 
@@ -2237,7 +2385,7 @@ run();
 
 ## shareObjectWithRole
 
-ShareObjectWithRole
+Group management. Internal only.
 
 ### Example Usage
 
@@ -2537,7 +2685,7 @@ run();
 
 ## whoAmI
 
-Describe what a key is allowed to do.
+Get current member roles and permissions
 
 ### Example Usage
 
