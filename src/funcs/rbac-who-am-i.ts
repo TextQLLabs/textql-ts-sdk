@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Describe what a key is allowed to do.
+ * Get current member roles and permissions
  *
  * @remarks
- * Describe what a key is allowed to do.
+ * Get current member roles and permissions
  */
 export function rbacWhoAmI(
   client: TextqlCore,

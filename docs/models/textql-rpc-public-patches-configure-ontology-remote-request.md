@@ -1,5 +1,7 @@
 # TextqlRpcPublicPatchesConfigureOntologyRemoteRequest
 
+Deprecated: use SetOntologyOwnersRequest when empty desired sets are supported.
+
 ## Example Usage
 
 ```typescript

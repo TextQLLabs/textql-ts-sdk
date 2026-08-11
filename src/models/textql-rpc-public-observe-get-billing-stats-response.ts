@@ -48,6 +48,7 @@ export type TextqlRpcPublicObserveGetBillingStatsResponse = {
   unattributedAppAcu?: number | undefined;
   totalAppCount?: number | undefined;
   acuRatePer1000Usd?: number | undefined;
+  unattributedAppLlmAcu?: number | undefined;
 };
 
 /** @internal */
@@ -81,6 +82,7 @@ export const TextqlRpcPublicObserveGetBillingStatsResponse$inboundSchema:
       unattributedAppAcu: types.optional(types.number()),
       totalAppCount: types.optional(types.number()),
       acuRatePer1000Usd: types.optional(types.number()),
+      unattributedAppLlmAcu: types.optional(types.number()),
     });
 
 export function textqlRpcPublicObserveGetBillingStatsResponseFromJSON(

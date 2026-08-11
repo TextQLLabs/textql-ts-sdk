@@ -13,7 +13,6 @@ import { ontologyDeleteApprovalRule } from "../funcs/ontology-delete-approval-ru
 import { ontologyDeleteContextPatchAutoApproveRule } from "../funcs/ontology-delete-context-patch-auto-approve-rule.js";
 import { ontologyDeleteDirectory } from "../funcs/ontology-delete-directory.js";
 import { ontologyDeleteFile } from "../funcs/ontology-delete-file.js";
-import { ontologyDeleteOwners } from "../funcs/ontology-delete-owners.js";
 import { ontologyDenyPatch } from "../funcs/ontology-deny-patch.js";
 import { ontologyExchangeGithubCode } from "../funcs/ontology-exchange-github-code.js";
 import { ontologyFinalizeFileUpload } from "../funcs/ontology-finalize-file-upload.js";
@@ -64,13 +63,13 @@ import { ontologyRevertPatch } from "../funcs/ontology-revert-patch.js";
 import { ontologySaveAllObjectsAsConfig } from "../funcs/ontology-save-all-objects-as-config.js";
 import { ontologySaveObjectAsConfig } from "../funcs/ontology-save-object-as-config.js";
 import { ontologySetFileGolden } from "../funcs/ontology-set-file-golden.js";
+import { ontologySetOwners } from "../funcs/ontology-set-owners.js";
 import { ontologyTriggerConfigDriftReconcile } from "../funcs/ontology-trigger-config-drift-reconcile.js";
 import { ontologyUpdateApprovalRule } from "../funcs/ontology-update-approval-rule.js";
 import { ontologyUpdateContextPatchAutoApproveRule } from "../funcs/ontology-update-context-patch-auto-approve-rule.js";
 import { ontologyUpdateSyncConfig } from "../funcs/ontology-update-sync-config.js";
 import { ontologyUpsertAnaConfig } from "../funcs/ontology-upsert-ana-config.js";
 import { ontologyUpsertFile } from "../funcs/ontology-upsert-file.js";
-import { ontologyUpsertOwners } from "../funcs/ontology-upsert-owners.js";
 import { ontologyValidateConfig } from "../funcs/ontology-validate-config.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -106,13 +105,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-   *
-   * @remarks
-   * Lists the skills under the ontology's flat skills/ root that the caller can
-   *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-   *  omitted unless include_unlisted is set.
+   * ConfigureOntologyRemote
    */
   async configureRemote(
     request: operations.OntologyManagementServiceConfigureOntologyRemoteRequest,
@@ -259,20 +252,6 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * DeleteOntologyOwners
-   */
-  async deleteOwners(
-    request: operations.OntologyManagementServiceDeleteOntologyOwnersRequest,
-    options?: RequestOptions,
-  ): Promise<operations.OntologyManagementServiceDeleteOntologyOwnersResponse> {
-    return unwrapAsync(ontologyDeleteOwners(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * DenyPatch
    */
   async denyPatch(
@@ -287,7 +266,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * ExchangeOntologyGithubCode
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+   *
+   * @remarks
+   * Lists the skills under the ontology's flat skills/ root that the caller can
+   *  read (OWNERS-filtered). Returns display metadata only — never instruction
+   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+   *  omitted unless include_unlisted is set.
    */
   async exchangeGithubCode(
     request:
@@ -503,7 +488,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * GetOntologySyncConflicts
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+   *
+   * @remarks
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+   *  caller's org: if the Ontology repo's live HEAD differs from the last
+   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+   *  equivalent of waiting for the periodic drift scan.
    */
   async getSyncConflicts(
     request:
@@ -1018,7 +1009,11 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * SetOntologyFileGolden
+   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+   *
+   * @remarks
+   * Deprecated: use SetOntologyOwners with the desired entry set. An empty
+   *  desired set is not currently supported, so retain this RPC for deletion.
    */
   async setFileGolden(
     request: operations.OntologyManagementServiceSetOntologyFileGoldenRequest,
@@ -1027,6 +1022,20 @@ export class Ontology extends ClientSDK {
     operations.OntologyManagementServiceSetOntologyFileGoldenResponse
   > {
     return unwrapAsync(ontologySetFileGolden(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * SetOntologyOwners
+   */
+  async setOwners(
+    request: operations.OntologyManagementServiceSetOntologyOwnersRequest,
+    options?: RequestOptions,
+  ): Promise<operations.OntologyManagementServiceSetOntologyOwnersResponse> {
+    return unwrapAsync(ontologySetOwners(
       this,
       request,
       options,
@@ -1082,13 +1091,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-   *
-   * @remarks
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-   *  caller's org: if the Ontology repo's live HEAD differs from the last
-   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-   *  equivalent of waiting for the periodic drift scan.
+   * UpdateOntologySyncConfig
    */
   async updateSyncConfig(
     request:
@@ -1105,7 +1108,10 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * UpsertOntologyAnaConfig
+   * Deprecated: use SetOntologyOwners with the complete desired entry set.
+   *
+   * @remarks
+   * Deprecated: use SetOntologyOwners with the complete desired entry set.
    */
   async upsertAnaConfig(
     request: operations.OntologyManagementServiceUpsertOntologyAnaConfigRequest,
@@ -1128,20 +1134,6 @@ export class Ontology extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.OntologyManagementServiceUpsertOntologyFileResponse> {
     return unwrapAsync(ontologyUpsertFile(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * UpsertOntologyOwners
-   */
-  async upsertOwners(
-    request: operations.OntologyManagementServiceUpsertOntologyOwnersRequest,
-    options?: RequestOptions,
-  ): Promise<operations.OntologyManagementServiceUpsertOntologyOwnersResponse> {
-    return unwrapAsync(ontologyUpsertOwners(
       this,
       request,
       options,

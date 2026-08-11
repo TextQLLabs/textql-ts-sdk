@@ -25,6 +25,7 @@ export const TextqlRpcPublicChatArtifactType = {
   ArtifactTypeApp: "ARTIFACT_TYPE_APP",
   ArtifactTypeDashboardPreview: "ARTIFACT_TYPE_DASHBOARD_PREVIEW",
   ArtifactTypeSkill: "ARTIFACT_TYPE_SKILL",
+  ArtifactTypePatchDiff: "ARTIFACT_TYPE_PATCH_DIFF",
 } as const;
 /**
  * Artifact types for drawer items

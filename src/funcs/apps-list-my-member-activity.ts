@@ -27,10 +27,12 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * View analytics: reads the engagement views recorded on app page load.
+ * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
  *
  * @remarks
- * View analytics: reads the engagement views recorded on app page load.
+ * Favorite/unfavorite a library item (app or dashboard) for the calling member.
+ *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+ *  since the merged library page pins apps and dashboards through one client.
  */
 export function appsListMyMemberActivity(
   client: TextqlCore,

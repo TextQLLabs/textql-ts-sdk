@@ -110,11 +110,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+   * View analytics: reads the engagement views recorded on app page load.
    *
    * @remarks
-   * Append-only per-member activity log. Listing is own rows only; no
-   *  cross-member reads in this release.
+   * View analytics: reads the engagement views recorded on app page load.
    */
   async getDBSchema(
     request: operations.AppServiceGetAppDBSchemaRequest,
@@ -128,7 +127,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * GetAppDBTablePreview
+   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   *
+   * @remarks
+   * Staff-only (superadmin gated in-handler): publishes the embedded component
+   *  gallery as an app tree and returns its signed viewer URL.
    */
   async getDBTablePreview(
     request: operations.AppServiceGetAppDBTablePreviewRequest,
@@ -142,11 +145,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
-   *
-   * @remarks
-   * Lists the calling member's favorited library items (apps, dashboards,
-   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+   * GetAppMemberState
    */
   async getMemberState(
     request: operations.AppServiceGetAppMemberStateRequest,
@@ -177,12 +176,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+   * Per-member notification subscription to an app ("watch this app").
    *
    * @remarks
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
-   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-   *  since the merged library page pins apps and dashboards through one client.
+   * Per-member notification subscription to an app ("watch this app").
    */
   async getAppViewStats(
     request: operations.AppServiceGetAppViewStatsRequest,
@@ -224,11 +221,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    *
    * @remarks
-   * Staff-only (superadmin gated in-handler): publishes the embedded component
-   *  gallery as an app tree and returns its signed viewer URL.
+   * Lists the calling member's favorited library items (apps, dashboards,
+   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
    */
   async listActivitySince(
     request: operations.AppServiceListAppActivitySinceRequest,
@@ -273,10 +270,12 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * View analytics: reads the engagement views recorded on app page load.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
    *
    * @remarks
-   * View analytics: reads the engagement views recorded on app page load.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
+   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+   *  since the merged library page pins apps and dashboards through one client.
    */
   async listMyMemberActivity(
     request: operations.AppServiceListMyAppMemberActivityRequest,
@@ -307,7 +306,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * PresenceHeartbeat
+   * Replaces the calling member's entire ordering; capped server-side.
+   *
+   * @remarks
+   * Replaces the calling member's entire ordering; capped server-side.
    */
   async presenceHeartbeat(
     request: operations.AppServicePresenceHeartbeatRequest,
@@ -321,10 +323,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
    *
    * @remarks
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Watcher management: app owners/editors and org admins list the app's
+   *  subscribers and add/remove members (Upsert/Delete with member_id).
    */
   async recordMemberActivity(
     request: operations.AppServiceRecordAppMemberActivityRequest,
@@ -369,13 +372,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
-   *
-   * @remarks
-   * Ordering overlay for the sidebar Bookmarks section: one position list per
-   *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
-   *  Membership truth stays in library_favorite / chat bookmarks; this persists
-   *  only the drag-and-drop order.
+   * SetAppMemberState
    */
   async setMemberState(
     request: operations.AppServiceSetAppMemberStateRequest,

@@ -166,23 +166,23 @@ run();
 * [deleteApp](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 * [duplicate](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](docs/sdks/apps/README.md#get) - GetApp
-* [getDBSchema](docs/sdks/apps/README.md#getdbschema) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-* [getDBTablePreview](docs/sdks/apps/README.md#getdbtablepreview) - GetAppDBTablePreview
-* [getMemberState](docs/sdks/apps/README.md#getmemberstate) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+* [getDBSchema](docs/sdks/apps/README.md#getdbschema) - View analytics: reads the engagement views recorded on app page load.
+* [getDBTablePreview](docs/sdks/apps/README.md#getdbtablepreview) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [getMemberState](docs/sdks/apps/README.md#getmemberstate) - GetAppMemberState
 * [getAppVersion](docs/sdks/apps/README.md#getappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
-* [getAppViewStats](docs/sdks/apps/README.md#getappviewstats) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+* [getAppViewStats](docs/sdks/apps/README.md#getappviewstats) - Per-member notification subscription to an app ("watch this app").
 * [getMembersWithApps](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](docs/sdks/apps/README.md#invokecomputefunction) - InvokeAppComputeFunction
-* [listActivitySince](docs/sdks/apps/README.md#listactivitysince) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+* [listActivitySince](docs/sdks/apps/README.md#listactivitysince) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
 * [listVersions](docs/sdks/apps/README.md#listversions) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
 * [list](docs/sdks/apps/README.md#list) - ListApps
-* [listMyMemberActivity](docs/sdks/apps/README.md#listmymemberactivity) - View analytics: reads the engagement views recorded on app page load.
+* [listMyMemberActivity](docs/sdks/apps/README.md#listmymemberactivity) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [moveAppToFolder](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-* [presenceHeartbeat](docs/sdks/apps/README.md#presenceheartbeat) - PresenceHeartbeat
-* [recordMemberActivity](docs/sdks/apps/README.md#recordmemberactivity) - Replaces the calling member's entire ordering; capped server-side.
+* [presenceHeartbeat](docs/sdks/apps/README.md#presenceheartbeat) - Replaces the calling member's entire ordering; capped server-side.
+* [recordMemberActivity](docs/sdks/apps/README.md#recordmemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
 * [refresh](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 * [restoreAppVersion](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
-* [setMemberState](docs/sdks/apps/README.md#setmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+* [setMemberState](docs/sdks/apps/README.md#setmemberstate) - SetAppMemberState
 * [setFavorite](docs/sdks/apps/README.md#setfavorite) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [update](docs/sdks/apps/README.md#update) - UpdateApp
 
@@ -360,7 +360,7 @@ run();
 
 * [addSubmodule](docs/sdks/ontology/README.md#addsubmodule) - AddOntologySubmodule
 * [approvePatch](docs/sdks/ontology/README.md#approvepatch) - ApprovePatch
-* [configureRemote](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [configureRemote](docs/sdks/ontology/README.md#configureremote) - ConfigureOntologyRemote
 * [createApprovalRule](docs/sdks/ontology/README.md#createapprovalrule) - CreateApprovalRule
 * [createContextPatchAutoApproveRule](docs/sdks/ontology/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 * [createDirectory](docs/sdks/ontology/README.md#createdirectory) - CreateOntologyDirectory
@@ -369,9 +369,8 @@ run();
 * [deleteContextPatchAutoApproveRule](docs/sdks/ontology/README.md#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
 * [deleteDirectory](docs/sdks/ontology/README.md#deletedirectory) - DeleteOntologyDirectory
 * [deleteFile](docs/sdks/ontology/README.md#deletefile) - DeleteOntologyFile
-* [deleteOwners](docs/sdks/ontology/README.md#deleteowners) - DeleteOntologyOwners
 * [denyPatch](docs/sdks/ontology/README.md#denypatch) - DenyPatch
-* [exchangeGithubCode](docs/sdks/ontology/README.md#exchangegithubcode) - ExchangeOntologyGithubCode
+* [exchangeGithubCode](docs/sdks/ontology/README.md#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [finalizeFileUpload](docs/sdks/ontology/README.md#finalizefileupload) - FinalizeOntologyFileUpload
 * [getCodeownerCoverage](docs/sdks/ontology/README.md#getcodeownercoverage) - GetCodeownerCoverage
 * [getConfigExportCapabilities](docs/sdks/ontology/README.md#getconfigexportcapabilities) - GetConfigExportCapabilities
@@ -385,7 +384,7 @@ run();
 * [getOwners](docs/sdks/ontology/README.md#getowners) - GetOntologyOwners
 * [getRemote](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
 * [getSizeTimeline](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
-* [getSyncConflicts](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
+* [getSyncConflicts](docs/sdks/ontology/README.md#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [getUsageSummary](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](docs/sdks/ontology/README.md#getpatch) - GetPatch
 * [getPatchByNumber](docs/sdks/ontology/README.md#getpatchbynumber) - GetPatchByNumber
@@ -419,14 +418,14 @@ run();
 * [revertPatch](docs/sdks/ontology/README.md#revertpatch) - RevertPatch
 * [saveAllObjectsAsConfig](docs/sdks/ontology/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 * [saveObjectAsConfig](docs/sdks/ontology/README.md#saveobjectasconfig) - SaveObjectAsConfig
-* [setFileGolden](docs/sdks/ontology/README.md#setfilegolden) - SetOntologyFileGolden
+* [setFileGolden](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [setOwners](docs/sdks/ontology/README.md#setowners) - SetOntologyOwners
 * [triggerConfigDriftReconcile](docs/sdks/ontology/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](docs/sdks/ontology/README.md#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](docs/sdks/ontology/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-* [updateSyncConfig](docs/sdks/ontology/README.md#updatesyncconfig) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-* [upsertAnaConfig](docs/sdks/ontology/README.md#upsertanaconfig) - UpsertOntologyAnaConfig
+* [updateSyncConfig](docs/sdks/ontology/README.md#updatesyncconfig) - UpdateOntologySyncConfig
+* [upsertAnaConfig](docs/sdks/ontology/README.md#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 * [upsertFile](docs/sdks/ontology/README.md#upsertfile) - UpsertOntologyFile
-* [upsertOwners](docs/sdks/ontology/README.md#upsertowners) - UpsertOntologyOwners
 * [validateConfig](docs/sdks/ontology/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 
 ### [Playbooks](docs/sdks/playbooks/README.md)
@@ -486,16 +485,18 @@ run();
 
 ### [Rbac](docs/sdks/rbac/README.md)
 
-* [approveAccessRequest](docs/sdks/rbac/README.md#approveaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+* [approveAccessRequest](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
-* [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
+* [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - AssignRoleToMember
 * [createApiKey](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
+* [createPersonalApiKey](docs/sdks/rbac/README.md#createpersonalapikey) - CreatePersonalApiKey
 * [createRole](docs/sdks/rbac/README.md#createrole) - Role management
 * [createServiceAccount](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
+* [createServiceAccountApiKey](docs/sdks/rbac/README.md#createserviceaccountapikey) - CreateServiceAccountApiKey
 * [deleteRole](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 * [deleteServiceAccount](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
 * [generateShareLink](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
-* [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
+* [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 * [getEmbedUserApiKey](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
 * [getMemberRoles](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
 * [getObjectAccess](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
@@ -507,20 +508,20 @@ run();
 * [listPermissions](docs/sdks/rbac/README.md#listpermissions) - Permission management
 * [listRoles](docs/sdks/rbac/README.md#listroles) - ListRoles
 * [listServiceAccounts](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
+* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 * [removePermissionFromRole](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
-* [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
+* [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - Member role assignment
 * [requestAccess](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
-* [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
+* [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - Object sharing and access control
 * [revokeObjectAccess](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
-* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
+* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
 * [setRolePermissions](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-* [shareObject](docs/sdks/rbac/README.md#shareobject) - Group management. Internal only.
-* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
+* [shareObject](docs/sdks/rbac/README.md#shareobject) - Describe what a key is allowed to do.
+* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - Group management. Internal only.
 * [updateObjectAccess](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
 * [updateObjectVisibility](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](docs/sdks/rbac/README.md#updaterole) - UpdateRole
-* [whoAmI](docs/sdks/rbac/README.md#whoami) - Describe what a key is allowed to do.
+* [whoAmI](docs/sdks/rbac/README.md#whoami) - Get current member roles and permissions
 
 ### [Sandbox](docs/sdks/sandbox/README.md)
 
@@ -646,24 +647,24 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 - [`appsGet`](docs/sdks/apps/README.md#get) - GetApp
 - [`appsGetAppVersion`](docs/sdks/apps/README.md#getappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
-- [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-- [`appsGetDBSchema`](docs/sdks/apps/README.md#getdbschema) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
-- [`appsGetDBTablePreview`](docs/sdks/apps/README.md#getdbtablepreview) - GetAppDBTablePreview
-- [`appsGetMemberState`](docs/sdks/apps/README.md#getmemberstate) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+- [`appsGetAppViewStats`](docs/sdks/apps/README.md#getappviewstats) - Per-member notification subscription to an app ("watch this app").
+- [`appsGetDBSchema`](docs/sdks/apps/README.md#getdbschema) - View analytics: reads the engagement views recorded on app page load.
+- [`appsGetDBTablePreview`](docs/sdks/apps/README.md#getdbtablepreview) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+- [`appsGetMemberState`](docs/sdks/apps/README.md#getmemberstate) - GetAppMemberState
 - [`appsGetMembersWithApps`](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 - [`appsHeartbeat`](docs/sdks/apps/README.md#heartbeat) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 - [`appsInvokeComputeFunction`](docs/sdks/apps/README.md#invokecomputefunction) - InvokeAppComputeFunction
 - [`appsList`](docs/sdks/apps/README.md#list) - ListApps
-- [`appsListActivitySince`](docs/sdks/apps/README.md#listactivitysince) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
-- [`appsListMyMemberActivity`](docs/sdks/apps/README.md#listmymemberactivity) - View analytics: reads the engagement views recorded on app page load.
+- [`appsListActivitySince`](docs/sdks/apps/README.md#listactivitysince) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+- [`appsListMyMemberActivity`](docs/sdks/apps/README.md#listmymemberactivity) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 - [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
 - [`appsMoveAppToFolder`](docs/sdks/apps/README.md#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-- [`appsPresenceHeartbeat`](docs/sdks/apps/README.md#presenceheartbeat) - PresenceHeartbeat
-- [`appsRecordMemberActivity`](docs/sdks/apps/README.md#recordmemberactivity) - Replaces the calling member's entire ordering; capped server-side.
+- [`appsPresenceHeartbeat`](docs/sdks/apps/README.md#presenceheartbeat) - Replaces the calling member's entire ordering; capped server-side.
+- [`appsRecordMemberActivity`](docs/sdks/apps/README.md#recordmemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
 - [`appsRefresh`](docs/sdks/apps/README.md#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 - [`appsRestoreAppVersion`](docs/sdks/apps/README.md#restoreappversion) - RestoreAppVersion
 - [`appsSetFavorite`](docs/sdks/apps/README.md#setfavorite) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
-- [`appsSetMemberState`](docs/sdks/apps/README.md#setmemberstate) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+- [`appsSetMemberState`](docs/sdks/apps/README.md#setmemberstate) - SetAppMemberState
 - [`appsUpdate`](docs/sdks/apps/README.md#update) - UpdateApp
 - [`auditLogsConfigureOtlpExport`](docs/sdks/auditlogs/README.md#configureotlpexport) - ConfigureOtlpExport
 - [`auditLogsConfigureS3Export`](docs/sdks/auditlogs/README.md#configures3export) - ConfigureS3Export
@@ -813,7 +814,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityUpdateCustomTopic`](docs/sdks/observability/README.md#updatecustomtopic) - UpdateCustomTopic
 - [`ontologyAddSubmodule`](docs/sdks/ontology/README.md#addsubmodule) - AddOntologySubmodule
 - [`ontologyApprovePatch`](docs/sdks/ontology/README.md#approvepatch) - ApprovePatch
-- [`ontologyConfigureRemote`](docs/sdks/ontology/README.md#configureremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+- [`ontologyConfigureRemote`](docs/sdks/ontology/README.md#configureremote) - ConfigureOntologyRemote
 - [`ontologyCreateApprovalRule`](docs/sdks/ontology/README.md#createapprovalrule) - CreateApprovalRule
 - [`ontologyCreateContextPatchAutoApproveRule`](docs/sdks/ontology/README.md#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 - [`ontologyCreateDirectory`](docs/sdks/ontology/README.md#createdirectory) - CreateOntologyDirectory
@@ -822,9 +823,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyDeleteContextPatchAutoApproveRule`](docs/sdks/ontology/README.md#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
 - [`ontologyDeleteDirectory`](docs/sdks/ontology/README.md#deletedirectory) - DeleteOntologyDirectory
 - [`ontologyDeleteFile`](docs/sdks/ontology/README.md#deletefile) - DeleteOntologyFile
-- [`ontologyDeleteOwners`](docs/sdks/ontology/README.md#deleteowners) - DeleteOntologyOwners
 - [`ontologyDenyPatch`](docs/sdks/ontology/README.md#denypatch) - DenyPatch
-- [`ontologyExchangeGithubCode`](docs/sdks/ontology/README.md#exchangegithubcode) - ExchangeOntologyGithubCode
+- [`ontologyExchangeGithubCode`](docs/sdks/ontology/README.md#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 - [`ontologyFinalizeFileUpload`](docs/sdks/ontology/README.md#finalizefileupload) - FinalizeOntologyFileUpload
 - [`ontologyGetAnaConfig`](docs/sdks/ontology/README.md#getanaconfig) - GetOntologyAnaConfig
 - [`ontologyGetCodeownerCoverage`](docs/sdks/ontology/README.md#getcodeownercoverage) - GetCodeownerCoverage
@@ -842,7 +842,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyGetRawPatch`](docs/sdks/ontology/README.md#getrawpatch) - GetRawPatch
 - [`ontologyGetRemote`](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
 - [`ontologyGetSizeTimeline`](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
-- [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
+- [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 - [`ontologyGetUsageDetailsForFile`](docs/sdks/ontology/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
 - [`ontologyGetUsageSummary`](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary
 - [`ontologyListApprovalRules`](docs/sdks/ontology/README.md#listapprovalrules) - ListApprovalRules
@@ -872,14 +872,14 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyRevertPatch`](docs/sdks/ontology/README.md#revertpatch) - RevertPatch
 - [`ontologySaveAllObjectsAsConfig`](docs/sdks/ontology/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 - [`ontologySaveObjectAsConfig`](docs/sdks/ontology/README.md#saveobjectasconfig) - SaveObjectAsConfig
-- [`ontologySetFileGolden`](docs/sdks/ontology/README.md#setfilegolden) - SetOntologyFileGolden
+- [`ontologySetFileGolden`](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+- [`ontologySetOwners`](docs/sdks/ontology/README.md#setowners) - SetOntologyOwners
 - [`ontologyTriggerConfigDriftReconcile`](docs/sdks/ontology/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 - [`ontologyUpdateApprovalRule`](docs/sdks/ontology/README.md#updateapprovalrule) - UpdateApprovalRule
 - [`ontologyUpdateContextPatchAutoApproveRule`](docs/sdks/ontology/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
-- [`ontologyUpdateSyncConfig`](docs/sdks/ontology/README.md#updatesyncconfig) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-- [`ontologyUpsertAnaConfig`](docs/sdks/ontology/README.md#upsertanaconfig) - UpsertOntologyAnaConfig
+- [`ontologyUpdateSyncConfig`](docs/sdks/ontology/README.md#updatesyncconfig) - UpdateOntologySyncConfig
+- [`ontologyUpsertAnaConfig`](docs/sdks/ontology/README.md#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 - [`ontologyUpsertFile`](docs/sdks/ontology/README.md#upsertfile) - UpsertOntologyFile
-- [`ontologyUpsertOwners`](docs/sdks/ontology/README.md#upsertowners) - UpsertOntologyOwners
 - [`ontologyValidateConfig`](docs/sdks/ontology/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 - [`playbooksAttachDashboard`](docs/sdks/playbooks/README.md#attachdashboard) - AttachDashboard
 - [`playbooksAttachDataset`](docs/sdks/playbooks/README.md#attachdataset) - AttachDataset
@@ -930,16 +930,18 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`powerbiSyncPowerBIItems`](docs/sdks/powerbi/README.md#syncpowerbiitems) - SyncPowerBIItems
 - [`powerbiTestConnection`](docs/sdks/powerbi/README.md#testconnection) - TestPowerBIConnection
 - [`powerbiUnsyncItems`](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
-- [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+- [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 - [`rbacAssignPermissionToRole`](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
-- [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
+- [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - AssignRoleToMember
 - [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
+- [`rbacCreatePersonalApiKey`](docs/sdks/rbac/README.md#createpersonalapikey) - CreatePersonalApiKey
 - [`rbacCreateRole`](docs/sdks/rbac/README.md#createrole) - Role management
 - [`rbacCreateServiceAccount`](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
+- [`rbacCreateServiceAccountApiKey`](docs/sdks/rbac/README.md#createserviceaccountapikey) - CreateServiceAccountApiKey
 - [`rbacDeleteRole`](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 - [`rbacDeleteServiceAccount`](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
 - [`rbacGenerateShareLink`](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
-- [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
+- [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 - [`rbacGetEmbedUserApiKey`](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
 - [`rbacGetMemberRoles`](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
 - [`rbacGetObjectAccess`](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
@@ -951,20 +953,20 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`rbacListPermissions`](docs/sdks/rbac/README.md#listpermissions) - Permission management
 - [`rbacListRoles`](docs/sdks/rbac/README.md#listroles) - ListRoles
 - [`rbacListServiceAccounts`](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
+- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 - [`rbacRemovePermissionFromRole`](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
-- [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
+- [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - Member role assignment
 - [`rbacRequestAccess`](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
-- [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
+- [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - Object sharing and access control
 - [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
-- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
+- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
 - [`rbacSetRolePermissions`](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Group management. Internal only.
-- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - ShareObjectWithRole
+- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Describe what a key is allowed to do.
+- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - Group management. Internal only.
 - [`rbacUpdateObjectAccess`](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
 - [`rbacUpdateObjectVisibility`](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 - [`rbacUpdateRole`](docs/sdks/rbac/README.md#updaterole) - UpdateRole
-- [`rbacWhoAmI`](docs/sdks/rbac/README.md#whoami) - Describe what a key is allowed to do.
+- [`rbacWhoAmI`](docs/sdks/rbac/README.md#whoami) - Get current member roles and permissions
 - [`sandboxAdminGetSandbox`](docs/sdks/sandboxadmin/README.md#getsandbox) - GetSandbox
 - [`sandboxAdminList`](docs/sdks/sandboxadmin/README.md#list) - ListSandboxes
 - [`sandboxAdminListExecutions`](docs/sdks/sandboxadmin/README.md#listexecutions) - ListSandboxExecutions

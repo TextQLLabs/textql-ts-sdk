@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * RemoveRoleFromMember
+ * Member role assignment
+ *
+ * @remarks
+ * Member role assignment
  */
 export function rbacRemoveRoleFromMember(
   client: TextqlCore,

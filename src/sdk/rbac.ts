@@ -6,7 +6,9 @@ import { rbacApproveAccessRequest } from "../funcs/rbac-approve-access-request.j
 import { rbacAssignPermissionToRole } from "../funcs/rbac-assign-permission-to-role.js";
 import { rbacAssignRoleToMember } from "../funcs/rbac-assign-role-to-member.js";
 import { rbacCreateApiKey } from "../funcs/rbac-create-api-key.js";
+import { rbacCreatePersonalApiKey } from "../funcs/rbac-create-personal-api-key.js";
 import { rbacCreateRole } from "../funcs/rbac-create-role.js";
+import { rbacCreateServiceAccountApiKey } from "../funcs/rbac-create-service-account-api-key.js";
 import { rbacCreateServiceAccount } from "../funcs/rbac-create-service-account.js";
 import { rbacDeleteRole } from "../funcs/rbac-delete-role.js";
 import { rbacDeleteServiceAccount } from "../funcs/rbac-delete-service-account.js";
@@ -43,11 +45,7 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class Rbac extends ClientSDK {
   /**
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
-   *
-   * @remarks
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,
-   *  internal only.
+   * ApproveAccessRequest
    */
   async approveAccessRequest(
     request: operations.RBACServiceApproveAccessRequestRequest,
@@ -75,10 +73,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Member role assignment
-   *
-   * @remarks
-   * Member role assignment
+   * AssignRoleToMember
    */
   async assignRoleToMember(
     request: operations.RBACServiceAssignRoleToMemberRequest,
@@ -99,6 +94,20 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceCreateApiKeyResponse> {
     return unwrapAsync(rbacCreateApiKey(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * CreatePersonalApiKey
+   */
+  async createPersonalApiKey(
+    request: operations.RBACServiceCreatePersonalApiKeyRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceCreatePersonalApiKeyResponse> {
+    return unwrapAsync(rbacCreatePersonalApiKey(
       this,
       request,
       options,
@@ -130,6 +139,20 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceCreateServiceAccountResponse> {
     return unwrapAsync(rbacCreateServiceAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * CreateServiceAccountApiKey
+   */
+  async createServiceAccountApiKey(
+    request: operations.RBACServiceCreateServiceAccountApiKeyRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceCreateServiceAccountApiKeyResponse> {
+    return unwrapAsync(rbacCreateServiceAccountApiKey(
       this,
       request,
       options,
@@ -179,10 +202,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Get current member roles and permissions
-   *
-   * @remarks
-   * Get current member roles and permissions
+   * GetCurrentMemberRolesAndPermissions
    */
   async getCurrentMemberRolesAndPermissions(
     request: operations.RBACServiceGetCurrentMemberRolesAndPermissionsRequest,
@@ -355,7 +375,11 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RejectAccessRequest
+   * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+   *
+   * @remarks
+   * SCIM group-mapping migration tooling: one-time role<->group conversion,
+   *  internal only.
    */
   async rejectAccessRequest(
     request: operations.RBACServiceRejectAccessRequestRequest,
@@ -383,7 +407,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RemoveRoleFromMember
+   * Member role assignment
+   *
+   * @remarks
+   * Member role assignment
    */
   async removeRoleFromMember(
     request: operations.RBACServiceRemoveRoleFromMemberRequest,
@@ -411,7 +438,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RevokeApiKey
+   * Object sharing and access control
+   *
+   * @remarks
+   * Object sharing and access control
    */
   async revokeApiKey(
     request: operations.RBACServiceRevokeApiKeyRequest,
@@ -439,10 +469,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Object sharing and access control
-   *
-   * @remarks
-   * Object sharing and access control
+   * RotateApiKey
    */
   async rotateApiKey(
     request: operations.RBACServiceRotateApiKeyRequest,
@@ -473,10 +500,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Group management. Internal only.
+   * Describe what a key is allowed to do.
    *
    * @remarks
-   * Group management. Internal only.
+   * Describe what a key is allowed to do.
    */
   async shareObject(
     request: operations.RBACServiceShareObjectRequest,
@@ -490,7 +517,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * ShareObjectWithRole
+   * Group management. Internal only.
+   *
+   * @remarks
+   * Group management. Internal only.
    */
   async shareObjectWithRole(
     request: operations.RBACServiceShareObjectWithRoleRequest,
@@ -546,10 +576,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Describe what a key is allowed to do.
+   * Get current member roles and permissions
    *
    * @remarks
-   * Describe what a key is allowed to do.
+   * Get current member roles and permissions
    */
   async whoAmI(
     request: operations.RBACServiceWhoAmIRequest,

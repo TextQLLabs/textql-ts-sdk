@@ -27,11 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+ * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  *
  * @remarks
- * Staff-only (superadmin gated in-handler): publishes the embedded component
- *  gallery as an app tree and returns its signed viewer URL.
+ * Lists the calling member's favorited library items (apps, dashboards,
+ *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
  */
 export function appsListActivitySince(
   client: TextqlCore,

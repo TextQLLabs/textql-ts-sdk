@@ -3,6 +3,15 @@
  */
 
 import * as z from "zod/v4-mini";
+import {
+  TextqlRpcPublicChatLlmModel,
+  TextqlRpcPublicChatLlmModel$outboundSchema,
+} from "./textql-rpc-public-chat-llm-model.js";
+import {
+  TextqlRpcPublicParadigmParadigmOptions,
+  TextqlRpcPublicParadigmParadigmOptions$Outbound,
+  TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+} from "./textql-rpc-public-paradigm-paradigm-options.js";
 
 export type TextqlRpcPublicChatDuplicateChatRequest = {
   /**
@@ -11,6 +20,9 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
   chatId?: string | undefined;
   onlyIfDifferentOwner?: boolean | null | undefined;
   upToCellId?: string | null | undefined;
+  paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions | undefined;
+  model?: TextqlRpcPublicChatLlmModel | undefined;
+  fastMode?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -18,6 +30,9 @@ export type TextqlRpcPublicChatDuplicateChatRequest$Outbound = {
   chatId?: string | undefined;
   onlyIfDifferentOwner?: boolean | null | undefined;
   upToCellId?: string | null | undefined;
+  paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions$Outbound | undefined;
+  model?: string | undefined;
+  fastMode?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -29,6 +44,11 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
     chatId: z.optional(z.string()),
     onlyIfDifferentOwner: z.optional(z.nullable(z.boolean())),
     upToCellId: z.optional(z.nullable(z.string())),
+    paradigmOptions: z.optional(
+      TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+    ),
+    model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+    fastMode: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicChatDuplicateChatRequestToJSON(

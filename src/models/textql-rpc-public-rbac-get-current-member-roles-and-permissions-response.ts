@@ -16,9 +16,6 @@ import {
   TextqlRpcPublicRbacRole$inboundSchema,
 } from "./textql-rpc-public-rbac-role.js";
 
-/**
- * Get current member roles and permissions messages
- */
 export type TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsResponse = {
   roles?: Array<TextqlRpcPublicRbacRole> | undefined;
   permissions?: Array<TextqlRpcPublicRbacPermission> | undefined;

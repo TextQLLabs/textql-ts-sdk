@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-patches-ontology-remote.js";
 
 export type TextqlRpcPublicPatchesConfigureOntologyRemoteResponse = {
+  /**
+   * Deprecated: use SetOntologyOwnersResponse.
+   */
   remote?: TextqlRpcPublicPatchesOntologyRemote | undefined;
 };
 

@@ -19,3 +19,4 @@ let value: TextqlRpcPublicRbacCreateApiKeyRequest = {};
 | `targetMemberId`     | *string*             | :heavy_minus_sign:   | N/A                  |
 | `clientId`           | *string*             | :heavy_minus_sign:   | N/A                  |
 | `suppressSuperadmin` | *boolean*            | :heavy_minus_sign:   | N/A                  |
+| `fullMemberAccess`   | *boolean*            | :heavy_minus_sign:   | N/A                  |
