@@ -8,6 +8,10 @@ import {
   TextqlRpcPublicChatLlmModel$outboundSchema,
 } from "./textql-rpc-public-chat-llm-model.js";
 import {
+  TextqlRpcPublicChatMethodology,
+  TextqlRpcPublicChatMethodology$outboundSchema,
+} from "./textql-rpc-public-chat-methodology.js";
+import {
   TextqlRpcPublicParadigmParadigmOptions,
   TextqlRpcPublicParadigmParadigmOptions$Outbound,
   TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
@@ -23,6 +27,8 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
   paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions | undefined;
   model?: TextqlRpcPublicChatLlmModel | undefined;
   fastMode?: boolean | null | undefined;
+  methodology?: TextqlRpcPublicChatMethodology | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -33,6 +39,8 @@ export type TextqlRpcPublicChatDuplicateChatRequest$Outbound = {
   paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions$Outbound | undefined;
   model?: string | undefined;
   fastMode?: boolean | null | undefined;
+  methodology?: string | undefined;
+  maxThinking?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -49,6 +57,8 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
     ),
     model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
     fastMode: z.optional(z.nullable(z.boolean())),
+    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
+    maxThinking: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicChatDuplicateChatRequestToJSON(

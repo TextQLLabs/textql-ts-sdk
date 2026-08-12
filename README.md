@@ -525,6 +525,11 @@ run();
 
 ### [Sandbox](docs/sdks/sandbox/README.md)
 
+* [create](docs/sdks/sandbox/README.md#create) - CreateSandbox
+* [exec](docs/sdks/sandbox/README.md#exec) - Exec
+* [executeCode](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
+* [getToolAvailability](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
+* [loadConnectorData](docs/sdks/sandbox/README.md#loadconnectordata) - LoadConnectorData
 * [executeQuery](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 
 ### [SandboxAdmin](docs/sdks/sandboxadmin/README.md)
@@ -982,7 +987,12 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`sandboxCapabilitiesSendNotify`](docs/sdks/sandboxcapabilities/README.md#sendnotify) - SendNotify
 - [`sandboxCapabilitiesStartAsk`](docs/sdks/sandboxcapabilities/README.md#startask) - StartAsk
 - [`sandboxCapabilitiesStateOp`](docs/sdks/sandboxcapabilities/README.md#stateop) - StateOp
+- [`sandboxCreate`](docs/sdks/sandbox/README.md#create) - CreateSandbox
+- [`sandboxExec`](docs/sdks/sandbox/README.md#exec) - Exec
+- [`sandboxExecuteCode`](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
 - [`sandboxExecuteQuery`](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
+- [`sandboxGetToolAvailability`](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
+- [`sandboxLoadConnectorData`](docs/sdks/sandbox/README.md#loadconnectordata) - LoadConnectorData
 - [`scimCreateOAuthClient`](docs/sdks/scim/README.md#createoauthclient) - CreateScimOAuthClient
 - [`scimCreateScimToken`](docs/sdks/scim/README.md#createscimtoken) - CreateScimToken
 - [`scimList`](docs/sdks/scim/README.md#list) - ListScimTokens
