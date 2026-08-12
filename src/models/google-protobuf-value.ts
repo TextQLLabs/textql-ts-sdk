@@ -34,7 +34,33 @@ export const GoogleProtobufValue$inboundSchema: z.ZodMiniType<
   z.array(z.any()),
   z.record(z.string(), z.any()),
 ]);
+/** @internal */
+export type GoogleProtobufValue$Outbound =
+  | number
+  | string
+  | boolean
+  | Array<any>
+  | { [k: string]: any };
 
+/** @internal */
+export const GoogleProtobufValue$outboundSchema: z.ZodMiniType<
+  GoogleProtobufValue$Outbound,
+  GoogleProtobufValue
+> = smartUnion([
+  z.number(),
+  z.string(),
+  z.boolean(),
+  z.array(z.any()),
+  z.record(z.string(), z.any()),
+]);
+
+export function googleProtobufValueToJSON(
+  googleProtobufValue: GoogleProtobufValue,
+): string {
+  return JSON.stringify(
+    GoogleProtobufValue$outboundSchema.parse(googleProtobufValue),
+  );
+}
 export function googleProtobufValueFromJSON(
   jsonString: string,
 ): SafeParseResult<GoogleProtobufValue, SDKValidationError> {

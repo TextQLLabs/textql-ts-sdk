@@ -13209,6 +13209,191 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_capability.SandboxStateOpResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/CreateSandbox:
+    post:
+      tags:
+        - SandboxExecService
+      summary: CreateSandbox
+      operationId: SandboxExecService_CreateSandbox
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: create
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.CreateSandboxRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.CreateSandboxResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/Exec:
+    post:
+      tags:
+        - SandboxExecService
+      summary: Exec
+      operationId: SandboxExecService_Exec
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: exec
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxExecRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxExecResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/ExecuteCode:
+    post:
+      tags:
+        - SandboxExecService
+      summary: ExecuteCode
+      operationId: SandboxExecService_ExecuteCode
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: executeCode
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxExecuteCodeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxExecuteCodeResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/GetToolAvailability:
+    post:
+      tags:
+        - SandboxExecService
+      summary: GetToolAvailability
+      operationId: SandboxExecService_GetToolAvailability
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: getToolAvailability
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.GetToolAvailabilityRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.GetToolAvailabilityResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/LoadConnectorData:
+    post:
+      tags:
+        - SandboxExecService
+      summary: LoadConnectorData
+      operationId: SandboxExecService_LoadConnectorData
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: loadConnectorData
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataResponse'
   /textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteQuery:
     post:
       tags:
@@ -18526,8 +18711,7 @@ components:
           description: |-
             Number of recipients to which the provider call succeeded during this
              Execute pass. Not derivable from Status — a partial-failure cell has
-             Status=failed with sent_count > 0. Drives the per-run cap when chat
-             history is replayed.
+             Status=failed with sent_count > 0.
         renderedBodyHtml:
           type: string
           title: rendered_body_html
@@ -21620,7 +21804,8 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Fable 5, and Opus 4.8. Thinking tokens bill as output tokens.
+             Supported on Sonnet 5, Fable 5, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
+             Thinking tokens bill as output tokens.
           nullable: true
       title: Chat
       additionalProperties: false
@@ -21879,7 +22064,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Fable 5, and Opus 4.8.
+             Supported on Sonnet 5, Fable 5, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
           nullable: true
       title: CreateRequest
       additionalProperties: false
@@ -21959,6 +22144,14 @@ components:
         fastMode:
           type: boolean
           title: fast_mode
+          nullable: true
+        methodology:
+          title: methodology
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.Methodology'
+        maxThinking:
+          type: boolean
+          title: max_thinking
           nullable: true
       title: DuplicateChatRequest
       additionalProperties: false
@@ -30320,6 +30513,9 @@ components:
           type: boolean
           title: feed_enabled
           nullable: true
+        fileGenerationDisabled:
+          type: boolean
+          title: file_generation_disabled
       title: UniversalOptions
       additionalProperties: false
     textql.rpc.public.patches.AddOntologySubmoduleRequest:
@@ -37273,6 +37469,235 @@ components:
           nullable: true
       title: SandboxStateOpResponse
       additionalProperties: false
+    textql.rpc.public.sandbox_exec.CreateSandboxRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          nullable: true
+      title: CreateSandboxRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.CreateSandboxResponse:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: CreateSandboxResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.GetToolAvailabilityRequest:
+      type: object
+      title: GetToolAvailabilityRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.GetToolAvailabilityResponse:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.ToolAvailability'
+          title: tools
+      title: GetToolAvailabilityResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxDataFrameOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        numRows:
+          type: integer
+          title: num_rows
+          format: int32
+        numCols:
+          type: integer
+          title: num_cols
+          format: int32
+      title: SandboxDataFrameOutput
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxExecRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          minLength: 1
+        command:
+          type: string
+          title: command
+          minLength: 1
+        kind:
+          type: string
+          title: kind
+          description: '"" | "bash" | "sh" | "shell" | "python" | "py"'
+        env:
+          type: object
+          title: env
+          additionalProperties:
+            type: string
+            title: value
+      title: SandboxExecRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxExecRequest.EnvEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: EnvEntry
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxExecResponse:
+      type: object
+      properties:
+        stdout:
+          type: string
+          title: stdout
+        stderr:
+          type: string
+          title: stderr
+        exitCode:
+          type: integer
+          title: exit_code
+          format: int32
+        error:
+          type: string
+          title: error
+          nullable: true
+      title: SandboxExecResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxExecuteCodeRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          minLength: 1
+        code:
+          type: string
+          title: code
+          minLength: 1
+      title: SandboxExecuteCodeRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxExecuteCodeResponse:
+      type: object
+      properties:
+        output:
+          type: array
+          items:
+            type: string
+          title: output
+        error:
+          type: string
+          title: error
+          nullable: true
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxFileOutput'
+          title: files
+        dataframes:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxDataFrameOutput'
+          title: dataframes
+        executionTimeMs:
+          type:
+            - integer
+            - string
+          title: execution_time_ms
+          format: int64
+      title: SandboxExecuteCodeResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxFileOutput:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        url:
+          type: string
+          title: url
+        mimeType:
+          type: string
+          title: mime_type
+      title: SandboxFileOutput
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          minLength: 1
+        connectorId:
+          exclusiveMinimum: 0
+          type: integer
+          title: connector_id
+          format: int32
+        query:
+          type: string
+          title: query
+        tqlPath:
+          type: string
+          title: tql_path
+        params:
+          title: params
+          $ref: '#/components/schemas/google.protobuf.Struct'
+        maxRows:
+          type: integer
+          title: max_rows
+          format: int32
+        dataframeName:
+          type: string
+          title: dataframe_name
+          nullable: true
+      title: SandboxLoadConnectorDataRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataResponse:
+      type: object
+      properties:
+        dataframeName:
+          type: string
+          title: dataframe_name
+        numRows:
+          type:
+            - integer
+            - string
+          title: num_rows
+          format: int64
+        numCols:
+          type:
+            - integer
+            - string
+          title: num_cols
+          format: int64
+        preview:
+          type: string
+          title: preview
+      title: SandboxLoadConnectorDataResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.ToolAvailability:
+      type: object
+      properties:
+        tool:
+          type: string
+          title: tool
+          description: '"python" | "bash" | "sql"'
+        enabled:
+          type: boolean
+          title: enabled
+        reason:
+          type: string
+          title: reason
+      title: ToolAvailability
+      additionalProperties: false
     textql.rpc.public.sandbox_query.AppDBTemplate:
       type: object
       properties:
@@ -38605,6 +39030,7 @@ tags:
   - name: SandboxAdminService
   - name: SandboxQueryService
   - name: SandboxCapabilityService
+  - name: SandboxExecService
   - name: ScimService
   - name: SecretService
   - name: SettingsService

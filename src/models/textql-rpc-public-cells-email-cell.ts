@@ -54,8 +54,7 @@ export type TextqlRpcPublicCellsEmailCell = {
    *
    * @remarks
    *  Execute pass. Not derivable from Status — a partial-failure cell has
-   *  Status=failed with sent_count > 0. Drives the per-run cap when chat
-   *  history is replayed.
+   *  Status=failed with sent_count > 0.
    */
   sentCount?: number | undefined;
   /**
