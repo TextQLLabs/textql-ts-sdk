@@ -12,30 +12,30 @@ import {
   TextqlRpcAuthOrganization$inboundSchema,
 } from "./textql-rpc-auth-organization.js";
 
-export type TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse = {
+export type TextqlRpcPublicSettingsGetOrganizationSettingsResponse = {
   organization?: TextqlRpcAuthOrganization | undefined;
 };
 
 /** @internal */
-export const TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse$inboundSchema:
+export const TextqlRpcPublicSettingsGetOrganizationSettingsResponse$inboundSchema:
   z.ZodMiniType<
-    TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse,
+    TextqlRpcPublicSettingsGetOrganizationSettingsResponse,
     unknown
   > = z.object({
     organization: types.optional(TextqlRpcAuthOrganization$inboundSchema),
   });
 
-export function textqlRpcPublicSettingsUpdateOrganizationSettingsResponseFromJSON(
+export function textqlRpcPublicSettingsGetOrganizationSettingsResponseFromJSON(
   jsonString: string,
 ): SafeParseResult<
-  TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse,
+  TextqlRpcPublicSettingsGetOrganizationSettingsResponse,
   SDKValidationError
 > {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse$inboundSchema
+      TextqlRpcPublicSettingsGetOrganizationSettingsResponse$inboundSchema
         .parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse' from JSON`,
+    `Failed to parse 'TextqlRpcPublicSettingsGetOrganizationSettingsResponse' from JSON`,
   );
 }

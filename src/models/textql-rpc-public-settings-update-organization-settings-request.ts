@@ -8,6 +8,14 @@ import {
   TextqlRpcParadigmParamsParadigmParams$Outbound,
   TextqlRpcParadigmParamsParadigmParams$outboundSchema,
 } from "./textql-rpc-paradigm-params-paradigm-params.js";
+import {
+  TextqlRpcParadigmParamsParadigmType,
+  TextqlRpcParadigmParamsParadigmType$outboundSchema,
+} from "./textql-rpc-paradigm-params-paradigm-type.js";
+import {
+  TextqlRpcPublicChatMethodology,
+  TextqlRpcPublicChatMethodology$outboundSchema,
+} from "./textql-rpc-public-chat-methodology.js";
 
 export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
   orgId?: string | undefined;
@@ -21,8 +29,21 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  Not recommended for use in new APIs, but still useful for legacy APIs and
    *  has no plan to be removed.
    */
+  secretsEnabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
   hideExampleConnectors?: boolean | undefined;
   paradigmParams?: TextqlRpcParadigmParamsParadigmParams | undefined;
+  defaultParadigmMode?: TextqlRpcParadigmParamsParadigmType | undefined;
+  defaultConnectorIds?: Array<number> | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -77,6 +98,17 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  Not recommended for use in new APIs, but still useful for legacy APIs and
    *  has no plan to be removed.
    */
+  contextV3Enabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
   observabilityEnabled?: boolean | undefined;
   /**
    * Wrapper message for `bool`.
@@ -99,6 +131,17 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  Not recommended for use in new APIs, but still useful for legacy APIs and
    *  has no plan to be removed.
    */
+  hideApiConnectors?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
   fastModeEnabled?: boolean | undefined;
   /**
    * Wrapper message for `bool`.
@@ -111,6 +154,19 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  has no plan to be removed.
    */
   maxThinkingEnabled?: boolean | undefined;
+  clearDefaultConnectorIds?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  defaultDashboardOutput?: boolean | undefined;
+  defaultMethodology?: TextqlRpcPublicChatMethodology | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -144,7 +200,6 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  has no plan to be removed.
    */
   dataAppsEnabled?: boolean | undefined;
-  toolRestrictions?: TextqlRpcParadigmParamsParadigmParams | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -155,30 +210,63 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  Not recommended for use in new APIs, but still useful for legacy APIs and
    *  has no plan to be removed.
    */
-  subagentsEnabled?: boolean | undefined;
+  issuesEnabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  spendTransparencyEnabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  sharingDisabled?: boolean | undefined;
+  toolRestrictions?: TextqlRpcParadigmParamsParadigmParams | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound =
   {
     orgId?: string | undefined;
+    secretsEnabled?: boolean | undefined;
     hideExampleConnectors?: boolean | undefined;
     paradigmParams?: TextqlRpcParadigmParamsParadigmParams$Outbound | undefined;
+    defaultParadigmMode?: string | undefined;
+    defaultConnectorIds?: Array<number> | undefined;
     trainingMode?: boolean | undefined;
     dashboardsEnabled?: boolean | undefined;
     methodologyEnabled?: boolean | undefined;
     feedEnabled?: boolean | undefined;
+    contextV3Enabled?: boolean | undefined;
     observabilityEnabled?: boolean | undefined;
     notificationsEnabled?: boolean | undefined;
+    hideApiConnectors?: boolean | undefined;
     fastModeEnabled?: boolean | undefined;
     maxThinkingEnabled?: boolean | undefined;
+    clearDefaultConnectorIds?: boolean | undefined;
+    defaultDashboardOutput?: boolean | undefined;
+    defaultMethodology?: string | undefined;
     tracesEnabled?: boolean | undefined;
     sandboxObservabilityEnabled?: boolean | undefined;
     dataAppsEnabled?: boolean | undefined;
+    issuesEnabled?: boolean | undefined;
+    spendTransparencyEnabled?: boolean | undefined;
+    sharingDisabled?: boolean | undefined;
     toolRestrictions?:
       | TextqlRpcParadigmParamsParadigmParams$Outbound
       | undefined;
-    subagentsEnabled?: boolean | undefined;
   };
 
 /** @internal */
@@ -188,25 +276,39 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
     TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest
   > = z.object({
     orgId: z.optional(z.string()),
+    secretsEnabled: z.optional(z.boolean()),
     hideExampleConnectors: z.optional(z.boolean()),
     paradigmParams: z.optional(
       TextqlRpcParadigmParamsParadigmParams$outboundSchema,
     ),
+    defaultParadigmMode: z.optional(
+      TextqlRpcParadigmParamsParadigmType$outboundSchema,
+    ),
+    defaultConnectorIds: z.optional(z.array(z.int())),
     trainingMode: z.optional(z.boolean()),
     dashboardsEnabled: z.optional(z.boolean()),
     methodologyEnabled: z.optional(z.boolean()),
     feedEnabled: z.optional(z.boolean()),
+    contextV3Enabled: z.optional(z.boolean()),
     observabilityEnabled: z.optional(z.boolean()),
     notificationsEnabled: z.optional(z.boolean()),
+    hideApiConnectors: z.optional(z.boolean()),
     fastModeEnabled: z.optional(z.boolean()),
     maxThinkingEnabled: z.optional(z.boolean()),
+    clearDefaultConnectorIds: z.optional(z.boolean()),
+    defaultDashboardOutput: z.optional(z.boolean()),
+    defaultMethodology: z.optional(
+      TextqlRpcPublicChatMethodology$outboundSchema,
+    ),
     tracesEnabled: z.optional(z.boolean()),
     sandboxObservabilityEnabled: z.optional(z.boolean()),
     dataAppsEnabled: z.optional(z.boolean()),
+    issuesEnabled: z.optional(z.boolean()),
+    spendTransparencyEnabled: z.optional(z.boolean()),
+    sharingDisabled: z.optional(z.boolean()),
     toolRestrictions: z.optional(
       TextqlRpcParadigmParamsParadigmParams$outboundSchema,
     ),
-    subagentsEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicSettingsUpdateOrganizationSettingsRequestToJSON(

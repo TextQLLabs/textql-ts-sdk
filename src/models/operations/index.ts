@@ -374,6 +374,7 @@ export * from "./secret-service-put-secret.js";
 export * from "./secret-service-update-secret.js";
 export * from "./settings-service-check-member-status.js";
 export * from "./settings-service-delete-organization-member.js";
+export * from "./settings-service-get-organization-settings.js";
 export * from "./settings-service-invite-organization-member.js";
 export * from "./settings-service-list-organization-members.js";
 export * from "./settings-service-update-organization-settings.js";

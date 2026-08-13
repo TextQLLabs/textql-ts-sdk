@@ -574,6 +574,7 @@ run();
 
 * [checkMemberStatus](docs/sdks/settings/README.md#checkmemberstatus) - CheckMemberStatus
 * [deleteMember](docs/sdks/settings/README.md#deletemember) - DeleteOrganizationMember
+* [get](docs/sdks/settings/README.md#get) - GetOrganizationSettings
 * [inviteMember](docs/sdks/settings/README.md#invitemember) - InviteOrganizationMember
 * [listMembers](docs/sdks/settings/README.md#listmembers) - ListOrganizationMembers
 * [update](docs/sdks/settings/README.md#update) - UpdateOrganizationSettings
@@ -1006,6 +1007,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`secretsUpdate`](docs/sdks/secrets/README.md#update) - UpdateSecret
 - [`settingsCheckMemberStatus`](docs/sdks/settings/README.md#checkmemberstatus) - CheckMemberStatus
 - [`settingsDeleteMember`](docs/sdks/settings/README.md#deletemember) - DeleteOrganizationMember
+- [`settingsGet`](docs/sdks/settings/README.md#get) - GetOrganizationSettings
 - [`settingsInviteMember`](docs/sdks/settings/README.md#invitemember) - InviteOrganizationMember
 - [`settingsListMembers`](docs/sdks/settings/README.md#listmembers) - ListOrganizationMembers
 - [`settingsUpdate`](docs/sdks/settings/README.md#update) - UpdateOrganizationSettings

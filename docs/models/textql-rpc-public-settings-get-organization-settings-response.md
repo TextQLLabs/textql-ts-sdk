@@ -1,11 +1,11 @@
-# TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse
+# TextqlRpcPublicSettingsGetOrganizationSettingsResponse
 
 ## Example Usage
 
 ```typescript
-import { TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse } from "@textql/sdk/models";
+import { TextqlRpcPublicSettingsGetOrganizationSettingsResponse } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse = {
+let value: TextqlRpcPublicSettingsGetOrganizationSettingsResponse = {
   organization: {
     createdAt: new Date("2023-01-15T01:30:15.01Z"),
     updatedAt: new Date("2023-01-15T01:30:15.01Z"),
