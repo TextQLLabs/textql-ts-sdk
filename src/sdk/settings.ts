@@ -4,6 +4,7 @@
 
 import { settingsCheckMemberStatus } from "../funcs/settings-check-member-status.js";
 import { settingsDeleteMember } from "../funcs/settings-delete-member.js";
+import { settingsGet } from "../funcs/settings-get.js";
 import { settingsInviteMember } from "../funcs/settings-invite-member.js";
 import { settingsListMembers } from "../funcs/settings-list-members.js";
 import { settingsUpdate } from "../funcs/settings-update.js";
@@ -34,6 +35,20 @@ export class Settings extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SettingsServiceDeleteOrganizationMemberResponse> {
     return unwrapAsync(settingsDeleteMember(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetOrganizationSettings
+   */
+  async get(
+    request: operations.SettingsServiceGetOrganizationSettingsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SettingsServiceGetOrganizationSettingsResponse> {
+    return unwrapAsync(settingsGet(
       this,
       request,
       options,

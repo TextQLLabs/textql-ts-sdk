@@ -13912,6 +13912,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.settings.DeleteOrganizationMemberResponse'
+  /textql.rpc.public.settings.SettingsService/GetOrganizationSettings:
+    post:
+      tags:
+        - SettingsService
+      summary: GetOrganizationSettings
+      operationId: SettingsService_GetOrganizationSettings
+      x-speakeasy-group: settings
+      x-speakeasy-name-override: get
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.GetOrganizationSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.GetOrganizationSettingsResponse'
   /textql.rpc.public.settings.SettingsService/InviteOrganizationMember:
     post:
       tags:
@@ -15427,6 +15464,20 @@ components:
          variants. Absence of any variant indicates an error.
 
          The JSON representation for `Value` is JSON value.
+    textql.rpc.auth.AssetUrlExpiry:
+      type: string
+      title: AssetUrlExpiry
+      enum:
+        - EXPIRY_NONE
+        - EXPIRY_ONE_DAY
+        - EXPIRY_SEVEN_DAYS
+        - EXPIRY_THIRTY_DAYS
+        - EXPIRY_ONE_YEAR
+        - EXPIRY_FIFTEEN_MINUTES
+        - EXPIRY_ONE_HOUR
+        - EXPIRY_SIX_HOURS
+        - EXPIRY_TWELVE_HOURS
+      description: Values are the organization.asset_url_expiry column values — do not renumber.
     textql.rpc.auth.Member:
       type: object
       properties:
@@ -15577,6 +15628,444 @@ components:
              Snapshotted onto the app at creation time; later toggles only affect future apps.
           nullable: true
       title: Member
+      additionalProperties: false
+    textql.rpc.auth.Organization:
+      type: object
+      properties:
+        orgId:
+          type: string
+          title: org_id
+        slackTeamId:
+          type: string
+          title: slack_team_id
+          nullable: true
+        slackKey:
+          type: string
+          title: slack_key
+          nullable: true
+        defaultConnectorId:
+          type: integer
+          title: default_connector_id
+          format: int32
+          description: 'Deprecated: use default_connector_ids instead'
+          nullable: true
+          deprecated: true
+        limitDataVisibility:
+          type: boolean
+          title: limit_data_visibility
+        requireAttached:
+          type: boolean
+          title: require_attached
+          nullable: true
+        organizationName:
+          type: string
+          title: organization_name
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        organizationLogoUrl:
+          type: string
+          title: organization_logo_url
+          nullable: true
+        emailAllowedDomains:
+          type: array
+          items:
+            type: string
+          title: email_allowed_domains
+        allowedAuthMethods:
+          type: array
+          items:
+            type: string
+          title: allowed_auth_methods
+        theme:
+          title: theme
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.auth.Theme'
+        orgMeta:
+          type: string
+          title: org_meta
+          nullable: true
+        injectWholeOntologyDisableSearch:
+          type: boolean
+          title: inject_whole_ontology_disable_search
+          nullable: true
+        warning:
+          type: string
+          title: warning
+          nullable: true
+        publicPreview:
+          type: boolean
+          title: public_preview
+        chatV5Cutover:
+          type: boolean
+          title: chat_v5_cutover
+        defaultParadigmMode:
+          title: default_paradigm_mode
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmType'
+        secretsEnabled:
+          type: boolean
+          title: secrets_enabled
+        emailPollingEnabled:
+          type: boolean
+          title: email_polling_enabled
+          nullable: true
+        logoUrl:
+          type: string
+          title: logo_url
+          nullable: true
+        brandName:
+          type: string
+          title: brand_name
+          nullable: true
+        paradigmParams:
+          title: paradigm_params
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        defaultLlmModel:
+          type: integer
+          title: default_llm_model
+          format: int32
+          nullable: true
+        preferredProvider:
+          type: string
+          title: preferred_provider
+          nullable: true
+        systemDefaultModel:
+          type: integer
+          title: system_default_model
+          format: int32
+          description: Model MODEL_DEFAULT resolves to for this org; SYSTEM_DEFAULT_MODEL env var can override it.
+          nullable: true
+        toolRestrictions:
+          title: tool_restrictions
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        consoleAccess:
+          type: boolean
+          title: console_access
+          nullable: true
+        defaultConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: default_connector_ids
+        hideToolCells:
+          type: boolean
+          title: hide_tool_cells
+          nullable: true
+        disableEmojis:
+          type: boolean
+          title: disable_emojis
+          nullable: true
+        hideExampleConnectors:
+          type: boolean
+          title: hide_example_connectors
+          nullable: true
+        trainingMode:
+          type: boolean
+          title: training_mode
+          nullable: true
+        dashboardsEnabled:
+          type: boolean
+          title: dashboards_enabled
+          nullable: true
+        billingAdminId:
+          type: string
+          title: billing_admin_id
+          nullable: true
+        methodologyEnabled:
+          type: boolean
+          title: methodology_enabled
+          nullable: true
+        allowAllApiAccess:
+          type: boolean
+          title: allow_all_api_access
+          nullable: true
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          nullable: true
+        contextV3Enabled:
+          type: boolean
+          title: context_v3_enabled
+          nullable: true
+        bashEnabled:
+          type: boolean
+          title: bash_enabled
+          nullable: true
+        defaultRoutingEnabled:
+          type: boolean
+          title: default_routing_enabled
+          nullable: true
+        enabledModelIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: enabled_model_ids
+        restrictedModelIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: restricted_model_ids
+        restrictedFamilies:
+          type: array
+          items:
+            type: string
+          title: restricted_families
+        discoverable:
+          type: boolean
+          title: discoverable
+          nullable: true
+        observabilityEnabled:
+          type: boolean
+          title: observability_enabled
+          nullable: true
+        notificationsEnabled:
+          type: boolean
+          title: notifications_enabled
+          nullable: true
+        clientDbOverrideEnabled:
+          type: boolean
+          title: client_db_override_enabled
+          nullable: true
+        contextReviewRequired:
+          type: boolean
+          title: context_review_required
+          nullable: true
+        googleConnectorEnabled:
+          type: boolean
+          title: google_connector_enabled
+          nullable: true
+        hideApiConnectors:
+          type: boolean
+          title: hide_api_connectors
+          nullable: true
+        fastModeEnabled:
+          type: boolean
+          title: fast_mode_enabled
+          nullable: true
+        maxThinkingEnabled:
+          type: boolean
+          title: max_thinking_enabled
+          nullable: true
+        sandboxStateRetentionDays:
+          type: integer
+          title: sandbox_state_retention_days
+          format: int32
+          nullable: true
+        sandboxLeaseConfigEnabled:
+          type: boolean
+          title: sandbox_lease_config_enabled
+          nullable: true
+        deleteInactiveThreadsEnabled:
+          type: boolean
+          title: delete_inactive_threads_enabled
+          nullable: true
+        threadRetentionDays:
+          type: integer
+          title: thread_retention_days
+          format: int32
+          nullable: true
+        threadHardDeleteGraceDays:
+          type: integer
+          title: thread_hard_delete_grace_days
+          format: int32
+          nullable: true
+        assetUrlExpiry:
+          title: asset_url_expiry
+          $ref: '#/components/schemas/textql.rpc.auth.AssetUrlExpiry'
+        emailOutputEnabled:
+          type: boolean
+          title: email_output_enabled
+          description: |-
+            Mirror of the email_output_enabled feature flag (in feature_flags table,
+             not on the organization row). Surfaces in settings UIs alongside the
+             org-row toggles.
+          nullable: true
+        defaultPlaybookPrivate:
+          type: boolean
+          title: default_playbook_private
+          nullable: true
+        defaultDashboardOutput:
+          type: boolean
+          title: default_dashboard_output
+          nullable: true
+        defaultMethodology:
+          type: integer
+          title: default_methodology
+          format: int32
+          description: |-
+            Org-wide default response methodology for new chats, as a
+             textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
+             with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
+             per-member (Member.default_methodology) and per-chat.
+          nullable: true
+        scimNewGroupDefaultRoleType:
+          type: string
+          title: scim_new_group_default_role_type
+          nullable: true
+        groupsFeatureEnabled:
+          type: boolean
+          title: groups_feature_enabled
+          nullable: true
+        availableProviders:
+          type: array
+          items:
+            type: string
+          title: available_providers
+        showTextqlUsage:
+          type: boolean
+          title: show_textql_usage
+          description: |-
+            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
+             staff activity in its usage views; when false (default) they are filtered out.
+          nullable: true
+        tracesEnabled:
+          type: boolean
+          title: traces_enabled
+          nullable: true
+        allowLlmDataRetention:
+          type: boolean
+          title: allow_llm_data_retention
+          nullable: true
+        soxDbSessionMetadataEnabled:
+          type: boolean
+          title: sox_db_session_metadata_enabled
+          nullable: true
+        smsEnabled:
+          type: boolean
+          title: sms_enabled
+          nullable: true
+        scimAssignDefaultRole:
+          type: boolean
+          title: scim_assign_default_role
+          nullable: true
+        migrationBannerDismissed:
+          type: boolean
+          title: migration_banner_dismissed
+          description: dismiss legacy-context migration banner org-wide
+          nullable: true
+        configMigrationsEnabled:
+          type: boolean
+          title: config_migrations_enabled
+          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
+          nullable: true
+          deprecated: true
+        sandboxObservabilityEnabled:
+          type: boolean
+          title: sandbox_observability_enabled
+          nullable: true
+        dataAppsEnabled:
+          type: boolean
+          title: data_apps_enabled
+          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
+          nullable: true
+        issuesEnabled:
+          type: boolean
+          title: issues_enabled
+          nullable: true
+        configObjectsEnabled:
+          type: boolean
+          title: config_objects_enabled
+          description: |-
+            config_objects feature_flags row: umbrella switch for all config-managed-object behavior — Ana's
+             authoring tools, the export RPC + capabilities, reconcile takeover. Supersedes config_migrations_enabled (field 74).
+          nullable: true
+        configObjectsPlaybooksEnabled:
+          type: boolean
+          title: config_objects_playbooks_enabled
+          description: |-
+            Per-type sub-toggles under config_objects: playbooks-as-files / dashboards-as-files.
+             Effective only while config_objects_enabled is on; no feature_flags row means enabled.
+          nullable: true
+        configObjectsDashboardsEnabled:
+          type: boolean
+          title: config_objects_dashboards_enabled
+          nullable: true
+        configAutofixEnabled:
+          type: boolean
+          title: config_autofix_enabled
+          description: |-
+            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
+             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
+          nullable: true
+          deprecated: true
+        helmChartVersion:
+          type: string
+          title: helm_chart_version
+          nullable: true
+        spendTransparencyEnabled:
+          type: boolean
+          title: spend_transparency_enabled
+          description: |-
+            Internal flag: show dollar costs (spend transparency) across the product.
+             Only rendered for internal (@textql.com) users while pricing is verified.
+          nullable: true
+        sharingDisabled:
+          type: boolean
+          title: sharing_disabled
+          nullable: true
+        appWritebackAutoApproveEnabled:
+          type: boolean
+          title: app_writeback_auto_approve_enabled
+          description: Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
+          nullable: true
+        subagentsEnabled:
+          type: boolean
+          title: subagents_enabled
+          nullable: true
+        malloyEnabled:
+          type: boolean
+          title: malloy_enabled
+          description: 'Internal research flag: enables Malloy support for the org''s ontology.'
+          nullable: true
+      title: Organization
+      additionalProperties: false
+    textql.rpc.auth.Theme:
+      type: object
+      properties:
+        bg:
+          type: string
+          title: bg
+        headerBg:
+          type: string
+          title: header_bg
+        cardBg:
+          type: string
+          title: card_bg
+        primaryAccent:
+          type: string
+          title: primary_accent
+        cardAccent:
+          type: string
+          title: card_accent
+        heading:
+          type: string
+          title: heading
+        text:
+          type: string
+          title: text
+        cardHeading:
+          type: string
+          title: card_heading
+        cardText:
+          type: string
+          title: card_text
+        logoUrl:
+          type: string
+          title: logo_url
+          nullable: true
+        docsUrl:
+          type: string
+          title: docs_url
+          nullable: true
+      title: Theme
       additionalProperties: false
     textql.rpc.identity.MemberPreview:
       type: object
@@ -22837,6 +23326,7 @@ components:
         - MODEL_KIMI_K3
         - MODEL_DEEPSEEK_V4_FLASH_0731
         - MODEL_MUSE_SPARK_1_1
+        - MODEL_MUSE_SPARK_1_2
     textql.rpc.public.chat.LlmUsage:
       type: object
       properties:
@@ -38169,6 +38659,18 @@ components:
           title: success
       title: DeleteOrganizationMemberResponse
       additionalProperties: false
+    textql.rpc.public.settings.GetOrganizationSettingsRequest:
+      type: object
+      title: GetOrganizationSettingsRequest
+      additionalProperties: false
+    textql.rpc.public.settings.GetOrganizationSettingsResponse:
+      type: object
+      properties:
+        organization:
+          title: organization
+          $ref: '#/components/schemas/textql.rpc.auth.Organization'
+      title: GetOrganizationSettingsResponse
+      additionalProperties: false
     textql.rpc.public.settings.InviteOrganizationMemberRequest:
       type: object
       properties:
@@ -38216,6 +38718,9 @@ components:
         orgId:
           type: string
           title: org_id
+        secretsEnabled:
+          title: secrets_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
         hideExampleConnectors:
           title: hide_example_connectors
           $ref: '#/components/schemas/google.protobuf.BoolValue'
@@ -38223,6 +38728,16 @@ components:
           title: paradigm_params
           nullable: true
           $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        defaultParadigmMode:
+          title: default_paradigm_mode
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmType'
+        defaultConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: default_connector_ids
         trainingMode:
           title: training_mode
           $ref: '#/components/schemas/google.protobuf.BoolValue'
@@ -38235,11 +38750,17 @@ components:
         feedEnabled:
           title: feed_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
+        contextV3Enabled:
+          title: context_v3_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
         observabilityEnabled:
           title: observability_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         notificationsEnabled:
           title: notifications_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        hideApiConnectors:
+          title: hide_api_connectors
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         fastModeEnabled:
           title: fast_mode_enabled
@@ -38247,6 +38768,16 @@ components:
         maxThinkingEnabled:
           title: max_thinking_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
+        clearDefaultConnectorIds:
+          type: boolean
+          title: clear_default_connector_ids
+        defaultDashboardOutput:
+          title: default_dashboard_output
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        defaultMethodology:
+          title: default_methodology
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.Methodology'
         tracesEnabled:
           title: traces_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
@@ -38256,17 +38787,27 @@ components:
         dataAppsEnabled:
           title: data_apps_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
+        issuesEnabled:
+          title: issues_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        spendTransparencyEnabled:
+          title: spend_transparency_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        sharingDisabled:
+          title: sharing_disabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
         toolRestrictions:
           title: tool_restrictions
           nullable: true
           $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
-        subagentsEnabled:
-          title: subagents_enabled
-          $ref: '#/components/schemas/google.protobuf.BoolValue'
       title: UpdateOrganizationSettingsRequest
       additionalProperties: false
     textql.rpc.public.settings.UpdateOrganizationSettingsResponse:
       type: object
+      properties:
+        organization:
+          title: organization
+          $ref: '#/components/schemas/textql.rpc.auth.Organization'
       title: UpdateOrganizationSettingsResponse
       additionalProperties: false
     textql.rpc.public.slack.CreateSlackUuidResponse:
