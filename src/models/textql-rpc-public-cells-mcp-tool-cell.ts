@@ -19,6 +19,10 @@ export type TextqlRpcPublicCellsMCPToolCell = {
   isError?: boolean | null | undefined;
   errorMessage?: string | null | undefined;
   executionTimeMs?: number | string | null | undefined;
+  authRequired?: boolean | null | undefined;
+  authCompleted?: boolean | null | undefined;
+  authServerId?: string | null | undefined;
+  authServerName?: string | null | undefined;
 };
 
 /** @internal */
@@ -56,6 +60,10 @@ export const TextqlRpcPublicCellsMCPToolCell$inboundSchema: z.ZodMiniType<
   executionTimeMs: z.optional(
     z.nullable(smartUnion([types.number(), types.string()])),
   ),
+  authRequired: z.optional(z.nullable(types.boolean())),
+  authCompleted: z.optional(z.nullable(types.boolean())),
+  authServerId: z.optional(z.nullable(types.string())),
+  authServerName: z.optional(z.nullable(types.string())),
 });
 
 export function textqlRpcPublicCellsMCPToolCellFromJSON(

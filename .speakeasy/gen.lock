@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: fbefa69e1b284f737cea8a1ebfdbb211
+  docChecksum: 633f7552f35cc25f8af84eb30f65ea96
   docVersion: 1.0.0
-  speakeasyVersion: 1.793.1
+  speakeasyVersion: 1.793.2
   generationVersion: 2.928.0
-  releaseVersion: 1.4.11
-  configChecksum: 3d2f9a0226446385a90f7e57abfa53f5
+  releaseVersion: 1.4.12
+  configChecksum: 3aa792c356a61d14364befbe8c4c6cf4
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 57a1f9d9-43f5-4cfe-a9e7-c04bf5188c2e
-  pristine_commit_hash: ec39145aab2a1cb92b9d08f43f6b30d046a3cf3c
-  pristine_tree_hash: 465a8f9c73945e75335b10b8d4b5189aef6072ec
+  generation_id: ee691e82-fe72-4a0f-962b-2705f2038ffe
+  pristine_commit_hash: 1f10c0bcb9cfd0c11a8662eb2ea2fe64c78360b3
+  pristine_tree_hash: 3f3e9e6836bad2db1046427d7ea48abc93fafc80
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -4100,8 +4100,8 @@ trackedFiles:
     pristine_git_object: 94f36bd4e4f75cd7e55dd335a911f9a6100e20a1
   docs/models/textql-rpc-auth-organization.md:
     id: 21918368741d
-    last_write_checksum: sha1:1c3c88cd975ef9d0a87e08d31c211af8382008e7
-    pristine_git_object: 19e852b2641dd94b9c7821b131f6c61d8aa62d0c
+    last_write_checksum: sha1:7757744ef8f49063b95ceb266bb31e5a1d8c29f4
+    pristine_git_object: 09df2c00771cc714887aeba752a1d3ef2b23ff8c
   docs/models/textql-rpc-auth-theme.md:
     id: cf13fc927ee9
     last_write_checksum: sha1:306cdfbed1d2254a7d86091cca1eed6f629faba3
@@ -4844,8 +4844,8 @@ trackedFiles:
     pristine_git_object: 337caff8cb5cda9ae7b3dcfc326895434b49a5cb
   docs/models/textql-rpc-public-cells-mcp-tool-cell.md:
     id: d9415dcd68d1
-    last_write_checksum: sha1:ac8c9a2c7aace4955bcd79ffa2040a4f4a888c5c
-    pristine_git_object: aa6ada0fa91dd991bc9d5f56a04ddefdb4ecc6c2
+    last_write_checksum: sha1:e3462a88b98c075bb646e537d9068d96c9dba25c
+    pristine_git_object: c9d86c369fb191d6d4b6f82b7564a8eb71d44819
   docs/models/textql-rpc-public-cells-metrics-cell.md:
     id: 6c68695d1208
     last_write_checksum: sha1:1fb00fdfca2269037faf8e347cea0f2c0a8f860c
@@ -9752,12 +9752,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:c183f7dce99b1973be591050fa6343b2a7ca1fb3
-    pristine_git_object: bc6bddec2c680d2b7b0d6a2b2583de04843b7e3f
+    last_write_checksum: sha1:d2f9527a2d0031a2160fe0cc92c388a0d761791a
+    pristine_git_object: e3f8b7aa1524707801e397769a4932efd683eacf
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:9712a2ba9a7e5a55ccfc79c90e73e5e685d383ee
-    pristine_git_object: 489ca60664ecd2d813b06d0d9ac078995ddd5265
+    last_write_checksum: sha1:f10ad22a196153d58ea63d5ef7066f0c82a0db9e
+    pristine_git_object: 2f759f088de8b4126ca14f329ec8438bd14d468d
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11404,8 +11404,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:081914f2a1e6474eeb7c6aa2ea45620fb7b4de68
-    pristine_git_object: ef1c070fb02ba33aa9d6c96643518028eee4f303
+    last_write_checksum: sha1:9be50535de2bf8d9abc13ac2c85c62c11befe2b7
+    pristine_git_object: f348337a32cbd76f1638fd05cfe7c6b81d3266e2
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -13136,8 +13136,8 @@ trackedFiles:
     pristine_git_object: 010fa71c90c86194a064aa1fd32c2a09ba1ad4f1
   src/models/textql-rpc-auth-organization.ts:
     id: 139235689f0f
-    last_write_checksum: sha1:4e893f9399247aa618a7022db0397281a8ee9497
-    pristine_git_object: a002b81617f07d41a122de77c28fd9433928d6eb
+    last_write_checksum: sha1:0679d89034812696ca87aa646e08e9bb6a4dbdaf
+    pristine_git_object: ac61e99e8008486c2b6a2a5855ae8adaaa4f72bb
   src/models/textql-rpc-auth-theme.ts:
     id: 58f1281a43aa
     last_write_checksum: sha1:7d380b1598efb4ec739c70f4252e04dfdf4d5a89
@@ -13840,8 +13840,8 @@ trackedFiles:
     pristine_git_object: 39706bc4db647d1ed8846d05268ec12c5bd7ac98
   src/models/textql-rpc-public-cells-mcp-tool-cell.ts:
     id: 2fe47eb2552d
-    last_write_checksum: sha1:6657cf31129157e96751578404fba63815b220f3
-    pristine_git_object: 31707ef33ca9edd0e03dd49c0a9c0c685f736c8c
+    last_write_checksum: sha1:38731a308a87eea79c91f2bba0c1cd1dfb041a59
+    pristine_git_object: 0f141e6ea539f4aa17212862242de2e49a366bc3
   src/models/textql-rpc-public-cells-metrics-cell.ts:
     id: a03afea08eb3
     last_write_checksum: sha1:7f99b389d25df0d53e2816d16b65c7aeeba718e5
@@ -24278,4 +24278,17 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.settings.update()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.organization` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelMuseSpark12)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelMuseSpark12)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelMuseSpark12)` **Added**\n  *  `response.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelMuseSpark12)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelMuseSpark12)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelMuseSpark12)` **Added**\n  *  `response.chat.model.enum(modelMuseSpark12)` **Added**\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model.enum(modelMuseSpark12)` **Added**\n  *  `response.chat.model.enum(modelMuseSpark12)` **Added**\n* `textql.settings.get()`: **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelMuseSpark12)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelMuseSpark12)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelMuseSpark12)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelMuseSpark12)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelMuseSpark12)` **Added**\n  *  `response.playbook.llmModel.enum(modelMuseSpark12)` **Added**\n* `textql.rbac.whoAmI()`:  `response.modelAccess.allowedModels[].enum(modelMuseSpark12)` **Added**\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelMuseSpark12)` **Added**\n  *  `response.agent.llmModel.enum(modelMuseSpark12)` **Added**\n"
+releaseNotes: |
+  ## Typescript SDK Changes:
+  * `textql.settings.get()`:  `response.organization` **Changed** (Breaking ⚠️)
+  * `textql.settings.update()`:  `response.organization` **Changed** (Breaking ⚠️)
+  * `textql.chats.attachApp()`:  `response.cell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.attachDashboard()`:  `response.cell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.attachDataset()`:  `response.cell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.checkStreamlitHealth()`:  `response.cell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.getHistory()`:  `response.cells[].union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.queryOneShot()`:  `response.cells[].union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.chats.run()`:  `response.cells[].union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(mcp_tool_cell).mcpToolCell` **Changed**
+  * `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(mcp_tool_cell).mcpToolCell` **Changed**

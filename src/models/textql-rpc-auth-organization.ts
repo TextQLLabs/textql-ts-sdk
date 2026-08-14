@@ -369,11 +369,6 @@ export type TextqlRpcAuthOrganization = {
    * Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
    */
   appWritebackAutoApproveEnabled?: boolean | null | undefined;
-  subagentsEnabled?: boolean | null | undefined;
-  /**
-   * Internal research flag: enables Malloy support for the org's ontology.
-   */
-  malloyEnabled?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -473,8 +468,6 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   spendTransparencyEnabled: z.optional(z.nullable(types.boolean())),
   sharingDisabled: z.optional(z.nullable(types.boolean())),
   appWritebackAutoApproveEnabled: z.optional(z.nullable(types.boolean())),
-  subagentsEnabled: z.optional(z.nullable(types.boolean())),
-  malloyEnabled: z.optional(z.nullable(types.boolean())),
 });
 
 export function textqlRpcAuthOrganizationFromJSON(
