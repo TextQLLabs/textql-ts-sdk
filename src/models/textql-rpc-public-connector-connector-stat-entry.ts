@@ -9,26 +9,35 @@ import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Display name (e.g., "Explore Data")
+ */
 export type TextqlRpcPublicConnectorConnectorStatEntryQueryCount =
   | number
   | string;
 
 /**
- * milliseconds
+ * True if requires multiple connectors
  */
 export type AvgQueryTimeMs = number | string;
 
 export type TextqlRpcPublicConnectorConnectorStatEntry = {
   connectorId?: number | undefined;
+  /**
+   * Display name (e.g., "Explore Data")
+   */
   queryCount?: number | string | undefined;
   /**
-   * 0.0-1.0
+   * Query text to send (plain text, no formatting)
    */
   errorRate?: number | undefined;
   /**
-   * milliseconds
+   * True if requires multiple connectors
    */
   avgQueryTimeMs?: number | string | undefined;
+  /**
+   * Specific connectors needed
+   */
   uniqueUsers?: number | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -124,6 +133,9 @@ export type TextqlRpcPublicConnectorConnectorStatEntry = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastQueriedAt?: Date | undefined;
+  /**
+   * Rich formatted message with styled feature words
+   */
   tableCount?: number | undefined;
 };
 

@@ -8,12 +8,21 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
+ *
+ * @remarks
+ *  protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
+ */
 export type TextqlRpcPublicConnectorSupabaseMetadata = {
   host?: string | undefined;
   port?: number | undefined;
   user?: string | undefined;
   password?: string | undefined;
   database?: string | undefined;
+  /**
+   * SSH tunnel / bastion host fields
+   */
   schemas?: Array<string> | undefined;
   dialect?: string | undefined;
   sslMode?: boolean | undefined;

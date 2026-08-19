@@ -1,6 +1,6 @@
 # AvgQueryTimeMs
 
-milliseconds
+True if requires multiple connectors
 
 
 ## Supported Types

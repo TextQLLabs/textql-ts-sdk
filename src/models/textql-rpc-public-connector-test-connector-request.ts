@@ -11,13 +11,6 @@ import {
 
 export type TextqlRpcPublicConnectorTestConnectorRequest = {
   config?: TextqlRpcPublicConnectorConnectorConfig | undefined;
-  /**
-   * Optional: If provided, confidential fields will be preserved from the existing connector
-   *
-   * @remarks
-   *  when the corresponding field in config is empty. This allows testing updates without
-   *  requiring the user to re-enter credentials.
-   */
   connectorId?: string | null | undefined;
 };
 

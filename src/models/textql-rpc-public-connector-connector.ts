@@ -229,15 +229,9 @@ export type TrinoMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -345,19 +339,19 @@ export type TableauMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
 export type SupabaseMetadata = {
+  /**
+   * KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
+   *
+   * @remarks
+   *  protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
+   */
   supabaseMetadata: TextqlRpcPublicConnectorSupabaseMetadata;
   id?: number | undefined;
   name?: string | undefined;
@@ -461,15 +455,9 @@ export type SupabaseMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -577,15 +565,9 @@ export type SqlServerMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -693,15 +675,9 @@ export type SnowflakeMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -809,15 +785,9 @@ export type SapHanaMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -925,15 +895,9 @@ export type RedshiftMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1041,15 +1005,9 @@ export type PowerbiMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1157,15 +1115,9 @@ export type PostgresMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1273,15 +1225,9 @@ export type OracleMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1389,15 +1335,9 @@ export type MysqlMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1505,15 +1445,9 @@ export type MotherduckMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1621,15 +1555,9 @@ export type MongodbMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1737,25 +1665,13 @@ export type Microsoft365Metadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
 export type KdbMetadata = {
-  /**
-   * KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
-   *
-   * @remarks
-   *  protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
-   */
   kdbMetadata: TextqlRpcPublicConnectorKdbMetadata;
   id?: number | undefined;
   name?: string | undefined;
@@ -1859,15 +1775,9 @@ export type KdbMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -1975,15 +1885,9 @@ export type GoogleMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2091,15 +1995,9 @@ export type GoogleDriveMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2207,15 +2105,9 @@ export type GoogleCalendarMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2323,15 +2215,9 @@ export type GmailMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2439,15 +2325,9 @@ export type FireboltMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2555,15 +2435,9 @@ export type ExasolMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2671,15 +2545,9 @@ export type DremioMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2787,15 +2655,9 @@ export type DatabricksMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -2903,15 +2765,9 @@ export type ClickhouseMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -3019,15 +2875,9 @@ export type BigqueryMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -3135,15 +2985,9 @@ export type AzureSynapseMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -3251,15 +3095,9 @@ export type AuroraMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 
@@ -3367,15 +3205,9 @@ export type AthenaMetadata = {
   allowSqlWriteOperations?: boolean | undefined;
   authStrategy?: string | undefined;
   authenticatedByMemberId?: string | undefined;
-  /**
-   * Per-member auth status for the requesting user (only set for per_member_oauth connectors)
-   */
   memberAuthenticated?: boolean | null | undefined;
   memberAuthUsername?: string | null | undefined;
   includeDbSessionMetadata?: boolean | undefined;
-  /**
-   * Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.
-   */
   isPublic?: boolean | undefined;
 };
 

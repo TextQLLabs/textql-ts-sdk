@@ -17,9 +17,6 @@ export type TextqlRpcPublicConnectorPostgresMetadata = {
   schemas?: Array<string> | undefined;
   dialect?: string | undefined;
   sslMode?: boolean | undefined;
-  /**
-   * SSH tunnel / bastion host fields
-   */
   sshTunnelEnabled?: boolean | undefined;
   sshHost?: string | undefined;
   sshPort?: number | undefined;

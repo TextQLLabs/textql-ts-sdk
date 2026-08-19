@@ -13,18 +13,9 @@ export type TextqlRpcPublicConnectorMongoDBMetadata = {
   port?: number | undefined;
   user?: string | undefined;
   password?: string | undefined;
-  /**
-   * default database to query
-   */
   database?: string | undefined;
-  /**
-   * authSource (e.g. "admin"); defaults to database when empty
-   */
   authSource?: string | undefined;
   tls?: boolean | undefined;
-  /**
-   * mongodb+srv connection (Atlas) — host is the cluster DNS name
-   */
   srv?: boolean | undefined;
 };
 

@@ -20,7 +20,7 @@ let value: TextqlRpcPublicConnectorRedshiftMetadata = {};
 | `schemas`            | *string*[]           | :heavy_minus_sign:   | N/A                  |
 | `dialect`            | *string*             | :heavy_minus_sign:   | N/A                  |
 | `sslMode`            | *boolean*            | :heavy_minus_sign:   | N/A                  |
-| `authType`           | *string*             | :heavy_minus_sign:   | PASSWORD, IAM_ROLE   |
+| `authType`           | *string*             | :heavy_minus_sign:   | N/A                  |
 | `roleArn`            | *string*             | :heavy_minus_sign:   | N/A                  |
 | `region`             | *string*             | :heavy_minus_sign:   | N/A                  |
 | `clusterId`          | *string*             | :heavy_minus_sign:   | N/A                  |

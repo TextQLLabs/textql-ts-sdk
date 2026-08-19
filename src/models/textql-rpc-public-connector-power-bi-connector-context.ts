@@ -9,17 +9,8 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicConnectorPowerBIConnectorContext = {
-  /**
-   * PowerBI report IDs
-   */
   reportIds?: Array<string> | undefined;
-  /**
-   * PowerBI dataset IDs (PowerBI datasets, not internal dataset_source)
-   */
   datasetIds?: Array<string> | undefined;
-  /**
-   * workspace dataset_source IDs (cache key, like Tableau collections)
-   */
   collectionIds?: Array<string> | undefined;
 };
 

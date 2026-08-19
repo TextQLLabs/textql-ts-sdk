@@ -1,5 +1,7 @@
 # TextqlRpcPublicConnectorConnectorStatEntryQueryCount
 
+Display name (e.g., "Explore Data")
+
 
 ## Supported Types
 

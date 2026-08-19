@@ -16,7 +16,7 @@
 * [deleteDirectory](#deletedirectory) - DeleteOntologyDirectory
 * [deleteFile](#deletefile) - DeleteOntologyFile
 * [denyPatch](#denypatch) - DenyPatch
-* [exchangeGithubCode](#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [exchangeGithubCode](#exchangegithubcode) - ExchangeOntologyGithubCode
 * [finalizeFileUpload](#finalizefileupload) - FinalizeOntologyFileUpload
 * [getCodeownerCoverage](#getcodeownercoverage) - GetCodeownerCoverage
 * [getConfigExportCapabilities](#getconfigexportcapabilities) - GetConfigExportCapabilities
@@ -30,7 +30,7 @@
 * [getOwners](#getowners) - GetOntologyOwners
 * [getRemote](#getremote) - GetOntologyRemote
 * [getSizeTimeline](#getsizetimeline) - GetOntologySizeTimeline
-* [getSyncConflicts](#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [getSyncConflicts](#getsyncconflicts) - GetOntologySyncConflicts
 * [getUsageSummary](#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](#getpatch) - GetPatch
 * [getPatchByNumber](#getpatchbynumber) - GetPatchByNumber
@@ -40,7 +40,7 @@
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](#listgoldenfiles) - ListGoldenFiles
+* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
 * [listEntries](#listentries) - ListOntologyEntries
 * [listHistory](#listhistory) - ListOntologyHistory
 * [listImports](#listimports) - ListOntologyImports
@@ -55,22 +55,22 @@
 * [pullFromRemote](#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](#pushtoremote) - PushOntologyToRemote
 * [recover](#recover) - RecoverOntology
-* [removeRemote](#removeremote) - RemoveOntologyRemote
+* [removeRemote](#removeremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [removeSubmodule](#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](#renamefile) - RenameOntologyFile
 * [requestPatchReview](#requestpatchreview) - RequestPatchReview
-* [resolveSyncConflict](#resolvesyncconflict) - ResolveOntologySyncConflict
+* [resolveSyncConflict](#resolvesyncconflict) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [restorePatch](#restorepatch) - RestorePatch
 * [revertPatch](#revertpatch) - RevertPatch
 * [saveAllObjectsAsConfig](#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 * [saveObjectAsConfig](#saveobjectasconfig) - SaveObjectAsConfig
-* [setFileGolden](#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [setFileGolden](#setfilegolden) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 * [setOwners](#setowners) - SetOntologyOwners
 * [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
 * [updateSyncConfig](#updatesyncconfig) - UpdateOntologySyncConfig
-* [upsertAnaConfig](#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
+* [upsertAnaConfig](#upsertanaconfig) - UpsertOntologyAnaConfig
 * [upsertFile](#upsertfile) - UpsertOntologyFile
 * [validateConfig](#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 
@@ -955,10 +955,7 @@ run();
 
 ## exchangeGithubCode
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
- omitted unless include_unlisted is set.
+ExchangeOntologyGithubCode
 
 ### Example Usage
 
@@ -1980,10 +1977,7 @@ run();
 
 ## getSyncConflicts
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+GetOntologySyncConflicts
 
 ### Example Usage
 
@@ -2717,7 +2711,8 @@ run();
 
 ## listGoldenFiles
 
-ListGoldenFiles
+Deprecated: use SetOntologyOwners with the desired entry set. An empty
+ desired set is not currently supported, so retain this RPC for deletion.
 
 ### Example Usage
 
@@ -3817,7 +3812,10 @@ run();
 
 ## removeRemote
 
-RemoveOntologyRemote
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+ omitted unless include_unlisted is set.
 
 ### Example Usage
 
@@ -4109,7 +4107,10 @@ run();
 
 ## resolveSyncConflict
 
-ResolveOntologySyncConflict
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 
@@ -4474,8 +4475,7 @@ run();
 
 ## setFileGolden
 
-Deprecated: use SetOntologyOwners with the desired entry set. An empty
- desired set is not currently supported, so retain this RPC for deletion.
+Deprecated: use SetOntologyOwners with the complete desired entry set.
 
 ### Example Usage
 
@@ -4913,7 +4913,7 @@ run();
 
 ## upsertAnaConfig
 
-Deprecated: use SetOntologyOwners with the complete desired entry set.
+UpsertOntologyAnaConfig
 
 ### Example Usage
 

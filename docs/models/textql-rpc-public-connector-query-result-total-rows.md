@@ -1,7 +1,5 @@
 # TextqlRpcPublicConnectorQueryResultTotalRows
 
-Total number of rows (for pagination/UI purposes)
-
 
 ## Supported Types
 

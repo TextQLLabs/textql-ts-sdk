@@ -266,13 +266,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-   *
-   * @remarks
-   * Lists the skills under the ontology's flat skills/ root that the caller can
-   *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-   *  omitted unless include_unlisted is set.
+   * ExchangeOntologyGithubCode
    */
   async exchangeGithubCode(
     request:
@@ -488,13 +482,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-   *
-   * @remarks
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-   *  caller's org: if the Ontology repo's live HEAD differs from the last
-   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-   *  equivalent of waiting for the periodic drift scan.
+   * GetOntologySyncConflicts
    */
   async getSyncConflicts(
     request:
@@ -651,7 +639,11 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * ListGoldenFiles
+   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+   *
+   * @remarks
+   * Deprecated: use SetOntologyOwners with the desired entry set. An empty
+   *  desired set is not currently supported, so retain this RPC for deletion.
    */
   async listGoldenFiles(
     request: operations.OntologyManagementServiceListGoldenFilesRequest,
@@ -876,7 +868,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * RemoveOntologyRemote
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+   *
+   * @remarks
+   * Lists the skills under the ontology's flat skills/ root that the caller can
+   *  read (OWNERS-filtered). Returns display metadata only — never instruction
+   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+   *  omitted unless include_unlisted is set.
    */
   async removeRemote(
     request: operations.OntologyManagementServiceRemoveOntologyRemoteRequest,
@@ -934,7 +932,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * ResolveOntologySyncConflict
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+   *
+   * @remarks
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+   *  caller's org: if the Ontology repo's live HEAD differs from the last
+   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+   *  equivalent of waiting for the periodic drift scan.
    */
   async resolveSyncConflict(
     request:
@@ -1009,11 +1013,10 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+   * Deprecated: use SetOntologyOwners with the complete desired entry set.
    *
    * @remarks
-   * Deprecated: use SetOntologyOwners with the desired entry set. An empty
-   *  desired set is not currently supported, so retain this RPC for deletion.
+   * Deprecated: use SetOntologyOwners with the complete desired entry set.
    */
   async setFileGolden(
     request: operations.OntologyManagementServiceSetOntologyFileGoldenRequest,
@@ -1108,10 +1111,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Deprecated: use SetOntologyOwners with the complete desired entry set.
-   *
-   * @remarks
-   * Deprecated: use SetOntologyOwners with the complete desired entry set.
+   * UpsertOntologyAnaConfig
    */
   async upsertAnaConfig(
     request: operations.OntologyManagementServiceUpsertOntologyAnaConfigRequest,

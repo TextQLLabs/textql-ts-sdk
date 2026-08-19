@@ -10,8 +10,8 @@ let value: TextqlRpcPublicConnectorPowerBIConnectorContext = {};
 
 ## Fields
 
-| Field                                                               | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `reportIds`                                                         | *string*[]                                                          | :heavy_minus_sign:                                                  | PowerBI report IDs                                                  |
-| `datasetIds`                                                        | *string*[]                                                          | :heavy_minus_sign:                                                  | PowerBI dataset IDs (PowerBI datasets, not internal dataset_source) |
-| `collectionIds`                                                     | *string*[]                                                          | :heavy_minus_sign:                                                  | workspace dataset_source IDs (cache key, like Tableau collections)  |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `reportIds`        | *string*[]         | :heavy_minus_sign: | N/A                |
+| `datasetIds`       | *string*[]         | :heavy_minus_sign: | N/A                |
+| `collectionIds`    | *string*[]         | :heavy_minus_sign: | N/A                |

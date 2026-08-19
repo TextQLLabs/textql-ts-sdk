@@ -11,6 +11,8 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicMcpHttpConfig = {
   url?: string | undefined;
   headers?: { [k: string]: string } | undefined;
+  oauthClientId?: string | null | undefined;
+  oauthClientSecret?: string | null | undefined;
 };
 
 /** @internal */
@@ -20,11 +22,15 @@ export const TextqlRpcPublicMcpHttpConfig$inboundSchema: z.ZodMiniType<
 > = z.object({
   url: types.optional(types.string()),
   headers: types.optional(z.record(z.string(), types.string())),
+  oauthClientId: z.optional(z.nullable(types.string())),
+  oauthClientSecret: z.optional(z.nullable(types.string())),
 });
 /** @internal */
 export type TextqlRpcPublicMcpHttpConfig$Outbound = {
   url?: string | undefined;
   headers?: { [k: string]: string } | undefined;
+  oauthClientId?: string | null | undefined;
+  oauthClientSecret?: string | null | undefined;
 };
 
 /** @internal */
@@ -34,6 +40,8 @@ export const TextqlRpcPublicMcpHttpConfig$outboundSchema: z.ZodMiniType<
 > = z.object({
   url: z.optional(z.string()),
   headers: z.optional(z.record(z.string(), z.string())),
+  oauthClientId: z.optional(z.nullable(z.string())),
+  oauthClientSecret: z.optional(z.nullable(z.string())),
 });
 
 export function textqlRpcPublicMcpHttpConfigToJSON(

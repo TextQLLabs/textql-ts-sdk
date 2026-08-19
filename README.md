@@ -370,7 +370,7 @@ run();
 * [deleteDirectory](docs/sdks/ontology/README.md#deletedirectory) - DeleteOntologyDirectory
 * [deleteFile](docs/sdks/ontology/README.md#deletefile) - DeleteOntologyFile
 * [denyPatch](docs/sdks/ontology/README.md#denypatch) - DenyPatch
-* [exchangeGithubCode](docs/sdks/ontology/README.md#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [exchangeGithubCode](docs/sdks/ontology/README.md#exchangegithubcode) - ExchangeOntologyGithubCode
 * [finalizeFileUpload](docs/sdks/ontology/README.md#finalizefileupload) - FinalizeOntologyFileUpload
 * [getCodeownerCoverage](docs/sdks/ontology/README.md#getcodeownercoverage) - GetCodeownerCoverage
 * [getConfigExportCapabilities](docs/sdks/ontology/README.md#getconfigexportcapabilities) - GetConfigExportCapabilities
@@ -384,7 +384,7 @@ run();
 * [getOwners](docs/sdks/ontology/README.md#getowners) - GetOntologyOwners
 * [getRemote](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
 * [getSizeTimeline](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
-* [getSyncConflicts](docs/sdks/ontology/README.md#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [getSyncConflicts](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
 * [getUsageSummary](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](docs/sdks/ontology/README.md#getpatch) - GetPatch
 * [getPatchByNumber](docs/sdks/ontology/README.md#getpatchbynumber) - GetPatchByNumber
@@ -394,7 +394,7 @@ run();
 * [listApprovalRules](docs/sdks/ontology/README.md#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](docs/sdks/ontology/README.md#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](docs/sdks/ontology/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](docs/sdks/ontology/README.md#listgoldenfiles) - ListGoldenFiles
+* [listGoldenFiles](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
 * [listEntries](docs/sdks/ontology/README.md#listentries) - ListOntologyEntries
 * [listHistory](docs/sdks/ontology/README.md#listhistory) - ListOntologyHistory
 * [listImports](docs/sdks/ontology/README.md#listimports) - ListOntologyImports
@@ -409,22 +409,22 @@ run();
 * [pullFromRemote](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
 * [recover](docs/sdks/ontology/README.md#recover) - RecoverOntology
-* [removeRemote](docs/sdks/ontology/README.md#removeremote) - RemoveOntologyRemote
+* [removeRemote](docs/sdks/ontology/README.md#removeremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [removeSubmodule](docs/sdks/ontology/README.md#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](docs/sdks/ontology/README.md#renamefile) - RenameOntologyFile
 * [requestPatchReview](docs/sdks/ontology/README.md#requestpatchreview) - RequestPatchReview
-* [resolveSyncConflict](docs/sdks/ontology/README.md#resolvesyncconflict) - ResolveOntologySyncConflict
+* [resolveSyncConflict](docs/sdks/ontology/README.md#resolvesyncconflict) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [restorePatch](docs/sdks/ontology/README.md#restorepatch) - RestorePatch
 * [revertPatch](docs/sdks/ontology/README.md#revertpatch) - RevertPatch
 * [saveAllObjectsAsConfig](docs/sdks/ontology/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 * [saveObjectAsConfig](docs/sdks/ontology/README.md#saveobjectasconfig) - SaveObjectAsConfig
-* [setFileGolden](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [setFileGolden](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 * [setOwners](docs/sdks/ontology/README.md#setowners) - SetOntologyOwners
 * [triggerConfigDriftReconcile](docs/sdks/ontology/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](docs/sdks/ontology/README.md#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](docs/sdks/ontology/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
 * [updateSyncConfig](docs/sdks/ontology/README.md#updatesyncconfig) - UpdateOntologySyncConfig
-* [upsertAnaConfig](docs/sdks/ontology/README.md#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
+* [upsertAnaConfig](docs/sdks/ontology/README.md#upsertanaconfig) - UpsertOntologyAnaConfig
 * [upsertFile](docs/sdks/ontology/README.md#upsertfile) - UpsertOntologyFile
 * [validateConfig](docs/sdks/ontology/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 
@@ -830,7 +830,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyDeleteDirectory`](docs/sdks/ontology/README.md#deletedirectory) - DeleteOntologyDirectory
 - [`ontologyDeleteFile`](docs/sdks/ontology/README.md#deletefile) - DeleteOntologyFile
 - [`ontologyDenyPatch`](docs/sdks/ontology/README.md#denypatch) - DenyPatch
-- [`ontologyExchangeGithubCode`](docs/sdks/ontology/README.md#exchangegithubcode) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+- [`ontologyExchangeGithubCode`](docs/sdks/ontology/README.md#exchangegithubcode) - ExchangeOntologyGithubCode
 - [`ontologyFinalizeFileUpload`](docs/sdks/ontology/README.md#finalizefileupload) - FinalizeOntologyFileUpload
 - [`ontologyGetAnaConfig`](docs/sdks/ontology/README.md#getanaconfig) - GetOntologyAnaConfig
 - [`ontologyGetCodeownerCoverage`](docs/sdks/ontology/README.md#getcodeownercoverage) - GetCodeownerCoverage
@@ -848,14 +848,14 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyGetRawPatch`](docs/sdks/ontology/README.md#getrawpatch) - GetRawPatch
 - [`ontologyGetRemote`](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
 - [`ontologyGetSizeTimeline`](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
-- [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+- [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
 - [`ontologyGetUsageDetailsForFile`](docs/sdks/ontology/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
 - [`ontologyGetUsageSummary`](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary
 - [`ontologyListApprovalRules`](docs/sdks/ontology/README.md#listapprovalrules) - ListApprovalRules
 - [`ontologyListChatsForFile`](docs/sdks/ontology/README.md#listchatsforfile) - ListChatsForFile
 - [`ontologyListContextPatchAutoApproveRules`](docs/sdks/ontology/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
 - [`ontologyListEntries`](docs/sdks/ontology/README.md#listentries) - ListOntologyEntries
-- [`ontologyListGoldenFiles`](docs/sdks/ontology/README.md#listgoldenfiles) - ListGoldenFiles
+- [`ontologyListGoldenFiles`](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
 - [`ontologyListHistory`](docs/sdks/ontology/README.md#listhistory) - ListOntologyHistory
 - [`ontologyListImports`](docs/sdks/ontology/README.md#listimports) - ListOntologyImports
 - [`ontologyListPatches`](docs/sdks/ontology/README.md#listpatches) - ListPatches
@@ -869,22 +869,22 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyPullFromRemote`](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 - [`ontologyPushToRemote`](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
 - [`ontologyRecover`](docs/sdks/ontology/README.md#recover) - RecoverOntology
-- [`ontologyRemoveRemote`](docs/sdks/ontology/README.md#removeremote) - RemoveOntologyRemote
+- [`ontologyRemoveRemote`](docs/sdks/ontology/README.md#removeremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 - [`ontologyRemoveSubmodule`](docs/sdks/ontology/README.md#removesubmodule) - RemoveOntologySubmodule
 - [`ontologyRenameFile`](docs/sdks/ontology/README.md#renamefile) - RenameOntologyFile
 - [`ontologyRequestPatchReview`](docs/sdks/ontology/README.md#requestpatchreview) - RequestPatchReview
-- [`ontologyResolveSyncConflict`](docs/sdks/ontology/README.md#resolvesyncconflict) - ResolveOntologySyncConflict
+- [`ontologyResolveSyncConflict`](docs/sdks/ontology/README.md#resolvesyncconflict) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 - [`ontologyRestorePatch`](docs/sdks/ontology/README.md#restorepatch) - RestorePatch
 - [`ontologyRevertPatch`](docs/sdks/ontology/README.md#revertpatch) - RevertPatch
 - [`ontologySaveAllObjectsAsConfig`](docs/sdks/ontology/README.md#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 - [`ontologySaveObjectAsConfig`](docs/sdks/ontology/README.md#saveobjectasconfig) - SaveObjectAsConfig
-- [`ontologySetFileGolden`](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+- [`ontologySetFileGolden`](docs/sdks/ontology/README.md#setfilegolden) - Deprecated: use SetOntologyOwners with the complete desired entry set.
 - [`ontologySetOwners`](docs/sdks/ontology/README.md#setowners) - SetOntologyOwners
 - [`ontologyTriggerConfigDriftReconcile`](docs/sdks/ontology/README.md#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 - [`ontologyUpdateApprovalRule`](docs/sdks/ontology/README.md#updateapprovalrule) - UpdateApprovalRule
 - [`ontologyUpdateContextPatchAutoApproveRule`](docs/sdks/ontology/README.md#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
 - [`ontologyUpdateSyncConfig`](docs/sdks/ontology/README.md#updatesyncconfig) - UpdateOntologySyncConfig
-- [`ontologyUpsertAnaConfig`](docs/sdks/ontology/README.md#upsertanaconfig) - Deprecated: use SetOntologyOwners with the complete desired entry set.
+- [`ontologyUpsertAnaConfig`](docs/sdks/ontology/README.md#upsertanaconfig) - UpsertOntologyAnaConfig
 - [`ontologyUpsertFile`](docs/sdks/ontology/README.md#upsertfile) - UpsertOntologyFile
 - [`ontologyValidateConfig`](docs/sdks/ontology/README.md#validateconfig) - Read-only functional validation of a proposed config: parse + dependency  resolution/reachability, no authorization and no persistence. "ok" means  functionally valid, not "guaranteed to merge" — the merge gate re-checks  authorization at approve time.
 - [`playbooksAttachDashboard`](docs/sdks/playbooks/README.md#attachdashboard) - AttachDashboard

@@ -15,18 +15,18 @@ export type TextqlRpcPublicConnectorOracleMetadata = {
   password?: string | undefined;
   serviceName?: string | undefined;
   dialect?: string | undefined;
+  /**
+   * ISO 8601 timestamp
+   */
   sslMode?: boolean | undefined;
+  /**
+   * When true, only email metadata is accessible (no body content)
+   */
   connectionType?: string | undefined;
   sid?: string | undefined;
   connectString?: string | undefined;
-  /**
-   * Oracle Wallet fields
-   */
   walletZip?: string | undefined;
   walletPassword?: string | undefined;
-  /**
-   * Optional - auto-detected from tnsnames.ora if not provided
-   */
   tnsAlias?: string | undefined;
 };
 

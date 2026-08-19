@@ -5,9 +5,6 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicConnectorGetConnectorStatsRequest = {
-  /**
-   * 0 = all-time
-   */
   days?: number | undefined;
 };
 

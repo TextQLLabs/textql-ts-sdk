@@ -13,33 +13,27 @@ export type TextqlRpcPublicConnectorSnowflakeMetadata = {
   password?: string | undefined;
   privateKey?: string | undefined;
   privateKeyPassphrase?: string | undefined;
+  /**
+   * default database to query
+   */
   role?: string | undefined;
+  /**
+   * authSource (e.g. "admin"); defaults to database when empty
+   */
   schema?: string | undefined;
   locator?: string | undefined;
+  /**
+   * mongodb+srv connection (Atlas) — host is the cluster DNS name
+   */
   database?: string | undefined;
   warehouse?: string | undefined;
-  /**
-   * OAuth fields (used when auth_type = OAUTH)
-   */
   oauthAccessToken?: string | undefined;
   oauthRefreshToken?: string | undefined;
   oauthClientId?: string | undefined;
   oauthClientSecret?: string | undefined;
-  /**
-   * SSO per-member auth (used when auth_strategy = PER_MEMBER_OAUTH) pass IdP token directly to Snowflake External OAuth
-   */
   enableSsoAuth?: boolean | undefined;
-  /**
-   * IdP token exchange URL (RFC 8693)
-   */
   tokenExchangeEndpoint?: string | undefined;
-  /**
-   * target audience for exchanged token
-   */
   tokenExchangeAudience?: string | undefined;
-  /**
-   * scope for exchanged token
-   */
   tokenExchangeScope?: string | undefined;
 };
 

@@ -18,4 +18,4 @@ let value: TextqlRpcPublicConnectorClickHouseMetadata = {};
 | `password`         | *string*           | :heavy_minus_sign: | N/A                |
 | `database`         | *string*           | :heavy_minus_sign: | N/A                |
 | `useSsl`           | *boolean*          | :heavy_minus_sign: | N/A                |
-| `protocol`         | *string*           | :heavy_minus_sign: | "http" or "native" |
+| `protocol`         | *string*           | :heavy_minus_sign: | N/A                |
