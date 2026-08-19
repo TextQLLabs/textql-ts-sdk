@@ -27,7 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ListGoldenFiles
+ * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+ *
+ * @remarks
+ * Deprecated: use SetOntologyOwners with the desired entry set. An empty
+ *  desired set is not currently supported, so retain this RPC for deletion.
  */
 export function ontologyListGoldenFiles(
   client: TextqlCore,

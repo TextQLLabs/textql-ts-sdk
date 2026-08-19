@@ -14,3 +14,5 @@ let value: TextqlRpcPublicMcpHttpConfig = {};
 | ------------------------ | ------------------------ | ------------------------ | ------------------------ |
 | `url`                    | *string*                 | :heavy_minus_sign:       | N/A                      |
 | `headers`                | Record<string, *string*> | :heavy_minus_sign:       | N/A                      |
+| `oauthClientId`          | *string*                 | :heavy_minus_sign:       | N/A                      |
+| `oauthClientSecret`      | *string*                 | :heavy_minus_sign:       | N/A                      |

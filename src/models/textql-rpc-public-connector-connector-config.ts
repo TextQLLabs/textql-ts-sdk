@@ -164,6 +164,12 @@ export type TextqlRpcPublicConnectorConnectorConfigTableau = {
 };
 
 export type Supabase = {
+  /**
+   * KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
+   *
+   * @remarks
+   *  protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
+   */
   supabase: TextqlRpcPublicConnectorSupabaseMetadata;
   connectorType?: TextqlRpcPublicConnectorConnectorType | undefined;
   name?: string | undefined;
@@ -248,12 +254,6 @@ export type Microsoft365 = {
 };
 
 export type Kdb = {
-  /**
-   * KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
-   *
-   * @remarks
-   *  protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
-   */
   kdb: TextqlRpcPublicConnectorKdbMetadata;
   connectorType?: TextqlRpcPublicConnectorConnectorType | undefined;
   name?: string | undefined;

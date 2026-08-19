@@ -9,19 +9,10 @@ import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Total number of rows (for pagination/UI purposes)
- */
 export type TextqlRpcPublicConnectorQueryResultTotalRows = number | string;
 
 export type TextqlRpcPublicConnectorQueryResult = {
-  /**
-   * Apache Arrow IPC format binary data
-   */
   arrowData?: string | undefined;
-  /**
-   * Total number of rows (for pagination/UI purposes)
-   */
   totalRows?: number | string | undefined;
 };
 

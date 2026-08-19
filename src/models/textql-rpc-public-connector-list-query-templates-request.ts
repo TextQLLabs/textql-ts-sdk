@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicConnectorListQueryTemplatesRequest = {
+  /**
+   * 0 = all-time
+   */
   connectorId?: number | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
-  /**
-   * Optional lookback window in days; 0 or unset means all-time.
-   */
   days?: number | undefined;
 };
 

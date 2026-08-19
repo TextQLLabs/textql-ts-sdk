@@ -15,13 +15,7 @@ export type TextqlRpcPublicConnectorMicrosoft365Metadata = {
   accessToken?: string | undefined;
   refreshToken?: string | undefined;
   memberId?: string | undefined;
-  /**
-   * ISO 8601 timestamp
-   */
   tokenExpiry?: string | undefined;
-  /**
-   * When true, only email metadata is accessible (no body content)
-   */
   metadataOnly?: boolean | undefined;
   scopes?: Array<string> | undefined;
 };

@@ -17,9 +17,6 @@ export type TextqlRpcPublicConnectorRedshiftMetadata = {
   schemas?: Array<string> | undefined;
   dialect?: string | undefined;
   sslMode?: boolean | undefined;
-  /**
-   * PASSWORD, IAM_ROLE
-   */
   authType?: string | undefined;
   roleArn?: string | undefined;
   region?: string | undefined;

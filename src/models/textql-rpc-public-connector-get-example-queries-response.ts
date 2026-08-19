@@ -12,7 +12,13 @@ import {
   TextqlRpcPublicConnectorExampleQuery$inboundSchema,
 } from "./textql-rpc-public-connector-example-query.js";
 
+/**
+ * A segment of an example query message - either plain text or a styled feature word
+ */
 export type TextqlRpcPublicConnectorGetExampleQueriesResponse = {
+  /**
+   * The text content of this segment
+   */
   examples?: Array<TextqlRpcPublicConnectorExampleQuery> | undefined;
 };
 

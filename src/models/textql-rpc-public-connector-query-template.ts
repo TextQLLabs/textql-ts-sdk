@@ -23,6 +23,9 @@ export type TextqlRpcPublicConnectorQueryTemplate = {
   templateId?: string | undefined;
   normalizedSql?: string | undefined;
   tables?: Array<string> | undefined;
+  /**
+   * Optional lookback window in days; 0 or unset means all-time.
+   */
   joins?: Array<TextqlRpcPublicConnectorQueryJoinInfo> | undefined;
   eventCount?: number | string | undefined;
   /**

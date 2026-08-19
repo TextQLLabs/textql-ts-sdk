@@ -7293,12 +7293,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-      description: |-
-        Lists the skills under the ontology's flat skills/ root that the caller can
-         read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-         omitted unless include_unlisted is set.
+      summary: ExchangeOntologyGithubCode
       operationId: OntologyManagementService_ExchangeOntologyGithubCode
       x-speakeasy-group: ontology
       x-speakeasy-name-override: exchangeGithubCode
@@ -7816,12 +7811,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
-      description: |-
-        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-         caller's org: if the Ontology repo's live HEAD differs from the last
-         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-         equivalent of waiting for the periodic drift scan.
+      summary: GetOntologySyncConflicts
       operationId: OntologyManagementService_GetOntologySyncConflicts
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getSyncConflicts
@@ -8197,7 +8187,10 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: ListGoldenFiles
+      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.'
+      description: |-
+        Deprecated: use SetOntologyOwners with the desired entry set. An empty
+         desired set is not currently supported, so retain this RPC for deletion.
       operationId: OntologyManagementService_ListGoldenFiles
       x-speakeasy-group: ontology
       x-speakeasy-name-override: listGoldenFiles
@@ -8759,7 +8752,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: RemoveOntologyRemote
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+      description: |-
+        Lists the skills under the ontology's flat skills/ root that the caller can
+         read (OWNERS-filtered). Returns display metadata only — never instruction
+         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+         omitted unless include_unlisted is set.
       operationId: OntologyManagementService_RemoveOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: removeRemote
@@ -8907,7 +8905,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: ResolveOntologySyncConflict
+      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
+      description: |-
+        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+         caller's org: if the Ontology repo's live HEAD differs from the last
+         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+         equivalent of waiting for the periodic drift scan.
       operationId: OntologyManagementService_ResolveOntologySyncConflict
       x-speakeasy-group: ontology
       x-speakeasy-name-override: resolveSyncConflict
@@ -9092,10 +9095,8 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.'
-      description: |-
-        Deprecated: use SetOntologyOwners with the desired entry set. An empty
-         desired set is not currently supported, so retain this RPC for deletion.
+      summary: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
+      description: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
       operationId: OntologyManagementService_SetOntologyFileGolden
       x-speakeasy-group: ontology
       x-speakeasy-name-override: setFileGolden
@@ -9317,8 +9318,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
-      description: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
+      summary: UpsertOntologyAnaConfig
       operationId: OntologyManagementService_UpsertOntologyAnaConfig
       x-speakeasy-group: ontology
       x-speakeasy-name-override: upsertAnaConfig
@@ -24063,6 +24063,7 @@ components:
         tenantId:
           type: string
           title: tenant_id
+          description: OAuth fields (used when auth_type = OAUTH)
       title: AzureSynapseMetadata
       additionalProperties: false
     textql.rpc.public.connector.BigQueryMetadata:
@@ -24107,7 +24108,6 @@ components:
         protocol:
           type: string
           title: protocol
-          description: '"http" or "native"'
       title: ClickHouseMetadata
       additionalProperties: false
     textql.rpc.public.connector.Connector:
@@ -24145,7 +24145,6 @@ components:
             memberAuthenticated:
               type: boolean
               title: member_authenticated
-              description: Per-member auth status for the requesting user (only set for per_member_oauth connectors)
               nullable: true
             memberAuthUsername:
               type: string
@@ -24157,7 +24156,6 @@ components:
             isPublic:
               type: boolean
               title: is_public
-              description: 'Org-visible (db.ConnectorIsPublic): a public access row, or no access rows.'
         - oneOf:
             - properties:
                 athenaMetadata:
@@ -24821,29 +24819,33 @@ components:
             - string
           title: query_count
           format: int64
+          description: Display name (e.g., "Explore Data")
         errorRate:
           type: number
           title: error_rate
           format: double
-          description: 0.0-1.0
+          description: Query text to send (plain text, no formatting)
         avgQueryTimeMs:
           type:
             - integer
             - string
           title: avg_query_time_ms
           format: int64
-          description: milliseconds
+          description: True if requires multiple connectors
         uniqueUsers:
           type: integer
           title: unique_users
           format: int32
+          description: Specific connectors needed
         lastQueriedAt:
           title: last_queried_at
+          description: Category (e.g., "Users", "Sales", "Performance")
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         tableCount:
           type: integer
           title: table_count
           format: int32
+          description: Rich formatted message with styled feature words
       title: ConnectorStatEntry
       additionalProperties: false
     textql.rpc.public.connector.ConnectorTable:
@@ -24852,9 +24854,11 @@ components:
         tableDatabase:
           type: string
           title: table_database
+          description: Apache Arrow IPC format binary data
         tableSchema:
           type: string
           title: table_schema
+          description: Total number of rows (for pagination/UI purposes)
         tableName:
           type: string
           title: table_name
@@ -24986,6 +24990,7 @@ components:
         catalog:
           type: string
           title: catalog
+          description: Connected App credentials for view embedding. Optional, generated by system.
         schema:
           type: string
           title: schema
@@ -25122,44 +25127,39 @@ components:
         id:
           type: string
           title: id
+          description: PowerBI report IDs
         label:
           type: string
           title: label
-          description: Display name (e.g., "Explore Data")
+          description: PowerBI dataset IDs (PowerBI datasets, not internal dataset_source)
         message:
           type: string
           title: message
-          description: Query text to send (plain text, no formatting)
+          description: workspace dataset_source IDs (cache key, like Tableau collections)
         isMultiSource:
           type: boolean
           title: is_multi_source
-          description: True if requires multiple connectors
         requiredConnectorIds:
           type: array
           items:
             type: integer
             format: int32
           title: required_connector_ids
-          description: Specific connectors needed
         category:
           type: string
           title: category
-          description: Category (e.g., "Users", "Sales", "Performance")
         segments:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.MessageSegment'
           title: segments
-          description: Rich formatted message with styled feature words
         requiredFeatures:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.FeatureType'
           title: required_features
-          description: Features this query will use (for tool enabling)
         sourceContext:
           title: source_context
-          description: Source context (e.g. which Tableau collection)
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorContext'
       title: ExampleQuery
@@ -25369,7 +25369,6 @@ components:
           type: integer
           title: days
           format: int32
-          description: 0 = all-time
       title: GetConnectorStatsRequest
       additionalProperties: false
     textql.rpc.public.connector.GetConnectorStatsResponse:
@@ -25445,7 +25444,6 @@ components:
           title: connector_contexts
         featureFilter:
           title: feature_filter
-          description: If set, only return queries with this feature type
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.connector.FeatureType'
       title: GetExampleQueriesRequest
@@ -25458,8 +25456,10 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.ExampleQuery'
           title: examples
+          description: The text content of this segment
       title: GetExampleQueriesResponse
       additionalProperties: false
+      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.GetTablePreviewRequest:
       type: object
       properties:
@@ -25596,7 +25596,6 @@ components:
         sshTunnelEnabled:
           type: boolean
           title: ssh_tunnel_enabled
-          description: SSH tunnel / bastion host fields
         sshHost:
           type: string
           title: ssh_host
@@ -25607,6 +25606,7 @@ components:
         sshUser:
           type: string
           title: ssh_user
+          description: PASSWORD, IAM_ROLE
         sshPrivateKey:
           type: string
           title: ssh_private_key
@@ -25615,9 +25615,6 @@ components:
           title: ssh_host_public_key
       title: KdbMetadata
       additionalProperties: false
-      description: |-
-        KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
-         protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
     textql.rpc.public.connector.ListConnectorTablesRequest:
       type: object
       properties:
@@ -25647,6 +25644,7 @@ components:
           type: integer
           title: connector_id
           format: int32
+          description: 0 = all-time
         limit:
           type: integer
           title: limit
@@ -25659,7 +25657,6 @@ components:
           type: integer
           title: days
           format: int32
-          description: Optional lookback window in days; 0 or unset means all-time.
       title: ListQueryTemplatesRequest
       additionalProperties: false
     textql.rpc.public.connector.ListQueryTemplatesResponse:
@@ -25709,15 +25706,13 @@ components:
         content:
           type: string
           title: content
-          description: The text content of this segment
+          description: dataset IDs for selected Tableau collections
         featureType:
           title: feature_type
-          description: If set, this is a feature word to be styled
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.connector.FeatureType'
       title: MessageSegment
       additionalProperties: false
-      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.Microsoft365Metadata:
       type: object
       properties:
@@ -25742,11 +25737,9 @@ components:
         tokenExpiry:
           type: string
           title: token_expiry
-          description: ISO 8601 timestamp
         metadataOnly:
           type: boolean
           title: metadata_only
-          description: When true, only email metadata is accessible (no body content)
         scopes:
           type: array
           items:
@@ -25773,18 +25766,15 @@ components:
         database:
           type: string
           title: database
-          description: default database to query
         authSource:
           type: string
           title: auth_source
-          description: authSource (e.g. "admin"); defaults to database when empty
         tls:
           type: boolean
           title: tls
         srv:
           type: boolean
           title: srv
-          description: mongodb+srv connection (Atlas) — host is the cluster DNS name
       title: MongoDBMetadata
       additionalProperties: false
     textql.rpc.public.connector.MotherduckMetadata:
@@ -25820,9 +25810,11 @@ components:
         sslMode:
           type: boolean
           title: ssl_mode
+          description: ISO 8601 timestamp
         connectionType:
           type: string
           title: connection_type
+          description: When true, only email metadata is accessible (no body content)
         sid:
           type: string
           title: sid
@@ -25832,14 +25824,12 @@ components:
         walletZip:
           type: string
           title: wallet_zip
-          description: Oracle Wallet fields
         walletPassword:
           type: string
           title: wallet_password
         tnsAlias:
           type: string
           title: tns_alias
-          description: Optional - auto-detected from tnsnames.ora if not provided
       title: OracleMetadata
       additionalProperties: false
     textql.rpc.public.connector.PostgresMetadata:
@@ -25875,7 +25865,6 @@ components:
         sshTunnelEnabled:
           type: boolean
           title: ssh_tunnel_enabled
-          description: SSH tunnel / bastion host fields
         sshHost:
           type: string
           title: ssh_host
@@ -25911,19 +25900,16 @@ components:
           items:
             type: string
           title: report_ids
-          description: PowerBI report IDs
         datasetIds:
           type: array
           items:
             type: string
           title: dataset_ids
-          description: PowerBI dataset IDs (PowerBI datasets, not internal dataset_source)
         collectionIds:
           type: array
           items:
             type: string
           title: collection_ids
-          description: workspace dataset_source IDs (cache key, like Tableau collections)
       title: PowerBIConnectorContext
       additionalProperties: false
     textql.rpc.public.connector.PowerBIMetadata:
@@ -25983,14 +25969,12 @@ components:
           type: string
           title: arrow_data
           format: byte
-          description: Apache Arrow IPC format binary data
         totalRows:
           type:
             - integer
             - string
           title: total_rows
           format: int64
-          description: Total number of rows (for pagination/UI purposes)
       title: QueryResult
       additionalProperties: false
     textql.rpc.public.connector.QueryTemplate:
@@ -26012,6 +25996,7 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.QueryJoinInfo'
           title: joins
+          description: Optional lookback window in days; 0 or unset means all-time.
         eventCount:
           type:
             - integer
@@ -26079,7 +26064,6 @@ components:
         authType:
           type: string
           title: auth_type
-          description: PASSWORD, IAM_ROLE
         roleArn:
           type: string
           title: role_arn
@@ -26210,22 +26194,24 @@ components:
         role:
           type: string
           title: role
+          description: default database to query
         schema:
           type: string
           title: schema
+          description: authSource (e.g. "admin"); defaults to database when empty
         locator:
           type: string
           title: locator
         database:
           type: string
           title: database
+          description: mongodb+srv connection (Atlas) — host is the cluster DNS name
         warehouse:
           type: string
           title: warehouse
         oauthAccessToken:
           type: string
           title: oauth_access_token
-          description: OAuth fields (used when auth_type = OAUTH)
         oauthRefreshToken:
           type: string
           title: oauth_refresh_token
@@ -26238,19 +26224,15 @@ components:
         enableSsoAuth:
           type: boolean
           title: enable_sso_auth
-          description: SSO per-member auth (used when auth_strategy = PER_MEMBER_OAUTH) pass IdP token directly to Snowflake External OAuth
         tokenExchangeEndpoint:
           type: string
           title: token_exchange_endpoint
-          description: IdP token exchange URL (RFC 8693)
         tokenExchangeAudience:
           type: string
           title: token_exchange_audience
-          description: target audience for exchanged token
         tokenExchangeScope:
           type: string
           title: token_exchange_scope
-          description: scope for exchanged token
       title: SnowflakeMetadata
       additionalProperties: false
     textql.rpc.public.connector.SupabaseMetadata:
@@ -26277,6 +26259,7 @@ components:
           items:
             type: string
           title: schemas
+          description: SSH tunnel / bastion host fields
         dialect:
           type: string
           title: dialect
@@ -26285,6 +26268,9 @@ components:
           title: ssl_mode
       title: SupabaseMetadata
       additionalProperties: false
+      description: |-
+        KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
+         protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
     textql.rpc.public.connector.TableauConnectorContext:
       type: object
       properties:
@@ -26293,7 +26279,6 @@ components:
           items:
             type: string
           title: collection_ids
-          description: dataset IDs for selected Tableau collections
       title: TableauConnectorContext
       additionalProperties: false
     textql.rpc.public.connector.TableauMetadata:
@@ -26314,7 +26299,6 @@ components:
         connectedAppClientId:
           type: string
           title: connected_app_client_id
-          description: Connected App credentials for view embedding. Optional, generated by system.
           nullable: true
         connectedAppSecretId:
           type: string
@@ -26335,10 +26319,6 @@ components:
         connectorId:
           type: string
           title: connector_id
-          description: |-
-            Optional: If provided, confidential fields will be preserved from the existing connector
-             when the corresponding field in config is empty. This allows testing updates without
-             requiring the user to re-enter credentials.
           nullable: true
       title: TestConnectorRequest
       additionalProperties: false
@@ -28671,6 +28651,14 @@ components:
           additionalProperties:
             type: string
             title: value
+        oauthClientId:
+          type: string
+          title: oauth_client_id
+          nullable: true
+        oauthClientSecret:
+          type: string
+          title: oauth_client_secret
+          nullable: true
       title: HttpConfig
       additionalProperties: false
     textql.rpc.public.mcp.HttpConfig.HeadersEntry:
@@ -28814,6 +28802,14 @@ components:
           additionalProperties:
             type: string
             title: value
+        oauthClientId:
+          type: string
+          title: oauth_client_id
+          nullable: true
+        oauthClientSecret:
+          type: string
+          title: oauth_client_secret
+          nullable: true
       title: SseConfig
       additionalProperties: false
     textql.rpc.public.mcp.SseConfig.HeadersEntry:
