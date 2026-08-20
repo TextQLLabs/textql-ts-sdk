@@ -120,6 +120,13 @@ export type TextqlRpcPublicCellsFeedAgentInfo = {
   llmModel?: TextqlRpcPublicChatLlmModel | undefined;
   fastMode?: boolean | null | undefined;
   postingFrequencyCrons?: Array<string> | undefined;
+  feedEnabled?: boolean | undefined;
+  isStateful?: boolean | undefined;
+  callableAsSubagent?: boolean | undefined;
+  slackChannel?: string | null | undefined;
+  teamsChannel?: string | null | undefined;
+  emailRecipientCount?: number | undefined;
+  emailRecipients?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -139,6 +146,13 @@ export const TextqlRpcPublicCellsFeedAgentInfo$inboundSchema: z.ZodMiniType<
   llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
   fastMode: z.optional(z.nullable(types.boolean())),
   postingFrequencyCrons: types.optional(z.array(types.string())),
+  feedEnabled: types.optional(types.boolean()),
+  isStateful: types.optional(types.boolean()),
+  callableAsSubagent: types.optional(types.boolean()),
+  slackChannel: z.optional(z.nullable(types.string())),
+  teamsChannel: z.optional(z.nullable(types.string())),
+  emailRecipientCount: types.optional(types.number()),
+  emailRecipients: types.optional(z.array(types.string())),
 });
 
 export function textqlRpcPublicCellsFeedAgentInfoFromJSON(

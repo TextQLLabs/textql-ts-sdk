@@ -19378,6 +19378,32 @@ components:
           items:
             type: string
           title: posting_frequency_crons
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+        isStateful:
+          type: boolean
+          title: is_stateful
+        callableAsSubagent:
+          type: boolean
+          title: callable_as_subagent
+        slackChannel:
+          type: string
+          title: slack_channel
+          nullable: true
+        teamsChannel:
+          type: string
+          title: teams_channel
+          nullable: true
+        emailRecipientCount:
+          type: integer
+          title: email_recipient_count
+          format: int32
+        emailRecipients:
+          type: array
+          items:
+            type: string
+          title: email_recipients
       title: FeedAgentInfo
       additionalProperties: false
     textql.rpc.public.cells.FeedCommentCell:
