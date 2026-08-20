@@ -37,6 +37,7 @@ export const TextqlRpcPublicConnectorConnectorType = {
   Firebolt: "FIREBOLT",
   Kdb: "KDB",
   Mongodb: "MONGODB",
+  AnaBilling: "ANA_BILLING",
 } as const;
 export type TextqlRpcPublicConnectorConnectorType = OpenEnum<
   typeof TextqlRpcPublicConnectorConnectorType
