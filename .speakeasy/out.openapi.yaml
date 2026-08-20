@@ -13394,6 +13394,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataResponse'
+  /textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteBash:
+    post:
+      tags:
+        - SandboxQueryService
+      summary: Runs in the caller's own worker; no connector/source scoping.
+      description: Runs in the caller's own worker; no connector/source scoping.
+      operationId: SandboxQueryService_ExecuteBash
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: executeBash
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_query.SandboxExecuteBashRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_query.SandboxExecuteBashResponse'
   /textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteQuery:
     post:
       tags:
@@ -15974,20 +16012,28 @@ components:
           type: boolean
           title: config_objects_enabled
           description: |-
-            config_objects feature_flags row: umbrella switch for all config-managed-object behavior — Ana's
-             authoring tools, the export RPC + capabilities, reconcile takeover. Supersedes config_migrations_enabled (field 74).
+            config_objects feature_flags row: the umbrella half of the config-management predicate
+             (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
+             alone does not make an org config-managed). One switch for every object type and every
+             config-managed-object behavior — Ana's authoring tools, the export RPC + capabilities,
+             reconcile takeover, the lazy row-to-config migration. Supersedes
+             config_migrations_enabled (field 74).
           nullable: true
         configObjectsPlaybooksEnabled:
           type: boolean
           title: config_objects_playbooks_enabled
           description: |-
-            Per-type sub-toggles under config_objects: playbooks-as-files / dashboards-as-files.
-             Effective only while config_objects_enabled is on; no feature_flags row means enabled.
+            Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
+             object type — config management is one-way, so a per-type switch that cannot
+             un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
+             because proto/api is additive-only.
           nullable: true
+          deprecated: true
         configObjectsDashboardsEnabled:
           type: boolean
           title: config_objects_dashboards_enabled
           nullable: true
+          deprecated: true
         configAutofixEnabled:
           type: boolean
           title: config_autofix_enabled
@@ -38208,6 +38254,56 @@ components:
           title: tql_path
           description: library path to a .tql file
       title: LibraryTQLTemplate
+      additionalProperties: false
+    textql.rpc.public.sandbox_query.SandboxExecuteBashRequest:
+      type: object
+      properties:
+        script:
+          type: string
+          title: script
+        env:
+          type: object
+          title: env
+          additionalProperties:
+            type: string
+            title: value
+      title: SandboxExecuteBashRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_query.SandboxExecuteBashRequest.EnvEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: EnvEntry
+      additionalProperties: false
+    textql.rpc.public.sandbox_query.SandboxExecuteBashResponse:
+      type: object
+      properties:
+        stdout:
+          type: string
+          title: stdout
+          format: byte
+        stderr:
+          type: string
+          title: stderr
+          format: byte
+        exitCode:
+          type: integer
+          title: exit_code
+          format: int32
+        error:
+          type: string
+          title: error
+          description: non-empty on execution-level failure (timeout, spawn error)
+        refreshedToken:
+          type: string
+          title: refreshed_token
+          nullable: true
+      title: SandboxExecuteBashResponse
       additionalProperties: false
     textql.rpc.public.sandbox_query.SandboxExecuteQueryRequest:
       type: object

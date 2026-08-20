@@ -1147,6 +1147,8 @@ export * from "./textql-rpc-public-sandbox-exec-sandbox-load-connector-data-resp
 export * from "./textql-rpc-public-sandbox-exec-tool-availability.js";
 export * from "./textql-rpc-public-sandbox-query-app-db-template.js";
 export * from "./textql-rpc-public-sandbox-query-library-tql-template.js";
+export * from "./textql-rpc-public-sandbox-query-sandbox-execute-bash-request.js";
+export * from "./textql-rpc-public-sandbox-query-sandbox-execute-bash-response.js";
 export * from "./textql-rpc-public-sandbox-query-sandbox-execute-query-request.js";
 export * from "./textql-rpc-public-sandbox-query-sandbox-execute-query-response.js";
 export * from "./textql-rpc-public-sandbox-query-sandbox-query-param.js";

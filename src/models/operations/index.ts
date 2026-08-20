@@ -360,6 +360,7 @@ export * from "./sandbox-exec-service-exec.js";
 export * from "./sandbox-exec-service-execute-code.js";
 export * from "./sandbox-exec-service-get-tool-availability.js";
 export * from "./sandbox-exec-service-load-connector-data.js";
+export * from "./sandbox-query-service-execute-bash.js";
 export * from "./sandbox-query-service-execute-query.js";
 export * from "./scim-service-create-scim-o-auth-client.js";
 export * from "./scim-service-create-scim-token.js";
