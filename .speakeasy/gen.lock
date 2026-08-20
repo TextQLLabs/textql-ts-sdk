@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: a48e2d36a7341397a13edaaf5c988b97
+  docChecksum: a6adb813e26aab01314d2624805d7bcc
   docVersion: 1.0.0
   speakeasyVersion: 1.795.0
   generationVersion: 2.931.0
-  releaseVersion: 1.4.15
-  configChecksum: e0804d109e8be418703df2dff65e0cbd
+  releaseVersion: 1.4.16
+  configChecksum: 2bd16616ec1beb6d210f94877e3b8e31
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 24473661-ea4e-40fc-9dfb-e7be47573b04
-  pristine_commit_hash: 3c48fa64b558468ef13e50729eb036b1aada1c8f
-  pristine_tree_hash: 76083bdcb199462abc60d69a897c0bf49bb1f84e
+  generation_id: 87dc9a11-1821-43e7-9322-fd2fc91bb8f0
+  pristine_commit_hash: e9585a26a2e932bcb32df65c15ea96c4e2bcede6
+  pristine_tree_hash: 0546f96b4493609ffeaccb863010f983734d0afe
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -4740,8 +4740,8 @@ trackedFiles:
     pristine_git_object: 17b2d32f7da9afdf3ad86ecba9dc7e72f4487a26
   docs/models/textql-rpc-public-cells-feed-agent-info.md:
     id: e38e89e922fd
-    last_write_checksum: sha1:0d47852e8a003c632fda26b26e3c1bdd356bf20b
-    pristine_git_object: d31a332a945d00a7e6df2eaf00247484e9b07ce3
+    last_write_checksum: sha1:dac64590f02cf866a2cb8409e4b6cad2a0fb3c36
+    pristine_git_object: 87445e9f70df44123b92aa4cf7c077c9dd78f3fb
   docs/models/textql-rpc-public-cells-feed-comment-cell.md:
     id: 8d8ce933b689
     last_write_checksum: sha1:621a8b653d61d2080669957aaa09660a131c6cde
@@ -9768,12 +9768,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:0209b59a699a0ca0656f1a8862e9f45a55b569f0
-    pristine_git_object: 214edbc321403b1159a248fe94a7cfe9f0d0fe81
+    last_write_checksum: sha1:29f749962c6e703bcca1edef8f11126fee2f01f6
+    pristine_git_object: 3322353f2bc2ea118cabd1fee7d7718d050ee2b4
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:e7a80956af639a5c20f6e3a380caf6bc71920d00
-    pristine_git_object: 4aad01952bf54cc98e5ca815a0d222b8b8843066
+    last_write_checksum: sha1:fbbf4481d42a63de5971188371da03784b7f948d
+    pristine_git_object: 89bafea2405bcf04aff8b12392dfb2292d7364da
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11424,8 +11424,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:6bef31a6c8485b262d67a0fb14e528929a74a06d
-    pristine_git_object: b86e75cc8b07a22e38f15955d650862e799e4f33
+    last_write_checksum: sha1:b963dee9f403aaca2cd6a11a496637d5a1b70b9b
+    pristine_git_object: d58beb1b12b082cac7f8be6af0dcc31464bfa981
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -13764,8 +13764,8 @@ trackedFiles:
     pristine_git_object: 74188f65120f890ceb4aa9321fba125ff4f8c598
   src/models/textql-rpc-public-cells-feed-agent-info.ts:
     id: b36f7f6db3f7
-    last_write_checksum: sha1:6f0e543b8ea63e2c20d4c257ca051af6fc8c24b5
-    pristine_git_object: 96e76448bc23ef948670f83430268be0f543b7f8
+    last_write_checksum: sha1:154970381fca3c1340c066668e34998546ac2980
+    pristine_git_object: c84a2af13a1cf4e1002b2e8ab9381874629fef55
   src/models/textql-rpc-public-cells-feed-comment-cell.ts:
     id: a5ed7c622a69
     last_write_checksum: sha1:54ec7e8ed360904c87f0a69417304ea678295afa
@@ -24322,4 +24322,15 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.chats.attachApp()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.queryOneShot()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.run()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.connectors.create()`: \n  *  `request.body.config.union(microsoft_365).connectorType.enum(anaBilling)` **Added**\n  *  `response.connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.duplicateConnector()`:  `response.connector.union(sql_server_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.get()`:  `response.connector.union(snowflake_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.getConnectors()`:  `response.connectors[].union(snowflake_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.test()`: \n  *  `request.body.config.union(trino).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.update()`: \n  *  `request.body.config.union(tableau).connectorType.enum(anaBilling)` **Added**\n  *  `response.connector.union(mysql_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n"
+releaseNotes: |
+  ## Typescript SDK Changes:
+  * `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.queryOneShot()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.chats.run()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed**
+  * `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent` **Changed**
