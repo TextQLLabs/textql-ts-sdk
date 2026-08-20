@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 10bcf2fbe88d33838c35a678726ea26a
+  docChecksum: a48e2d36a7341397a13edaaf5c988b97
   docVersion: 1.0.0
   speakeasyVersion: 1.795.0
   generationVersion: 2.931.0
-  releaseVersion: 1.4.14
-  configChecksum: 42dc9ff6c1373201a9d032fd9a739a2c
+  releaseVersion: 1.4.15
+  configChecksum: e0804d109e8be418703df2dff65e0cbd
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 2aabcc4f-2651-4980-aef4-ee76c59da580
-  pristine_commit_hash: af76e2b2f8af3476901dc21a9cd89d6f7cea33f0
-  pristine_tree_hash: 3d6043672e9f65746cda9d356583913799c8ef02
+  generation_id: 24473661-ea4e-40fc-9dfb-e7be47573b04
+  pristine_commit_hash: 3c48fa64b558468ef13e50729eb036b1aada1c8f
+  pristine_tree_hash: 76083bdcb199462abc60d69a897c0bf49bb1f84e
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -5944,8 +5944,8 @@ trackedFiles:
     pristine_git_object: c3eb2d230472b4e2ea6d4ad5afc6a854be70fdee
   docs/models/textql-rpc-public-connector-connector-type.md:
     id: b4c7431d1375
-    last_write_checksum: sha1:06859d5b87a593af738abc3538890a6c66a6dc5f
-    pristine_git_object: daddbcbb997609ab2fef82c2b1fe1b7e07148ff1
+    last_write_checksum: sha1:2eeb2240caae7473feb72930a607724006648e68
+    pristine_git_object: 213e29bf0aafa446aad3376be02d87c06dc9bae1
   docs/models/textql-rpc-public-connector-connector.md:
     id: a0fcf11d2df0
     last_write_checksum: sha1:8420dc844b1901d0c2a3b60f27d96d18ff887f12
@@ -9768,12 +9768,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:c3b8591dceb60e3f14855b396b3c8b22adf4606a
-    pristine_git_object: 079d03c4d2b5f0d921d97e0d6fe19b35d6a9f858
+    last_write_checksum: sha1:0209b59a699a0ca0656f1a8862e9f45a55b569f0
+    pristine_git_object: 214edbc321403b1159a248fe94a7cfe9f0d0fe81
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:fe67d2978136deea0169633f59b58ebed7c36524
-    pristine_git_object: 8f8f61488e439a257c13086e454122662fd6920b
+    last_write_checksum: sha1:e7a80956af639a5c20f6e3a380caf6bc71920d00
+    pristine_git_object: 4aad01952bf54cc98e5ca815a0d222b8b8843066
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11424,8 +11424,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:7e2a7ae7e1a94de15cf99f33fbe637e9e1078e91
-    pristine_git_object: 97bb3502783e5cb6ec5e205ae6e9538827988dae
+    last_write_checksum: sha1:6bef31a6c8485b262d67a0fb14e528929a74a06d
+    pristine_git_object: b86e75cc8b07a22e38f15955d650862e799e4f33
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -14620,8 +14620,8 @@ trackedFiles:
     pristine_git_object: 7227aea4436766f6461f3f52d967ebd5c50fd274
   src/models/textql-rpc-public-connector-connector-type.ts:
     id: 30c664c28d57
-    last_write_checksum: sha1:1397ec757ff113ea1b7df4ecc6cda19fb6753b83
-    pristine_git_object: 5d29dcbebd949d267318b337c85d46c8e3d80ec8
+    last_write_checksum: sha1:3539cab7944fa8184c7e35439a169f816c01f68b
+    pristine_git_object: fe3bd6509ff75e1eec6ce36e7f351429c1b3b1cd
   src/models/textql-rpc-public-connector-connector.ts:
     id: ea78de69c612
     last_write_checksum: sha1:a75668840f88e481930e22f269e66f6909791478
@@ -24322,6 +24322,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `textql.sandbox.executeBash()`: **Added**
+releaseNotes: "## Typescript SDK Changes:\n* `textql.chats.attachApp()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.queryOneShot()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.chats.run()`:  `response.cells[].union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.connectors.create()`: \n  *  `request.body.config.union(microsoft_365).connectorType.enum(anaBilling)` **Added**\n  *  `response.connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.duplicateConnector()`:  `response.connector.union(sql_server_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.get()`:  `response.connector.union(snowflake_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.getConnectors()`:  `response.connectors[].union(snowflake_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.test()`: \n  *  `request.body.config.union(trino).connectorType.enum(anaBilling)` **Added**\n* `textql.connectors.update()`: \n  *  `request.body.config.union(tableau).connectorType.enum(anaBilling)` **Added**\n  *  `response.connector.union(mysql_metadata).connectorType.enum(anaBilling)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(sql_cell).sqlCell.authConnectorType.enum(anaBilling)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(ontology_query_cell).ontologyQueryCell.authConnectorType.enum(anaBilling)` **Added**\n"
