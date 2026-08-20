@@ -4,6 +4,7 @@
 
 import { sandboxCreate } from "../funcs/sandbox-create.js";
 import { sandboxExec } from "../funcs/sandbox-exec.js";
+import { sandboxExecuteBash } from "../funcs/sandbox-execute-bash.js";
 import { sandboxExecuteCode } from "../funcs/sandbox-execute-code.js";
 import { sandboxExecuteQuery } from "../funcs/sandbox-execute-query.js";
 import { sandboxGetToolAvailability } from "../funcs/sandbox-get-tool-availability.js";
@@ -77,6 +78,23 @@ export class Sandbox extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SandboxExecServiceLoadConnectorDataResponse> {
     return unwrapAsync(sandboxLoadConnectorData(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Runs in the caller's own worker; no connector/source scoping.
+   *
+   * @remarks
+   * Runs in the caller's own worker; no connector/source scoping.
+   */
+  async executeBash(
+    request: operations.SandboxQueryServiceExecuteBashRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SandboxQueryServiceExecuteBashResponse> {
+    return unwrapAsync(sandboxExecuteBash(
       this,
       request,
       options,

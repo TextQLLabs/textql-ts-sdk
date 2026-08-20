@@ -333,19 +333,30 @@ export type TextqlRpcAuthOrganization = {
   dataAppsEnabled?: boolean | null | undefined;
   issuesEnabled?: boolean | null | undefined;
   /**
-   * config_objects feature_flags row: umbrella switch for all config-managed-object behavior — Ana's
+   * config_objects feature_flags row: the umbrella half of the config-management predicate
    *
    * @remarks
-   *  authoring tools, the export RPC + capabilities, reconcile takeover. Supersedes config_migrations_enabled (field 74).
+   *  (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
+   *  alone does not make an org config-managed). One switch for every object type and every
+   *  config-managed-object behavior — Ana's authoring tools, the export RPC + capabilities,
+   *  reconcile takeover, the lazy row-to-config migration. Supersedes
+   *  config_migrations_enabled (field 74).
    */
   configObjectsEnabled?: boolean | null | undefined;
   /**
-   * Per-type sub-toggles under config_objects: playbooks-as-files / dashboards-as-files.
+   * Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
    *
    * @remarks
-   *  Effective only while config_objects_enabled is on; no feature_flags row means enabled.
+   *  object type — config management is one-way, so a per-type switch that cannot
+   *  un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
+   *  because proto/api is additive-only.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   configObjectsPlaybooksEnabled?: boolean | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   configObjectsDashboardsEnabled?: boolean | null | undefined;
   /**
    * Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for

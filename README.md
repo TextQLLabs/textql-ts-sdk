@@ -530,6 +530,7 @@ run();
 * [executeCode](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
 * [getToolAvailability](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
 * [loadConnectorData](docs/sdks/sandbox/README.md#loadconnectordata) - LoadConnectorData
+* [executeBash](docs/sdks/sandbox/README.md#executebash) - Runs in the caller's own worker; no connector/source scoping.
 * [executeQuery](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 
 ### [SandboxAdmin](docs/sdks/sandboxadmin/README.md)
@@ -990,6 +991,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`sandboxCapabilitiesStateOp`](docs/sdks/sandboxcapabilities/README.md#stateop) - StateOp
 - [`sandboxCreate`](docs/sdks/sandbox/README.md#create) - CreateSandbox
 - [`sandboxExec`](docs/sdks/sandbox/README.md#exec) - Exec
+- [`sandboxExecuteBash`](docs/sdks/sandbox/README.md#executebash) - Runs in the caller's own worker; no connector/source scoping.
 - [`sandboxExecuteCode`](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
 - [`sandboxExecuteQuery`](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 - [`sandboxGetToolAvailability`](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
