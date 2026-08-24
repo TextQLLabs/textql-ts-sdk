@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatCheckStreamlitHealthRequest = {
-  chatId?: string | undefined;
-  cellId?: string | undefined;
+  chatId: string;
+  cellId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatCheckStreamlitHealthRequest$Outbound = {
-  chatId?: string | undefined;
-  cellId?: string | undefined;
+  chatId: string;
+  cellId: string;
 };
 
 /** @internal */
@@ -21,8 +21,8 @@ export const TextqlRpcPublicChatCheckStreamlitHealthRequest$outboundSchema:
     TextqlRpcPublicChatCheckStreamlitHealthRequest$Outbound,
     TextqlRpcPublicChatCheckStreamlitHealthRequest
   > = z.object({
-    chatId: z.optional(z.string()),
-    cellId: z.optional(z.string()),
+    chatId: z.string(),
+    cellId: z.string(),
   });
 
 export function textqlRpcPublicChatCheckStreamlitHealthRequestToJSON(

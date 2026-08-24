@@ -6,7 +6,10 @@
 import { ChatServiceSendMessageRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceSendMessageRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    message: "<value>",
+  },
 };
 ```
 

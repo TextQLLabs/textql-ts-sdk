@@ -5,11 +5,13 @@
 ```typescript
 import { TextqlRpcPublicChatCancelStreamRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatCancelStreamRequest = {};
+let value: TextqlRpcPublicChatCancelStreamRequest = {
+  chatId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_minus_sign: | N/A                |
+| `chatId`           | *string*           | :heavy_check_mark: | N/A                |

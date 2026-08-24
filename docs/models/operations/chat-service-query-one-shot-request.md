@@ -6,7 +6,10 @@
 import { ChatServiceQueryOneShotRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceQueryOneShotRequest = {
-  body: {},
+  body: {
+    question: "<value>",
+    paradigm: {},
+  },
 };
 ```
 

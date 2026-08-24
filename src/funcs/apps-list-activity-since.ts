@@ -27,11 +27,12 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+ * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
  *
  * @remarks
- * Lists the calling member's favorited library items (apps, dashboards,
- *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+ * Favorite/unfavorite a library item (app or dashboard) for the calling member.
+ *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+ *  since the merged library page pins apps and dashboards through one client.
  */
 export function appsListActivitySince(
   client: TextqlCore,

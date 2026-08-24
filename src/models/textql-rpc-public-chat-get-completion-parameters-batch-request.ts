@@ -5,13 +5,13 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetCompletionParametersBatchRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   cellIds?: Array<string> | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetCompletionParametersBatchRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   cellIds?: Array<string> | undefined;
 };
 
@@ -21,7 +21,7 @@ export const TextqlRpcPublicChatGetCompletionParametersBatchRequest$outboundSche
     TextqlRpcPublicChatGetCompletionParametersBatchRequest$Outbound,
     TextqlRpcPublicChatGetCompletionParametersBatchRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
     cellIds: z.optional(z.array(z.string())),
   });
 

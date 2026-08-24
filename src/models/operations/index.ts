@@ -378,6 +378,7 @@ export * from "./settings-service-delete-organization-member.js";
 export * from "./settings-service-get-organization-settings.js";
 export * from "./settings-service-invite-organization-member.js";
 export * from "./settings-service-list-organization-members.js";
+export * from "./settings-service-update-organization-model-settings.js";
 export * from "./settings-service-update-organization-settings.js";
 export * from "./slack-service-create-slack-uuid.js";
 export * from "./slack-service-delete-installation.js";

@@ -5,11 +5,13 @@
 ```typescript
 import { TextqlRpcPublicChatCheckChatPermissionsRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatCheckChatPermissionsRequest = {};
+let value: TextqlRpcPublicChatCheckChatPermissionsRequest = {
+  chatId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_minus_sign: | N/A                |
+| `chatId`           | *string*           | :heavy_check_mark: | N/A                |

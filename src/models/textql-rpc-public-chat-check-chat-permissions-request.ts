@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatCheckChatPermissionsRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatCheckChatPermissionsRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -19,7 +19,7 @@ export const TextqlRpcPublicChatCheckChatPermissionsRequest$outboundSchema:
     TextqlRpcPublicChatCheckChatPermissionsRequest$Outbound,
     TextqlRpcPublicChatCheckChatPermissionsRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatCheckChatPermissionsRequestToJSON(

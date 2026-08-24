@@ -6,7 +6,9 @@
 import { ChatServiceRejectContextPromptChangeRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceRejectContextPromptChangeRequest = {
-  body: {},
+  body: {
+    cellId: "<id>",
+  },
 };
 ```
 

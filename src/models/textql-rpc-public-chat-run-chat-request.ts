@@ -9,7 +9,7 @@ import {
 } from "./textql-rpc-public-chat-llm-model.js";
 
 export type TextqlRpcPublicChatRunChatRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   latestCompleteCellId?: string | null | undefined;
   research?: boolean | null | undefined;
   model?: TextqlRpcPublicChatLlmModel | undefined;
@@ -19,7 +19,7 @@ export type TextqlRpcPublicChatRunChatRequest = {
 
 /** @internal */
 export type TextqlRpcPublicChatRunChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   latestCompleteCellId?: string | null | undefined;
   research?: boolean | null | undefined;
   model?: string | undefined;
@@ -32,7 +32,7 @@ export const TextqlRpcPublicChatRunChatRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatRunChatRequest$Outbound,
   TextqlRpcPublicChatRunChatRequest
 > = z.object({
-  chatId: z.optional(z.string()),
+  chatId: z.string(),
   latestCompleteCellId: z.optional(z.nullable(z.string())),
   research: z.optional(z.nullable(z.boolean())),
   model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),

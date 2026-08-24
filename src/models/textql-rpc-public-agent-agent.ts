@@ -163,7 +163,12 @@ export type TextqlRpcPublicAgentAgent = {
    *  tools, feed persona prompt). Delivery config (channels, recipients, slack,
    *  teams) is only meaningful when true.
    */
+  callableAsSubagent?: boolean | undefined;
+  subagentInvokerMemberIds?: Array<string> | undefined;
+  subagentInvokerRoleIds?: Array<string> | undefined;
   feedEnabled?: boolean | undefined;
+  subagentAgentIds?: Array<string> | undefined;
+  allowAdHocSubagents?: boolean | undefined;
 };
 
 /** @internal */
@@ -204,7 +209,12 @@ export const TextqlRpcPublicAgentAgent$inboundSchema: z.ZodMiniType<
   ),
   profileImageUrl: types.optional(types.string()),
   postingFrequencyCadences: types.optional(z.array(types.string())),
+  callableAsSubagent: types.optional(types.boolean()),
+  subagentInvokerMemberIds: types.optional(z.array(types.string())),
+  subagentInvokerRoleIds: types.optional(z.array(types.string())),
   feedEnabled: types.optional(types.boolean()),
+  subagentAgentIds: types.optional(z.array(types.string())),
+  allowAdHocSubagents: types.optional(types.boolean()),
 });
 
 export function textqlRpcPublicAgentAgentFromJSON(

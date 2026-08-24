@@ -5,12 +5,15 @@
 ```typescript
 import { TextqlRpcPublicChatAttachAgentToChatRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatAttachAgentToChatRequest = {};
+let value: TextqlRpcPublicChatAttachAgentToChatRequest = {
+  chatId: "<id>",
+  agentId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_minus_sign: | N/A                |
-| `agentId`          | *string*           | :heavy_minus_sign: | N/A                |
+| `chatId`           | *string*           | :heavy_check_mark: | N/A                |
+| `agentId`          | *string*           | :heavy_check_mark: | N/A                |

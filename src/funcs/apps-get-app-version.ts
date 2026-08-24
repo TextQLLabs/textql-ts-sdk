@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+ * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
  *
  * @remarks
- * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+ * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
  */
 export function appsGetAppVersion(
   client: TextqlCore,

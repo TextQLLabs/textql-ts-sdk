@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetChatArtifactsSummaryRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetChatArtifactsSummaryRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -19,7 +19,7 @@ export const TextqlRpcPublicChatGetChatArtifactsSummaryRequest$outboundSchema:
     TextqlRpcPublicChatGetChatArtifactsSummaryRequest$Outbound,
     TextqlRpcPublicChatGetChatArtifactsSummaryRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatGetChatArtifactsSummaryRequestToJSON(

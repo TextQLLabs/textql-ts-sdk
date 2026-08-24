@@ -6,7 +6,9 @@
 import { ChatServiceDuplicateChatRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceDuplicateChatRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

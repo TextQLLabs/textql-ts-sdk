@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
- *
- * @remarks
- * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+ * AppHeartbeat
  */
 export function appsHeartbeat(
   client: TextqlCore,

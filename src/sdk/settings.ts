@@ -7,6 +7,7 @@ import { settingsDeleteMember } from "../funcs/settings-delete-member.js";
 import { settingsGet } from "../funcs/settings-get.js";
 import { settingsInviteMember } from "../funcs/settings-invite-member.js";
 import { settingsListMembers } from "../funcs/settings-list-members.js";
+import { settingsUpdateModelSettings } from "../funcs/settings-update-model-settings.js";
 import { settingsUpdate } from "../funcs/settings-update.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -77,6 +78,22 @@ export class Settings extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SettingsServiceListOrganizationMembersResponse> {
     return unwrapAsync(settingsListMembers(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * UpdateOrganizationModelSettings
+   */
+  async updateModelSettings(
+    request: operations.SettingsServiceUpdateOrganizationModelSettingsRequest,
+    options?: RequestOptions,
+  ): Promise<
+    operations.SettingsServiceUpdateOrganizationModelSettingsResponse
+  > {
+    return unwrapAsync(settingsUpdateModelSettings(
       this,
       request,
       options,

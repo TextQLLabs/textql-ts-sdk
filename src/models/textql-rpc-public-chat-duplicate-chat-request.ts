@@ -21,7 +21,7 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
   /**
    * "user" or "assistant"
    */
-  chatId?: string | undefined;
+  chatId: string;
   onlyIfDifferentOwner?: boolean | null | undefined;
   upToCellId?: string | null | undefined;
   paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions | undefined;
@@ -33,7 +33,7 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
 
 /** @internal */
 export type TextqlRpcPublicChatDuplicateChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   onlyIfDifferentOwner?: boolean | null | undefined;
   upToCellId?: string | null | undefined;
   paradigmOptions?: TextqlRpcPublicParadigmParadigmOptions$Outbound | undefined;
@@ -49,7 +49,7 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
     TextqlRpcPublicChatDuplicateChatRequest$Outbound,
     TextqlRpcPublicChatDuplicateChatRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
     onlyIfDifferentOwner: z.optional(z.nullable(z.boolean())),
     upToCellId: z.optional(z.nullable(z.string())),
     paradigmOptions: z.optional(

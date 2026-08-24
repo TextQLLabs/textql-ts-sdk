@@ -6,7 +6,9 @@
 import { ChatServiceCancelStreamRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceCancelStreamRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

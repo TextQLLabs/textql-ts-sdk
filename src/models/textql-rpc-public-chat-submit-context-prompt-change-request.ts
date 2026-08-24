@@ -8,14 +8,14 @@ export type TextqlRpcPublicChatSubmitContextPromptChangeRequest = {
   /**
    * UUID
    */
-  cellId?: string | undefined;
-  editedContext?: string | undefined;
+  cellId: string;
+  editedContext: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatSubmitContextPromptChangeRequest$Outbound = {
-  cellId?: string | undefined;
-  editedContext?: string | undefined;
+  cellId: string;
+  editedContext: string;
 };
 
 /** @internal */
@@ -24,8 +24,8 @@ export const TextqlRpcPublicChatSubmitContextPromptChangeRequest$outboundSchema:
     TextqlRpcPublicChatSubmitContextPromptChangeRequest$Outbound,
     TextqlRpcPublicChatSubmitContextPromptChangeRequest
   > = z.object({
-    cellId: z.optional(z.string()),
-    editedContext: z.optional(z.string()),
+    cellId: z.string(),
+    editedContext: z.string(),
   });
 
 export function textqlRpcPublicChatSubmitContextPromptChangeRequestToJSON(

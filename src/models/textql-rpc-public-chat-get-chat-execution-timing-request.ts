@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetChatExecutionTimingRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetChatExecutionTimingRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -19,7 +19,7 @@ export const TextqlRpcPublicChatGetChatExecutionTimingRequest$outboundSchema:
     TextqlRpcPublicChatGetChatExecutionTimingRequest$Outbound,
     TextqlRpcPublicChatGetChatExecutionTimingRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatGetChatExecutionTimingRequestToJSON(

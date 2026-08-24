@@ -493,8 +493,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-      description: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+      summary: AppHeartbeat
       operationId: AppService_AppHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: heartbeat
@@ -683,8 +682,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'View analytics: reads the engagement views recorded on app page load.'
-      description: 'View analytics: reads the engagement views recorded on app page load.'
+      summary: Replaces the calling member's entire ordering; capped server-side.
+      description: Replaces the calling member's entire ordering; capped server-side.
       operationId: AppService_GetAppDBSchema
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBSchema
@@ -721,10 +720,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.'
-      description: |-
-        Staff-only (superadmin gated in-handler): publishes the embedded component
-         gallery as an app tree and returns its signed viewer URL.
+      summary: 'View analytics: reads the engagement views recorded on app page load.'
+      description: 'View analytics: reads the engagement views recorded on app page load.'
       operationId: AppService_GetAppDBTablePreview
       x-speakeasy-group: apps
       x-speakeasy-name-override: getDBTablePreview
@@ -761,7 +758,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: GetAppMemberState
+      summary: Per-member notification subscription to an app ("watch this app").
+      description: Per-member notification subscription to an app ("watch this app").
       operationId: AppService_GetAppMemberState
       x-speakeasy-group: apps
       x-speakeasy-name-override: getMemberState
@@ -798,8 +796,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
-      description: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
+      summary: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+      description: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
       operationId: AppService_GetAppVersion
       x-speakeasy-group: apps
       x-speakeasy-name-override: getAppVersion
@@ -836,8 +834,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Per-member notification subscription to an app ("watch this app").
-      description: Per-member notification subscription to an app ("watch this app").
+      summary: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+      description: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
       operationId: AppService_GetAppViewStats
       x-speakeasy-group: apps
       x-speakeasy-name-override: getAppViewStats
@@ -948,10 +946,11 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Lists the calling member''s favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.'
+      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
       description: |-
-        Lists the calling member's favorited library items (apps, dashboards,
-         agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+        Favorite/unfavorite a library item (app or dashboard) for the calling member.
+         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+         since the merged library page pins apps and dashboards through one client.
       operationId: AppService_ListAppActivitySince
       x-speakeasy-group: apps
       x-speakeasy-name-override: listActivitySince
@@ -988,8 +987,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
-      description: Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+      summary: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+      description: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
       operationId: AppService_ListAppVersions
       x-speakeasy-group: apps
       x-speakeasy-name-override: listVersions
@@ -1063,11 +1062,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+      summary: 'Watcher management: app owners/editors and org admins list the app''s  subscribers and add/remove members (Upsert/Delete with member_id).'
       description: |-
-        Favorite/unfavorite a library item (app or dashboard) for the calling member.
-         Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-         since the merged library page pins apps and dashboards through one client.
+        Watcher management: app owners/editors and org admins list the app's
+         subscribers and add/remove members (Upsert/Delete with member_id).
       operationId: AppService_ListMyAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: listMyMemberActivity
@@ -1104,8 +1102,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: Moves an app into a library folder (or to root when folder_id is empty).
-      description: Moves an app into a library folder (or to root when folder_id is empty).
+      summary: MoveAppToFolder
       operationId: AppService_MoveAppToFolder
       x-speakeasy-group: apps
       x-speakeasy-name-override: moveAppToFolder
@@ -1142,8 +1139,12 @@ paths:
     post:
       tags:
         - AppService
-      summary: Replaces the calling member's entire ordering; capped server-side.
-      description: Replaces the calling member's entire ordering; capped server-side.
+      summary: 'Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks (''<kind>:<id>'' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.'
+      description: |-
+        Ordering overlay for the sidebar Bookmarks section: one position list per
+         member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+         Membership truth stays in library_favorite / chat bookmarks; this persists
+         only the drag-and-drop order.
       operationId: AppService_PresenceHeartbeat
       x-speakeasy-group: apps
       x-speakeasy-name-override: presenceHeartbeat
@@ -1180,10 +1181,7 @@ paths:
     post:
       tags:
         - AppService
-      summary: 'Watcher management: app owners/editors and org admins list the app''s  subscribers and add/remove members (Upsert/Delete with member_id).'
-      description: |-
-        Watcher management: app owners/editors and org admins list the app's
-         subscribers and add/remove members (Upsert/Delete with member_id).
+      summary: RecordAppMemberActivity
       operationId: AppService_RecordAppMemberActivity
       x-speakeasy-group: apps
       x-speakeasy-name-override: recordMemberActivity
@@ -1220,8 +1218,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
-      description: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+      summary: Moves an app into a library folder (or to root when folder_id is empty).
+      description: Moves an app into a library folder (or to root when folder_id is empty).
       operationId: AppService_RefreshApp
       x-speakeasy-group: apps
       x-speakeasy-name-override: refresh
@@ -1258,7 +1256,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: RestoreAppVersion
+      summary: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
+      description: 'Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.'
       operationId: AppService_RestoreAppVersion
       x-speakeasy-group: apps
       x-speakeasy-name-override: restoreAppVersion
@@ -1332,8 +1331,8 @@ paths:
     post:
       tags:
         - AppService
-      summary: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
-      description: Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+      summary: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+      description: Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
       operationId: AppService_SetFavorite
       x-speakeasy-group: apps
       x-speakeasy-name-override: setFavorite
@@ -14061,6 +14060,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.settings.ListOrganizationMembersResponse'
+  /textql.rpc.public.settings.SettingsService/UpdateOrganizationModelSettings:
+    post:
+      tags:
+        - SettingsService
+      summary: UpdateOrganizationModelSettings
+      operationId: SettingsService_UpdateOrganizationModelSettings
+      x-speakeasy-group: settings
+      x-speakeasy-name-override: updateModelSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.settings.UpdateOrganizationModelSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.settings.UpdateOrganizationModelSettingsResponse'
   /textql.rpc.public.settings.SettingsService/UpdateOrganizationSettings:
     post:
       tags:
@@ -15332,15 +15368,6 @@ components:
              service Foo {
                rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);
              }
-    google.protobuf.Int32Value:
-      type: number
-      description: |-
-        Wrapper message for `int32`.
-
-         The JSON representation for `Int32Value` is JSON number.
-
-         Not recommended for use in new APIs, but still useful for legacy APIs and
-         has no plan to be removed.
     google.protobuf.ListValue:
       type: object
       properties:
@@ -15915,20 +15942,34 @@ components:
           title: thread_hard_delete_grace_days
           format: int32
           nullable: true
+        deleteInactiveAppsEnabled:
+          type: boolean
+          title: delete_inactive_apps_enabled
+          nullable: true
+        appRetentionDays:
+          type: integer
+          title: app_retention_days
+          format: int32
+          nullable: true
+        appHardDeleteGraceDays:
+          type: integer
+          title: app_hard_delete_grace_days
+          format: int32
+          nullable: true
         assetUrlExpiry:
           title: asset_url_expiry
           $ref: '#/components/schemas/textql.rpc.auth.AssetUrlExpiry'
         emailOutputEnabled:
           type: boolean
           title: email_output_enabled
-          description: |-
-            Mirror of the email_output_enabled feature flag (in feature_flags table,
-             not on the organization row). Surfaces in settings UIs alongside the
-             org-row toggles.
           nullable: true
         defaultPlaybookPrivate:
           type: boolean
           title: default_playbook_private
+          description: |-
+            Mirror of the email_output_enabled feature flag (in feature_flags table,
+             not on the organization row). Surfaces in settings UIs alongside the
+             org-row toggles.
           nullable: true
         defaultDashboardOutput:
           type: boolean
@@ -15938,15 +15979,15 @@ components:
           type: integer
           title: default_methodology
           format: int32
+          nullable: true
+        scimNewGroupDefaultRoleType:
+          type: string
+          title: scim_new_group_default_role_type
           description: |-
             Org-wide default response methodology for new chats, as a
              textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
              with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
              per-member (Member.default_methodology) and per-chat.
-          nullable: true
-        scimNewGroupDefaultRoleType:
-          type: string
-          title: scim_new_group_default_role_type
           nullable: true
         groupsFeatureEnabled:
           type: boolean
@@ -15960,13 +16001,13 @@ components:
         showTextqlUsage:
           type: boolean
           title: show_textql_usage
-          description: |-
-            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
-             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         tracesEnabled:
           type: boolean
           title: traces_enabled
+          description: |-
+            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
+             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         allowLlmDataRetention:
           type: boolean
@@ -15987,30 +16028,34 @@ components:
         migrationBannerDismissed:
           type: boolean
           title: migration_banner_dismissed
-          description: dismiss legacy-context migration banner org-wide
           nullable: true
         configMigrationsEnabled:
           type: boolean
           title: config_migrations_enabled
-          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
+          description: dismiss legacy-context migration banner org-wide
           nullable: true
           deprecated: true
         sandboxObservabilityEnabled:
           type: boolean
           title: sandbox_observability_enabled
+          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
           nullable: true
         dataAppsEnabled:
           type: boolean
           title: data_apps_enabled
-          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
         issuesEnabled:
           type: boolean
           title: issues_enabled
+          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
         configObjectsEnabled:
           type: boolean
           title: config_objects_enabled
+          nullable: true
+        configObjectsPlaybooksEnabled:
+          type: boolean
+          title: config_objects_playbooks_enabled
           description: |-
             config_objects feature_flags row: the umbrella half of the config-management predicate
              (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
@@ -16019,9 +16064,10 @@ components:
              reconcile takeover, the lazy row-to-config migration. Supersedes
              config_migrations_enabled (field 74).
           nullable: true
-        configObjectsPlaybooksEnabled:
+          deprecated: true
+        configObjectsDashboardsEnabled:
           type: boolean
-          title: config_objects_playbooks_enabled
+          title: config_objects_dashboards_enabled
           description: |-
             Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
              object type — config management is one-way, so a per-type switch that cannot
@@ -16029,37 +16075,36 @@ components:
              because proto/api is additive-only.
           nullable: true
           deprecated: true
-        configObjectsDashboardsEnabled:
-          type: boolean
-          title: config_objects_dashboards_enabled
-          nullable: true
-          deprecated: true
         configAutofixEnabled:
           type: boolean
           title: config_autofix_enabled
-          description: |-
-            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
-             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
           deprecated: true
         helmChartVersion:
           type: string
           title: helm_chart_version
+          description: |-
+            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
+             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         spendTransparencyEnabled:
           type: boolean
           title: spend_transparency_enabled
-          description: |-
-            Internal flag: show dollar costs (spend transparency) across the product.
-             Only rendered for internal (@textql.com) users while pricing is verified.
           nullable: true
         sharingDisabled:
           type: boolean
           title: sharing_disabled
+          description: |-
+            Internal flag: show dollar costs (spend transparency) across the product.
+             Only rendered for internal (@textql.com) users while pricing is verified.
           nullable: true
         appWritebackAutoApproveEnabled:
           type: boolean
           title: app_writeback_auto_approve_enabled
+          nullable: true
+        subagentsEnabled:
+          type: boolean
+          title: subagents_enabled
           description: Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
           nullable: true
       title: Organization
@@ -16379,13 +16424,34 @@ components:
             Index-aligned with posting_frequency_crons. Each entry is the flexible
              cadence (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) the schedule came from,
              or "" when the schedule is an exact custom cron.
-        feedEnabled:
+        callableAsSubagent:
           type: boolean
-          title: feed_enabled
+          title: callable_as_subagent
           description: |-
             Whether this agent participates in the feed (posts/comments/engages, feed
              tools, feed persona prompt). Delivery config (channels, recipients, slack,
              teams) is only meaningful when true.
+        subagentInvokerMemberIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_member_ids
+        subagentInvokerRoleIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_role_ids
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+        subagentAgentIds:
+          type: array
+          items:
+            type: string
+          title: subagent_agent_ids
+        allowAdHocSubagents:
+          type: boolean
+          title: allow_ad_hoc_subagents
       title: Agent
       additionalProperties: false
     textql.rpc.public.agent.AgentDBColumn:
@@ -16775,12 +16841,35 @@ components:
             Index-aligned with posting_frequency_crons. A non-empty cadence
              (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) marks a flexible schedule whose
              cron the backend generates; "" (or an empty list) means exact.
-        feedEnabled:
+        callableAsSubagent:
           type: boolean
-          title: feed_enabled
+          title: callable_as_subagent
           description: |-
             Unset defaults to true: new agents are delegatable unless the caller opts
              out. Mirrors allow_ad_hoc_subagents below.
+          nullable: true
+        subagentInvokerMemberIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_member_ids
+        subagentInvokerRoleIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_role_ids
+        feedEnabled:
+          type: boolean
+          title: feed_enabled
+          nullable: true
+        subagentAgentIds:
+          type: array
+          items:
+            type: string
+          title: subagent_agent_ids
+        allowAdHocSubagents:
+          type: boolean
+          title: allow_ad_hoc_subagents
           nullable: true
       title: CreateAgentRequest
       additionalProperties: false
@@ -17105,10 +17194,41 @@ components:
             Index-aligned with posting_frequency_crons. A non-empty cadence
              (HOURLY/FOUR-HOUR/EIGHT-HOUR/DAILY/WEEKLY) marks a flexible schedule whose
              cron the backend generates; "" (or an empty list) means exact.
+        callableAsSubagent:
+          type: boolean
+          title: callable_as_subagent
+          description: Feed participation; nil = don't touch (mirrors fast_mode/is_stateful).
+          nullable: true
+        subagentInvokerMemberIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_member_ids
+        subagentInvokerRoleIds:
+          type: array
+          items:
+            type: string
+          title: subagent_invoker_role_ids
+        updateSubagentInvokers:
+          type: boolean
+          title: update_subagent_invokers
+          nullable: true
         feedEnabled:
           type: boolean
           title: feed_enabled
-          description: Feed participation; nil = don't touch (mirrors fast_mode/is_stateful).
+          nullable: true
+        subagentAgentIds:
+          type: array
+          items:
+            type: string
+          title: subagent_agent_ids
+        updateSubagents:
+          type: boolean
+          title: update_subagents
+          nullable: true
+        allowAdHocSubagents:
+          type: boolean
+          title: allow_ad_hoc_subagents
           nullable: true
       title: UpdateAgentRequest
       additionalProperties: false
@@ -17450,6 +17570,7 @@ components:
         id:
           type: string
           title: id
+          description: normalized relative path, forward slashes, no .. or leading /
         appId:
           type: string
           title: app_id
@@ -17457,7 +17578,6 @@ components:
           type: integer
           title: version_number
           format: int32
-          description: JSON object, keys map to function kwargs
         code:
           type: string
           title: code
@@ -17512,6 +17632,7 @@ components:
           nullable: true
       title: AppVersion
       additionalProperties: false
+      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.AppViewerInfo:
       type: object
       properties:
@@ -17942,12 +18063,10 @@ components:
           type: integer
           title: limit
           format: int32
-          description: 'Routing observability: warm | warm_fallback | tql | sql.'
         offset:
           type: integer
           title: offset
           format: int32
-          description: Whether this invoke paid phase-1 module definition (cold imports).
       title: ListAppVersionsRequest
       additionalProperties: false
     textql.rpc.public.app.ListAppVersionsResponse:
@@ -17958,14 +18077,12 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.app.AppVersion'
           title: versions
-          description: normalized relative path, forward slashes, no .. or leading /
         totalCount:
           type: integer
           title: total_count
           format: int32
       title: ListAppVersionsResponse
       additionalProperties: false
-      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.ListAppsRequest:
       type: object
       properties:
@@ -18723,33 +18840,32 @@ components:
         action:
           type: string
           title: action
+          description: create | update | publish
         appId:
           type: string
           title: app_id
-          description: '"sql" | "python"'
         name:
           type: string
           title: name
-          description: Produced dataframe name, if applicable
         errorMessage:
           type: string
           title: error_message
-          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         screenshotUrl:
           type: string
           title: screenshot_url
-          description: 'SQL only: referenced tables'
           nullable: true
         lastRunAt:
           type: string
           title: last_run_at
-          description: upstream cell(s), for graph lineage
           nullable: true
         buildLineCount:
           type: integer
           title: build_line_count
           format: int32
+          description: |-
+            Size of the app being written, updated live as the tool args stream so the
+             builder loader can show real "N lines / M files" progress during generation.
           nullable: true
         buildFileCount:
           type: integer
@@ -18758,13 +18874,13 @@ components:
           nullable: true
       title: AppCell
       additionalProperties: false
+      description: AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
     textql.rpc.public.cells.AppInfo:
       type: object
       properties:
         id:
           type: string
           title: id
-          description: create | update | publish
         name:
           type: string
           title: name
@@ -18775,6 +18891,7 @@ components:
         status:
           type: string
           title: status
+          description: '"draft" or "published" (derived from published_at)'
         creatorId:
           type: string
           title: creator_id
@@ -18783,9 +18900,6 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         updatedAt:
           title: updated_at
-          description: |-
-            Size of the app being written, updated live as the tool args stream so the
-             builder loader can show real "N lines / M files" progress during generation.
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         refreshedAt:
           title: refreshed_at
@@ -18797,7 +18911,6 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: AppInfo
       additionalProperties: false
-      description: AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
     textql.rpc.public.cells.BashCell:
       type: object
       properties:
@@ -18901,25 +19014,30 @@ components:
         kind:
           type: string
           title: kind
+          description: '"sql" | "python"'
         dataframeName:
           type: string
           title: dataframe_name
+          description: Produced dataframe name, if applicable
           nullable: true
         connectorId:
           type: integer
           title: connector_id
           format: int32
+          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         tables:
           type: array
           items:
             type: string
           title: tables
+          description: 'SQL only: referenced tables'
         inputCellIds:
           type: array
           items:
             type: string
           title: input_cell_ids
+          description: upstream cell(s), for graph lineage
       title: CitationLineageNode
       additionalProperties: false
     textql.rpc.public.cells.CompactionCell:
@@ -19934,6 +20052,7 @@ components:
         appId:
           type: string
           title: app_id
+          description: Set for single-app lookup
         totalCount:
           type: integer
           title: total_count
@@ -19941,7 +20060,6 @@ components:
         errorMessage:
           type: string
           title: error_message
-          description: '"draft" or "published" (derived from published_at)'
           nullable: true
         apps:
           type: array
@@ -21314,6 +21432,68 @@ components:
           nullable: true
       title: StreamlitCell
       additionalProperties: false
+    textql.rpc.public.cells.SubagentCell:
+      type: object
+      properties:
+        objective:
+          type: string
+          title: objective
+        subagentName:
+          type: string
+          title: subagent_name
+        agentId:
+          type: string
+          title: agent_id
+          nullable: true
+        detached:
+          type: boolean
+          title: detached
+        childChatId:
+          type: string
+          title: child_chat_id
+        status:
+          title: status
+          $ref: '#/components/schemas/textql.rpc.public.cells.SubagentRunStatus'
+        finalMessage:
+          type: string
+          title: final_message
+        artifacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.cells.FileReference'
+          title: artifacts
+        depth:
+          type: integer
+          title: depth
+          format: int32
+        errorMessage:
+          type: string
+          title: error_message
+          nullable: true
+        executionTimeMs:
+          type:
+            - integer
+            - string
+          title: execution_time_ms
+          format: int64
+          nullable: true
+        tokensUsed:
+          type:
+            - integer
+            - string
+          title: tokens_used
+          format: int64
+          nullable: true
+      title: SubagentCell
+      additionalProperties: false
+    textql.rpc.public.cells.SubagentRunStatus:
+      type: string
+      title: SubagentRunStatus
+      enum:
+        - SUBAGENT_RUN_STATUS_UNKNOWN
+        - SUBAGENT_RUN_STATUS_RUNNING
+        - SUBAGENT_RUN_STATUS_COMPLETED
+        - SUBAGENT_RUN_STATUS_ERROR
     textql.rpc.public.cells.SummaryCell:
       type: object
       properties:
@@ -21536,6 +21716,9 @@ components:
           type: string
           title: edited_context
       title: ApproveContextPromptChangeRequest
+      required:
+        - cellId
+        - editedContext
       additionalProperties: false
     textql.rpc.public.chat.ApproveContextPromptChangeResponse:
       type: object
@@ -21574,6 +21757,8 @@ components:
           type: string
           title: cell_id
       title: ApproveOntologyChangeRequest
+      required:
+        - cellId
       additionalProperties: false
       description: Per-member auth resume
     textql.rpc.public.chat.ApproveOntologyChangeResponse:
@@ -21646,6 +21831,9 @@ components:
           type: string
           title: agent_id
       title: AttachAgentToChatRequest
+      required:
+        - chatId
+        - agentId
       additionalProperties: false
     textql.rpc.public.chat.AttachAgentToChatResponse:
       type: object
@@ -21665,6 +21853,9 @@ components:
           type: string
           title: app_id
       title: AttachAppRequest
+      required:
+        - chatId
+        - appId
       additionalProperties: false
     textql.rpc.public.chat.AttachAppResponse:
       type: object
@@ -21688,6 +21879,9 @@ components:
           title: dashboard_id
           description: uses latest version
       title: AttachDashboardRequest
+      required:
+        - chatId
+        - dashboardId
       additionalProperties: false
     textql.rpc.public.chat.AttachDashboardResponse:
       type: object
@@ -21710,6 +21904,9 @@ components:
           type: string
           title: dataset_id
       title: AttachDatasetRequest
+      required:
+        - chatId
+        - datasetId
       additionalProperties: false
     textql.rpc.public.chat.AttachDatasetResponse:
       type: object
@@ -21729,6 +21926,8 @@ components:
           type: string
           title: chat_id
       title: BookmarkChatRequest
+      required:
+        - chatId
       additionalProperties: false
       description: Simplified query request for external API users
     textql.rpc.public.chat.CancelStreamRequest:
@@ -21738,6 +21937,8 @@ components:
           type: string
           title: chat_id
       title: CancelStreamRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.CancelStreamResponse:
       type: object
@@ -21783,6 +21984,7 @@ components:
             toolSummary:
               type: string
               title: tool_summary
+              description: LLM-generated summary of what this tool call does
               nullable: true
             durationMs:
               type:
@@ -21790,7 +21992,7 @@ components:
                 - string
               title: duration_ms
               format: int64
-              description: LLM-generated summary of what this tool call does
+              description: cells_v5.duration_ms — wall-clock this cell took
               nullable: true
         - oneOf:
             - properties:
@@ -22141,6 +22343,13 @@ components:
               required:
                 - streamlitCell
             - properties:
+                subagentCell:
+                  title: subagent_cell
+                  $ref: '#/components/schemas/textql.rpc.public.cells.SubagentCell'
+              title: subagent_cell
+              required:
+                - subagentCell
+            - properties:
                 summaryCell:
                   title: summary_cell
                   $ref: '#/components/schemas/textql.rpc.public.cells.SummaryCell'
@@ -22466,6 +22675,8 @@ components:
           type: string
           title: chat_id
       title: CheckChatPermissionsRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.CheckChatPermissionsResponse:
       type: object
@@ -22558,6 +22769,9 @@ components:
           type: string
           title: cell_id
       title: CheckStreamlitHealthRequest
+      required:
+        - chatId
+        - cellId
       additionalProperties: false
     textql.rpc.public.chat.CheckStreamlitHealthResponse:
       type: object
@@ -22634,7 +22848,13 @@ components:
             max_thinking runs extended thinking at max effort with visible reasoning.
              Supported on Sonnet 5, Fable 5, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
           nullable: true
+        modelName:
+          type: string
+          title: model_name
+          nullable: true
       title: CreateRequest
+      required:
+        - paradigm
       additionalProperties: false
     textql.rpc.public.chat.CreateResponse:
       type: object
@@ -22660,6 +22880,8 @@ components:
           type: string
           title: chat_id
       title: DeleteChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.DismissQuestionsRequest:
       type: object
@@ -22674,6 +22896,8 @@ components:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionAnswer'
           title: answers
       title: DismissQuestionsRequest
+      required:
+        - cellId
       additionalProperties: false
     textql.rpc.public.chat.DismissQuestionsResponse:
       type: object
@@ -22722,6 +22946,8 @@ components:
           title: max_thinking
           nullable: true
       title: DuplicateChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.DuplicateChatResponse:
       type: object
@@ -22849,6 +23075,8 @@ components:
           type: string
           title: chat_id
       title: GetAPIChatAnswerRequest
+      required:
+        - chatId
       additionalProperties: false
       description: order is "most recent first"
     textql.rpc.public.chat.GetAPIChatAnswerResponse:
@@ -22875,6 +23103,9 @@ components:
           type: string
           title: chat_id
       title: GetArtifactRequest
+      required:
+        - artifactId
+        - chatId
       additionalProperties: false
       description: Request all artifact summaries for a chat (for drawer dropdown)
     textql.rpc.public.chat.GetArtifactResponse:
@@ -22926,6 +23157,8 @@ components:
           type: string
           title: chat_id
       title: GetChatArtifactsSummaryRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.GetChatArtifactsSummaryResponse:
       type: object
@@ -22946,6 +23179,8 @@ components:
           type: string
           title: chat_id
       title: GetChatExecutionTimingRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.GetChatExecutionTimingResponse:
       type: object
@@ -23000,6 +23235,8 @@ components:
           title: chat_id
           description: whether to return only the user's chats or all of the org's chats
       title: GetChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.GetChatResponse:
       type: object
@@ -23139,6 +23376,8 @@ components:
             type: string
           title: cell_ids
       title: GetCompletionParametersBatchRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.GetCompletionParametersBatchResponse:
       type: object
@@ -23173,6 +23412,9 @@ components:
           type: string
           title: cell_id
       title: GetCompletionParametersRequest
+      required:
+        - chatId
+        - cellId
       additionalProperties: false
     textql.rpc.public.chat.GetCompletionParametersResponse:
       type: object
@@ -23192,6 +23434,8 @@ components:
           type: boolean
           title: include_costs
       title: GetLlmUsageRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.GetLlmUsageResponse:
       type: object
@@ -23255,6 +23499,8 @@ components:
           title: skip
           nullable: true
       title: GetPlaybookChatsRequest
+      required:
+        - playbookId
       additionalProperties: false
     textql.rpc.public.chat.GetPlaybookChatsResponse:
       type: object
@@ -23290,6 +23536,8 @@ components:
           title: skip
           nullable: true
       title: HistoryRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.HistoryResponse:
       type: object
@@ -23469,6 +23717,8 @@ components:
           title: min_generation
           format: int64
       title: PollChatEventsRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.PollChatEventsResponse:
       type: object
@@ -23510,6 +23760,9 @@ components:
           title: chat_id
           nullable: true
       title: QueryOneShotRequest
+      required:
+        - question
+        - paradigm
       additionalProperties: false
     textql.rpc.public.chat.QueryOneShotResponse:
       type: object
@@ -23544,6 +23797,10 @@ components:
           title: reason
           nullable: true
       title: RateChatCellRequest
+      required:
+        - chatId
+        - cellId
+        - rating
       additionalProperties: false
     textql.rpc.public.chat.RejectContextPromptChangeRequest:
       type: object
@@ -23553,6 +23810,8 @@ components:
           title: cell_id
           description: UUID
       title: RejectContextPromptChangeRequest
+      required:
+        - cellId
       additionalProperties: false
       description: context prompt change management
     textql.rpc.public.chat.RejectContextPromptChangeResponse:
@@ -23583,6 +23842,8 @@ components:
           title: cell_id
           description: UUID
       title: RejectOntologyChangeRequest
+      required:
+        - cellId
       additionalProperties: false
       description: Ontology change management
     textql.rpc.public.chat.RejectOntologyChangeResponse:
@@ -23629,6 +23890,8 @@ components:
           title: max_thinking
           nullable: true
       title: RunChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.RunChatResponse:
       type: object
@@ -23663,6 +23926,9 @@ components:
           title: steering
           nullable: true
       title: SendRequest
+      required:
+        - chatId
+        - message
       additionalProperties: false
     textql.rpc.public.chat.SendResponse:
       type: object
@@ -23700,6 +23966,9 @@ components:
           type: string
           title: edited_context
       title: SubmitContextPromptChangeRequest
+      required:
+        - cellId
+        - editedContext
       additionalProperties: false
     textql.rpc.public.chat.SubmitContextPromptChangeResponse:
       type: object
@@ -23734,6 +24003,8 @@ components:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionAnswer'
           title: answers
       title: SubmitQuestionsRequest
+      required:
+        - cellId
       additionalProperties: false
     textql.rpc.public.chat.SubmitQuestionsResponse:
       type: object
@@ -23778,6 +24049,8 @@ components:
           type: string
           title: chat_id
       title: UnbookmarkChatRequest
+      required:
+        - chatId
       additionalProperties: false
       description: Simplified query response for external API users
     textql.rpc.public.chat.UpdateChatRequest:
@@ -23817,6 +24090,8 @@ components:
           description: update max thinking mode
           nullable: true
       title: UpdateChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.UpdateChatResponse:
       type: object
@@ -23909,6 +24184,8 @@ components:
           title: resume_cursor
           nullable: true
       title: WatchChatRequest
+      required:
+        - chatId
       additionalProperties: false
     textql.rpc.public.chat.WatchHandoffPendingEvent:
       type: object
@@ -24135,7 +24412,6 @@ components:
         tenantId:
           type: string
           title: tenant_id
-          description: OAuth fields (used when auth_type = OAUTH)
       title: AzureSynapseMetadata
       additionalProperties: false
     textql.rpc.public.connector.BigQueryMetadata:
@@ -24885,52 +25161,47 @@ components:
           type: integer
           title: connector_id
           format: int32
+          description: The text content of this segment
         queryCount:
           type:
             - integer
             - string
           title: query_count
           format: int64
-          description: Display name (e.g., "Explore Data")
+          description: If set, this is a feature word to be styled
         errorRate:
           type: number
           title: error_rate
           format: double
-          description: Query text to send (plain text, no formatting)
         avgQueryTimeMs:
           type:
             - integer
             - string
           title: avg_query_time_ms
           format: int64
-          description: True if requires multiple connectors
         uniqueUsers:
           type: integer
           title: unique_users
           format: int32
-          description: Specific connectors needed
         lastQueriedAt:
           title: last_queried_at
-          description: Category (e.g., "Users", "Sales", "Performance")
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         tableCount:
           type: integer
           title: table_count
           format: int32
-          description: Rich formatted message with styled feature words
       title: ConnectorStatEntry
       additionalProperties: false
+      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.ConnectorTable:
       type: object
       properties:
         tableDatabase:
           type: string
           title: table_database
-          description: Apache Arrow IPC format binary data
         tableSchema:
           type: string
           title: table_schema
-          description: Total number of rows (for pagination/UI purposes)
         tableName:
           type: string
           title: table_name
@@ -25063,7 +25334,6 @@ components:
         catalog:
           type: string
           title: catalog
-          description: Connected App credentials for view embedding. Optional, generated by system.
         schema:
           type: string
           title: schema
@@ -25200,15 +25470,13 @@ components:
         id:
           type: string
           title: id
-          description: PowerBI report IDs
+          description: dataset IDs for selected Tableau collections
         label:
           type: string
           title: label
-          description: PowerBI dataset IDs (PowerBI datasets, not internal dataset_source)
         message:
           type: string
           title: message
-          description: workspace dataset_source IDs (cache key, like Tableau collections)
         isMultiSource:
           type: boolean
           title: is_multi_source
@@ -25529,10 +25797,9 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.ExampleQuery'
           title: examples
-          description: The text content of this segment
+          description: PowerBI report IDs
       title: GetExampleQueriesResponse
       additionalProperties: false
-      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.GetTablePreviewRequest:
       type: object
       properties:
@@ -25695,6 +25962,7 @@ components:
           type: integer
           title: connector_id
           format: int32
+          description: Apache Arrow IPC format binary data
       title: ListConnectorTablesRequest
       additionalProperties: false
     textql.rpc.public.connector.ListConnectorTablesResponse:
@@ -25717,7 +25985,6 @@ components:
           type: integer
           title: connector_id
           format: int32
-          description: 0 = all-time
         limit:
           type: integer
           title: limit
@@ -25726,10 +25993,12 @@ components:
           type: integer
           title: offset
           format: int32
+          description: 0.0-1.0
         days:
           type: integer
           title: days
           format: int32
+          description: milliseconds
       title: ListQueryTemplatesRequest
       additionalProperties: false
     textql.rpc.public.connector.ListQueryTemplatesResponse:
@@ -25740,6 +26009,7 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.QueryTemplate'
           title: templates
+          description: 0 = all-time
         totalCount:
           type: integer
           title: total_count
@@ -25779,7 +26049,6 @@ components:
         content:
           type: string
           title: content
-          description: dataset IDs for selected Tableau collections
         featureType:
           title: feature_type
           nullable: true
@@ -25883,11 +26152,9 @@ components:
         sslMode:
           type: boolean
           title: ssl_mode
-          description: ISO 8601 timestamp
         connectionType:
           type: string
           title: connection_type
-          description: When true, only email metadata is accessible (no body content)
         sid:
           type: string
           title: sid
@@ -25978,6 +26245,7 @@ components:
           items:
             type: string
           title: dataset_ids
+          description: If set, only return queries with this feature type
         collectionIds:
           type: array
           items:
@@ -26069,7 +26337,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.QueryJoinInfo'
           title: joins
-          description: Optional lookback window in days; 0 or unset means all-time.
         eventCount:
           type:
             - integer
@@ -26460,9 +26727,11 @@ components:
         sslMode:
           type: boolean
           title: ssl_mode
+          description: ISO 8601 timestamp
         accessToken:
           type: string
           title: access_token
+          description: When true, only email metadata is accessible (no body content)
         skipTlsVerify:
           type: boolean
           title: skip_tls_verify
@@ -36804,17 +37073,15 @@ components:
         updatedAt:
           title: updated_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
-        defaultModelId:
-          type: integer
-          title: default_model_id
-          format: int32
-          nullable: true
-        allowedModelIds:
+        allowedModels:
           type: array
           items:
-            type: integer
-            format: int32
-          title: allowed_model_ids
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: allowed_models
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
         allowModelChoice:
           type: boolean
           title: allow_model_choice
@@ -37054,22 +37321,21 @@ components:
         description:
           type: string
           title: description
-        defaultModelId:
-          title: default_model_id
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Int32Value'
-        allowedModelIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: allowed_model_ids
         allowModelChoice:
           title: allow_model_choice
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         clearAllowedModelIds:
           type: boolean
           title: clear_allowed_model_ids
+        allowedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: allowed_models
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
       title: UpdateRoleRequest
       additionalProperties: false
     textql.rpc.public.rbac.UpdateRoleResponse:
@@ -38838,6 +39104,47 @@ components:
           title: members
       title: ListOrganizationMembersResponse
       additionalProperties: false
+    textql.rpc.public.settings.UpdateOrganizationModelSettingsRequest:
+      type: object
+      properties:
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+        enabledModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: enabled_models
+        clearEnabledModels:
+          type: boolean
+          title: clear_enabled_models
+        restrictedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: restricted_models
+        clearRestrictedModels:
+          type: boolean
+          title: clear_restricted_models
+        restrictedFamilies:
+          type: array
+          items:
+            type: string
+          title: restricted_families
+        clearRestrictedFamilies:
+          type: boolean
+          title: clear_restricted_families
+      title: UpdateOrganizationModelSettingsRequest
+      additionalProperties: false
+    textql.rpc.public.settings.UpdateOrganizationModelSettingsResponse:
+      type: object
+      properties:
+        organization:
+          title: organization
+          $ref: '#/components/schemas/textql.rpc.auth.Organization'
+      title: UpdateOrganizationModelSettingsResponse
+      additionalProperties: false
     textql.rpc.public.settings.UpdateOrganizationSettingsRequest:
       type: object
       properties:
@@ -38879,6 +39186,26 @@ components:
         contextV3Enabled:
           title: context_v3_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
+        clearEnabledModelIds:
+          type: boolean
+          title: clear_enabled_model_ids
+        clearRestrictedModelIds:
+          type: boolean
+          title: clear_restricted_model_ids
+        enabledModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: enabled_models
+        restrictedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: restricted_models
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
         observabilityEnabled:
           title: observability_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
@@ -38926,6 +39253,9 @@ components:
           title: tool_restrictions
           nullable: true
           $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
+        subagentsEnabled:
+          title: subagents_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
       title: UpdateOrganizationSettingsRequest
       additionalProperties: false
     textql.rpc.public.settings.UpdateOrganizationSettingsResponse:

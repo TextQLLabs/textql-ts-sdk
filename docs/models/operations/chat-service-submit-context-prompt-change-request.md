@@ -6,7 +6,10 @@
 import { ChatServiceSubmitContextPromptChangeRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceSubmitContextPromptChangeRequest = {
-  body: {},
+  body: {
+    cellId: "<id>",
+    editedContext: "<value>",
+  },
 };
 ```
 

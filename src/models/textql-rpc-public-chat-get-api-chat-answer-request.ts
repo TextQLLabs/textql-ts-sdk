@@ -8,12 +8,12 @@ import * as z from "zod/v4-mini";
  * order is "most recent first"
  */
 export type TextqlRpcPublicChatGetAPIChatAnswerRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetAPIChatAnswerRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -22,7 +22,7 @@ export const TextqlRpcPublicChatGetAPIChatAnswerRequest$outboundSchema:
     TextqlRpcPublicChatGetAPIChatAnswerRequest$Outbound,
     TextqlRpcPublicChatGetAPIChatAnswerRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatGetAPIChatAnswerRequestToJSON(

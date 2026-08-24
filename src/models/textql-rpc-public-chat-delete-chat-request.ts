@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatDeleteChatRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatDeleteChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -18,7 +18,7 @@ export const TextqlRpcPublicChatDeleteChatRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatDeleteChatRequest$Outbound,
   TextqlRpcPublicChatDeleteChatRequest
 > = z.object({
-  chatId: z.optional(z.string()),
+  chatId: z.string(),
 });
 
 export function textqlRpcPublicChatDeleteChatRequestToJSON(

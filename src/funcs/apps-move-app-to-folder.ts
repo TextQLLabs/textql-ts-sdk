@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Moves an app into a library folder (or to root when folder_id is empty).
- *
- * @remarks
- * Moves an app into a library folder (or to root when folder_id is empty).
+ * MoveAppToFolder
  */
 export function appsMoveAppToFolder(
   client: TextqlCore,

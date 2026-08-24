@@ -22,16 +22,10 @@ import {
 
 export type TextqlRpcPublicConnectorExampleQuery = {
   /**
-   * PowerBI report IDs
+   * dataset IDs for selected Tableau collections
    */
   id?: string | undefined;
-  /**
-   * PowerBI dataset IDs (PowerBI datasets, not internal dataset_source)
-   */
   label?: string | undefined;
-  /**
-   * workspace dataset_source IDs (cache key, like Tableau collections)
-   */
   message?: string | undefined;
   isMultiSource?: boolean | undefined;
   requiredConnectorIds?: Array<number> | undefined;

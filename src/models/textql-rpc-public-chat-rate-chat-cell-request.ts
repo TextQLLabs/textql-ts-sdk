@@ -9,17 +9,17 @@ import {
 } from "./textql-rpc-public-chat-cell-rating.js";
 
 export type TextqlRpcPublicChatRateChatCellRequest = {
-  chatId?: string | undefined;
-  cellId?: string | undefined;
-  rating?: TextqlRpcPublicChatCellRating | undefined;
+  chatId: string;
+  cellId: string;
+  rating: TextqlRpcPublicChatCellRating;
   reason?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatRateChatCellRequest$Outbound = {
-  chatId?: string | undefined;
-  cellId?: string | undefined;
-  rating?: string | undefined;
+  chatId: string;
+  cellId: string;
+  rating: string;
   reason?: string | null | undefined;
 };
 
@@ -29,9 +29,9 @@ export const TextqlRpcPublicChatRateChatCellRequest$outboundSchema:
     TextqlRpcPublicChatRateChatCellRequest$Outbound,
     TextqlRpcPublicChatRateChatCellRequest
   > = z.object({
-    chatId: z.optional(z.string()),
-    cellId: z.optional(z.string()),
-    rating: z.optional(TextqlRpcPublicChatCellRating$outboundSchema),
+    chatId: z.string(),
+    cellId: z.string(),
+    rating: TextqlRpcPublicChatCellRating$outboundSchema,
     reason: z.optional(z.nullable(z.string())),
   });
 

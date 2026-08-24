@@ -10,34 +10,28 @@ import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * Display name (e.g., "Explore Data")
+ * If set, this is a feature word to be styled
  */
 export type TextqlRpcPublicConnectorConnectorStatEntryQueryCount =
   | number
   | string;
 
-/**
- * True if requires multiple connectors
- */
 export type AvgQueryTimeMs = number | string;
 
+/**
+ * A segment of an example query message - either plain text or a styled feature word
+ */
 export type TextqlRpcPublicConnectorConnectorStatEntry = {
+  /**
+   * The text content of this segment
+   */
   connectorId?: number | undefined;
   /**
-   * Display name (e.g., "Explore Data")
+   * If set, this is a feature word to be styled
    */
   queryCount?: number | string | undefined;
-  /**
-   * Query text to send (plain text, no formatting)
-   */
   errorRate?: number | undefined;
-  /**
-   * True if requires multiple connectors
-   */
   avgQueryTimeMs?: number | string | undefined;
-  /**
-   * Specific connectors needed
-   */
   uniqueUsers?: number | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -133,9 +127,6 @@ export type TextqlRpcPublicConnectorConnectorStatEntry = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastQueriedAt?: Date | undefined;
-  /**
-   * Rich formatted message with styled feature words
-   */
   tableCount?: number | undefined;
 };
 

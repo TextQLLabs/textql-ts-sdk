@@ -7,6 +7,10 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+import {
+  TextqlRpcPublicChatLlmModel,
+  TextqlRpcPublicChatLlmModel$inboundSchema,
+} from "./textql-rpc-public-chat-llm-model.js";
 
 export type TextqlRpcPublicRbacRole = {
   id?: string | undefined;
@@ -202,8 +206,8 @@ export type TextqlRpcPublicRbacRole = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   updatedAt?: Date | undefined;
-  defaultModelId?: number | null | undefined;
-  allowedModelIds?: Array<number> | undefined;
+  allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
+  defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
   allowModelChoice?: boolean | null | undefined;
   isScimManaged?: boolean | undefined;
 };
@@ -220,8 +224,10 @@ export const TextqlRpcPublicRbacRole$inboundSchema: z.ZodMiniType<
   isSystem: types.optional(types.boolean()),
   createdAt: types.optional(types.date()),
   updatedAt: types.optional(types.date()),
-  defaultModelId: z.optional(z.nullable(types.number())),
-  allowedModelIds: types.optional(z.array(types.number())),
+  allowedModels: types.optional(
+    z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
+  ),
+  defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
   allowModelChoice: z.optional(z.nullable(types.boolean())),
   isScimManaged: types.optional(types.boolean()),
 });

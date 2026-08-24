@@ -49,7 +49,12 @@ export type TextqlRpcPublicAgentCreateAgentRequest = {
    * @remarks
    *  out. Mirrors allow_ad_hoc_subagents below.
    */
+  callableAsSubagent?: boolean | null | undefined;
+  subagentInvokerMemberIds?: Array<string> | undefined;
+  subagentInvokerRoleIds?: Array<string> | undefined;
   feedEnabled?: boolean | null | undefined;
+  subagentAgentIds?: Array<string> | undefined;
+  allowAdHocSubagents?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -71,7 +76,12 @@ export type TextqlRpcPublicAgentCreateAgentRequest$Outbound = {
   teamsDmUserAadIds?: Array<string> | undefined;
   slackTrigger?: TextqlRpcPublicAgentSlackAgentTrigger$Outbound | undefined;
   postingFrequencyCadences?: Array<string> | undefined;
+  callableAsSubagent?: boolean | null | undefined;
+  subagentInvokerMemberIds?: Array<string> | undefined;
+  subagentInvokerRoleIds?: Array<string> | undefined;
   feedEnabled?: boolean | null | undefined;
+  subagentAgentIds?: Array<string> | undefined;
+  allowAdHocSubagents?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -101,7 +111,12 @@ export const TextqlRpcPublicAgentCreateAgentRequest$outboundSchema:
       TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
     ),
     postingFrequencyCadences: z.optional(z.array(z.string())),
+    callableAsSubagent: z.optional(z.nullable(z.boolean())),
+    subagentInvokerMemberIds: z.optional(z.array(z.string())),
+    subagentInvokerRoleIds: z.optional(z.array(z.string())),
     feedEnabled: z.optional(z.nullable(z.boolean())),
+    subagentAgentIds: z.optional(z.array(z.string())),
+    allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicAgentCreateAgentRequestToJSON(

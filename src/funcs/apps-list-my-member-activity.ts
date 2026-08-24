@@ -27,12 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+ * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
  *
  * @remarks
- * Favorite/unfavorite a library item (app or dashboard) for the calling member.
- *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
- *  since the merged library page pins apps and dashboards through one client.
+ * Watcher management: app owners/editors and org admins list the app's
+ *  subscribers and add/remove members (Upsert/Delete with member_id).
  */
 export function appsListMyMemberActivity(
   client: TextqlCore,

@@ -205,6 +205,10 @@ import {
   TextqlRpcPublicCellsStreamlitCell$inboundSchema,
 } from "./textql-rpc-public-cells-streamlit-cell.js";
 import {
+  TextqlRpcPublicCellsSubagentCell,
+  TextqlRpcPublicCellsSubagentCell$inboundSchema,
+} from "./textql-rpc-public-cells-subagent-cell.js";
+import {
   TextqlRpcPublicCellsSummaryCell,
   TextqlRpcPublicCellsSummaryCell$inboundSchema,
 } from "./textql-rpc-public-cells-summary-cell.js";
@@ -246,9 +250,9 @@ import {
 } from "./textql-rpc-public-chat-cell-lifecycle.js";
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs58 = number | string;
+export type TextqlRpcPublicChatCellDurationMs59 = number | string;
 
 export type WsCell = {
   wsCell: TextqlRpcPublicCellsWebSearchCell;
@@ -359,17 +363,20 @@ export type WsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs57 = number | string;
+export type TextqlRpcPublicChatCellDurationMs58 = number | string;
 
 export type UseSkillCell = {
   /**
@@ -488,17 +495,20 @@ export type UseSkillCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs56 = number | string;
+export type TextqlRpcPublicChatCellDurationMs57 = number | string;
 
 export type ThinkingCell = {
   thinkingCell: TextqlRpcPublicCellsThinkingCell;
@@ -609,17 +619,20 @@ export type ThinkingCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs55 = number | string;
+export type TextqlRpcPublicChatCellDurationMs56 = number | string;
 
 export type TextCell = {
   textCell: TextqlRpcPublicCellsTextCell;
@@ -730,17 +743,20 @@ export type TextCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs54 = number | string;
+export type TextqlRpcPublicChatCellDurationMs55 = number | string;
 
 export type TabularFileCell = {
   tabularFileCell: TextqlRpcPublicCellsTabularFileCell;
@@ -851,17 +867,20 @@ export type TabularFileCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs53 = number | string;
+export type TextqlRpcPublicChatCellDurationMs54 = number | string;
 
 export type TableauSqlCell = {
   tableauSqlCell: TextqlRpcPublicCellsTableauSQLCell;
@@ -972,17 +991,20 @@ export type TableauSqlCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs52 = number | string;
+export type TextqlRpcPublicChatCellDurationMs53 = number | string;
 
 export type TableauSearchFieldsCell = {
   tableauSearchFieldsCell: TextqlRpcPublicCellsTableauSearchFieldsCell;
@@ -1093,17 +1115,20 @@ export type TableauSearchFieldsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs51 = number | string;
+export type TextqlRpcPublicChatCellDurationMs52 = number | string;
 
 export type TableauCell = {
   tableauCell: TextqlRpcPublicCellsTableauCell;
@@ -1214,17 +1239,20 @@ export type TableauCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs50 = number | string;
+export type TextqlRpcPublicChatCellDurationMs51 = number | string;
 
 export type SummaryCell = {
   summaryCell: TextqlRpcPublicCellsSummaryCell;
@@ -1335,15 +1363,142 @@ export type SummaryCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
+ */
+export type TextqlRpcPublicChatCellDurationMs50 = number | string;
+
+export type SubagentCell = {
+  subagentCell: TextqlRpcPublicCellsSubagentCell;
+  /**
+   * UUID
+   */
+  id?: string | undefined;
+  /**
+   * A Timestamp represents a point in time independent of any time zone or local
+   *
+   * @remarks
+   *  calendar, encoded as a count of seconds and fractions of seconds at
+   *  nanosecond resolution. The count is relative to an epoch at UTC midnight on
+   *  January 1, 1970, in the proleptic Gregorian calendar which extends the
+   *  Gregorian calendar backwards to year one.
+   *
+   *  All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+   *  second table is needed for interpretation, using a [24-hour linear
+   *  smear](https://developers.google.com/time/smear).
+   *
+   *  The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+   *  restricting to that range, we ensure that we can convert to and from [RFC
+   *  3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+   *
+   *  # Examples
+   *
+   *  Example 1: Compute Timestamp from POSIX `time()`.
+   *
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds(time(NULL));
+   *      timestamp.set_nanos(0);
+   *
+   *  Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+   *
+   *      struct timeval tv;
+   *      gettimeofday(&tv, NULL);
+   *
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds(tv.tv_sec);
+   *      timestamp.set_nanos(tv.tv_usec * 1000);
+   *
+   *  Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+   *
+   *      FILETIME ft;
+   *      GetSystemTimeAsFileTime(&ft);
+   *      UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+   *
+   *      // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+   *      // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+   *      timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+   *
+   *  Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+   *
+   *      long millis = System.currentTimeMillis();
+   *
+   *      Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+   *          .setNanos((int) ((millis % 1000) * 1000000)).build();
+   *
+   *  Example 5: Compute Timestamp from Java `Instant.now()`.
+   *
+   *      Instant now = Instant.now();
+   *
+   *      Timestamp timestamp =
+   *          Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+   *              .setNanos(now.getNano()).build();
+   *
+   *  Example 6: Compute Timestamp from current time in Python.
+   *
+   *      timestamp = Timestamp()
+   *      timestamp.GetCurrentTime()
+   *
+   *  # JSON Mapping
+   *
+   *  In JSON format, the Timestamp type is encoded as a string in the
+   *  [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+   *  format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+   *  where {year} is always expressed using four digits while {month}, {day},
+   *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+   *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+   *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  able to accept both UTC and other timezones (as indicated by an offset).
+   *
+   *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+   *  01:30 UTC on January 15, 2017.
+   *
+   *  In JavaScript, one can convert a Date object to this format using the
+   *  standard
+   *  [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+   *  method. In Python, a standard `datetime.datetime` object can be converted
+   *  to this format using
+   *  [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+   *  the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+   *  the Joda Time's [`ISODateTimeFormat.dateTime()`](
+   *  http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+   *  ) to obtain a formatter capable of generating timestamps in this format.
+   */
+  timestamp?: Date | undefined;
+  complete?: boolean | undefined;
+  /**
+   * whether it was created by a human or robot
+   */
+  generated?: boolean | undefined;
+  lifecycle?: TextqlRpcPublicChatCellLifecycle | undefined;
+  toolCallId?: string | null | undefined;
+  execError?: string | null | undefined;
+  senderMemberId?: string | null | undefined;
+  /**
+   * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
+   */
+  durationMs?: number | string | null | undefined;
+};
+
+/**
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs49 = number | string;
 
@@ -1456,15 +1611,18 @@ export type StreamlitCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs48 = number | string;
 
@@ -1580,15 +1738,18 @@ export type StatusCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs47 = number | string;
 
@@ -1701,15 +1862,18 @@ export type SqlCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs46 = number | string;
 
@@ -1822,15 +1986,18 @@ export type ReportHistoryCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs45 = number | string;
 
@@ -1943,15 +2110,18 @@ export type ReportCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs44 = number | string;
 
@@ -2072,15 +2242,18 @@ export type QuestionsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs43 = number | string;
 
@@ -2193,15 +2366,18 @@ export type PyCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs42 = number | string;
 
@@ -2317,15 +2493,18 @@ export type PreviewCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs41 = number | string;
 
@@ -2438,15 +2617,18 @@ export type PowerbiDaxCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs40 = number | string;
 
@@ -2559,15 +2741,18 @@ export type PowerbiCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs39 = number | string;
 
@@ -2680,15 +2865,18 @@ export type PlaybookEditorCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs38 = number | string;
 
@@ -2801,15 +2989,18 @@ export type PatchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs37 = number | string;
 
@@ -2922,15 +3113,18 @@ export type OntologySearchMetricsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs36 = number | string;
 
@@ -3043,15 +3237,18 @@ export type OntologyQueryCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs35 = number | string;
 
@@ -3164,15 +3361,18 @@ export type OntologyOpenObjectCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs34 = number | string;
 
@@ -3285,15 +3485,18 @@ export type OntologyEditorCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs33 = number | string;
 
@@ -3406,15 +3609,18 @@ export type Microsoft365EmailSearchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs32 = number | string;
 
@@ -3528,15 +3734,18 @@ export type Microsoft365EmailContentCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs31 = number | string;
 
@@ -3649,15 +3858,18 @@ export type Microsoft365CalendarCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs30 = number | string;
 
@@ -3770,15 +3982,18 @@ export type MetricsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs29 = number | string;
 
@@ -3891,15 +4106,18 @@ export type MdCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs28 = number | string;
 
@@ -4012,15 +4230,18 @@ export type McpToolCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs27 = number | string;
 
@@ -4133,15 +4354,18 @@ export type ListUsersCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs26 = number | string;
 
@@ -4254,15 +4478,18 @@ export type ListDashboardsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs25 = number | string;
 
@@ -4375,15 +4602,18 @@ export type ListAppsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs24 = number | string;
 
@@ -4496,15 +4726,18 @@ export type LinkedinSearchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs23 = number | string;
 
@@ -4617,15 +4850,18 @@ export type JavascriptCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs22 = number | string;
 
@@ -4738,15 +4974,18 @@ export type ImageCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs21 = number | string;
 
@@ -4859,15 +5098,18 @@ export type GoogleDriveSearchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs20 = number | string;
 
@@ -4980,15 +5222,18 @@ export type GoogleDriveContentCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs19 = number | string;
 
@@ -5101,15 +5346,18 @@ export type GoogleCalendarSearchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs18 = number | string;
 
@@ -5222,15 +5470,18 @@ export type GmailEmailSearchCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs17 = number | string;
 
@@ -5343,15 +5594,18 @@ export type GmailEmailContentCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs16 = number | string;
 
@@ -5464,15 +5718,18 @@ export type FormEditorCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs15 = number | string;
 
@@ -5592,15 +5849,18 @@ export type FormCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs14 = number | string;
 
@@ -5713,15 +5973,18 @@ export type FeedPostCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs13 = number | string;
 
@@ -5834,15 +6097,18 @@ export type FeedExplorerCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs12 = number | string;
 
@@ -5955,15 +6221,18 @@ export type FeedEngageCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs11 = number | string;
 
@@ -6076,15 +6345,18 @@ export type FeedCreateCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs10 = number | string;
 
@@ -6197,15 +6469,18 @@ export type FeedCommentCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs9 = number | string;
 
@@ -6326,15 +6601,18 @@ export type EmailCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs8 = number | string;
 
@@ -6447,15 +6725,18 @@ export type DocumentCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs7 = number | string;
 
@@ -6568,15 +6849,18 @@ export type DashboardCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs6 = number | string;
 
@@ -6689,15 +6973,18 @@ export type ContextPromptEditorCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs5 = number | string;
 
@@ -6817,15 +7104,18 @@ export type ConnectorsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs4 = number | string;
 
@@ -6938,15 +7228,18 @@ export type CompactionCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs3 = number | string;
 
@@ -7059,19 +7352,25 @@ export type BashCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs2 = number | string;
 
 export type AppCell = {
+  /**
+   * AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
+   */
   appCell: TextqlRpcPublicCellsAppCell;
   /**
    * UUID
@@ -7180,15 +7479,18 @@ export type AppCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
 
 /**
- * LLM-generated summary of what this tool call does
+ * cells_v5.duration_ms — wall-clock this cell took
  */
 export type TextqlRpcPublicChatCellDurationMs1 = number | string;
 
@@ -7301,9 +7603,12 @@ export type AnsCell = {
   toolCallId?: string | null | undefined;
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
-  toolSummary?: string | null | undefined;
   /**
    * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
    */
   durationMs?: number | string | null | undefined;
 };
@@ -7358,6 +7663,7 @@ export type TextqlRpcPublicChatCell =
   | SqlCell
   | StatusCell
   | StreamlitCell
+  | SubagentCell
   | SummaryCell
   | TableauCell
   | TableauSearchFieldsCell
@@ -7369,19 +7675,19 @@ export type TextqlRpcPublicChatCell =
   | WsCell;
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs58$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs58,
+export const TextqlRpcPublicChatCellDurationMs59$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs59,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs58FromJSON(
+export function textqlRpcPublicChatCellDurationMs59FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs58, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs59, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs58$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs58' from JSON`,
+      TextqlRpcPublicChatCellDurationMs59$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs59' from JSON`,
   );
 }
 
@@ -7413,19 +7719,19 @@ export function wsCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs57$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs57,
+export const TextqlRpcPublicChatCellDurationMs58$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs58,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs57FromJSON(
+export function textqlRpcPublicChatCellDurationMs58FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs57, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs58, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs57$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs57' from JSON`,
+      TextqlRpcPublicChatCellDurationMs58$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs58' from JSON`,
   );
 }
 
@@ -7458,19 +7764,19 @@ export function useSkillCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs56$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs56,
+export const TextqlRpcPublicChatCellDurationMs57$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs57,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs56FromJSON(
+export function textqlRpcPublicChatCellDurationMs57FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs56, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs57, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs56$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs56' from JSON`,
+      TextqlRpcPublicChatCellDurationMs57$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs57' from JSON`,
   );
 }
 
@@ -7503,19 +7809,19 @@ export function thinkingCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs55$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs55,
+export const TextqlRpcPublicChatCellDurationMs56$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs56,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs55FromJSON(
+export function textqlRpcPublicChatCellDurationMs56FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs55, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs56, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs55$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs55' from JSON`,
+      TextqlRpcPublicChatCellDurationMs56$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs56' from JSON`,
   );
 }
 
@@ -7548,19 +7854,19 @@ export function textCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs54$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs54,
+export const TextqlRpcPublicChatCellDurationMs55$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs55,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs54FromJSON(
+export function textqlRpcPublicChatCellDurationMs55FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs54, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs55, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs54$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs54' from JSON`,
+      TextqlRpcPublicChatCellDurationMs55$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs55' from JSON`,
   );
 }
 
@@ -7595,19 +7901,19 @@ export function tabularFileCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs53$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs53,
+export const TextqlRpcPublicChatCellDurationMs54$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs54,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs53FromJSON(
+export function textqlRpcPublicChatCellDurationMs54FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs53, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs54, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs53$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs53' from JSON`,
+      TextqlRpcPublicChatCellDurationMs54$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs54' from JSON`,
   );
 }
 
@@ -7642,19 +7948,19 @@ export function tableauSqlCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs52$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs52,
+export const TextqlRpcPublicChatCellDurationMs53$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs53,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs52FromJSON(
+export function textqlRpcPublicChatCellDurationMs53FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs52, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs53, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs52$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs52' from JSON`,
+      TextqlRpcPublicChatCellDurationMs53$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs53' from JSON`,
   );
 }
 
@@ -7690,19 +7996,19 @@ export function tableauSearchFieldsCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs51$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs51,
+export const TextqlRpcPublicChatCellDurationMs52$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs52,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs51FromJSON(
+export function textqlRpcPublicChatCellDurationMs52FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs51, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs52, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs51$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs51' from JSON`,
+      TextqlRpcPublicChatCellDurationMs52$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs52' from JSON`,
   );
 }
 
@@ -7735,19 +8041,19 @@ export function tableauCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs50$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs50,
+export const TextqlRpcPublicChatCellDurationMs51$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs51,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs50FromJSON(
+export function textqlRpcPublicChatCellDurationMs51FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs50, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs51, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs50$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs50' from JSON`,
+      TextqlRpcPublicChatCellDurationMs51$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs51' from JSON`,
   );
 }
 
@@ -7776,6 +8082,51 @@ export function summaryCellFromJSON(
     jsonString,
     (x) => SummaryCell$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'SummaryCell' from JSON`,
+  );
+}
+
+/** @internal */
+export const TextqlRpcPublicChatCellDurationMs50$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs50,
+  unknown
+> = smartUnion([types.number(), types.string()]);
+
+export function textqlRpcPublicChatCellDurationMs50FromJSON(
+  jsonString: string,
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs50, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      TextqlRpcPublicChatCellDurationMs50$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs50' from JSON`,
+  );
+}
+
+/** @internal */
+export const SubagentCell$inboundSchema: z.ZodMiniType<SubagentCell, unknown> =
+  z.object({
+    subagentCell: TextqlRpcPublicCellsSubagentCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  });
+
+export function subagentCellFromJSON(
+  jsonString: string,
+): SafeParseResult<SubagentCell, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SubagentCell$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SubagentCell' from JSON`,
   );
 }
 
@@ -10103,6 +10454,7 @@ export const TextqlRpcPublicChatCell$inboundSchema: z.ZodMiniType<
   z.lazy(() => SqlCell$inboundSchema),
   z.lazy(() => StatusCell$inboundSchema),
   z.lazy(() => StreamlitCell$inboundSchema),
+  z.lazy(() => SubagentCell$inboundSchema),
   z.lazy(() => SummaryCell$inboundSchema),
   z.lazy(() => TableauCell$inboundSchema),
   z.lazy(() => TableauSearchFieldsCell$inboundSchema),

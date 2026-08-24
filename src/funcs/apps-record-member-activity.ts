@@ -27,11 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
- *
- * @remarks
- * Watcher management: app owners/editors and org admins list the app's
- *  subscribers and add/remove members (Upsert/Delete with member_id).
+ * RecordAppMemberActivity
  */
 export function appsRecordMemberActivity(
   client: TextqlCore,

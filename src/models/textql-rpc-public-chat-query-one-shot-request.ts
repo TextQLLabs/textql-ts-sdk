@@ -14,19 +14,19 @@ import {
 } from "./textql-rpc-public-paradigm-paradigm.js";
 
 export type TextqlRpcPublicChatQueryOneShotRequest = {
-  question?: string | undefined;
+  question: string;
   /**
    * ChatParadigm includes paradigm options
    */
-  paradigm?: TextqlRpcPublicParadigmParadigm | undefined;
+  paradigm: TextqlRpcPublicParadigmParadigm;
   model?: TextqlRpcPublicChatLlmModel | undefined;
   chatId?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatQueryOneShotRequest$Outbound = {
-  question?: string | undefined;
-  paradigm?: TextqlRpcPublicParadigmParadigm$Outbound | undefined;
+  question: string;
+  paradigm: TextqlRpcPublicParadigmParadigm$Outbound;
   model?: string | undefined;
   chatId?: string | null | undefined;
 };
@@ -37,8 +37,8 @@ export const TextqlRpcPublicChatQueryOneShotRequest$outboundSchema:
     TextqlRpcPublicChatQueryOneShotRequest$Outbound,
     TextqlRpcPublicChatQueryOneShotRequest
   > = z.object({
-    question: z.optional(z.string()),
-    paradigm: z.optional(TextqlRpcPublicParadigmParadigm$outboundSchema),
+    question: z.string(),
+    paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
     model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
     chatId: z.optional(z.nullable(z.string())),
   });

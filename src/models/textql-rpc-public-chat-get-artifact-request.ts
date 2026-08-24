@@ -8,14 +8,14 @@ import * as z from "zod/v4-mini";
  * Request all artifact summaries for a chat (for drawer dropdown)
  */
 export type TextqlRpcPublicChatGetArtifactRequest = {
-  artifactId?: string | undefined;
-  chatId?: string | undefined;
+  artifactId: string;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetArtifactRequest$Outbound = {
-  artifactId?: string | undefined;
-  chatId?: string | undefined;
+  artifactId: string;
+  chatId: string;
 };
 
 /** @internal */
@@ -24,8 +24,8 @@ export const TextqlRpcPublicChatGetArtifactRequest$outboundSchema:
     TextqlRpcPublicChatGetArtifactRequest$Outbound,
     TextqlRpcPublicChatGetArtifactRequest
   > = z.object({
-    artifactId: z.optional(z.string()),
-    chatId: z.optional(z.string()),
+    artifactId: z.string(),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatGetArtifactRequestToJSON(

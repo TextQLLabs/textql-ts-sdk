@@ -5,12 +5,12 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatCancelStreamRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatCancelStreamRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -19,7 +19,7 @@ export const TextqlRpcPublicChatCancelStreamRequest$outboundSchema:
     TextqlRpcPublicChatCancelStreamRequest$Outbound,
     TextqlRpcPublicChatCancelStreamRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatCancelStreamRequestToJSON(

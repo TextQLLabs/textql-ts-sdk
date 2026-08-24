@@ -7,11 +7,13 @@ context prompt change management
 ```typescript
 import { TextqlRpcPublicChatRejectContextPromptChangeRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatRejectContextPromptChangeRequest = {};
+let value: TextqlRpcPublicChatRejectContextPromptChangeRequest = {
+  cellId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `cellId`           | *string*           | :heavy_minus_sign: | UUID               |
+| `cellId`           | *string*           | :heavy_check_mark: | UUID               |

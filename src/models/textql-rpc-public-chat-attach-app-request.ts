@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatAttachAppRequest = {
-  chatId?: string | undefined;
-  appId?: string | undefined;
+  chatId: string;
+  appId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatAttachAppRequest$Outbound = {
-  chatId?: string | undefined;
-  appId?: string | undefined;
+  chatId: string;
+  appId: string;
 };
 
 /** @internal */
@@ -20,8 +20,8 @@ export const TextqlRpcPublicChatAttachAppRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatAttachAppRequest$Outbound,
   TextqlRpcPublicChatAttachAppRequest
 > = z.object({
-  chatId: z.optional(z.string()),
-  appId: z.optional(z.string()),
+  chatId: z.string(),
+  appId: z.string(),
 });
 
 export function textqlRpcPublicChatAttachAppRequestToJSON(

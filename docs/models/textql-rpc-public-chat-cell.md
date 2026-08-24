@@ -597,6 +597,15 @@ const value: models.StreamlitCell = {
 };
 ```
 
+### `models.SubagentCell`
+
+```typescript
+const value: models.SubagentCell = {
+  subagentCell: {},
+  timestamp: new Date("2023-01-15T01:30:15.01Z"),
+};
+```
+
 ### `models.SummaryCell`
 
 ```typescript

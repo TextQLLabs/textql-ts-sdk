@@ -49,7 +49,14 @@ export type TextqlRpcPublicAgentUpdateAgentRequest = {
   /**
    * Feed participation; nil = don't touch (mirrors fast_mode/is_stateful).
    */
+  callableAsSubagent?: boolean | null | undefined;
+  subagentInvokerMemberIds?: Array<string> | undefined;
+  subagentInvokerRoleIds?: Array<string> | undefined;
+  updateSubagentInvokers?: boolean | null | undefined;
   feedEnabled?: boolean | null | undefined;
+  subagentAgentIds?: Array<string> | undefined;
+  updateSubagents?: boolean | null | undefined;
+  allowAdHocSubagents?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -74,7 +81,14 @@ export type TextqlRpcPublicAgentUpdateAgentRequest$Outbound = {
   teamsDmUserAadIds?: Array<string> | undefined;
   slackTrigger?: TextqlRpcPublicAgentSlackAgentTrigger$Outbound | undefined;
   postingFrequencyCadences?: Array<string> | undefined;
+  callableAsSubagent?: boolean | null | undefined;
+  subagentInvokerMemberIds?: Array<string> | undefined;
+  subagentInvokerRoleIds?: Array<string> | undefined;
+  updateSubagentInvokers?: boolean | null | undefined;
   feedEnabled?: boolean | null | undefined;
+  subagentAgentIds?: Array<string> | undefined;
+  updateSubagents?: boolean | null | undefined;
+  allowAdHocSubagents?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -107,7 +121,14 @@ export const TextqlRpcPublicAgentUpdateAgentRequest$outboundSchema:
       TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
     ),
     postingFrequencyCadences: z.optional(z.array(z.string())),
+    callableAsSubagent: z.optional(z.nullable(z.boolean())),
+    subagentInvokerMemberIds: z.optional(z.array(z.string())),
+    subagentInvokerRoleIds: z.optional(z.array(z.string())),
+    updateSubagentInvokers: z.optional(z.nullable(z.boolean())),
     feedEnabled: z.optional(z.nullable(z.boolean())),
+    subagentAgentIds: z.optional(z.array(z.string())),
+    updateSubagents: z.optional(z.nullable(z.boolean())),
+    allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicAgentUpdateAgentRequestToJSON(

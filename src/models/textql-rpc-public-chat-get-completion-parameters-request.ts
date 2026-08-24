@@ -8,14 +8,14 @@ export type TextqlRpcPublicChatGetCompletionParametersRequest = {
   /**
    * UUID
    */
-  chatId?: string | undefined;
-  cellId?: string | undefined;
+  chatId: string;
+  cellId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetCompletionParametersRequest$Outbound = {
-  chatId?: string | undefined;
-  cellId?: string | undefined;
+  chatId: string;
+  cellId: string;
 };
 
 /** @internal */
@@ -24,8 +24,8 @@ export const TextqlRpcPublicChatGetCompletionParametersRequest$outboundSchema:
     TextqlRpcPublicChatGetCompletionParametersRequest$Outbound,
     TextqlRpcPublicChatGetCompletionParametersRequest
   > = z.object({
-    chatId: z.optional(z.string()),
-    cellId: z.optional(z.string()),
+    chatId: z.string(),
+    cellId: z.string(),
   });
 
 export function textqlRpcPublicChatGetCompletionParametersRequestToJSON(

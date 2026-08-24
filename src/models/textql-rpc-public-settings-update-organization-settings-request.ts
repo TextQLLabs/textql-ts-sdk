@@ -13,6 +13,10 @@ import {
   TextqlRpcParadigmParamsParadigmType$outboundSchema,
 } from "./textql-rpc-paradigm-params-paradigm-type.js";
 import {
+  TextqlRpcPublicChatLlmModel,
+  TextqlRpcPublicChatLlmModel$outboundSchema,
+} from "./textql-rpc-public-chat-llm-model.js";
+import {
   TextqlRpcPublicChatMethodology,
   TextqlRpcPublicChatMethodology$outboundSchema,
 } from "./textql-rpc-public-chat-methodology.js";
@@ -99,6 +103,11 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  has no plan to be removed.
    */
   contextV3Enabled?: boolean | undefined;
+  clearEnabledModelIds?: boolean | undefined;
+  clearRestrictedModelIds?: boolean | undefined;
+  enabledModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
+  restrictedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
+  defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -234,6 +243,17 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    */
   sharingDisabled?: boolean | undefined;
   toolRestrictions?: TextqlRpcParadigmParamsParadigmParams | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  subagentsEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -250,6 +270,11 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound =
     methodologyEnabled?: boolean | undefined;
     feedEnabled?: boolean | undefined;
     contextV3Enabled?: boolean | undefined;
+    clearEnabledModelIds?: boolean | undefined;
+    clearRestrictedModelIds?: boolean | undefined;
+    enabledModels?: Array<string> | undefined;
+    restrictedModels?: Array<string> | undefined;
+    defaultModel?: string | undefined;
     observabilityEnabled?: boolean | undefined;
     notificationsEnabled?: boolean | undefined;
     hideApiConnectors?: boolean | undefined;
@@ -267,6 +292,7 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound =
     toolRestrictions?:
       | TextqlRpcParadigmParamsParadigmParams$Outbound
       | undefined;
+    subagentsEnabled?: boolean | undefined;
   };
 
 /** @internal */
@@ -290,6 +316,15 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
     methodologyEnabled: z.optional(z.boolean()),
     feedEnabled: z.optional(z.boolean()),
     contextV3Enabled: z.optional(z.boolean()),
+    clearEnabledModelIds: z.optional(z.boolean()),
+    clearRestrictedModelIds: z.optional(z.boolean()),
+    enabledModels: z.optional(
+      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+    ),
+    restrictedModels: z.optional(
+      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+    ),
+    defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
     observabilityEnabled: z.optional(z.boolean()),
     notificationsEnabled: z.optional(z.boolean()),
     hideApiConnectors: z.optional(z.boolean()),
@@ -309,6 +344,7 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
     toolRestrictions: z.optional(
       TextqlRpcParadigmParamsParadigmParams$outboundSchema,
     ),
+    subagentsEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicSettingsUpdateOrganizationSettingsRequestToJSON(

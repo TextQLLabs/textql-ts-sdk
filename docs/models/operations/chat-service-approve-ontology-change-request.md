@@ -6,7 +6,9 @@
 import { ChatServiceApproveOntologyChangeRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceApproveOntologyChangeRequest = {
-  body: {},
+  body: {
+    cellId: "<id>",
+  },
 };
 ```
 

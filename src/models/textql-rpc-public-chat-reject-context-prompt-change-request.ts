@@ -11,12 +11,12 @@ export type TextqlRpcPublicChatRejectContextPromptChangeRequest = {
   /**
    * UUID
    */
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatRejectContextPromptChangeRequest$Outbound = {
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
@@ -25,7 +25,7 @@ export const TextqlRpcPublicChatRejectContextPromptChangeRequest$outboundSchema:
     TextqlRpcPublicChatRejectContextPromptChangeRequest$Outbound,
     TextqlRpcPublicChatRejectContextPromptChangeRequest
   > = z.object({
-    cellId: z.optional(z.string()),
+    cellId: z.string(),
   });
 
 export function textqlRpcPublicChatRejectContextPromptChangeRequestToJSON(

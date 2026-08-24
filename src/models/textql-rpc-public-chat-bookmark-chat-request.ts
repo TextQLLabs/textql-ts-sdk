@@ -8,12 +8,12 @@ import * as z from "zod/v4-mini";
  * Simplified query request for external API users
  */
 export type TextqlRpcPublicChatBookmarkChatRequest = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatBookmarkChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -22,7 +22,7 @@ export const TextqlRpcPublicChatBookmarkChatRequest$outboundSchema:
     TextqlRpcPublicChatBookmarkChatRequest$Outbound,
     TextqlRpcPublicChatBookmarkChatRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
   });
 
 export function textqlRpcPublicChatBookmarkChatRequestToJSON(

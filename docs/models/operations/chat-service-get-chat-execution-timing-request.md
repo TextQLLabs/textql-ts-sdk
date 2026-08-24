@@ -6,7 +6,9 @@
 import { ChatServiceGetChatExecutionTimingRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetChatExecutionTimingRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

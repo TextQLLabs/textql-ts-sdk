@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetPlaybookChatsRequest = {
-  playbookId?: string | undefined;
+  playbookId: string;
   limit?: number | null | undefined;
   skip?: number | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetPlaybookChatsRequest$Outbound = {
-  playbookId?: string | undefined;
+  playbookId: string;
   limit?: number | null | undefined;
   skip?: number | null | undefined;
 };
@@ -23,7 +23,7 @@ export const TextqlRpcPublicChatGetPlaybookChatsRequest$outboundSchema:
     TextqlRpcPublicChatGetPlaybookChatsRequest$Outbound,
     TextqlRpcPublicChatGetPlaybookChatsRequest
   > = z.object({
-    playbookId: z.optional(z.string()),
+    playbookId: z.string(),
     limit: z.optional(z.nullable(z.int())),
     skip: z.optional(z.nullable(z.int())),
   });

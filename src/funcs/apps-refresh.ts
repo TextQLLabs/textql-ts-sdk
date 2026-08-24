@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+ * Moves an app into a library folder (or to root when folder_id is empty).
  *
  * @remarks
- * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+ * Moves an app into a library folder (or to root when folder_id is empty).
  */
 export function appsRefresh(
   client: TextqlCore,

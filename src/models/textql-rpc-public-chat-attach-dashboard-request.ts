@@ -5,17 +5,17 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatAttachDashboardRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   /**
    * uses latest version
    */
-  dashboardId?: string | undefined;
+  dashboardId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatAttachDashboardRequest$Outbound = {
-  chatId?: string | undefined;
-  dashboardId?: string | undefined;
+  chatId: string;
+  dashboardId: string;
 };
 
 /** @internal */
@@ -24,8 +24,8 @@ export const TextqlRpcPublicChatAttachDashboardRequest$outboundSchema:
     TextqlRpcPublicChatAttachDashboardRequest$Outbound,
     TextqlRpcPublicChatAttachDashboardRequest
   > = z.object({
-    chatId: z.optional(z.string()),
-    dashboardId: z.optional(z.string()),
+    chatId: z.string(),
+    dashboardId: z.string(),
   });
 
 export function textqlRpcPublicChatAttachDashboardRequestToJSON(

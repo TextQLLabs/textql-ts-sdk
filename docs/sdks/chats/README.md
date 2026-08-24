@@ -59,7 +59,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.approveContextPromptChange({
-    body: {},
+    body: {
+      cellId: "<id>",
+      editedContext: "<value>",
+    },
   });
 
   console.log(result);
@@ -84,7 +87,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsApproveContextPromptChange(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+      editedContext: "<value>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -132,7 +138,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.approveOntologyChange({
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -157,7 +165,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsApproveOntologyChange(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -205,7 +215,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachAgent({
-    body: {},
+    body: {
+      chatId: "<id>",
+      agentId: "<id>",
+    },
   });
 
   console.log(result);
@@ -230,7 +243,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachAgent(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      agentId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -278,7 +294,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachApp({
-    body: {},
+    body: {
+      chatId: "<id>",
+      appId: "<id>",
+    },
   });
 
   console.log(result);
@@ -303,7 +322,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachApp(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      appId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -351,7 +373,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachDashboard({
-    body: {},
+    body: {
+      chatId: "<id>",
+      dashboardId: "<id>",
+    },
   });
 
   console.log(result);
@@ -376,7 +401,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachDashboard(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      dashboardId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -424,7 +452,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.attachDataset({
-    body: {},
+    body: {
+      chatId: "<id>",
+      datasetId: "<id>",
+    },
   });
 
   console.log(result);
@@ -449,7 +480,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsAttachDataset(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      datasetId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -497,7 +531,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.bookmark({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -522,7 +558,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsBookmark(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -570,7 +608,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.cancelStream({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -595,7 +635,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCancelStream(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -643,7 +685,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.checkPermissions({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -668,7 +712,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCheckPermissions(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -789,7 +835,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.checkStreamlitHealth({
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -814,7 +863,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCheckStreamlitHealth(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -862,7 +914,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.createChat({
-    body: {},
+    body: {
+      paradigm: {},
+    },
   });
 
   console.log(result);
@@ -887,7 +941,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsCreateChat(textql, {
-    body: {},
+    body: {
+      paradigm: {},
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -935,7 +991,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.delete({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -960,7 +1018,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDelete(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1010,7 +1070,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.dismissQuestions({
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1035,7 +1097,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDismissQuestions(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1083,7 +1147,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.duplicateChat({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1108,7 +1174,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsDuplicateChat(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1156,7 +1224,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getApiAnswer({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1181,7 +1251,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetApiAnswer(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1229,7 +1301,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getArtifact({
-    body: {},
+    body: {
+      artifactId: "<id>",
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1254,7 +1329,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetArtifact(textql, {
-    body: {},
+    body: {
+      artifactId: "<id>",
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1302,7 +1380,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.get({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1327,7 +1407,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGet(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1375,7 +1457,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getArtifactsSummary({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1400,7 +1484,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetArtifactsSummary(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1448,7 +1534,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getChatExecutionTiming({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1473,7 +1561,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetChatExecutionTiming(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1521,7 +1611,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getHistory({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1546,7 +1638,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetHistory(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1673,7 +1767,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getCompletionParameters({
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1698,7 +1795,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetCompletionParameters(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1746,7 +1846,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getCompletionParametersBatch({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1771,7 +1873,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetCompletionParametersBatch(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1819,7 +1923,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getLlmUsage({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1844,7 +1950,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetLlmUsage(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -1965,7 +2073,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.getPlaybookChats({
-    body: {},
+    body: {
+      playbookId: "<id>",
+    },
   });
 
   console.log(result);
@@ -1990,7 +2100,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsGetPlaybookChats(textql, {
-    body: {},
+    body: {
+      playbookId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2038,7 +2150,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.pollEvents({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2063,7 +2177,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsPollEvents(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2111,7 +2227,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.queryOneShot({
-    body: {},
+    body: {
+      question: "<value>",
+      paradigm: {},
+    },
   });
 
   console.log(result);
@@ -2136,7 +2255,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsQueryOneShot(textql, {
-    body: {},
+    body: {
+      question: "<value>",
+      paradigm: {},
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2184,7 +2306,11 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rateCell({
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+      rating: "CELL_RATING_UP",
+    },
   });
 
   console.log(result);
@@ -2209,7 +2335,11 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRateCell(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      cellId: "<id>",
+      rating: "CELL_RATING_UP",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2257,7 +2387,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rejectContextPromptChange({
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2282,7 +2414,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRejectContextPromptChange(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2333,7 +2467,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.rejectOntologyChange({
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2358,7 +2494,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRejectOntologyChange(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2406,7 +2544,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.run({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2431,7 +2571,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsRun(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2479,7 +2621,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.send({
-    body: {},
+    body: {
+      chatId: "<id>",
+      message: "<value>",
+    },
   });
 
   console.log(result);
@@ -2504,7 +2649,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSend(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+      message: "<value>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2552,7 +2700,10 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.submitContextPromptChange({
-    body: {},
+    body: {
+      cellId: "<id>",
+      editedContext: "<value>",
+    },
   });
 
   console.log(result);
@@ -2577,7 +2728,10 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSubmitContextPromptChange(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+      editedContext: "<value>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2625,7 +2779,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.submitQuestions({
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2650,7 +2806,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsSubmitQuestions(textql, {
-    body: {},
+    body: {
+      cellId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2698,7 +2856,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.unbookmark({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2723,7 +2883,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsUnbookmark(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2771,7 +2933,9 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.chats.update({
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
 
   console.log(result);
@@ -2796,7 +2960,9 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await chatsUpdate(textql, {
-    body: {},
+    body: {
+      chatId: "<id>",
+    },
   });
   if (res.ok) {
     const { value: result } = res;
