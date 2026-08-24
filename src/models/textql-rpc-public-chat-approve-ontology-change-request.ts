@@ -8,12 +8,12 @@ import * as z from "zod/v4-mini";
  * Per-member auth resume
  */
 export type TextqlRpcPublicChatApproveOntologyChangeRequest = {
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatApproveOntologyChangeRequest$Outbound = {
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
@@ -22,7 +22,7 @@ export const TextqlRpcPublicChatApproveOntologyChangeRequest$outboundSchema:
     TextqlRpcPublicChatApproveOntologyChangeRequest$Outbound,
     TextqlRpcPublicChatApproveOntologyChangeRequest
   > = z.object({
-    cellId: z.optional(z.string()),
+    cellId: z.string(),
   });
 
 export function textqlRpcPublicChatApproveOntologyChangeRequestToJSON(

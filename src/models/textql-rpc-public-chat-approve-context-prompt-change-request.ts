@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatApproveContextPromptChangeRequest = {
-  cellId?: string | undefined;
-  editedContext?: string | undefined;
+  cellId: string;
+  editedContext: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatApproveContextPromptChangeRequest$Outbound = {
-  cellId?: string | undefined;
-  editedContext?: string | undefined;
+  cellId: string;
+  editedContext: string;
 };
 
 /** @internal */
@@ -21,8 +21,8 @@ export const TextqlRpcPublicChatApproveContextPromptChangeRequest$outboundSchema
     TextqlRpcPublicChatApproveContextPromptChangeRequest$Outbound,
     TextqlRpcPublicChatApproveContextPromptChangeRequest
   > = z.object({
-    cellId: z.optional(z.string()),
-    editedContext: z.optional(z.string()),
+    cellId: z.string(),
+    editedContext: z.string(),
   });
 
 export function textqlRpcPublicChatApproveContextPromptChangeRequestToJSON(

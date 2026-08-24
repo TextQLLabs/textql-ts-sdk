@@ -24,12 +24,15 @@ import {
   TextqlRpcPublicDashboardDataSource$inboundSchema,
 } from "./textql-rpc-public-dashboard-data-source.js";
 
+/**
+ * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
+ */
 export type TextqlRpcPublicAppAppVersion = {
+  /**
+   * normalized relative path, forward slashes, no .. or leading /
+   */
   id?: string | undefined;
   appId?: string | undefined;
-  /**
-   * JSON object, keys map to function kwargs
-   */
   versionNumber?: number | undefined;
   code?: string | undefined;
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;

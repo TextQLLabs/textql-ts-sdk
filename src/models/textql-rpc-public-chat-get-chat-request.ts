@@ -8,12 +8,12 @@ export type TextqlRpcPublicChatGetChatRequest = {
   /**
    * whether to return only the user's chats or all of the org's chats
    */
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
 };
 
 /** @internal */
@@ -21,7 +21,7 @@ export const TextqlRpcPublicChatGetChatRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatGetChatRequest$Outbound,
   TextqlRpcPublicChatGetChatRequest
 > = z.object({
-  chatId: z.optional(z.string()),
+  chatId: z.string(),
 });
 
 export function textqlRpcPublicChatGetChatRequestToJSON(

@@ -7,7 +7,7 @@ import { TextqlRpcPublicChatAttachDatasetResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatAttachDatasetResponse = {
   cell: {
-    gmailEmailSearchCell: {},
+    googleCalendarSearchCell: {},
     timestamp: new Date("2023-01-15T01:30:15.01Z"),
   },
   dataset: {

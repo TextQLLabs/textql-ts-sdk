@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetAppMemberState
+ * Per-member notification subscription to an app ("watch this app").
+ *
+ * @remarks
+ * Per-member notification subscription to an app ("watch this app").
  */
 export function appsGetMemberState(
   client: TextqlCore,

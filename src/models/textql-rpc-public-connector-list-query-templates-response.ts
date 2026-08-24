@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-connector-query-template.js";
 
 export type TextqlRpcPublicConnectorListQueryTemplatesResponse = {
+  /**
+   * 0 = all-time
+   */
   templates?: Array<TextqlRpcPublicConnectorQueryTemplate> | undefined;
   totalCount?: number | undefined;
 };

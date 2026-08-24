@@ -3,23 +3,15 @@
  */
 
 import * as z from "zod/v4-mini";
+import {
+  TextqlRpcPublicChatLlmModel,
+  TextqlRpcPublicChatLlmModel$outboundSchema,
+} from "./textql-rpc-public-chat-llm-model.js";
 
 export type TextqlRpcPublicRbacUpdateRoleRequest = {
   roleId?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
-  /**
-   * Wrapper message for `int32`.
-   *
-   * @remarks
-   *
-   *  The JSON representation for `Int32Value` is JSON number.
-   *
-   *  Not recommended for use in new APIs, but still useful for legacy APIs and
-   *  has no plan to be removed.
-   */
-  defaultModelId?: number | undefined;
-  allowedModelIds?: Array<number> | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -32,6 +24,8 @@ export type TextqlRpcPublicRbacUpdateRoleRequest = {
    */
   allowModelChoice?: boolean | undefined;
   clearAllowedModelIds?: boolean | undefined;
+  allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
+  defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
 };
 
 /** @internal */
@@ -39,10 +33,10 @@ export type TextqlRpcPublicRbacUpdateRoleRequest$Outbound = {
   roleId?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
-  defaultModelId?: number | undefined;
-  allowedModelIds?: Array<number> | undefined;
   allowModelChoice?: boolean | undefined;
   clearAllowedModelIds?: boolean | undefined;
+  allowedModels?: Array<string> | undefined;
+  defaultModel?: string | undefined;
 };
 
 /** @internal */
@@ -53,10 +47,12 @@ export const TextqlRpcPublicRbacUpdateRoleRequest$outboundSchema: z.ZodMiniType<
   roleId: z.optional(z.string()),
   name: z.optional(z.string()),
   description: z.optional(z.string()),
-  defaultModelId: z.optional(z.number()),
-  allowedModelIds: z.optional(z.array(z.int())),
   allowModelChoice: z.optional(z.boolean()),
   clearAllowedModelIds: z.optional(z.boolean()),
+  allowedModels: z.optional(
+    z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+  ),
+  defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
 });
 
 export function textqlRpcPublicRbacUpdateRoleRequestToJSON(

@@ -6,7 +6,9 @@
 import { ChatServiceSubmitQuestionsRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceSubmitQuestionsRequest = {
-  body: {},
+  body: {
+    cellId: "<id>",
+  },
 };
 ```
 

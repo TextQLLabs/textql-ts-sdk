@@ -6,7 +6,10 @@
 import { ChatServiceAttachDashboardRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceAttachDashboardRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    dashboardId: "<id>",
+  },
 };
 ```
 

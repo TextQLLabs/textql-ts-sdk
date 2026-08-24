@@ -5,8 +5,8 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatSendRequest = {
-  chatId?: string | undefined;
-  message?: string | undefined;
+  chatId: string;
+  message: string;
   imageUrls?: Array<string> | undefined;
   messageId?: string | null | undefined;
   steering?: boolean | null | undefined;
@@ -14,8 +14,8 @@ export type TextqlRpcPublicChatSendRequest = {
 
 /** @internal */
 export type TextqlRpcPublicChatSendRequest$Outbound = {
-  chatId?: string | undefined;
-  message?: string | undefined;
+  chatId: string;
+  message: string;
   imageUrls?: Array<string> | undefined;
   messageId?: string | null | undefined;
   steering?: boolean | null | undefined;
@@ -26,8 +26,8 @@ export const TextqlRpcPublicChatSendRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatSendRequest$Outbound,
   TextqlRpcPublicChatSendRequest
 > = z.object({
-  chatId: z.optional(z.string()),
-  message: z.optional(z.string()),
+  chatId: z.string(),
+  message: z.string(),
   imageUrls: z.optional(z.array(z.string())),
   messageId: z.optional(z.nullable(z.string())),
   steering: z.optional(z.nullable(z.boolean())),

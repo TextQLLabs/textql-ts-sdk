@@ -6,7 +6,10 @@
 import { ChatServiceGetArtifactRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetArtifactRequest = {
-  body: {},
+  body: {
+    artifactId: "<id>",
+    chatId: "<id>",
+  },
 };
 ```
 

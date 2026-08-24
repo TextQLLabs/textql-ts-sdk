@@ -7,7 +7,7 @@ import { TextqlRpcPublicChatAttachDashboardResponse } from "@textql/sdk/models";
 
 let value: TextqlRpcPublicChatAttachDashboardResponse = {
   cell: {
-    formEditorCell: {},
+    gmailEmailContentCell: {},
     timestamp: new Date("2023-01-15T01:30:15.01Z"),
   },
   dashboard: {

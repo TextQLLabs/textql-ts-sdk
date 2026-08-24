@@ -6,7 +6,10 @@
 import { ChatServiceCheckStreamlitHealthRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceCheckStreamlitHealthRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    cellId: "<id>",
+  },
 };
 ```
 

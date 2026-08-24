@@ -6,7 +6,10 @@
 import { ChatServiceGetCompletionParametersRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetCompletionParametersRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    cellId: "<id>",
+  },
 };
 ```
 

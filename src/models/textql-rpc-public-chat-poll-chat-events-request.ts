@@ -8,7 +8,7 @@ import { smartUnion } from "../types/smart-union.js";
 export type MinGeneration = number | string;
 
 export type TextqlRpcPublicChatPollChatEventsRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   resumeCursor?: string | null | undefined;
   minGeneration?: number | string | undefined;
 };
@@ -28,7 +28,7 @@ export function minGenerationToJSON(minGeneration: MinGeneration): string {
 
 /** @internal */
 export type TextqlRpcPublicChatPollChatEventsRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   resumeCursor?: string | null | undefined;
   minGeneration?: number | string | undefined;
 };
@@ -39,7 +39,7 @@ export const TextqlRpcPublicChatPollChatEventsRequest$outboundSchema:
     TextqlRpcPublicChatPollChatEventsRequest$Outbound,
     TextqlRpcPublicChatPollChatEventsRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
     resumeCursor: z.optional(z.nullable(z.string())),
     minGeneration: z.optional(smartUnion([z.int(), z.string()])),
   });

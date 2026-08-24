@@ -6,7 +6,9 @@
 import { ChatServiceGetCompletionParametersBatchRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetCompletionParametersBatchRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

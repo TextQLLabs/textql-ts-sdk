@@ -17,13 +17,7 @@ import {
 } from "./textql-rpc-public-connector-query-result.js";
 
 export type TextqlRpcPublicConnectorConnectorTable = {
-  /**
-   * Apache Arrow IPC format binary data
-   */
   tableDatabase?: string | undefined;
-  /**
-   * Total number of rows (for pagination/UI purposes)
-   */
   tableSchema?: string | undefined;
   tableName?: string | undefined;
   preview?: TextqlRpcPublicConnectorQueryResult | undefined;

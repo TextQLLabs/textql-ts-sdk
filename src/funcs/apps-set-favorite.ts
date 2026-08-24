@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+ * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
  *
  * @remarks
- * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+ * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
  */
 export function appsSetFavorite(
   client: TextqlCore,

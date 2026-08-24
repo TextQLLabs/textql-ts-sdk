@@ -7,7 +7,7 @@ import { TextqlRpcPublicObserveGetCheckRecordFixResponse } from "@textql/sdk/mod
 
 let value: TextqlRpcPublicObserveGetCheckRecordFixResponse = {
   fixPatchCell: {
-    gmailEmailSearchCell: {},
+    googleCalendarSearchCell: {},
     timestamp: new Date("2023-01-15T01:30:15.01Z"),
   },
 };

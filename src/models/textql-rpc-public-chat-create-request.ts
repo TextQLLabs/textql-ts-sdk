@@ -21,7 +21,7 @@ export type TextqlRpcPublicChatCreateRequest = {
   /**
    * ChatParadigm includes paradigm options
    */
-  paradigm?: TextqlRpcPublicParadigmParadigm | undefined;
+  paradigm: TextqlRpcPublicParadigmParadigm;
   model?: TextqlRpcPublicChatLlmModel | undefined;
   /**
    * optionally pre-fill first message
@@ -61,11 +61,12 @@ export type TextqlRpcPublicChatCreateRequest = {
    *  Supported on Sonnet 5, Fable 5, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
    */
   maxThinking?: boolean | null | undefined;
+  modelName?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatCreateRequest$Outbound = {
-  paradigm?: TextqlRpcPublicParadigmParadigm$Outbound | undefined;
+  paradigm: TextqlRpcPublicParadigmParadigm$Outbound;
   model?: string | undefined;
   message?: string | null | undefined;
   playbookId?: string | null | undefined;
@@ -75,6 +76,7 @@ export type TextqlRpcPublicChatCreateRequest$Outbound = {
   vllmModelId?: string | null | undefined;
   fastMode?: boolean | null | undefined;
   maxThinking?: boolean | null | undefined;
+  modelName?: string | null | undefined;
 };
 
 /** @internal */
@@ -82,7 +84,7 @@ export const TextqlRpcPublicChatCreateRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCreateRequest$Outbound,
   TextqlRpcPublicChatCreateRequest
 > = z.object({
-  paradigm: z.optional(TextqlRpcPublicParadigmParadigm$outboundSchema),
+  paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
   model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
   message: z.optional(z.nullable(z.string())),
   playbookId: z.optional(z.nullable(z.string())),
@@ -92,6 +94,7 @@ export const TextqlRpcPublicChatCreateRequest$outboundSchema: z.ZodMiniType<
   vllmModelId: z.optional(z.nullable(z.string())),
   fastMode: z.optional(z.nullable(z.boolean())),
   maxThinking: z.optional(z.nullable(z.boolean())),
+  modelName: z.optional(z.nullable(z.string())),
 });
 
 export function textqlRpcPublicChatCreateRequestToJSON(

@@ -5,13 +5,13 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetLlmUsageRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   includeCosts?: boolean | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatGetLlmUsageRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   includeCosts?: boolean | undefined;
 };
 
@@ -21,7 +21,7 @@ export const TextqlRpcPublicChatGetLlmUsageRequest$outboundSchema:
     TextqlRpcPublicChatGetLlmUsageRequest$Outbound,
     TextqlRpcPublicChatGetLlmUsageRequest
   > = z.object({
-    chatId: z.optional(z.string()),
+    chatId: z.string(),
     includeCosts: z.optional(z.boolean()),
   });
 

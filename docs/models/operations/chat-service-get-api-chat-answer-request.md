@@ -6,7 +6,9 @@
 import { ChatServiceGetAPIChatAnswerRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetAPIChatAnswerRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

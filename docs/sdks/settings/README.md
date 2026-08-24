@@ -9,6 +9,7 @@
 * [get](#get) - GetOrganizationSettings
 * [inviteMember](#invitemember) - InviteOrganizationMember
 * [listMembers](#listmembers) - ListOrganizationMembers
+* [updateModelSettings](#updatemodelsettings) - UpdateOrganizationModelSettings
 * [update](#update) - UpdateOrganizationSettings
 
 ## checkMemberStatus
@@ -369,6 +370,79 @@ run();
 ### Response
 
 **Promise\<[operations.SettingsServiceListOrganizationMembersResponse](../../models/operations/settings-service-list-organization-members-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateModelSettings
+
+UpdateOrganizationModelSettings
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="SettingsService_UpdateOrganizationModelSettings" method="post" path="/textql.rpc.public.settings.SettingsService/UpdateOrganizationModelSettings" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.settings.updateModelSettings({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { settingsUpdateModelSettings } from "@textql/sdk/funcs/settings-update-model-settings.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await settingsUpdateModelSettings(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("settingsUpdateModelSettings failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.SettingsServiceUpdateOrganizationModelSettingsRequest](../../models/operations/settings-service-update-organization-model-settings-request.md)                     | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.SettingsServiceUpdateOrganizationModelSettingsResponse](../../models/operations/settings-service-update-organization-model-settings-response.md)\>**
 
 ### Errors
 

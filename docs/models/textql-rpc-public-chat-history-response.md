@@ -8,7 +8,7 @@ import { TextqlRpcPublicChatHistoryResponse } from "@textql/sdk/models";
 let value: TextqlRpcPublicChatHistoryResponse = {
   cells: [
     {
-      streamlitCell: {},
+      subagentCell: {},
       timestamp: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],

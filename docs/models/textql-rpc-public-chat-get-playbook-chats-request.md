@@ -5,13 +5,15 @@
 ```typescript
 import { TextqlRpcPublicChatGetPlaybookChatsRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatGetPlaybookChatsRequest = {};
+let value: TextqlRpcPublicChatGetPlaybookChatsRequest = {
+  playbookId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `playbookId`       | *string*           | :heavy_minus_sign: | N/A                |
+| `playbookId`       | *string*           | :heavy_check_mark: | N/A                |
 | `limit`            | *number*           | :heavy_minus_sign: | N/A                |
 | `skip`             | *number*           | :heavy_minus_sign: | N/A                |

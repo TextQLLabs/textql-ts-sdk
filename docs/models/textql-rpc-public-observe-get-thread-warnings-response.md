@@ -11,7 +11,7 @@ let value: TextqlRpcPublicObserveGetThreadWarningsResponse = {
       warnings: [
         {
           fixPatchCell: {
-            microsoft365CalendarCell: {},
+            microsoft365EmailContentCell: {},
             timestamp: new Date("2023-01-15T01:30:15.01Z"),
           },
         },

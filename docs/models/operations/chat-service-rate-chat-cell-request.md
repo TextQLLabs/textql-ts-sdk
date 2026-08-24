@@ -6,7 +6,11 @@
 import { ChatServiceRateChatCellRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceRateChatCellRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    cellId: "<id>",
+    rating: "CELL_RATING_NONE",
+  },
 };
 ```
 

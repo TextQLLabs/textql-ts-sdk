@@ -15,7 +15,13 @@ export type TextqlRpcPublicConnectorTrinoMetadata = {
   password?: string | undefined;
   catalog?: string | undefined;
   schema?: string | undefined;
+  /**
+   * ISO 8601 timestamp
+   */
   sslMode?: boolean | undefined;
+  /**
+   * When true, only email metadata is accessible (no body content)
+   */
   accessToken?: string | undefined;
   skipTlsVerify?: boolean | undefined;
 };

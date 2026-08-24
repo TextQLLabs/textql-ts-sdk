@@ -6,7 +6,10 @@
 import { ChatServiceAttachAppRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceAttachAppRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    appId: "<id>",
+  },
 };
 ```
 

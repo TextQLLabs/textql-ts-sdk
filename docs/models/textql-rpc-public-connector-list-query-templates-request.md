@@ -12,7 +12,7 @@ let value: TextqlRpcPublicConnectorListQueryTemplatesRequest = {};
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `connectorId`      | *number*           | :heavy_minus_sign: | 0 = all-time       |
+| `connectorId`      | *number*           | :heavy_minus_sign: | N/A                |
 | `limit`            | *number*           | :heavy_minus_sign: | N/A                |
-| `offset`           | *number*           | :heavy_minus_sign: | N/A                |
-| `days`             | *number*           | :heavy_minus_sign: | N/A                |
+| `offset`           | *number*           | :heavy_minus_sign: | 0.0-1.0            |
+| `days`             | *number*           | :heavy_minus_sign: | milliseconds       |

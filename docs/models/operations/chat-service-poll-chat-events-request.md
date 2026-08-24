@@ -6,7 +6,9 @@
 import { ChatServicePollChatEventsRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServicePollChatEventsRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

@@ -6,7 +6,9 @@
 import { ChatServiceGetPlaybookChatsRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetPlaybookChatsRequest = {
-  body: {},
+  body: {
+    playbookId: "<id>",
+  },
 };
 ```
 

@@ -6,7 +6,10 @@
 import { ChatServiceAttachAgentToChatRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceAttachAgentToChatRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    agentId: "<id>",
+  },
 };
 ```
 

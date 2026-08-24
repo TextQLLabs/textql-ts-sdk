@@ -11,12 +11,12 @@ export type TextqlRpcPublicChatRejectOntologyChangeRequest = {
   /**
    * UUID
    */
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatRejectOntologyChangeRequest$Outbound = {
-  cellId?: string | undefined;
+  cellId: string;
 };
 
 /** @internal */
@@ -25,7 +25,7 @@ export const TextqlRpcPublicChatRejectOntologyChangeRequest$outboundSchema:
     TextqlRpcPublicChatRejectOntologyChangeRequest$Outbound,
     TextqlRpcPublicChatRejectOntologyChangeRequest
   > = z.object({
-    cellId: z.optional(z.string()),
+    cellId: z.string(),
   });
 
 export function textqlRpcPublicChatRejectOntologyChangeRequestToJSON(

@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatAttachDatasetRequest = {
-  chatId?: string | undefined;
-  datasetId?: string | undefined;
+  chatId: string;
+  datasetId: string;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatAttachDatasetRequest$Outbound = {
-  chatId?: string | undefined;
-  datasetId?: string | undefined;
+  chatId: string;
+  datasetId: string;
 };
 
 /** @internal */
@@ -21,8 +21,8 @@ export const TextqlRpcPublicChatAttachDatasetRequest$outboundSchema:
     TextqlRpcPublicChatAttachDatasetRequest$Outbound,
     TextqlRpcPublicChatAttachDatasetRequest
   > = z.object({
-    chatId: z.optional(z.string()),
-    datasetId: z.optional(z.string()),
+    chatId: z.string(),
+    datasetId: z.string(),
   });
 
 export function textqlRpcPublicChatAttachDatasetRequestToJSON(

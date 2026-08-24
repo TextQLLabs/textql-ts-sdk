@@ -5,12 +5,15 @@
 ```typescript
 import { TextqlRpcPublicChatSubmitContextPromptChangeRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatSubmitContextPromptChangeRequest = {};
+let value: TextqlRpcPublicChatSubmitContextPromptChangeRequest = {
+  cellId: "<id>",
+  editedContext: "<value>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `cellId`           | *string*           | :heavy_minus_sign: | UUID               |
-| `editedContext`    | *string*           | :heavy_minus_sign: | N/A                |
+| `cellId`           | *string*           | :heavy_check_mark: | UUID               |
+| `editedContext`    | *string*           | :heavy_check_mark: | N/A                |

@@ -6,13 +6,7 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppListAppVersionsRequest = {
   appId?: string | undefined;
-  /**
-   * Routing observability: warm | warm_fallback | tql | sql.
-   */
   limit?: number | undefined;
-  /**
-   * Whether this invoke paid phase-1 module definition (cold imports).
-   */
   offset?: number | undefined;
 };
 

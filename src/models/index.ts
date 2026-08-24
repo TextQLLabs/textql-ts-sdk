@@ -233,6 +233,8 @@ export * from "./textql-rpc-public-cells-sql-cell.js";
 export * from "./textql-rpc-public-cells-sql-reference.js";
 export * from "./textql-rpc-public-cells-status-cell.js";
 export * from "./textql-rpc-public-cells-streamlit-cell.js";
+export * from "./textql-rpc-public-cells-subagent-cell.js";
+export * from "./textql-rpc-public-cells-subagent-run-status.js";
 export * from "./textql-rpc-public-cells-summary-cell.js";
 export * from "./textql-rpc-public-cells-tableau-cell.js";
 export * from "./textql-rpc-public-cells-tableau-message-block.js";
@@ -1188,6 +1190,8 @@ export * from "./textql-rpc-public-settings-invite-organization-member-request.j
 export * from "./textql-rpc-public-settings-invite-organization-member-response.js";
 export * from "./textql-rpc-public-settings-list-organization-members-request.js";
 export * from "./textql-rpc-public-settings-list-organization-members-response.js";
+export * from "./textql-rpc-public-settings-update-organization-model-settings-request.js";
+export * from "./textql-rpc-public-settings-update-organization-model-settings-response.js";
 export * from "./textql-rpc-public-settings-update-organization-settings-request.js";
 export * from "./textql-rpc-public-settings-update-organization-settings-response.js";
 export * from "./textql-rpc-public-slack-create-slack-uuid-response.js";

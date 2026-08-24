@@ -6,7 +6,9 @@
 import { ChatServiceCreateChatRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceCreateChatRequest = {
-  body: {},
+  body: {
+    paradigm: {},
+  },
 };
 ```
 

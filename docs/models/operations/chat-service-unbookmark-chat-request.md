@@ -6,7 +6,9 @@
 import { ChatServiceUnbookmarkChatRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceUnbookmarkChatRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

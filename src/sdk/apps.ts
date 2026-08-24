@@ -32,10 +32,7 @@ import { unwrapAsync } from "../types/fp.js";
 
 export class Apps extends ClientSDK {
   /**
-   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
-   *
-   * @remarks
-   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+   * AppHeartbeat
    */
   async heartbeat(
     request: operations.AppServiceAppHeartbeatRequest,
@@ -110,10 +107,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * View analytics: reads the engagement views recorded on app page load.
+   * Replaces the calling member's entire ordering; capped server-side.
    *
    * @remarks
-   * View analytics: reads the engagement views recorded on app page load.
+   * Replaces the calling member's entire ordering; capped server-side.
    */
   async getDBSchema(
     request: operations.AppServiceGetAppDBSchemaRequest,
@@ -127,11 +124,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    *
    * @remarks
-   * Staff-only (superadmin gated in-handler): publishes the embedded component
-   *  gallery as an app tree and returns its signed viewer URL.
+   * View analytics: reads the engagement views recorded on app page load.
    */
   async getDBTablePreview(
     request: operations.AppServiceGetAppDBTablePreviewRequest,
@@ -145,7 +141,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * GetAppMemberState
+   * Per-member notification subscription to an app ("watch this app").
+   *
+   * @remarks
+   * Per-member notification subscription to an app ("watch this app").
    */
   async getMemberState(
     request: operations.AppServiceGetAppMemberStateRequest,
@@ -159,10 +158,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
    *
    * @remarks
-   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
    */
   async getAppVersion(
     request: operations.AppServiceGetAppVersionRequest,
@@ -176,10 +175,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Per-member notification subscription to an app ("watch this app").
+   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
    *
    * @remarks
-   * Per-member notification subscription to an app ("watch this app").
+   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
    */
   async getAppViewStats(
     request: operations.AppServiceGetAppViewStatsRequest,
@@ -221,11 +220,12 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
    *
    * @remarks
-   * Lists the calling member's favorited library items (apps, dashboards,
-   *  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
+   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+   *  since the merged library page pins apps and dashboards through one client.
    */
   async listActivitySince(
     request: operations.AppServiceListAppActivitySinceRequest,
@@ -239,10 +239,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
    *
    * @remarks
-   * Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
    */
   async listVersions(
     request: operations.AppServiceListAppVersionsRequest,
@@ -270,12 +270,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+   * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
    *
    * @remarks
-   * Favorite/unfavorite a library item (app or dashboard) for the calling member.
-   *  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
-   *  since the merged library page pins apps and dashboards through one client.
+   * Watcher management: app owners/editors and org admins list the app's
+   *  subscribers and add/remove members (Upsert/Delete with member_id).
    */
   async listMyMemberActivity(
     request: operations.AppServiceListMyAppMemberActivityRequest,
@@ -289,10 +288,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Moves an app into a library folder (or to root when folder_id is empty).
-   *
-   * @remarks
-   * Moves an app into a library folder (or to root when folder_id is empty).
+   * MoveAppToFolder
    */
   async moveAppToFolder(
     request: operations.AppServiceMoveAppToFolderRequest,
@@ -306,10 +302,13 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
    *
    * @remarks
-   * Replaces the calling member's entire ordering; capped server-side.
+   * Ordering overlay for the sidebar Bookmarks section: one position list per
+   *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+   *  Membership truth stays in library_favorite / chat bookmarks; this persists
+   *  only the drag-and-drop order.
    */
   async presenceHeartbeat(
     request: operations.AppServicePresenceHeartbeatRequest,
@@ -323,11 +322,7 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
-   *
-   * @remarks
-   * Watcher management: app owners/editors and org admins list the app's
-   *  subscribers and add/remove members (Upsert/Delete with member_id).
+   * RecordAppMemberActivity
    */
   async recordMemberActivity(
     request: operations.AppServiceRecordAppMemberActivityRequest,
@@ -341,10 +336,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   * Moves an app into a library folder (or to root when folder_id is empty).
    *
    * @remarks
-   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   * Moves an app into a library folder (or to root when folder_id is empty).
    */
   async refresh(
     request: operations.AppServiceRefreshAppRequest,
@@ -358,7 +353,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * RestoreAppVersion
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+   *
+   * @remarks
+   * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
    */
   async restoreAppVersion(
     request: operations.AppServiceRestoreAppVersionRequest,
@@ -386,10 +384,10 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
    *
    * @remarks
-   * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+   * Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
    */
   async setFavorite(
     request: operations.AppServiceSetFavoriteRequest,

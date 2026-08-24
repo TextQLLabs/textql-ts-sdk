@@ -4,34 +4,34 @@
 
 ### Available Operations
 
-* [heartbeat](#heartbeat) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+* [heartbeat](#heartbeat) - AppHeartbeat
 * [createApp](#createapp) - CreateApp
 * [deleteApp](#deleteapp) - DeleteApp
 * [duplicate](#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](#get) - GetApp
-* [getDBSchema](#getdbschema) - View analytics: reads the engagement views recorded on app page load.
-* [getDBTablePreview](#getdbtablepreview) - Staff-only (superadmin gated in-handler): publishes the embedded component  gallery as an app tree and returns its signed viewer URL.
-* [getMemberState](#getmemberstate) - GetAppMemberState
-* [getAppVersion](#getappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
-* [getAppViewStats](#getappviewstats) - Per-member notification subscription to an app ("watch this app").
+* [getDBSchema](#getdbschema) - Replaces the calling member's entire ordering; capped server-side.
+* [getDBTablePreview](#getdbtablepreview) - View analytics: reads the engagement views recorded on app page load.
+* [getMemberState](#getmemberstate) - Per-member notification subscription to an app ("watch this app").
+* [getAppVersion](#getappversion) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+* [getAppViewStats](#getappviewstats) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [getMembersWithApps](#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](#invokecomputefunction) - InvokeAppComputeFunction
-* [listActivitySince](#listactivitysince) - Lists the calling member's favorited library items (apps, dashboards,  agents) for the sidebar Pinned section: id, type, name, preview screenshot.
-* [listVersions](#listversions) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+* [listActivitySince](#listactivitysince) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
+* [listVersions](#listversions) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 * [list](#list) - ListApps
-* [listMyMemberActivity](#listmymemberactivity) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-* [moveAppToFolder](#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
-* [presenceHeartbeat](#presenceheartbeat) - Replaces the calling member's entire ordering; capped server-side.
-* [recordMemberActivity](#recordmemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
-* [refresh](#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
-* [restoreAppVersion](#restoreappversion) - RestoreAppVersion
+* [listMyMemberActivity](#listmymemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
+* [moveAppToFolder](#moveapptofolder) - MoveAppToFolder
+* [presenceHeartbeat](#presenceheartbeat) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+* [recordMemberActivity](#recordmemberactivity) - RecordAppMemberActivity
+* [refresh](#refresh) - Moves an app into a library folder (or to root when folder_id is empty).
+* [restoreAppVersion](#restoreappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [setMemberState](#setmemberstate) - SetAppMemberState
-* [setFavorite](#setfavorite) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+* [setFavorite](#setfavorite) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 * [update](#update) - UpdateApp
 
 ## heartbeat
 
-Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+AppHeartbeat
 
 ### Example Usage
 
@@ -398,7 +398,7 @@ run();
 
 ## getDBSchema
 
-View analytics: reads the engagement views recorded on app page load.
+Replaces the calling member's entire ordering; capped server-side.
 
 ### Example Usage
 
@@ -471,8 +471,7 @@ run();
 
 ## getDBTablePreview
 
-Staff-only (superadmin gated in-handler): publishes the embedded component
- gallery as an app tree and returns its signed viewer URL.
+View analytics: reads the engagement views recorded on app page load.
 
 ### Example Usage
 
@@ -545,7 +544,7 @@ run();
 
 ## getMemberState
 
-GetAppMemberState
+Per-member notification subscription to an app ("watch this app").
 
 ### Example Usage
 
@@ -618,7 +617,7 @@ run();
 
 ## getAppVersion
 
-Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
 
 ### Example Usage
 
@@ -691,7 +690,7 @@ run();
 
 ## getAppViewStats
 
-Per-member notification subscription to an app ("watch this app").
+Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 
 ### Example Usage
 
@@ -910,8 +909,9 @@ run();
 
 ## listActivitySince
 
-Lists the calling member's favorited library items (apps, dashboards,
- agents) for the sidebar Pinned section: id, type, name, preview screenshot.
+Favorite/unfavorite a library item (app or dashboard) for the calling member.
+ Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+ since the merged library page pins apps and dashboards through one client.
 
 ### Example Usage
 
@@ -984,7 +984,7 @@ run();
 
 ## listVersions
 
-Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 
 ### Example Usage
 
@@ -1130,9 +1130,8 @@ run();
 
 ## listMyMemberActivity
 
-Favorite/unfavorite a library item (app or dashboard) for the calling member.
- Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
- since the merged library page pins apps and dashboards through one client.
+Watcher management: app owners/editors and org admins list the app's
+ subscribers and add/remove members (Upsert/Delete with member_id).
 
 ### Example Usage
 
@@ -1205,7 +1204,7 @@ run();
 
 ## moveAppToFolder
 
-Moves an app into a library folder (or to root when folder_id is empty).
+MoveAppToFolder
 
 ### Example Usage
 
@@ -1278,7 +1277,10 @@ run();
 
 ## presenceHeartbeat
 
-Replaces the calling member's entire ordering; capped server-side.
+Ordering overlay for the sidebar Bookmarks section: one position list per
+ member covering favorites and thread bookmarks ('<kind>:<id>' keys).
+ Membership truth stays in library_favorite / chat bookmarks; this persists
+ only the drag-and-drop order.
 
 ### Example Usage
 
@@ -1351,8 +1353,7 @@ run();
 
 ## recordMemberActivity
 
-Watcher management: app owners/editors and org admins list the app's
- subscribers and add/remove members (Upsert/Delete with member_id).
+RecordAppMemberActivity
 
 ### Example Usage
 
@@ -1425,7 +1426,7 @@ run();
 
 ## refresh
 
-Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+Moves an app into a library folder (or to root when folder_id is empty).
 
 ### Example Usage
 
@@ -1498,7 +1499,7 @@ run();
 
 ## restoreAppVersion
 
-RestoreAppVersion
+Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 
 ### Example Usage
 
@@ -1644,7 +1645,7 @@ run();
 
 ## setFavorite
 
-Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 
 ### Example Usage
 

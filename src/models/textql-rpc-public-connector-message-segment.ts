@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-connector-feature-type.js";
 
 export type TextqlRpcPublicConnectorMessageSegment = {
-  /**
-   * dataset IDs for selected Tableau collections
-   */
   content?: string | undefined;
   /**
    * Feature types for nudge queries - identifies which feature a query promotes

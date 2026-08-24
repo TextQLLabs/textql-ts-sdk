@@ -6,7 +6,9 @@
 import { ChatServiceGetChatArtifactsSummaryRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetChatArtifactsSummaryRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

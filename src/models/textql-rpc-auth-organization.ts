@@ -278,10 +278,14 @@ export type TextqlRpcAuthOrganization = {
   deleteInactiveThreadsEnabled?: boolean | null | undefined;
   threadRetentionDays?: number | null | undefined;
   threadHardDeleteGraceDays?: number | null | undefined;
+  deleteInactiveAppsEnabled?: boolean | null | undefined;
+  appRetentionDays?: number | null | undefined;
+  appHardDeleteGraceDays?: number | null | undefined;
   /**
    * Values are the organization.asset_url_expiry column values — do not renumber.
    */
   assetUrlExpiry?: TextqlRpcAuthAssetUrlExpiry | undefined;
+  emailOutputEnabled?: boolean | null | undefined;
   /**
    * Mirror of the email_output_enabled feature flag (in feature_flags table,
    *
@@ -289,9 +293,9 @@ export type TextqlRpcAuthOrganization = {
    *  not on the organization row). Surfaces in settings UIs alongside the
    *  org-row toggles.
    */
-  emailOutputEnabled?: boolean | null | undefined;
   defaultPlaybookPrivate?: boolean | null | undefined;
   defaultDashboardOutput?: boolean | null | undefined;
+  defaultMethodology?: number | null | undefined;
   /**
    * Org-wide default response methodology for new chats, as a
    *
@@ -300,38 +304,38 @@ export type TextqlRpcAuthOrganization = {
    *  with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
    *  per-member (Member.default_methodology) and per-chat.
    */
-  defaultMethodology?: number | null | undefined;
   scimNewGroupDefaultRoleType?: string | null | undefined;
   groupsFeatureEnabled?: boolean | null | undefined;
   availableProviders?: Array<string> | undefined;
+  showTextqlUsage?: boolean | null | undefined;
   /**
    * When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
    *
    * @remarks
    *  staff activity in its usage views; when false (default) they are filtered out.
    */
-  showTextqlUsage?: boolean | null | undefined;
   tracesEnabled?: boolean | null | undefined;
   allowLlmDataRetention?: boolean | null | undefined;
   soxDbSessionMetadataEnabled?: boolean | null | undefined;
   smsEnabled?: boolean | null | undefined;
   scimAssignDefaultRole?: boolean | null | undefined;
-  /**
-   * dismiss legacy-context migration banner org-wide
-   */
   migrationBannerDismissed?: boolean | null | undefined;
   /**
-   * Deprecated: superseded by config_objects_enabled (field 80); no longer populated.
+   * dismiss legacy-context migration banner org-wide
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   configMigrationsEnabled?: boolean | null | undefined;
+  /**
+   * Deprecated: superseded by config_objects_enabled (field 80); no longer populated.
+   */
   sandboxObservabilityEnabled?: boolean | null | undefined;
+  dataAppsEnabled?: boolean | null | undefined;
   /**
    * Internal gate for the data apps feature (apps resource + html generative dashboards).
    */
-  dataAppsEnabled?: boolean | null | undefined;
   issuesEnabled?: boolean | null | undefined;
+  configObjectsEnabled?: boolean | null | undefined;
   /**
    * config_objects feature_flags row: the umbrella half of the config-management predicate
    *
@@ -341,8 +345,10 @@ export type TextqlRpcAuthOrganization = {
    *  config-managed-object behavior — Ana's authoring tools, the export RPC + capabilities,
    *  reconcile takeover, the lazy row-to-config migration. Supersedes
    *  config_migrations_enabled (field 74).
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configObjectsEnabled?: boolean | null | undefined;
+  configObjectsPlaybooksEnabled?: boolean | null | undefined;
   /**
    * Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
    *
@@ -353,33 +359,31 @@ export type TextqlRpcAuthOrganization = {
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configObjectsPlaybooksEnabled?: boolean | null | undefined;
+  configObjectsDashboardsEnabled?: boolean | null | undefined;
   /**
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configObjectsDashboardsEnabled?: boolean | null | undefined;
+  configAutofixEnabled?: boolean | null | undefined;
   /**
    * Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
    *
    * @remarks
    *  every org with the config-object checks surface on. Retained only because proto/api is additive-only.
-   *
-   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configAutofixEnabled?: boolean | null | undefined;
   helmChartVersion?: string | null | undefined;
+  spendTransparencyEnabled?: boolean | null | undefined;
   /**
    * Internal flag: show dollar costs (spend transparency) across the product.
    *
    * @remarks
    *  Only rendered for internal (@textql.com) users while pricing is verified.
    */
-  spendTransparencyEnabled?: boolean | null | undefined;
   sharingDisabled?: boolean | null | undefined;
+  appWritebackAutoApproveEnabled?: boolean | null | undefined;
   /**
    * Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
    */
-  appWritebackAutoApproveEnabled?: boolean | null | undefined;
+  subagentsEnabled?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -452,6 +456,9 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   deleteInactiveThreadsEnabled: z.optional(z.nullable(types.boolean())),
   threadRetentionDays: z.optional(z.nullable(types.number())),
   threadHardDeleteGraceDays: z.optional(z.nullable(types.number())),
+  deleteInactiveAppsEnabled: z.optional(z.nullable(types.boolean())),
+  appRetentionDays: z.optional(z.nullable(types.number())),
+  appHardDeleteGraceDays: z.optional(z.nullable(types.number())),
   assetUrlExpiry: types.optional(TextqlRpcAuthAssetUrlExpiry$inboundSchema),
   emailOutputEnabled: z.optional(z.nullable(types.boolean())),
   defaultPlaybookPrivate: z.optional(z.nullable(types.boolean())),
@@ -479,6 +486,7 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   spendTransparencyEnabled: z.optional(z.nullable(types.boolean())),
   sharingDisabled: z.optional(z.nullable(types.boolean())),
   appWritebackAutoApproveEnabled: z.optional(z.nullable(types.boolean())),
+  subagentsEnabled: z.optional(z.nullable(types.boolean())),
 });
 
 export function textqlRpcAuthOrganizationFromJSON(

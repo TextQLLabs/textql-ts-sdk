@@ -5,14 +5,14 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatHistoryRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   limit?: number | null | undefined;
   skip?: number | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatHistoryRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   limit?: number | null | undefined;
   skip?: number | null | undefined;
 };
@@ -22,7 +22,7 @@ export const TextqlRpcPublicChatHistoryRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatHistoryRequest$Outbound,
   TextqlRpcPublicChatHistoryRequest
 > = z.object({
-  chatId: z.optional(z.string()),
+  chatId: z.string(),
   limit: z.optional(z.nullable(z.int())),
   skip: z.optional(z.nullable(z.int())),
 });

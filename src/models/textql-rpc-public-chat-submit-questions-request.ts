@@ -13,13 +13,13 @@ export type TextqlRpcPublicChatSubmitQuestionsRequest = {
   /**
    * UUID
    */
-  cellId?: string | undefined;
+  cellId: string;
   answers?: Array<TextqlRpcPublicCellsQuestionAnswer> | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicChatSubmitQuestionsRequest$Outbound = {
-  cellId?: string | undefined;
+  cellId: string;
   answers?: Array<TextqlRpcPublicCellsQuestionAnswer$Outbound> | undefined;
 };
 
@@ -29,7 +29,7 @@ export const TextqlRpcPublicChatSubmitQuestionsRequest$outboundSchema:
     TextqlRpcPublicChatSubmitQuestionsRequest$Outbound,
     TextqlRpcPublicChatSubmitQuestionsRequest
   > = z.object({
-    cellId: z.optional(z.string()),
+    cellId: z.string(),
     answers: z.optional(
       z.array(TextqlRpcPublicCellsQuestionAnswer$outboundSchema),
     ),

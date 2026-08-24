@@ -6,7 +6,10 @@
 import { ChatServiceAttachDatasetRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceAttachDatasetRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+    datasetId: "<id>",
+  },
 };
 ```
 

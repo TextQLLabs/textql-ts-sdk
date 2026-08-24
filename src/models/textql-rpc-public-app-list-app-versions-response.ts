@@ -12,13 +12,7 @@ import {
   TextqlRpcPublicAppAppVersion$inboundSchema,
 } from "./textql-rpc-public-app-app-version.js";
 
-/**
- * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
- */
 export type TextqlRpcPublicAppListAppVersionsResponse = {
-  /**
-   * normalized relative path, forward slashes, no .. or leading /
-   */
   versions?: Array<TextqlRpcPublicAppAppVersion> | undefined;
   totalCount?: number | undefined;
 };

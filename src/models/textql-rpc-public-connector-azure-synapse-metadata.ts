@@ -18,9 +18,6 @@ export type TextqlRpcPublicConnectorAzureSynapseMetadata = {
   authType?: string | undefined;
   clientId?: string | undefined;
   clientSecret?: string | undefined;
-  /**
-   * OAuth fields (used when auth_type = OAUTH)
-   */
   tenantId?: string | undefined;
 };
 

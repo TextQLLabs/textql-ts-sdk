@@ -6,7 +6,9 @@
 import { ChatServiceGetChatHistoryRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetChatHistoryRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 

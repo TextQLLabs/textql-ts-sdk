@@ -5,14 +5,16 @@
 ```typescript
 import { TextqlRpcPublicChatUpdateChatRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatUpdateChatRequest = {};
+let value: TextqlRpcPublicChatUpdateChatRequest = {
+  chatId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| `chatId`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `chatId`                                                                                 | *string*                                                                                 | :heavy_check_mark:                                                                       | N/A                                                                                      |
 | `research`                                                                               | *boolean*                                                                                | :heavy_minus_sign:                                                                       | update report mode                                                                       |
 | `summary`                                                                                | *string*                                                                                 | :heavy_minus_sign:                                                                       | update chat summary                                                                      |
 | `dashboardMode`                                                                          | *boolean*                                                                                | :heavy_minus_sign:                                                                       | update dashboard mode                                                                    |

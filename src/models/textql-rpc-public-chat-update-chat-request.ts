@@ -9,7 +9,7 @@ import {
 } from "./textql-rpc-public-chat-methodology.js";
 
 export type TextqlRpcPublicChatUpdateChatRequest = {
-  chatId?: string | undefined;
+  chatId: string;
   /**
    * update report mode
    */
@@ -35,7 +35,7 @@ export type TextqlRpcPublicChatUpdateChatRequest = {
 
 /** @internal */
 export type TextqlRpcPublicChatUpdateChatRequest$Outbound = {
-  chatId?: string | undefined;
+  chatId: string;
   research?: boolean | null | undefined;
   summary?: string | null | undefined;
   dashboardMode?: boolean | null | undefined;
@@ -49,7 +49,7 @@ export const TextqlRpcPublicChatUpdateChatRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatUpdateChatRequest$Outbound,
   TextqlRpcPublicChatUpdateChatRequest
 > = z.object({
-  chatId: z.optional(z.string()),
+  chatId: z.string(),
   research: z.optional(z.nullable(z.boolean())),
   summary: z.optional(z.nullable(z.string())),
   dashboardMode: z.optional(z.nullable(z.boolean())),

@@ -7,11 +7,13 @@ Ontology change management
 ```typescript
 import { TextqlRpcPublicChatRejectOntologyChangeRequest } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicChatRejectOntologyChangeRequest = {};
+let value: TextqlRpcPublicChatRejectOntologyChangeRequest = {
+  cellId: "<id>",
+};
 ```
 
 ## Fields
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `cellId`           | *string*           | :heavy_minus_sign: | UUID               |
+| `cellId`           | *string*           | :heavy_check_mark: | UUID               |

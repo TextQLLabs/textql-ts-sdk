@@ -6,7 +6,9 @@
 import { ChatServiceGetLlmUsageRequest } from "@textql/sdk/models/operations";
 
 let value: ChatServiceGetLlmUsageRequest = {
-  body: {},
+  body: {
+    chatId: "<id>",
+  },
 };
 ```
 
