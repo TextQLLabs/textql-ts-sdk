@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: a206ee6ae5884442f1f880dbbc7f3147
+  docChecksum: 1634995873cc314fdc7abd72df134133
   docVersion: 1.0.0
   speakeasyVersion: 1.795.3
   generationVersion: 2.932.9
-  releaseVersion: 1.4.17
-  configChecksum: 61dd563694575a13433c833f6f584ea6
+  releaseVersion: 1.4.18
+  configChecksum: ae725a5632026270ea20a0a9a933c727
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 20bae5b3-f8b0-4219-8248-d39f57c46773
-  pristine_commit_hash: a9806ddd785fd60dff789f0e2bfb3a91853b0acc
-  pristine_tree_hash: f9092eeb2a5d38a562ae00f09f054d64176ef0c9
+  generation_id: 441fe70a-9af3-4db1-841f-7df3d062e059
+  pristine_commit_hash: d84e7eeec013160a60f289173ac0b21a777c366a
+  pristine_tree_hash: 55a990fe201dfae316f29e7fb6b4c50cf0d23905
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -7376,8 +7376,8 @@ trackedFiles:
     pristine_git_object: 7da7bed1c84c425328602e66f7bcbe7a37070c9b
   docs/models/textql-rpc-public-patches-configure-ontology-remote-request.md:
     id: af3f21140e03
-    last_write_checksum: sha1:6c665337f122a8fdf349b720b249f701f7c01ddb
-    pristine_git_object: c06b4cb2ea17ad605e79c5335d0a26bbbc909b5c
+    last_write_checksum: sha1:8ddd530bf05a1d7c5561b34b6337f8a01f3bab59
+    pristine_git_object: ca725919e81c7e0bd86a90904b8baf3a01e43405
   docs/models/textql-rpc-public-patches-configure-ontology-remote-response.md:
     id: 82728d875402
     last_write_checksum: sha1:92581250d9e94485d1a83944f8501bc1733bb91b
@@ -9756,8 +9756,8 @@ trackedFiles:
     pristine_git_object: 05b5b58e4f1280d46824e78f5043c0460844b370
   docs/sdks/ontology/README.md:
     id: 0dbbd337a8ee
-    last_write_checksum: sha1:e08e0f94c85c3ca535ba04819d25a316a870e337
-    pristine_git_object: 34f7aa2b94949d08309508d033e1835f5fb6e66c
+    last_write_checksum: sha1:c6985d9949ab0fed4f3492cd8a70a010967fa5fd
+    pristine_git_object: efbb90ae919d35e18daa74452cbf5df66546a958
   docs/sdks/playbooks/README.md:
     id: e8797c3b29dd
     last_write_checksum: sha1:cc7f4cd4065a42d8e183efa05fce725b7c7bccc6
@@ -9792,8 +9792,8 @@ trackedFiles:
     pristine_git_object: 5b7ccf9121c420095b88b471177c7431da8166dd
   docs/sdks/settings/README.md:
     id: ffd4dbcfc0ce
-    last_write_checksum: sha1:23e59acb031e7e0de22d79e0013f32a7c0c6f24d
-    pristine_git_object: 3786b1dd4e47e8073c0ea4edf3346c1b6c0099ff
+    last_write_checksum: sha1:07dba79a1936f53dc8c6b3eca4a5a5f4d8cc9aa9
+    pristine_git_object: 24c77a9e7297caa9ee98c7375be409d65ff4d878
   docs/sdks/slack/README.md:
     id: 29c890536099
     last_write_checksum: sha1:56953b1033c5d78c479996b5a9bdcc747c74b5a2
@@ -9808,12 +9808,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:e983a98687539ec34658ab00421638bbf58a9dfe
-    pristine_git_object: b0cc5d9ffdbb40ca54c1e8df30862a7634b5d9a9
+    last_write_checksum: sha1:a8ab68dca050ca607086e91fca73227fdba9b10d
+    pristine_git_object: 11da43d9009cbac209578472c3317d74fa2fa39a
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:9fa3c28738fce54e4a6f02bbbb11a6f4ef4cb417
-    pristine_git_object: 44bf35be0cf2f51464f4333b6224ce7d036180cc
+    last_write_checksum: sha1:6d9d6187f0fde2a141508a939751e09822249c76
+    pristine_git_object: 81492f9192918c5810c67b4c51ba19c2fec3696a
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -10700,8 +10700,8 @@ trackedFiles:
     pristine_git_object: dac1e887a44beb056a02043a84c635beaf8107cb
   src/funcs/ontology-list-golden-files.ts:
     id: 6713e05bff2e
-    last_write_checksum: sha1:8dec18d181fbbe585270de4e82bb472028a5fced
-    pristine_git_object: cfd24f91ef0f50428d2ed48a69e540c5d00deca1
+    last_write_checksum: sha1:8216c7a3aaa3fa05b046b0b90af783d6f6511224
+    pristine_git_object: 9a2919d343849e02250323675956a0a3217f4f77
   src/funcs/ontology-list-history.ts:
     id: 4e21bacaa74d
     last_write_checksum: sha1:32b3bb9ebb057336cc740ff436727078b3297287
@@ -11322,10 +11322,10 @@ trackedFiles:
     id: be684326c424
     last_write_checksum: sha1:ad08469ec94ac5fc9c7057ba9b71b3cc2f985ab7
     pristine_git_object: 0712e69eed71b8a9273501c07e09e41beff4c6db
-  src/funcs/settings-update-model-settings.ts:
-    id: 5cff5d95df0d
-    last_write_checksum: sha1:1909a3cb55fbbb69a7d3e1f2a2e539de4f3c0ce7
-    pristine_git_object: 08942fd8c6391f63a0a373f5c3d97f7b855615d0
+  src/funcs/settings-update-models.ts:
+    id: 9a5d6ab3e133
+    last_write_checksum: sha1:8bc1f11bca7bddd2d490d8e6e4055cb7bebb5ce0
+    pristine_git_object: b560331aca2bbfdac9c66689526d41dda7d8b57a
   src/funcs/settings-update.ts:
     id: c88764862269
     last_write_checksum: sha1:356cf06de05a0ecfa8944ac3532969245b02c436
@@ -11468,8 +11468,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:e599952af3e0331fd61404ba36ae6bc886660e8b
-    pristine_git_object: 82c33acf6565156988730b9f76a8ea2ed2462215
+    last_write_checksum: sha1:480bd2d3e60e2a25cc2f7ecda21ff553c6e59d46
+    pristine_git_object: fbb6195a548bbf85415274457c63b3d96cb852c0
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -16028,8 +16028,8 @@ trackedFiles:
     pristine_git_object: 72353bbdf423fcd1fad52d2227b61e16a6999f28
   src/models/textql-rpc-public-patches-configure-ontology-remote-request.ts:
     id: 9875e891f81f
-    last_write_checksum: sha1:5e00fb613529f48f044abe66aa2a74f4c985bf3d
-    pristine_git_object: ca2a67d3c2bc758ba10ded1bf6658b606948a23c
+    last_write_checksum: sha1:392c0b6f7484b3c72ca757111d98d198da65418c
+    pristine_git_object: c940d46884f29e658e83ecc0563a8a811b69c7fa
   src/models/textql-rpc-public-patches-configure-ontology-remote-response.ts:
     id: ddd4c00c4c36
     last_write_checksum: sha1:c0fd574abf75f5a9321322b5848827e0cbfe712b
@@ -18216,8 +18216,8 @@ trackedFiles:
     pristine_git_object: 9f8ba5293302004f896d164b04cd10612b438423
   src/sdk/ontology.ts:
     id: 6d410ab7f699
-    last_write_checksum: sha1:3f6744177fc337df7b40b65d39ebe688dfbb770d
-    pristine_git_object: f728e63d0ea623862f55faaee1096defad19ee08
+    last_write_checksum: sha1:b708796f675f0c863dea892ae5c77847545a1502
+    pristine_git_object: 4d38948f276706bb53425e53899f60ea08c87191
   src/sdk/playbooks.ts:
     id: a26be27b2b08
     last_write_checksum: sha1:c4ca33ed79950f90be17033c82eb5ee73d93f7e2
@@ -18256,8 +18256,8 @@ trackedFiles:
     pristine_git_object: 426191ec22cc50a38e0cf054e82c9852b5e7fa94
   src/sdk/settings.ts:
     id: b7e993b8acd3
-    last_write_checksum: sha1:70f451a04c67fd00be8764c4c018ea04abcc722c
-    pristine_git_object: 0bf1baf6bbc0db96c9932abf3c1bbaacb3f68e02
+    last_write_checksum: sha1:3e980387561023632370ab5f6377122717b021e9
+    pristine_git_object: 6ac96af48527d34e6dcb8cf9c6bc8688dce8c980
   src/sdk/slack.ts:
     id: bbd98c55f3c0
     last_write_checksum: sha1:179758a33f07dd019923d7ce620939362f0610f8
@@ -24398,4 +24398,7 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.chats.queryOneShot()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.rbac.updateRole()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.role` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.rbac.whoAmI()`:  `response.roles[]` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.chats.bookmark()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.cancelStream()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.checkPermissions()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n  *  `response.cell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.approveContextPromptChange()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.dismissQuestions()`: \n  *  `request.body.cellId` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getApiAnswer()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getArtifact()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getArtifactsSummary()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getChatExecutionTiming()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.chats.getCompletionParameters()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.getCompletionParametersBatch()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.getLlmUsage()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.approveOntologyChange()`: \n  *  `request.body.cellId` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`: \n  *  `request.body.playbookId` **Changed** (Breaking ⚠️)\n* `textql.chats.delete()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.rateCell()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.rejectContextPromptChange()`: \n  *  `request.body.cellId` **Changed** (Breaking ⚠️)\n* `textql.chats.rejectOntologyChange()`: \n  *  `request.body.cellId` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.chats.send()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.submitContextPromptChange()`: \n  *  `request.body` **Changed** (Breaking ⚠️)\n* `textql.chats.submitQuestions()`: \n  *  `request.body.cellId` **Changed** (Breaking ⚠️)\n* `textql.chats.unbookmark()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.rbac.createRole()`:  `response.role` **Changed** (Breaking ⚠️)\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getMemberRoles()`:  `response.memberRoles.Map<textql.rpc.public.rbac.MemberRoles>.roles[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getRole()`:  `response.role` **Changed** (Breaking ⚠️)\n* `textql.rbac.listRoles()`:  `response.roles[]` **Changed** (Breaking ⚠️)\n* `textql.chats.pollEvents()`: \n  *  `request.body.chatId` **Changed** (Breaking ⚠️)\n  *  `response.events[].union(cell).cell.union(subagent_cell)` **Added** (Breaking ⚠️)\n* `textql.settings.updateModelSettings()`: **Added**\n* `textql.agents.create()`: \n  *  `request.body` **Changed**\n  *  `response.agent` **Changed**\n* `textql.agents.duplicate()`:  `response.agent` **Changed**\n* `textql.agents.getAgent()`:  `response.agent` **Changed**\n* `textql.agents.list()`:  `response.agents[]` **Changed**\n* `textql.agents.update()`: \n  *  `request.body` **Changed**\n  *  `response.agent` **Changed**\n* `textql.settings.get()`:  `response.organization` **Changed**\n* `textql.settings.update()`: \n  *  `request.body` **Changed**\n  *  `response.organization` **Changed**\n"
+releaseNotes: |
+  ## Typescript SDK Changes:
+  * `textql.settings.updateModels()`: **Added**
+  * `textql.settings.updateModelSettings()`: **Removed** (Breaking ⚠️)

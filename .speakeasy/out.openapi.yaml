@@ -8186,10 +8186,10 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.'
+      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.'
       description: |-
         Deprecated: use SetOntologyOwners with the desired entry set. An empty
-         desired set is not currently supported, so retain this RPC for deletion.
+         desired set removes every entry and opens the directory.
       operationId: OntologyManagementService_ListGoldenFiles
       x-speakeasy-group: ontology
       x-speakeasy-name-override: listGoldenFiles
@@ -14067,7 +14067,7 @@ paths:
       summary: UpdateOrganizationModelSettings
       operationId: SettingsService_UpdateOrganizationModelSettings
       x-speakeasy-group: settings
-      x-speakeasy-name-override: updateModelSettings
+      x-speakeasy-name-override: updateModels
       parameters:
         - name: Connect-Protocol-Version
           in: header
@@ -31600,7 +31600,7 @@ components:
           title: use_hosted_github_app
       title: ConfigureOntologyRemoteRequest
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersRequest when empty desired sets are supported.'
+      description: 'Deprecated: use SetOntologyOwnersRequest with an empty entry set.'
     textql.rpc.public.patches.ConfigureOntologyRemoteResponse:
       type: object
       properties:

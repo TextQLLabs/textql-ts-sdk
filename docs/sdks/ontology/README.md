@@ -40,7 +40,7 @@
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
 * [listEntries](#listentries) - ListOntologyEntries
 * [listHistory](#listhistory) - ListOntologyHistory
 * [listImports](#listimports) - ListOntologyImports
@@ -2712,7 +2712,7 @@ run();
 ## listGoldenFiles
 
 Deprecated: use SetOntologyOwners with the desired entry set. An empty
- desired set is not currently supported, so retain this RPC for deletion.
+ desired set removes every entry and opens the directory.
 
 ### Example Usage
 

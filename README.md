@@ -394,7 +394,7 @@ run();
 * [listApprovalRules](docs/sdks/ontology/README.md#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](docs/sdks/ontology/README.md#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](docs/sdks/ontology/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+* [listGoldenFiles](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
 * [listEntries](docs/sdks/ontology/README.md#listentries) - ListOntologyEntries
 * [listHistory](docs/sdks/ontology/README.md#listhistory) - ListOntologyHistory
 * [listImports](docs/sdks/ontology/README.md#listimports) - ListOntologyImports
@@ -578,7 +578,7 @@ run();
 * [get](docs/sdks/settings/README.md#get) - GetOrganizationSettings
 * [inviteMember](docs/sdks/settings/README.md#invitemember) - InviteOrganizationMember
 * [listMembers](docs/sdks/settings/README.md#listmembers) - ListOrganizationMembers
-* [updateModelSettings](docs/sdks/settings/README.md#updatemodelsettings) - UpdateOrganizationModelSettings
+* [updateModels](docs/sdks/settings/README.md#updatemodels) - UpdateOrganizationModelSettings
 * [update](docs/sdks/settings/README.md#update) - UpdateOrganizationSettings
 
 ### [Slack](docs/sdks/slack/README.md)
@@ -857,7 +857,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyListChatsForFile`](docs/sdks/ontology/README.md#listchatsforfile) - ListChatsForFile
 - [`ontologyListContextPatchAutoApproveRules`](docs/sdks/ontology/README.md#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
 - [`ontologyListEntries`](docs/sdks/ontology/README.md#listentries) - ListOntologyEntries
-- [`ontologyListGoldenFiles`](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+- [`ontologyListGoldenFiles`](docs/sdks/ontology/README.md#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
 - [`ontologyListHistory`](docs/sdks/ontology/README.md#listhistory) - ListOntologyHistory
 - [`ontologyListImports`](docs/sdks/ontology/README.md#listimports) - ListOntologyImports
 - [`ontologyListPatches`](docs/sdks/ontology/README.md#listpatches) - ListPatches
@@ -1014,7 +1014,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`settingsInviteMember`](docs/sdks/settings/README.md#invitemember) - InviteOrganizationMember
 - [`settingsListMembers`](docs/sdks/settings/README.md#listmembers) - ListOrganizationMembers
 - [`settingsUpdate`](docs/sdks/settings/README.md#update) - UpdateOrganizationSettings
-- [`settingsUpdateModelSettings`](docs/sdks/settings/README.md#updatemodelsettings) - UpdateOrganizationModelSettings
+- [`settingsUpdateModels`](docs/sdks/settings/README.md#updatemodels) - UpdateOrganizationModelSettings
 - [`slackCreateUuid`](docs/sdks/slack/README.md#createuuid) - CreateSlackUuid
 - [`slackDeleteInstallation`](docs/sdks/slack/README.md#deleteinstallation) - DeleteInstallation
 - [`slackGetCurrentUser`](docs/sdks/slack/README.md#getcurrentuser) - GetCurrentUser

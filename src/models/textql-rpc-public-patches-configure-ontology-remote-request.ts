@@ -5,7 +5,7 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Deprecated: use SetOntologyOwnersRequest when empty desired sets are supported.
+ * Deprecated: use SetOntologyOwnersRequest with an empty entry set.
  */
 export type TextqlRpcPublicPatchesConfigureOntologyRemoteRequest = {
   remoteUrl?: string | undefined;
