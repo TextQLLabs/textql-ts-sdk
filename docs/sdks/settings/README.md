@@ -9,7 +9,7 @@
 * [get](#get) - GetOrganizationSettings
 * [inviteMember](#invitemember) - InviteOrganizationMember
 * [listMembers](#listmembers) - ListOrganizationMembers
-* [updateModelSettings](#updatemodelsettings) - UpdateOrganizationModelSettings
+* [updateModels](#updatemodels) - UpdateOrganizationModelSettings
 * [update](#update) - UpdateOrganizationSettings
 
 ## checkMemberStatus
@@ -377,7 +377,7 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## updateModelSettings
+## updateModels
 
 UpdateOrganizationModelSettings
 
@@ -392,7 +392,7 @@ const textql = new Textql({
 });
 
 async function run() {
-  const result = await textql.settings.updateModelSettings({
+  const result = await textql.settings.updateModels({
     body: {},
   });
 
@@ -408,7 +408,7 @@ The standalone function version of this method:
 
 ```typescript
 import { TextqlCore } from "@textql/sdk/core.js";
-import { settingsUpdateModelSettings } from "@textql/sdk/funcs/settings-update-model-settings.js";
+import { settingsUpdateModels } from "@textql/sdk/funcs/settings-update-models.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -417,14 +417,14 @@ const textql = new TextqlCore({
 });
 
 async function run() {
-  const res = await settingsUpdateModelSettings(textql, {
+  const res = await settingsUpdateModels(textql, {
     body: {},
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("settingsUpdateModelSettings failed:", res.error);
+    console.log("settingsUpdateModels failed:", res.error);
   }
 }
 

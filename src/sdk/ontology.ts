@@ -639,11 +639,11 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set is not currently supported, so retain this RPC for deletion.
+   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
    *
    * @remarks
    * Deprecated: use SetOntologyOwners with the desired entry set. An empty
-   *  desired set is not currently supported, so retain this RPC for deletion.
+   *  desired set removes every entry and opens the directory.
    */
   async listGoldenFiles(
     request: operations.OntologyManagementServiceListGoldenFilesRequest,

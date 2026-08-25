@@ -29,7 +29,7 @@ import { Result } from "../types/fp.js";
 /**
  * UpdateOrganizationModelSettings
  */
-export function settingsUpdateModelSettings(
+export function settingsUpdateModels(
   client: TextqlCore,
   request: operations.SettingsServiceUpdateOrganizationModelSettingsRequest,
   options?: RequestOptions,
