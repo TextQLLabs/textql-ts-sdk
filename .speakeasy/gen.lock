@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 1634995873cc314fdc7abd72df134133
+  docChecksum: ce57ccbd13fd199e98ffa69a574e61a4
   docVersion: 1.0.0
   speakeasyVersion: 1.795.3
   generationVersion: 2.932.9
-  releaseVersion: 1.4.18
-  configChecksum: ae725a5632026270ea20a0a9a933c727
+  releaseVersion: 1.4.19
+  configChecksum: cd3fd0449730c39966464bfa05809027
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 441fe70a-9af3-4db1-841f-7df3d062e059
-  pristine_commit_hash: d84e7eeec013160a60f289173ac0b21a777c366a
-  pristine_tree_hash: 55a990fe201dfae316f29e7fb6b4c50cf0d23905
+  generation_id: a7b8c128-a608-42be-9124-f7512c0f86a8
+  pristine_commit_hash: 01848ba66674700a6911aa34d09ce2cebd763792
+  pristine_tree_hash: b0fffd96953d320c35651efe8afad238cbee1fb2
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -5696,8 +5696,8 @@ trackedFiles:
     pristine_git_object: e0b0ccbee14c9fead35e70a4cfc68d259cd5c616
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:e8fe9bb94dee4679afe2647f72706ebb880d6b41
-    pristine_git_object: d85e1d8ec8b293fb18233e9fc94a7f6c9d54984d
+    last_write_checksum: sha1:a88b3dce7ddbba78a55cfc1eee3d8ff394bf04b1
+    pristine_git_object: 3e4ea76744c03b09b247cf7485d47e3ab2d8504f
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:734ef8bd75c7d62327aa20e7bc09b8350217c50b
@@ -9808,12 +9808,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:a8ab68dca050ca607086e91fca73227fdba9b10d
-    pristine_git_object: 11da43d9009cbac209578472c3317d74fa2fa39a
+    last_write_checksum: sha1:881bddc687ddfceb7429037c381f15411791dd38
+    pristine_git_object: 79a2e22b8c98b7c6e7639a42e395a309cda38f92
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:6d9d6187f0fde2a141508a939751e09822249c76
-    pristine_git_object: 81492f9192918c5810c67b4c51ba19c2fec3696a
+    last_write_checksum: sha1:e5f80951d3c2c7a7a8051860b38a5c91f4674c9d
+    pristine_git_object: e561b07543ec5ac8a5ca401a1d65faa6967f0aef
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11468,8 +11468,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:480bd2d3e60e2a25cc2f7ecda21ff553c6e59d46
-    pristine_git_object: fbb6195a548bbf85415274457c63b3d96cb852c0
+    last_write_checksum: sha1:d9b34cd05733dd48e9ff81afcd2f2991597bfb7b
+    pristine_git_object: cfacf0ea63b15e57c6420d8c62a10d2390556f66
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
@@ -14448,8 +14448,8 @@ trackedFiles:
     pristine_git_object: 69f15a5c681165af62ef10572fa3ca6c78ec9c25
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:1661114bfbe17b308f003bb18d5b731e7cf1e0dd
-    pristine_git_object: 3f4ef271d66281b61cb9e336bd4a9f772e853269
+    last_write_checksum: sha1:7079fb5c1db9752578d10874ee5cc6ce26f5dda1
+    pristine_git_object: a7e788875a70f567b17c2133ba153c322bfeb8a2
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:08749962dde2aaa6f8c665fc006a320d071b6a61
@@ -24398,7 +24398,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `textql.settings.updateModels()`: **Added**
-  * `textql.settings.updateModelSettings()`: **Removed** (Breaking ⚠️)
+releaseNotes: "## Typescript SDK Changes:\n* `textql.agents.create()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.duplicate()`:  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.getAgent()`:  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.list()`:  `response.agents[].llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.update()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.checkHealth()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.getAll()`:  `response.chats[].model` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model` **Changed** (Breaking ⚠️)\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.rbac.createRole()`:  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getMemberRoles()`:  `response.memberRoles.Map<textql.rpc.public.rbac.MemberRoles>.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getRole()`:  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.listRoles()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.updateRole()`: \n  *  `request.body.allowedModels[]` **Changed** (Breaking ⚠️)\n  *  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.whoAmI()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.settings.updateModels()`: \n  *  `request.body.defaultModel` **Changed** (Breaking ⚠️)\n* `textql.settings.update()`: \n  *  `request.body.enabledModels[]` **Changed** (Breaking ⚠️)\n"
