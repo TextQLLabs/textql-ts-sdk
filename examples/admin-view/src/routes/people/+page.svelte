@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
-	import { Bot, KeyRound, Plus, Search, Shield, UserPlus, Users } from '@lucide/svelte';
+	import { Bot, KeyRound, Plus, Shield, UserPlus, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import { initials, roleNames, rolesById } from '$lib/admin';
 	import { MutationTracker } from '$lib/mutate.svelte';
-	import { Button, Page, Select, Spinner } from '$lib/primitives';
+	import { Badge, Button, Page, Panel, SearchField, SegmentedControl, Select, Spinner } from '$lib/primitives';
 
 	let { data } = $props();
 	const saving = new MutationTracker();
@@ -17,6 +17,20 @@
 	let query = $state('');
 	let selectedId = $state('');
 	let addRoleId = $state('');
+
+	const viewOptions = $derived([
+		{
+			value: 'people',
+			label: 'People',
+			count: admin.people.filter((person) => person.kind === 'person').length
+		},
+		{
+			value: 'service',
+			label: 'Service accounts',
+			count: admin.people.filter((person) => person.kind === 'service-account').length
+		},
+		{ value: 'keys', label: 'API keys', count: admin.apiKeys.length }
+	]);
 
 	const humanPeople = $derived(
 		admin.people.filter((person) => person.kind === 'person' && matches(person.name, person.email))
@@ -66,25 +80,19 @@
 	<ConnectionEmpty mode={admin.mode} error={admin.error} />
 {:else}
 
-	<div class="identity-tabs" role="tablist" aria-label="Identity type">
-		<button class:active={view === 'people'} onclick={() => selectView('people')} type="button">
-			<Users size={14} /> People <span>{admin.people.filter((person) => person.kind === 'person').length}</span>
-		</button>
-		<button class:active={view === 'service'} onclick={() => selectView('service')} type="button">
-			<Bot size={14} /> Service accounts <span>{admin.people.filter((person) => person.kind === 'service-account').length}</span>
-		</button>
-		<button class:active={view === 'keys'} onclick={() => selectView('keys')} type="button">
-			<KeyRound size={14} /> API keys <span>{admin.apiKeys.length}</span>
-		</button>
+	<div class="identity-tabs">
+		<SegmentedControl
+			value={view}
+			options={viewOptions}
+			label="Identity type"
+			onValueChange={(next) => selectView(next as typeof view)}
+		/>
 	</div>
 
 	<div class="identity-layout" class:keys-view={view === 'keys'}>
-		<section class="panel identity-list">
+		<Panel class="identity-list">
 			<div class="list-toolbar">
-				<div class="search-box">
-					<Search size={14} />
-					<input bind:value={query} placeholder="Search this list" aria-label="Search identities" />
-				</div>
+				<SearchField bind:value={query} placeholder="Search this list" label="Search identities" />
 			</div>
 
 			{#if view === 'keys'}
@@ -96,7 +104,7 @@
 								<tr>
 									<td><strong>{key.name}</strong><small class="mono">{key.short}</small></td>
 									<td>{key.ownerName}</td>
-									<td><span class:success={key.status === 'active'} class="badge neutral">{key.statusLabel}</span></td>
+									<td><Badge tone={key.status === 'active' ? 'success' : 'neutral'}>{key.statusLabel}</Badge></td>
 									<td>{key.expiresAt ? formatDate(key.expiresAt) : 'Never'}</td>
 								</tr>
 							{/each}
@@ -125,7 +133,7 @@
 					<div class="list-empty">No identities match this search.</div>
 				{/if}
 			{/if}
-		</section>
+		</Panel>
 
 		{#if view !== 'keys' && selectedPerson}
 			<aside class="panel identity-detail">
@@ -155,7 +163,7 @@
 										<form
 											method="POST"
 											action="?/removeRole"
-											use:enhance={saving.submit(key, `Remove ${role.name}`)}
+											use:enhance={saving.submit(key, () => `Remove ${role.name}`)}
 										>
 											<input type="hidden" name="memberId" value={selectedPerson.id} />
 											<input type="hidden" name="roleId" value={role.id} />
@@ -206,14 +214,9 @@
 
 <style>
 	.identity-tabs { display: flex; gap: 4px; margin-bottom: 14px; }
-	.identity-tabs button { display: flex; align-items: center; gap: 7px; border: 0; border-radius: 7px; background: transparent; padding: 8px 10px; color: var(--color-muted); font-size: 11px; cursor: pointer; }
-	.identity-tabs button.active { background: white; color: var(--color-access); box-shadow: 0 1px 2px rgba(23,33,43,.07); }
-	.identity-tabs button span { border-radius: 999px; background: var(--color-paper); padding: 1px 5px; font-family: var(--font-mono); font-size: 8px; }
 	.identity-layout { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(280px,.72fr); gap: 14px; align-items: start; }
 	.identity-layout.keys-view { grid-template-columns: 1fr; }
 	.list-toolbar { border-bottom: 1px solid var(--color-line); padding: 12px; }
-	.search-box { display: flex; align-items: center; gap: 8px; border: 1px solid var(--color-line); border-radius: 7px; padding: 7px 9px; color: var(--color-subtle); }
-	.search-box input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--color-ink); font-size: 11px; }
 	.person-rows { display: grid; }
 	.person-rows > button { display: grid; grid-template-columns: 34px minmax(0,1fr) minmax(100px,.65fr); align-items: center; gap: 10px; border: 0; border-bottom: 1px solid var(--color-line); background: transparent; padding: 12px 14px; text-align: left; cursor: pointer; }
 	.person-rows > button:last-child { border: 0; }

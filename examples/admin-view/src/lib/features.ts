@@ -61,6 +61,17 @@ export interface FeatureRow {
 	mode?: ModeDef;
 	/** Why the product sometimes hides this row entirely. */
 	hiddenWhen?: string;
+	/**
+	 * The condition behind `hiddenWhen`, evaluated against the live org. True
+	 * means Settings -> Features would not render this row, so neither do we —
+	 * this page should never show a switch the product does not offer.
+	 */
+	hiddenFor?: (organization: Record<string, unknown> | undefined) => boolean;
+	/**
+	 * Why this row has no Default column, when the underlying paradigm field
+	 * exists anyway. Only set on `default: NONE` rows.
+	 */
+	defaultNote?: string;
 	storage: string;
 	caveat?: string;
 }
@@ -113,7 +124,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'Grounds answers in your defined metrics, entities and relationships rather than guessing at raw tables. What it runs depends on the experience: Old queries the semantic layer; New is the unified, file-based context library the agent reads and queries with .tql.',
 				available: R('ontologyEnabled'),
-				default: P('ontologyEnabled'),
+				default: NONE,
+				defaultNote:
+					'The product moves this default onto a nested "TQL Query" sub-row rather than the parent, because Ontology is the capability and TQL Query is the tool that gets switched on. Both write paradigm_params.ontologyEnabled.',
 				mode: {
 					field: 'contextV3Enabled',
 					oldLabel: 'Legacy',
@@ -160,10 +173,12 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets the agent build dashboards from a thread.',
 				details: 'Enables the dashboards surface and dashboard output from threads.',
 				available: O('dashboardsEnabled'),
-				default: O('defaultDashboardOutput'),
+				default: NONE,
+				defaultNote:
+					'The default lives on a nested "Default dashboard output" sub-row, backed by the separate organization.default_dashboard_output column — not by paradigm_params.',
 				storage: 'organization.dashboards_enabled / .default_dashboard_output',
 				caveat:
-					'Turning Available off force-clears Default in the same write, and enabling Default while Available is off is rejected outright. The only org-column row with a real Default.'
+					'Turning Available off force-clears default_dashboard_output in the same write, and setting that column while Available is off is rejected outright.'
 			},
 			{
 				key: 'powerbi',
@@ -171,7 +186,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Connects Power BI workspaces as a data source.',
 				details: 'Lets the agent query Power BI datasets and reference existing reports.',
 				available: R('powerbiEnabled'),
-				default: P('powerbiEnabled'),
+				default: NONE,
+				defaultNote:
+					'paradigm_params.powerbiEnabled exists but is recomputed from the attached connectors every time the selection changes (computeConnectorSelectionFlags: powerbiEnabled = !exclusiveOAuth && hasPowerBI). It never reads the stored value, so an org default could not survive a single connector change.',
 				storage: TOOL_STORAGE,
 				caveat: 'Also gates Power BI dataset creation in the datasets service.'
 			},
@@ -181,7 +198,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Connects Tableau as a data source.',
 				details: 'Lets the agent query Tableau collections and workbooks.',
 				available: R('tableauEnabled'),
-				default: P('tableauEnabled'),
+				default: NONE,
+				defaultNote:
+					'Same as Power BI: paradigm_params.tableauEnabled is derived from whether a Tableau connector is attached (tableauEnabled = !exclusiveOAuth && hasTableau), not from anything stored. SQL and Ontology carry their previous value forward; these two do not.',
 				storage: TOOL_STORAGE,
 				caveat:
 					'Available is never applied at thread creation — applyRestrictions does not read it. The datasets service does gate Tableau dataset creation on it.'
@@ -192,7 +211,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets threads pick a response methodology.',
 				details: 'Exposes the methodology selector and an org-wide default.',
 				available: O('methodologyEnabled'),
-				default: O('defaultMethodology'),
+				default: NONE,
+				defaultNote:
+					'The default is a methodology picker on a nested sub-row, backed by organization.default_methodology — an enum, not a boolean, so it cannot be a switch.',
 				storage: 'organization.methodology_enabled / .default_methodology',
 				caveat: 'Default is an enum here, not a boolean.'
 			},
@@ -205,6 +226,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				default: P('javascriptEnabled'),
 				hiddenWhen:
 					'Data Apps retires JS visualizations, so the product hides this row entirely once dataAppsEnabled is on — and the backend stops registering the tool.',
+				hiddenFor: (org) => readSource(O('dataAppsEnabled'), org).kind === 'on',
 				storage: TOOL_STORAGE
 			}
 		]
@@ -220,7 +242,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets members upload files for the agent to analyse.',
 				details: 'Permits CSV / Excel upload and dataset creation from local files.',
 				available: R('fileUploadEnabled'),
-				default: P('fileUploadEnabled'),
+				default: NONE,
+				defaultNote:
+					'Single-axis in the product: available or not. The paradigm field is only ever set by the org ceiling.',
 				storage: TOOL_STORAGE,
 				caveat:
 					'Available is not applied at thread creation, but the datasets service does gate dataset creation on it.'
@@ -232,7 +256,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'Lets the agent look through earlier threads in the org to reuse analysis instead of starting over.',
 				available: R('chatHistorySearchEnabled'),
-				default: P('chatHistorySearchEnabled'),
+				default: NONE,
+				defaultNote:
+					'Single-axis in the product. paradigm_params.chatHistorySearchEnabled defaults on for every new thread and is not offered as an org default.',
 				storage: TOOL_STORAGE
 			},
 			{
@@ -262,7 +288,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets members change the model mid-thread.',
 				details: 'Shows the model picker in a thread instead of pinning the org default.',
 				available: R('modelSwitchingEnabled'),
-				default: P('modelSwitchingEnabled'),
+				default: NONE,
+				defaultNote:
+					'Single-axis in the product. Which models a member may pick is role policy (Roles -> Model policy), not a per-thread default.',
 				storage: TOOL_STORAGE,
 				caveat: 'Available is inert — nothing reads modelSwitchingEnabled as a restriction.'
 			},
@@ -424,7 +452,9 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets the agent ask you structured clarifying questions.',
 				details: 'Registers the questions cell so the agent can request input mid-thread.',
 				available: R('questionsToolEnabled'),
-				default: P('questionsToolEnabled'),
+				default: NONE,
+				defaultNote:
+					'Single-axis in the product; the tool is either available or not.',
 				storage: TOOL_STORAGE,
 				caveat:
 					'Inverts the usual rule: the tool is granted if EITHER column is true, so Default can enable it even when Available is off.'

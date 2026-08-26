@@ -12,7 +12,7 @@
 		resolveDefaultModel
 	} from '$lib/modelCatalog';
 	import { MutationTracker } from '$lib/mutate.svelte';
-	import { BrandLogo, Button, Page, Select } from '$lib/primitives';
+	import { Badge, BrandLogo, Button, Page, Select } from '$lib/primitives';
 
 	let { data } = $props();
 	const saving = new MutationTracker();
@@ -124,7 +124,7 @@
 					<strong>Organization model catalog</strong>
 					<span>This is the ceiling for every role and member in the organization.</span>
 				</div>
-				<span class="badge access">{effectiveDraftModels.length} available</span>
+				<Badge tone="accent">{effectiveDraftModels.length} available</Badge>
 			</div>
 
 			<div class="policy-controls">

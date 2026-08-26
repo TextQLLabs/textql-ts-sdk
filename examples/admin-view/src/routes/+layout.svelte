@@ -38,7 +38,6 @@
 	// covers writes — `invalidateAll` is not a navigation and never sets the former.
 	const busy = $derived(navigating.to !== null || mutations.busy);
 	const current = $derived(page.url.pathname);
-	const isAdminPage = $derived(NAV.some((item) => item.href === '/' ? current === '/' : current.startsWith(item.href)));
 	const organizationName = $derived(
 		typeof data.admin.organization?.organizationName === 'string'
 			? data.admin.organization.organizationName
@@ -119,7 +118,7 @@
 			{/each}
 		</nav>
 
-		<main class:page-frame={!isAdminPage} class="main-content">
+		<main class="main-content">
 			{@render children()}
 		</main>
 	</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { Check, ChevronRight, LockKeyhole, Plus, Search, ShieldCheck, Trash2, Users } from '@lucide/svelte';
+	import { Check, ChevronRight, LockKeyhole, Plus, ShieldCheck, Trash2, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import ModelCatalogPicker from '$lib/ModelCatalogPicker.svelte';
@@ -13,7 +13,17 @@
 		resolveDefaultModel
 	} from '$lib/modelCatalog';
 	import { MutationTracker } from '$lib/mutate.svelte';
-	import { Button, Page, Select, Switch, confirm as confirmDialog } from '$lib/primitives';
+	import {
+		Badge,
+		Button,
+		Page,
+		SearchField,
+		Select,
+		Switch,
+		TextArea,
+		TextField,
+		confirm as confirmDialog
+	} from '$lib/primitives';
 
 	let { data } = $props();
 	const saving = new MutationTracker();
@@ -142,9 +152,35 @@
 		)
 	);
 	const hasChanges = $derived(changedPermissionCount > 0 || metadataChanged);
-	/** System and SCIM-managed roles are read-only; so is anything mid-save. */
-	const roleLocked = $derived(
+	/**
+	 * Only the *name* is off-limits on a built-in role — `admin` and `member` are
+	 * looked up by name, and SCIM owns the names of the roles it provisions.
+	 *
+	 * Everything else is local configuration and stays editable, which is what
+	 * Settings -> Roles does: it gates on the caller's role:write /
+	 * role_permission:write and never on isSystem. Locking the model policy on
+	 * `member` made the one role most orgs actually scope models on read-only.
+	 */
+	const nameLocked = $derived(
 		Boolean(selectedRole?.isSystem || selectedRole?.isScimManaged) || saving.busy
+	);
+	/** A write is in flight; nothing should be editable until it lands. */
+	const roleLocked = $derived(saving.busy);
+	/**
+	 * System roles first, then custom, each alphabetical. They behave differently
+	 * — a system role can't be renamed or deleted — so they read as two groups
+	 * rather than one list you have to scan for lock icons.
+	 */
+	const roleGroups = $derived(
+		[
+			{ id: 'system', label: 'Built-in', roles: admin.roles.filter((role) => role.isSystem) },
+			{ id: 'custom', label: 'Custom', roles: admin.roles.filter((role) => !role.isSystem) }
+		]
+			.map((group) => ({
+				...group,
+				roles: [...group.roles].sort((a, b) => a.name.localeCompare(b.name))
+			}))
+			.filter((group) => group.roles.length > 0)
 	);
 	const affectedPeople = $derived(
 		admin.people.filter((person) => person.roleIds.includes(selectedRoleId))
@@ -221,8 +257,8 @@
 			use:enhance={saving.submit('create', 'Create role')}
 		>
 			<div><strong>Create a custom role</strong><span>Start empty, then add permissions after creation.</span></div>
-			<input class="field-input" name="name" placeholder="Role name" required />
-			<input class="field-input" name="description" placeholder="What should this role be used for?" />
+			<TextField name="name" placeholder="Role name" required label="Role name" />
+			<TextField name="description" placeholder="What should this role be used for?" label="Role description" />
 			<Button variant="solid" size="sm" type="submit" loading={saving.is('create')} disabled={saving.busy}>
 				Create role
 			</Button>
@@ -232,17 +268,37 @@
 	<div class="role-workspace">
 		<aside class="panel role-list">
 			<div class="panel-heading">
-				<div><h2 class="panel-title">Organization roles</h2><p class="panel-subtitle">{admin.roles.length} total</p></div>
+				<div class="panel-heading-text">
+					<h2 class="panel-title">Organization roles</h2>
+					<p class="panel-subtitle">{admin.roles.length} total</p>
+				</div>
 			</div>
-			<div class="role-items">
-				{#each admin.roles as role (role.id)}
-					<button class:selected={selectedRoleId === role.id} type="button" onclick={() => selectRole(role)}>
-						<span class="role-symbol"><ShieldCheck size={15} /></span>
-						<span><strong>{role.name}</strong><small>{memberCounts.get(role.id) ?? 0} members · {permissionCounts.get(role.id) ?? 0} permissions</small></span>
-						{#if role.isSystem}<LockKeyhole size={12} class="role-lock" />{:else}<ChevronRight size={13} />{/if}
-					</button>
-				{/each}
-			</div>
+			{#each roleGroups as group (group.id)}
+				<div class="role-group-heading">
+					<span>{group.label}</span>
+					<span class="role-group-count">{group.roles.length}</span>
+				</div>
+				<div class="role-items" data-kind={group.id}>
+					{#each group.roles as role (role.id)}
+						<button
+							class:selected={selectedRoleId === role.id}
+							type="button"
+							onclick={() => selectRole(role)}
+						>
+							<span class="role-symbol">
+								{#if role.isSystem}<LockKeyhole size={14} />{:else}<ShieldCheck size={15} />{/if}
+							</span>
+							<span>
+								<strong>{role.name}</strong>
+								<small>
+									{memberCounts.get(role.id) ?? 0} members · {permissionCounts.get(role.id) ?? 0} permissions
+								</small>
+							</span>
+							{#if role.isScimManaged}<Badge tone="accent">SCIM</Badge>{:else}<ChevronRight size={13} />{/if}
+						</button>
+					{/each}
+				</div>
+			{/each}
 		</aside>
 
 		{#if selectedRole}
@@ -250,7 +306,7 @@
 				class="panel role-editor"
 				method="POST"
 				action="?/saveRole"
-				use:enhance={saving.submit('save', `Save ${selectedRole.name}`)}
+				use:enhance={saving.submit('save', () => `Save ${selectedRole?.name ?? 'role'}`)}
 			>
 				<input type="hidden" name="roleId" value={selectedRole.id} />
 				<input type="hidden" name="permissionIds" value={draftPermissionIds.join(',')} />
@@ -268,26 +324,42 @@
 					<div class="editor-title-row">
 						<div>
 							<div class="editor-badges">
-								{#if selectedRole.isSystem}<span class="badge neutral">System role</span>{/if}
-								{#if selectedRole.isScimManaged}<span class="badge access">SCIM managed</span>{/if}
+								{#if selectedRole.isSystem}<Badge>System role</Badge>{/if}
+								{#if selectedRole.isScimManaged}<Badge tone="accent">SCIM managed</Badge>{/if}
 							</div>
-							<input class="role-name-input" name="name" bind:value={draftName} disabled={selectedRole.isSystem || selectedRole.isScimManaged} />
+							<!-- readonly, not disabled: a disabled input is omitted from the
+							     submission, and saveRole rejects a missing name. -->
+							<input
+								class="role-name-input"
+								class:locked={nameLocked}
+								name="name"
+								bind:value={draftName}
+								readonly={nameLocked}
+								aria-label="Role name"
+							/>
 						</div>
 						<div class="impact"><Users size={13} /><strong>{affectedPeople.length}</strong><span>affected</span></div>
 					</div>
-					<textarea class="role-description" name="description" bind:value={draftDescription} rows="2" disabled={selectedRole.isSystem || selectedRole.isScimManaged}></textarea>
+					<TextArea
+						class="role-description"
+						name="description"
+						bind:value={draftDescription}
+						rows={2}
+						label="Role description"
+						disabled={roleLocked}
+					/>
 				</div>
 
 				<div class="model-policy">
 					<div class="model-policy-head">
 						<div><strong>Model policy</strong><span>Narrow the <a href="/models">organization catalog</a> for this role.</span></div>
-						<span class="badge access">{effectiveDraftModels.length} available</span>
+						<Badge tone="accent">{effectiveDraftModels.length} available</Badge>
 					</div>
 					<div class="model-policy-controls">
 						<label class="scope-toggle">
 							<Switch
 								checked={draftModelScope === 'selected'}
-								disabled={roleLocked || saving.busy}
+								disabled={roleLocked}
 								onCheckedChange={(on) => setModelScope(on ? 'selected' : 'all')}
 								label="Restrict this role to selected models"
 							/>
@@ -303,13 +375,13 @@
 								bind:value={draftDefaultModel}
 								options={defaultModelOptions}
 								searchable
-								disabled={roleLocked || saving.busy}
+								disabled={roleLocked}
 								label="Role default model"
 								searchPlaceholder="Find a model"
 							/>
 						</div>
 						<label class="choice-toggle">
-							<Switch bind:checked={draftModelChoice} disabled={roleLocked || saving.busy} label="Members can choose a model" />
+							<Switch bind:checked={draftModelChoice} disabled={roleLocked} label="Members can choose a model" />
 							<span><strong>Members can choose</strong><small>Show the model picker for this role.</small></span>
 						</label>
 					</div>
@@ -317,7 +389,7 @@
 						<ModelCatalogPicker
 							bind:selected={draftModels}
 							unavailable={unavailableModels}
-							disabled={roleLocked || saving.busy}
+							disabled={roleLocked}
 							dense
 							unavailableLabel="Not in the organization catalog"
 						/>
@@ -326,7 +398,9 @@
 
 				<div class="permissions-toolbar">
 					<div><strong>Permissions</strong><span>{effectiveDraftPermissionIds.size} effective · {draftPermissionIds.length} explicit</span></div>
-					<div class="permission-search"><Search size={13} /><input bind:value={permissionQuery} placeholder="Find a permission" /></div>
+					<div class="permission-search">
+						<SearchField bind:value={permissionQuery} placeholder="Find a permission" />
+					</div>
 				</div>
 
 				<div class="permission-groups">
@@ -339,7 +413,7 @@
 									class:checked={effectiveDraftPermissionIds.has(permission.id)}
 									class:implied={impliedByDraft.has(permission.id)}
 									onclick={() => togglePermission(permission.id)}
-									disabled={selectedRole.isSystem || selectedRole.isScimManaged || impliedByDraft.has(permission.id)}
+									disabled={roleLocked || impliedByDraft.has(permission.id)}
 									title={impliedByDraft.has(permission.id) ? `Included by ${impliedByDraft.get(permission.id)?.action.replaceAll('_', ' ')}` : undefined}
 								>
 									<span class="permission-check">{#if effectiveDraftPermissionIds.has(permission.id)}<Check size={12} />{/if}</span>
@@ -355,22 +429,25 @@
 						<strong>{hasChanges ? `${changedPermissionCount + (metadataChanged ? 1 : 0)} pending changes` : 'No pending changes'}</strong>
 						<span>{affectedPeople.length} people and service accounts receive this role.</span>
 					</div>
-					{#if !selectedRole.isSystem && !selectedRole.isScimManaged}
-						<div class="change-actions">
-							<Button variant="ghost" size="sm" disabled={saving.busy} onclick={() => selectRole(selectedRole)}>
-								Discard
-							</Button>
-							<Button
-								variant="solid"
-								size="sm"
-								type="submit"
-								loading={saving.is('save')}
-								disabled={!hasChanges || saving.busy}
-							>
-								{saving.is('save') ? 'Saving…' : 'Save role'}
-							</Button>
-						</div>
-					{/if}
+					<div class="change-actions">
+						<Button
+							variant="ghost"
+							size="sm"
+							disabled={saving.busy}
+							onclick={() => selectRole(selectedRole)}
+						>
+							Discard
+						</Button>
+						<Button
+							variant="solid"
+							size="sm"
+							type="submit"
+							loading={saving.is('save')}
+							disabled={!hasChanges || saving.busy}
+						>
+							{saving.is('save') ? 'Saving…' : 'Save role'}
+						</Button>
+					</div>
 				</div>
 			</form>
 		{/if}
@@ -382,7 +459,7 @@
 			method="POST"
 			action="?/deleteRole"
 			bind:this={deleteForm}
-			use:enhance={saving.submit('delete', `Delete ${selectedRole.name}`)}
+			use:enhance={saving.submit('delete', () => `Delete ${selectedRole?.name ?? 'role'}`)}
 		>
 			<input type="hidden" name="roleId" value={selectedRole.id} />
 			<Button
@@ -412,15 +489,21 @@
 	.role-items > button:last-child { border: 0; }
 	.role-items > button:hover, .role-items > button.selected { background: var(--color-paper); }
 	.role-items > button.selected { box-shadow: inset 2px 0 var(--color-access); }
+	.role-group-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 1px solid var(--color-line); background: var(--color-paper); padding: 6px 13px; color: var(--color-subtle); font-size: 8.5px; font-weight: 680; letter-spacing: .06em; text-transform: uppercase; }
+	.role-group-count { font-family: var(--font-mono); letter-spacing: 0; }
 	.role-symbol { display: grid; height: 29px; width: 29px; place-items: center; border-radius: 7px; background: var(--color-access-soft); color: var(--color-access); }
+	/* Built-in roles read as fixed furniture: neutral mark, no accent. */
+	.role-items[data-kind='system'] .role-symbol { background: var(--color-fill); color: var(--color-muted); }
+	.role-items[data-kind='system'] strong { color: var(--color-muted); }
 	.role-items strong, .role-items small { display: block; }.role-items strong { font-size: 10px; }.role-items small { margin-top: 4px; color: var(--color-muted); font-size: 8px; }
 	.role-items > button > :global(svg) { color: var(--color-subtle); }
 	.role-editor { overflow: hidden; }
 	.editor-header { border-bottom: 1px solid var(--color-line); padding: 18px; }
 	.editor-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
 	.editor-badges { display: flex; gap: 5px; min-height: 18px; margin-bottom: 4px; }
+	.role-name-input.locked { color: var(--color-muted); cursor: default; }
 	.role-name-input { width: min(440px,70vw); border: 0; background: transparent; padding: 0; color: var(--color-ink); font-size: 21px; font-weight: 620; letter-spacing: -.025em; outline: 0; }
-	.role-description { width: min(650px,100%); resize: vertical; border: 0; background: transparent; margin-top: 6px; padding: 0; color: var(--color-muted); font-size: 11px; line-height: 1.5; outline: 0; }
+	:global(.role-description) { width: min(650px,100%); margin-top: 6px; }
 	.impact { display: grid; grid-template-columns: auto auto; align-items: center; gap: 3px 6px; color: var(--color-access); }.impact span { grid-column: 1 / -1; color: var(--color-muted); font-size: 8px; text-transform: uppercase; }.impact strong { font-family: var(--font-mono); font-size: 13px; }
 	.model-policy { display: grid; gap: 12px; border-bottom: 1px solid var(--color-line); background: var(--color-paper); padding: 13px 18px; }
 	.model-policy-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
@@ -433,7 +516,7 @@
 	.model-policy strong, .model-policy span { display: block; }.model-policy strong { font-size: 10px; }.model-policy span, .model-policy label { margin-top: 3px; color: var(--color-muted); font-size: 8px; }.model-policy label { display: flex; align-items: center; gap: 6px; }
 	.permissions-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--color-line); padding: 13px 18px; }
 	.permissions-toolbar strong, .permissions-toolbar span { display: block; }.permissions-toolbar strong { font-size: 11px; }.permissions-toolbar span { margin-top: 2px; color: var(--color-muted); font-size: 8px; }
-	.permission-search { display: flex; align-items: center; gap: 7px; border: 1px solid var(--color-line); border-radius: 7px; padding: 6px 8px; color: var(--color-subtle); }.permission-search input { width: 170px; border: 0; outline: 0; font-size: 9px; }
+	.permission-search { width: 190px; flex: 0 0 auto; }
 	.permission-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px 26px; padding: 18px; }
 	.permission-group h3 { margin: 0 0 7px; color: var(--color-subtle); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 	.permission-group button { display: grid; width: 100%; grid-template-columns: 18px minmax(0,1fr); align-items: center; gap: 8px; border: 0; border-radius: 6px; background: transparent; padding: 7px 6px; text-align: left; cursor: pointer; }
@@ -444,5 +527,5 @@
 	.change-bar { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid var(--color-line); background: rgba(255,255,255,.94); padding: 12px 18px; backdrop-filter: blur(10px); }.change-bar strong, .change-bar span { display: block; }.change-bar strong { font-size: 10px; }.change-bar span { margin-top: 3px; color: var(--color-muted); font-size: 8px; }.change-actions { display: flex; gap: 7px; }
 	.delete-role { display: flex; justify-content: flex-end; margin-top: 12px; }
 	@media (max-width: 900px) { .create-role { grid-template-columns: 1fr; }.role-workspace { grid-template-columns: 1fr; }.role-items { grid-template-columns: repeat(2,minmax(0,1fr)); }.model-policy { grid-template-columns: 1fr; } }
-	@media (max-width: 620px) { .role-items, .permission-groups { grid-template-columns: 1fr; }.permission-search input { width: 120px; }.change-bar { align-items: flex-start; flex-direction: column; }.change-actions { width: 100%; }.change-actions :global(.primitive-button) { flex: 1; } }
+	@media (max-width: 620px) { .role-items, .permission-groups { grid-template-columns: 1fr; }.permission-search { width: 140px; }.change-bar { align-items: flex-start; flex-direction: column; }.change-actions { width: 100%; }.change-actions :global(.primitive-button) { flex: 1; } }
 </style>

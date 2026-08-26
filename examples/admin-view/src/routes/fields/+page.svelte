@@ -89,11 +89,11 @@
 	);
 
 	const columns: TableColumn[] = [
-		{ label: 'Field' },
-		{ label: 'Storage' },
-		{ label: 'Surface' },
-		{ label: 'State' },
-		{ label: 'Live' }
+		{ label: 'Field', width: '40%' },
+		{ label: 'Storage', width: '16%' },
+		{ label: 'Surface', width: '9%' },
+		{ label: 'State', width: '11%' },
+		{ label: 'Live', width: '24%' }
 	];
 </script>
 
@@ -155,7 +155,7 @@
 	<td class="mono nowrap muted">{f.storage}</td>
 	<td><Badge tone={SURFACE_TONES[f.surface]}>{SURFACE_LABELS[f.surface]}</Badge></td>
 	<td><Badge tone={ENFORCEMENT_TONES[f.enforcement]}>{ENFORCEMENT_LABELS[f.enforcement]}</Badge></td>
-	<td class="mono nowrap">
+	<td class="mono live-cell">
 		{#if value === null}
 			<span class="muted">—</span>
 		{:else if value === 'absent'}
@@ -174,7 +174,9 @@
 	.filter-bar :global(.field-search) { min-width: 220px; flex: 1; }
 	.filter-select { width: 170px; flex: 0 0 auto; }
 	.filter-count { margin-left: auto; color: var(--color-muted); font-family: var(--font-mono); font-size: 10px; }
-	.field-cell { max-width: 34rem; }
+	/* max-width:0 lets the percentage widths win so a long id truncates
+	   instead of stretching the table past the panel. */
+	.live-cell { max-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 	.field-key { color: var(--color-ink); font-size: 11px; }
 	.field-column { color: var(--color-muted); font-size: 9.5px; }
 	.field-summary { margin: 4px 0 0; color: var(--color-muted); font-size: 10px; line-height: 1.55; }

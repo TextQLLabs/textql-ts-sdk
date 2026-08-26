@@ -32,7 +32,9 @@
 	h1 { margin: 0; color: var(--color-ink); font-size: 13.5px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
 	p { margin: 0; color: var(--color-muted); font-size: 11.5px; line-height: 1.3; }
 	.page-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; }
-	.page-body { display: flex; width: min(840px,100%); min-height: 0; flex: 1; flex-direction: column; margin: 0 auto; padding: 28px 20px 48px; }
-	.page-body.wide { width: min(1040px,100%); padding: 24px 32px 48px; }
-	@media (max-width: 560px) { .page-head-inner { padding: 7px 12px; } .page-copy p { display: none; } .page-body, .page-body.wide { padding: 20px 14px 40px; } }
+	/* Top gutter matches the side gutter so the first panel sits the same
+	   distance from the header as it does from the page edge. */
+	.page-body { display: flex; width: min(1180px,100%); min-height: 0; flex: 1; flex-direction: column; margin: 0 auto; padding: var(--page-gutter) var(--page-gutter) calc(var(--page-gutter) * 2); --page-gutter: 24px; }
+	.page-body.wide { width: min(1560px,100%); }
+	@media (max-width: 560px) { .page-head-inner { padding: 7px 12px; } .page-copy p { display: none; } .page-body { --page-gutter: 14px; } }
 </style>

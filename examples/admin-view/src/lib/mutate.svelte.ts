@@ -45,8 +45,14 @@ export class MutationTracker {
 	/**
 	 * `key` identifies the control being submitted — a field name, a role id.
 	 * `label` names the thing changed, and becomes the toast title.
+	 *
+	 * Pass a function when the label depends on reactive state. `use:enhance`
+	 * builds its SubmitFunction once and never rebuilds it, so a string
+	 * interpolated from `$state` freezes at whatever was selected on mount — the
+	 * roles page happily reported "Save admin" while saving `member`.
 	 */
-	submit(key: string, label: string): SubmitFunction {
+	submit(key: string, label: string | (() => string)): SubmitFunction {
+		const titleOf = () => (typeof label === 'string' ? label : label());
 		return () => {
 			this.#key = key;
 			inFlight += 1;
@@ -55,16 +61,17 @@ export class MutationTracker {
 				// app-wide bar runs until the refetch below settles too.
 				this.#key = null;
 
+				const title = titleOf();
 				if (result.type === 'success') {
 					const message = messageOf(result.data);
-					toast.success(label, message ? { description: message } : {});
+					toast.success(title, message ? { description: message } : {});
 					await invalidateAll();
 				} else if (result.type === 'failure') {
-					toast.error(`${label} failed`, {
+					toast.error(`${title} failed`, {
 						description: messageOf(result.data) ?? 'The API rejected the change.'
 					});
 				} else if (result.type === 'error') {
-					toast.error(`${label} failed`, { description: result.error.message });
+					toast.error(`${title} failed`, { description: result.error.message });
 				}
 
 				// Redirects and the form-scoped `form` prop still need the default

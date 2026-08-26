@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { AlertTriangle, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, KeyRound, ShieldCheck, UserRound } from '@lucide/svelte';
+	import { AlertTriangle, ArrowRight, CheckCircle2, KeyRound, ShieldCheck, UserRound } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import { connectorLogoForType, connectorNameForType } from '$lib/connectorBranding';
 	import { getModelIconSrc, getModelName, resolveDefaultModel } from '$lib/modelCatalog';
-	import { BrandLogo, Page, Select } from '$lib/primitives';
+	import { Badge, BrandLogo, EmptyState, Page, Pager, Panel, Select } from '$lib/primitives';
 
 	let { data } = $props();
 	const admin = $derived(data.admin);
@@ -89,6 +89,28 @@
 	}
 </script>
 
+{#snippet reviewBadge()}
+	<Badge tone={reviewCount === 0 ? 'success' : 'warning'}>
+		{reviewCount === 0 ? 'Clear' : reviewCount}
+	</Badge>
+{/snippet}
+
+{#snippet connectorFilter()}
+	<div class="connector-filter">
+		<Select
+			value={connectorType}
+			options={connectorTypeOptions}
+			label="Filter connectors by type"
+			searchable={connectorTypeOptions.length > 8}
+			searchPlaceholder="Find a type"
+			onValueChange={(value) => {
+				connectorType = value;
+				connectorPage = 0;
+			}}
+		/>
+	</div>
+{/snippet}
+
 {#snippet actions()}
 	{#if admin.mode === 'live'}
 		<Badge tone="success"><CheckCircle2 size={11} /> Live organization</Badge>
@@ -165,28 +187,12 @@
 	</div>
 
 	<div class="overview-grid">
-		<section class="panel connector-panel">
-			<div class="panel-heading">
-				<div>
-					<h2 class="panel-title">Connectors</h2>
-					<p class="panel-subtitle">{admin.connectors.length} data sources this organization can query.</p>
-				</div>
-				{#if admin.connectors.length}
-					<div class="connector-filter">
-						<Select
-							value={connectorType}
-							options={connectorTypeOptions}
-							label="Filter connectors by type"
-							searchable={connectorTypeOptions.length > 8}
-							searchPlaceholder="Find a type"
-							onValueChange={(value) => {
-								connectorType = value;
-								connectorPage = 0;
-							}}
-						/>
-					</div>
-				{/if}
-			</div>
+		<Panel
+			class="connector-panel"
+			title="Connectors"
+			subtitle={`${admin.connectors.length} data sources this organization can query.`}
+			actions={admin.connectors.length ? connectorFilter : undefined}
+		>
 			{#if visibleConnectors.length}
 				<div class="brand-list">
 					{#each visibleConnectors as connector (connector.id)}
@@ -195,46 +201,28 @@
 							<strong>{connector.name}</strong>
 							<!-- Always occupied: grid auto-placement would otherwise slide the type
 							     label into the badge column on rows that have no badge. -->
-							<span>{#if connector.isDefault}<span class="badge access">Default</span>{/if}</span>
+							<span>{#if connector.isDefault}<Badge tone="accent">Default</Badge>{/if}</span>
 							<small>{connectorNameForType(connector.type)}</small>
 						</div>
 					{/each}
 				</div>
-				{#if connectorPageCount > 1}
-					<div class="pager">
-						<button
-							type="button"
-							onclick={() => (connectorPage -= 1)}
-							disabled={connectorPage === 0}
-							aria-label="Previous page"><ChevronLeft size={13} /></button
-						>
-						<span
-							>{connectorPageStart + 1}–{connectorPageStart + visibleConnectors.length} of {filteredConnectors.length}</span
-						>
-						<button
-							type="button"
-							onclick={() => (connectorPage += 1)}
-							disabled={connectorPage >= connectorPageCount - 1}
-							aria-label="Next page"><ChevronRight size={13} /></button
-						>
-					</div>
-				{/if}
+				<Pager
+					bind:page={connectorPage}
+					pageCount={connectorPageCount}
+					total={filteredConnectors.length}
+					shown={visibleConnectors.length}
+					perPage={CONNECTORS_PER_PAGE}
+				/>
 			{:else}
-				<div class="small-empty">
-					<AlertTriangle size={15} />
-					{admin.connectors.length ? 'No connectors of that type.' : 'No connectors were returned.'}
-				</div>
+				<EmptyState
+					icon={AlertTriangle}
+					title={admin.connectors.length ? 'No connectors of that type' : 'No connectors returned'}
+					description={admin.connectors.length ? 'Clear the type filter to see the rest.' : undefined}
+				/>
 			{/if}
-		</section>
+		</Panel>
 
-		<section class="panel">
-			<div class="panel-heading">
-				<div>
-					<h2 class="panel-title">Models</h2>
-					<p class="panel-subtitle">Which model new threads resolve to.</p>
-				</div>
-				<a href="/models" class="quiet-link">Manage <ArrowRight size={12} /></a>
-			</div>
+		<Panel title="Models" subtitle="Which model new threads resolve to." actions={modelsLink}>
 			<div class="brand-list">
 				<div class="brand-row">
 					<BrandLogo src={orgDefaultModel.iconSrc} name={orgDefaultModel.name} size={20} />
@@ -250,17 +238,15 @@
 					</div>
 				{/each}
 			</div>
-		</section>
+		</Panel>
 	</div>
 
-	<section class="panel recent-panel">
-		<div class="panel-heading">
-			<div>
-				<h2 class="panel-title">Recent audit activity</h2>
-				<p class="panel-subtitle">Latest security and operational events.</p>
-			</div>
-			<a href="/changes" class="quiet-link">View audit log <ArrowRight size={12} /></a>
-		</div>
+	<Panel
+		class="recent-panel"
+		title="Recent audit activity"
+		subtitle="Latest security and operational events."
+		actions={auditLink}
+	>
 		{#if admin.changes.length}
 			<div class="recent-list">
 				{#each admin.changes.slice(0, 5) as change (change.id)}
@@ -275,11 +261,19 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="small-empty"><AlertTriangle size={15} /> No audit entries were returned.</div>
+			<EmptyState icon={AlertTriangle} title="No audit entries were returned" />
 		{/if}
-	</section>
+	</Panel>
 {/if}
 </Page>
+
+{#snippet modelsLink()}
+	<a href="/models" class="quiet-link">Manage <ArrowRight size={12} /></a>
+{/snippet}
+
+{#snippet auditLink()}
+	<a href="/changes" class="quiet-link">View audit log <ArrowRight size={12} /></a>
+{/snippet}
 
 <style>
 	.overview-grid { display: grid; grid-template-columns: minmax(0,1.7fr) minmax(240px,.8fr); gap: 16px; margin-bottom: 16px; }
@@ -302,7 +296,7 @@
 	.posture-list div:last-child { border: 0; }
 	.posture-list dt { color: var(--color-muted); font-size: 10px; }
 	.posture-list dd { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 650; }
-	.quiet-link { display: inline-flex; align-items: center; gap: 5px; color: var(--color-access); font-size: 10px; text-decoration: none; }
+	:global(.quiet-link) { display: inline-flex; align-items: center; gap: 5px; color: var(--color-access); font-size: 10px; text-decoration: none; }
 	.recent-list { display: grid; }
 	.recent-row { display: grid; grid-template-columns: 10px minmax(0,1fr) auto; align-items: center; gap: 10px; border-bottom: 1px solid var(--color-line); padding: 12px 18px; }
 	.recent-row:last-child { border: 0; }
@@ -311,7 +305,6 @@
 	.recent-row strong { font-size: 10px; font-weight: 620; }
 	.recent-row span { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
 	.recent-row time { color: var(--color-subtle); font-family: var(--font-mono); font-size: 9px; }
-	.small-empty { display: flex; align-items: center; gap: 8px; padding: 22px 18px; color: var(--color-muted); font-size: 11px; }
 	.brand-list { display: grid; }
 	.brand-row { display: grid; grid-template-columns: 20px minmax(0,1fr) auto; align-items: center; gap: 11px; border-bottom: 1px solid var(--color-line); padding: 11px 18px; }
 	.brand-row:last-child { border: 0; }
@@ -321,13 +314,10 @@
 	.brand-row small { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
 	/* Connectors run to dozens of rows, so they get a one-line variant: the type
 	   moves onto the title line as a right-aligned label instead of a second row. */
-	.connector-panel .brand-row { grid-template-columns: 16px auto auto minmax(0,1fr); gap: 9px; padding: 8px 18px; }
-	.connector-panel .brand-row small { margin: 0; text-align: right; }
+	:global(.connector-panel) .brand-row { grid-template-columns: 16px auto auto minmax(0,1fr); gap: 9px; padding: 8px 18px; }
+	:global(.connector-panel) .brand-row small { margin: 0; text-align: right; }
 	.connector-filter { width: 190px; flex: 0 0 auto; }
 	.connector-filter :global(.select-root > button) { border-radius: 7px; padding: 5px 8px; font-size: 11.5px; }
 	.connector-filter :global(.select-root > button img) { width: 14px; height: 14px; }
-	.pager { display: flex; align-items: center; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--color-line); padding: 7px 18px; color: var(--color-muted); font-family: var(--font-mono); font-size: 9px; }
-	.pager button { display: grid; height: 20px; width: 20px; place-items: center; border: 1px solid var(--color-line); border-radius: 5px; background: var(--color-elevate); color: var(--color-ink); cursor: pointer; }
-	.pager button:disabled { color: var(--color-line); cursor: default; }
 	@media (max-width: 800px) { .overview-grid { grid-template-columns: 1fr; } }
 </style>
