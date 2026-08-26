@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: 'Ioskeley Mono';
-	src: url('../../react-demo/public/fonts/IoskeleyMono-Regular.woff2') format('woff2');
+	src: url('/fonts/IoskeleyMono-Regular.woff2') format('woff2');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
 	font-family: 'Ioskeley Mono';
-	src: url('../../react-demo/public/fonts/IoskeleyMono-Medium.woff2') format('woff2');
+	src: url('/fonts/IoskeleyMono-Medium.woff2') format('woff2');
 	font-weight: 500;
 	font-style: normal;
 	font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
 	font-family: 'Geist Pixel';
-	src: url('../../react-demo/public/fonts/GeistPixel-Square.woff2') format('woff2');
+	src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
 	font-weight: 400 700;
 	font-style: normal;
 	font-display: swap;
@@ -66,6 +66,12 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 ::selection { color: var(--color-ink); background: color-mix(in srgb, var(--color-accent) 28%, transparent); }
 code, kbd, .mono { font-family: var(--font-mono); }
+
+/* Indeterminate: SvelteKit reports that a load is running, not how far along. */
+.route-progress { position: fixed; z-index: 1400; top: 0; left: 0; height: 2px; width: 100%; overflow: hidden; background: transparent; pointer-events: none; }
+.route-progress::after { content: ''; position: absolute; top: 0; left: 0; height: 100%; width: 40%; background: var(--color-accent); animation: route-progress-slide 900ms ease-in-out infinite; }
+@keyframes route-progress-slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
+@media (prefers-reduced-motion: reduce) { .route-progress::after { width: 100%; animation: none; opacity: .5; } }
 
 .app-shell { display: grid; height: 100dvh; grid-template-columns: 260px minmax(0, 1fr); background: var(--color-paper); }
 .sidebar { display: flex; min-height: 0; flex-direction: column; overflow: hidden; border-right: 1px solid color-mix(in srgb, var(--color-line) 80%, transparent); background: var(--color-sidebar); padding: 14px 12px 12px; }

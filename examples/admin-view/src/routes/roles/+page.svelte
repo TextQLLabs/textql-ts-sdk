@@ -1,23 +1,73 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { Check, ChevronRight, LockKeyhole, Plus, Search, ShieldCheck, Trash2, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
+	import ModelCatalogPicker from '$lib/ModelCatalogPicker.svelte';
 	import { expandPermissionIds, type AdminPermission, type AdminRole } from '$lib/admin';
-	import { getModelIconSrc, getModelName } from '$lib/modelCatalog';
-	import { BrandLogo, Button, Page, confirm as confirmDialog } from '$lib/primitives';
+	import {
+		CATALOG_MODELS,
+		getModelEnumName,
+		getModelIconSrcByEnum
+	} from '$lib/modelCatalog';
+	import { MutationTracker } from '$lib/mutate.svelte';
+	import { Button, Page, Select, Switch, confirm as confirmDialog } from '$lib/primitives';
 
-	let { data, form } = $props();
+	let { data } = $props();
+	const saving = new MutationTracker();
+	let deleteForm = $state<HTMLFormElement>();
 	const admin = $derived(data.admin);
 	let selectedRoleId = $state('');
 	let draftPermissionIds = $state<string[]>([]);
 	let draftName = $state('');
 	let draftDescription = $state('');
-	let draftModels = $state('');
+	let draftModels = $state<string[]>([]);
+	let draftModelScope = $state<'all' | 'selected'>('all');
+	let draftDefaultModel = $state<string | number>('MODEL_UNKNOWN');
 	let draftModelChoice = $state(false);
 	let permissionQuery = $state('');
 	let showCreate = $state(false);
 
 	const selectedRole = $derived(admin.roles.find((role) => role.id === selectedRoleId));
+	const organization = $derived(admin.organization ?? {});
+	const organizationEnabledIds = $derived(
+		Array.isArray(organization.enabledModelIds)
+			? organization.enabledModelIds.filter((id): id is number => typeof id === 'number')
+			: []
+	);
+	const organizationRestrictedIds = $derived(
+		Array.isArray(organization.restrictedModelIds)
+			? organization.restrictedModelIds.filter((id): id is number => typeof id === 'number')
+			: []
+	);
+	const deploymentEnabledIds = $derived(
+		Array.isArray(organization.deploymentEnabledModelIds)
+			? organization.deploymentEnabledModelIds.filter((id): id is number => typeof id === 'number')
+			: []
+	);
+	const organizationModels = $derived(
+		CATALOG_MODELS.filter((model) =>
+			(organizationEnabledIds.length === 0 || organizationEnabledIds.includes(model.id)) &&
+			!organizationRestrictedIds.includes(model.id) &&
+			(deploymentEnabledIds.length === 0 || deploymentEnabledIds.includes(model.id))
+		).map((model) => model.enumName)
+	);
+	const unavailableModels = $derived(
+		CATALOG_MODELS.filter((model) => !organizationModels.includes(model.enumName)).map((model) => model.enumName)
+	);
+	const effectiveDraftModels = $derived(
+		(draftModelScope === 'all' ? organizationModels : draftModels).filter((model) => organizationModels.includes(model))
+	);
+	const defaultModelOptions = $derived([
+		{ value: 'MODEL_UNKNOWN', label: 'Inherit organization default', hint: 'No role override' },
+		{ value: 'MODEL_DEFAULT', label: 'Organization default', hint: 'Resolve through the organization policy' },
+		{ value: 'MODEL_DEFAULT_SYSTEM', label: 'System default', hint: 'Skip the organization override' },
+		...CATALOG_MODELS.filter((model) => effectiveDraftModels.includes(model.enumName)).map((model) => ({
+			value: model.enumName,
+			label: model.name,
+			iconSrc: getModelIconSrcByEnum(model.enumName)
+		}))
+	]);
 	const currentPermissionIds = $derived(admin.rolePermissions[selectedRoleId] ?? []);
 	const effectiveDraftPermissionIds = $derived(expandPermissionIds(draftPermissionIds, admin.permissions));
 	const impliedByDraft = $derived.by(() => {
@@ -42,19 +92,17 @@
 			selectedRole &&
 				(draftName !== selectedRole.name ||
 					draftDescription !== selectedRole.description ||
-					draftModels !== selectedRole.allowedModelIds.join(', ') ||
+					draftModelScope !== (selectedRole.allowedModels.length === 0 ? 'all' : 'selected') ||
+					(draftModelScope === 'selected' &&
+						effectiveDraftModels.slice().sort().join(',') !== selectedRole.allowedModels.slice().sort().join(',')) ||
+					String(draftDefaultModel) !== (selectedRole.defaultModel ?? 'MODEL_UNKNOWN') ||
 					draftModelChoice !== (selectedRole.allowModelChoice ?? false))
 		)
 	);
 	const hasChanges = $derived(changedPermissionCount > 0 || metadataChanged);
-	/** The IDs typed into the model-policy field, resolved against the catalog so
-	 *  an unrecognised number is visibly unrecognised rather than silently fine. */
-	const draftModelChips = $derived(
-		draftModels
-			.split(',')
-			.map((part) => Number(part.trim()))
-			.filter((id) => Number.isFinite(id) && id > 0)
-			.map((id) => ({ id, name: getModelName(id), logo: getModelIconSrc(id) }))
+	/** System and SCIM-managed roles are read-only; so is anything mid-save. */
+	const roleLocked = $derived(
+		Boolean(selectedRole?.isSystem || selectedRole?.isScimManaged) || saving.busy
 	);
 	const affectedPeople = $derived(
 		admin.people.filter((person) => person.roleIds.includes(selectedRoleId))
@@ -79,7 +127,9 @@
 		draftPermissionIds = [...(admin.rolePermissions[role.id] ?? [])];
 		draftName = role.name;
 		draftDescription = role.description;
-		draftModels = role.allowedModelIds.join(', ');
+		draftModels = [...role.allowedModels];
+		draftModelScope = role.allowedModels.length === 0 ? 'all' : 'selected';
+		draftDefaultModel = role.defaultModel ?? 'MODEL_UNKNOWN';
 		draftModelChoice = role.allowModelChoice ?? false;
 		permissionQuery = '';
 	}
@@ -94,8 +144,16 @@
 			: [...draftPermissionIds, id];
 	}
 
-	async function confirmDelete(event: SubmitEvent): Promise<void> {
-		event.preventDefault();
+	function setModelScope(next: 'all' | 'selected'): void {
+		draftModelScope = next;
+		if (next === 'selected' && draftModels.length === 0) draftModels = [...organizationModels];
+	}
+
+	/**
+	 * requestSubmit rather than submit: the latter bypasses the submit event, so
+	 * `use:enhance` would never see the delete and it would full-page navigate.
+	 */
+	async function requestDelete(): Promise<void> {
 		if (!selectedRole) return;
 		const approved = await confirmDialog({
 			tone: 'danger',
@@ -103,7 +161,7 @@
 			description: 'This removes the role from the organization and cannot be undone.',
 			confirmLabel: 'Delete role'
 		});
-		if (approved) (event.currentTarget as HTMLFormElement).submit();
+		if (approved) deleteForm?.requestSubmit();
 	}
 </script>
 
@@ -113,13 +171,19 @@
 {#if admin.mode !== 'live'}
 	<ConnectionEmpty mode={admin.mode} error={admin.error} />
 {:else}
-	{#if form?.message}<div class="form-message">{form.message}</div>{/if}
 	{#if showCreate}
-		<form class="panel create-role" method="POST" action="?/createRole">
+		<form
+			class="panel create-role"
+			method="POST"
+			action="?/createRole"
+			use:enhance={saving.submit('create', 'Create role')}
+		>
 			<div><strong>Create a custom role</strong><span>Start empty, then add permissions after creation.</span></div>
 			<input class="field-input" name="name" placeholder="Role name" required />
 			<input class="field-input" name="description" placeholder="What should this role be used for?" />
-			<Button variant="solid" size="sm" type="submit">Create role</Button>
+			<Button variant="solid" size="sm" type="submit" loading={saving.is('create')} disabled={saving.busy}>
+				Create role
+			</Button>
 		</form>
 	{/if}
 
@@ -140,9 +204,24 @@
 		</aside>
 
 		{#if selectedRole}
-			<form class="panel role-editor" method="POST" action="?/saveRole">
+			<form
+				class="panel role-editor"
+				method="POST"
+				action="?/saveRole"
+				use:enhance={saving.submit('save', `Save ${selectedRole.name}`)}
+			>
 				<input type="hidden" name="roleId" value={selectedRole.id} />
 				<input type="hidden" name="permissionIds" value={draftPermissionIds.join(',')} />
+				<input type="hidden" name="modelScope" value={draftModelScope} />
+				<!-- Only meaningful for the "selected" scope; "all" clears the allow list. -->
+				<input
+					type="hidden"
+					name="allowedModels"
+					value={draftModelScope === 'all' ? '' : effectiveDraftModels.join(',')}
+				/>
+				<input type="hidden" name="modelScope" value={draftModelScope} />
+				<input type="hidden" name="defaultModel" value={String(draftDefaultModel)} />
+				{#if draftModelChoice}<input type="hidden" name="allowModelChoice" value="on" />{/if}
 				<div class="editor-header">
 					<div class="editor-title-row">
 						<div>
@@ -158,25 +237,48 @@
 				</div>
 
 				<div class="model-policy">
-					<div><strong>Model policy</strong><span>Comma-separated model IDs; empty means all organization models.</span></div>
-					<input class="field-input mono" name="allowedModelIds" bind:value={draftModels} placeholder="All models" disabled={selectedRole.isSystem || selectedRole.isScimManaged} />
-					<label><input type="checkbox" name="allowModelChoice" bind:checked={draftModelChoice} disabled={selectedRole.isSystem || selectedRole.isScimManaged} /> Members can choose a model</label>
-					{#if selectedRole.defaultModelId}
-						{@const defaultId = selectedRole.defaultModelId}
-						<div class="model-default">
-							<span>Default</span>
-							<span class="model-chip"><BrandLogo src={getModelIconSrc(defaultId)} name={getModelName(defaultId)} size={13} />{getModelName(defaultId)}</span>
+					<div class="model-policy-head">
+						<div><strong>Model policy</strong><span>Narrow the <a href="/models">organization catalog</a> for this role.</span></div>
+						<span class="badge access">{effectiveDraftModels.length} available</span>
+					</div>
+					<div class="model-policy-controls">
+						<label class="scope-toggle">
+							<Switch
+								checked={draftModelScope === 'selected'}
+								disabled={roleLocked || saving.busy}
+								onCheckedChange={(on) => setModelScope(on ? 'selected' : 'all')}
+								label="Restrict this role to selected models"
+							/>
+							<span>
+								<strong>Restrict to selected models</strong>
+								<small>Off inherits the whole organization catalog, including future models.</small>
+							</span>
+						</label>
+						<div class="default-model">
+							<label for="role-default-model">Default model</label>
+							<Select
+								id="role-default-model"
+								bind:value={draftDefaultModel}
+								options={defaultModelOptions}
+								searchable
+								disabled={roleLocked || saving.busy}
+								label="Role default model"
+								searchPlaceholder="Find a model"
+							/>
 						</div>
-					{/if}
-					{#if draftModelChips.length}
-						<div class="model-chips">
-							{#each draftModelChips as model (model.id)}
-								<span class="model-chip" class:unknown={!model.logo}>
-									<BrandLogo src={model.logo} name={model.name} size={13} />
-									{model.name}
-								</span>
-							{/each}
-						</div>
+						<label class="choice-toggle">
+							<Switch bind:checked={draftModelChoice} disabled={roleLocked || saving.busy} label="Members can choose a model" />
+							<span><strong>Members can choose</strong><small>Show the model picker for this role.</small></span>
+						</label>
+					</div>
+					{#if draftModelScope === 'selected'}
+						<ModelCatalogPicker
+							bind:selected={draftModels}
+							unavailable={unavailableModels}
+							disabled={roleLocked || saving.busy}
+							dense
+							unavailableLabel="Not in the organization catalog"
+						/>
 					{/if}
 				</div>
 
@@ -213,8 +315,18 @@
 					</div>
 					{#if !selectedRole.isSystem && !selectedRole.isScimManaged}
 						<div class="change-actions">
-							<Button variant="ghost" size="sm" onclick={() => selectRole(selectedRole)}>Discard</Button>
-							<Button variant="solid" size="sm" type="submit" disabled={!hasChanges}>Save role</Button>
+							<Button variant="ghost" size="sm" disabled={saving.busy} onclick={() => selectRole(selectedRole)}>
+								Discard
+							</Button>
+							<Button
+								variant="solid"
+								size="sm"
+								type="submit"
+								loading={saving.is('save')}
+								disabled={!hasChanges || saving.busy}
+							>
+								{saving.is('save') ? 'Saving…' : 'Save role'}
+							</Button>
 						</div>
 					{/if}
 				</div>
@@ -223,16 +335,31 @@
 	</div>
 
 	{#if selectedRole && !selectedRole.isSystem && !selectedRole.isScimManaged}
-		<form class="delete-role" method="POST" action="?/deleteRole" onsubmit={confirmDelete}>
+		<form
+			class="delete-role"
+			method="POST"
+			action="?/deleteRole"
+			bind:this={deleteForm}
+			use:enhance={saving.submit('delete', `Delete ${selectedRole.name}`)}
+		>
 			<input type="hidden" name="roleId" value={selectedRole.id} />
-			<Button type="submit" variant="danger-soft" size="sm"><Trash2 size={13} /> Delete {selectedRole.name}</Button>
+			<Button
+				type="button"
+				variant="danger-soft"
+				size="sm"
+				loading={saving.is('delete')}
+				disabled={saving.busy}
+				onclick={requestDelete}
+			>
+				{#if !saving.is('delete')}<Trash2 size={13} />{/if}
+				Delete {selectedRole.name}
+			</Button>
 		</form>
 	{/if}
 {/if}
 </Page>
 
 <style>
-	.form-message { margin-bottom: 14px; border: 1px solid var(--color-line); border-radius: 8px; background: white; padding: 10px 12px; color: var(--color-access); font-size: 11px; }
 	.create-role { display: grid; grid-template-columns: minmax(180px,.8fr) 1fr 1.5fr auto; align-items: center; gap: 10px; margin-bottom: 14px; padding: 13px; }
 	.create-role strong, .create-role span { display: block; }
 	.create-role strong { font-size: 11px; }.create-role span { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
@@ -253,10 +380,15 @@
 	.role-name-input { width: min(440px,70vw); border: 0; background: transparent; padding: 0; color: var(--color-ink); font-size: 21px; font-weight: 620; letter-spacing: -.025em; outline: 0; }
 	.role-description { width: min(650px,100%); resize: vertical; border: 0; background: transparent; margin-top: 6px; padding: 0; color: var(--color-muted); font-size: 11px; line-height: 1.5; outline: 0; }
 	.impact { display: grid; grid-template-columns: auto auto; align-items: center; gap: 3px 6px; color: var(--color-access); }.impact span { grid-column: 1 / -1; color: var(--color-muted); font-size: 8px; text-transform: uppercase; }.impact strong { font-family: var(--font-mono); font-size: 13px; }
-	.model-policy { display: grid; grid-template-columns: 1.2fr 1fr auto; align-items: center; gap: 14px; border-bottom: 1px solid var(--color-line); background: var(--color-paper); padding: 13px 18px; }
+	.model-policy { display: grid; gap: 12px; border-bottom: 1px solid var(--color-line); background: var(--color-paper); padding: 13px 18px; }
+	.model-policy-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+	.model-policy-controls { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(180px,1fr) auto; align-items: center; gap: 14px; }
+	.scope-toggle { display: flex; align-items: center; gap: 9px; }
+	.default-model > label { display: block; }
+	.choice-toggle { display: flex; align-items: center; gap: 6px; }
+	.model-policy a { color: var(--color-access); text-decoration: none; }
+	@media (max-width: 900px) { .model-policy-controls { grid-template-columns: 1fr; } }
 	.model-policy strong, .model-policy span { display: block; }.model-policy strong { font-size: 10px; }.model-policy span, .model-policy label { margin-top: 3px; color: var(--color-muted); font-size: 8px; }.model-policy label { display: flex; align-items: center; gap: 6px; }
-	.model-default, .model-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; grid-column: 1 / -1; }.model-default > span:first-child { margin: 0; color: var(--color-subtle); font-size: 8px; font-weight: 680; letter-spacing: .06em; text-transform: uppercase; }
-	.model-policy .model-chip { display: inline-flex; align-items: center; gap: 5px; margin: 0; border: 1px solid var(--color-line); border-radius: 5px; background: var(--color-elevate); padding: 2px 7px 2px 5px; color: var(--color-ink); font-size: 9px; }.model-policy .model-chip.unknown { border-style: dashed; color: var(--color-muted); }
 	.permissions-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--color-line); padding: 13px 18px; }
 	.permissions-toolbar strong, .permissions-toolbar span { display: block; }.permissions-toolbar strong { font-size: 11px; }.permissions-toolbar span { margin-top: 2px; color: var(--color-muted); font-size: 8px; }
 	.permission-search { display: flex; align-items: center; gap: 7px; border: 1px solid var(--color-line); border-radius: 7px; padding: 6px 8px; color: var(--color-subtle); }.permission-search input { width: 170px; border: 0; outline: 0; font-size: 9px; }

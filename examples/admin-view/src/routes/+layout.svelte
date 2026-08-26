@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
+	import { navigating, page } from '$app/state';
 	import {
 		BookOpenText,
+		Bot,
 		ChevronDown,
 		Flag,
 		History,
@@ -11,6 +12,7 @@
 	} from '@lucide/svelte';
 
 	import '../app.css';
+	import { mutations } from '$lib/mutate.svelte';
 	import Toaster from '$lib/primitives/Toaster.svelte';
 
 	let { data, children } = $props();
@@ -20,6 +22,7 @@
 		{ href: '/', label: 'Overview', icon: LayoutDashboard },
 		{ href: '/people', label: 'People & access', icon: Users },
 		{ href: '/roles', label: 'Roles', icon: ShieldCheck },
+		{ href: '/models', label: 'Models', icon: Bot },
 		{ href: '/features', label: 'Features', icon: Flag },
 		{ href: '/changes', label: 'Audit log', icon: History }
 	];
@@ -31,6 +34,9 @@
 		{ href: '/storage', label: 'Storage map' }
 	];
 
+	// Two separate signals: `navigating` covers route changes, `mutations.busy`
+	// covers writes — `invalidateAll` is not a navigation and never sets the former.
+	const busy = $derived(navigating.to !== null || mutations.busy);
 	const current = $derived(page.url.pathname);
 	const isAdminPage = $derived(NAV.some((item) => item.href === '/' ? current === '/' : current.startsWith(item.href)));
 	const organizationName = $derived(
@@ -41,6 +47,8 @@
 				: 'Organization'
 	);
 </script>
+
+{#if busy}<div class="route-progress" role="progressbar" aria-label="Loading"></div>{/if}
 
 <div class="app-shell">
 	<aside class="sidebar">
@@ -99,7 +107,7 @@
 
 		<div class="connection-state" class:connected={data.admin.mode === 'live'}>
 			<span class="status-dot"></span>
-			<span>{data.admin.mode === 'live' ? 'TextQL SDK connected' : '@textql/sdk 1.4.6'}</span>
+			<span>{data.admin.mode === 'live' ? 'TextQL SDK connected' : '@textql/sdk 1.4.21'}</span>
 		</div>
 	</aside>
 

@@ -1,16 +1,11 @@
 import { env } from '$env/dynamic/private';
+import { Textql } from '@textql/sdk';
 
 /**
- * GetOrganizationSettings is a public RPC and is mapped in speakeasy_names.yaml
- * (SettingsService_GetOrganizationSettings -> `get`), but the current SDK
- * checkout predates that regeneration and exposes no `settings.get`. Until the
- * SDK is regenerated we call the Connect endpoint directly; afterwards this
- * whole module collapses to:
- *
- *   const result = await client.settings.get({});
+ * Settings are read through the same pinned SDK used for mutations. Keeping
+ * this helper separate gives us one place to redact fields before SvelteKit
+ * serializes the organization into page data.
  */
-const RPC_PATH =
-	'/rpc/public/textql.rpc.public.settings.SettingsService/GetOrganizationSettings';
 
 export interface LiveSettings {
 	configured: boolean;
@@ -45,26 +40,17 @@ export async function fetchOrganizationSettings(): Promise<LiveSettings> {
 	}
 
 	try {
-		const response = await fetch(`${base}${RPC_PATH}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${apiKey}`
-			},
-			body: '{}'
-		});
-
-		if (!response.ok) {
-			const detail = await response.text().catch(() => '');
-			return {
-				configured: true,
-				serverUrl: base,
-				error: `${response.status} ${response.statusText}${detail ? ` — ${detail.slice(0, 200)}` : ''}`
-			};
+		const serverURL = base.endsWith('/rpc/public') ? base : `${base}/rpc/public`;
+		const client = new Textql({ apiKey, serverURL });
+		const result = await client.settings.get({ body: {} });
+		const organization =
+			result && typeof result === 'object' && 'organization' in result && result.organization
+				? (result.organization as unknown as Record<string, unknown>)
+				: undefined;
+		if (!organization) {
+			return { configured: true, serverUrl: base, error: 'Organization settings were not returned.' };
 		}
-
-		const payload = (await response.json()) as { organization?: Record<string, unknown> };
-		return { configured: true, serverUrl: base, organization: redact(payload.organization ?? {}) };
+		return { configured: true, serverUrl: base, organization: redact(organization) };
 	} catch (cause) {
 		console.error('GetOrganizationSettings failed', cause);
 		return {

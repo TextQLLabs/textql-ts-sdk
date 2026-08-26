@@ -6,8 +6,8 @@ export interface AdminRole {
 	description: string;
 	isSystem: boolean;
 	isScimManaged: boolean;
-	defaultModelId?: number;
-	allowedModelIds: number[];
+	defaultModel?: string;
+	allowedModels: string[];
 	allowModelChoice?: boolean;
 }
 

@@ -11,6 +11,7 @@ import {
 	type AdminRole,
 	type AdminSnapshot
 } from '$lib/admin';
+import { getModelEnumName } from '$lib/modelCatalog';
 import { fetchOrganizationSettings } from '$lib/server/settings';
 
 function sdkBaseUrl(raw: string | undefined): string {
@@ -78,12 +79,7 @@ export function textqlClient(): Textql | null {
 	});
 }
 
-/**
- * Load the operator-facing administration model through the published SDK.
- * The settings read is the sole exception because v1.4.6 does not expose
- * SettingsService.GetOrganizationSettings yet; that existing helper calls the
- * same public Connect endpoint and redacts secret-bearing fields.
- */
+/** Load the operator-facing administration model through the pinned SDK. */
 export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 	const client = textqlClient();
 	const serverUrl = displayBaseUrl(env.TEXTQL_SERVER_URL);
@@ -124,8 +120,17 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 			description: text(role.description, 'No description provided.'),
 			isSystem: bool(role.isSystem),
 			isScimManaged: bool(role.isScimManaged),
-			defaultModelId: number(role.defaultModelId),
-			allowedModelIds: numberArray(role.allowedModelIds),
+			defaultModel:
+				text(role.defaultModel) ||
+				(number(role.defaultModelId) === undefined
+					? undefined
+					: getModelEnumName(number(role.defaultModelId) as number)),
+			allowedModels:
+				stringArray(role.allowedModels).length > 0
+					? stringArray(role.allowedModels)
+					: numberArray(role.allowedModelIds)
+						.map(getModelEnumName)
+						.filter((model): model is string => Boolean(model)),
 			allowModelChoice:
 				typeof role.allowModelChoice === 'boolean' ? role.allowModelChoice : undefined
 		}));

@@ -255,6 +255,7 @@
 					<h2 class="panel-title">Models</h2>
 					<p class="panel-subtitle">Which model new threads resolve to.</p>
 				</div>
+				<a href="/models" class="quiet-link">Manage <ArrowRight size={12} /></a>
 			</div>
 			<div class="brand-list">
 				{#each orgModels as model (model.label)}

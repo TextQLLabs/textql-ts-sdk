@@ -1,12 +1,15 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
 	import { Bot, KeyRound, Plus, Search, Shield, UserPlus, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import { initials, roleNames } from '$lib/admin';
-	import { Button, Page, Select } from '$lib/primitives';
+	import { MutationTracker } from '$lib/mutate.svelte';
+	import { Button, Page, Select, Spinner } from '$lib/primitives';
 
-	let { data, form } = $props();
+	let { data } = $props();
+	const saving = new MutationTracker();
 	const admin = $derived(data.admin);
 	let view = $state<'people' | 'service' | 'keys'>(
 		page.url.searchParams.get('view') === 'keys' ? 'keys' : 'people'
@@ -60,9 +63,6 @@
 {#if admin.mode !== 'live'}
 	<ConnectionEmpty mode={admin.mode} error={admin.error} />
 {:else}
-	{#if form?.message}
-		<div class="form-message">{form.message}</div>
-	{/if}
 
 	<div class="identity-tabs" role="tablist" aria-label="Identity type">
 		<button class:active={view === 'people'} onclick={() => selectView('people')} type="button">
@@ -149,10 +149,17 @@
 								<div class="assigned-role">
 									<span><Shield size={13} /><strong>{role.name}</strong></span>
 									{#if selectedPerson.kind === 'person' && !selectedPerson.isScimManaged}
-										<form method="POST" action="?/removeRole">
+										{@const key = `remove:${role.id}`}
+										<form
+											method="POST"
+											action="?/removeRole"
+											use:enhance={saving.submit(key, `Remove ${role.name}`)}
+										>
 											<input type="hidden" name="memberId" value={selectedPerson.id} />
 											<input type="hidden" name="roleId" value={role.id} />
-											<button type="submit">Remove</button>
+											<button type="submit" disabled={saving.busy} aria-busy={saving.is(key) || undefined}>
+												{#if saving.is(key)}<Spinner size={10} /> Removing{:else}Remove{/if}
+											</button>
 										</form>
 									{/if}
 								</div>
@@ -162,11 +169,24 @@
 					</div>
 
 					{#if selectedPerson.kind === 'person' && !selectedPerson.isScimManaged}
-						<form class="add-role" method="POST" action="?/assignRole">
+						<form
+							class="add-role"
+							method="POST"
+							action="?/assignRole"
+							use:enhance={saving.submit('assign', 'Assign role')}
+						>
 							<input type="hidden" name="memberId" value={selectedPerson.id} />
 							<input type="hidden" name="roleId" value={addRoleId} />
-							<Select bind:value={addRoleId} options={availableRoles.map((role) => ({ value: role.id, label: role.name, hint: role.description }))} placeholder="Choose a role" label="Role to assign" searchable />
-							<Button variant="surface" size="sm" type="submit" disabled={!addRoleId}><Plus size={13} /> Add</Button>
+							<Select bind:value={addRoleId} options={availableRoles.map((role) => ({ value: role.id, label: role.name, hint: role.description }))} placeholder="Choose a role" label="Role to assign" searchable disabled={saving.busy} />
+							<Button
+								variant="surface"
+								size="sm"
+								type="submit"
+								loading={saving.is('assign')}
+								disabled={!addRoleId || saving.busy}
+							>
+								{#if !saving.is('assign')}<Plus size={13} />{/if} Add
+							</Button>
 						</form>
 					{:else}
 						<p class="managed-note">
@@ -183,7 +203,6 @@
 </Page>
 
 <style>
-	.form-message { margin-bottom: 14px; border: 1px solid var(--color-line); border-radius: 8px; background: white; padding: 10px 12px; color: var(--color-access); font-size: 11px; }
 	.identity-tabs { display: flex; gap: 4px; margin-bottom: 14px; }
 	.identity-tabs button { display: flex; align-items: center; gap: 7px; border: 0; border-radius: 7px; background: transparent; padding: 8px 10px; color: var(--color-muted); font-size: 11px; cursor: pointer; }
 	.identity-tabs button.active { background: white; color: var(--color-access); box-shadow: 0 1px 2px rgba(23,33,43,.07); }

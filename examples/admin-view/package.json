@@ -26,6 +26,6 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^1.25.0",
-		"@textql/sdk": "1.4.6"
+		"@textql/sdk": "1.4.21"
 	}
 }

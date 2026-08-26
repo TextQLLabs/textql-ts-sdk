@@ -7,6 +7,7 @@ export { default as Marquee } from './Marquee.svelte';
 export { default as Modal } from './Modal.svelte';
 export { default as Page } from './Page.svelte';
 export { default as Select } from './Select.svelte';
+export { default as Spinner } from './Spinner.svelte';
 export { default as Switch } from './Switch.svelte';
 export { default as Text } from './Text.svelte';
 export { default as Toaster } from './Toaster.svelte';

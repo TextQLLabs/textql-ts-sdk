@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import Spinner from './Spinner.svelte';
 	import type { ButtonSize, ButtonVariant } from './types';
 
 	let {
@@ -7,6 +8,7 @@
 		size = 'md',
 		href,
 		disabled = false,
+		loading = false,
 		class: className = '',
 		type = 'button',
 		children,
@@ -16,19 +18,32 @@
 		size?: ButtonSize;
 		href?: string;
 		disabled?: boolean;
+		/** In-flight: swaps a spinner in ahead of the label and blocks re-submits. */
+		loading?: boolean;
 		class?: string;
 		type?: 'button' | 'submit' | 'reset';
 		children?: Snippet;
 		[key: string]: unknown;
 	} = $props();
+
+	const inert = $derived(disabled || loading);
 </script>
 
-{#if href && !disabled}
+{#if href && !inert}
 	<a {href} class={`primitive-button ${className}`} data-variant={variant} data-size={size} {...rest}>
 		{@render children?.()}
 	</a>
 {:else}
-	<button {type} {disabled} class={`primitive-button ${className}`} data-variant={variant} data-size={size} {...rest}>
+	<button
+		{type}
+		disabled={inert}
+		aria-busy={loading || undefined}
+		class={`primitive-button ${className}`}
+		data-variant={variant}
+		data-size={size}
+		{...rest}
+	>
+		{#if loading}<Spinner size={size === 'xs' || size === 'sm' ? 12 : 14} />{/if}
 		{@render children?.()}
 	</button>
 {/if}
@@ -36,6 +51,8 @@
 <style>
 	.primitive-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: 12px; font-family: var(--font-sans); font-weight: 500; line-height: 1.25; text-decoration: none; white-space: nowrap; cursor: pointer; user-select: none; transition: color 120ms ease, background 120ms ease, border-color 120ms ease, box-shadow 120ms ease, opacity 120ms ease; }
 	.primitive-button:disabled { cursor: not-allowed; opacity: .5; }
+	/* Loading is a busy state, not a rejection — keep it legible rather than faded. */
+	.primitive-button[aria-busy='true'] { cursor: progress; opacity: .85; }
 	.primitive-button[data-size='xs'] { padding: 2px 8px; font-size: 10px; }
 	.primitive-button[data-size='sm'] { padding: 4px 10px; font-size: 12px; }
 	.primitive-button[data-size='md'] { padding: 6px 12px; font-size: 12px; }

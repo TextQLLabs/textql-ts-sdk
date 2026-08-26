@@ -286,19 +286,6 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				storage: 'organization.hide_api_connectors',
 				caveat: 'Stored inverted as hide_api_connectors.'
 			},
-			{
-				key: 'googleDrive',
-				name: 'Google Drive',
-				description: 'Reads files from connected Google Drive accounts.',
-				details: 'Lets the agent pull documents and sheets from Drive.',
-				available: R('googleDriveEnabled'),
-				default: P('googleDriveEnabled'),
-				hiddenWhen:
-					'The product only renders this row when paradigm_params.googleDriveEnabled is already on, so an org that has never used Drive never sees it.',
-				storage: TOOL_STORAGE,
-				caveat:
-					'Available is inert for this row — applyRestrictions never reads it. Only Default has any effect.'
-			}
 		]
 	},
 	{

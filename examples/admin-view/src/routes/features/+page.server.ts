@@ -60,7 +60,7 @@ export const actions: Actions = {
 				body[parentKey] = { ...(current as Record<string, unknown>), [source.field]: desired };
 			} else {
 				if (!SDK_ORG_FIELDS.has(source.field)) {
-					return fail(400, { message: `${source.field} is not exposed by @textql/sdk 1.4.6.` });
+					return fail(400, { message: `${source.field} is not exposed by @textql/sdk 1.4.21.` });
 				}
 				body[source.field] = source.invert ? !desired : desired;
 			}

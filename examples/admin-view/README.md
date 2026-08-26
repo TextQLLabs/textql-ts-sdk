@@ -1,7 +1,7 @@
 # TextQL administration example
 
 A SvelteKit administration experience built against a real TextQL organization.
-It uses the pinned `@textql/sdk` version from `package.json`; it does not ship
+It uses the exact `@textql/sdk` `1.4.21` pin from `package.json`; it does not ship
 fixture members, roles, permissions, keys, features, or audit events.
 
 ## Run it
@@ -26,9 +26,10 @@ is only read from SvelteKit server modules and is never serialized to the page.
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Access posture, items to review, recent changes, and an effective-access trace |
+| `/` | Access posture, items to review, connectors, models, and recent audit activity |
 | `/people` | People, service accounts, API keys, and role assignment |
 | `/roles` | Role metadata, model policy, and permission grants |
+| `/models` | Organization model availability and default model policy |
 | `/features` | Organization feature availability and defaults |
 | `/changes` | Searchable organization audit history |
 
@@ -37,11 +38,11 @@ reference** in the sidebar.
 
 ## Organization context
 
-Most RBAC operations infer the organization from the API key. The deployed
-`settings.listMembers` operation currently requires `orgId`, so the server data
-layer derives it from `GetOrganizationSettings` (or the first returned role as
-a fallback). It is an internal request detail: the UI never asks the admin to
-find or enter an organization ID.
+Most RBAC operations and `settings.updateModels` infer the organization from
+the API key. The deployed `settings.listMembers` operation requires `orgId`, so
+the server data layer derives it from `settings.get` (or the first returned
+role as a fallback). It is an internal request detail: the UI never asks the
+admin to find or enter an organization ID.
 
 ## Svelte primitives
 
