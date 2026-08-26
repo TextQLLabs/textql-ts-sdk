@@ -73,6 +73,7 @@ export interface AdminSnapshot {
 	configured: boolean;
 	error?: string;
 	serverUrl: string;
+	organizationName: string;
 	organization?: Record<string, unknown>;
 	roles: AdminRole[];
 	permissions: AdminPermission[];
@@ -93,6 +94,7 @@ export function emptyAdminSnapshot(
 		configured: mode !== 'unconfigured',
 		error,
 		serverUrl,
+		organizationName: 'Organization',
 		roles: [],
 		permissions: [],
 		people: [],
@@ -139,14 +141,33 @@ export function formatDate(value: string | undefined, style: DateStyle, fallback
 	return formatter.format(new Date(value));
 }
 
+/** The window Overview flags and People filters on. */
+export const EXPIRING_SOON_DAYS = 30;
+
+export function isExpiringSoon(key: AdminApiKey): boolean {
+	if (!key.expiresAt || key.status === 'revoked') return false;
+	const remaining = new Date(key.expiresAt).getTime() - Date.now();
+	return remaining > 0 && remaining < EXPIRING_SOON_DAYS * 24 * 60 * 60 * 1000;
+}
+
 export function rolesById(roles: AdminRole[]): Map<string, AdminRole> {
 	return new Map(roles.map((role) => [role.id, role]));
 }
 
-export function roleNames(person: AdminPerson, byId: Map<string, AdminRole>): string[] {
+/**
+ * The built-in admin role. It is identified by name because the API exposes no
+ * flag for it, and both the roles editor and the directory need the same answer.
+ */
+export function isAdminRole(role: AdminRole | undefined): boolean {
+	return Boolean(role?.isSystem && role.name.toLowerCase() === 'admin');
+}
+
+/** Assigned roles, admin first so a truncated list never drops it. */
+export function personRoles(person: AdminPerson, byId: Map<string, AdminRole>): AdminRole[] {
 	return person.roleIds
-		.map((id) => byId.get(id)?.name)
-		.filter((name): name is string => Boolean(name));
+		.map((id) => byId.get(id))
+		.filter((role): role is AdminRole => Boolean(role))
+		.sort((a, b) => Number(isAdminRole(b)) - Number(isAdminRole(a)));
 }
 
 const ACTION_IMPLICATIONS: Record<string, string[]> = {

@@ -168,7 +168,7 @@
 					</div>
 				</div>
 			{:else}
-				<ModelCatalogPicker bind:selected={draftModels} unavailable={unavailableModels} disabled={saving.busy} unavailableLabel="Unavailable to this organization" />
+				<ModelCatalogPicker bind:selected={draftModels} unavailable={unavailableModels} disabled={saving.busy} minSelected={1} unavailableLabel="Unavailable to this organization" />
 			{/if}
 
 			<div class="policy-footer">

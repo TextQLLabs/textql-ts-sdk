@@ -72,6 +72,17 @@ export interface FeatureRow {
 	 * exists anyway. Only set on `default: NONE` rows.
 	 */
 	defaultNote?: string;
+	/**
+	 * paradigm_params field cleared when Available goes off, mirroring the
+	 * product's `restrictionAvail(key, field, paradigmField)` opt-in. Only the
+	 * off direction cascades: turning Available back on leaves the default
+	 * alone, so a tool does not silently come back enabled in new threads.
+	 *
+	 * Usually the same field the Default column writes. Ontology sets it even
+	 * though it has no Default column, because the product still clears
+	 * paradigm_params.ontologyEnabled from the sub-row.
+	 */
+	cascadeDefault?: string;
 	storage: string;
 	caveat?: string;
 }
@@ -102,6 +113,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'When a question needs current or external information the agent searches the live web, can fetch a specific URL, and surfaces the source pages it pulled.',
 				available: R('webSearchEnabled'),
+				cascadeDefault: 'webSearchEnabled',
 				default: P('webSearchEnabled'),
 				storage: TOOL_STORAGE
 			},
@@ -112,6 +124,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'The agent writes SQL from a plain-language question, runs it against connected databases, and shows both the query and the result table.',
 				available: R('sqlEnabled'),
+				cascadeDefault: 'sqlEnabled',
 				default: P('sqlEnabled'),
 				storage: TOOL_STORAGE,
 				caveat:
@@ -124,6 +137,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'Grounds answers in your defined metrics, entities and relationships rather than guessing at raw tables. What it runs depends on the experience: Old queries the semantic layer; New is the unified, file-based context library the agent reads and queries with .tql.',
 				available: R('ontologyEnabled'),
+				cascadeDefault: 'ontologyEnabled',
 				default: NONE,
 				defaultNote:
 					'The product moves this default onto a nested "TQL Query" sub-row rather than the parent, because Ontology is the capability and TQL Query is the tool that gets switched on. Both write paradigm_params.ontologyEnabled.',
@@ -143,6 +157,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets the agent send results by email.',
 				details: 'Registers the EmailCell tool so a thread can deliver its output to an inbox.',
 				available: R('emailOutputEnabled'),
+				cascadeDefault: 'emailOutputEnabled',
 				default: P('emailOutputEnabled'),
 				storage: TOOL_STORAGE,
 				caveat:
@@ -155,6 +170,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				details:
 					'Gives the agent a shell in its sandbox for file manipulation and tooling that Python does not cover.',
 				available: R('bashEnabled'),
+				cascadeDefault: 'bashEnabled',
 				default: P('bashEnabled'),
 				storage: TOOL_STORAGE,
 				caveat:
@@ -223,6 +239,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Runs JavaScript for client-side visualizations.',
 				details: 'Executes JavaScript, largely for interactive output rather than data access.',
 				available: R('javascriptEnabled'),
+				cascadeDefault: 'javascriptEnabled',
 				default: P('javascriptEnabled'),
 				hiddenWhen:
 					'Data Apps retires JS visualizations, so the product hides this row entirely once dataAppsEnabled is on — and the backend stops registering the tool.',
@@ -441,6 +458,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
 				description: 'Lets the agent build interactive forms.',
 				details: 'Registers the form editor so a thread can collect structured input.',
 				available: R('formEditorEnabled'),
+				cascadeDefault: 'formEditorEnabled',
 				default: P('formEditorEnabled'),
 				storage: TOOL_STORAGE,
 				caveat:

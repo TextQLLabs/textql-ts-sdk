@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { Check, LockKeyhole, Search } from '@lucide/svelte';
+	import { Check, LockKeyhole } from '@lucide/svelte';
 
 	import { CATALOG_MODELS, PROVIDERS, getModelIconSrc } from '$lib/modelCatalog';
-	import { BrandLogo } from '$lib/primitives';
+	import { BrandLogo, EmptyState, SearchField } from '$lib/primitives';
 
 	let {
 		selected = $bindable<string[]>([]),
 		unavailable = [],
 		disabled = false,
 		dense = false,
+		minSelected = 0,
 		selectedLabel = 'Available',
 		unselectedLabel = 'Not available',
 		unavailableLabel = 'Blocked by organization policy'
@@ -17,6 +18,8 @@
 		unavailable?: string[];
 		disabled?: boolean;
 		dense?: boolean;
+		/** Floor the selection cannot go below. The API rejects an empty catalog. */
+		minSelected?: number;
 		selectedLabel?: string;
 		unselectedLabel?: string;
 		unavailableLabel?: string;
@@ -35,117 +38,116 @@
 			)
 		})).filter((group) => group.models.length > 0)
 	);
+	const selectedCount = $derived(selected.filter((model) => !unavailableSet.has(model)).length);
+	const atFloor = $derived(minSelected > 0 && selectedCount <= minSelected);
 
 	function toggle(enumName: string): void {
 		if (disabled || unavailableSet.has(enumName)) return;
+		if (atFloor && selected.includes(enumName)) return;
 		selected = selected.includes(enumName)
 			? selected.filter((model) => model !== enumName)
 			: [...selected, enumName];
 	}
 
-	function toggleProvider(enumNames: string[]): void {
-		const available = enumNames.filter((enumName) => !unavailableSet.has(enumName));
-		const everySelected = available.every((enumName) => selected.includes(enumName));
-		selected = everySelected
-			? selected.filter((enumName) => !available.includes(enumName))
-			: [...new Set([...selected, ...available])];
+	function toggleProvider(available: string[]): void {
+		if (!available.every((enumName) => selected.includes(enumName))) {
+			selected = [...new Set([...selected, ...available])];
+			return;
+		}
+		if (minSelected > 0 && selectedCount - available.length < minSelected) return;
+		selected = selected.filter((enumName) => !available.includes(enumName));
 	}
 </script>
 
 <div class:dense class="catalog-picker">
 	<div class="catalog-toolbar">
-		<div>
-			<strong>{selected.filter((model) => !unavailableSet.has(model)).length} models selected</strong>
-			<span>Changes apply after you save this policy.</span>
-		</div>
-		<label class="catalog-search">
-			<Search size={13} />
-			<input bind:value={query} placeholder="Find a model" aria-label="Find a model" />
-		</label>
+		<strong>{selectedCount} {selectedCount === 1 ? 'model' : 'models'} selected</strong>
+		<span>{atFloor ? `Keep at least ${minSelected} selected.` : 'Applies on save.'}</span>
+		<SearchField bind:value={query} placeholder="Find a model" class="catalog-search" />
 	</div>
 
-	<div class="provider-groups">
-		{#each groups as group (group.provider.id)}
-			{@const availableModels = group.models.filter((model) => !unavailableSet.has(model.enumName))}
-			{@const providerSelected = availableModels.filter((model) => selected.includes(model.enumName)).length}
-			<section class="provider-group">
-				<div class="provider-heading">
-					<div class="provider-name">
-						<BrandLogo src={group.provider.iconPath} name={group.provider.name} size={15} />
-						<strong>{group.provider.name}</strong>
-						<span>{providerSelected}/{availableModels.length}</span>
-					</div>
-					{#if availableModels.length > 1 && !disabled}
-						<button type="button" onclick={() => toggleProvider(group.models.map((model) => model.enumName))}>
-							{providerSelected === availableModels.length ? 'Clear' : 'Select all'}
-						</button>
-					{/if}
-				</div>
-				<div class="model-grid">
-					{#each group.models as model (model.enumName)}
-						{@const blocked = unavailableSet.has(model.enumName)}
-						{@const checked = selected.includes(model.enumName) && !blocked}
-						<button
-							type="button"
-							class:checked
-							class:blocked
-							disabled={disabled || blocked}
-							role="checkbox"
-							aria-checked={checked}
-							onclick={() => toggle(model.enumName)}
-						>
-							<span class="model-logo">
-								<BrandLogo src={getModelIconSrc(model.id)} name={model.name} size={dense ? 16 : 18} />
-							</span>
-							<span class="model-copy">
-								<strong>{model.name}</strong>
-								<small>{blocked ? unavailableLabel : checked ? selectedLabel : unselectedLabel}</small>
-							</span>
-							<span class="model-check">
-								{#if blocked}<LockKeyhole size={11} />{:else if checked}<Check size={12} />{/if}
-							</span>
-						</button>
-					{/each}
-				</div>
-			</section>
-		{/each}
-		{#if groups.length === 0}<div class="no-results">No models match “{query}”.</div>{/if}
-	</div>
+	{#each groups as group (group.provider.id)}
+		{@const availableModels = group.models.filter((model) => !unavailableSet.has(model.enumName))}
+		{@const providerSelected = availableModels.filter((model) => selected.includes(model.enumName)).length}
+		{@const wouldClear = providerSelected === availableModels.length}
+		{@const blockedClear = wouldClear && minSelected > 0 && selectedCount - providerSelected < minSelected}
+		<section class="provider-group">
+			<div class="provider-heading">
+				<BrandLogo src={group.provider.iconPath} name={group.provider.name} size={13} />
+				<strong>{group.provider.name}</strong>
+				<span class="provider-count">{providerSelected}/{availableModels.length}</span>
+				{#if availableModels.length > 1 && !disabled && !blockedClear}
+					<button type="button" onclick={() => toggleProvider(availableModels.map((model) => model.enumName))}>
+						{wouldClear ? 'Clear' : 'Select all'}
+					</button>
+				{/if}
+			</div>
+
+			<div class="model-chips">
+				{#each group.models as model (model.enumName)}
+					{@const blocked = unavailableSet.has(model.enumName)}
+					{@const checked = selected.includes(model.enumName) && !blocked}
+					{@const pinned = checked && atFloor}
+					<button
+						type="button"
+						class:checked
+						class:blocked
+						class:pinned
+						disabled={disabled || blocked || pinned}
+						role="checkbox"
+						aria-checked={checked}
+						title={blocked
+							? unavailableLabel
+							: pinned
+								? `At least ${minSelected} ${minSelected === 1 ? 'model' : 'models'} must stay selected.`
+								: checked
+									? selectedLabel
+									: unselectedLabel}
+						onclick={() => toggle(model.enumName)}
+					>
+						<BrandLogo src={getModelIconSrc(model.id)} name={model.name} size={dense ? 13 : 14} />
+						<span>{model.name}</span>
+						{#if blocked}
+							<LockKeyhole size={11} />
+						{:else if checked}
+							<Check size={12} strokeWidth={2.6} />
+						{/if}
+					</button>
+				{/each}
+			</div>
+		</section>
+	{/each}
+
+	{#if groups.length === 0}
+		<EmptyState title="No models match" description="Nothing in the catalog matches “{query}”." />
+	{/if}
 </div>
 
 <style>
 	.catalog-picker { border-top: 1px solid var(--color-line); }
-	.catalog-toolbar { display: flex; min-height: 54px; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 14px; }
-	.catalog-toolbar strong, .catalog-toolbar span { display: block; }
+	.catalog-toolbar { display: flex; align-items: baseline; gap: 8px; padding: 9px 14px; }
 	.catalog-toolbar strong { font-size: 11px; font-weight: 600; }
-	.catalog-toolbar span { margin-top: 2px; color: var(--color-muted); font-size: 9px; }
-	.catalog-search { display: flex; width: 190px; align-items: center; gap: 7px; border: 1px solid var(--color-line); border-radius: 8px; background: var(--color-elevate); padding: 7px 9px; color: var(--color-muted); }
-	.catalog-search input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: var(--color-ink); font-size: 10px; }
-	.provider-groups { border-top: 1px solid var(--color-line); }
-	.provider-group + .provider-group { border-top: 1px solid var(--color-line); }
-	.provider-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: color-mix(in srgb, var(--color-paper) 72%, transparent); padding: 8px 14px; }
-	.provider-name { display: flex; align-items: center; gap: 7px; }
-	.provider-name strong { font-size: 9px; font-weight: 650; }
-	.provider-name span { color: var(--color-muted); font-family: var(--font-mono); font-size: 8px; }
-	.provider-heading > button { border: 0; background: transparent; padding: 2px 0; color: var(--color-access); font-size: 8px; cursor: pointer; }
-	.model-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--color-line); }
-	.model-grid > button { display: grid; min-height: 64px; grid-template-columns: 32px minmax(0, 1fr) 18px; align-items: center; gap: 8px; border: 0; background: var(--color-elevate); padding: 10px 12px; color: var(--color-ink); text-align: left; cursor: pointer; }
-	.model-grid > button:hover:not(:disabled) { background: color-mix(in srgb, var(--color-access-soft) 38%, var(--color-elevate)); }
-	.model-grid > button.checked { background: color-mix(in srgb, var(--color-access-soft) 58%, var(--color-elevate)); }
-	.model-grid > button.blocked { cursor: default; opacity: .55; }
-	.model-logo { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid color-mix(in srgb, var(--color-line) 75%, transparent); border-radius: 8px; background: var(--color-elevate); }
-	.model-copy { min-width: 0; }
-	.model-copy strong, .model-copy small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-	.model-copy strong { font-size: 10px; font-weight: 620; }
-	.model-copy small { margin-top: 3px; color: var(--color-muted); font-size: 8px; }
-	.model-check { display: grid; width: 17px; height: 17px; place-items: center; border: 1px solid var(--color-line); border-radius: 5px; color: var(--color-muted); }
-	.checked .model-check { border-color: var(--color-access); background: var(--color-access); color: white; }
-	.no-results { padding: 30px 14px; color: var(--color-muted); font-size: 10px; text-align: center; }
-	.dense .catalog-toolbar { min-height: 48px; padding: 8px 12px; }
-	.dense .provider-heading { padding: 7px 12px; }
-	.dense .model-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.dense .model-grid > button { min-height: 54px; grid-template-columns: 28px minmax(0, 1fr) 18px; padding: 8px 10px; }
-	.dense .model-logo { width: 26px; height: 26px; border-radius: 7px; }
-	@media (max-width: 1050px) { .model-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-	@media (max-width: 620px) { .catalog-toolbar { align-items: stretch; flex-direction: column; }.catalog-search { width: 100%; }.model-grid, .dense .model-grid { grid-template-columns: 1fr; } }
+	.catalog-toolbar > span { flex: 1; color: var(--color-muted); font-size: 9px; }
+	.catalog-toolbar :global(.catalog-search) { width: 170px; flex: 0 0 auto; }
+	.provider-group { border-top: 1px solid var(--color-line); }
+	.provider-heading { display: flex; align-items: center; gap: 6px; background: color-mix(in srgb, var(--color-paper) 72%, transparent); padding: 6px 14px; }
+	.provider-heading strong { font-size: 9px; font-weight: 650; }
+	.provider-count { color: var(--color-muted); font-family: var(--font-mono); font-size: 8px; }
+	.provider-heading > button { margin-left: auto; border: 0; background: transparent; padding: 2px 0; color: var(--color-access); font-size: 8px; cursor: pointer; }
+	.provider-heading > button:hover { text-decoration: underline; }
+	.model-chips { display: flex; flex-wrap: wrap; gap: 5px; padding: 9px 14px; }
+	.model-chips > button { display: flex; align-items: center; gap: 6px; border: 1px solid var(--color-line); border-radius: 7px; background: var(--color-elevate); padding: 4px 8px 4px 6px; color: var(--color-muted); font-size: 10.5px; font-weight: 550; cursor: pointer; }
+	.model-chips > button:hover:not(:disabled) { border-color: color-mix(in srgb, var(--color-access) 45%, var(--color-line)); color: var(--color-ink); }
+	.model-chips > button.checked { border-color: color-mix(in srgb, var(--color-access) 55%, transparent); background: var(--color-access-soft); color: var(--color-access); }
+	/* Dashed, not faded: blocked is policy, not a rejected click. */
+	.model-chips > button.blocked { border-style: dashed; color: var(--color-subtle); cursor: default; }
+	.model-chips > button:disabled:not(.blocked) { cursor: not-allowed; opacity: .55; }
+	/* Pinned stays opaque so a required pick does not look unavailable. */
+	.model-chips > button.pinned:disabled { cursor: not-allowed; opacity: 1; }
+	.model-chips :global(img), .model-chips :global(svg) { flex: 0 0 auto; }
+	.dense .catalog-toolbar { padding: 8px 12px; }
+	.dense .provider-heading { padding: 5px 12px; }
+	.dense .model-chips { gap: 4px; padding: 8px 12px; }
+	.dense .model-chips > button { padding: 3px 7px 3px 5px; font-size: 10px; }
+	@media (max-width: 620px) { .catalog-toolbar { flex-wrap: wrap; } .catalog-toolbar :global(.catalog-search) { width: 100%; } }
 </style>

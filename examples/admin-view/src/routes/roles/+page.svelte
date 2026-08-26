@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { page } from '$app/state';
 	import { Check, ChevronRight, LockKeyhole, Plus, ShieldCheck, Trash2, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import ModelCatalogPicker from '$lib/ModelCatalogPicker.svelte';
-	import { expandPermissionIds, permissionIndex, type AdminPermission, type AdminRole } from '$lib/admin';
+	import { expandPermissionIds, isAdminRole, permissionIndex, type AdminPermission, type AdminRole } from '$lib/admin';
 	import {
 		CATALOG_MODELS,
 		DEFAULT_MODEL_CHOICES,
@@ -139,12 +140,22 @@
 		new Set([...currentPermissionIds, ...draftPermissionIds]).size -
 		currentPermissionIds.filter((id) => draftPermissionIds.includes(id)).length
 	);
+	// Admin is always 'all' even if an allow list is stored, so the editor
+	// does not show a phantom restriction.
+	function storedScope(role: AdminRole): 'all' | 'selected' {
+		return !isAdminRole(role) && role.allowedModels.length > 0 ? 'selected' : 'all';
+	}
+
+	const restrictable = $derived(!isAdminRole(selectedRole));
+	/** A restricted role with nothing selected is a policy updateRole refuses. */
+	const emptyRestriction = $derived(draftModelScope === 'selected' && effectiveDraftModels.length === 0);
+
 	const metadataChanged = $derived(
 		Boolean(
 			selectedRole &&
 				(draftName !== selectedRole.name ||
 					draftDescription !== selectedRole.description ||
-					draftModelScope !== (selectedRole.allowedModels.length === 0 ? 'all' : 'selected') ||
+					draftModelScope !== storedScope(selectedRole) ||
 					(draftModelScope === 'selected' &&
 						effectiveDraftModels.slice().sort().join(',') !== selectedRole.allowedModels.slice().sort().join(',')) ||
 					String(draftDefaultModel) !== (selectedRole.defaultModel ?? 'MODEL_UNKNOWN') ||
@@ -206,14 +217,19 @@
 		draftName = role.name;
 		draftDescription = role.description;
 		draftModels = [...role.allowedModels];
-		draftModelScope = role.allowedModels.length === 0 ? 'all' : 'selected';
+		draftModelScope = storedScope(role);
 		draftDefaultModel = role.defaultModel ?? 'MODEL_UNKNOWN';
 		draftModelChoice = role.allowModelChoice ?? false;
 		permissionQuery = '';
 	}
 
+	// Overview links here with ?role=<id> so "4 empty custom roles" lands on one
+	// of them rather than on whichever role happens to sort first.
 	$effect(() => {
-		if (!selectedRoleId && admin.roles[0]) selectRole(admin.roles[0]);
+		if (selectedRoleId) return;
+		const requested = page.url.searchParams.get('role');
+		const target = admin.roles.find((role) => role.id === requested) ?? admin.roles[0];
+		if (target) selectRole(target);
 	});
 
 	function togglePermission(id: string): void {
@@ -317,7 +333,6 @@
 					name="allowedModels"
 					value={draftModelScope === 'all' ? '' : effectiveDraftModels.join(',')}
 				/>
-				<input type="hidden" name="modelScope" value={draftModelScope} />
 				<input type="hidden" name="defaultModel" value={String(draftDefaultModel)} />
 				{#if draftModelChoice}<input type="hidden" name="allowModelChoice" value="on" />{/if}
 				<div class="editor-header">
@@ -352,22 +367,38 @@
 
 				<div class="model-policy">
 					<div class="model-policy-head">
-						<div><strong>Model policy</strong><span>Narrow the <a href="/models">organization catalog</a> for this role.</span></div>
+						<div>
+							<strong>Model policy</strong>
+							<span>
+								{#if restrictable}Narrow the{:else}Inherited from the{/if}
+								<a href="/models">organization catalog</a>{restrictable ? ' for this role.' : '.'}
+							</span>
+						</div>
 						<Badge tone="accent">{effectiveDraftModels.length} available</Badge>
 					</div>
 					<div class="model-policy-controls">
-						<label class="scope-toggle">
-							<Switch
-								checked={draftModelScope === 'selected'}
-								disabled={roleLocked}
-								onCheckedChange={(on) => setModelScope(on ? 'selected' : 'all')}
-								label="Restrict this role to selected models"
-							/>
-							<span>
-								<strong>Restrict to selected models</strong>
-								<small>Off inherits the whole organization catalog, including future models.</small>
-							</span>
-						</label>
+						{#if restrictable}
+							<label class="scope-toggle">
+								<Switch
+									checked={draftModelScope === 'selected'}
+									disabled={roleLocked}
+									onCheckedChange={(on) => setModelScope(on ? 'selected' : 'all')}
+									label="Restrict this role to selected models"
+								/>
+								<span>
+									<strong>Restrict to selected models</strong>
+									<small>Off inherits the whole organization catalog, including future models.</small>
+								</span>
+							</label>
+						{:else}
+							<div class="scope-fixed">
+								<ShieldCheck size={15} />
+								<span>
+									<strong>Full organization catalog</strong>
+									<small>Administrators are never narrowed to a subset.</small>
+								</span>
+							</div>
+						{/if}
 						<div class="default-model">
 							<label for="role-default-model">Default model</label>
 							<Select
@@ -385,12 +416,13 @@
 							<span><strong>Members can choose</strong><small>Show the model picker for this role.</small></span>
 						</label>
 					</div>
-					{#if draftModelScope === 'selected'}
+					{#if restrictable && draftModelScope === 'selected'}
 						<ModelCatalogPicker
 							bind:selected={draftModels}
 							unavailable={unavailableModels}
 							disabled={roleLocked}
 							dense
+							minSelected={1}
 							unavailableLabel="Not in the organization catalog"
 						/>
 					{/if}
@@ -427,7 +459,11 @@
 				<div class="change-bar">
 					<div>
 						<strong>{hasChanges ? `${changedPermissionCount + (metadataChanged ? 1 : 0)} pending changes` : 'No pending changes'}</strong>
-						<span>{affectedPeople.length} people and service accounts receive this role.</span>
+						<span>
+							{emptyRestriction
+								? 'Select at least one model, or turn off "Restrict to selected models".'
+								: `${affectedPeople.length} people and service accounts receive this role.`}
+						</span>
 					</div>
 					<div class="change-actions">
 						<Button
@@ -443,7 +479,7 @@
 							size="sm"
 							type="submit"
 							loading={saving.is('save')}
-							disabled={!hasChanges || saving.busy}
+							disabled={!hasChanges || emptyRestriction || saving.busy}
 						>
 							{saving.is('save') ? 'Saving…' : 'Save role'}
 						</Button>
@@ -524,6 +560,8 @@
 	.permission-check { display: grid; height: 16px; width: 16px; place-items: center; border: 1px solid var(--color-line); border-radius: 4px; color: white; }.checked .permission-check { border-color: var(--color-access); background: var(--color-access); }
 	.permission-group button.implied { cursor: default; }.permission-group button.implied .permission-check { border-color: color-mix(in srgb,var(--color-access) 55%,var(--color-line)); background: color-mix(in srgb,var(--color-access) 72%,white); }
 	.permission-group strong, .permission-group small { display: block; }.permission-group strong { font-size: 9px; font-weight: 620; text-transform: capitalize; }.permission-group small { margin-top: 2px; color: var(--color-muted); font-size: 8px; line-height: 1.35; }.permission-group small em { display: inline-block; margin-left: 6px; color: var(--color-access); font-style: normal; white-space: nowrap; }
+	.scope-fixed { display: flex; align-items: center; gap: 9px; }
+	.scope-fixed > :global(svg) { flex: 0 0 auto; color: var(--color-access); }
 	.change-bar { position: sticky; bottom: 0; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid var(--color-line); background: rgba(255,255,255,.94); padding: 12px 18px; backdrop-filter: blur(10px); }.change-bar strong, .change-bar span { display: block; }.change-bar strong { font-size: 10px; }.change-bar span { margin-top: 3px; color: var(--color-muted); font-size: 8px; }.change-actions { display: flex; gap: 7px; }
 	.delete-role { display: flex; justify-content: flex-end; margin-top: 12px; }
 	@media (max-width: 900px) { .create-role { grid-template-columns: 1fr; }.role-workspace { grid-template-columns: 1fr; }.role-items { grid-template-columns: repeat(2,minmax(0,1fr)); }.model-policy { grid-template-columns: 1fr; } }

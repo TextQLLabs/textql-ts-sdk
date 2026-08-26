@@ -2,6 +2,7 @@
 	import { AlertTriangle, ArrowRight, CheckCircle2, KeyRound, ShieldCheck, UserRound } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
+	import { EXPIRING_SOON_DAYS, isExpiringSoon } from '$lib/admin';
 	import { connectorLogoForType, connectorNameForType } from '$lib/connectorBranding';
 	import { getModelIconSrc, getModelName, resolveDefaultModel } from '$lib/modelCatalog';
 	import { Badge, BrandLogo, EmptyState, Page, Pager, Panel, Select } from '$lib/primitives';
@@ -17,13 +18,7 @@
 			(role) => !role.isSystem && (admin.rolePermissions[role.id]?.length ?? 0) === 0
 		)
 	);
-	const expiringKeys = $derived(
-		admin.apiKeys.filter((key) => {
-			if (!key.expiresAt || key.status === 'revoked') return false;
-			const remaining = new Date(key.expiresAt).getTime() - Date.now();
-			return remaining > 0 && remaining < 1000 * 60 * 60 * 24 * 30;
-		})
-	);
+	const expiringKeys = $derived(admin.apiKeys.filter(isExpiringSoon));
 	const reviewCount = $derived(
 		peopleWithoutRoles.length + rolesWithoutPermissions.length + expiringKeys.length
 	);
@@ -153,7 +148,7 @@
 						</a>
 					{/if}
 					{#if rolesWithoutPermissions.length}
-						<a href="/roles" class="review-row">
+						<a href="/roles?role={rolesWithoutPermissions[0].id}" class="review-row">
 							<span class="review-icon warning"><ShieldCheck size={16} /></span>
 							<span>
 								<strong>{rolesWithoutPermissions.length} empty custom {rolesWithoutPermissions.length === 1 ? 'role' : 'roles'}</strong>
@@ -163,10 +158,10 @@
 						</a>
 					{/if}
 					{#if expiringKeys.length}
-						<a href="/people?view=keys" class="review-row">
+						<a href="/people?view=keys&amp;filter=expiring" class="review-row">
 							<span class="review-icon warning"><KeyRound size={16} /></span>
 							<span>
-								<strong>{expiringKeys.length} API {expiringKeys.length === 1 ? 'key expires' : 'keys expire'} within 30 days</strong>
+								<strong>{expiringKeys.length} API {expiringKeys.length === 1 ? 'key expires' : 'keys expire'} within {EXPIRING_SOON_DAYS} days</strong>
 								<small>Rotate or replace credentials before dependent workflows stop.</small>
 							</span>
 							<ArrowRight size={14} />

@@ -1,18 +1,34 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/state';
-	import { Bot, KeyRound, Plus, Shield, UserPlus, Users } from '@lucide/svelte';
+	import { Bot, KeyRound, Plus, Shield, UserPlus, Users, X } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
-	import { initials, roleNames, rolesById } from '$lib/admin';
+	import { EXPIRING_SOON_DAYS, formatDate, initials, isAdminRole, isExpiringSoon, personRoles, rolesById } from '$lib/admin';
 	import { MutationTracker } from '$lib/mutate.svelte';
 	import { Badge, Button, Page, Panel, SearchField, SegmentedControl, Select, Spinner } from '$lib/primitives';
 
 	let { data } = $props();
 	const saving = new MutationTracker();
 	const admin = $derived(data.admin);
+	/** Overview review links; each filter implies a view. */
+	const FILTERS = {
+		'no-role': { view: 'people', label: 'with no role' },
+		expiring: { view: 'keys', label: `expiring within ${EXPIRING_SOON_DAYS} days` }
+	} as const;
+	type FilterKey = keyof typeof FILTERS;
+
+	const requested = page.url.searchParams.get('filter');
+	const requestedFilter: FilterKey | null =
+		requested === 'no-role' || requested === 'expiring' ? requested : null;
+
+	let focus = $state<FilterKey | null>(requestedFilter);
 	let view = $state<'people' | 'service' | 'keys'>(
-		page.url.searchParams.get('view') === 'keys' ? 'keys' : 'people'
+		requestedFilter
+			? FILTERS[requestedFilter].view
+			: page.url.searchParams.get('view') === 'keys'
+				? 'keys'
+				: 'people'
 	);
 	let query = $state('');
 	let selectedId = $state('');
@@ -33,7 +49,12 @@
 	]);
 
 	const humanPeople = $derived(
-		admin.people.filter((person) => person.kind === 'person' && matches(person.name, person.email))
+		admin.people.filter(
+			(person) =>
+				person.kind === 'person' &&
+				matches(person.name, person.email) &&
+				(focus !== 'no-role' || person.roleIds.length === 0)
+		)
 	);
 	const serviceAccounts = $derived(
 		admin.people.filter(
@@ -41,7 +62,11 @@
 		)
 	);
 	const keys = $derived(
-		admin.apiKeys.filter((key) => matches(key.name, key.ownerName, key.short))
+		admin.apiKeys.filter(
+			(key) =>
+				matches(key.name, key.ownerName, key.short) &&
+				(focus !== 'expiring' || isExpiringSoon(key))
+		)
 	);
 	const selectedPerson = $derived(
 		admin.people.find((person) => person.id === selectedId) ??
@@ -53,7 +78,14 @@
 			: []
 	);
 
+	const focusCount = $derived(view === 'keys' ? keys.length : humanPeople.length);
+	const focusNoun = $derived(
+		view === 'keys' ? (focusCount === 1 ? 'key' : 'keys') : focusCount === 1 ? 'person' : 'people'
+	);
+
 	const roleLookup = $derived(rolesById(admin.roles));
+	/** Enough to show admin plus one more before the column starts crowding. */
+	const ROLE_TAG_LIMIT = 2;
 
 	function matches(...values: string[]): boolean {
 		const needle = query.trim().toLowerCase();
@@ -64,12 +96,7 @@
 		view = next;
 		selectedId = '';
 		query = '';
-	}
-
-	function formatDate(value: string | undefined): string {
-		return value
-			? new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
-			: 'Unknown';
+		focus = null;
 	}
 </script>
 
@@ -95,6 +122,16 @@
 				<SearchField bind:value={query} placeholder="Search this list" label="Search identities" />
 			</div>
 
+			{#if focus}
+				<div class="focus-note">
+					<Badge tone="warning">Filtered</Badge>
+					<span>Showing {focusCount} {focusNoun} {FILTERS[focus].label}.</span>
+					<Button variant="ghost" size="sm" onclick={() => (focus = null)}>
+						<X size={13} /> Show all
+					</Button>
+				</div>
+			{/if}
+
 			{#if view === 'keys'}
 				<div class="table-wrap">
 					<table>
@@ -105,16 +142,17 @@
 									<td><strong>{key.name}</strong><small class="mono">{key.short}</small></td>
 									<td>{key.ownerName}</td>
 									<td><Badge tone={key.status === 'active' ? 'success' : 'neutral'}>{key.statusLabel}</Badge></td>
-									<td>{key.expiresAt ? formatDate(key.expiresAt) : 'Never'}</td>
+									<td>{key.expiresAt ? formatDate(key.expiresAt, 'date') : 'Never'}</td>
 								</tr>
 							{/each}
 						</tbody>
 					</table>
 				</div>
-				{#if keys.length === 0}<div class="list-empty">No API keys match this search.</div>{/if}
+				{#if keys.length === 0}<div class="list-empty">No API keys match this {focus ? 'filter' : 'search'}.</div>{/if}
 			{:else}
 				<div class="person-rows">
 					{#each view === 'people' ? humanPeople : serviceAccounts as person (person.id)}
+						{@const roles = personRoles(person, roleLookup)}
 						<button
 							type="button"
 							class:selected={selectedPerson?.id === person.id}
@@ -125,12 +163,23 @@
 								<strong>{person.name}</strong>
 								<small>{person.email}</small>
 							</span>
-							<span class="role-summary">{roleNames(person, roleLookup).join(', ') || 'No role'}</span>
+							<span class="role-tags">
+								{#each roles.slice(0, ROLE_TAG_LIMIT) as role (role.id)}
+									<Badge tone={isAdminRole(role) ? 'accent' : 'neutral'}>
+										{#if isAdminRole(role)}<Shield size={10} />{/if}{role.name}
+									</Badge>
+								{:else}
+									<em>No role</em>
+								{/each}
+								{#if roles.length > ROLE_TAG_LIMIT}
+									<Badge>+{roles.length - ROLE_TAG_LIMIT}</Badge>
+								{/if}
+							</span>
 						</button>
 					{/each}
 				</div>
 				{#if (view === 'people' ? humanPeople : serviceAccounts).length === 0}
-					<div class="list-empty">No identities match this search.</div>
+					<div class="list-empty">No identities match this {focus ? 'filter' : 'search'}.</div>
 				{/if}
 			{/if}
 		</Panel>
@@ -146,34 +195,31 @@
 				</div>
 				<div class="identity-facts">
 					<div><span>Identity</span><strong>{selectedPerson.kind === 'person' ? 'Person' : 'Service account'}</strong></div>
-					<div><span>Added</span><strong>{formatDate(selectedPerson.createdAt)}</strong></div>
+					<div><span>Added</span><strong>{formatDate(selectedPerson.createdAt, 'date')}</strong></div>
 					<div><span>Provisioning</span><strong>{selectedPerson.isScimManaged ? 'SCIM managed' : 'Direct'}</strong></div>
 				</div>
 
 				<div class="detail-section">
 					<div class="detail-section-title"><span>Assigned roles</span><span>{selectedPerson.roleIds.length}</span></div>
 					<div class="assigned-roles">
-						{#each selectedPerson.roleIds as roleId (roleId)}
-							{@const role = admin.roles.find((item) => item.id === roleId)}
-							{#if role}
-								<div class="assigned-role">
-									<span><Shield size={13} /><strong>{role.name}</strong></span>
-									{#if selectedPerson.kind === 'person' && !selectedPerson.isScimManaged}
-										{@const key = `remove:${role.id}`}
-										<form
-											method="POST"
-											action="?/removeRole"
-											use:enhance={saving.submit(key, () => `Remove ${role.name}`)}
-										>
-											<input type="hidden" name="memberId" value={selectedPerson.id} />
-											<input type="hidden" name="roleId" value={role.id} />
-											<button type="submit" disabled={saving.busy} aria-busy={saving.is(key) || undefined}>
-												{#if saving.is(key)}<Spinner size={10} /> Removing{:else}Remove{/if}
-											</button>
-										</form>
-									{/if}
-								</div>
-							{/if}
+						{#each personRoles(selectedPerson, roleLookup) as role (role.id)}
+							<div class="assigned-role">
+								<span><Shield size={13} /><strong>{role.name}</strong></span>
+								{#if selectedPerson.kind === 'person' && !selectedPerson.isScimManaged}
+									{@const key = `remove:${role.id}`}
+									<form
+										method="POST"
+										action="?/removeRole"
+										use:enhance={saving.submit(key, () => `Remove ${role.name}`)}
+									>
+										<input type="hidden" name="memberId" value={selectedPerson.id} />
+										<input type="hidden" name="roleId" value={role.id} />
+										<button type="submit" disabled={saving.busy} aria-busy={saving.is(key) || undefined}>
+											{#if saving.is(key)}<Spinner size={10} /> Removing{:else}Remove{/if}
+										</button>
+									</form>
+								{/if}
+							</div>
 						{/each}
 						{#if selectedPerson.roleIds.length === 0}<p>No roles assigned.</p>{/if}
 					</div>
@@ -217,6 +263,8 @@
 	.identity-layout { display: grid; grid-template-columns: minmax(0,1.5fr) minmax(280px,.72fr); gap: 14px; align-items: start; }
 	.identity-layout.keys-view { grid-template-columns: 1fr; }
 	.list-toolbar { border-bottom: 1px solid var(--color-line); padding: 12px; }
+	.focus-note { display: flex; align-items: center; gap: 9px; border-bottom: 1px solid var(--color-line); background: var(--color-warning-soft); padding: 8px 12px; color: var(--color-ink); font-size: 10px; }
+	.focus-note > span { flex: 1; }
 	.person-rows { display: grid; }
 	.person-rows > button { display: grid; grid-template-columns: 34px minmax(0,1fr) minmax(100px,.65fr); align-items: center; gap: 10px; border: 0; border-bottom: 1px solid var(--color-line); background: transparent; padding: 12px 14px; text-align: left; cursor: pointer; }
 	.person-rows > button:last-child { border: 0; }
@@ -227,8 +275,10 @@
 	.avatar.large { height: 42px; width: 42px; font-size: 11px; }
 	.person-copy strong, .person-copy small { display: block; }
 	.person-copy strong { font-size: 11px; font-weight: 650; }
-	.person-copy small, .role-summary { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
-	.role-summary { overflow: hidden; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+	.person-copy small { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
+	.role-tags { display: flex; align-items: center; justify-content: flex-end; gap: 4px; overflow: hidden; }
+	.role-tags :global(.badge) { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+	.role-tags em { color: var(--color-subtle); font-size: 9px; font-style: normal; }
 	.identity-detail { overflow: hidden; }
 	.detail-header { display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--color-line); padding: 17px; }
 	.detail-header h2 { margin: 0; font-size: 13px; font-weight: 650; }
@@ -256,5 +306,5 @@
 	td small { margin-top: 3px; color: var(--color-muted); font-size: 8px; }
 	.list-empty { padding: 34px 18px; color: var(--color-muted); font-size: 11px; text-align: center; }
 	@media (max-width: 900px) { .identity-layout { grid-template-columns: 1fr; } }
-	@media (max-width: 560px) { .identity-tabs { overflow-x: auto; } .person-rows > button { grid-template-columns: 34px 1fr; } .role-summary { display: none; } }
+	@media (max-width: 560px) { .identity-tabs { overflow-x: auto; } .person-rows > button { grid-template-columns: 34px 1fr; } .role-tags { display: none; } }
 </style>

@@ -73,6 +73,7 @@
 					<div class="feature-columns"><span>Capability</span><span>Available</span><span>Default</span></div>
 					{#each group.rows as row (row.key)}
 						{@const Icon = toolIcon(row.key)}
+						{@const availableOn = isOn(row.available)}
 						<div class="feature-row" class:open={expanded.includes(row.key)}>
 							<div class="feature-main">
 								<button class="feature-copy" type="button" onclick={() => toggleExpanded(row.key)} aria-expanded={expanded.includes(row.key)}>
@@ -93,13 +94,18 @@
 										>
 											<input type="hidden" name="kind" value={row.available.kind} />
 											<input type="hidden" name="field" value={row.available.field} />
-											<input type="hidden" name="desired" value={String(!isOn(row.available))} />
+											<input type="hidden" name="desired" value={String(!availableOn)} />
+											<!-- Off only: a tool that becomes unavailable must not keep a
+											     default that would switch it on the moment it returns. -->
+											{#if availableOn && row.cascadeDefault}
+												<input type="hidden" name="clearDefault" value={row.cascadeDefault} />
+											{/if}
 											<Switch
 												type="submit"
-												checked={isOn(row.available)}
+												checked={availableOn}
 												pending={saving.is(key)}
 												disabled={saving.busy}
-												label={`Turn ${row.name} ${isOn(row.available) ? 'off' : 'on'}`}
+												label={`Turn ${row.name} ${availableOn ? 'off' : 'on'}`}
 											/>
 										</form>
 									{/if}
@@ -110,6 +116,7 @@
 										<span class="dash">—</span>
 									{:else if canManage(row.default)}
 										{@const key = `default:${row.key}`}
+										{@const defaultOn = availableOn && isOn(row.default)}
 										<form
 											method="POST"
 											action="?/setFeature"
@@ -117,13 +124,15 @@
 										>
 											<input type="hidden" name="kind" value={row.default.kind} />
 											<input type="hidden" name="field" value={row.default.field} />
-											<input type="hidden" name="desired" value={String(!isOn(row.default))} />
+											<input type="hidden" name="desired" value={String(!defaultOn)} />
 											<Switch
 												type="submit"
-												checked={isOn(row.default)}
+												checked={defaultOn}
 												pending={saving.is(key)}
-												disabled={saving.busy}
-												label={`Change ${row.name} default`}
+												disabled={saving.busy || !availableOn}
+												label={availableOn
+													? `Change ${row.name} default`
+													: `${row.name} is unavailable to this organization`}
 											/>
 										</form>
 									{:else}<span class="dash">—</span>{/if}

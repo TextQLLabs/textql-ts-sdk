@@ -12,8 +12,9 @@
 	} from '@lucide/svelte';
 
 	import '../app.css';
+	import { initials } from '$lib/admin';
 	import { mutations } from '$lib/mutate.svelte';
-	import Toaster from '$lib/primitives/Toaster.svelte';
+	import { Toaster } from '$lib/primitives';
 
 	let { data, children } = $props();
 	let referenceOpen = $state(false);
@@ -38,13 +39,10 @@
 	// covers writes — `invalidateAll` is not a navigation and never sets the former.
 	const busy = $derived(navigating.to !== null || mutations.busy);
 	const current = $derived(page.url.pathname);
-	const organizationName = $derived(
-		typeof data.admin.organization?.organizationName === 'string'
-			? data.admin.organization.organizationName
-			: typeof data.admin.organization?.name === 'string'
-				? data.admin.organization.name
-				: 'Organization'
-	);
+
+	function navActive(href: string): boolean {
+		return href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
+	}
 </script>
 
 {#if busy}<div class="route-progress" role="progressbar" aria-label="Loading"></div>{/if}
@@ -62,9 +60,9 @@
 		</div>
 
 		<div class="org-switcher">
-			<div class="org-avatar">{organizationName.slice(0, 1).toUpperCase()}</div>
+			<div class="org-avatar">{initials(data.admin.organizationName)}</div>
 			<div class="min-w-0 flex-1">
-				<div class="org-name">{organizationName}</div>
+				<div class="org-name">{data.admin.organizationName}</div>
 				<div class="org-meta">
 					{data.admin.mode === 'live' ? 'Live organization' : 'Not connected'}
 				</div>
@@ -74,8 +72,13 @@
 		<nav class="primary-nav" aria-label="Administration">
 			<div class="nav-eyebrow">Manage</div>
 			{#each NAV as item (item.href)}
-				{@const active = item.href === '/' ? current === '/' : current.startsWith(item.href)}
-				<a href={item.href} class:active class="nav-item">
+				{@const active = navActive(item.href)}
+				<a
+					href={item.href}
+					class:active
+					class="nav-item"
+					aria-current={active ? 'page' : undefined}
+				>
 					<item.icon size={16} strokeWidth={1.8} />
 					<span>{item.label}</span>
 				</a>
@@ -113,8 +116,8 @@
 	<div class="main-column">
 		<nav class="mobile-nav" aria-label="Administration">
 			{#each NAV as item (item.href)}
-				{@const active = item.href === '/' ? current === '/' : current.startsWith(item.href)}
-				<a href={item.href} class:active>{item.label}</a>
+				{@const active = navActive(item.href)}
+				<a href={item.href} class:active aria-current={active ? 'page' : undefined}>{item.label}</a>
 			{/each}
 		</nav>
 

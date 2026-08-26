@@ -264,6 +264,7 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 			mode: 'live',
 			configured: true,
 			serverUrl,
+			organizationName: text(settings.organization.organizationName, 'Organization'),
 			organization: settings.organization,
 			roles,
 			permissions,
