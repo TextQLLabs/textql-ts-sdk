@@ -95,6 +95,7 @@
 		<Select
 			value={connectorType}
 			options={connectorTypeOptions}
+			size="sm"
 			label="Filter connectors by type"
 			searchable={connectorTypeOptions.length > 8}
 			searchPlaceholder="Find a type"
@@ -197,7 +198,7 @@
 							<!-- Always occupied: grid auto-placement would otherwise slide the type
 							     label into the badge column on rows that have no badge. -->
 							<span>{#if connector.isDefault}<Badge tone="accent">Default</Badge>{/if}</span>
-							<small>{connectorNameForType(connector.type)}</small>
+							<span class="connector-type"><Badge>{connectorNameForType(connector.type)}</Badge></span>
 						</div>
 					{/each}
 				</div>
@@ -308,11 +309,9 @@
 	.brand-row strong { font-size: 11px; font-weight: 650; }
 	.brand-row small { margin-top: 3px; color: var(--color-muted); font-size: 9px; }
 	/* Connectors run to dozens of rows, so they get a one-line variant: the type
-	   moves onto the title line as a right-aligned label instead of a second row. */
+	   moves onto the title line as a right-aligned pill instead of a second row. */
 	:global(.connector-panel) .brand-row { grid-template-columns: 16px auto auto minmax(0,1fr); gap: 9px; padding: 8px 18px; }
-	:global(.connector-panel) .brand-row small { margin: 0; text-align: right; }
+	:global(.connector-panel) .brand-row .connector-type { justify-self: end; }
 	.connector-filter { width: 190px; flex: 0 0 auto; }
-	.connector-filter :global(.select-root > button) { border-radius: 7px; padding: 5px 8px; font-size: 11.5px; }
-	.connector-filter :global(.select-root > button img) { width: 14px; height: 14px; }
 	@media (max-width: 800px) { .overview-grid { grid-template-columns: 1fr; } }
 </style>

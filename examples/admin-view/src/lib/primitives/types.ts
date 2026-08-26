@@ -6,6 +6,7 @@ export type TextColor = 'black' | 'muted' | 'white' | 'accent';
 export type TextType = 'paragraph' | 'label' | 'heading' | 'important';
 export type BadgeTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger';
 export type FieldSize = 'sm' | 'md';
+export type DatePreset = { label: string; from?: Date; to?: Date };
 
 export type SegmentedOption = {
 	value: string;
