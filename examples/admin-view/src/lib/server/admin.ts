@@ -4,6 +4,7 @@ import { Textql } from '@textql/sdk';
 import {
 	emptyAdminSnapshot,
 	type AdminApiKey,
+	type ApiKeyStatus,
 	type AdminChange,
 	type AdminConnector,
 	type AdminPermission,
@@ -19,7 +20,7 @@ function sdkBaseUrl(raw: string | undefined): string {
 	return base.endsWith('/rpc/public') ? base : `${base}/rpc/public`;
 }
 
-function displayBaseUrl(raw: string | undefined): string {
+export function displayBaseUrl(raw: string | undefined): string {
 	return (raw?.trim() || 'https://app.textql.com').replace(/\/rpc\/public\/?$/, '').replace(/\/+$/, '');
 }
 
@@ -27,7 +28,7 @@ function asRecord(value: unknown): Record<string, unknown> {
 	return value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
 }
 
-function asArray(value: unknown, key: string): Record<string, unknown>[] {
+export function asArray(value: unknown, key: string): Record<string, unknown>[] {
 	const field = asRecord(value)[key];
 	return Array.isArray(field) ? field.map(asRecord) : [];
 }
@@ -65,7 +66,15 @@ function humanize(value: string): string {
 		.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
-function errorMessage(cause: unknown): string {
+export function apiKeyStatus(raw: string): ApiKeyStatus {
+	const name = raw.replace(/^RBAC_/, '').toLowerCase();
+	if (name.includes('revoked')) return 'revoked';
+	if (name.includes('expired')) return 'expired';
+	if (name.includes('active')) return 'active';
+	return 'unknown';
+}
+
+export function errorMessage(cause: unknown): string {
 	if (cause instanceof Error) return cause.message;
 	return 'The TextQL API did not return admin data.';
 }
@@ -86,9 +95,24 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 	if (!client) return emptyAdminSnapshot(serverUrl, 'unconfigured');
 
 	try {
-		const [settings, rolesResponse] = await Promise.all([
-			fetchOrganizationSettings(),
-			client.rbac.listRoles({ body: {} })
+		// Everything that needs no orgId goes out at once; only the member list
+		// and the per-role permission fan-out have to wait on a prior response.
+		const [
+			settings,
+			rolesResponse,
+			permissionsResponse,
+			serviceAccountsResponse,
+			keysResponse,
+			changesResponse,
+			connectorsResponse
+		] = await Promise.all([
+			fetchOrganizationSettings(client),
+			client.rbac.listRoles({ body: {} }),
+			client.rbac.listPermissions({ body: {} }),
+			client.rbac.listServiceAccounts({ body: {} }),
+			client.rbac.listApiKeys({ body: {} }),
+			client.auditLogs.list({ body: { pageSize: 40 } }),
+			client.connectors.getConnectors({ body: {} })
 		]);
 		if (settings.error || !settings.organization) {
 			throw new Error(settings.error ?? 'Organization settings were not returned.');
@@ -96,23 +120,6 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 		const roleRecords = asArray(rolesResponse, 'roles');
 		const orgId = text(settings.organization.orgId) || text(roleRecords[0]?.orgId);
 		if (!orgId) throw new Error('The TextQL API did not return an organization ID.');
-
-		const [
-			permissionsResponse,
-			membersResponse,
-			serviceAccountsResponse,
-			keysResponse,
-			changesResponse,
-			connectorsResponse
-		] =
-			await Promise.all([
-				client.rbac.listPermissions({ body: {} }),
-				client.settings.listMembers({ body: { orgId } }),
-				client.rbac.listServiceAccounts({ body: {} }),
-				client.rbac.listApiKeys({ body: {} }),
-				client.auditLogs.list({ body: { pageSize: 40 } }),
-				client.connectors.getConnectors({ body: {} })
-			]);
 
 		const roles: AdminRole[] = roleRecords.map((role) => ({
 			id: text(role.id),
@@ -135,6 +142,11 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 				typeof role.allowModelChoice === 'boolean' ? role.allowModelChoice : undefined
 		}));
 
+		const [membersResponse, ...rolePermissionResponses] = await Promise.all([
+			client.settings.listMembers({ body: { orgId } }),
+			...roles.map((role) => client.rbac.getRolePermissions({ body: { roleId: role.id } }))
+		]);
+
 		const permissions: AdminPermission[] = asArray(permissionsResponse, 'permissions').map(
 			(permission) => ({
 				id: text(permission.id),
@@ -151,10 +163,7 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 			...serviceAccountRecords.map((account) => text(account.memberId)).filter(Boolean)
 		];
 
-		const [memberRolesResponse, ...rolePermissionResponses] = await Promise.all([
-			client.rbac.getMemberRoles({ body: { memberIds } }),
-			...roles.map((role) => client.rbac.getRolePermissions({ body: { roleId: role.id } }))
-		]);
+		const memberRolesResponse = await client.rbac.getMemberRoles({ body: { memberIds } });
 
 		const memberRoles = asRecord(asRecord(memberRolesResponse).memberRoles);
 		const roleIdsFor = (memberId: string): string[] => {
@@ -216,7 +225,8 @@ export async function loadAdminSnapshot(): Promise<AdminSnapshot> {
 				ownerId,
 				ownerName: owner?.name ?? text(key.ownerDisplayName, text(key.ownerEmail, 'Unknown owner')),
 				roleIds: stringArray(key.assumedRoles),
-				status: humanize(text(key.status, 'active')).toLowerCase(),
+				status: apiKeyStatus(text(key.status, 'active')),
+				statusLabel: humanize(text(key.status, 'active')).toLowerCase(),
 				createdAt: iso(key.createdAt),
 				expiresAt: iso(key.expiresAt)
 			};

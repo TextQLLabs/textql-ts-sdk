@@ -107,3 +107,62 @@ export function getModelName(id: number): string {
 export function getModelNameByEnum(enumName: string): string {
 	return modelByEnum.get(enumName)?.name ?? DEFAULT_MODEL_CHOICES.find((model) => model.enumName === enumName)?.name ?? 'Unknown model';
 }
+
+/** The model the platform falls back to when nothing else resolves. */
+export const FALLBACK_DEFAULT_MODEL_ID = 25;
+
+export interface ResolvedDefaultModel extends CatalogModel {
+	iconSrc?: string;
+	/** True when the org has no default_llm_model of its own. */
+	inherited: boolean;
+}
+
+/**
+ * The model new threads actually start on. An org override wins; otherwise the
+ * deployment's system default applies. Both surfaces name the concrete model
+ * rather than the sentinel, so "organization default" always reads as a model.
+ */
+export function resolveDefaultModel(organization: {
+	defaultLlmModel?: unknown;
+	systemDefaultModel?: unknown;
+} = {}): ResolvedDefaultModel {
+	const pick = (value: unknown): CatalogModel | undefined =>
+		typeof value === 'number' && value > 0 ? modelById.get(value) : undefined;
+	const override = pick(organization.defaultLlmModel);
+	const model =
+		override ??
+		pick(organization.systemDefaultModel) ??
+		(modelById.get(FALLBACK_DEFAULT_MODEL_ID) as CatalogModel);
+	return { ...model, iconSrc: getModelIconSrc(model.id), inherited: !override };
+}
+
+const CONCRETE_MODELS = new Set(CATALOG_MODELS.map((model) => model.enumName));
+const SELECTABLE_DEFAULTS = new Set([
+	...CONCRETE_MODELS,
+	...DEFAULT_MODEL_CHOICES.map((model) => model.enumName)
+]);
+
+export interface ModelPolicy {
+	scope: string;
+	models: string[];
+	defaultModel: string;
+}
+
+/**
+ * The org policy and the per-role policy enforce the same five rules, so both
+ * actions and both editors ask here rather than each restating them.
+ */
+export function validateModelPolicy({ scope, models, defaultModel }: ModelPolicy): string | null {
+	if (scope !== 'all' && scope !== 'selected') return 'Choose a model policy.';
+	if (scope === 'selected' && models.length === 0) {
+		return 'Select at least one model.';
+	}
+	if (models.some((model) => !CONCRETE_MODELS.has(model))) {
+		return 'The model selection contains an unsupported model.';
+	}
+	if (!SELECTABLE_DEFAULTS.has(defaultModel)) return 'Choose a valid default model.';
+	if (scope === 'selected' && CONCRETE_MODELS.has(defaultModel) && !models.includes(defaultModel)) {
+		return 'The default must be one of the selected models.';
+	}
+	return null;
+}

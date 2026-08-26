@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Badge, Page, Panel } from '$lib/primitives';
 	import { CATEGORY_BLURBS, CATEGORY_LABELS, ORG_FIELDS, type Category } from '$lib/catalog';
 	import { TOOL_FIELDS } from '$lib/tools';
 
@@ -69,103 +70,100 @@
                     call site says`;
 </script>
 
-<div class="space-y-12">
-	<section>
-		<h1 class="text-2xl font-semibold tracking-tight">The model behind the switches</h1>
-		<p class="text-muted mt-2 max-w-3xl text-sm leading-relaxed">
-			The Features page shows two columns. This page explains what is underneath them — why there
-			are two, where each is stored, and what happens between an org setting and a running thread.
-		</p>
-	</section>
+<Page
+	title="The model behind the switches"
+	lead="What is underneath the two columns on the Features page."
+	wide
+>
+	<Panel
+		title="Three mechanisms, one RPC"
+		subtitle="All four writes happen inside one transaction; an absent value means something different in each store."
+		padded
+		class="stack"
+	>
+		<pre class="diagram">{MECHANISMS}</pre>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Three mechanisms, one RPC</h2>
-		<div class="border-line bg-panel rounded-sm border p-5">
-			<pre class="diagram text-ink">{MECHANISMS}</pre>
-		</div>
-		<p class="text-muted text-xs leading-relaxed">
-			All four writes happen inside one transaction. The row that matters for anyone diffing config
-			is the last one: an absent value means something different in each store.
-		</p>
-	</section>
-
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Available and Default are the same message</h2>
-		<div class="border-line bg-panel rounded-sm border p-5">
-			<pre class="diagram text-ink">{LAYERS}</pre>
-		</div>
-		<p class="text-muted max-w-3xl text-xs leading-relaxed">
+	<Panel title="Available and Default are the same message" padded class="stack">
+		<pre class="diagram">{LAYERS}</pre>
+		<p class="note">
 			Both columns hold the <em>same</em> proto type, so they accept identical JSON. Position is the
 			entire semantic difference — nothing inside the object says which role it is playing.
-			<a class="text-info underline underline-offset-2" href="/tools">Try the resolver →</a>
+			<a href="/tools">Try the resolver →</a>
 		</p>
-	</section>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">How a thread resolves its tools</h2>
-		<div class="border-line bg-panel rounded-sm border p-5">
-			<pre class="diagram text-ink">{PIPELINE}</pre>
+	<Panel title="How a thread resolves its tools" padded class="stack">
+		<pre class="diagram">{PIPELINE}</pre>
+		<div class="stat-grid">
+			<div class="stat"><strong>{maskedCount}</strong><span>fields Available actually gates</span></div>
+			<div class="stat"><strong>{inertCount}</strong><span>fields stored but never consulted</span></div>
+			<div class="stat"><strong>{TOOL_FIELDS.length}</strong><span>toggles in the message</span></div>
 		</div>
-		<div class="grid gap-3 sm:grid-cols-3">
-			<div class="border-line bg-panel rounded-sm border p-4">
-				<div class="text-ink text-lg font-semibold">{maskedCount}</div>
-				<div class="text-muted mt-0.5 text-xs">fields Available actually gates</div>
-			</div>
-			<div class="border-line bg-panel rounded-sm border p-4">
-				<div class="text-ink text-lg font-semibold">{inertCount}</div>
-				<div class="text-muted mt-0.5 text-xs">fields stored but never consulted</div>
-			</div>
-			<div class="border-line bg-panel rounded-sm border p-4">
-				<div class="text-ink text-lg font-semibold">{TOOL_FIELDS.length}</div>
-				<div class="text-muted mt-0.5 text-xs">toggles in the message</div>
-			</div>
-		</div>
-	</section>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">The four kinds of org setting</h2>
-		<div class="grid gap-3 sm:grid-cols-2">
+	<Panel title="The four kinds of org setting" padded class="stack">
+		<div class="category-grid">
 			{#each CATEGORIES as category (category)}
-				<div class="border-line bg-panel rounded-sm border p-4">
-					<div class="flex items-baseline justify-between">
-						<h3 class="text-ink text-[13px] font-medium">{CATEGORY_LABELS[category]}</h3>
-						<span class="text-muted font-mono text-xs">{counts[category]}</span>
+				<div class="category">
+					<div class="category-head">
+						<h3>{CATEGORY_LABELS[category]}</h3>
+						<Badge>{counts[category]}</Badge>
 					</div>
-					<p class="text-muted mt-1.5 text-xs leading-relaxed">{CATEGORY_BLURBS[category]}</p>
+					<p>{CATEGORY_BLURBS[category]}</p>
 				</div>
 			{/each}
 		</div>
-		<p class="text-muted text-xs leading-relaxed">
-			<a class="text-info underline underline-offset-2" href="/fields">Browse the catalog →</a>
-		</p>
-	</section>
+		<p class="note"><a href="/fields">Browse the catalog →</a></p>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Things that surprise people</h2>
-		<ul class="text-muted space-y-2 text-xs leading-relaxed">
+	<Panel title="Things that surprise people" padded class="stack">
+		<ul class="surprises">
 			<li>
-				<span class="text-ink font-medium">Available is a snapshot.</span> It is applied once, when a
+				<strong>Available is a snapshot.</strong> It is applied once, when a
 				thread is created. Turning a capability off later does not disable it in threads that already
 				exist.
 			</li>
 			<li>
-				<span class="text-ink font-medium">Admins skip it.</span> The mask is not applied for any
+				<strong>Admins skip it.</strong> The mask is not applied for any
 				admin auth context, including admin API keys — so on the chat path it is not a security
 				boundary for them. The sandbox-exec, forms and datasets gates have no such bypass.
 			</li>
 			<li>
-				<span class="text-ink font-medium">Python cannot be turned off.</span> It is hard-set on
+				<strong>Python cannot be turned off.</strong> It is hard-set on
 				after the mask runs, and the sandbox gate always allows it.
 			</li>
 			<li>
-				<span class="text-ink font-medium">Both blobs are whole-message replaces.</span> The message
+				<strong>Both blobs are whole-message replaces.</strong> The message
 				has no field presence, so anything left out of a write is stored as false. Read, modify, then
 				write.
 			</li>
 			<li>
-				<span class="text-ink font-medium">proto3 omits false.</span> A response with four keys is not
+				<strong>proto3 omits false.</strong> A response with four keys is not
 				truncated — the other toggles are false. Decode with the schema rather than reading raw JSON.
 			</li>
 		</ul>
-	</section>
-</div>
+	</Panel>
+</Page>
+
+<style>
+	:global(.stack) { margin-bottom: 14px; }
+	.note { margin: 12px 0 0; max-width: 70ch; color: var(--color-muted); font-size: 10.5px; line-height: 1.6; }
+	.note a { color: var(--color-access); text-decoration: none; }
+	.note a:hover { text-decoration: underline; }
+	.stat-grid { display: grid; gap: 10px; margin-top: 14px; }
+	.stat { border: 1px solid var(--color-line); border-radius: 8px; background: var(--color-elevate); padding: 11px 12px; }
+	.stat strong { display: block; font-size: 17px; font-weight: 650; }
+	.stat span { display: block; margin-top: 2px; color: var(--color-muted); font-size: 10px; }
+	.category-grid { display: grid; gap: 10px; }
+	.category { border: 1px solid var(--color-line); border-radius: 8px; background: var(--color-elevate); padding: 11px 12px; }
+	.category-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+	.category h3 { margin: 0; font-size: 11.5px; font-weight: 600; }
+	.category p { margin: 6px 0 0; color: var(--color-muted); font-size: 10px; line-height: 1.55; }
+	.surprises { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; color: var(--color-muted); font-size: 10.5px; line-height: 1.6; }
+	.surprises strong { color: var(--color-ink); font-weight: 600; }
+	@media (min-width: 640px) {
+		.stat-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+		.category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+</style>

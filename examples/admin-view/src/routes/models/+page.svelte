@@ -8,7 +8,8 @@
 		CATALOG_MODELS,
 		getModelEnumName,
 		getModelIconSrcByEnum,
-		getModelNameByEnum
+		getModelNameByEnum,
+		resolveDefaultModel
 	} from '$lib/modelCatalog';
 	import { MutationTracker } from '$lib/mutate.svelte';
 	import { BrandLogo, Button, Page, Select } from '$lib/primitives';
@@ -55,13 +56,25 @@
 	const effectiveDraftModels = $derived(
 		(scope === 'all' ? eligibleModels : draftModels).filter((model) => !unavailableModels.includes(model))
 	);
+	// This option means "no org override", so it names the system default, not
+	// the currently resolved one — those differ once an override exists.
+	const systemDefault = $derived(
+		resolveDefaultModel({ systemDefaultModel: organization.systemDefaultModel })
+	);
 	const defaultOptions = $derived([
 		{
 			value: 'MODEL_UNKNOWN',
-			label: 'Use the system default',
-			hint: 'No organization override'
+			label: systemDefault.name,
+			hint: 'System default — no organization override',
+			iconSrc: systemDefault.iconSrc
 		},
-		...CATALOG_MODELS.filter((model) => effectiveDraftModels.includes(model.enumName)).map((model) => ({
+		// The entry above already names this model, so it is not repeated — unless
+		// the org has pinned it explicitly and the value must stay selectable.
+		...CATALOG_MODELS.filter(
+			(model) =>
+				effectiveDraftModels.includes(model.enumName) &&
+				(model.id !== systemDefault.id || model.enumName === draftDefault)
+		).map((model) => ({
 			value: model.enumName,
 			label: model.name,
 			iconSrc: getModelIconSrcByEnum(model.enumName)

@@ -4,7 +4,7 @@
 	import { Bot, KeyRound, Plus, Search, Shield, UserPlus, Users } from '@lucide/svelte';
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
-	import { initials, roleNames } from '$lib/admin';
+	import { initials, roleNames, rolesById } from '$lib/admin';
 	import { MutationTracker } from '$lib/mutate.svelte';
 	import { Button, Page, Select, Spinner } from '$lib/primitives';
 
@@ -38,6 +38,8 @@
 			? admin.roles.filter((role) => !selectedPerson.roleIds.includes(role.id))
 			: []
 	);
+
+	const roleLookup = $derived(rolesById(admin.roles));
 
 	function matches(...values: string[]): boolean {
 		const needle = query.trim().toLowerCase();
@@ -94,7 +96,7 @@
 								<tr>
 									<td><strong>{key.name}</strong><small class="mono">{key.short}</small></td>
 									<td>{key.ownerName}</td>
-									<td><span class:success={key.status.includes('active')} class="badge neutral">{key.status}</span></td>
+									<td><span class:success={key.status === 'active'} class="badge neutral">{key.statusLabel}</span></td>
 									<td>{key.expiresAt ? formatDate(key.expiresAt) : 'Never'}</td>
 								</tr>
 							{/each}
@@ -115,7 +117,7 @@
 								<strong>{person.name}</strong>
 								<small>{person.email}</small>
 							</span>
-							<span class="role-summary">{roleNames(person, admin.roles).join(', ') || 'No role'}</span>
+							<span class="role-summary">{roleNames(person, roleLookup).join(', ') || 'No role'}</span>
 						</button>
 					{/each}
 				</div>

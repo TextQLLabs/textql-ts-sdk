@@ -3,7 +3,7 @@
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import { connectorLogoForType, connectorNameForType } from '$lib/connectorBranding';
-	import { getModelIconSrc, getModelName } from '$lib/modelCatalog';
+	import { getModelIconSrc, getModelName, resolveDefaultModel } from '$lib/modelCatalog';
 	import { BrandLogo, Page, Select } from '$lib/primitives';
 
 	let { data } = $props();
@@ -19,7 +19,7 @@
 	);
 	const expiringKeys = $derived(
 		admin.apiKeys.filter((key) => {
-			if (!key.expiresAt || key.status.includes('revoked')) return false;
+			if (!key.expiresAt || key.status === 'revoked') return false;
 			const remaining = new Date(key.expiresAt).getTime() - Date.now();
 			return remaining > 0 && remaining < 1000 * 60 * 60 * 24 * 30;
 		})
@@ -65,23 +65,11 @@
 		filteredConnectors.slice(connectorPageStart, connectorPageStart + CONNECTORS_PER_PAGE)
 	);
 
-	/** organization.default_llm_model / .system_default_model, as stored. */
-	const orgModels = $derived.by(() => {
-		const organization = admin.organization ?? {};
-		return (
-			[
-				['Org default', organization.defaultLlmModel],
-				['System default', organization.systemDefaultModel]
-			] as const
-		)
-			.filter(([, id]) => typeof id === 'number' && id > 0)
-			.map(([label, id]) => ({
-				label,
-				id: id as number,
-				name: getModelName(id as number),
-				logo: getModelIconSrc(id as number)
-			}));
-	});
+	/**
+	 * organization.default_llm_model when set, otherwise .system_default_model —
+	 * either way the panel names the model new threads start on.
+	 */
+	const orgDefaultModel = $derived(resolveDefaultModel(admin.organization ?? {}));
 	const restrictedModels = $derived(
 		(Array.isArray(admin.organization?.restrictedModelIds)
 			? (admin.organization.restrictedModelIds as unknown[])
@@ -103,7 +91,7 @@
 
 {#snippet actions()}
 	{#if admin.mode === 'live'}
-		<span class="badge success"><CheckCircle2 size={11} /> Live organization</span>
+		<Badge tone="success"><CheckCircle2 size={11} /> Live organization</Badge>
 	{/if}
 {/snippet}
 
@@ -113,18 +101,14 @@
 	<ConnectionEmpty mode={admin.mode} error={admin.error} />
 {:else}
 	<div class="overview-grid">
-		<section class="panel review-panel">
-			<div class="panel-heading">
-				<div>
-					<h2 class="panel-title">Review first</h2>
-					<p class="panel-subtitle">
-						{reviewCount === 0 ? 'No obvious access hygiene issues found.' : `${reviewCount} items need attention.`}
-					</p>
-				</div>
-				<span class:success={reviewCount === 0} class:warning={reviewCount > 0} class="badge">
-					{reviewCount === 0 ? 'Clear' : reviewCount}
-				</span>
-			</div>
+		<Panel
+			class="review-panel"
+			title="Review first"
+			subtitle={reviewCount === 0
+				? 'No obvious access hygiene issues found.'
+				: `${reviewCount} items need attention.`}
+			actions={reviewBadge}
+		>
 
 			{#if reviewCount === 0}
 				<div class="review-clear">
@@ -168,22 +152,16 @@
 					{/if}
 				</div>
 			{/if}
-		</section>
+		</Panel>
 
-		<section class="panel posture-panel">
-			<div class="panel-heading">
-				<div>
-					<h2 class="panel-title">Access posture</h2>
-					<p class="panel-subtitle">Current organization records.</p>
-				</div>
-			</div>
+		<Panel class="posture-panel" title="Access posture" subtitle="Current organization records.">
 			<dl class="posture-list">
 				<div><dt>People</dt><dd>{admin.people.filter((person) => person.kind === 'person').length}</dd></div>
 				<div><dt>Service accounts</dt><dd>{admin.people.filter((person) => person.kind === 'service-account').length}</dd></div>
 				<div><dt>Roles</dt><dd>{admin.roles.length}</dd></div>
-				<div><dt>Active API keys</dt><dd>{admin.apiKeys.filter((key) => key.status.includes('active')).length}</dd></div>
+				<div><dt>Active API keys</dt><dd>{admin.apiKeys.filter((key) => key.status === 'active').length}</dd></div>
 			</dl>
-		</section>
+		</Panel>
 	</div>
 
 	<div class="overview-grid">
@@ -258,21 +236,19 @@
 				<a href="/models" class="quiet-link">Manage <ArrowRight size={12} /></a>
 			</div>
 			<div class="brand-list">
-				{#each orgModels as model (model.label)}
-					<div class="brand-row">
-						<BrandLogo src={model.logo} name={model.name} size={20} />
-						<span><strong>{model.name}</strong><small>{model.label}</small></span>
-					</div>
-				{/each}
+				<div class="brand-row">
+					<BrandLogo src={orgDefaultModel.iconSrc} name={orgDefaultModel.name} size={20} />
+					<span>
+						<strong>{orgDefaultModel.name}</strong>
+						<small>Org default{orgDefaultModel.inherited ? ' · from the system default' : ''}</small>
+					</span>
+				</div>
 				{#each restrictedModels as model (model.id)}
 					<div class="brand-row muted-row">
 						<BrandLogo src={model.logo} name={model.name} size={20} />
 						<span><strong>{model.name}</strong><small>Restricted org-wide</small></span>
 					</div>
 				{/each}
-				{#if !orgModels.length && !restrictedModels.length}
-					<div class="small-empty"><AlertTriangle size={15} /> No model policy is set.</div>
-				{/if}
 			</div>
 		</section>
 	</div>

@@ -1,7 +1,18 @@
 <script lang="ts">
 	import { Check, Minus, X } from '@lucide/svelte';
 
-	import { CEILING_LABELS, TOOL_FIELDS, TOOL_PAYLOAD_FIELDS, resolveTool } from '$lib/tools';
+	import { CEILING_LABELS, TOOL_FIELDS, TOOL_PAYLOAD_FIELDS, resolveTool, type ToolField } from '$lib/tools';
+	import {
+		Badge,
+		Checkbox,
+		DataTable,
+		Page,
+		Panel,
+		SegmentedControl,
+		Select,
+		type BadgeTone,
+		type TableColumn
+	} from '$lib/primitives';
 
 	let { data } = $props();
 
@@ -25,10 +36,10 @@
 
 	/** Live org values, if an API key is configured. */
 	const liveParadigm = $derived(
-		(data.live.organization?.paradigmParams ?? undefined) as Record<string, unknown> | undefined
+		(data.admin.organization?.paradigmParams ?? undefined) as Record<string, unknown> | undefined
 	);
 	const liveRestrictions = $derived(
-		(data.live.organization?.toolRestrictions ?? undefined) as Record<string, unknown> | undefined
+		(data.admin.organization?.toolRestrictions ?? undefined) as Record<string, unknown> | undefined
 	);
 
 	function liveValue(source: Record<string, unknown> | undefined, key: string) {
@@ -36,221 +47,173 @@
 		return source[key] === true;
 	}
 
-	const CEILING_STYLES: Record<string, string> = {
-		and: 'bg-ok-bg text-ok',
-		override: 'bg-info-bg text-info',
-		'forced-on': 'bg-warn-bg text-warn',
-		or: 'bg-warn-bg text-warn',
-		none: 'bg-dead-bg text-dead'
+	const CEILING_TONES: Record<string, BadgeTone> = {
+		and: 'success',
+		override: 'accent',
+		'forced-on': 'warning',
+		or: 'warning',
+		none: 'danger'
 	};
+
+	const fieldOptions = TOOL_FIELDS.map((f) => ({ value: f.key, label: f.key }));
+	const OVERRIDE_OPTIONS = [
+		{ value: 'inherit', label: 'Inherit' },
+		{ value: 'on', label: 'On' },
+		{ value: 'off', label: 'Off' }
+	];
+	const columns: TableColumn[] = [
+		{ label: 'Field' },
+		{ label: 'Ceiling' },
+		{ label: 'New-org default' },
+		{ label: 'Live' },
+		{ label: 'Also gated by' }
+	];
 </script>
 
-<div class="space-y-10">
-	<section>
-		<h1 class="text-2xl font-semibold tracking-tight">Tool permissions</h1>
-		<p class="text-muted mt-2 max-w-3xl text-sm leading-relaxed">
-			<code class="text-ink">tool_restrictions</code> and
-			<code class="text-ink">paradigm_params</code> are the same proto message in two columns. The
-			ceiling decides what is permitted; the default decides what starts switched on. Change the
-			inputs below to see how one field resolves.
-		</p>
-	</section>
-
-	<!-- resolver -->
-	<section class="border-line bg-panel rounded-sm border">
-		<div class="border-line grid gap-6 border-b p-5 md:grid-cols-[220px_1fr]">
-			<div class="space-y-4">
-				<label class="block">
-					<span class="text-muted mb-1.5 block text-[11px] font-medium uppercase tracking-wide"
-						>Field</span
-					>
-					<select
-						bind:value={selectedKey}
-						class="border-line w-full rounded-sm border bg-white px-2 py-1.5 font-mono text-xs"
-					>
-						{#each TOOL_FIELDS as f (f.key)}
-							<option value={f.key}>{f.key}</option>
-						{/each}
-					</select>
+<Page
+	title="Tool permissions"
+	lead="tool_restrictions and paradigm_params are the same proto message in two columns."
+	wide
+>
+	<Panel class="stack">
+		<div class="resolver">
+			<div class="resolver-inputs">
+				<label class="control">
+					<span class="control-label" id="resolver-field-label">Field</span>
+					<Select bind:value={selectedKey} options={fieldOptions} searchable label="Field" />
 				</label>
 
-				<label class="flex items-center gap-2 text-xs">
-					<input type="checkbox" bind:checked={ceiling} />
-					<code>tool_restrictions</code>
-				</label>
+				<Checkbox bind:checked={ceiling} label="tool_restrictions" />
+				<Checkbox bind:checked={orgDefault} label="org paradigm_params" />
 
-				<label class="flex items-center gap-2 text-xs">
-					<input type="checkbox" bind:checked={orgDefault} />
-					<code>org paradigm_params</code>
-				</label>
-
-				<div>
-					<span class="text-muted mb-1.5 block text-[11px] font-medium uppercase tracking-wide"
-						>Member override</span
-					>
-					<div class="flex gap-1">
-						{#each [['inherit', 'Inherit'], ['on', 'On'], ['off', 'Off']] as [value, label] (value)}
-							<button
-								type="button"
-								onclick={() => (memberOverride = value as typeof memberOverride)}
-								class="flex-1 rounded-sm px-2 py-1 text-[11px] transition-colors
-									{memberOverride === value ? 'bg-info-bg text-info font-medium' : 'text-muted hover:text-ink'}"
-							>
-								{label}
-							</button>
-						{/each}
-					</div>
+				<div class="control">
+					<span class="control-label">Member override</span>
+					<SegmentedControl
+						bind:value={memberOverride}
+						options={OVERRIDE_OPTIONS}
+						label="Member override"
+					/>
 				</div>
 
-				<label class="flex items-center gap-2 text-xs">
-					<input type="checkbox" bind:checked={isAdmin} />
-					caller is an admin
-				</label>
+				<Checkbox bind:checked={isAdmin} label="caller is an admin" />
 			</div>
 
-			<div class="space-y-3">
-				<div class="flex items-center gap-3">
-					<span class="text-muted text-[11px] font-medium uppercase tracking-wide">Result</span>
-					<span
-						class="rounded-sm px-2 py-1 text-xs font-semibold
-							{result.enabled ? 'bg-ok-bg text-ok' : 'bg-dead-bg text-dead'}"
-					>
+			<div class="resolver-output">
+				<div class="result-line">
+					<span class="control-label">Result</span>
+					<Badge tone={result.enabled ? 'success' : 'danger'}>
 						{field.label} is {result.enabled ? 'ON' : 'OFF'} in a new chat
-					</span>
+					</Badge>
 				</div>
 
-				<ol class="space-y-1.5">
+				<ol class="steps">
 					{#each result.steps as step, i (i)}
-						<li class="flex items-start gap-2 text-xs">
-							<span class="text-muted mt-0.5 font-mono text-[10px]">{i + 1}</span>
-							<span
-								class="mt-0.5 rounded-sm px-1 font-mono text-[10px]
-									{step.value ? 'bg-ok-bg text-ok' : 'bg-dead-bg text-dead'}"
-							>
-								{step.value}
-							</span>
-							<span>
-								<span class="text-ink font-medium">{step.label}</span>
-								<span class="text-muted"> — {step.detail}</span>
-							</span>
+						<li>
+							<span class="step-index">{i + 1}</span>
+							<Badge tone={step.value ? 'success' : 'danger'}>{step.value}</Badge>
+							<span><strong>{step.label}</strong> — {step.detail}</span>
 						</li>
 					{/each}
 				</ol>
 
-				{#if field.note}
-					<p class="bg-warn-bg text-warn rounded-sm p-2.5 text-xs leading-relaxed">
-						{field.note}
-					</p>
-				{/if}
+				{#if field.note}<p class="field-note">{field.note}</p>{/if}
 			</div>
 		</div>
 
-		<div class="text-muted p-5 text-xs leading-relaxed">
-			<span class="text-ink font-medium">Why the admin checkbox matters.</span>
+		<p class="admin-note">
+			<strong>Why the admin checkbox matters.</strong>
 			<code>shouldApplyToolRestrictions</code> returns false for any admin auth context, including admin
 			API keys, so the mask never runs and the seed goes straight to the chat row. The ceiling still
 			applies to that admin on the sandbox-exec, forms and datasets surfaces, which read it live.
-		</div>
-	</section>
-
-	<!-- all fields -->
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Every field in the message</h2>
-
-		<div class="border-line bg-panel overflow-x-auto rounded-sm border">
-			<table class="w-full text-left text-xs">
-				<thead class="border-line text-muted border-b">
-					<tr>
-						<th class="px-3 py-2 font-medium">Field</th>
-						<th class="px-3 py-2 font-medium">Ceiling</th>
-						<th class="px-3 py-2 font-medium">New-org default</th>
-						<th class="px-3 py-2 font-medium">Live</th>
-						<th class="px-3 py-2 font-medium">Also gated by</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each TOOL_FIELDS as f (f.key)}
-						{@const restrictionValue = liveValue(liveRestrictions, f.key)}
-						{@const defaultValue = liveValue(liveParadigm, f.key)}
-						<tr class="border-line border-b last:border-0">
-							<td class="px-3 py-2">
-								<button
-									type="button"
-									onclick={() => (selectedKey = f.key)}
-									class="hover:text-info text-left font-mono"
-								>
-									{f.key}
-								</button>
-								{#if f.internal}
-									<span class="text-muted ml-1.5 text-[10px]">internal</span>
-								{/if}
-							</td>
-							<td class="px-3 py-2">
-								<span class="rounded-sm px-1.5 py-0.5 text-[10px] {CEILING_STYLES[f.ceiling]}">
-									{CEILING_LABELS[f.ceiling]}
-								</span>
-								{#if f.liveReRead}
-									<span class="text-muted ml-1.5 text-[10px]">live</span>
-								{/if}
-							</td>
-							<td class="px-3 py-2">
-								{#if f.defaultOn}
-									<Check size={13} class="text-ok" />
-								{:else}
-									<Minus size={13} class="text-muted" />
-								{/if}
-							</td>
-							<td class="px-3 py-2">
-								{#if restrictionValue === null}
-									<span class="text-muted">—</span>
-								{:else}
-									<span class="flex items-center gap-2 font-mono text-[10px]">
-										<span title="tool_restrictions">
-											{#if restrictionValue}<Check size={12} class="text-ok" />{:else}<X
-													size={12}
-													class="text-dead"
-												/>{/if}
-										</span>
-										<span class="text-line">/</span>
-										<span title="paradigm_params">
-											{#if defaultValue}<Check size={12} class="text-ok" />{:else}<X
-													size={12}
-													class="text-dead"
-												/>{/if}
-										</span>
-									</span>
-								{/if}
-							</td>
-							<td class="text-muted px-3 py-2">
-								{f.nonChatGates?.join(', ') ?? '—'}
-							</td>
-						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</div>
-
-		<p class="text-muted text-xs leading-relaxed">
-			{#if liveRestrictions}
-				Live column shows <span class="font-mono">ceiling / default</span> for this org.
-			{:else}
-				Set <code>TEXTQL_API_KEY</code> in <code>.env</code> to populate the Live column.
-			{/if}
 		</p>
-	</section>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Non-toggle members</h2>
-		<div class="border-line bg-panel rounded-sm border p-4">
-			<ul class="space-y-2 text-xs">
-				{#each TOOL_PAYLOAD_FIELDS as f (f.key)}
-					<li>
-						<code class="text-ink">{f.key}</code>
-						<span class="text-muted font-mono text-[11px]"> : {f.type}</span>
-						<span class="text-muted"> — {f.note}</span>
-					</li>
-				{/each}
-			</ul>
-		</div>
-	</section>
-</div>
+	<Panel title="Every field in the message" class="stack table-panel">
+		<DataTable {columns} items={TOOL_FIELDS} key={(f: ToolField) => f.key} {row} />
+	</Panel>
+
+	<p class="footnote">
+		{#if liveRestrictions}
+			Live column shows <span class="mono">ceiling / default</span> for this org.
+		{:else}
+			Set <code>TEXTQL_API_KEY</code> in <code>.env</code> to populate the Live column.
+		{/if}
+	</p>
+
+	<Panel title="Non-toggle members" padded class="stack">
+		<ul class="payload-fields">
+			{#each TOOL_PAYLOAD_FIELDS as f (f.key)}
+				<li>
+					<code>{f.key}</code><span class="mono type"> : {f.type}</span>
+					<span class="muted"> — {f.note}</span>
+				</li>
+			{/each}
+		</ul>
+	</Panel>
+</Page>
+
+{#snippet row(f: ToolField)}
+	{@const restrictionValue = liveValue(liveRestrictions, f.key)}
+	{@const defaultValue = liveValue(liveParadigm, f.key)}
+	<td>
+		<button type="button" class="field-link" onclick={() => (selectedKey = f.key)}>{f.key}</button>
+		{#if f.internal}<span class="tag">internal</span>{/if}
+	</td>
+	<td>
+		<Badge tone={CEILING_TONES[f.ceiling]}>{CEILING_LABELS[f.ceiling]}</Badge>
+		{#if f.liveReRead}<span class="tag">live</span>{/if}
+	</td>
+	<td>
+		{#if f.defaultOn}<Check size={13} class="ok" />{:else}<Minus size={13} class="muted-icon" />{/if}
+	</td>
+	<td>
+		{#if restrictionValue === null}
+			<span class="muted">—</span>
+		{:else}
+			<span class="live-pair">
+				<span title="tool_restrictions">
+					{#if restrictionValue}<Check size={12} class="ok" />{:else}<X size={12} class="bad" />{/if}
+				</span>
+				<span class="sep">/</span>
+				<span title="paradigm_params">
+					{#if defaultValue}<Check size={12} class="ok" />{:else}<X size={12} class="bad" />{/if}
+				</span>
+			</span>
+		{/if}
+	</td>
+	<td class="muted">{f.nonChatGates?.join(', ') ?? '—'}</td>
+{/snippet}
+
+<style>
+	:global(.stack) { margin-bottom: 14px; }
+	:global(.table-panel) { overflow: hidden; }
+	.resolver { display: grid; gap: 20px; border-bottom: 1px solid var(--color-line); padding: 16px 18px; }
+	.resolver-inputs { display: grid; align-content: start; gap: 12px; }
+	.control { display: block; }
+	.control-label { display: block; margin-bottom: 6px; color: var(--color-subtle); font-size: 9px; font-weight: 680; letter-spacing: .06em; text-transform: uppercase; }
+	.resolver-output { display: grid; align-content: start; gap: 12px; }
+	.result-line { display: flex; align-items: center; gap: 10px; }
+	.result-line .control-label { margin: 0; }
+	.steps { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+	.steps li { display: flex; align-items: flex-start; gap: 8px; color: var(--color-muted); font-size: 10.5px; line-height: 1.5; }
+	.steps strong { color: var(--color-ink); font-weight: 600; }
+	.step-index { color: var(--color-subtle); font-family: var(--font-mono); font-size: 9.5px; }
+	.field-note { margin: 0; border-radius: 7px; background: var(--color-warning-soft); padding: 9px 10px; color: var(--color-warning); font-size: 10.5px; line-height: 1.6; }
+	.admin-note { margin: 0; padding: 14px 18px; color: var(--color-muted); font-size: 10.5px; line-height: 1.6; }
+	.admin-note strong { color: var(--color-ink); font-weight: 600; }
+	.field-link { border: 0; background: transparent; padding: 0; color: var(--color-ink); font-family: var(--font-mono); font-size: 11px; text-align: left; cursor: pointer; }
+	.field-link:hover { color: var(--color-access); }
+	.tag { margin-left: 6px; color: var(--color-subtle); font-size: 9px; }
+	.live-pair { display: inline-flex; align-items: center; gap: 6px; }
+	.sep { color: var(--color-line); }
+	.muted { color: var(--color-muted); }
+	.mono { font-family: var(--font-mono); }
+	.type { color: var(--color-muted); font-size: 10px; }
+	.payload-fields { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; font-size: 10.5px; }
+	.payload-fields code { color: var(--color-ink); }
+	.footnote { margin: 0 0 14px; color: var(--color-muted); font-size: 10px; line-height: 1.6; }
+	:global(.ok) { color: var(--color-decision); }
+	:global(.bad) { color: var(--color-danger); }
+	:global(.muted-icon) { color: var(--color-muted); }
+	@media (min-width: 768px) { .resolver { grid-template-columns: 220px minmax(0, 1fr); } }
+</style>

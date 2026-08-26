@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { MEMBER_FIELDS, ORG_FIELDS, type Storage } from '$lib/catalog';
+	import { Badge, Page, Panel } from '$lib/primitives';
 
 	const STORES: { id: Storage | 'chat'; title: string; blurb: string; absent: string }[] = [
 		{
@@ -64,102 +65,82 @@
   tool restriction   →  organization           .tool_restrictions`;
 </script>
 
-<div class="space-y-10">
-	<section>
-		<h1 class="text-2xl font-semibold tracking-tight">Storage</h1>
-		<p class="text-muted mt-2 max-w-3xl text-sm leading-relaxed">
-			One RPC, four write paths, all inside a single transaction. The reason this matters is the
-			last line of each card: a missing value means something different in every store.
-		</p>
-	</section>
+<Page
+	title="Storage"
+	lead="One RPC, four write paths, all inside a single transaction."
+	wide
+>
+	<Panel title="Where to look" subtitle="A missing value means something different in every store." padded>
+		<pre class="diagram">{MAP}</pre>
+	</Panel>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">Where to look</h2>
-		<div class="border-line bg-panel rounded-sm border p-5">
-			<pre class="diagram text-ink">{MAP}</pre>
-		</div>
-	</section>
-
-	<section class="space-y-3">
+	<div class="store-list">
 		{#each STORES as store (store.id)}
 			{@const fields = store.id === 'chat' ? [] : fieldsFor(store.id)}
-			<div class="border-line bg-panel rounded-sm border p-5">
-				<div class="flex items-baseline justify-between gap-4">
-					<h3 class="text-ink font-mono text-sm">{store.title}</h3>
-					{#if fields.length}
-						<span class="text-muted font-mono text-xs">{fields.length} fields</span>
-					{/if}
+			<Panel padded class="store-card">
+				<div class="store-head">
+					<h3 class="store-title">{store.title}</h3>
+					{#if fields.length}<Badge>{fields.length} fields</Badge>{/if}
 				</div>
 
-				<p class="text-muted mt-2 max-w-3xl text-xs leading-relaxed">{store.blurb}</p>
-
-				<p class="text-warn mt-2 text-xs leading-relaxed">
-					<span class="font-medium">Absent means:</span>
-					{store.absent}
-				</p>
+				<p class="store-blurb">{store.blurb}</p>
+				<p class="store-absent"><strong>Absent means:</strong> {store.absent}</p>
 
 				{#if store.id === 'member_meta'}
-					<ul class="mt-3 grid gap-1.5 text-xs sm:grid-cols-2">
+					<ul class="member-fields">
 						{#each MEMBER_FIELDS as f (f.key)}
 							<li>
-								<code class="text-ink">{f.key}</code>
-								{#if f.gotcha}
-									<span class="text-warn"> — {f.gotcha}</span>
-								{:else}
-									<span class="text-muted"> — {f.summary}</span>
-								{/if}
+								<code>{f.key}</code>
+								<span class:gotcha={Boolean(f.gotcha)}> — {f.gotcha ?? f.summary}</span>
 							</li>
 						{/each}
 					</ul>
 				{:else if fields.length}
-					<div class="mt-3 flex flex-wrap gap-1.5">
-						{#each fields as f (f.key)}
-							<code class="bg-paper text-muted rounded-sm px-1.5 py-0.5 text-[10px]">{f.key}</code>
-						{/each}
+					<div class="field-chips">
+						{#each fields as f (f.key)}<code>{f.key}</code>{/each}
 					</div>
 				{/if}
-			</div>
+			</Panel>
 		{/each}
-	</section>
+	</div>
 
-	<section class="space-y-3">
-		<h2 class="text-sm font-semibold tracking-tight">If you are diffing config</h2>
-		<div class="border-line bg-panel space-y-2.5 rounded-sm border p-5 text-xs leading-relaxed">
+	<Panel title="If you are diffing config" padded class="diff-notes">
+		<div class="notes">
 			<p>
-				<span class="text-ink font-medium">Read-modify-write the two blobs.</span>
+				<strong>Read-modify-write the two blobs.</strong>
 				<code>paradigm_params</code> and <code>tool_restrictions</code> have no field presence, so a
 				partial write turns every omitted toggle off.
 			</p>
 			<p>
-				<span class="text-ink font-medium">Use the clear sentinel for connectors.</span> A repeated
+				<strong>Use the clear sentinel for connectors.</strong> A repeated
 				proto3 field cannot express "empty", so <code>clearDefaultConnectorIds</code> exists. Do not
 				send it alongside a list — the list wins, which is the opposite of how the model-id clear flags
 				resolve.
 			</p>
 			<p>
-				<span class="text-ink font-medium">Send the retention fields together.</span> Sandbox and
+				<strong>Send the retention fields together.</strong> Sandbox and
 				thread windows cross-validate in both directions, so applying them one at a time produces
 				spurious InvalidArgument errors depending on order.
 			</p>
 			<p>
-				<span class="text-ink font-medium">Exclude the fields that cannot round-trip.</span>
+				<strong>Exclude the fields that cannot round-trip.</strong>
 				<code>restrictedModelIds</code> is rewritten on read, <code>defaultConnectorIds</code> is
 				derived, and <code>emailOutputEnabled</code>, <code>configMigrationsEnabled</code> and
 				<code>configAutofixEnabled</code> are accepted and discarded. Diffing them produces permanent
 				phantom drift.
 			</p>
 			<p>
-				<span class="text-ink font-medium">Watch the implicit writes.</span>
+				<strong>Watch the implicit writes.</strong>
 				<code>secretsEnabled</code> also sets <code>allowAllApiAccess</code>;
 				<code>dashboardsEnabled: false</code> clears <code>defaultDashboardOutput</code>; writing
 				<code>toolRestrictions</code> forces <code>multipleConnectorMode</code> true.
 			</p>
 			<p>
-				<span class="text-ink font-medium">Feature flags hide their provenance.</span> The response
+				<strong>Feature flags hide their provenance.</strong> The response
 				gives you a resolved boolean, not whether it came from an org row, the global row, or a code
 				default. Writing it back pins an org-specific row and silently stops the org tracking the
 				global default — drift your differ cannot see, because before and after both read true.
 			</p>
 		</div>
-	</section>
-</div>
+	</Panel>
+</Page>

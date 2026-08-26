@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { AlertTriangle, Search } from '@lucide/svelte';
+	import { AlertTriangle } from '@lucide/svelte';
 
 	import {
 		CATEGORY_LABELS,
@@ -7,8 +7,21 @@
 		ORG_FIELDS,
 		type Category,
 		type Enforcement,
+		type OrgField,
 		type Surface
 	} from '$lib/catalog';
+	import {
+		Badge,
+		Checkbox,
+		DataTable,
+		EmptyState,
+		Page,
+		Panel,
+		SearchField,
+		Select,
+		type BadgeTone,
+		type TableColumn
+	} from '$lib/primitives';
 
 	let { data } = $props();
 
@@ -17,7 +30,7 @@
 	let surface = $state<Surface | 'all'>('all');
 	let onlyGotchas = $state(false);
 
-	const organization = $derived(data.live.organization);
+	const organization = $derived(data.admin.organization);
 
 	const filtered = $derived(
 		ORG_FIELDS.filter((f) => {
@@ -34,10 +47,10 @@
 		})
 	);
 
-	const SURFACE_STYLES: Record<Surface, string> = {
-		public: 'bg-ok-bg text-ok',
-		internal: 'bg-warn-bg text-warn',
-		'not-settable': 'bg-dead-bg text-dead'
+	const SURFACE_TONES: Record<Surface, BadgeTone> = {
+		public: 'success',
+		internal: 'warning',
+		'not-settable': 'danger'
 	};
 
 	const SURFACE_LABELS: Record<Surface, string> = {
@@ -46,12 +59,13 @@
 		'not-settable': 'Not settable'
 	};
 
-	const ENFORCEMENT_STYLES: Record<Enforcement, string> = {
-		enforced: 'text-muted',
-		ignored: 'text-dead font-medium',
-		deprecated: 'text-dead',
-		vestigial: 'text-dead',
-		computed: 'text-warn'
+	/** Only "enforced" is unremarkable; the rest are all degrees of dead. */
+	const ENFORCEMENT_TONES: Record<Enforcement, BadgeTone> = {
+		enforced: 'neutral',
+		ignored: 'danger',
+		deprecated: 'danger',
+		vestigial: 'danger',
+		computed: 'warning'
 	};
 
 	/** proto3 drops false booleans, so an absent key is a real false. */
@@ -66,116 +80,108 @@
 
 	const CATEGORIES: (Category | 'all')[] = ['all', 'identity', 'config', 'policy', 'feature-gate'];
 	const SURFACES: (Surface | 'all')[] = ['all', 'public', 'internal', 'not-settable'];
+
+	const categoryOptions = $derived(
+		CATEGORIES.map((c) => ({ value: c, label: c === 'all' ? 'All categories' : CATEGORY_LABELS[c] }))
+	);
+	const surfaceOptions = $derived(
+		SURFACES.map((s) => ({ value: s, label: s === 'all' ? 'All surfaces' : SURFACE_LABELS[s] }))
+	);
+
+	const columns: TableColumn[] = [
+		{ label: 'Field' },
+		{ label: 'Storage' },
+		{ label: 'Surface' },
+		{ label: 'State' },
+		{ label: 'Live' }
+	];
 </script>
 
-<div class="space-y-6">
-	<section>
-		<h1 class="text-2xl font-semibold tracking-tight">Field catalog</h1>
-		<p class="text-muted mt-2 max-w-3xl text-sm leading-relaxed">
-			Every organization-level setting the backend reads, with where it is stored, whether the
-			public API can set it, and whether anything still enforces it. Public / Internal reflects
-			<code class="text-ink">google.api.visibility</code> — internal fields are stripped from the
-			generated OpenAPI spec and so from the SDKs.
+<Page title="Field catalog" lead="Every organization-level setting the backend reads." wide>
+	<Panel class="intro-panel" padded>
+		<p class="intro">
+			Where each setting is stored, whether the public API can set it, and whether anything still
+			enforces it. Public / Internal reflects <code>google.api.visibility</code> — internal fields are
+			stripped from the generated OpenAPI spec and so from the SDKs.
 		</p>
-	</section>
+	</Panel>
 
-	<!-- filters -->
-	<div class="border-line bg-panel flex flex-wrap items-center gap-3 rounded-sm border p-3">
-		<div class="relative min-w-52 flex-1">
-			<Search size={14} class="text-muted absolute top-1/2 left-2.5 -translate-y-1/2" />
-			<input
+	<Panel class="filter-panel">
+		<div class="filter-bar">
+			<SearchField
 				bind:value={query}
 				placeholder="Search name, column or description"
-				class="border-line w-full rounded-sm border bg-white py-1.5 pr-2 pl-8 text-xs"
+				class="field-search"
 			/>
+			<div class="filter-select">
+				<Select bind:value={category} options={categoryOptions} label="Filter by category" />
+			</div>
+			<div class="filter-select">
+				<Select bind:value={surface} options={surfaceOptions} label="Filter by surface" />
+			</div>
+			<Checkbox bind:checked={onlyGotchas} label="Only fields with caveats" />
+			<span class="filter-count">{filtered.length}/{ORG_FIELDS.length}</span>
 		</div>
+	</Panel>
 
-		<select
-			bind:value={category}
-			class="border-line rounded-sm border bg-white px-2 py-1.5 text-xs"
-		>
-			{#each CATEGORIES as c (c)}
-				<option value={c}>{c === 'all' ? 'All categories' : CATEGORY_LABELS[c]}</option>
-			{/each}
-		</select>
+	<Panel class="table-panel">
+		<DataTable {columns} items={filtered} key={(f: OrgField) => f.key} {row} {empty} />
+	</Panel>
 
-		<select bind:value={surface} class="border-line rounded-sm border bg-white px-2 py-1.5 text-xs">
-			{#each SURFACES as s (s)}
-				<option value={s}>{s === 'all' ? 'All surfaces' : SURFACE_LABELS[s]}</option>
-			{/each}
-		</select>
-
-		<label class="flex items-center gap-1.5 text-xs">
-			<input type="checkbox" bind:checked={onlyGotchas} />
-			Only fields with caveats
-		</label>
-
-		<span class="text-muted ml-auto font-mono text-xs">{filtered.length}/{ORG_FIELDS.length}</span>
-	</div>
-
-	<!-- table -->
-	<div class="border-line bg-panel overflow-x-auto rounded-sm border">
-		<table class="w-full text-left text-xs">
-			<thead class="border-line text-muted border-b">
-				<tr>
-					<th class="px-3 py-2 font-medium">Field</th>
-					<th class="px-3 py-2 font-medium">Storage</th>
-					<th class="px-3 py-2 font-medium">Surface</th>
-					<th class="px-3 py-2 font-medium">State</th>
-					<th class="px-3 py-2 font-medium">Live</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each filtered as f (f.key)}
-					{@const value = live(f.key)}
-					<tr class="border-line border-b align-top last:border-0">
-						<td class="max-w-md px-3 py-2.5">
-							<div class="text-ink font-mono">{f.key}</div>
-							{#if f.column && f.column !== f.key}
-								<div class="text-muted font-mono text-[10px]">{f.column}</div>
-							{/if}
-							<p class="text-muted mt-1 leading-relaxed">{f.summary}</p>
-							{#if f.gotcha}
-								<p class="text-warn mt-1.5 flex items-start gap-1.5 leading-relaxed">
-									<AlertTriangle size={12} class="mt-0.5 shrink-0" />
-									<span>{f.gotcha}</span>
-								</p>
-							{/if}
-						</td>
-						<td class="text-muted px-3 py-2.5 font-mono text-[10px] whitespace-nowrap">
-							{f.storage}
-						</td>
-						<td class="px-3 py-2.5">
-							<span class="rounded-sm px-1.5 py-0.5 text-[10px] {SURFACE_STYLES[f.surface]}">
-								{SURFACE_LABELS[f.surface]}
-							</span>
-						</td>
-						<td class="px-3 py-2.5 whitespace-nowrap {ENFORCEMENT_STYLES[f.enforcement]}">
-							{ENFORCEMENT_LABELS[f.enforcement]}
-						</td>
-						<td class="px-3 py-2.5 font-mono text-[10px] whitespace-nowrap">
-							{#if value === null}
-								<span class="text-muted">—</span>
-							{:else if value === 'absent'}
-								<span class="text-muted" title="proto3 omits false booleans, so this is false"
-									>false*</span
-								>
-							{:else}
-								<span class="text-ink">{String(value)}</span>
-							{/if}
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</div>
-
-	<p class="text-muted text-xs leading-relaxed">
+	<p class="footnote">
 		{#if organization}
-			<span class="font-mono">false*</span> means the key was absent from the response. proto3 omits
-			false booleans, so absent is a real <span class="font-mono">false</span>, not missing data.
+			<span class="mono">false*</span> means the key was absent from the response. proto3 omits false
+			booleans, so absent is a real <span class="mono">false</span>, not missing data.
 		{:else}
 			Set <code>TEXTQL_API_KEY</code> in <code>.env</code> to populate the Live column.
 		{/if}
 	</p>
-</div>
+</Page>
+
+{#snippet empty()}
+	<EmptyState title="No matching fields" description="Adjust the search or filters." />
+{/snippet}
+
+{#snippet row(f: OrgField)}
+	{@const value = live(f.key)}
+	<td class="field-cell">
+		<div class="mono field-key">{f.key}</div>
+		{#if f.column && f.column !== f.key}<div class="mono field-column">{f.column}</div>{/if}
+		<p class="field-summary">{f.summary}</p>
+		{#if f.gotcha}
+			<p class="field-gotcha"><AlertTriangle size={12} /><span>{f.gotcha}</span></p>
+		{/if}
+	</td>
+	<td class="mono nowrap muted">{f.storage}</td>
+	<td><Badge tone={SURFACE_TONES[f.surface]}>{SURFACE_LABELS[f.surface]}</Badge></td>
+	<td><Badge tone={ENFORCEMENT_TONES[f.enforcement]}>{ENFORCEMENT_LABELS[f.enforcement]}</Badge></td>
+	<td class="mono nowrap">
+		{#if value === null}
+			<span class="muted">—</span>
+		{:else if value === 'absent'}
+			<span class="muted" title="proto3 omits false booleans, so this is false">false*</span>
+		{:else}
+			{String(value)}
+		{/if}
+	</td>
+{/snippet}
+
+<style>
+	:global(.intro-panel), :global(.filter-panel) { margin-bottom: 14px; }
+	:global(.table-panel) { overflow: hidden; }
+	.intro { margin: 0; max-width: 70ch; color: var(--color-muted); font-size: 11px; line-height: 1.6; }
+	.filter-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 11px 12px; }
+	.filter-bar :global(.field-search) { min-width: 220px; flex: 1; }
+	.filter-select { width: 170px; flex: 0 0 auto; }
+	.filter-count { margin-left: auto; color: var(--color-muted); font-family: var(--font-mono); font-size: 10px; }
+	.field-cell { max-width: 34rem; }
+	.field-key { color: var(--color-ink); font-size: 11px; }
+	.field-column { color: var(--color-muted); font-size: 9.5px; }
+	.field-summary { margin: 4px 0 0; color: var(--color-muted); font-size: 10px; line-height: 1.55; }
+	.field-gotcha { display: flex; align-items: flex-start; gap: 6px; margin: 6px 0 0; color: var(--color-warning); font-size: 10px; line-height: 1.5; }
+	.field-gotcha :global(svg) { flex: 0 0 auto; margin-top: 1px; }
+	.mono { font-family: var(--font-mono); }
+	.nowrap { white-space: nowrap; }
+	.muted { color: var(--color-muted); }
+	.footnote { margin: 14px 0 0; color: var(--color-muted); font-size: 10px; line-height: 1.6; }
+</style>

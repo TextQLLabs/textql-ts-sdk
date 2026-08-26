@@ -30,6 +30,8 @@ export interface AdminPerson {
 	description?: string;
 }
 
+export type ApiKeyStatus = 'active' | 'revoked' | 'expired' | 'unknown';
+
 export interface AdminApiKey {
 	id: string;
 	name: string;
@@ -37,7 +39,9 @@ export interface AdminApiKey {
 	ownerId: string;
 	ownerName: string;
 	roleIds: string[];
-	status: string;
+	/** Normalized at the boundary so call sites branch on a value, not on copy. */
+	status: ApiKeyStatus;
+	statusLabel: string;
 	createdAt?: string;
 	expiresAt?: string;
 }
@@ -108,13 +112,40 @@ export function initials(name: string): string {
 		.join('');
 }
 
-export function permissionLabel(permission: AdminPermission): string {
-	return `${permission.resource}:${permission.action}`;
+/** Proto3 repeated int32 arrives as unknown JSON; every model list needs this. */
+export function numberList(value: unknown): number[] {
+	return Array.isArray(value) ? value.filter((item): item is number => typeof item === 'number') : [];
 }
 
-export function roleNames(person: AdminPerson, allRoles: AdminRole[]): string[] {
+type DateStyle = 'day' | 'time' | 'dayTime' | 'date';
+
+const DATE_OPTIONS: Record<DateStyle, Intl.DateTimeFormatOptions> = {
+	day: { month: 'short', day: 'numeric' },
+	time: { hour: 'numeric', minute: '2-digit' },
+	dayTime: { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' },
+	date: { month: 'short', day: 'numeric', year: 'numeric' }
+};
+
+/** Intl formatters are costly to construct, so each style is built once. */
+const FORMATTERS = new Map<DateStyle, Intl.DateTimeFormat>();
+
+export function formatDate(value: string | undefined, style: DateStyle, fallback = 'Unknown'): string {
+	if (!value) return fallback;
+	let formatter = FORMATTERS.get(style);
+	if (!formatter) {
+		formatter = new Intl.DateTimeFormat(undefined, DATE_OPTIONS[style]);
+		FORMATTERS.set(style, formatter);
+	}
+	return formatter.format(new Date(value));
+}
+
+export function rolesById(roles: AdminRole[]): Map<string, AdminRole> {
+	return new Map(roles.map((role) => [role.id, role]));
+}
+
+export function roleNames(person: AdminPerson, byId: Map<string, AdminRole>): string[] {
 	return person.roleIds
-		.map((id) => allRoles.find((role) => role.id === id)?.name)
+		.map((id) => byId.get(id)?.name)
 		.filter((name): name is string => Boolean(name));
 }
 
@@ -124,35 +155,42 @@ const ACTION_IMPLICATIONS: Record<string, string[]> = {
 	read_private: ['read']
 };
 
+export interface PermissionIndex {
+	byId: Map<string, AdminPermission>;
+	byResourceAndAction: Map<string, string>;
+}
+
+/**
+ * Built once per snapshot and passed in: expansion runs per role and per draft
+ * edit, so rebuilding the index inside the expansion made it quadratic.
+ */
+export function permissionIndex(allPermissions: AdminPermission[]): PermissionIndex {
+	return {
+		byId: new Map(allPermissions.map((permission) => [permission.id, permission])),
+		byResourceAndAction: new Map(
+			allPermissions.map((permission) => [
+				`${permission.resource}:${permission.action}`,
+				permission.id
+			])
+		)
+	};
+}
+
 /** Expand explicit grants into the permissions they include for the same resource. */
 export function expandPermissionIds(
 	explicitIds: Iterable<string>,
-	allPermissions: AdminPermission[]
+	index: PermissionIndex
 ): Set<string> {
 	const expanded = new Set(explicitIds);
-	const byResourceAndAction = new Map(
-		allPermissions.map((permission) => [`${permission.resource}:${permission.action}`, permission.id])
-	);
 
 	for (const id of [...expanded]) {
-		const permission = allPermissions.find((item) => item.id === id);
+		const permission = index.byId.get(id);
 		if (!permission) continue;
 		for (const action of ACTION_IMPLICATIONS[permission.action] ?? []) {
-			const impliedId = byResourceAndAction.get(`${permission.resource}:${action}`);
+			const impliedId = index.byResourceAndAction.get(`${permission.resource}:${action}`);
 			if (impliedId) expanded.add(impliedId);
 		}
 	}
 
 	return expanded;
-}
-
-export function effectivePermissionIds(
-	person: AdminPerson,
-	permissionsByRole: Record<string, string[]>,
-	allPermissions: AdminPermission[]
-): Set<string> {
-	return expandPermissionIds(
-		person.roleIds.flatMap((roleId) => permissionsByRole[roleId] ?? []),
-		allPermissions
-	);
 }

@@ -497,3 +497,43 @@ export function sourceLabel(source: Source): string {
 			return 'no default — single-axis';
 	}
 }
+
+/**
+ * The organization columns @textql/sdk 1.4.21 can actually write. The features
+ * page hides a switch it cannot save and the action rejects a field it cannot
+ * write — both from this one list, so the two can't drift apart.
+ */
+export const SDK_ORG_FIELDS = new Set([
+	'hideExampleConnectors',
+	'trainingMode',
+	'dashboardsEnabled',
+	'methodologyEnabled',
+	'feedEnabled',
+	'observabilityEnabled',
+	'notificationsEnabled',
+	'fastModeEnabled',
+	'maxThinkingEnabled',
+	'tracesEnabled',
+	'sandboxObservabilityEnabled',
+	'dataAppsEnabled',
+	'subagentsEnabled'
+]);
+
+/** Writable through the SDK: tool/paradigm maps always, org columns only if exposed. */
+export function isSettable(source: Source): boolean {
+	if (source.kind === 'none') return false;
+	return source.kind !== 'org' || SDK_ORG_FIELDS.has(source.field);
+}
+
+const SOURCES_BY_KEY = new Map<string, Source>();
+for (const group of FEATURE_GROUPS) {
+	for (const row of group.rows) {
+		for (const source of [row.available, row.default]) {
+			if (source.kind !== 'none') SOURCES_BY_KEY.set(`${source.kind}:${source.field}`, source);
+		}
+	}
+}
+
+export function findSource(kind: string, field: string): Source | null {
+	return SOURCES_BY_KEY.get(`${kind}:${field}`) ?? null;
+}

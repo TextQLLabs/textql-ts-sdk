@@ -4,11 +4,13 @@
 
 	import ConnectionEmpty from '$lib/ConnectionEmpty.svelte';
 	import ModelCatalogPicker from '$lib/ModelCatalogPicker.svelte';
-	import { expandPermissionIds, type AdminPermission, type AdminRole } from '$lib/admin';
+	import { expandPermissionIds, permissionIndex, type AdminPermission, type AdminRole } from '$lib/admin';
 	import {
 		CATALOG_MODELS,
+		DEFAULT_MODEL_CHOICES,
 		getModelEnumName,
-		getModelIconSrcByEnum
+		getModelIconSrcByEnum,
+		resolveDefaultModel
 	} from '$lib/modelCatalog';
 	import { MutationTracker } from '$lib/mutate.svelte';
 	import { Button, Page, Select, Switch, confirm as confirmDialog } from '$lib/primitives';
@@ -58,24 +60,64 @@
 	const effectiveDraftModels = $derived(
 		(draftModelScope === 'all' ? organizationModels : draftModels).filter((model) => organizationModels.includes(model))
 	);
+	const orgDefaultModel = $derived(resolveDefaultModel(organization));
+	/**
+	 * MODEL_UNKNOWN, MODEL_DEFAULT and MODEL_DEFAULT_SYSTEM all land on the same
+	 * model, so the picker offers one inherit entry naming it. The other two are
+	 * only listed when a role already stores them, so an existing value stays
+	 * representable.
+	 */
 	const defaultModelOptions = $derived([
-		{ value: 'MODEL_UNKNOWN', label: 'Inherit organization default', hint: 'No role override' },
-		{ value: 'MODEL_DEFAULT', label: 'Organization default', hint: 'Resolve through the organization policy' },
-		{ value: 'MODEL_DEFAULT_SYSTEM', label: 'System default', hint: 'Skip the organization override' },
-		...CATALOG_MODELS.filter((model) => effectiveDraftModels.includes(model.enumName)).map((model) => ({
+		{
+			value: 'MODEL_UNKNOWN',
+			label: orgDefaultModel.name,
+			hint: 'Organization default',
+			iconSrc: orgDefaultModel.iconSrc
+		},
+		...DEFAULT_MODEL_CHOICES.filter(
+			(choice) => choice.enumName !== 'MODEL_UNKNOWN' && choice.enumName === draftDefaultModel
+		).map((choice) => ({
+			value: choice.enumName,
+			label: orgDefaultModel.name,
+			hint: choice.name,
+			iconSrc: orgDefaultModel.iconSrc
+		})),
+		// The inherit entry above already names this model, so it is not repeated —
+		// unless the role has pinned it explicitly and the value must stay selectable.
+		...CATALOG_MODELS.filter(
+			(model) =>
+				effectiveDraftModels.includes(model.enumName) &&
+				(model.id !== orgDefaultModel.id || model.enumName === draftDefaultModel)
+		).map((model) => ({
 			value: model.enumName,
 			label: model.name,
 			iconSrc: getModelIconSrcByEnum(model.enumName)
 		}))
 	]);
+	const permissions = $derived(permissionIndex(admin.permissions));
+	const memberCounts = $derived.by(() => {
+		const counts = new Map<string, number>();
+		for (const person of admin.people) {
+			for (const roleId of person.roleIds) counts.set(roleId, (counts.get(roleId) ?? 0) + 1);
+		}
+		return counts;
+	});
+	const permissionCounts = $derived(
+		new Map(
+			admin.roles.map((role) => [
+				role.id,
+				expandPermissionIds(admin.rolePermissions[role.id] ?? [], permissions).size
+			])
+		)
+	);
 	const currentPermissionIds = $derived(admin.rolePermissions[selectedRoleId] ?? []);
-	const effectiveDraftPermissionIds = $derived(expandPermissionIds(draftPermissionIds, admin.permissions));
+	const effectiveDraftPermissionIds = $derived(expandPermissionIds(draftPermissionIds, permissions));
 	const impliedByDraft = $derived.by(() => {
 		const result = new Map<string, AdminPermission>();
 		for (const explicitId of draftPermissionIds) {
-			const source = admin.permissions.find((permission) => permission.id === explicitId);
+			const source = permissions.byId.get(explicitId);
 			if (!source) continue;
-			for (const impliedId of expandPermissionIds([explicitId], admin.permissions)) {
+			for (const impliedId of expandPermissionIds([explicitId], permissions)) {
 				if (impliedId !== explicitId && !draftPermissionIds.includes(impliedId)) {
 					result.set(impliedId, source);
 				}
@@ -196,7 +238,7 @@
 				{#each admin.roles as role (role.id)}
 					<button class:selected={selectedRoleId === role.id} type="button" onclick={() => selectRole(role)}>
 						<span class="role-symbol"><ShieldCheck size={15} /></span>
-						<span><strong>{role.name}</strong><small>{admin.people.filter((person) => person.roleIds.includes(role.id)).length} members · {expandPermissionIds(admin.rolePermissions[role.id] ?? [], admin.permissions).size} permissions</small></span>
+						<span><strong>{role.name}</strong><small>{memberCounts.get(role.id) ?? 0} members · {permissionCounts.get(role.id) ?? 0} permissions</small></span>
 						{#if role.isSystem}<LockKeyhole size={12} class="role-lock" />{:else}<ChevronRight size={13} />{/if}
 					</button>
 				{/each}
