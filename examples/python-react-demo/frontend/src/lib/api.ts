@@ -81,6 +81,38 @@ export async function createChat(options: {
 	return payload.chat_id;
 }
 
+/** Approve or reject a halted cell, releasing the run it parked. */
+export async function resolveCell(
+	cellId: string,
+	kind: 'ontology' | 'context_prompt',
+	action: 'approve' | 'reject'
+): Promise<void> {
+	const response = await fetch(`${BASE}/cells/${encodeURIComponent(cellId)}/resolve`, {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ kind, action })
+	});
+	await readJson(response, `Unable to ${action} this change.`);
+}
+
+/** The TextQL host the backend talks to, plus the member the API key is. */
+export type AppConfig = { appUrl: string; email: string | null };
+
+export async function getConfig(): Promise<AppConfig> {
+	const response = await fetch(`${BASE}/config`);
+	const payload = (await readJson(response, 'Unable to read config.')) as {
+		app_url: string;
+		email?: string | null;
+	};
+	const email =
+		typeof payload.email === 'string' && payload.email.trim() ? payload.email.trim() : null;
+	return { appUrl: payload.app_url, email };
+}
+
+export async function getAppUrl(): Promise<string> {
+	return (await getConfig()).appUrl;
+}
+
 export async function closeChat(chatId: string): Promise<void> {
 	await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}`, { method: 'DELETE' });
 }
@@ -121,6 +153,29 @@ export async function sendMessage(
 		throw new Error('The server returned no stream.');
 	}
 
+	await pumpSse(response.body, options.onEvent, options.signal);
+}
+
+/** Re-attach to a parked run after OAuth / questions — unlike /send, this does not stop on runComplete. */
+export async function watchChat(
+	chatId: string,
+	options: {
+		latestCellId?: string;
+		signal?: AbortSignal;
+		onEvent: (event: StreamEvent) => void;
+	}
+): Promise<void> {
+	const params = new URLSearchParams();
+	if (options.latestCellId) params.set('latest_cell_id', options.latestCellId);
+	const query = params.toString();
+	const response = await fetch(
+		`${BASE}/chats/${encodeURIComponent(chatId)}/watch${query ? `?${query}` : ''}`,
+		{ signal: options.signal }
+	);
+	if (!response.ok || !response.body) {
+		await readJson(response, 'Unable to watch this chat.');
+		throw new Error('The server returned no stream.');
+	}
 	await pumpSse(response.body, options.onEvent, options.signal);
 }
 

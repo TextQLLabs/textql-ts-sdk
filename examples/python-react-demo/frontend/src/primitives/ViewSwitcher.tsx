@@ -49,10 +49,11 @@ export function ViewSwitcher({
 
 const TRACK = 'inline-flex items-center gap-0.5 rounded-sm bg-track p-0.5';
 const ITEM =
-	'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent px-2 py-[3px] font-medium text-muted transition-colors duration-[0.12s] hover:bg-ink/8 hover:text-ink';
-/** Inverted, not tinted. Every shade-of-the-track version of this — lighter
- *  chip, darker chip, border, shadow — topped out around 1.5:1 in dark mode and
- *  read as no selection at all. Ink-on-paper is ~12:1 in both themes. */
+	'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border-0 px-2 py-[3px] font-medium transition-colors duration-[0.12s]';
+/** Idle sits on the track, so `text-muted` (~3:1) disappears. */
+const ITEM_OFF = 'bg-transparent text-text-3 hover:bg-ink/8 hover:text-ink';
+/** Inverted chip. Kept off ITEM_OFF's class string so `bg-transparent` cannot
+ *  beat `bg-ink` — `cx` does not resolve Tailwind conflicts. */
 const ITEM_ON = 'bg-ink text-paper hover:bg-ink hover:text-paper';
 
 export function ViewSwitcherItem({ view, className }: { view: View; className?: string }) {
@@ -63,7 +64,7 @@ export function ViewSwitcherItem({ view, className }: { view: View; className?: 
 	return (
 		<button
 			type="button"
-			className={cx(ITEM, active && ITEM_ON, className)}
+			className={cx(ITEM, active ? ITEM_ON : ITEM_OFF, className)}
 			aria-pressed={active}
 			onClick={() => setValue(view.value)}
 		>

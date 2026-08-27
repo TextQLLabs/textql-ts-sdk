@@ -24,6 +24,7 @@ import {
 	usePreviewPanel
 } from '../lib/previewPanel';
 import { CellDetail } from './CellDetail';
+import { HaltCell } from './HaltCell';
 import { Collapse } from './Collapse';
 import { Markdown } from './Markdown';
 import { QuestionsCell } from './QuestionsCell';
@@ -142,6 +143,10 @@ export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
 
 				if (segment.type === 'questions') {
 					return <QuestionsCell key={key} cell={segment.cell} onAnswered={onAnswered} />;
+				}
+
+				if (segment.type === 'halt') {
+					return <HaltCell key={key} cell={segment.cell} onResolved={onAnswered} />;
 				}
 
 				const open = expandedBatches.has(key);

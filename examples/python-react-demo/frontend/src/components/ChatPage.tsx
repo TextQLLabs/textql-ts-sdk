@@ -5,13 +5,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
 	closeChat,
 	createChat,
+	getConfig,
 	getHistory,
 	listChats,
 	sendMessage,
+	watchChat,
 	type ChatSummary,
 	type StreamEvent
 } from '../lib/api';
 import { getCellCase, settleCells, type CellLike } from '../lib/cells';
+import { getHalt } from '../lib/halts';
 import { loadLastChatConfig, saveLastChatConfig } from '../lib/chatConfigPrefs';
 import { DEFAULT_CHAT_MODEL } from '../lib/chatModels';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
@@ -197,6 +200,7 @@ export function ChatPage() {
 	const [openingChatId, setOpeningChatId] = useState<string | undefined>();
 	const [chatAssets, setChatAssets] = useState<PreviewItem[]>([]);
 	const [prefsReady, setPrefsReady] = useState(false);
+	const [memberEmail, setMemberEmail] = useState<string | null>(null);
 	const connectors = useConnectors();
 
 	// Model and connectors are fixed once the chat exists server-side.
@@ -265,6 +269,13 @@ export function ChatPage() {
 			setSelectedConnectorIds(prefs.connectorIds);
 		}
 		void connectorsCache.load();
+		void getConfig()
+			.then((config) => {
+				if (config.email) setMemberEmail(config.email);
+			})
+			.catch(() => {
+				// Attribution falls back to "You".
+			});
 		setPrefsReady(true);
 	}, []);
 
@@ -289,7 +300,7 @@ export function ChatPage() {
 		const handle = setTimeout(() => {
 			const items = collectPreviewItems(allCells);
 			setChatAssets(items);
-			if (previewPanel.tabs.length > 0) previewPanel.syncFromCells(items);
+			previewPanel.openNewItems(items);
 		}, 120);
 		return () => clearTimeout(handle);
 	}, [messages]);
@@ -384,6 +395,13 @@ export function ChatPage() {
 			}
 			case 'timeout': {
 				const assistant = messagesRef.current.find((message) => message.id === assistantId);
+				const halted = assistant?.cells?.some((cell) => getHalt(cell));
+				if (halted) {
+					if (assistant) assistant.streaming = true;
+					const id = loadedChatId.current;
+					if (id) void resumeLiveRun(id, assistantId);
+					return;
+				}
 				if (assistant) {
 					assistant.streaming = false;
 					settleCells(assistant.cells);
@@ -395,6 +413,54 @@ export function ChatPage() {
 				// opened / heartbeat / handoffPending / streamEnded need no UI.
 				return;
 		}
+	}
+
+	function lastCellId(): string {
+		if (latestCellId.current) return latestCellId.current;
+		for (let i = messagesRef.current.length - 1; i >= 0; i--) {
+			const cells = messagesRef.current[i]?.cells;
+			if (!cells?.length) continue;
+			const id = cells[cells.length - 1]?.id;
+			if (typeof id === 'string' && id) return id;
+		}
+		return '';
+	}
+
+	async function resumeLiveRun(id: string, assistantId?: number) {
+		activeRequest.current?.abort();
+		const request = new AbortController();
+		activeRequest.current = request;
+		const targetId =
+			assistantId ??
+			[...messagesRef.current].reverse().find((message) => message.role === 'assistant')?.id ??
+			Date.now();
+		setSending(true);
+		try {
+			await watchChat(id, {
+				latestCellId: lastCellId(),
+				signal: request.signal,
+				onEvent: (event) => {
+					if (activeRequest.current !== request) return;
+					applyEvent(event, targetId);
+					publishMessages();
+				}
+			});
+		} catch {
+			if (request.signal.aborted) return;
+		} finally {
+			if (activeRequest.current === request) {
+				const assistant = messagesRef.current.find((message) => message.id === targetId);
+				if (assistant) assistant.streaming = false;
+				publishMessages();
+				setSending(false);
+				activeRequest.current = undefined;
+			}
+		}
+	}
+
+	function handleHaltResolved() {
+		const id = loadedChatId.current ?? chatId;
+		if (id) void resumeLiveRun(id);
 	}
 
 	function onConversationScroll() {
@@ -849,7 +915,7 @@ export function ChatPage() {
 												className={cx(
 													'flex max-w-full flex-col',
 													message.role === 'you'
-														? 'w-full gap-1.5 rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none'
+														? 'w-full gap-1.5'
 														: 'w-full gap-2 border-0 bg-transparent px-0 py-0.5 [&_.streaming-indicator]:mt-1.5 [&_.streaming-indicator]:inline-block'
 												)}
 											>
@@ -860,6 +926,7 @@ export function ChatPage() {
 															<ToolSequence
 																cells={message.cells}
 																streaming={message.streaming ?? false}
+																onAnswered={handleHaltResolved}
 															/>
 														) : message.body ? (
 															<p className={MESSAGE_BODY}>{message.body}</p>
@@ -871,7 +938,17 @@ export function ChatPage() {
 														) : null}
 													</>
 												) : message.body ? (
-													<p className={MESSAGE_BODY_YOU}>{message.body}</p>
+													<>
+														<span
+															className="min-w-0 truncate text-[12px] font-medium text-text-3"
+															title={memberEmail ?? undefined}
+														>
+															{memberEmail ?? 'You'}
+														</span>
+														<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
+															<p className={MESSAGE_BODY_YOU}>{message.body}</p>
+														</div>
+													</>
 												) : null}
 											</article>
 										))}

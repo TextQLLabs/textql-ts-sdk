@@ -95,6 +95,16 @@ class SubmitQuestionsRequest(BaseModel):
     answers: list[QuestionAnswer] = []
 
 
+class ResolveCellRequest(BaseModel):
+    kind: str = Field(..., description="'ontology' or 'context_prompt'")
+    action: str = Field(..., description="'approve' or 'reject'")
+
+
+class ConfigResponse(BaseModel):
+    app_url: str
+    email: Optional[str] = None
+
+
 class CreateChatRequest(BaseModel):
     model: str = Field("MODEL_OPUS_4_8", description="TextQL model identifier")
     connector_ids: list[int] = Field([57], description="Connector IDs to enable")
@@ -147,6 +157,15 @@ def _get_connectors_client() -> Any:
     if _connectors is None:
         raise RuntimeError("Connector client not initialised — lifespan has not run yet")
     return _connectors
+
+
+# A halted cell is resolved by its own RPC pair; the cell id is the whole request.
+_RESOLVERS = {
+    ("ontology", "approve"): "approve_ontology_change_async",
+    ("ontology", "reject"): "reject_ontology_change_async",
+    ("context_prompt", "approve"): "approve_context_prompt_change_async",
+    ("context_prompt", "reject"): "reject_context_prompt_change_async",
+}
 
 
 def _build_paradigm(req: CreateChatRequest) -> TextqlRPCPublicParadigmParadigm:
@@ -330,6 +349,48 @@ async def submit_questions(body: SubmitQuestionsRequest):
         logger.error("[submit_questions] SDK error | %s", result)
         raise HTTPException(status_code=502, detail=f"{body.action} questions failed: {result}")
     return {"success": True}
+
+
+@router.get("/config", response_model=ConfigResponse)
+async def get_config():
+    """The host the SDK is pointed at, and the member the API key is.
+
+    The email is the identity the chat messages should be attributed to.
+    """
+    sdk = _get_sdk()
+    email: Optional[str] = None
+    try:
+        me = await sdk.rbac.who_am_i_async(body={})
+        if not isinstance(me, ConnectError) and isinstance(me.email, str) and me.email.strip():
+            email = me.email.strip()
+    except Exception as err:
+        logger.warning("[get_config] WhoAmI failed; message attribution will fall back | %s", err)
+    return ConfigResponse(
+        app_url=sdk.sdk_configuration.get_server_details()[0].rstrip("/"),
+        email=email,
+    )
+
+
+@router.post("/cells/{cell_id}/resolve")
+async def resolve_cell(
+    body: ResolveCellRequest,
+    cell_id: str = Path(..., description="ID of the halted cell"),
+):
+    """Approve or reject a halted cell, which releases the paused run.
+
+    An ontology patch or a context-prompt edit parks the run until someone says
+    yes or no; until then the watch stream simply goes quiet.
+    """
+    logger.info("[resolve_cell] request | cell_id=%s kind=%s action=%s", cell_id, body.kind, body.action)
+    method = _RESOLVERS.get((body.kind, body.action))
+    if method is None:
+        raise HTTPException(status_code=400, detail=f"Cannot {body.action} a {body.kind} cell")
+
+    result = await getattr(_get_sdk().chats, method)(cell_id=cell_id)
+    if isinstance(result, ConnectError):
+        logger.error("[resolve_cell] SDK error | %s", result)
+        raise HTTPException(status_code=502, detail=f"{method} failed: {result}")
+    return {"cell_id": cell_id, "kind": body.kind, "action": body.action}
 
 
 @router.get("/chats", response_model=ListChatsResponse)

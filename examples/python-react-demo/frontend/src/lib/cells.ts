@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { FOntologyIcon } from '../assets/icons/FOntologyIcon';
 import { McpIcon } from '../components/McpIcon';
+import { getHalt } from './halts';
 import { CellLifecycle as Lifecycle, type CellLifecycle } from './lifecycle';
 import { isRecord } from './utils';
 
@@ -289,6 +290,7 @@ export function getActiveSummary(cells: CellLike[]): string {
 export type Segment =
 	| { type: 'assistant'; cell: CellLike }
 	| { type: 'questions'; cell: CellLike }
+	| { type: 'halt'; cell: CellLike }
 	| { type: 'toolgroup'; cells: CellLike[] };
 
 const TEXT_CASES = new Set(['mdCell', 'ansCell']);
@@ -312,6 +314,11 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 		} else if (cellCase === 'questionsCell') {
 			flushGroup();
 			result.push({ type: 'questions', cell });
+		} else if (getHalt(cell)) {
+			// A cell the run is parked on comes out of the batch: collapsed inside
+			// one, the thing blocking the chat is invisible.
+			flushGroup();
+			result.push({ type: 'halt', cell });
 		} else {
 			currentGroup.push(cell);
 		}
@@ -322,7 +329,7 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 
 /** Stable key so segment DOM survives cells appending mid-stream. */
 export function getSegmentKey(segment: Segment, index: number): string {
-	if (segment.type === 'assistant' || segment.type === 'questions') {
+	if (segment.type === 'assistant' || segment.type === 'questions' || segment.type === 'halt') {
 		return `${segment.type}:${segment.cell.id || index}`;
 	}
 	return `toolgroup:${segment.cells[0]?.id || index}`;

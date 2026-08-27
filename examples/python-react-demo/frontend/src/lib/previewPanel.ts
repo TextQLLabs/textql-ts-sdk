@@ -336,6 +336,22 @@ class PreviewPanelState extends Store<PanelState> {
 	}
 
 	/**
+	 * Open the panel for assets that are not already tabs. A closed panel stays
+	 * closed until something new arrives; the newest of those is selected.
+	 */
+	openNewItems(items: PreviewItem[]) {
+		const known = new Set(this.state.tabs.map((tab) => tab.id));
+		const fresh = items.filter((item) => !known.has(item.id));
+		if (fresh.length === 0) {
+			this.syncFromCells(items);
+			return;
+		}
+		this.openPanel(items);
+		const latest = fresh[fresh.length - 1];
+		if (latest) this.select(latest.id);
+	}
+
+	/**
 	 * Open the panel with the chat's assets as tabs.
 	 * Keeps existing tab order, refreshes content, and appends any new assets.
 	 */

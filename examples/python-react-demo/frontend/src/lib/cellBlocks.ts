@@ -129,7 +129,7 @@ function image(blocks: Block[], url: unknown, alt?: string) {
 
 function authNote(blocks: Block[], p: Record<string, unknown>) {
 	if (p.authRequired === true && p.authCompleted !== true) {
-		text(blocks, 'Auth', `Authentication required for ${str(p.authConnectorName) || str(p.authProviderName) || 'this connector'} — approve it in the TextQL app.`);
+		text(blocks, 'Auth', `Authentication required for ${str(p.authConnectorName) || str(p.authProviderName) || 'this connector'}.`);
 	}
 }
 

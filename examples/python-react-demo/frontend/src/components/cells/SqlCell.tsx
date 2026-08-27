@@ -90,7 +90,7 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 			<CellFrame cell={cell} actions={actions}>
 				{authPending && (
 					<CellError
-						message={`Authentication required for ${connector || 'this connector'} — approve it in the TextQL app.`}
+						message={`Authentication required for ${connector || 'this connector'}.`}
 					/>
 				)}
 
