@@ -46,7 +46,7 @@ there instead of from the top of the chat.
 **1. Get a TextQL API key** — in the TextQL app under **Settings → Developers →
 API Keys**, click **+ Create API Key** (admin only).
 
-**2. Backend** (Python 3.11+):
+**2. Backend** (Python 3.11 — see `backend/.python-version`):
 
 ```sh
 cd backend
@@ -56,7 +56,9 @@ cp .env.example .env      # then put your key in it
 .venv/bin/uvicorn app.main:app --port 8787 --reload
 ```
 
-**3. Frontend** (Node 24.16.0 — see `.nvmrc`), in a second terminal:
+**3. Frontend** (Node 24.16.0 — see `frontend/.nvmrc`; `engines` is pinned exactly and
+`.npmrc` sets `engine-strict=true`, so `npm install` refuses any other version), in a
+second terminal:
 
 ```sh
 cd frontend
