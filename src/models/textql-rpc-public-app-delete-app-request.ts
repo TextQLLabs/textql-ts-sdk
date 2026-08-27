@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppDeleteAppRequest = {
+  /**
+   * full replacement for the calling member
+   */
   appId?: string | undefined;
 };
 

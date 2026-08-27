@@ -10,6 +10,6 @@ let value: TextqlRpcPublicAppGetAppRequest = {};
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `appId`            | *string*           | :heavy_minus_sign: | N/A                |
+| Field                                                           | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `appId`                                                         | *string*                                                        | :heavy_minus_sign:                                              | signed /asset/apptree viewer URL for the published gallery tree |

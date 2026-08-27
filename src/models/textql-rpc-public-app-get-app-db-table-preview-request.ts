@@ -4,7 +4,13 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
+ */
 export type TextqlRpcPublicAppGetAppDBTablePreviewRequest = {
+  /**
+   * normalized relative path, forward slashes, no .. or leading /
+   */
   appId?: string | undefined;
   tableName?: string | undefined;
   limit?: number | undefined;

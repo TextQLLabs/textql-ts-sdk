@@ -26,6 +26,9 @@ import {
 
 export type TextqlRpcPublicAppApp = {
   id?: string | undefined;
+  /**
+   * the COMPLETE tree; files omitted here are deleted
+   */
   orgId?: string | undefined;
   creatorId?: string | undefined;
   name?: string | undefined;

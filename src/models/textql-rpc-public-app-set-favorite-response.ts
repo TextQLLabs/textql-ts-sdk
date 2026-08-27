@@ -9,9 +9,6 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicAppSetFavoriteResponse = {
-  /**
-   * signed /asset/apptree viewer URL for the published gallery tree
-   */
   favorited?: boolean | undefined;
 };
 

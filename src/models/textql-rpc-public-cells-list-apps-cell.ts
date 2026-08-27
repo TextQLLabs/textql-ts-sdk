@@ -12,13 +12,19 @@ import {
   TextqlRpcPublicCellsAppInfo$inboundSchema,
 } from "./textql-rpc-public-cells-app-info.js";
 
+/**
+ * create_design_system tool: authors/edits an org Data App design system.
+ */
 export type TextqlRpcPublicCellsListAppsCell = {
-  searchTerm?: string | undefined;
   /**
-   * Set for single-app lookup
+   * create | edit
    */
+  searchTerm?: string | undefined;
   appId?: string | undefined;
   totalCount?: number | undefined;
+  /**
+   * in-product viewer route
+   */
   errorMessage?: string | null | undefined;
   apps?: Array<TextqlRpcPublicCellsAppInfo> | undefined;
 };

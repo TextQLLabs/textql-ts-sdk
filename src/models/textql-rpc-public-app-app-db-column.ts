@@ -8,13 +8,19 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * View analytics
- */
 export type TextqlRpcPublicAppAppDBColumn = {
+  /**
+   * running | stopped | error
+   */
   name?: string | undefined;
+  /**
+   * import/exec failure of the author module
+   */
   type?: string | undefined;
   nullable?: boolean | undefined;
+  /**
+   * tail of the server process log, redacted
+   */
   primaryKey?: boolean | undefined;
 };
 

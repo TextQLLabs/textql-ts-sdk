@@ -14,7 +14,7 @@ import {
 } from "./textql-rpc-public-app-app-db-table.js";
 
 /**
- * DuckDB type name, e.g. "VARCHAR", "BIGINT"
+ * Routing observability: warm | warm_fallback | tql | sql.
  */
 export type TextqlRpcPublicAppGetAppDBSchemaResponseChangeLogBytes =
   | number
@@ -23,7 +23,7 @@ export type TextqlRpcPublicAppGetAppDBSchemaResponseChangeLogBytes =
 export type TextqlRpcPublicAppGetAppDBSchemaResponse = {
   tables?: Array<TextqlRpcPublicAppAppDBTable> | undefined;
   /**
-   * DuckDB type name, e.g. "VARCHAR", "BIGINT"
+   * Routing observability: warm | warm_fallback | tql | sql.
    */
   changeLogBytes?: number | string | undefined;
 };

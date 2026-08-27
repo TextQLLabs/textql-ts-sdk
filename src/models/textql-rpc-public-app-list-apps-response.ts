@@ -14,9 +14,6 @@ import {
 
 export type TextqlRpcPublicAppListAppsResponse = {
   apps?: Array<TextqlRpcPublicAppApp> | undefined;
-  /**
-   * whether the caller may edit this app (HasAppWriteAccess)
-   */
   totalCount?: number | undefined;
 };
 
