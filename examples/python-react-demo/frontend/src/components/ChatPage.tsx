@@ -1,6 +1,6 @@
-import { Moon, PanelLeft, PanelLeftClose, PanelRight, Plus, Sun } from 'lucide-react';
+import { MessagesSquare, Moon, PanelLeft, PanelLeftClose, PanelRight, Plus, Sun } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import {
 	closeChat,
@@ -31,6 +31,7 @@ import { isRecord } from '../lib/utils';
 import { Tooltip, toast } from '../primitives';
 import { Composer } from './Composer';
 import { PreviewPanel } from './PreviewPanel';
+import { ThreadsPage } from './ThreadsPage';
 import { ToolSequence } from './ToolSequence';
 import { UnicodeSpinner } from './UnicodeSpinner';
 
@@ -190,6 +191,9 @@ export function ChatPage() {
 	const [selectedConnectorIds, setSelectedConnectorIds] = useState<number[]>([]);
 	const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_CHAT_MODEL);
 	/** Desktop: collapsible panel. Mobile: drawer open state. */
+	const location = useLocation();
+	/** A full-panel section route: the shell stays, the chat pane is replaced. */
+	const isThreadsRoute = location.pathname.startsWith('/threads');
 	const [sidebarOpen, setSidebarOpen] = useState(true);
 	const [chatId, setChatId] = useState<string | undefined>();
 	const [chatLoadError, setChatLoadError] = useState<string | undefined>();
@@ -674,6 +678,16 @@ export function ChatPage() {
 							</button>
 						</Tooltip>
 					</div>
+					{/* The sidebar only holds one page of recent chats; the filterable
+					    list of everything lives on /threads. */}
+					<button
+						type="button"
+						className={cx(NEW_CHAT_BTN, 'justify-start bg-transparent')}
+						onClick={() => navigate('/threads')}
+					>
+						<MessagesSquare size={15} strokeWidth={2} />
+						<span>All threads</span>
+					</button>
 				</div>
 
 				<div className="mt-3.5 flex min-h-0 flex-1 flex-col">
@@ -766,6 +780,16 @@ export function ChatPage() {
 							<PanelLeft size={16} strokeWidth={1.75} />
 						</button>
 					</Tooltip>
+					<Tooltip label="All threads" side="right">
+						<button
+							type="button"
+							className={cx(ICON_GHOST, 'bg-transparent p-[7px]')}
+							aria-label="All threads"
+							onClick={() => navigate('/threads')}
+						>
+							<MessagesSquare size={16} strokeWidth={1.75} />
+						</button>
+					</Tooltip>
 					<Tooltip label="New chat" side="right">
 						<button
 							type="button"
@@ -779,6 +803,11 @@ export function ChatPage() {
 				</aside>
 			)}
 
+			{isThreadsRoute ? (
+				<div className="col-start-2 row-start-1 flex h-full min-h-0 min-w-0 max-[780px]:h-dvh">
+					<ThreadsPage />
+				</div>
+			) : (
 			<div
 				className={cx(
 					// `workspace` stays a plain class: PreviewPanel's resize handler
@@ -976,6 +1005,7 @@ export function ChatPage() {
 
 				{panel.open && <PreviewPanel />}
 			</div>
+			)}
 		</div>
 	);
 }

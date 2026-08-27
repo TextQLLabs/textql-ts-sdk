@@ -10,6 +10,7 @@ import json
 import logging
 import re
 from contextlib import aclosing
+from datetime import datetime, timedelta, timezone
 from typing import Any, AsyncGenerator, cast, Optional
 from urllib.parse import urljoin, urlparse
 
@@ -23,7 +24,15 @@ from pydantic import BaseModel, Field
 
 from google.protobuf.json_format import MessageToDict
 
-from textql_sdk._connect.public.chat_pb2 import WatchChatEvent, WatchChatRequest
+from textql_sdk._connect.public.chat_pb2 import (
+    ChatSortDirection,
+    ChatSortField,
+    ChatSource,
+    GetChatsRequest,
+    GetMembersWithChatsRequest,
+    WatchChatEvent,
+    WatchChatRequest,
+)
 from textql_sdk._connect.public.connector_pb2 import ConnectorType, GetConnectorsRequest
 from textql_sdk.models import (
     ConnectError,
@@ -54,16 +63,42 @@ router = APIRouter(prefix="/v3/textql", tags=["TextQL"])
 # ---------------------------------------------------------------------------
 
 class ChatSummary(BaseModel):
+    """One row, in both spellings the two callers expect.
+
+    The sidebar reads the snake_case fields; ThreadsPage's `parse` reads the
+    camelCase ones. Serving one row shape beats maintaining two list routes.
+    """
+
     id: str
     summary: Optional[str] = None
     updated_at: Optional[str] = None
     is_running: bool = False
+    title: str
+    createdBy: Optional[str] = None
+    source: Optional[str] = None
+    lastMessageAt: Optional[str] = None
+    updatedAt: Optional[str] = None
 
 
 class ListChatsResponse(BaseModel):
     chats: list[ChatSummary]
     total_count: int
     has_more: bool
+    page: int
+    pageSize: int
+    totalCount: int
+    hasMore: bool
+
+
+class MemberOption(BaseModel):
+    id: str
+    name: Optional[str] = None
+    email: Optional[str] = None
+    pictureUrl: Optional[str] = None
+
+
+class ListChatMembersResponse(BaseModel):
+    members: list[MemberOption]
 
 
 class ChatHistoryResponse(BaseModel):
@@ -295,6 +330,66 @@ async def _watch_stream(
                 return
 
 
+
+# ---------------------------------------------------------------------------
+# Thread list facets
+# ---------------------------------------------------------------------------
+
+_SORT_FIELDS = {
+    "updated": ChatSortField.CHAT_SORT_FIELD_UPDATED_AT,
+    "created": ChatSortField.CHAT_SORT_FIELD_CREATED_AT,
+    "name": ChatSortField.CHAT_SORT_FIELD_NAME,
+}
+
+_SOURCE_LABELS = {
+    ChatSource.CHAT_SOURCE_THREAD: "Thread",
+    ChatSource.CHAT_SOURCE_PLAYBOOK: "Playbook",
+    ChatSource.CHAT_SOURCE_SLACK: "Slack",
+    ChatSource.CHAT_SOURCE_FEED: "Feed",
+    ChatSource.CHAT_SOURCE_TEAMS: "Teams",
+    ChatSource.CHAT_SOURCE_SMS: "SMS",
+    ChatSource.CHAT_SOURCE_MCP: "MCP",
+    ChatSource.CHAT_SOURCE_SYSTEM: "System",
+}
+
+_DATE_PRESET_DAYS = {"today": 1, "week": 7, "month": 30, "quarter": 90}
+
+
+def _created_after(value: Optional[str]) -> Optional[datetime]:
+    """Date facet value — a preset id or `since:YYYY-MM-DD` — to a lower bound.
+
+    Mirrors `createdAfterFor` in the frontend's tableFilter; the facet sends
+    whichever spelling the drilldown produced.
+    """
+    if not value:
+        return None
+    if value.startswith("since:"):
+        try:
+            day = datetime.strptime(value[len("since:"):], "%Y-%m-%d")
+        except ValueError:
+            return None
+        return day.replace(tzinfo=timezone.utc)
+    days = _DATE_PRESET_DAYS.get(value)
+    if days is None:
+        return None
+    return datetime.now(timezone.utc) - timedelta(days=days)
+
+
+def _chat_title(chat: Any) -> str:
+    return (chat.summary or "").strip() or (chat.preview or "").strip() or "New chat"
+
+
+def _chat_creator(chat: Any) -> Optional[str]:
+    return (chat.agent_name or "").strip() or (chat.creator_email or "").strip() or None
+
+
+def _proto_ts(value: Any) -> Optional[str]:
+    """A protobuf Timestamp to ISO-8601, or None when it was never set."""
+    if value is None or not value.seconds and not value.nanos:
+        return None
+    return value.ToDatetime(tzinfo=timezone.utc).isoformat()
+
+
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
@@ -396,43 +491,120 @@ async def resolve_cell(
 @router.get("/chats", response_model=ListChatsResponse)
 async def list_chats(
     search_term: Optional[str] = Query(None, description="Filter chats by keyword"),
+    q: Optional[str] = Query(None, description="Same as search_term; what FilterToolbar sends"),
     limit: int = Query(10, ge=1, le=100, description="Number of chats per page"),
     offset: int = Query(0, ge=0, description="Pagination offset"),
+    page: Optional[int] = Query(None, ge=0, description="Page index; overrides offset when set"),
+    page_size: int = Query(30, ge=1, le=100, description="Rows per page when using `page`"),
+    creator: list[str] = Query([], description="Creator member ids"),
+    source: list[str] = Query([], description="ChatSource enum names"),
+    scope: list[str] = Query([], description="'bookmarked' and/or 'shared'"),
+    date: Optional[str] = Query(None, description="Preset id or since:YYYY-MM-DD"),
+    sort: str = Query("updated", description="updated | created | name"),
+    dir: str = Query("desc", description="asc | desc"),
 ):
     """List chats in your org, newest first.
 
-    Supports keyword search and pagination via `limit` / `offset`.
-    Use `has_more` in the response to know if more pages exist.
+    Goes over Connect rather than `sdk.chats.get_all_async` for the same reason
+    as list_connectors: the facets ThreadsPage sends (creator ids, sources,
+    shared-with-me) are proto fields the generated REST model doesn't carry.
+
+    Two callers, two paging dialects: the sidebar sends `limit` / `offset`, the
+    thread list sends `page`. `page` wins when present and the response answers
+    in both spellings.
     """
-    logger.info("[list_chats] request | search_term=%r limit=%d offset=%d", search_term, limit, offset)
-    sdk = _get_sdk()
-    resp = await sdk.chats.get_all_async(
+    if page is not None:
+        limit, offset = page_size, page * page_size
+    term = (q or search_term or "").strip()
+    logger.info(
+        "[list_chats] request | q=%r limit=%d offset=%d creator=%d source=%s scope=%s date=%r sort=%s/%s",
+        term, limit, offset, len(creator), source, scope, date, sort, dir,
+    )
+
+    request = GetChatsRequest(
+        # Org-wide: surface everyone's threads, not just the caller's.
+        member_only=False,
         limit=limit,
         offset=offset,
-        search_term=search_term,
-        sort_by="CHAT_SORT_FIELD_UPDATED_AT",
-        sort_direction="CHAT_SORT_DIRECTION_DESC",
+        sort_by=_SORT_FIELDS.get(sort, ChatSortField.CHAT_SORT_FIELD_UPDATED_AT),
+        sort_direction=(
+            ChatSortDirection.CHAT_SORT_DIRECTION_ASC
+            if dir == "asc"
+            else ChatSortDirection.CHAT_SORT_DIRECTION_DESC
+        ),
+        exclude_batch_runs=True,
     )
-    if isinstance(resp, ConnectError):
-        logger.error("[list_chats] SDK error | %s", resp)
-        raise HTTPException(status_code=502, detail=f"list_chats failed: {resp}")
+    if term:
+        request.search_term = term
+    if creator:
+        request.creator_member_ids.extend(creator)
+    # The facet sends raw enum names; drop anything this proto doesn't know
+    # rather than passing it through to the RPC.
+    known = [name for name in source if name in ChatSource.keys()]
+    if known:
+        request.sources.extend(ChatSource.Value(name) for name in known)
+    if "bookmarked" in scope:
+        request.bookmarked_only = True
+    if "shared" in scope:
+        request.shared_with_me = True
+    created_after = _created_after(date)
+    if created_after is not None:
+        request.created_after.FromDatetime(created_after)
 
-    chats = resp.chats or []
+    resp = await _get_streaming().chats.get_chats(request)
+
+    chats = list(resp.chats)
     total = resp.total_count or 0
     has_more = total > offset + len(chats)
     logger.info("[list_chats] response | returned=%d total=%d has_more=%s", len(chats), total, has_more)
-    return ListChatsResponse(
-        chats=[
+
+    rows = []
+    for c in chats:
+        updated = _proto_ts(c.updated_at) or _proto_ts(c.timestamp)
+        rows.append(
             ChatSummary(
                 id=c.id,
                 summary=c.summary or None,
-                updated_at=c.updated_at.isoformat() if c.updated_at else None,
+                updated_at=updated,
                 is_running=bool(c.is_running),
+                title=_chat_title(c),
+                createdBy=_chat_creator(c),
+                source=_SOURCE_LABELS.get(c.source),
+                lastMessageAt=updated,
+                updatedAt=updated,
             )
-            for c in chats
-        ],
+        )
+    return ListChatsResponse(
+        chats=rows,
         total_count=total,
         has_more=has_more,
+        page=page or 0,
+        pageSize=limit,
+        totalCount=total,
+        hasMore=has_more,
+    )
+
+
+@router.get("/chats/members", response_model=ListChatMembersResponse)
+async def list_chat_members():
+    """Creator facet options for the threads toolbar.
+
+    Every member who has authored a chat, so the facet only lists people the
+    list can actually be narrowed to.
+    """
+    resp = await _get_streaming().chats.get_members_with_chats(GetMembersWithChatsRequest())
+    logger.info("[list_chat_members] response | returned=%d", len(resp.members))
+    return ListChatMembersResponse(
+        members=[
+            MemberOption(
+                id=m.member_id,
+                name=m.member_name or None,
+                email=m.member_email or None,
+                pictureUrl=m.member_picture_url or None,
+            )
+            for m in resp.members
+            if m.member_id
+        ]
     )
 
 
