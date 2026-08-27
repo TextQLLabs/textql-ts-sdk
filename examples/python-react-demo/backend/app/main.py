@@ -8,9 +8,12 @@ the streaming bridge keeps its own connection pool.
 
 import logging
 import os
+import ssl
 
 from contextlib import asynccontextmanager
 
+import httpx
+import truststore
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -42,12 +45,14 @@ async def lifespan(_app: FastAPI):
         raise RuntimeError("TEXTQL_API_KEY is not set — copy .env.example to .env")
 
     server_url = os.getenv("TEXTQL_SERVER_URL") or None
-    sdk = Textql(api_key=api_key, server_url=server_url)
-    # server_url is optional here too: the bridge reads it off the SDK and
-    # appends the /rpc/public mount itself.
+    ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    http_client = httpx.AsyncClient(
+        follow_redirects=True,
+        timeout=httpx.Timeout(None, connect=10.0),
+        verify=ctx,
+    )
+    sdk = Textql(api_key=api_key, server_url=server_url, async_client=http_client)
     streaming = create_streaming_client(sdk)
-    # Connector listing isn't one of the streaming services, so it goes through
-    # create_connect_client — see list_connectors for why not the REST method.
     connectors = create_connect_client(ConnectorServiceClient, sdk)
 
     textql_router._sdk = sdk
@@ -61,6 +66,7 @@ async def lifespan(_app: FastAPI):
         textql_router._sdk = None
         textql_router._streaming = None
         textql_router._connectors = None
+        await http_client.aclose()
 
 
 app = FastAPI(title="TextQL Streaming Demo", lifespan=lifespan)
