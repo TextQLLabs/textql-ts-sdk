@@ -18,12 +18,8 @@ const PROXY_PREFIXES = [
 	'/sandbox/proxy/'
 ];
 
-export function isUserContentHost(hostname: string): boolean {
+function isUserContentHost(hostname: string): boolean {
 	return hostname === USERCONTENT_HOST || hostname.endsWith(`.${USERCONTENT_HOST}`);
-}
-
-export function isAllowedPreviewHost(hostname: string): boolean {
-	return isUserContentHost(hostname) || hostname === APP_HOST;
 }
 
 function pathIsProxied(pathname: string): boolean {

@@ -13,23 +13,3 @@ export function usePageTitle(title: string): void {
 		};
 	}, [title]);
 }
-
-/** Same idea for the page's `<meta name="description">`. */
-export function usePageDescription(description: string): void {
-	useEffect(() => {
-		let tag = document.head.querySelector<HTMLMetaElement>('meta[name="description"]');
-		let created = false;
-		if (!tag) {
-			tag = document.createElement('meta');
-			tag.name = 'description';
-			document.head.appendChild(tag);
-			created = true;
-		}
-		const previous = tag.content;
-		tag.content = description;
-		return () => {
-			if (created) tag?.remove();
-			else if (tag) tag.content = previous;
-		};
-	}, [description]);
-}

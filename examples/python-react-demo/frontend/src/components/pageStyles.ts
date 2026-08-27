@@ -9,7 +9,7 @@
  * order they appear in a class string.
  */
 
-export const LIST_SECTION = 'flex w-full flex-col gap-3.5';
+const LIST_SECTION = 'flex w-full flex-col gap-3.5';
 /** Pages whose list owns the scroll (agents, apps, playbooks). */
 export const LIST_SECTION_SCROLL = `${LIST_SECTION} min-h-0 flex-1 overflow-y-auto`;
 
@@ -20,7 +20,6 @@ export const BOARD_GROUP_TITLE_ROW = 'flex items-baseline gap-2';
 export const BOARD_GROUP_TITLE =
 	'm-0 font-sans text-[12px] font-semibold tracking-[0.06em] text-ink uppercase';
 export const BOARD_GROUP_COUNT = 'font-mono text-[11px] font-medium text-muted';
-export const BOARD_GROUP_HINT = 'm-0 text-[11.5px] leading-[1.4] text-muted';
 export const BOARD_LIST = 'm-0 flex list-none flex-col gap-0.5 p-0';
 export const BOARD_MORE = 'flex flex-col items-center gap-2 px-4 pt-3 pb-1 text-center';
 export const BOARD_END = 'm-0 px-4 pt-3 pb-1 text-center font-mono text-[11px] text-muted';

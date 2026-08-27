@@ -95,22 +95,17 @@ export async function resolveCell(
 	await readJson(response, `Unable to ${action} this change.`);
 }
 
-/** The TextQL host the backend talks to, plus the member the API key is. */
-export type AppConfig = { appUrl: string; email: string | null };
+/** The member the API key authenticates as, used for message attribution. */
+export type AppConfig = { email: string | null };
 
 export async function getConfig(): Promise<AppConfig> {
 	const response = await fetch(`${BASE}/config`);
 	const payload = (await readJson(response, 'Unable to read config.')) as {
-		app_url: string;
 		email?: string | null;
 	};
 	const email =
 		typeof payload.email === 'string' && payload.email.trim() ? payload.email.trim() : null;
-	return { appUrl: payload.app_url, email };
-}
-
-export async function getAppUrl(): Promise<string> {
-	return (await getConfig()).appUrl;
+	return { email };
 }
 
 export async function closeChat(chatId: string): Promise<void> {
