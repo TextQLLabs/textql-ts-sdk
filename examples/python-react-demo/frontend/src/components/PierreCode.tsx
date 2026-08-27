@@ -2,6 +2,7 @@ import type { FileContents } from '@pierre/diffs';
 import { useEffect, useRef, useState } from 'react';
 
 import { cx } from '../lib/cx';
+import { useResolvedTheme } from '../lib/themePref';
 
 type Props = {
 	fileName: string;
@@ -19,6 +20,11 @@ export function PierreCode({ fileName, contents, lang, fill = false }: Props) {
 	const hostRef = useRef<HTMLElement | null>(null);
 	const lastKeyRef = useRef('');
 	const [loadError, setLoadError] = useState(false);
+	const theme = useResolvedTheme();
+	// The boot effect runs once but resolves async, so it reads the theme through
+	// a ref to pick up a flip that lands mid-boot.
+	const themeRef = useRef(theme);
+	themeRef.current = theme;
 
 	const currentKey = `${fileName}\0${lang ?? ''}\0${contents ?? ''}`;
 
@@ -38,7 +44,7 @@ export function PierreCode({ fileName, contents, lang, fill = false }: Props) {
 
 				viewerRef.current = new PierreFile({
 					theme: DEFAULT_THEMES,
-					themeType: 'light',
+					themeType: themeRef.current,
 					disableFileHeader: true,
 					disableLineNumbers: true,
 					overflow: 'wrap',
@@ -96,6 +102,11 @@ code, pre, [class*="line"] {
 		viewer.render({ file, fileContainer: host, forceRender: true });
 		lastKeyRef.current = currentKey;
 	}
+
+	// Pierre swaps its theme CSS in place, so this is cheaper than a re-render.
+	useEffect(() => {
+		viewerRef.current?.setThemeType(theme);
+	}, [theme]);
 
 	useEffect(() => {
 		const host = hostRef.current;

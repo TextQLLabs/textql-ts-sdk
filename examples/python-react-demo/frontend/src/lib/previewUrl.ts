@@ -2,8 +2,11 @@
  * Preview assets live on textqlusercontent.com (and some sandbox embeds on
  * app.textql.com). Those origins only allow framing from the main TextQL app,
  * so localhost iframes get "refused to connect". Rewrite to same-origin URLs
- * served through /api/preview-proxy in both development and production.
+ * served through /v3/textql/preview-proxy, the FastAPI backend route Vite
+ * proxies in dev.
  */
+
+export const PREVIEW_PROXY_PATH = '/v3/textql/preview-proxy';
 
 const USERCONTENT_HOST = 'textqlusercontent.com';
 const APP_HOST = 'app.textql.com';
@@ -30,7 +33,7 @@ function pathIsProxied(pathname: string): boolean {
 }
 
 function proxyUrl(target: string): string {
-	return `/api/preview-proxy?url=${encodeURIComponent(target)}`;
+	return `${PREVIEW_PROXY_PATH}?url=${encodeURIComponent(target)}`;
 }
 
 export function toEmbeddablePreviewUrl(url: string | null | undefined): string | null {

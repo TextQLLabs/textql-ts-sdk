@@ -4,6 +4,11 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [tailwindcss(), react()],
+	css: {
+		modules: {
+			localsConvention: 'camelCaseOnly'
+		}
+	},
 	server: {
 		// Same-origin in dev, so the browser never sees CORS and the API key
 		// stays in the Python process.

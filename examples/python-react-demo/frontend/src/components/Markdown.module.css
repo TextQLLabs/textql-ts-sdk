@@ -124,3 +124,41 @@
 	font-size: 14px;
 	line-height: 1.65;
 }
+
+/* Thinking bodies and other asides. Declared as `.md.mdMuted` on purpose: this
+   file is unlayered, so it outranks any Tailwind utility a caller wraps it in —
+   the size and colour have to be overridden here or not at all. */
+.md.mdMuted {
+	font-size: 12.5px;
+	line-height: 1.55;
+	color: var(--color-muted);
+}
+
+.md.mdMuted :global(h1),
+.md.mdMuted :global(h2),
+.md.mdMuted :global(h3),
+.md.mdMuted :global(h4) {
+	font-size: 1em;
+	font-weight: 600;
+	color: inherit;
+	margin: 0.6em 0 0.3em;
+}
+
+.md.mdMuted :global(strong) {
+	font-weight: 550;
+	color: inherit;
+}
+
+.md.mdMuted :global(p) {
+	margin: 0 0 0.45em;
+}
+
+.md.mdMuted :global(code) {
+	font-size: 0.9em;
+}
+
+.md-plain.md-plain-muted {
+	font-size: 12.5px;
+	line-height: 1.55;
+	color: var(--color-muted);
+}

@@ -135,6 +135,18 @@ function isHiddenCell(cell: CellLike): boolean {
 	return getCellCase(cell) === 'summaryCell';
 }
 
+/**
+ * A chat's paradigm — model, connectors, SQL/Python — is fixed when the chat is
+ * created, and there is no RPC to change it afterwards. So a chat created with
+ * no connector fails *every* run, and the server's phrasing doesn't say that.
+ */
+function runErrorMessage(raw: string): string {
+	if (raw.includes('missing connector')) {
+		return 'This chat was created without a connector. A chat\'s connectors are fixed when it is created, so start a new chat and pick one in the composer.';
+	}
+	return raw || 'The chat run failed.';
+}
+
 function proseText(cell: CellLike): string {
 	const cellCase = getCellCase(cell);
 	const payload = cellCase ? cell[cellCase] : undefined;
@@ -216,16 +228,23 @@ export function ChatPage() {
 		setMessages([...messagesRef.current]);
 	}, []);
 
+	// Refreshed after every run, so the spinner and the error state are reserved
+	// for the first load — swapping a populated list out mid-chat reads as a
+	// spurious refresh, and a background failure just leaves the list stale.
+	const chatsLoadedRef = useRef(false);
+
 	const loadChats = useCallback(async () => {
-		setChatsLoading(true);
-		setChatsError(false);
+		if (!chatsLoadedRef.current) setChatsLoading(true);
 		try {
 			const list = await listChats();
 			setChats(
 				list.map((chat) => ({ id: chat.id, title: chatTitle(chat), updatedAt: chat.updated_at }))
 			);
+			chatsLoadedRef.current = true;
+			setChatsError(false);
 		} catch {
-			setChatsError(true);
+			if (chatsLoadedRef.current) toast.error('Could not refresh the chat list.');
+			else setChatsError(true);
 		} finally {
 			setChatsLoading(false);
 		}
@@ -360,7 +379,7 @@ export function ChatPage() {
 			case 'runError': {
 				const assistant = mountAssistant(assistantId);
 				const error = isRecord(event.runError) ? event.runError : {};
-				assistant.body = typeof error.error === 'string' ? error.error : 'The chat run failed.';
+				assistant.body = runErrorMessage(typeof error.error === 'string' ? error.error : '');
 				assistant.streaming = false;
 				settleCells(assistant.cells);
 				return;

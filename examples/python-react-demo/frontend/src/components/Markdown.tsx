@@ -73,9 +73,10 @@ function parse(text: string): string {
 type Props = {
 	renderedHtml?: string;
 	content?: string;
+	muted?: boolean;
 };
 
-export function Markdown({ renderedHtml = '', content = '' }: Props) {
+export function Markdown({ renderedHtml = '', content = '', muted = false }: Props) {
 	const [parsedContent, setParsedContent] = useState(() => parse(content));
 	const lastParsedText = useRef(content);
 	const lastParsedAt = useRef(Date.now());
@@ -95,13 +96,20 @@ export function Markdown({ renderedHtml = '', content = '' }: Props) {
 
 	const html = renderedHtml.trim() ? sanitize(renderedHtml) : parsedContent;
 
+	const tone = muted ? ` ${styles.mdMuted}` : '';
+
 	if (html) {
 		// Allowlist-sanitized above.
 		// The bare `md` class is a stable hook other components style via :global().
-		return <div className={`md ${styles.md}`} dangerouslySetInnerHTML={{ __html: html }} />;
+		return (
+			<div
+				className={`md ${styles.md}${tone}`}
+				dangerouslySetInnerHTML={{ __html: html }}
+			/>
+		);
 	}
 	if (content) {
-		return <p className={`md-plain ${styles.mdPlain}`}>{content}</p>;
+		return <p className={`md-plain ${styles.mdPlain}${muted ? ` ${styles.mdPlainMuted}` : ''}`}>{content}</p>;
 	}
 	return null;
 }

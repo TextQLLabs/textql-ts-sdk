@@ -8,14 +8,17 @@ main.py at startup.
 import asyncio
 import json
 import logging
+import re
 from contextlib import aclosing
 from typing import Any, AsyncGenerator, cast, Optional
+from urllib.parse import urljoin, urlparse
 
 logger = logging.getLogger(__name__)
 
 
+import httpx
 from fastapi import APIRouter, HTTPException, Path, Query
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, Field
 
 from google.protobuf.json_format import MessageToDict
@@ -569,3 +572,120 @@ async def close_chat(chat_id: str = Path(..., description="Chat ID to close")):
     """
     logger.info("[close_chat] client closed | chat_id=%s", chat_id)
     return {"chat_id": chat_id, "status": "closed_client_side"}
+
+
+# ---------------------------------------------------------------------------
+# Preview proxy
+# ---------------------------------------------------------------------------
+
+_USERCONTENT_HOST = "textqlusercontent.com"
+_APP_HOST = "app.textql.com"
+
+# Mirrors frontend/src/lib/chartFitShim.ts — charts are measured in the iframe
+# and posted out so the panel can scale them to fit.
+_CHART_FIT_SHIM = """
+<style>html,body{margin:0!important;padding:0!important;}</style>
+<script>(function(){var lw=0,lh=0;function measure(){var d=document.documentElement,b=document.body;var w=Math.max(d.scrollWidth,b?b.scrollWidth:0,d.offsetWidth);var h=Math.max(d.scrollHeight,b?b.scrollHeight:0,d.offsetHeight);if(w&&h&&(w!==lw||h!==lh)){lw=w;lh=h;try{parent.postMessage({__chartFit:true,w:w,h:h},'*');}catch(e){}}}window.addEventListener('load',measure);[60,250,600,1200].forEach(function(t){setTimeout(measure,t);});try{new ResizeObserver(measure).observe(document.documentElement);}catch(e){}})();</script>
+"""
+
+_HEAD_RE = re.compile(r"<head[^>]*>", re.IGNORECASE)
+
+_DROPPED_HEADERS = {
+    "x-frame-options",
+    "content-encoding",
+    "content-length",
+    "transfer-encoding",
+    "connection",
+    "keep-alive",
+}
+
+
+def _is_allowed_preview_host(hostname: str) -> bool:
+    return (
+        hostname == _USERCONTENT_HOST
+        or hostname.endswith(f".{_USERCONTENT_HOST}")
+        or hostname == _APP_HOST
+    )
+
+
+def _preview_headers(upstream: httpx.Headers) -> dict[str, str]:
+    headers = {
+        key: value
+        for key, value in upstream.items()
+        if key.lower() not in _DROPPED_HEADERS
+    }
+    headers["content-disposition"] = "inline"
+    headers["content-security-policy"] = "sandbox allow-scripts"
+    return headers
+
+
+def _inject_base_href(html: str, document_url: str) -> str:
+    """Point relative sub-resources back at the upstream directory.
+
+    Data-app HTML loads its runtime with relative URLs (`./modules/app.js`, the
+    `./_runtime/...` importmap). Served through this same-origin proxy those
+    would resolve against our host and 404, so a <base> restores the upstream
+    origin, which allow-lists its own directory and serves `access-control-
+    allow-origin: *`.
+    """
+    base_tag = f'<base href="{urljoin(document_url, ".")}">'
+    match = _HEAD_RE.search(html)
+    if match:
+        return html[: match.end()] + base_tag + html[match.end() :]
+    return base_tag + html
+
+
+@router.get("/preview-proxy")
+async def preview_proxy(
+    url: str = Query(..., description="Absolute upstream preview URL"),
+    fit: Optional[str] = Query(None, description="Pass 'chart' to inject the fit shim"),
+):
+    """Serve a preview asset same-origin.
+
+    Preview assets live on textqlusercontent.com (and some sandbox embeds on
+    app.textql.com), which only allow framing from the main TextQL app — a
+    localhost iframe gets "refused to connect" and images 404 against the dev
+    server. The frontend rewrites those URLs here via `toEmbeddablePreviewUrl`.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise HTTPException(status_code=400, detail="Invalid protocol")
+    if not _is_allowed_preview_host(parsed.hostname or ""):
+        raise HTTPException(status_code=403, detail="Host not allowed")
+
+    client = httpx.AsyncClient(follow_redirects=True, timeout=30.0)
+    try:
+        request = client.build_request("GET", url)
+        upstream = await client.send(request, stream=True)
+    except httpx.HTTPError as err:
+        await client.aclose()
+        logger.error("[preview_proxy] upstream failed | url=%s error=%s", url, err)
+        raise HTTPException(status_code=502, detail="Preview fetch failed") from err
+
+    content_type = upstream.headers.get("content-type", "")
+    headers = _preview_headers(upstream.headers)
+
+    if upstream.is_success and "text/html" in content_type:
+        try:
+            await upstream.aread()
+            html = _inject_base_href(upstream.text, str(upstream.url))
+        finally:
+            await upstream.aclose()
+            await client.aclose()
+        if fit == "chart":
+            html = (
+                html.replace("</body>", f"{_CHART_FIT_SHIM}</body>")
+                if "</body>" in html
+                else html + _CHART_FIT_SHIM
+            )
+        return Response(content=html, status_code=upstream.status_code, headers=headers)
+
+    async def body() -> AsyncGenerator[bytes, None]:
+        try:
+            async for chunk in upstream.aiter_bytes():
+                yield chunk
+        finally:
+            await upstream.aclose()
+            await client.aclose()
+
+    return StreamingResponse(body(), status_code=upstream.status_code, headers=headers)

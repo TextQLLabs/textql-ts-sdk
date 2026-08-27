@@ -10,7 +10,7 @@ import {
 	usePreviewPanel,
 	type PreviewItem
 } from '../lib/previewPanel';
-import { toEmbeddablePreviewUrl } from '../lib/previewUrl';
+import { PREVIEW_PROXY_PATH, toEmbeddablePreviewUrl } from '../lib/previewUrl';
 import { Markdown } from './Markdown';
 import { PierreCode } from './PierreCode';
 
@@ -222,7 +222,7 @@ export function PreviewPanel() {
 	const isChart = item ? CHART_TYPES.has(previewKind(item)) : false;
 	// For proxied chart URLs, ask the proxy to inject the fit shim.
 	const embedUrl =
-		isChart && rawEmbedUrl?.startsWith('/api/preview-proxy')
+		isChart && rawEmbedUrl?.startsWith(PREVIEW_PROXY_PATH)
 			? `${rawEmbedUrl}&fit=chart`
 			: rawEmbedUrl;
 
@@ -266,7 +266,7 @@ export function PreviewPanel() {
 		if (isImage(preview) || isTable(preview)) return false;
 		if (isHtmlEmbed(preview) || isPdf(preview)) return true;
 		// Unknown typed URL on the preview proxy — embed rather than <a download>.
-		return Boolean(embedUrl.startsWith('/asset/') || embedUrl.startsWith('/api/preview-proxy'));
+		return Boolean(embedUrl.startsWith('/asset/') || embedUrl.startsWith(PREVIEW_PROXY_PATH));
 	}
 
 	function onResizePointerDown(event: React.PointerEvent<HTMLButtonElement>) {
