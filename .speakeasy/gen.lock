@@ -3,23 +3,23 @@ id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
   docChecksum: ce57ccbd13fd199e98ffa69a574e61a4
   docVersion: 1.0.0
-  speakeasyVersion: 1.795.3
-  generationVersion: 2.932.9
-  releaseVersion: 1.4.21
-  configChecksum: 5ae6a55e0452801fe2395b20ba1fc362
+  speakeasyVersion: 1.796.0
+  generationVersion: 2.932.15
+  releaseVersion: 1.4.22
+  configChecksum: 970b382335ca43d28f460770d3e8204c
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 000b422d-69a7-4f5e-9df0-c580d05a8e65
-  pristine_commit_hash: b9a1cd25dd8df7355d5ccdba4583c9e6bd530134
-  pristine_tree_hash: e71ca59063014f47ac83ea1edaf228c6874375c2
+  generation_id: 59986bf2-25d6-4075-a97d-5aedc1a7d0b6
+  pristine_commit_hash: 618dfb0f86ae50947f3e3d2412ccd3e67c34bdff
+  pristine_tree_hash: f6385f8e9cc82a1eb13704d270502c53b5ca6f79
 features:
   typescript:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.4
     constsAndDefaults: 0.1.14
-    core: 3.31.5
+    core: 3.31.6
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     devContainers: 2.90.1
@@ -9808,12 +9808,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:1e3b083f549adba6a30f056b866e0998b8f07ef7
-    pristine_git_object: 91863e8103e5059390554226b69f5853957b3dd0
+    last_write_checksum: sha1:40b4f55f5603895224a1f7677a8fb9554d257d94
+    pristine_git_object: 8dbc72df12809b84b6be4cf784a90574bd9266ea
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:4e03eb0fb5c1308838ca06446f59430af4ab7de2
-    pristine_git_object: fa01245c17da0c0c0ea3239c9e5c52173d1e7982
+    last_write_checksum: sha1:721b23ec67de1fdf3709d5dd2c11e1206174e1b9
+    pristine_git_object: 8ec8267bdb41ed5fca0c6aa250558bcb97b2c0bb
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11468,12 +11468,12 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:685d9df5facbcdaf661795644595c9aa2313290b
-    pristine_git_object: 1d78b724c8c4a400848b9e2e6f4f3e9de10bf43e
+    last_write_checksum: sha1:56dad5c824e5aba0de9936535df65d8dfdeef77a
+    pristine_git_object: adca47ba2f3c84ed88f94407b103cc3d3e284300
   src/lib/encodings.ts:
     id: 3bd8ead98afd
-    last_write_checksum: sha1:7533dcb79b22b8c84ac7b90aec94317d12bad5f8
-    pristine_git_object: 194a5c58800befc83f6838020550f973eda549d9
+    last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
+    pristine_git_object: e2bcb0da4968c2f30c226b94267ddf37ed9e627d
   src/lib/env.ts:
     id: c52972a3b198
     last_write_checksum: sha1:272ba8696e417680f75bacaac4e858c280a2f8d2
