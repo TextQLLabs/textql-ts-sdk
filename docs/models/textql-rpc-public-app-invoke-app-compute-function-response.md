@@ -10,6 +10,6 @@ let value: TextqlRpcPublicAppInvokeAppComputeFunctionResponse = {};
 
 ## Fields
 
-| Field                     | Type                      | Required                  | Description               |
-| ------------------------- | ------------------------- | ------------------------- | ------------------------- |
-| `resultJson`              | *string*                  | :heavy_minus_sign:        | running \| stopped \| error |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `resultJson`       | *string*           | :heavy_minus_sign: | N/A                |

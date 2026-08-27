@@ -1,6 +1,6 @@
 # TextqlRpcPublicChatCellDurationMs34
 
-cells_v5.duration_ms — wall-clock this cell took
+LLM-generated summary of what this tool call does
 
 
 ## Supported Types

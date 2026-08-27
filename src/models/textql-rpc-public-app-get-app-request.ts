@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppGetAppRequest = {
+  /**
+   * signed /asset/apptree viewer URL for the published gallery tree
+   */
   appId?: string | undefined;
 };
 

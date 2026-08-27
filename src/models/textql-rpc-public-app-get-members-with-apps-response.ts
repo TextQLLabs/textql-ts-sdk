@@ -12,9 +12,6 @@ import {
   TextqlRpcIdentityMemberPreview$inboundSchema,
 } from "./textql-rpc-identity-member-preview.js";
 
-/**
- * List responses omit code (heavyweight); fetch a single app for it.
- */
 export type TextqlRpcPublicAppGetMembersWithAppsResponse = {
   members?: Array<TextqlRpcIdentityMemberPreview> | undefined;
 };

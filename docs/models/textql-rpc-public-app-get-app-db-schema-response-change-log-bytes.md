@@ -1,6 +1,6 @@
 # TextqlRpcPublicAppGetAppDBSchemaResponseChangeLogBytes
 
-DuckDB type name, e.g. "VARCHAR", "BIGINT"
+Routing observability: warm | warm_fallback | tql | sql.
 
 
 ## Supported Types

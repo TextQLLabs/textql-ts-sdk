@@ -10,6 +10,6 @@ let value: TextqlRpcPublicAppDeleteAppRequest = {};
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `appId`            | *string*           | :heavy_minus_sign: | N/A                |
+| Field                                   | Type                                    | Required                                | Description                             |
+| --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| `appId`                                 | *string*                                | :heavy_minus_sign:                      | full replacement for the calling member |

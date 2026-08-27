@@ -24,8 +24,17 @@ export type TextqlRpcPublicAppComputeFunction = {
   name?: string | undefined;
   description?: string | undefined;
   params?: Array<TextqlRpcPublicAppComputeFunctionParam> | undefined;
+  /**
+   * Filter by specific folder
+   */
   returns?: string | null | undefined;
+  /**
+   * Only show apps with no folder
+   */
   code?: string | undefined;
+  /**
+   * Only apps shared with the caller (not authored by them)
+   */
   tqlPath?: string | null | undefined;
   tql?: string | null | undefined;
   /**

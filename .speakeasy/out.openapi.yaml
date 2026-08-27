@@ -17276,6 +17276,7 @@ components:
         orgId:
           type: string
           title: org_id
+          description: the COMPLETE tree; files omitted here are deleted
         creatorId:
           type: string
           title: creator_id
@@ -17469,18 +17470,20 @@ components:
         name:
           type: string
           title: name
+          description: running | stopped | error
         type:
           type: string
           title: type
+          description: import/exec failure of the author module
         nullable:
           type: boolean
           title: nullable
         primaryKey:
           type: boolean
           title: primary_key
+          description: tail of the server process log, redacted
       title: AppDBColumn
       additionalProperties: false
-      description: View analytics
     textql.rpc.public.app.AppDBTable:
       type: object
       properties:
@@ -17511,7 +17514,7 @@ components:
         appId:
           type: string
           title: app_id
-          description: full replacement for the calling member
+          description: the resolved default after the change; unset when cleared
       title: AppHeartbeatRequest
       additionalProperties: false
     textql.rpc.public.app.AppMemberActivityRow:
@@ -17570,7 +17573,6 @@ components:
         id:
           type: string
           title: id
-          description: normalized relative path, forward slashes, no .. or leading /
         appId:
           type: string
           title: app_id
@@ -17632,7 +17634,6 @@ components:
           nullable: true
       title: AppVersion
       additionalProperties: false
-      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.AppViewerInfo:
       type: object
       properties:
@@ -17646,7 +17647,6 @@ components:
           type: integer
           title: view_count
           format: int32
-          description: Prefer this git commit SHA when set; else version_number selects a legacy db-backed row.
         displayName:
           type: string
           title: display_name
@@ -17658,6 +17658,13 @@ components:
           title: recent_view_times
       title: AppViewerInfo
       additionalProperties: false
+      description: |-
+        AppServer declares whether the app runs an optional persistent server: a
+         long-lived python process in the app's dedicated worker. Its handlers serve
+         webhook deliveries and server-handled compute functions, and module globals
+         persist between requests (until the worker recycles). The server's source is
+         not stored here — it lives in the app's file tree under `server/`, with
+         `server/main.py` as the entry module (importing sibling `server/*.py` files).
     textql.rpc.public.app.Capability:
       type: object
       properties:
@@ -17667,7 +17674,7 @@ components:
         name:
           type: string
           title: name
-          description: string | number | boolean | object | array
+          description: whether the caller may edit this app (HasAppWriteAccess)
           nullable: true
         connectorId:
           type: integer
@@ -17711,7 +17718,6 @@ components:
         name:
           type: string
           title: name
-          description: False when the document predates tree publishing and has no runtime to overwrite.
         type:
           type: string
           title: type
@@ -17739,13 +17745,16 @@ components:
         returns:
           type: string
           title: returns
+          description: Filter by specific folder
           nullable: true
         code:
           type: string
           title: code
+          description: Only show apps with no folder
         tqlPath:
           type: string
           title: tql_path
+          description: Only apps shared with the caller (not authored by them)
           nullable: true
         tql:
           type: string
@@ -17825,6 +17834,7 @@ components:
         appId:
           type: string
           title: app_id
+          description: full replacement for the calling member
       title: DeleteAppRequest
       additionalProperties: false
     textql.rpc.public.app.DuplicateAppRequest:
@@ -17840,6 +17850,7 @@ components:
       properties:
         app:
           title: app
+          description: optional; empty = current default vendor set
           $ref: '#/components/schemas/textql.rpc.public.app.App'
       title: DuplicateAppResponse
       additionalProperties: false
@@ -17865,7 +17876,7 @@ components:
             - string
           title: change_log_bytes
           format: int64
-          description: DuckDB type name, e.g. "VARCHAR", "BIGINT"
+          description: 'Routing observability: warm | warm_fallback | tql | sql.'
       title: GetAppDBSchemaResponse
       additionalProperties: false
     textql.rpc.public.app.GetAppDBTablePreviewRequest:
@@ -17874,6 +17885,7 @@ components:
         appId:
           type: string
           title: app_id
+          description: normalized relative path, forward slashes, no .. or leading /
         tableName:
           type: string
           title: table_name
@@ -17883,6 +17895,7 @@ components:
           format: int32
       title: GetAppDBTablePreviewRequest
       additionalProperties: false
+      description: AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
     textql.rpc.public.app.GetAppDBTablePreviewResponse:
       type: object
       properties:
@@ -17916,6 +17929,7 @@ components:
         appId:
           type: string
           title: app_id
+          description: signed /asset/apptree viewer URL for the published gallery tree
       title: GetAppRequest
       additionalProperties: false
     textql.rpc.public.app.GetAppResponse:
@@ -17923,6 +17937,7 @@ components:
       properties:
         app:
           title: app
+          description: '''app'' | ''dashboard'''
           $ref: '#/components/schemas/textql.rpc.public.app.App'
         hasWritePermission:
           type: boolean
@@ -17935,6 +17950,7 @@ components:
         appId:
           type: string
           title: app_id
+          description: False when the document predates tree publishing and has no runtime to overwrite.
         versionNumber:
           type: integer
           title: version_number
@@ -17945,9 +17961,6 @@ components:
           nullable: true
       title: GetAppVersionRequest
       additionalProperties: false
-      description: |-
-        Version history entry. Git-backed apps derive one per library commit (published_by/at
-         carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
     textql.rpc.public.app.GetAppVersionResponse:
       type: object
       properties:
@@ -17964,6 +17977,12 @@ components:
           title: app_id
       title: GetAppViewStatsRequest
       additionalProperties: false
+      description: |-
+        ComputeFunction is a declared server-side function invocable from the app via the bridge.
+         Exactly one of code (python, runs on the app's worker), sql (plain SQL on the app's
+         private DB), tql (inline TQL source), or tql_path (a Context Library .tql) must be set.
+         TQL variants are real TQL (compiled at save time) executed against a connector; sql is
+         the app-state path (:name params bound server-side, reserved :_now / :_uuid).
     textql.rpc.public.app.GetAppViewStatsResponse:
       type: object
       properties:
@@ -17996,7 +18015,6 @@ components:
           title: members
       title: GetMembersWithAppsResponse
       additionalProperties: false
-      description: List responses omit code (heavyweight); fetch a single app for it.
     textql.rpc.public.app.InvokeAppComputeFunctionRequest:
       type: object
       properties:
@@ -18017,7 +18035,6 @@ components:
         resultJson:
           type: string
           title: result_json
-          description: running | stopped | error
       title: InvokeAppComputeFunctionResponse
       additionalProperties: false
     textql.rpc.public.app.ListAppActivitySinceRequest:
@@ -18124,7 +18141,6 @@ components:
           type: integer
           title: total_count
           format: int32
-          description: whether the caller may edit this app (HasAppWriteAccess)
       title: ListAppsResponse
       additionalProperties: false
     textql.rpc.public.app.ListMyAppMemberActivityRequest:
@@ -18287,23 +18303,24 @@ components:
         primitiveType:
           type: string
           title: primitive_type
-          description: optional; empty = current default vendor set
         primitiveId:
           type: string
           title: primitive_id
-          description: 'optional; empty = default indigo #6366f1'
         favorited:
           type: boolean
           title: favorited
+          description: '"" = brand/default accent'
       title: SetFavoriteRequest
       additionalProperties: false
+      description: |-
+        A named Data App design system: the file tree is the source of truth, the
+         token fields mirror theme.json ("" = brand/default). All fields server-owned.
     textql.rpc.public.app.SetFavoriteResponse:
       type: object
       properties:
         favorited:
           type: boolean
           title: favorited
-          description: signed /asset/apptree viewer URL for the published gallery tree
       title: SetFavoriteResponse
       additionalProperties: false
     textql.rpc.public.app.StreamAppActivityRequest:
@@ -18414,6 +18431,7 @@ components:
       properties:
         app:
           title: app
+          description: '''<kind>:<id>'', first = top of the sidebar'
           $ref: '#/components/schemas/textql.rpc.public.app.App'
       title: UpdateAppResponse
       additionalProperties: false
@@ -20049,10 +20067,10 @@ components:
         searchTerm:
           type: string
           title: search_term
+          description: create | edit
         appId:
           type: string
           title: app_id
-          description: Set for single-app lookup
         totalCount:
           type: integer
           title: total_count
@@ -20060,6 +20078,7 @@ components:
         errorMessage:
           type: string
           title: error_message
+          description: in-product viewer route
           nullable: true
         apps:
           type: array
@@ -20068,6 +20087,7 @@ components:
           title: apps
       title: ListAppsCell
       additionalProperties: false
+      description: 'create_design_system tool: authors/edits an org Data App design system.'
     textql.rpc.public.cells.ListDashboardsCell:
       type: object
       properties:
@@ -21984,7 +22004,6 @@ components:
             toolSummary:
               type: string
               title: tool_summary
-              description: LLM-generated summary of what this tool call does
               nullable: true
             durationMs:
               type:
@@ -21992,7 +22011,7 @@ components:
                 - string
               title: duration_ms
               format: int64
-              description: cells_v5.duration_ms — wall-clock this cell took
+              description: LLM-generated summary of what this tool call does
               nullable: true
         - oneOf:
             - properties:

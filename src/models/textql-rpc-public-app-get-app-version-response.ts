@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-app-app-version.js";
 
 export type TextqlRpcPublicAppGetAppVersionResponse = {
-  /**
-   * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
-   */
   version?: TextqlRpcPublicAppAppVersion | undefined;
 };
 

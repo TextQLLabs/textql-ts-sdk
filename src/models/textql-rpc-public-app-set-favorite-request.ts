@@ -4,15 +4,18 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * A named Data App design system: the file tree is the source of truth, the
+ *
+ * @remarks
+ *  token fields mirror theme.json ("" = brand/default). All fields server-owned.
+ */
 export type TextqlRpcPublicAppSetFavoriteRequest = {
-  /**
-   * optional; empty = current default vendor set
-   */
   primitiveType?: string | undefined;
-  /**
-   * optional; empty = default indigo #6366f1
-   */
   primitiveId?: string | undefined;
+  /**
+   * "" = brand/default accent
+   */
   favorited?: boolean | undefined;
 };
 

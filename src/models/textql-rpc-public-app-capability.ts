@@ -17,7 +17,7 @@ import {
 export type TextqlRpcPublicAppCapability = {
   type?: string | undefined;
   /**
-   * string | number | boolean | object | array
+   * whether the caller may edit this app (HasAppWriteAccess)
    */
   name?: string | null | undefined;
   connectorId?: number | null | undefined;

@@ -4,13 +4,10 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Version history entry. Git-backed apps derive one per library commit (published_by/at
- *
- * @remarks
- *  carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
- */
 export type TextqlRpcPublicAppGetAppVersionRequest = {
+  /**
+   * False when the document predates tree publishing and has no runtime to overwrite.
+   */
   appId?: string | undefined;
   versionNumber?: number | undefined;
   commitId?: string | null | undefined;

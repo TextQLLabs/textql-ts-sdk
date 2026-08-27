@@ -1,5 +1,7 @@
 # TextqlRpcPublicCellsListAppsCell
 
+create_design_system tool: authors/edits an org Data App design system.
+
 ## Example Usage
 
 ```typescript
@@ -21,8 +23,8 @@ let value: TextqlRpcPublicCellsListAppsCell = {
 
 | Field                                                                                 | Type                                                                                  | Required                                                                              | Description                                                                           |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `searchTerm`                                                                          | *string*                                                                              | :heavy_minus_sign:                                                                    | N/A                                                                                   |
-| `appId`                                                                               | *string*                                                                              | :heavy_minus_sign:                                                                    | Set for single-app lookup                                                             |
+| `searchTerm`                                                                          | *string*                                                                              | :heavy_minus_sign:                                                                    | create \| edit                                                                        |
+| `appId`                                                                               | *string*                                                                              | :heavy_minus_sign:                                                                    | N/A                                                                                   |
 | `totalCount`                                                                          | *number*                                                                              | :heavy_minus_sign:                                                                    | N/A                                                                                   |
-| `errorMessage`                                                                        | *string*                                                                              | :heavy_minus_sign:                                                                    | N/A                                                                                   |
+| `errorMessage`                                                                        | *string*                                                                              | :heavy_minus_sign:                                                                    | in-product viewer route                                                               |
 | `apps`                                                                                | [models.TextqlRpcPublicCellsAppInfo](../models/textql-rpc-public-cells-app-info.md)[] | :heavy_minus_sign:                                                                    | N/A                                                                                   |
