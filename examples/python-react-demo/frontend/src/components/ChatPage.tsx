@@ -84,10 +84,8 @@ const CHAT_STATUS_TEXT = 'm-0 text-center text-[13px] text-muted';
 
 const MESSAGE_BODY =
 	'm-0 text-[14px] leading-[1.65] whitespace-pre-wrap text-text-strong wrap-anywhere max-[560px]:text-[13px]';
-/** The user bubble's own body rule outranks the ≤560px `.message-body`
- *  font-size, so it stays at 14px on narrow screens. */
 const MESSAGE_BODY_YOU =
-	'm-0 text-[14px] leading-[1.45] tracking-[-0.01em] whitespace-pre-wrap text-ink wrap-anywhere';
+	'm-0 text-[13px] leading-[1.45] tracking-[-0.01em] whitespace-pre-wrap text-ink wrap-anywhere';
 
 const MOBILE_SIDEBAR_MQ = '(max-width: 780px)';
 
@@ -544,7 +542,12 @@ export function ChatPage() {
 		previewPanel.openPanel(chatAssets);
 	}
 
-	const showNewChat = messages.length === 0 && !chatLoadError;
+	// The route names a chat we have not replayed yet — a hard refresh on
+	// /chat/:id would otherwise land on the new-chat composer until history
+	// arrives. Switching between loaded chats keeps the old turns on screen.
+	const chatPending =
+		Boolean(routeId) && routeId !== chatId && messages.length === 0 && !chatLoadError;
+	const showNewChat = messages.length === 0 && !chatLoadError && !chatPending;
 	const hasAssets = chatAssets.length > 0;
 
 	return (
@@ -720,7 +723,7 @@ export function ChatPage() {
 					'[&_.preview-panel]:h-full [&_.preview-panel]:min-h-0 [&_.preview-panel]:w-[var(--preview-panel-width,420px)] [&_.preview-panel]:min-w-0 [&_.preview-panel]:flex-none',
 					// Narrow viewports stack the preview under the chat instead.
 					panel.open &&
-						'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
+					'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
 					panel.resizing && 'cursor-col-resize'
 				)}
 				style={{ ['--preview-panel-width' as string]: `${panel.width}px` }}
@@ -728,7 +731,7 @@ export function ChatPage() {
 				<main
 					className={cx(
 						'relative min-h-0 min-w-0 flex-auto bg-paper max-[780px]:h-dvh',
-						showNewChat || chatLoadError
+						showNewChat || chatLoadError || chatPending
 							? 'grid grid-rows-[minmax(0,1fr)]'
 							: 'grid grid-rows-[minmax(0,1fr)_auto]',
 						panel.resizing && 'pointer-events-none contain-layout contain-style'
@@ -771,7 +774,12 @@ export function ChatPage() {
 						)}
 					</div>
 
-					{chatLoadError ? (
+					{chatPending ? (
+						<section className={CHAT_STATUS} aria-label="Loading chat" aria-busy="true">
+							<UnicodeSpinner label="Loading chat" />
+							<p className={CHAT_STATUS_TEXT}>Loading chat…</p>
+						</section>
+					) : chatLoadError ? (
 						<section className={CHAT_STATUS} aria-label="Chat load error">
 							<p className={CHAT_STATUS_TEXT}>{chatLoadError}</p>
 							<div className="flex flex-wrap justify-center gap-1">
@@ -828,7 +836,7 @@ export function ChatPage() {
 												className={cx(
 													'flex max-w-full flex-col',
 													message.role === 'you'
-														? 'w-full gap-1.5 rounded-xl border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none'
+														? 'w-full gap-1.5 rounded-lg border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none'
 														: 'w-full gap-2 border-0 bg-transparent px-0 py-0.5 [&_.streaming-indicator]:mt-1.5 [&_.streaming-indicator]:inline-block'
 												)}
 											>

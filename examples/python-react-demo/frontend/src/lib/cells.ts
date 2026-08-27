@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react';
+
 import type { LucideIcon } from 'lucide-react';
 import {
 	AppWindow,
@@ -27,9 +29,9 @@ import {
 	SquareSlash,
 	Table,
 	Terminal,
-	Users,
-	Wrench
+	Users
 } from 'lucide-react';
+import { McpIcon } from '../components/McpIcon';
 import { CellLifecycle as Lifecycle, type CellLifecycle } from './lifecycle';
 import { isRecord } from './utils';
 
@@ -154,7 +156,8 @@ export function getBatchStartedAtMs(cells: CellLike[]): number | null {
 	return earliest;
 }
 
-export type IconComponent = LucideIcon;
+/** A lucide icon, or anything that takes the same `size` / `className` props. */
+export type IconComponent = LucideIcon | ComponentType<{ size?: number; className?: string }>;
 
 /** Find the oneof payload key, e.g. "sqlCell" | "mdCell" | "mcpToolCell". */
 export function getCellCase(cell: CellLike): string | undefined {
@@ -182,7 +185,7 @@ const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
 	wsCell: { name: 'Web Search', icon: Globe },
 	linkedinSearchCell: { name: 'LinkedIn Search', icon: Users },
 	metricsCell: { name: 'Metrics', icon: ChartLine },
-	mcpToolCell: { name: 'MCP Tool', icon: Wrench },
+	mcpToolCell: { name: 'MCP Tool', icon: McpIcon },
 	useSkillCell: { name: 'Using skill', icon: SquareSlash },
 	ontologyQueryCell: { name: 'TQL Query', icon: Database },
 	tableauSearchFieldsCell: { name: 'Search Tableau Fields', icon: Search },
