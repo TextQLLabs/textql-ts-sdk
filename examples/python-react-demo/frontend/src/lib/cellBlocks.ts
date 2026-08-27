@@ -8,6 +8,7 @@ import {
 	titleCaseSnake,
 	type CellLike
 } from './cells';
+import { parsePreviewTable } from './dataframePreview';
 import { formatCron } from './cron';
 import { isRecord } from './utils';
 
@@ -18,7 +19,14 @@ export type Block =
 	| { kind: 'kv'; rows: { label: string; value: string }[] }
 	| { kind: 'link'; label: string; href: string }
 	| { kind: 'image'; url: string; alt?: string }
-	| { kind: 'list'; label?: string; items: { title: string; subtitle?: string; href?: string }[] };
+	| { kind: 'list'; label?: string; items: { title: string; subtitle?: string; href?: string }[] }
+	| {
+			kind: 'table';
+			label?: string;
+			caption?: string;
+			columns: string[];
+			rows: string[][];
+	  };
 
 function num(value: unknown): string {
 	if (typeof value === 'number') return String(value);
@@ -27,7 +35,7 @@ function num(value: unknown): string {
 }
 
 /** Finished wall-clock only — never surface placeholder 0 ms while executing. */
-function formatExecTimeMs(value: unknown): string {
+export function formatExecTimeMs(value: unknown): string {
 	const n =
 		typeof value === 'number'
 			? value
@@ -79,6 +87,24 @@ function md(blocks: Block[], label: string, value: unknown) {
 
 function code(blocks: Block[], label: string, value: unknown, lang?: string) {
 	if (str(value)) blocks.push({ kind: 'code', label: label || undefined, text: str(value), lang });
+}
+
+/** A dataframe preview as a real table, or the raw text when it isn't one. */
+function preview(blocks: Block[], label: string, value: unknown) {
+	const raw = str(value);
+	if (!raw) return;
+	const table = parsePreviewTable(raw);
+	if (!table) {
+		blocks.push({ kind: 'code', label, text: raw });
+		return;
+	}
+	blocks.push({
+		kind: 'table',
+		label,
+		caption: table.caption || undefined,
+		columns: table.columns,
+		rows: table.rows
+	});
 }
 
 function link(blocks: Block[], label: string, href: unknown) {
@@ -173,18 +199,18 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Agent memory', p.agentMemory === true ? 'yes' : '']
 		]);
 		code(b, 'Query', p.query, 'sql');
-		code(b, 'Result', p.dataframePreview);
+		preview(b, 'Result', p.dataframePreview);
 	},
 	tableauSqlCell: (p, b) => {
 		kv(b, [['Datasource', str(p.tableauDatasourceLuid)]]);
 		code(b, 'Query', p.query, 'sql');
-		code(b, 'Result', p.dataframePreview);
+		preview(b, 'Result', p.dataframePreview);
 	},
 	powerbiDaxCell: (p, b) => {
 		authNote(b, p);
 		kv(b, [['Dataset', str(p.datasetId)]]);
 		code(b, 'DAX', p.daxQuery, 'sql');
-		code(b, 'Result', p.dataframePreview);
+		preview(b, 'Result', p.dataframePreview);
 	},
 	metricsCell: (p, b) => {
 		kv(b, [
@@ -193,7 +219,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		]);
 		code(b, 'Query', p.query);
 		code(b, 'Generated SQL', p.generatedSql, 'sql');
-		code(b, 'Result', p.dataframePreview);
+		preview(b, 'Result', p.dataframePreview);
 		text(b, 'Error', p.errorMessage);
 	},
 	ontologyQueryCell: (p, b) => {
@@ -207,7 +233,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			code(b, 'Params', prettyJson(p.paramsJson), 'json');
 		}
 		code(b, 'SQL', p.sql, 'sql');
-		code(b, 'Result', p.dataframePreview);
+		preview(b, 'Result', p.dataframePreview);
 	},
 	ontologySearchMetricsCell: (p, b) => {
 		kv(b, [
@@ -247,8 +273,8 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		code(b, 'Code', p.code, 'python');
 		const output = strs(p.output).join('\n');
 		code(b, 'Output', output);
-		const preview = strs(p.dataframePreview).join('\n\n');
-		code(b, 'Dataframes', preview);
+		const previewText = strs(p.dataframePreview).join('\n\n');
+		preview(b, 'Dataframes', previewText);
 		imageRefs(b, p.images);
 		for (const chart of recs(p.charts)) {
 			image(b, str(chart.pngUrl) || str(chart.url), str(chart.title));
@@ -406,7 +432,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			href: str(file.webViewLink) || undefined
 		}));
 		list(b, 'Files', items);
-		code(b, 'Preview', p.dataframePreview);
+		preview(b, 'Preview', p.dataframePreview);
 		text(b, 'Error', p.errorMessage);
 	},
 	googleDriveContentCell: (p, b) => {

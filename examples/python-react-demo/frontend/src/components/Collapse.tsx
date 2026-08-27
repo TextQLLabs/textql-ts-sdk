@@ -22,6 +22,10 @@ export function Collapse({ open, duration = 220, className, children }: Props) {
 		if (open) setRendered(true);
 	}, [open]);
 
+	// `rendered` is a dependency because opening is two renders: the first only
+	// flips `rendered`, so the element does not exist yet and there is nothing to
+	// measure. Without it the effect never re-runs against the mounted node and
+	// the body just appears at full height.
 	useLayoutEffect(() => {
 		const el = ref.current;
 		// Nothing to animate when collapsing an already-unmounted body.
@@ -35,9 +39,6 @@ export function Collapse({ open, duration = 220, className, children }: Props) {
 		}
 
 		const style = getComputedStyle(el);
-		const height = el.scrollHeight;
-		const paddingTop = parseFloat(style.paddingTop) || 0;
-		const paddingBottom = parseFloat(style.paddingBottom) || 0;
 		const collapsed = {
 			height: '0px',
 			opacity: 0,
@@ -45,29 +46,44 @@ export function Collapse({ open, duration = 220, className, children }: Props) {
 			paddingBottom: '0px'
 		};
 		const expanded = {
-			height: `${height}px`,
+			height: `${el.scrollHeight}px`,
 			opacity: 1,
-			paddingTop: `${paddingTop}px`,
-			paddingBottom: `${paddingBottom}px`
+			paddingTop: style.paddingTop,
+			paddingBottom: style.paddingBottom
 		};
 
 		el.style.overflow = 'hidden';
 		const animation = el.animate(open ? [collapsed, expanded] : [expanded, collapsed], {
 			duration,
-			easing: 'cubic-bezier(0.33, 1, 0.68, 1)'
+			easing: 'cubic-bezier(0.33, 1, 0.68, 1)',
+			// Without a forwards fill the element reverts to its base style the
+			// instant the animation ends, so a closing body snaps back to full
+			// height for one frame before React unmounts it — a visible flash.
+			fill: 'forwards'
 		});
 
+		let superseded = false;
 		animation.finished
 			.then(() => {
-				if (open) el.style.overflow = '';
-				else setRendered(false);
+				if (superseded) return;
+				if (!open) {
+					setRendered(false);
+					return;
+				}
+				// Drop the fill once open, or the body would stay pinned to the height
+				// it had when it opened and clip whatever streams in after.
+				animation.cancel();
+				el.style.overflow = '';
 			})
 			.catch(() => {
 				/* superseded by a newer toggle */
 			});
 
-		return () => animation.cancel();
-	}, [open, duration]);
+		return () => {
+			superseded = true;
+			animation.cancel();
+		};
+	}, [open, rendered, duration]);
 
 	if (!rendered) return null;
 

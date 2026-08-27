@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { asRecords, asString, asStrings, getCellPayload, type CellLike } from '../lib/cells';
+import { CELL_BODY, CELL_META } from '../lib/cellText';
 import { cx } from '../lib/cx';
+import { CellShell } from './CellShell';
 
 // onAnswered lets the page re-attach its watch stream so the resumed run's
 // cells show up (submitting halts → resumes the run on the backend).
@@ -36,17 +38,17 @@ function inputType(input: Record<string, unknown>): 'text' | 'multiline' | 'pass
 }
 
 const HEAD =
-	'flex items-center justify-between gap-2 text-[12px] font-semibold tracking-[0.01em] text-muted';
-const DESC = 'm-0 text-[11.5px] not-italic text-muted';
+	cx(CELL_BODY, 'flex items-center justify-between gap-2 font-semibold tracking-[0.01em] text-muted');
+const DESC = cx(CELL_META, 'm-0 not-italic text-muted');
 /** Selectable card: neutral by default, accent border + tint when picked. */
 const OPTION =
-	'flex w-full cursor-pointer items-start gap-2 rounded-xs border px-[0.55rem] py-[0.4rem] text-left text-[12.5px] text-ink transition-[border-color,background] duration-[0.12s] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent';
+	cx(CELL_BODY, 'flex w-full cursor-pointer items-start gap-2 rounded-xs border px-[0.55rem] py-[0.4rem] text-left text-ink transition-[border-color,background] duration-[0.12s] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent');
 const TEXT_INPUT =
-	'w-full rounded-xs border border-line bg-elevate px-[0.55rem] py-[0.35rem] text-[12.5px] text-ink focus-visible:border-transparent focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-accent';
+	cx(CELL_BODY, 'w-full rounded-xs border border-line bg-elevate px-[0.55rem] py-[0.35rem] text-ink focus-visible:border-transparent focus-visible:outline-2 focus-visible:-outline-offset-1 focus-visible:outline-accent');
 const BTN_SUBMIT =
-	'cursor-pointer rounded-xs border-0 bg-accent px-[0.85rem] py-[0.32rem] text-[12px] font-medium text-white transition-[background] duration-[0.12s] hover:bg-[color-mix(in_srgb,var(--color-accent)_88%,#000)] disabled:cursor-not-allowed disabled:opacity-50';
+	cx(CELL_BODY, 'cursor-pointer rounded-xs border-0 bg-accent px-[0.85rem] py-[0.32rem] font-medium text-white transition-[background] duration-[0.12s] hover:bg-[color-mix(in_srgb,var(--color-accent)_88%,#000)] disabled:cursor-not-allowed disabled:opacity-50');
 const BTN_SKIP =
-	'cursor-pointer border-0 bg-transparent px-[0.3rem] py-[0.32rem] text-[12px] text-muted hover:text-ink disabled:cursor-not-allowed disabled:opacity-50';
+	cx(CELL_BODY, 'cursor-pointer border-0 bg-transparent px-[0.3rem] py-[0.32rem] text-muted hover:text-ink disabled:cursor-not-allowed disabled:opacity-50');
 
 /** Custom radio/checkbox indicator so the picked state reads clearly. */
 function Indicator({ chosen, round }: { chosen: boolean; round: boolean }) {
@@ -177,7 +179,7 @@ export function QuestionsCell({ cell, onAnswered }: Props) {
 
 		return (
 			<div className="flex flex-col gap-[0.35rem]">
-				<p className="m-0 text-[13px] font-medium">{asString(q.question)}</p>
+				<p className={cx(CELL_BODY, 'm-0 font-medium')}>{asString(q.question)}</p>
 				{asString(q.explanation) && <p className={DESC}>{asString(q.explanation)}</p>}
 
 				{kind === 'choice' || kind === 'multichoice' ? (
@@ -274,71 +276,73 @@ export function QuestionsCell({ cell, onAnswered }: Props) {
 	}
 
 	return (
-		<section className="my-1 flex flex-col gap-[0.7rem] rounded-sm border border-line bg-ink/3.5 px-[0.85rem] py-3 text-[12.5px] text-ink">
-			{pending && !done ? (
-				<>
-					<header className={HEAD}>
-						<span>Please answer to continue</span>
-						{questions.length > 1 && (
-							<span className="flex-none font-semibold tabular-nums text-muted">
-								{step + 1}/{questions.length}
-							</span>
-						)}
-					</header>
+		<CellShell className={cx(CELL_BODY, 'my-1 text-ink')}>
+			<div className="flex flex-col gap-[0.7rem]">
+				{pending && !done ? (
+					<>
+						<header className={HEAD}>
+							<span>Please answer to continue</span>
+							{questions.length > 1 && (
+								<span className="flex-none font-semibold tabular-nums text-muted">
+									{step + 1}/{questions.length}
+								</span>
+							)}
+						</header>
 
-					{questions[step] && renderQuestionCard(questions[step]!, step)}
+						{questions[step] && renderQuestionCard(questions[step]!, step)}
 
-					<div className="mt-[0.15rem] flex items-center gap-[0.6rem]">
-						{step > 0 && (
+						<div className="mt-[0.15rem] flex items-center gap-[0.6rem]">
+							{step > 0 && (
+								<button
+									type="button"
+									className={BTN_SKIP}
+									disabled={submitting}
+									onClick={() => setStep((s) => Math.max(0, s - 1))}
+								>
+									Back
+								</button>
+							)}
+							{isLast ? (
+								<button
+									type="button"
+									className={BTN_SUBMIT}
+									disabled={submitting}
+									onClick={() => send('submit')}
+								>
+									Submit
+								</button>
+							) : (
+								<button
+									type="button"
+									className={BTN_SUBMIT}
+									disabled={submitting}
+									onClick={() => setStep((s) => Math.min(questions.length - 1, s + 1))}
+								>
+									Next
+								</button>
+							)}
 							<button
 								type="button"
 								className={BTN_SKIP}
 								disabled={submitting}
-								onClick={() => setStep((s) => Math.max(0, s - 1))}
+								onClick={() => send('dismiss')}
 							>
-								Back
+								Skip
 							</button>
-						)}
-						{isLast ? (
-							<button
-								type="button"
-								className={BTN_SUBMIT}
-								disabled={submitting}
-								onClick={() => send('submit')}
-							>
-								Submit
-							</button>
-						) : (
-							<button
-								type="button"
-								className={BTN_SUBMIT}
-								disabled={submitting}
-								onClick={() => setStep((s) => Math.min(questions.length - 1, s + 1))}
-							>
-								Next
-							</button>
-						)}
-						<button
-							type="button"
-							className={BTN_SKIP}
-							disabled={submitting}
-							onClick={() => send('dismiss')}
-						>
-							Skip
-						</button>
-					</div>
-				</>
-			) : (
-				<>
-					<header className={HEAD}>{dismissed ? 'Questions skipped' : 'Answers submitted'}</header>
-					{questions.map((q, qi) => (
-						<div className="flex flex-col" key={qi}>
-							<span className="font-medium">{asString(q.question)}</span>
-							<span className="text-muted">{answerText(qi) || '—'}</span>
 						</div>
-					))}
-				</>
-			)}
-		</section>
+					</>
+				) : (
+					<>
+						<header className={HEAD}>{dismissed ? 'Questions skipped' : 'Answers submitted'}</header>
+						{questions.map((q, qi) => (
+							<div className="flex flex-col" key={qi}>
+								<span className="font-medium">{asString(q.question)}</span>
+								<span className="text-muted">{answerText(qi) || '—'}</span>
+							</div>
+						))}
+					</>
+				)}
+			</div>
+		</CellShell>
 	);
 }

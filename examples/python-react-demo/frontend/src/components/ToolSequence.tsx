@@ -15,6 +15,7 @@ import {
 	type CellLike,
 	type Segment
 } from '../lib/cells';
+import { CELL_BODY, CELL_LABEL } from '../lib/cellText';
 import { cx } from '../lib/cx';
 import {
 	cellOpensInPreviewPanel,
@@ -36,7 +37,10 @@ const CHEVRON = 'shrink-0 text-[#a1a1aa] transition-transform duration-150 motio
 const STEP_HEADER =
 	'group max-w-full cursor-pointer items-center gap-1 rounded-xs border-0 bg-transparent px-1.5 py-1 text-left';
 const STEP_LABEL =
-	'min-w-0 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] group-hover:text-text-3';
+	cx(
+		CELL_BODY,
+		'min-w-0 overflow-hidden font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] group-hover:text-text-3'
+	);
 
 function assistantHtml(cell: CellLike): string {
 	const payload = getCellPayload(cell);
@@ -159,7 +163,8 @@ export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
 							{/* .shimmer comes from app.css */}
 							<span
 								className={cx(
-									'min-w-0 flex-1 overflow-hidden text-[13px] font-medium text-ellipsis whitespace-nowrap text-muted',
+									CELL_BODY,
+									'min-w-0 flex-1 overflow-hidden font-medium text-ellipsis whitespace-nowrap text-muted',
 									batchRunning && 'shimmer'
 								)}
 							>
@@ -208,7 +213,7 @@ export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
 													<span className="ml-auto inline-flex shrink-0 items-center gap-1.5">
 														{running && <RunningDuration startedAtMs={getCellStartedAtMs(cell)} />}
 														{isAsset && (
-															<span className="text-[11px] font-semibold tracking-[0.02em] text-[#a1a1aa] uppercase group-hover:text-text-3">
+															<span className={cx(CELL_LABEL, 'text-[#a1a1aa] group-hover:text-text-3')}>
 																Open
 															</span>
 														)}

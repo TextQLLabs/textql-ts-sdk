@@ -2,6 +2,7 @@ import { ExternalLink, PanelRightClose, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { withChartFitShim } from '../lib/chartFitShim';
+import { CELL_BODY, CELL_CODE, CELL_LABEL, CELL_META } from '../lib/cellText';
 import { cx } from '../lib/cx';
 import {
 	clampPreviewWidth,
@@ -40,7 +41,7 @@ const CELL = 'max-w-[260px] overflow-hidden px-3 py-[7px] text-left text-ellipsi
 /** Muted, sticky row-number gutter. */
 const ROWNUM =
 	'sticky left-0 w-[1%] max-w-none border-r border-line/55 bg-fill text-right tabular-nums text-muted select-none';
-const EMPTY = 'm-0 text-[13px] leading-normal text-[#a1a1aa]';
+const EMPTY = cx(CELL_BODY, 'm-0 text-[#a1a1aa]');
 
 function typeLabel(previewType: string): string {
 	if (!previewType) return 'File';
@@ -118,7 +119,7 @@ function numericColumns(rows: string[][]): boolean[] {
 
 function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 	if (rows.length === 0 || (rows[0]?.length ?? 0) <= 1) {
-		return <pre className="m-0 overflow-auto rounded-[8px] border border-line bg-elevate px-3 py-2.5 font-mono text-[11.5px] leading-[1.45] whitespace-pre">
+		return <pre className={cx(CELL_CODE, 'm-0 overflow-auto rounded-[8px] border border-line bg-elevate px-3 py-2.5 whitespace-pre')}>
 				{raw}
 			</pre>;
 	}
@@ -126,7 +127,7 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 	return (
 		<>
 			<div className="max-h-full overflow-auto rounded-sm border border-line bg-elevate">
-				<table className="w-full border-separate border-spacing-0 text-[12.5px] text-text-strong">
+				<table className={cx(CELL_BODY, 'w-full border-separate border-spacing-0 text-text-strong')}>
 					<thead>
 						<tr>
 							<th className={cx(CELL, ROWNUM, 'z-2 border-b border-line')}></th>
@@ -135,7 +136,8 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 									key={i}
 									className={cx(
 										CELL,
-										'sticky top-0 z-1 border-b border-line bg-fill text-[11px] font-semibold tracking-[0.02em] text-muted uppercase',
+										CELL_LABEL,
+										'sticky top-0 z-1 border-b border-line bg-fill text-muted',
 										numCols[i] && 'text-right'
 									)}
 									title={h}
@@ -168,7 +170,7 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 				</table>
 			</div>
 			{rows.length - 1 > CSV_ROW_CAP && (
-				<p className="mx-0.5 mt-2 text-[11px] text-muted">
+				<p className={cx(CELL_META, 'mx-0.5 mt-2 text-muted')}>
 					Showing first {CSV_ROW_CAP} of {rows.length - 1} rows
 				</p>
 			)}
@@ -432,10 +434,11 @@ export function PreviewPanel() {
 								title={tab.name}
 								onClick={() => previewPanel.select(tab.id)}
 							>
-								<span className="min-w-0 flex-1 overflow-hidden text-[12px] font-[550] text-ellipsis whitespace-nowrap">{tab.name}</span>
+								<span className={cx(CELL_BODY, 'min-w-0 flex-1 overflow-hidden font-[550] text-ellipsis whitespace-nowrap')}>{tab.name}</span>
 								<span
 									className={cx(
-										'text-[10px] font-medium tracking-[0.03em] text-[#a1a1aa] uppercase',
+										CELL_LABEL,
+										'text-[#a1a1aa]',
 										tab.id === item?.id ? 'inline' : 'hidden'
 									)}
 								>
@@ -467,7 +470,7 @@ export function PreviewPanel() {
 				</button>
 			</header>
 
-			{item?.toolSummary && <p className="m-0 border-b border-line/70 px-3.5 py-2 text-[12px] leading-[1.4] text-[#71717a]">{item.toolSummary}</p>}
+			{item?.toolSummary && <p className={cx(CELL_META, 'm-0 border-b border-line/70 px-3.5 py-2 text-[#71717a]')}>{item.toolSummary}</p>}
 
 			{/* Avoid iframe/layout thrash while dragging the splitter. */}
 			<div
@@ -483,7 +486,7 @@ export function PreviewPanel() {
 			{item?.url && (
 				<footer className="border-t border-line/80 bg-elevate px-3.5 py-2.5">
 					<a
-						className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#2563eb] no-underline hover:underline"
+						className={cx(CELL_BODY, 'inline-flex items-center gap-1.5 font-medium text-[#2563eb] no-underline hover:underline')}
 						href={embedUrl ?? item.url}
 						target="_blank"
 						rel="noreferrer noopener"

@@ -2,6 +2,7 @@ import { ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { getCellPayload, type CellLike } from '../lib/cells';
+import { CELL_BODY } from '../lib/cellText';
 import { cx } from '../lib/cx';
 
 type Props = {
@@ -12,7 +13,10 @@ type Props = {
 
 const ROW =
 	'flex w-full min-h-8 items-center gap-1.5 rounded-sm border-0 bg-transparent px-1.5 py-1 text-left font-[inherit]';
-const LABEL = 'min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-[13px] font-medium text-muted';
+const LABEL = cx(
+	CELL_BODY,
+	'min-w-0 overflow-hidden text-ellipsis whitespace-nowrap font-medium text-muted'
+);
 
 export function ThinkingCell({ cell, active = false }: Props) {
 	const payload = getCellPayload(cell);
@@ -70,7 +74,12 @@ export function ThinkingCell({ cell, active = false }: Props) {
 			)}
 
 			{showBody && (
-				<pre className="m-0 ml-3 border-l-2 border-line py-0 pt-0.5 pr-2 pb-2 pl-[22px] font-[inherit] text-[12.5px] leading-[1.55] italic whitespace-pre-wrap text-[#a1a1aa] wrap-anywhere">
+				<pre
+					className={cx(
+						CELL_BODY,
+						'm-0 ml-3 border-l-2 border-line py-0 pt-0.5 pr-2 pb-2 pl-[22px] font-[inherit] italic whitespace-pre-wrap text-[#a1a1aa] wrap-anywhere'
+					)}
+				>
 					{bodyText}
 				</pre>
 			)}

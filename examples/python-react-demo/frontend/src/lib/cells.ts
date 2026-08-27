@@ -175,6 +175,9 @@ export function getCellPayload(cell: CellLike): Record<string, unknown> {
 export type CellTypeInfo = {
 	name: string;
 	icon: IconComponent;
+	/** Opt out of the shared CellShell card. Cells are opted in by default; set
+	 *  this only for a cell whose shape is not a card at all. */
+	standalone?: boolean;
 };
 
 const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
@@ -211,7 +214,8 @@ const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
 	listAppsCell: { name: 'List Data Apps', icon: AppWindow },
 	listUsersCell: { name: 'List Users', icon: List },
 	compactionCell: { name: 'Compaction', icon: Archive },
-	thinkingCell: { name: 'Thinking', icon: Brain },
+	// A disclosure row with a rule down its left edge, not a card.
+	thinkingCell: { name: 'Thinking', icon: Brain, standalone: true },
 	documentCell: { name: 'Document', icon: FileText },
 	emailCell: { name: 'Email', icon: Mail },
 	imageCell: { name: 'Image', icon: Image },
@@ -241,6 +245,11 @@ const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
 export function getCellTypeInfo(cellCase: string | undefined): CellTypeInfo {
 	if (cellCase && CELL_TYPE_INFO[cellCase]) return CELL_TYPE_INFO[cellCase];
 	return { name: 'Tool', icon: Bot };
+}
+
+/** Cells render into the shared card unless their type opts out. */
+export function usesCellShell(cellCase: string | undefined): boolean {
+	return getCellTypeInfo(cellCase).standalone !== true;
 }
 
 export function titleCaseSnake(value: string): string {

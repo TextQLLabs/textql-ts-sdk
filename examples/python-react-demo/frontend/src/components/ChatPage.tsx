@@ -546,6 +546,7 @@ export function ChatPage() {
 	// previous transcript until the new one loads.
 	const chatPending = Boolean(routeId) && routeId !== chatId && messages.length === 0;
 	const showNewChat = messages.length === 0 && !chatLoadError && !chatPending;
+	const activeChatTitle = chats.find((chat) => chat.id === chatId)?.title ?? '';
 	const hasAssets = chatAssets.length > 0;
 
 	return (
@@ -730,8 +731,8 @@ export function ChatPage() {
 					className={cx(
 						'relative min-h-0 min-w-0 flex-auto bg-paper max-[780px]:h-dvh',
 						showNewChat || chatLoadError || chatPending
-							? 'grid grid-rows-[minmax(0,1fr)]'
-							: 'grid grid-rows-[minmax(0,1fr)_auto]',
+							? 'grid grid-rows-[auto_minmax(0,1fr)]'
+							: 'grid grid-rows-[auto_minmax(0,1fr)_auto]',
 						panel.resizing && 'pointer-events-none contain-layout contain-style'
 					)}
 				>
@@ -757,6 +758,20 @@ export function ChatPage() {
 							</button>
 						</div>
 					)}
+
+					{/* Sits in the grid rather than the floating overlays, so a long title
+					    truncates against the panel instead of running under them. */}
+					<header className="flex h-9 min-w-0 items-center pt-1.5 pr-3 pl-4 max-[560px]:pl-3.5">
+						<h1
+							className={cx(
+								'm-0 min-w-0 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-text-3',
+								// The mobile drawer's floating "New chat" pill owns this corner.
+								!sidebarOpen && 'max-[780px]:hidden'
+							)}
+						>
+							{activeChatTitle}
+						</h1>
+					</header>
 
 					<div className={cx(PANEL_OVERLAYS, 'right-3 flex')}>
 						{hasAssets && !panel.open && (
