@@ -1,6 +1,5 @@
 import type { ComponentType } from 'react';
 
-import type { LucideIcon } from 'lucide-react';
 import {
 	AppWindow,
 	Archive,
@@ -31,6 +30,7 @@ import {
 	Terminal,
 	Users
 } from 'lucide-react';
+import { FOntologyIcon } from '../assets/icons/FOntologyIcon';
 import { McpIcon } from '../components/McpIcon';
 import { CellLifecycle as Lifecycle, type CellLifecycle } from './lifecycle';
 import { isRecord } from './utils';
@@ -156,8 +156,7 @@ export function getBatchStartedAtMs(cells: CellLike[]): number | null {
 	return earliest;
 }
 
-/** A lucide icon, or anything that takes the same `size` / `className` props. */
-export type IconComponent = LucideIcon | ComponentType<{ size?: number; className?: string }>;
+export type IconComponent = ComponentType<{ size?: number | string; className?: string }>;
 
 /** Find the oneof payload key, e.g. "sqlCell" | "mdCell" | "mcpToolCell". */
 export function getCellCase(cell: CellLike): string | undefined {
@@ -187,12 +186,12 @@ const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
 	metricsCell: { name: 'Metrics', icon: ChartLine },
 	mcpToolCell: { name: 'MCP Tool', icon: McpIcon },
 	useSkillCell: { name: 'Using skill', icon: SquareSlash },
-	ontologyQueryCell: { name: 'TQL Query', icon: Database },
+	ontologyQueryCell: { name: 'TQL Query', icon: FOntologyIcon },
 	tableauSearchFieldsCell: { name: 'Search Tableau Fields', icon: Search },
 	googleDriveSearchCell: { name: 'Google Drive Search', icon: HardDrive },
 	googleDriveContentCell: { name: 'Google Drive File', icon: HardDrive },
-	ontologySearchMetricsCell: { name: 'Ontology Metric Search', icon: Search },
-	ontologyOpenObjectCell: { name: 'Ontology Object Context', icon: Database },
+	ontologySearchMetricsCell: { name: 'Ontology Metric Search', icon: FOntologyIcon },
+	ontologyOpenObjectCell: { name: 'Ontology Object Context', icon: FOntologyIcon },
 	microsoft365EmailSearchCell: { name: 'Microsoft 365 Email Search', icon: Mail },
 	microsoft365EmailContentCell: { name: 'Microsoft 365 Email', icon: Mail },
 	microsoft365CalendarCell: { name: 'Microsoft 365 Calendar', icon: Calendar },
@@ -220,14 +219,14 @@ const CELL_TYPE_INFO: Record<string, CellTypeInfo> = {
 	tabularFileCell: { name: 'Datasets', icon: Table },
 	reportCell: { name: 'Report', icon: ChartArea },
 	reportHistoryCell: { name: 'Report History', icon: ChartArea },
-	patchCell: { name: 'Ontology Update', icon: FilePen },
+	patchCell: { name: 'Ontology Update', icon: FOntologyIcon },
 	tableauCell: { name: 'Tableau', icon: ChartColumn },
 	previewCell: { name: 'Preview', icon: Eye },
 	streamlitCell: { name: 'Streamlit', icon: ChartColumn },
 	dashboardCell: { name: 'Dashboard', icon: LayoutDashboard },
 	appCell: { name: 'Data App', icon: AppWindow },
 	contextPromptEditorCell: { name: 'Context Editor', icon: Pencil },
-	ontologyEditorCell: { name: 'Ontology Editor', icon: Pencil },
+	ontologyEditorCell: { name: 'Ontology Editor', icon: FOntologyIcon },
 	formEditorCell: { name: 'Form Editor', icon: FilePen },
 	formCell: { name: 'Form', icon: FilePen },
 	questionsCell: { name: 'Questions', icon: MessageCircleQuestionMark },

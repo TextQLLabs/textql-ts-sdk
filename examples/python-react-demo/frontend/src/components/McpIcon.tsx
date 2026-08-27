@@ -1,37 +1,27 @@
-import { connectorIconSrc } from '../lib/connectorIcons';
-import { cx } from '../lib/cx';
-
-const MCP_SRC = connectorIconSrc('MCP');
+import type { SVGProps } from 'react';
 
 /**
  * The Model Context Protocol mark, for `mcpToolCell`. Lucide has no MCP icon —
- * not in 0.545, not in 1.34 — so this reuses the official mark already vendored
- * for MCP *connectors* rather than falling back to a generic wrench.
- *
- * Drawn as a mask, not an `<img>`: the asset is `fill="currentColor"`, which an
- * image cannot inherit, so it paints black and vanishes against a dark
- * background. Masking pushes `currentColor` through the shape instead, so it
- * follows the theme exactly like the lucide icons beside it.
+ * not in 0.545, not in 1.34 — so this is the official mark already vendored at
+ * `assets/connectors/mcp.svg`, inlined so `fill="currentColor"` actually
+ * inherits: as an `<img>` it paints black and vanishes in dark mode.
  *
  * Takes a `LucideIcon`'s props so `getCellTypeInfo` callers need no special case.
  */
-export function McpIcon({ size = 16, className }: { size?: number; className?: string }) {
+export function McpIcon({ size = 16, ...props }: SVGProps<SVGSVGElement> & { size?: number | string }) {
 	return (
-		<span
+		<svg
+			{...props}
+			width={size}
+			height={size}
+			viewBox="0 0 24 24"
+			fill="currentColor"
+			fillRule="evenodd"
+			xmlns="http://www.w3.org/2000/svg"
 			aria-hidden
-			className={cx('inline-block shrink-0 bg-current', className)}
-			style={{
-				width: size,
-				height: size,
-				maskImage: `url(${MCP_SRC})`,
-				WebkitMaskImage: `url(${MCP_SRC})`,
-				maskSize: 'contain',
-				WebkitMaskSize: 'contain',
-				maskRepeat: 'no-repeat',
-				WebkitMaskRepeat: 'no-repeat',
-				maskPosition: 'center',
-				WebkitMaskPosition: 'center'
-			}}
-		/>
+		>
+			<path d="M15.688 2.343a2.588 2.588 0 00-3.61 0l-9.626 9.44a.863.863 0 01-1.203 0 .823.823 0 010-1.18l9.626-9.44a4.313 4.313 0 016.016 0 4.116 4.116 0 011.204 3.54 4.3 4.3 0 013.609 1.18l.05.05a4.115 4.115 0 010 5.9l-8.706 8.537a.274.274 0 000 .393l1.788 1.754a.823.823 0 010 1.18.863.863 0 01-1.203 0l-1.788-1.753a1.92 1.92 0 010-2.754l8.706-8.538a2.47 2.47 0 000-3.54l-.05-.049a2.588 2.588 0 00-3.607-.003l-7.172 7.034-.002.002-.098.097a.863.863 0 01-1.204 0 .823.823 0 010-1.18l7.273-7.133a2.47 2.47 0 00-.003-3.537z" />
+			<path d="M14.485 4.703a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a4.115 4.115 0 000 5.9 4.314 4.314 0 006.016 0l7.12-6.982a.823.823 0 000-1.18.863.863 0 00-1.204 0l-7.119 6.982a2.588 2.588 0 01-3.61 0 2.47 2.47 0 010-3.54l7.12-6.982z" />
+		</svg>
 	);
 }

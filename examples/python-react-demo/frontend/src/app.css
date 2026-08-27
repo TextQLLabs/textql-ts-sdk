@@ -49,6 +49,8 @@
 	--color-text-3: #52525b;
 	/* Subtle inset fill (chips, code blocks, hovered rows). */
 	--color-fill: #f1f1f3;
+	/* Cell/preview error text and the tint on an errored cell's border. */
+	--color-danger: #dc2626;
 
 	--radius-xs: 6px;
 	--radius-sm: 10px;
@@ -214,6 +216,7 @@
 	--color-text-2: #cdced4;
 	--color-text-3: #a9a9b2;
 	--color-fill: #262828;
+	--color-danger: #f87171;
 	color-scheme: dark;
 }
 

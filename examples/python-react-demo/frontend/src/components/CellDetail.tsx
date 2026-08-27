@@ -2,9 +2,9 @@ import { ExternalLink } from 'lucide-react';
 
 import { buildCellBlocks } from '../lib/cellBlocks';
 import { getCellCase, getCellTypeInfo, getToolDisplayName, type CellLike } from '../lib/cells';
-import { cx } from '../lib/cx';
 import { guessPreviewType, previewItemsFromCell, previewPanel } from '../lib/previewPanel';
 import { toEmbeddablePreviewUrl } from '../lib/previewUrl';
+import { CellError, CellShell } from './CellShell';
 import { Markdown } from './Markdown';
 import { PierreCode } from './PierreCode';
 
@@ -56,28 +56,12 @@ export function CellDetail({ cell }: { cell: CellLike }) {
 	}
 
 	return (
-		<div
-			className={cx(
-				'flex flex-col gap-1.5 rounded-sm border bg-elevate/55 px-3 py-2.5',
-				execError ? 'border-[color-mix(in_srgb,#dc2626_35%,var(--color-line))]' : 'border-line'
-			)}
+		<CellShell
+			icon={Icon}
+			title={getToolDisplayName(cell)}
+			summary={typeof cell.toolSummary === 'string' ? cell.toolSummary : null}
+			error={execError || null}
 		>
-			<div className="flex min-w-0 items-center gap-[7px] text-ink [&_svg]:shrink-0 [&_svg]:text-muted">
-				<Icon size={14} />
-				<span className="shrink-0 text-[12.5px] font-semibold">{getToolDisplayName(cell)}</span>
-				{cell.toolSummary && (
-					<span className="overflow-hidden text-[12.5px] text-ellipsis whitespace-nowrap text-muted">
-						{cell.toolSummary}
-					</span>
-				)}
-			</div>
-
-			{execError && (
-				<p className="m-0 text-[12px] whitespace-pre-wrap text-[#dc2626] wrap-anywhere">
-					{execError}
-				</p>
-			)}
-
 			{blocks.map((block, i) => {
 				if (block.kind === 'kv') {
 					return (
@@ -126,15 +110,13 @@ export function CellDetail({ cell }: { cell: CellLike }) {
 				}
 
 				if (block.kind === 'text') {
+					// An error block reads as the cell's error, not as a labelled field,
+					// so it renders exactly like execError above.
+					if (block.label === 'Error') return <CellError key={i} message={block.text} />;
 					return (
 						<div key={i} className="contents">
 							{block.label && <p className={BLOCK_LABEL}>{block.label}</p>}
-							<p
-								className={cx(
-									'm-0 text-[13px] leading-[1.55] whitespace-pre-wrap wrap-anywhere',
-									block.label === 'Error' ? 'text-[#dc2626]' : 'text-text-strong'
-								)}
-							>
+							<p className="m-0 text-[13px] leading-[1.55] whitespace-pre-wrap text-text-strong wrap-anywhere">
 								{block.text}
 							</p>
 						</div>
@@ -199,6 +181,6 @@ export function CellDetail({ cell }: { cell: CellLike }) {
 					</div>
 				);
 			})}
-		</div>
+		</CellShell>
 	);
 }

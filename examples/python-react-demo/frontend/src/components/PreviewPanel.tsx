@@ -11,6 +11,7 @@ import {
 	type PreviewItem
 } from '../lib/previewPanel';
 import { PREVIEW_PROXY_PATH, toEmbeddablePreviewUrl } from '../lib/previewUrl';
+import { CellError } from './CellShell';
 import { Markdown } from './Markdown';
 import { PierreCode } from './PierreCode';
 
@@ -323,7 +324,7 @@ export function PreviewPanel() {
 
 	function renderBody() {
 		if (!item) return <p className={EMPTY}>No preview selected.</p>;
-		if (item.error) return <p className="m-0 text-[13px] leading-normal whitespace-pre-wrap text-[#dc2626]">{item.error}</p>;
+		if (item.error) return <CellError message={item.error} />;
 		if (isImage(item) && embedUrl) {
 			return <img className={cx(FRAME, 'block h-auto')} src={embedUrl} alt={item.name} />;
 		}

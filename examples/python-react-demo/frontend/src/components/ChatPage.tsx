@@ -542,11 +542,9 @@ export function ChatPage() {
 		previewPanel.openPanel(chatAssets);
 	}
 
-	// The route names a chat we have not replayed yet — a hard refresh on
-	// /chat/:id would otherwise land on the new-chat composer until history
-	// arrives. Switching between loaded chats keeps the old turns on screen.
-	const chatPending =
-		Boolean(routeId) && routeId !== chatId && messages.length === 0 && !chatLoadError;
+	// Refreshing /chat/:id has no messages yet; switching chats keeps the
+	// previous transcript until the new one loads.
+	const chatPending = Boolean(routeId) && routeId !== chatId && messages.length === 0;
 	const showNewChat = messages.length === 0 && !chatLoadError && !chatPending;
 	const hasAssets = chatAssets.length > 0;
 
@@ -836,7 +834,7 @@ export function ChatPage() {
 												className={cx(
 													'flex max-w-full flex-col',
 													message.role === 'you'
-														? 'w-full gap-1.5 rounded-lg border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none'
+														? 'w-full gap-1.5 rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none'
 														: 'w-full gap-2 border-0 bg-transparent px-0 py-0.5 [&_.streaming-indicator]:mt-1.5 [&_.streaming-indicator]:inline-block'
 												)}
 											>
