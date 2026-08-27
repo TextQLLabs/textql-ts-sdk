@@ -1,9 +1,16 @@
 import { ExternalLink } from 'lucide-react';
+import { useMemo } from 'react';
 
 import { buildCellBlocks } from '../../lib/cellBlocks';
+import { getCellToolSummary } from '../../lib/cells';
 import { CELL_BODY, CELL_CODE, CELL_LABEL, CELL_META } from '../../lib/cellText';
 import { cx } from '../../lib/cx';
-import { guessPreviewType, previewItemsFromCell, previewPanel } from '../../lib/previewPanel';
+import {
+	guessPreviewType,
+	previewItemId,
+	previewItemsFromCell,
+	previewPanel
+} from '../../lib/previewPanel';
 import { toEmbeddablePreviewUrl } from '../../lib/previewUrl';
 import { CellError } from '../CellShell';
 import { CellFrame } from './CellFrame';
@@ -37,10 +44,10 @@ const LINK = cx(
  * backend cell type shows something sensible before anyone writes UI for it.
  */
 export function BlockCell({ cell }: CellComponentProps) {
-	// buildCellBlocks owns the Time row: it only appends one once the cell finishes.
-	const blocks = buildCellBlocks(cell);
-	const cellAssets = previewItemsFromCell(cell);
-	const cellKey = typeof cell.id === 'string' && cell.id ? cell.id : 'cell';
+	// Both walk the whole payload, and an open step re-renders on every snapshot;
+	// cell identity changes exactly when the snapshot does.
+	const blocks = useMemo(() => buildCellBlocks(cell), [cell]);
+	const cellAssets = useMemo(() => previewItemsFromCell(cell), [cell]);
 
 	/** Prefer the collected chat-asset identity so topbar / steps share tabs. */
 	function openUrlAsset(url: string, name: string, suffix: string, previewType?: string) {
@@ -50,13 +57,13 @@ export function BlockCell({ cell }: CellComponentProps) {
 			return;
 		}
 		previewPanel.openItem({
-			id: `${cellKey}:${suffix}`,
+			id: previewItemId(cell, suffix),
 			name,
 			previewType: previewType ?? guessPreviewType(url),
 			url,
 			content: null,
 			error: null,
-			toolSummary: typeof cell.toolSummary === 'string' ? cell.toolSummary : null
+			toolSummary: getCellToolSummary(cell)
 		});
 	}
 
@@ -111,10 +118,9 @@ export function BlockCell({ cell }: CellComponentProps) {
 					);
 				}
 
+				if (block.kind === 'error') return <CellError key={i} message={block.text} />;
+
 				if (block.kind === 'text') {
-					// An error block reads as the cell's error, not as a labelled field,
-					// so it renders exactly like execError above.
-					if (block.label === 'Error') return <CellError key={i} message={block.text} />;
 					return (
 						<div key={i} className="contents">
 							{block.label && <p className={BLOCK_LABEL}>{block.label}</p>}

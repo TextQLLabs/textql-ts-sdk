@@ -1,22 +1,14 @@
-/**
- * Pure, framework-agnostic sort-menu helpers. Sibling to tableFilter.ts — no
- * framework imports, so it stays trivially unit-testable.
- */
-
 export type SortDir = 'asc' | 'desc';
 export type SortEntry = { columnId: string; dir: SortDir };
 
 /** Field shape the sort menu needs to label and toggle an entry. */
 export interface SortMenuColumn {
   id: string;
-  header?: string;
   sortType?: 'text' | 'number' | 'date';
-  sortLabels?: { asc: string; desc: string };
 }
 
 /** Human-readable direction label for the sort menu (avoid "asc/desc"). */
 export function sortDirectionLabel(column: SortMenuColumn, dir: SortDir): string {
-  if (column.sortLabels) return dir === 'asc' ? column.sortLabels.asc : column.sortLabels.desc;
   const t = column.sortType ?? 'text';
   if (t === 'date') return dir === 'asc' ? 'Oldest' : 'Latest';
   if (t === 'number') return dir === 'asc' ? 'Lowest' : 'Highest';

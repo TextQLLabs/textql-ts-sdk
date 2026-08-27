@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-import { getCellPayload, type CellLike } from '../lib/cells';
+import { getCellContent, getCellPayload, type CellLike } from '../lib/cells';
 import { CELL_BODY } from '../lib/cellText';
 import { cx } from '../lib/cx';
 
@@ -21,7 +21,7 @@ const LABEL = cx(
 export function ThinkingCell({ cell, active = false }: Props) {
 	const payload = getCellPayload(cell);
 	const redacted = payload.redacted === true;
-	const content = typeof payload.content === 'string' ? payload.content.trim() : '';
+	const content = getCellContent(cell).trim();
 	const hasContent = redacted || content.length > 0;
 	const isThinking = active && !cell.complete;
 

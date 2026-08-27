@@ -1,11 +1,8 @@
+import { asString as str } from '../../lib/cells';
 import { BlockCell } from './BlockCell';
 import { makeListCell } from './ListCell';
 import { SqlCell } from './SqlCell';
 import type { CellComponent } from './types';
-
-function str(value: unknown): string {
-	return typeof value === 'string' ? value : '';
-}
 
 /**
  * Cell case → the component that renders its body. A type absent from here

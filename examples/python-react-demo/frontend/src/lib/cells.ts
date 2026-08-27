@@ -1,5 +1,3 @@
-import type { ComponentType } from 'react';
-
 import {
 	AppWindow,
 	Archive,
@@ -31,12 +29,15 @@ import {
 	Users
 } from 'lucide-react';
 import { FOntologyIcon } from '../assets/icons/FOntologyIcon';
-import { McpIcon } from '../components/McpIcon';
+import { McpIcon } from '../assets/icons/McpIcon';
 import { getHalt } from './halts';
+import type { IconComponent } from './icon';
 import { CellLifecycle as Lifecycle, type CellLifecycle } from './lifecycle';
 import { isRecord } from './utils';
 
-/** Coerce unknown payload fields; cell payloads are untyped proto JSON. */
+export type { IconComponent };
+
+/** Cell payloads are untyped proto JSON; coerce rather than trust. */
 export function asString(value: unknown): string {
 	return typeof value === 'string' ? value : '';
 }
@@ -145,6 +146,27 @@ export function formatElapsed(ms: number): string {
 	return `${hours}h ${String(remMins).padStart(2, '0')}m`;
 }
 
+/** Finished wall-clock only — never surface a placeholder 0 ms while executing. */
+function formatExecTimeMs(value: unknown): string {
+	const n =
+		typeof value === 'number'
+			? value
+			: typeof value === 'string' && value !== ''
+				? Number(value)
+				: NaN;
+	if (!Number.isFinite(n) || n <= 0) return '';
+	// Sub-second stays in ms, where the precision is the point; past that it
+	// matches the running timer's label so a cell doesn't switch units when it
+	// finishes.
+	return n < 1000 ? `${Math.round(n)} ms` : formatElapsed(n);
+}
+
+/** The cell's final duration, or '' while it is still running. */
+export function getCellExecTime(cell: CellLike): string {
+	if (!isCellFinished(cell)) return '';
+	return formatExecTimeMs(getCellPayload(cell).executionTimeMs ?? cell.durationMs);
+}
+
 /** Earliest start among still-running cells in a batch (for the header timer). */
 export function getBatchStartedAtMs(cells: CellLike[]): number | null {
 	let earliest: number | null = null;
@@ -157,20 +179,41 @@ export function getBatchStartedAtMs(cells: CellLike[]): number | null {
 	return earliest;
 }
 
-export type IconComponent = ComponentType<{ size?: number | string; className?: string }>;
+const CELL_CASES = new WeakMap<CellLike, string | undefined>();
 
-/** Find the oneof payload key, e.g. "sqlCell" | "mdCell" | "mcpToolCell". */
+/**
+ * Find the oneof payload key, e.g. "sqlCell" | "mdCell" | "mcpToolCell".
+ *
+ * Memoized: several callers ask per cell per render, and a snapshot replaces a
+ * cell wholesale rather than rewriting its oneof.
+ */
 export function getCellCase(cell: CellLike): string | undefined {
+	const cached = CELL_CASES.get(cell);
+	if (cached !== undefined || CELL_CASES.has(cell)) return cached;
+	let found: string | undefined;
 	for (const key of Object.keys(cell)) {
-		if (key.endsWith('Cell') && isRecord(cell[key])) return key;
+		if (key.endsWith('Cell') && isRecord(cell[key])) {
+			found = key;
+			break;
+		}
 	}
-	return undefined;
+	CELL_CASES.set(cell, found);
+	return found;
 }
 
 export function getCellPayload(cell: CellLike): Record<string, unknown> {
 	const cellCase = getCellCase(cell);
 	const payload = cellCase ? cell[cellCase] : undefined;
 	return isRecord(payload) ? payload : {};
+}
+
+/** Prose content of a cell (`mdCell`, `ansCell`, `thinkingCell`, …). */
+export function getCellContent(cell: CellLike): string {
+	return asString(getCellPayload(cell).content);
+}
+
+export function getCellToolSummary(cell: CellLike): string | null {
+	return typeof cell.toolSummary === 'string' ? cell.toolSummary : null;
 }
 
 export type CellTypeInfo = {
@@ -253,9 +296,10 @@ export function usesCellShell(cellCase: string | undefined): boolean {
 	return getCellTypeInfo(cellCase).standalone !== true;
 }
 
-export function titleCaseSnake(value: string): string {
+/** `foo_bar` → `Foo Bar`; pass a separator the value actually uses. */
+export function titleCase(value: string, separator = '_'): string {
 	return value
-		.split('_')
+		.split(separator)
 		.filter(Boolean)
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 		.join(' ');
@@ -267,12 +311,11 @@ export function getToolDisplayName(cell: CellLike): string {
 	const payload = getCellPayload(cell);
 
 	if (cellCase === 'useSkillCell') {
-		const trigger = typeof payload.trigger === 'string' ? payload.trigger : '';
+		const trigger = asString(payload.trigger);
 		return trigger ? `Using skill /${trigger.replace(/^\//, '')}` : 'Using skill';
 	}
 	if (cellCase === 'mcpToolCell') {
-		const toolName = typeof payload.toolName === 'string' ? payload.toolName : '';
-		return titleCaseSnake(toolName) || 'Tool';
+		return titleCase(asString(payload.toolName)) || 'Tool';
 	}
 	return getCellTypeInfo(cellCase).name;
 }

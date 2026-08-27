@@ -1,10 +1,12 @@
 import { Check } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { toast } from 'sonner';
 
+import { submitQuestions } from '../lib/api';
 import { asRecords, asString, asStrings, getCellPayload, type CellLike } from '../lib/cells';
 import { CELL_BODY, CELL_META } from '../lib/cellText';
 import { cx } from '../lib/cx';
+import { QuestionInputKind, QuestionKind, QuestionsStatus } from '../lib/lifecycle';
+import { toast } from '../primitives';
 import { CellShell } from './CellShell';
 
 // onAnswered lets the page re-attach its watch stream so the resumed run's
@@ -26,15 +28,15 @@ const blank = (q: Record<string, unknown>): Working => ({
 });
 
 function kindOf(q: Record<string, unknown>): 'choice' | 'multichoice' | 'inputs' {
-	const k = asString(q.kind);
-	if (k.endsWith('MULTICHOICE')) return 'multichoice';
-	if (k.endsWith('INPUTS')) return 'inputs';
+	const kind = asString(q.kind);
+	if (kind === QuestionKind.Multichoice) return 'multichoice';
+	if (kind === QuestionKind.Inputs) return 'inputs';
 	return 'choice';
 }
 
 function inputType(input: Record<string, unknown>): 'text' | 'multiline' | 'password' {
 	if (input.sensitive === true) return 'password';
-	return asString(input.kind).endsWith('MULTILINE') ? 'multiline' : 'text';
+	return asString(input.kind) === QuestionInputKind.Multiline ? 'multiline' : 'text';
 }
 
 const HEAD =
@@ -73,8 +75,8 @@ export function QuestionsCell({ cell, onAnswered }: Props) {
 	const status = asString(payload.status);
 	const questions = asRecords(payload.questions);
 	const summary = asRecords(payload.answers);
-	const pending = status === '' || status.endsWith('PENDING');
-	const dismissed = status.endsWith('DISMISSED');
+	const pending = status === '' || status === QuestionsStatus.Pending;
+	const dismissed = status === QuestionsStatus.Dismissed;
 
 	const [working, setWorking] = useState<Working[]>([]);
 	const [submitting, setSubmitting] = useState(false);
@@ -154,15 +156,7 @@ export function QuestionsCell({ cell, onAnswered }: Props) {
 					provided: inputs.map((_, j) => (w.inputs[j] ?? '').length > 0)
 				};
 			});
-			const res = await fetch('/v3/textql/questions', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ action, cellId: asString(cell.id), answers })
-			});
-			if (!res.ok) {
-				const body = (await res.json().catch(() => ({}))) as { detail?: string };
-				throw new Error(body.detail ?? `Request failed (${res.status})`);
-			}
+			await submitQuestions(asString(cell.id), action, answers);
 			setDone(true);
 			onAnswered?.();
 			toast.success(action === 'submit' ? 'Answers submitted' : 'Questions skipped');

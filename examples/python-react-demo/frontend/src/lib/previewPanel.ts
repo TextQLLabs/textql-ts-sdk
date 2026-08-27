@@ -1,9 +1,12 @@
+import { useSyncExternalStore } from 'react';
+
 import {
 	asRecords as records,
 	asString,
 	asStrings as strings,
 	getCellCase,
 	getCellPayload,
+	getCellToolSummary,
 	type CellLike
 } from './cells';
 import { Store, useStore } from './store';
@@ -39,7 +42,6 @@ function loadWidth(): number {
 	return Number.isFinite(n) ? clampPreviewWidth(n) : DEFAULT_WIDTH;
 }
 
-/** Infer a preview type from a URL / filename when the cell doesn't specify one. */
 export function guessPreviewType(url: string, fallback = 'file'): string {
 	const path = url.split('?')[0]?.toLowerCase() ?? '';
 	if (/\.(png|jpe?g|gif|webp|svg|bmp|ico)$/.test(path)) return 'image';
@@ -51,24 +53,23 @@ export function guessPreviewType(url: string, fallback = 'file'): string {
 	return fallback;
 }
 
-function cellId(cell: CellLike, suffix: string): string {
+/**
+ * The identity of one asset. Anything that opens a tab must derive it the same
+ * way, or the collector and the opener produce two tabs for the same asset.
+ */
+export function previewItemId(cell: CellLike, suffix: string): string {
 	const base = typeof cell.id === 'string' && cell.id ? cell.id : 'cell';
 	return `${base}:${suffix}`;
-}
-
-function toolSummaryOf(cell: CellLike): string | null {
-	return typeof cell.toolSummary === 'string' ? cell.toolSummary : null;
 }
 
 function execErrorOf(cell: CellLike): string | null {
 	return typeof cell.execError === 'string' && cell.execError ? cell.execError : null;
 }
 
-/** Collect every openable asset from a single cell (images, charts, files, embeds, …). */
 export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 	const cellCase = getCellCase(cell);
 	const payload = getCellPayload(cell);
-	const summary = toolSummaryOf(cell);
+	const summary = getCellToolSummary(cell);
 	const execError = execErrorOf(cell);
 	const out: PreviewItem[] = [];
 
@@ -76,7 +77,7 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 		const href = asString(url);
 		if (!href) return;
 		out.push({
-			id: cellId(cell, suffix),
+			id: previewItemId(cell, suffix),
 			name: name || 'Asset',
 			previewType: previewType || guessPreviewType(href),
 			url: href,
@@ -90,7 +91,7 @@ export function previewItemsFromCell(cell: CellLike): PreviewItem[] {
 		const text = asString(content);
 		if (!text) return;
 		out.push({
-			id: cellId(cell, suffix),
+			id: previewItemId(cell, suffix),
 			name: name || 'Asset',
 			previewType: previewType || 'file',
 			url: null,
@@ -225,7 +226,6 @@ export function collectPreviewItems(cells: CellLike[]): PreviewItem[] {
 	return out;
 }
 
-/** Whether a cell has any openable preview assets. */
 export function cellHasPreviewAssets(cell: CellLike): boolean {
 	return previewItemsFromCell(cell).length > 0;
 }
@@ -432,4 +432,15 @@ export const previewPanel = new PreviewPanelState();
 
 export function usePreviewPanel(): PanelState {
 	return useStore(previewPanel);
+}
+
+/**
+ * Just the two fields the transcript reads. `setWidth` fires once per frame
+ * while the resize handle is dragged, and every subscriber to the whole state
+ * re-renders with it.
+ */
+export function usePreviewSelection(): { open: boolean; selectedId: string | null } {
+	const open = useSyncExternalStore(previewPanel.subscribe, () => previewPanel.open);
+	const selectedId = useSyncExternalStore(previewPanel.subscribe, () => previewPanel.selectedId);
+	return { open, selectedId };
 }

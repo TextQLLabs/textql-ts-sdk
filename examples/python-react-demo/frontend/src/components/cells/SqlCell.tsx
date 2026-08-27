@@ -1,8 +1,7 @@
 import { Check, Code, Copy, Table } from 'lucide-react';
 import { useState } from 'react';
 
-import { formatExecTimeMs } from '../../lib/cellBlocks';
-import { isCellFinished } from '../../lib/cells';
+import { asString as str, getCellExecTime } from '../../lib/cells';
 import { connectorIconSrc } from '../../lib/connectorIcons';
 import { useConnector } from '../../lib/connectorsCache';
 import { CELL_CODE, CELL_META } from '../../lib/cellText';
@@ -12,10 +11,6 @@ import { CellError } from '../CellShell';
 import { PierreCode } from '../PierreCode';
 import { CellFrame } from './CellFrame';
 import type { CellComponentProps } from './types';
-
-function str(value: unknown): string {
-	return typeof value === 'string' ? value : '';
-}
 
 /**
  * Query and result are the two things anyone reads in a SQL cell, and both are
@@ -36,9 +31,7 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 	// An unapproved connector is the one thing in this cell the user must act on.
 	const authPending = payload.authRequired === true && payload.authCompleted !== true;
 	const connector = str(payload.authConnectorName) || str(payload.authProviderName);
-	const time = isCellFinished(cell)
-		? formatExecTimeMs(payload.executionTimeMs ?? cell.durationMs)
-		: '';
+	const time = getCellExecTime(cell);
 	// Resolves after the connector list lands; until then the bare id stands in.
 	const connectorInfo = useConnector(payload.connectorId);
 	const connectorLabel =

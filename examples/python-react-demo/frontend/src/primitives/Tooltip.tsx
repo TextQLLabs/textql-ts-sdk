@@ -7,7 +7,6 @@ type Side = 'top' | 'bottom' | 'left' | 'right';
 
 type Props = {
 	label: string;
-	shortcut?: string;
 	side?: Side;
 	children: ReactNode;
 };
@@ -25,7 +24,7 @@ const SIDE_CLASS: Record<Side, string> = {
 	left: '-translate-x-full -translate-y-1/2 [--tooltip-dx:5px] [--tooltip-dy:0px]'
 };
 
-export function Tooltip({ label, shortcut, side = 'bottom', children }: Props) {
+export function Tooltip({ label, side = 'bottom', children }: Props) {
 	const wrapRef = useRef<HTMLSpanElement | null>(null);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 	const [open, setOpen] = useState(false);
@@ -75,11 +74,6 @@ export function Tooltip({ label, shortcut, side = 'bottom', children }: Props) {
 						style={{ left: `${point.x}px`, top: `${point.y}px` }}
 					>
 						{label}
-						{shortcut && (
-							<kbd className="rounded-[4px] bg-paper/22 px-[0.28rem] py-[0.02rem] font-[inherit] text-[10.5px] text-paper">
-								{shortcut}
-							</kbd>
-						)}
 					</span>,
 					document.body
 				)}

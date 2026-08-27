@@ -5,6 +5,7 @@ import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
 import { connectorIconSrc } from '../lib/connectorIcons';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
+import { useDismissable } from '../lib/useDismissable';
 
 type Flyout = 'models' | 'connectors';
 
@@ -176,33 +177,17 @@ export function Composer({
 		onSend?.();
 	}
 
-	useEffect(() => {
-		function handleWindowKeydown(event: KeyboardEvent) {
-			if (event.key === 'Escape' && menuOpen) {
-				event.preventDefault();
-				if (flyout) {
-					setFlyout(null);
-					setConnectorQuery('');
-					return;
-				}
-				closeMenu();
-			}
+	useDismissable(menuOpen, closeMenu, {
+		contains: (target) => target instanceof Node && menuRootRef.current?.contains(target) === true,
+		// Escape backs out of an open flyout first, and only then closes the menu.
+		onEscape: (event) => {
+			event.preventDefault();
+			if (!flyout) return false;
+			setFlyout(null);
+			setConnectorQuery('');
+			return true;
 		}
-
-		function handleWindowPointerDown(event: PointerEvent) {
-			if (!menuOpen || !menuRootRef.current) return;
-			const target = event.target;
-			if (!(target instanceof Node) || menuRootRef.current.contains(target)) return;
-			closeMenu();
-		}
-
-		window.addEventListener('keydown', handleWindowKeydown);
-		window.addEventListener('pointerdown', handleWindowPointerDown);
-		return () => {
-			window.removeEventListener('keydown', handleWindowKeydown);
-			window.removeEventListener('pointerdown', handleWindowPointerDown);
-		};
-	}, [menuOpen, flyout, closeMenu]);
+	});
 
 	useEffect(() => {
 		if (flyout === 'connectors') queueMicrotask(() => searchRef.current?.focus());

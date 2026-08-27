@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { asRecords as records, asString as str } from '../../lib/cells';
 import { CELL_BODY, CELL_META } from '../../lib/cellText';
 import { cx } from '../../lib/cx';
 import { CellError } from '../CellShell';
@@ -16,16 +17,6 @@ type Spec = {
 	noun: string;
 	row: (item: Record<string, unknown>) => Row;
 };
-
-function str(value: unknown): string {
-	return typeof value === 'string' ? value : '';
-}
-
-function records(value: unknown): Record<string, unknown>[] {
-	return Array.isArray(value)
-		? value.filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
-		: [];
-}
 
 /**
  * The list-* cells differ only in which array they read and how a row reads.

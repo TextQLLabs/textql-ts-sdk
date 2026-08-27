@@ -1,9 +1,10 @@
-import { useEffect, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+import { useDismissable } from '../lib/useDismissable';
 
 type Props = {
 	open?: boolean;
 	title?: string;
-	/** Body content. */
 	children?: ReactNode;
 	/**
 	 * Footer buttons. Convention: pass the dismiss/secondary button FIRST and
@@ -13,39 +14,12 @@ type Props = {
 	actions?: ReactNode;
 	/** Called when dismissed via backdrop or Escape (not on programmatic close). */
 	onClose?: () => void;
-	/** Toggle the bindable open state (Svelte's `bind:open` equivalent). */
-	onOpenChange?: (open: boolean) => void;
-	/** Allow clicking the backdrop to dismiss. */
-	dismissable?: boolean;
 };
 
-export function Modal({
-	open = false,
-	title,
-	children,
-	actions,
-	onClose,
-	onOpenChange,
-	dismissable = true
-}: Props) {
-	useEffect(() => {
-		if (!open || !dismissable) return;
-		const onKeydown = (event: KeyboardEvent) => {
-			if (event.key === 'Escape') {
-				onOpenChange?.(false);
-				onClose?.();
-			}
-		};
-		window.addEventListener('keydown', onKeydown);
-		return () => window.removeEventListener('keydown', onKeydown);
-	}, [open, dismissable, onClose, onOpenChange]);
+export function Modal({ open = false, title, children, actions, onClose }: Props) {
+	useDismissable(open, () => onClose?.());
 
 	if (!open) return null;
-
-	const dismiss = () => {
-		onOpenChange?.(false);
-		onClose?.();
-	};
 
 	return (
 		<div
@@ -57,7 +31,7 @@ export function Modal({
 			<button
 				type="button"
 				className="absolute inset-0 animate-modal-fade cursor-default border-0 bg-ink/40 p-0 backdrop-blur-xs motion-reduce:animate-none"
-				onClick={() => dismissable && dismiss()}
+				onClick={() => onClose?.()}
 				aria-label="Close"
 				tabIndex={-1}
 			/>
@@ -69,11 +43,7 @@ export function Modal({
 				{children && (
 					<div className="mt-1.5 font-sans text-sm leading-relaxed text-muted">{children}</div>
 				)}
-				{actions && (
-					// Right-aligned: dismiss (first) on the left, primary action (last)
-					// on the right.
-					<div className="mt-4 flex justify-end gap-2">{actions}</div>
-				)}
+				{actions && <div className="mt-4 flex justify-end gap-2">{actions}</div>}
 			</div>
 		</div>
 	);

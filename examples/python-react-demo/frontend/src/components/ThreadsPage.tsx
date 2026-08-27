@@ -2,8 +2,11 @@ import { Bookmark, Ellipsis, Plus, Share2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { closeChat } from '../lib/api';
+import { groupByDay, shortDate } from '../lib/dates';
 import { cx } from '../lib/cx';
 import { DATE_PRESETS } from '../lib/tableFilter';
+import { useDismissable } from '../lib/useDismissable';
 import { usePageTitle } from '../lib/usePageTitle';
 import { loadMemberOptions, usePagedList } from '../lib/usePagedList';
 import { FilterToolbar } from './filterToolbar';
@@ -58,38 +61,6 @@ const SOURCE_OPTIONS: FilterOption[] = [
 	{ value: 'CHAT_SOURCE_SYSTEM', label: 'System' }
 ];
 
-type ThreadGroup = {
-	key: string;
-	label: string;
-	threads: ThreadListItem[];
-};
-
-function dateKey(value: string | null) {
-	if (!value) return 'unknown';
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return 'unknown';
-	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function shortDate(value: string | null) {
-	if (!value) return 'Older';
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return 'Older';
-
-	const today = new Date();
-	const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-	const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-	const dayDiff = Math.round((startOfToday.getTime() - startOfDay.getTime()) / 86_400_000);
-
-	if (dayDiff === 0) return 'Today';
-	if (dayDiff === 1) return 'Yesterday';
-	return date.toLocaleDateString(undefined, {
-		month: 'short',
-		day: 'numeric',
-		year: date.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
-	});
-}
-
 function formatLastMessage(value: string | null) {
 	if (!value) return '—';
 	const date = new Date(value);
@@ -112,7 +83,7 @@ export function ThreadsPage() {
 	const navigate = useNavigate();
 
 	const [openingId, setOpeningId] = useState<string | undefined>();
-	const [deletingId, setDeletingId] = useState<string | undefined>();
+	const [closingId, setClosingId] = useState<string | undefined>();
 	const [menuThreadId, setMenuThreadId] = useState<string | undefined>();
 	const [creatorOptions, setCreatorOptions] = useState<FilterOption[]>([]);
 
@@ -135,7 +106,7 @@ export function ThreadsPage() {
 
 	const threads = list.items;
 
-	const busy = openingId !== undefined || deletingId !== undefined;
+	const busy = openingId !== undefined || closingId !== undefined;
 
 	// Every facet here is applied server-side, so the toolbar gets no rows and
 	// each facet declares its own options rather than deriving them from the one
@@ -172,36 +143,18 @@ export function ThreadsPage() {
 		[creatorOptions]
 	);
 
-	const groups: ThreadGroup[] = [];
-	for (const thread of threads) {
-		const key = dateKey(thread.lastMessageAt);
-		const existing = groups.find((group) => group.key === key);
-		if (existing) existing.threads.push(thread);
-		else groups.push({ key, label: shortDate(thread.lastMessageAt), threads: [thread] });
-	}
+	const groups = useMemo(
+		() => groupByDay(threads, (thread) => thread.lastMessageAt),
+		[threads]
+	);
 
 	useEffect(() => {
 		void loadMemberOptions('/v3/textql/chats/members').then(setCreatorOptions);
 	}, []);
 
-	useEffect(() => {
-		function onWindowKeydown(event: KeyboardEvent) {
-			if (event.key === 'Escape' && menuThreadId !== undefined) setMenuThreadId(undefined);
-		}
-		function onWindowPointerDown(event: PointerEvent) {
-			if (menuThreadId === undefined) return;
-			const target = event.target;
-			if (!(target instanceof Element) || !target.closest('[data-thread-menu]')) {
-				setMenuThreadId(undefined);
-			}
-		}
-		window.addEventListener('keydown', onWindowKeydown);
-		window.addEventListener('pointerdown', onWindowPointerDown);
-		return () => {
-			window.removeEventListener('keydown', onWindowKeydown);
-			window.removeEventListener('pointerdown', onWindowPointerDown);
-		};
-	}, [menuThreadId]);
+	useDismissable(menuThreadId !== undefined, () => setMenuThreadId(undefined), {
+		contains: (target) => target instanceof Element && target.closest('[data-thread-menu]') !== null
+	});
 
 	function openThread(id: string) {
 		if (busy) return;
@@ -221,35 +174,33 @@ export function ThreadsPage() {
 		setMenuThreadId((current) => (current === id ? undefined : id));
 	}
 
-	async function deleteThread(id: string, event: React.MouseEvent) {
+	async function closeThread(id: string, event: React.MouseEvent) {
 		event.stopPropagation();
 		event.preventDefault();
 		setMenuThreadId(undefined);
 		if (busy) return;
 
 		const confirmed = await confirm({
-			tone: 'danger',
-			title: 'Delete thread?',
+			title: 'Close thread?',
 			description:
-				'This permanently deletes the thread and all of its messages. This cannot be undone.',
-			confirmLabel: 'Delete'
+				'This removes the thread from this list. Nothing is deleted — the conversation stays on the server and can be reopened from its link.',
+			confirmLabel: 'Close'
 		});
 		if (!confirmed) return;
 
-		setDeletingId(id);
+		setClosingId(id);
 		const rollback = list.remove(id);
 
 		try {
-			const response = await fetch(`/v3/textql/chats/${encodeURIComponent(id)}`, { method: 'DELETE' });
-			if (!response.ok) throw new Error('Unable to delete thread.');
-			toast.success('Thread deleted');
+			await closeChat(id);
+			toast.success('Thread closed');
 		} catch {
 			rollback();
-			toast.error("Couldn't delete thread", {
+			toast.error("Couldn't close thread", {
 				description: 'Something went wrong. Please try again.'
 			});
 		} finally {
-			setDeletingId(undefined);
+			setClosingId(undefined);
 		}
 	}
 
@@ -257,7 +208,6 @@ export function ThreadsPage() {
 		<Page
 			title="Threads"
 			lead="Browse and open all your conversations."
-			wide
 			actions={
 				<>
 					{/* `totalCount` spans the whole (filtered) list, so this is the only
@@ -327,20 +277,20 @@ export function ThreadsPage() {
 								<header className={BOARD_GROUP_HEAD}>
 									<div className={BOARD_GROUP_TITLE_ROW}>
 										<h2 className={BOARD_GROUP_TITLE}>{group.label}</h2>
-										<span className={BOARD_GROUP_COUNT}>{group.threads.length}</span>
+										<span className={BOARD_GROUP_COUNT}>{group.rows.length}</span>
 									</div>
 								</header>
 
 								<ul className={BOARD_LIST}>
-									{group.threads.map((thread) => {
+									{group.rows.map((thread) => {
 										const menuOpen = menuThreadId === thread.id;
-										const deleting = thread.id === deletingId;
+										const closing = thread.id === closingId;
 										return (
 											<li
 												key={thread.id}
 												className={cx(
 													'group/row flex items-center gap-0.5 rounded-sm transition-[background] duration-[120ms] hover:bg-elevate/70',
-													(thread.id === openingId || deleting) && 'opacity-65'
+													(thread.id === openingId || closing) && 'opacity-65'
 												)}
 											>
 												<button
@@ -381,7 +331,7 @@ export function ThreadsPage() {
 														type="button"
 														className={cx(
 															MENU_BTN_BASE,
-															menuOpen || deleting ? MENU_BTN_SHOWN : MENU_BTN_HIDDEN
+															menuOpen || closing ? MENU_BTN_SHOWN : MENU_BTN_HIDDEN
 														)}
 														aria-label="Thread options"
 														aria-haspopup="menu"
@@ -390,8 +340,8 @@ export function ThreadsPage() {
 														disabled={busy}
 														onClick={(event) => toggleMenu(thread.id, event)}
 													>
-														{deleting ? (
-															<UnicodeSpinner className={ROW_SPINNER} label="Deleting thread" />
+														{closing ? (
+															<UnicodeSpinner className={ROW_SPINNER} label="Closing thread" />
 														) : (
 															<Ellipsis size={13} strokeWidth={2} />
 														)}
@@ -402,9 +352,9 @@ export function ThreadsPage() {
 																type="button"
 																className={MENU_ITEM}
 																role="menuitem"
-																onClick={(event) => deleteThread(thread.id, event)}
+																onClick={(event) => closeThread(thread.id, event)}
 															>
-																Delete
+																Close
 															</button>
 														</div>
 													)}

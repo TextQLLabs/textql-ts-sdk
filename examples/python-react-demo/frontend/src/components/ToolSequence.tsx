@@ -1,12 +1,14 @@
 import { ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import {
+	asString,
 	buildSegments,
 	getActiveSummary,
 	getBatchHeadline,
 	getBatchStartedAtMs,
 	getCellCase,
+	getCellContent,
 	getCellPayload,
 	getCellStartedAtMs,
 	getSegmentKey,
@@ -21,7 +23,7 @@ import {
 	cellOpensInPreviewPanel,
 	previewItemsFromCell,
 	previewPanel,
-	usePreviewPanel
+	usePreviewSelection
 } from '../lib/previewPanel';
 import { CellDetail } from './CellDetail';
 import { HaltCell } from './HaltCell';
@@ -44,13 +46,7 @@ const STEP_LABEL =
 	);
 
 function assistantHtml(cell: CellLike): string {
-	const payload = getCellPayload(cell);
-	return typeof payload.renderedHtml === 'string' ? payload.renderedHtml : '';
-}
-
-function assistantText(cell: CellLike): string {
-	const payload = getCellPayload(cell);
-	return typeof payload.content === 'string' ? payload.content : '';
+	return asString(getCellPayload(cell).renderedHtml);
 }
 
 function batchLabel(cells: CellLike[], active: boolean): string {
@@ -63,9 +59,8 @@ function stepKey(batchKey: string, cell: CellLike, idx: number): string {
 }
 
 function thoughtContent(cell: CellLike): string {
-	const payload = getCellPayload(cell);
-	if (payload.redacted === true) return '_Thinking (redacted)_';
-	return typeof payload.content === 'string' ? payload.content : '';
+	if (getCellPayload(cell).redacted === true) return '_Thinking (redacted)_';
+	return getCellContent(cell);
 }
 
 function openPreview(cell: CellLike) {
@@ -75,8 +70,16 @@ function openPreview(cell: CellLike) {
 	previewPanel.select(items[0]!.id);
 }
 
-export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
-	const panel = usePreviewPanel();
+/**
+ * Memoized: a chat's completed turns keep their cell arrays across a stream, so
+ * only the turn currently being written re-renders per event.
+ */
+export const ToolSequence = memo(function ToolSequence({
+	cells,
+	streaming = false,
+	onAnswered
+}: Props) {
+	const panel = usePreviewSelection();
 	// ChatPage's upsertAssistantCell reassigns the cells array on every stream
 	// snapshot, so array identity alone is enough to recompute the segments.
 	const segments = buildSegments(cells);
@@ -135,7 +138,7 @@ export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
 						<div className="py-0.5" key={key}>
 							<Markdown
 								renderedHtml={live ? '' : assistantHtml(segment.cell)}
-								content={assistantText(segment.cell)}
+								content={getCellContent(segment.cell)}
 							/>
 						</div>
 					);
@@ -250,4 +253,4 @@ export function ToolSequence({ cells, streaming = false, onAnswered }: Props) {
 			})}
 		</div>
 	);
-}
+});

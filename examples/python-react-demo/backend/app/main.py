@@ -1,9 +1,9 @@
 """FastAPI app for the TextQL streaming demo.
 
-The lifespan builds the two clients the router needs — the REST SDK for unary
-calls and the Connect-RPC bridge for `watch_chat` — and injects them into the
-router module. There is no per-request client: both are cheap to hold open and
-the streaming bridge keeps its own connection pool.
+The lifespan builds the clients the router needs — the REST SDK for unary calls,
+the Connect-RPC bridge for `watch_chat`, and a plain HTTP client for the preview
+proxy — and injects them into the router module. There is no per-request client:
+they are cheap to hold open and the streaming bridge keeps its own pool.
 """
 
 import logging
@@ -54,10 +54,14 @@ async def lifespan(_app: FastAPI):
     sdk = Textql(api_key=api_key, server_url=server_url, async_client=http_client)
     streaming = create_streaming_client(sdk)
     connectors = create_connect_client(ConnectorServiceClient, sdk)
+    # Separate from the SDK's client: the proxy wants a read timeout, the
+    # streaming SDK wants none.
+    preview_client = httpx.AsyncClient(follow_redirects=True, timeout=30.0, verify=ctx)
 
     textql_router._sdk = sdk
     textql_router._streaming = streaming
     textql_router._connectors = connectors
+    textql_router._http = preview_client
     logger.info("SDK ready | server_url=%s", server_url or "(default)")
 
     try:
@@ -66,6 +70,8 @@ async def lifespan(_app: FastAPI):
         textql_router._sdk = None
         textql_router._streaming = None
         textql_router._connectors = None
+        textql_router._http = None
+        await preview_client.aclose()
         await http_client.aclose()
 
 

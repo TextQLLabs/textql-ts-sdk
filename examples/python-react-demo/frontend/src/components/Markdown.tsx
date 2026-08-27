@@ -1,5 +1,5 @@
 import { marked } from 'marked';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import sanitizeHtml from 'sanitize-html';
 
 import styles from './Markdown.module.css';
@@ -76,7 +76,15 @@ type Props = {
 	muted?: boolean;
 };
 
-export function Markdown({ renderedHtml = '', content = '', muted = false }: Props) {
+/**
+ * Memoized on primitive props: ToolSequence renders one of these per prose cell
+ * in the transcript, and every SSE event would otherwise re-sanitize all of them.
+ */
+export const Markdown = memo(function Markdown({
+	renderedHtml = '',
+	content = '',
+	muted = false
+}: Props) {
 	const [parsedContent, setParsedContent] = useState(() => parse(content));
 	const lastParsedText = useRef(content);
 	const lastParsedAt = useRef(Date.now());
@@ -94,7 +102,11 @@ export function Markdown({ renderedHtml = '', content = '', muted = false }: Pro
 		return () => clearTimeout(handle);
 	}, [content]);
 
-	const html = renderedHtml.trim() ? sanitize(renderedHtml) : parsedContent;
+	const serverHtml = useMemo(
+		() => (renderedHtml.trim() ? sanitize(renderedHtml) : ''),
+		[renderedHtml]
+	);
+	const html = serverHtml || parsedContent;
 
 	const tone = muted ? ` ${styles.mdMuted}` : '';
 
@@ -112,4 +124,4 @@ export function Markdown({ renderedHtml = '', content = '', muted = false }: Pro
 		return <p className={`md-plain ${styles.mdPlain}${muted ? ` ${styles.mdPlainMuted}` : ''}`}>{content}</p>;
 	}
 	return null;
-}
+});

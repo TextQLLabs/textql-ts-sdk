@@ -1,4 +1,4 @@
-import { getCellCase, getCellPayload, type CellLike } from '../lib/cells';
+import { asString, getCellCase, getCellPayload, type CellLike } from '../lib/cells';
 import { getCellComponent } from './cells/registry';
 
 /**
@@ -7,7 +7,7 @@ import { getCellComponent } from './cells/registry';
  */
 export function CellDetail({ cell }: { cell: CellLike }) {
 	const Body = getCellComponent(getCellCase(cell));
-	const execError = typeof cell.execError === 'string' ? cell.execError : '';
+	const execError = asString(cell.execError);
 
 	return <Body cell={cell} payload={getCellPayload(cell)} execError={execError} />;
 }

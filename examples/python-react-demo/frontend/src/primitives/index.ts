@@ -13,4 +13,4 @@ export {
 	ViewSwitcherPanel,
 	type View
 } from './ViewSwitcher';
-export type { ConfirmOptions, ConfirmTone } from './modalTypes';
+export type { ConfirmOptions } from './modalTypes';

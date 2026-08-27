@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 
-import type { IconComponent } from '../lib/cells';
 import { cx } from '../lib/cx';
+import type { IconComponent } from '../lib/icon';
 
 export type View = { value: string; label: string; icon?: IconComponent };
 
@@ -21,30 +21,16 @@ function useSwitcher(part: string): SwitcherContext {
 
 type RootProps = {
 	views: View[];
-	/** Controlled. Omit for uncontrolled, which starts on `defaultValue` or the first view. */
-	value?: string;
-	defaultValue?: string;
-	onValueChange?: (value: string) => void;
+	value: string;
+	onValueChange: (value: string) => void;
 	children?: ReactNode;
 };
 
 /** Holds the selection. Renders no DOM of its own. */
-export function ViewSwitcher({
-	views,
-	value,
-	defaultValue,
-	onValueChange,
-	children
-}: RootProps) {
-	const [uncontrolled, setUncontrolled] = useState(defaultValue ?? views[0]?.value ?? '');
-	const current = value ?? uncontrolled;
-
-	function setValue(next: string) {
-		if (value === undefined) setUncontrolled(next);
-		onValueChange?.(next);
-	}
-
-	return <Context.Provider value={{ views, value: current, setValue }}>{children}</Context.Provider>;
+export function ViewSwitcher({ views, value, onValueChange, children }: RootProps) {
+	return (
+		<Context.Provider value={{ views, value, setValue: onValueChange }}>{children}</Context.Provider>
+	);
 }
 
 const TRACK = 'inline-flex items-center gap-0.5 rounded-sm bg-track p-0.5';

@@ -39,7 +39,6 @@ export class Store<S extends object> {
 	getSnapshot = (): S => this.#state;
 }
 
-/** Subscribe a component to a store; re-renders whenever its snapshot changes. */
 export function useStore<S extends object>(store: Store<S>): S {
 	return useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
 }

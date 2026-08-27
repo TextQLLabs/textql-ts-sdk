@@ -80,7 +80,7 @@ backend/
   app/main.py           FastAPI app; the lifespan builds the SDK clients once
   app/textql_router.py  every route, under /v3/textql
 frontend/
-  src/lib/api.ts        the six calls the UI makes, plus the SSE reader
+  src/lib/api.ts        the nine calls the UI makes, plus the SSE reader
   src/lib/cells.ts      the oneof switch: which payload, what to call it
   src/lib/cellBlocks.ts groups a run's cells into tool batches
   src/components/       ChatPage, Composer, ToolSequence, CellDetail, …
@@ -90,10 +90,10 @@ frontend/
 
 | Route | What it does |
 | --- | --- |
-| `GET /v3/textql/chats` | List chats, newest first (`search_term`, `limit`, `offset`) |
+| `GET /v3/textql/chats` | List chats, newest first (`q`/`search_term`, and either `page`/`page_size` or `limit`/`offset`) |
 | `POST /v3/textql/chats` | Create a chat; returns the `chat_id` every other call needs |
 | `GET /v3/textql/chats/{id}/history` | Replay cells, oldest-first, in the same JSON the stream sends |
-| `POST /v3/textql/chats/{id}/send` | Send a turn; SSE by default, `stream: false` for plain JSON |
+| `POST /v3/textql/chats/{id}/send` | Send a turn; SSE by default, `stream: false` for the run's cells as JSON |
 | `GET /v3/textql/chats/{id}/watch` | The whole chat's event stream, across turns; never closes on `runComplete` |
 | `POST /v3/textql/questions` | Answer or skip a questions cell, resuming a paused run |
 | `GET /v3/textql/connectors` | Connectors, for the composer's picker |

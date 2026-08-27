@@ -46,10 +46,5 @@ export const CHIP = `${RESET} inline-flex max-w-[240px] items-center gap-1.5 rou
 export const CHIP_LABEL = 'min-w-0 overflow-hidden text-ellipsis whitespace-nowrap';
 export const CHIP_CLEAR = `${RESET} rounded-[5px] px-1.5 py-[3px] text-[11px] text-accent hover:bg-elevate/60`;
 
-export const TAB = `${RESET} shrink-0 rounded-[5px] px-2 py-1 text-xs transition-colors`;
-export const TAB_IDLE = 'text-muted hover:text-ink';
-export const TAB_ON = 'font-medium text-ink';
-export const TAB_COUNT = 'ml-[5px] font-mono text-[10.5px] text-muted';
-
 export const SEARCH_WRAP =
 	'flex h-[30px] min-w-0 flex-1 items-center gap-1.5 rounded-[var(--radius-sm)] bg-elevate/55 px-[9px] text-muted shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--color-line)_70%,transparent)]';

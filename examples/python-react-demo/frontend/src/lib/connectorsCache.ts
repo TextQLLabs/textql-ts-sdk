@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
 
+import { listConnectors, type ConnectorSummary } from './api';
 import { Store, useStore } from './store';
-import { isRecord } from './utils';
 
-export type ConnectorItem = {
-	id: number;
-	name: string;
-	type: string;
-};
+export type ConnectorItem = ConnectorSummary;
 
 type CacheState = {
 	connectors: ConnectorItem[];
@@ -31,29 +27,7 @@ class ConnectorsCache extends Store<CacheState> {
 
 		this.#inflight = (async () => {
 			try {
-				const response = await fetch('/v3/textql/connectors');
-				const payload: unknown = await response.json();
-
-				if (!response.ok || !isRecord(payload) || !Array.isArray(payload.connectors)) {
-					throw new Error('Unable to load connectors.');
-				}
-
-				const next: ConnectorItem[] = [];
-
-				for (const item of payload.connectors) {
-					if (
-						!isRecord(item) ||
-						typeof item.id !== 'number' ||
-						typeof item.name !== 'string' ||
-						typeof item.type !== 'string'
-					) {
-						continue;
-					}
-
-					next.push({ id: item.id, name: item.name, type: item.type });
-				}
-
-				this.set({ connectors: next, loaded: true, error: false });
+				this.set({ connectors: await listConnectors(), loaded: true, error: false });
 			} catch {
 				this.set({ error: true });
 			} finally {

@@ -2,11 +2,10 @@ import {
 	asRecords as recs,
 	asString as str,
 	asStrings as strs,
-	formatElapsed,
 	getCellCase,
+	getCellExecTime,
 	getCellPayload,
-	isCellFinished,
-	titleCaseSnake,
+	titleCase,
 	type CellLike
 } from './cells';
 import { parsePreviewTable } from './dataframePreview';
@@ -15,6 +14,7 @@ import { isRecord } from './utils';
 
 export type Block =
 	| { kind: 'text'; label?: string; text: string }
+	| { kind: 'error'; text: string }
 	| { kind: 'md'; label?: string; text: string }
 	| { kind: 'code'; label?: string; text: string; lang?: string }
 	| { kind: 'kv'; rows: { label: string; value: string }[] }
@@ -35,25 +35,10 @@ function num(value: unknown): string {
 	return '';
 }
 
-/** Finished wall-clock only — never surface placeholder 0 ms while executing. */
-export function formatExecTimeMs(value: unknown): string {
-	const n =
-		typeof value === 'number'
-			? value
-			: typeof value === 'string' && value !== ''
-				? Number(value)
-				: NaN;
-	if (!Number.isFinite(n) || n <= 0) return '';
-	// Sub-second stays in ms, where the precision is the point; past that it
-	// matches the running timer's label so a cell doesn't switch units when it
-	// finishes.
-	return n < 1000 ? `${Math.round(n)} ms` : formatElapsed(n);
-}
-
 function humanizeEnum(value: unknown): string {
 	const text = str(value);
 	if (!/^[A-Z][A-Z0-9_]*$/.test(text)) return text;
-	return titleCaseSnake(text.toLowerCase());
+	return titleCase(text.toLowerCase());
 }
 
 function prettyJson(value: unknown): string {
@@ -73,6 +58,19 @@ function prettyJson(value: unknown): string {
 
 type BlockBuilder = (p: Record<string, unknown>, blocks: Block[]) => void;
 
+/** Shared by the cell types whose bodies are identical. */
+const biMessageCell: BlockBuilder = (p, b) => {
+	kv(b, [['Dataset', str(p.datasetId)]]);
+	messageBlocks(b, p.messageBlocks);
+};
+
+const emailContentCell: BlockBuilder = (p, b) => {
+	kv(b, [
+		['Subject', str(p.subject)],
+		['From', str(p.sender)]
+	]);
+};
+
 function kv(blocks: Block[], rows: [string, string][]) {
 	const filled = rows.filter(([, value]) => value !== '');
 	if (filled.length > 0) {
@@ -82,6 +80,11 @@ function kv(blocks: Block[], rows: [string, string][]) {
 
 function text(blocks: Block[], label: string, value: unknown) {
 	if (str(value)) blocks.push({ kind: 'text', label: label || undefined, text: str(value) });
+}
+
+/** The cell failed: rendered as the cell's error, not as a labelled field. */
+function err(blocks: Block[], value: unknown) {
+	if (str(value)) blocks.push({ kind: 'error', text: str(value) });
 }
 
 /** Markdown-rendered prose (LLM-written content, answers, summaries). */
@@ -171,7 +174,6 @@ function messageBlocks(blocks: Block[], value: unknown) {
 }
 
 const BUILDERS: Record<string, BlockBuilder> = {
-	// ── Text / answer ────────────────────────────────────────────────────
 	mdCell: (p, b) => {
 		md(b, '', p.content);
 	},
@@ -194,22 +196,6 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		md(b, '', p.content);
 	},
 
-	// ── Query tools ──────────────────────────────────────────────────────
-	sqlCell: (p, b) => {
-		authNote(b, p);
-		// Time is appended in buildCellBlocks only after the cell finishes.
-		kv(b, [
-			['Connector', num(p.connectorId)],
-			['Agent memory', p.agentMemory === true ? 'yes' : '']
-		]);
-		code(b, 'Query', p.query, 'sql');
-		preview(b, 'Result', p.dataframePreview);
-	},
-	tableauSqlCell: (p, b) => {
-		kv(b, [['Datasource', str(p.tableauDatasourceLuid)]]);
-		code(b, 'Query', p.query, 'sql');
-		preview(b, 'Result', p.dataframePreview);
-	},
 	powerbiDaxCell: (p, b) => {
 		authNote(b, p);
 		kv(b, [['Dataset', str(p.datasetId)]]);
@@ -224,7 +210,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		code(b, 'Query', p.query);
 		code(b, 'Generated SQL', p.generatedSql, 'sql');
 		preview(b, 'Result', p.dataframePreview);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	ontologyQueryCell: (p, b) => {
 		authNote(b, p);
@@ -271,7 +257,6 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		list(b, 'Metrics', metrics);
 	},
 
-	// ── Code execution ───────────────────────────────────────────────────
 	pyCell: (p, b) => {
 		authNote(b, p);
 		code(b, 'Code', p.code, 'python');
@@ -300,7 +285,6 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		if (exitCode && exitCode !== '0') kv(b, [['Exit code', exitCode]]);
 	},
 
-	// ── Search tools ─────────────────────────────────────────────────────
 	wsCell: (p, b) => {
 		kv(b, [
 			['Query', str(p.query)],
@@ -318,7 +302,6 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		code(b, 'Result', p.resultText);
 	},
 
-	// ── MCP / skills ─────────────────────────────────────────────────────
 	mcpToolCell: (p, b) => {
 		// Time is appended in buildCellBlocks only after the cell finishes.
 		kv(b, [
@@ -328,7 +311,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		if (str(p.argumentsJson) && str(p.argumentsJson) !== '{}') {
 			code(b, 'Arguments', prettyJson(p.argumentsJson), 'json');
 		}
-		if (str(p.errorMessage)) text(b, 'Error', p.errorMessage);
+		if (str(p.errorMessage)) err(b, p.errorMessage);
 		else code(b, 'Result', str(p.contentJson) ? prettyJson(p.contentJson) : '', 'json');
 	},
 	useSkillCell: (p, b) => {
@@ -339,9 +322,8 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		]);
 	},
 
-	// ── Apps / dashboards / reports ──────────────────────────────────────
 	streamlitCell: (p, b) => {
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 		link(b, 'Open app', p.url);
 		image(b, p.screenshotUrl, 'App screenshot');
 		code(b, 'Code', p.code, 'python');
@@ -352,7 +334,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Action', humanizeEnum(p.action)],
 			['Type', str(p.type)]
 		]);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 		image(b, p.screenshotUrl, 'Dashboard screenshot');
 		code(b, 'Code', p.code, 'python');
 	},
@@ -362,7 +344,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Action', str(p.action)],
 			['Build', num(p.buildLineCount) ? `${num(p.buildLineCount)} lines / ${num(p.buildFileCount)} files` : '']
 		]);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 		image(b, p.screenshotUrl, 'App screenshot');
 	},
 	reportCell: (p, b) => {
@@ -376,20 +358,19 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			subtitle: str(report.summary) || undefined
 		}));
 		list(b, 'Reports', items);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	previewCell: (p, b) => {
 		kv(b, [
 			['Name', str(p.name)],
 			['Type', str(p.previewType)]
 		]);
-		text(b, 'Error', p.error);
+		err(b, p.error);
 		if (str(p.previewType) === 'image') image(b, p.url, str(p.name));
 		else link(b, 'Open preview', p.url);
 		code(b, '', p.content);
 	},
 
-	// ── Files / media ────────────────────────────────────────────────────
 	imageCell: (p, b) => {
 		image(b, p.url, str(p.altText) || str(p.name));
 		text(b, '', p.caption);
@@ -417,17 +398,9 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		list(b, 'Dataframes', items);
 	},
 
-	// ── Tableau / PowerBI ────────────────────────────────────────────────
-	tableauCell: (p, b) => {
-		kv(b, [['Dataset', str(p.datasetId)]]);
-		messageBlocks(b, p.messageBlocks);
-	},
-	powerbiCell: (p, b) => {
-		kv(b, [['Dataset', str(p.datasetId)]]);
-		messageBlocks(b, p.messageBlocks);
-	},
+	tableauCell: biMessageCell,
+	powerbiCell: biMessageCell,
 
-	// ── Google / Microsoft integrations ──────────────────────────────────
 	googleDriveSearchCell: (p, b) => {
 		kv(b, [['Files found', num(p.fileCount)]]);
 		const items = recs(p.files).map((file) => ({
@@ -437,7 +410,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		}));
 		list(b, 'Files', items);
 		preview(b, 'Preview', p.dataframePreview);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	googleDriveContentCell: (p, b) => {
 		kv(b, [
@@ -445,7 +418,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Type', str(p.contentType)]
 		]);
 		code(b, '', p.content);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	googleCalendarSearchCell: (p, b) => {
 		kv(b, [['Events', num(p.eventCount)]]);
@@ -455,28 +428,17 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		kv(b, [['Emails', num(p.emailCount)]]);
 		md(b, '', p.emailSummary);
 	},
-	gmailEmailContentCell: (p, b) => {
-		kv(b, [
-			['Subject', str(p.subject)],
-			['From', str(p.sender)]
-		]);
-	},
+	gmailEmailContentCell: emailContentCell,
 	microsoft365EmailSearchCell: (p, b) => {
 		kv(b, [['Emails', num(p.emailCount)]]);
 		text(b, '', p.emailSummary);
 	},
-	microsoft365EmailContentCell: (p, b) => {
-		kv(b, [
-			['Subject', str(p.subject)],
-			['From', str(p.sender)]
-		]);
-	},
+	microsoft365EmailContentCell: emailContentCell,
 	microsoft365CalendarCell: (p, b) => {
 		kv(b, [['Events', num(p.eventCount)]]);
 		text(b, '', p.eventSummary);
 	},
 
-	// ── Email ────────────────────────────────────────────────────────────
 	emailCell: (p, b) => {
 		kv(b, [
 			['To', strs(p.to).join(', ')],
@@ -485,11 +447,10 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Sent at', str(p.sentAt)],
 			['Sent count', num(p.sentCount)]
 		]);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 		md(b, '', p.body);
 	},
 
-	// ── Editors / config ─────────────────────────────────────────────────
 	contextPromptEditorCell: (p, b) => {
 		kv(b, [
 			['Action', humanizeEnum(p.action)],
@@ -497,7 +458,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		]);
 		code(b, 'Diff', p.diff, 'diff');
 		md(b, 'Proposed', p.proposedContext);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	ontologyEditorCell: (p, b) => {
 		kv(b, [
@@ -540,7 +501,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		});
 		list(b, 'Playbooks', items);
 		fieldChanges(b, p.fieldChanges);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	},
 	formEditorCell: (p, b) => {
 		const form = isRecord(p.form) ? p.form : isRecord(p.formSnapshot) ? p.formSnapshot : null;
@@ -598,46 +559,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		}
 	},
 
-	// ── Lists ────────────────────────────────────────────────────────────
-	listDashboardsCell: (p, b) => {
-		kv(b, [
-			['Search', str(p.searchTerm)],
-			['Total', num(p.totalCount)]
-		]);
-		const items = recs(p.dashboards).map((dashboard) => ({
-			title: str(dashboard.name) || 'dashboard',
-			subtitle: str(dashboard.status) || undefined
-		}));
-		list(b, 'Dashboards', items);
-		text(b, 'Error', p.errorMessage);
-	},
-	listAppsCell: (p, b) => {
-		kv(b, [
-			['Search', str(p.searchTerm)],
-			['Total', num(p.totalCount)]
-		]);
-		const items = recs(p.apps).map((app) => ({
-			title: str(app.name) || 'app',
-			subtitle: str(app.status) || undefined
-		}));
-		list(b, 'Apps', items);
-		text(b, 'Error', p.errorMessage);
-	},
-	listUsersCell: (p, b) => {
-		kv(b, [
-			['Search', str(p.searchTerm)],
-			['Type', str(p.userType)],
-			['Total', num(p.totalCount)]
-		]);
-		const items = recs(p.agents).map((agent) => ({
-			title: str(agent.name) || 'user',
-			subtitle: str(agent.email) || str(agent.type) || undefined
-		}));
-		list(b, 'Users', items);
-		text(b, 'Error', p.errorMessage);
-	},
 
-	// ── Feed ─────────────────────────────────────────────────────────────
 	feedExplorerCell: (p, b) => {
 		kv(b, [
 			['Operation', str(p.operation)],
@@ -645,20 +567,20 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Filter', str(p.filter)]
 		]);
 		code(b, 'Result', str(p.result) ? prettyJson(p.result) : '', 'json');
-		text(b, 'Error', p.error);
+		err(b, p.error);
 	},
 	feedPostCell: (p, b) => {
 		kv(b, [['Title', str(p.title)]]);
 		md(b, '', p.content);
 		for (const url of strs(p.imageUrls)) image(b, url);
 		link(b, 'View post', p.postUrl);
-		text(b, 'Error', p.error);
+		err(b, p.error);
 	},
 	feedCommentCell: (p, b) => {
 		kv(b, [['On post', str(p.postTitle)]]);
 		md(b, '', p.content);
 		link(b, 'View comment', p.commentUrl);
-		text(b, 'Error', p.error);
+		err(b, p.error);
 	},
 	feedEngageCell: (p, b) => {
 		kv(b, [
@@ -668,7 +590,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 			['Downvotes', num(p.downvoteCount)]
 		]);
 		link(b, 'View', p.url);
-		text(b, 'Error', p.error);
+		err(b, p.error);
 	},
 	feedCreateCell: (p, b) => {
 		const agent = isRecord(p.agent) ? p.agent : null;
@@ -679,7 +601,7 @@ const BUILDERS: Record<string, BlockBuilder> = {
 		]);
 		if (agent) md(b, 'Prompt', agent.prompt);
 		fieldChanges(b, p.fieldChanges);
-		text(b, 'Error', p.errorMessage);
+		err(b, p.errorMessage);
 	}
 };
 
@@ -697,10 +619,7 @@ export function buildCellBlocks(cell: CellLike): Block[] {
 		if (json && json !== '{}') blocks.push({ kind: 'code', text: json });
 	}
 
-	// Only finished cells get a final duration — never 0/missing while running.
-	const time = isCellFinished(cell)
-		? formatExecTimeMs(payload.executionTimeMs ?? cell.durationMs)
-		: '';
+	const time = getCellExecTime(cell);
 	if (time) {
 		const firstKv = blocks.find((block) => block.kind === 'kv');
 		if (firstKv && firstKv.kind === 'kv') {

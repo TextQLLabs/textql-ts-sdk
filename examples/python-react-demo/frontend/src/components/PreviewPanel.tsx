@@ -1,6 +1,7 @@
 import { ExternalLink, PanelRightClose, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
+import { titleCase } from '../lib/cells';
 import { withChartFitShim } from '../lib/chartFitShim';
 import { CELL_BODY, CELL_CODE, CELL_LABEL, CELL_META } from '../lib/cellText';
 import { cx } from '../lib/cx';
@@ -42,11 +43,6 @@ const CELL = 'max-w-[260px] overflow-hidden px-3 py-[7px] text-left text-ellipsi
 const ROWNUM =
 	'sticky left-0 w-[1%] max-w-none border-r border-line/55 bg-fill text-right tabular-nums text-muted select-none';
 const EMPTY = cx(CELL_BODY, 'm-0 text-[#a1a1aa]');
-
-function typeLabel(previewType: string): string {
-	if (!previewType) return 'File';
-	return previewType.charAt(0).toUpperCase() + previewType.slice(1);
-}
 
 /** Trust a recognized declared type; otherwise sniff the URL extension. */
 function previewKind(preview: PreviewItem): string {
@@ -229,9 +225,10 @@ export function PreviewPanel() {
 			? `${rawEmbedUrl}&fit=chart`
 			: rawEmbedUrl;
 
-	const [chartFitW, setChartFitW] = useState(0); // panel content width (the wrapper)
-	const [chartNatW, setChartNatW] = useState(CHART_W_DEFAULT); // chart's reported natural width
-	const [chartNatH, setChartNatH] = useState(CHART_H_DEFAULT); // chart's reported natural height
+	// Natural size comes back from the injected shim; the fit width is measured.
+	const [chartFitW, setChartFitW] = useState(0);
+	const [chartNatW, setChartNatW] = useState(CHART_W_DEFAULT);
+	const [chartNatH, setChartNatH] = useState(CHART_H_DEFAULT);
 	const chartScale = chartFitW > 0 ? Math.min(1, chartFitW / chartNatW) : 1;
 	const chartFitRef = useRef<HTMLDivElement | null>(null);
 
@@ -442,7 +439,7 @@ export function PreviewPanel() {
 										tab.id === item?.id ? 'inline' : 'hidden'
 									)}
 								>
-									{typeLabel(tab.previewType)}
+									{titleCase(tab.previewType) || 'File'}
 								</span>
 							</button>
 							<button

@@ -2,7 +2,7 @@ import { ArrowLeft, Check, ChevronRight, ListFilter, Search } from 'lucide-react
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { cx } from '../../lib/cx';
-import { SINCE_PREFIX, distinctValues, type ColumnFilter } from '../../lib/tableFilter';
+import { SINCE_PREFIX, type ColumnFilter } from '../../lib/tableFilter';
 import { sortDirectionLabel, toggleSortEntry, type SortEntry } from '../../lib/tableSort';
 import { DateRangeFilter } from './DateRangeFilter';
 import {
@@ -33,12 +33,6 @@ const PANEL_MAX_H = 340;
 
 type Props = {
 	fields: FilterField[];
-	/**
-	 * Rows the facet options are derived from when a field declares none.
-	 * Server-filtered surfaces pass `[]` and declare `filterOptions` instead —
-	 * options taken from one loaded page would be wrong.
-	 */
-	items: unknown[];
 	filters: ColumnFilter[];
 	onFiltersChange: (filters: ColumnFilter[]) => void;
 	sortEntries: SortEntry[];
@@ -46,9 +40,12 @@ type Props = {
 	datePresets?: { value: string; label: string }[];
 };
 
+function optionsFor(field: FilterField): FilterOption[] {
+	return field.filterOptions?.map(toOption) ?? [];
+}
+
 export function FilterPopover({
 	fields,
-	items,
 	filters,
 	onFiltersChange,
 	sortEntries,
@@ -63,25 +60,16 @@ export function FilterPopover({
 
 	const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
-	const optionsFor = useCallback(
-		(field: FilterField): FilterOption[] => {
-			if (field.filterOptions) return field.filterOptions.map(toOption);
-			return distinctValues(items, field).map((value) => ({ value, label: value }));
-		},
-		[items]
-	);
-
 	// A facet with nothing to pick is a dead end, so it doesn't get a row. Date
-	// facets carry their own presets and disabled ones are deliberately visible,
-	// so neither needs options to earn its place.
+	// facets carry their own presets, so they need no options to earn their place.
 	const facetFields = useMemo(
 		() =>
 			fields.filter((field) => {
 				if (!field.filterable) return false;
-				if (field.filterDisabled || field.filterKind === 'date') return true;
+				if (field.filterKind === 'date') return true;
 				return optionsFor(field).length > 0;
 			}),
-		[fields, optionsFor]
+		[fields]
 	);
 	const sortFields = useMemo(() => fields.filter((field) => field.sortable), [fields]);
 	const activeField = facetFields.find((field) => field.id === activeFieldId);
@@ -106,7 +94,7 @@ export function FilterPopover({
 
 	function summaryFor(field: FilterField): string {
 		const values = valuesFor(field.id);
-		if (values.length === 0) return field.filterAllLabel ?? 'All';
+		if (values.length === 0) return 'All';
 		if (values.length === 1) {
 			const match = optionsFor(field).find((option) => option.value === values[0]);
 			// A date facet's custom value has no option row to borrow a label from.
@@ -199,10 +187,7 @@ export function FilterPopover({
 		};
 	}, [open, place]);
 
-	const allOptions = useMemo(
-		() => (activeField ? optionsFor(activeField) : []),
-		[activeField, optionsFor]
-	);
+	const allOptions = useMemo(() => (activeField ? optionsFor(activeField) : []), [activeField]);
 	const q = query.trim().toLowerCase();
 	const visibleOptions = q
 		? allOptions.filter((option) => option.label.toLowerCase().includes(q))
@@ -245,7 +230,6 @@ export function FilterPopover({
 									key={field.id}
 									type="button"
 									className={FACET_ROW}
-									disabled={field.filterDisabled}
 									onClick={() => {
 										setActiveFieldId(field.id);
 										setQuery('');
@@ -320,8 +304,6 @@ export function FilterPopover({
 									</button>
 								)}
 							</div>
-
-							{activeField.filterNote && <p className={NOTE}>{activeField.filterNote}</p>}
 
 							{activeField.filterKind === 'date' ? (
 								<DateRangeFilter

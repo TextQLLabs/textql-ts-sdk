@@ -4,6 +4,7 @@
  */
 
 import type { CellLike } from './cells';
+import { isRecord } from './utils';
 
 const BASE = '/v3/textql';
 
@@ -108,8 +109,47 @@ export async function getConfig(): Promise<AppConfig> {
 	return { email };
 }
 
+/**
+ * Client-side close only: the chat stays on the server and the same `chat_id`
+ * can be resumed. Rejects if the request fails, so callers that show the
+ * outcome can roll back; fire-and-forget callers should `.catch()`.
+ */
 export async function closeChat(chatId: string): Promise<void> {
-	await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}`, { method: 'DELETE' });
+	const response = await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}`, {
+		method: 'DELETE'
+	});
+	await readJson(response, 'Unable to close this chat.');
+}
+
+export type ConnectorSummary = { id: number; name: string; type: string };
+
+export async function listConnectors(): Promise<ConnectorSummary[]> {
+	const response = await fetch(`${BASE}/connectors`);
+	const payload = await readJson(response, 'Unable to load connectors.');
+	if (!isRecord(payload) || !Array.isArray(payload.connectors)) {
+		throw new Error('Unable to load connectors.');
+	}
+	return payload.connectors.filter(
+		(item): item is ConnectorSummary =>
+			isRecord(item) &&
+			typeof item.id === 'number' &&
+			typeof item.name === 'string' &&
+			typeof item.type === 'string'
+	);
+}
+
+/** Answers (or dismisses) a questions cell, resuming the paused run. */
+export async function submitQuestions(
+	cellId: string,
+	action: 'submit' | 'dismiss',
+	answers: unknown[]
+): Promise<void> {
+	const response = await fetch(`${BASE}/questions`, {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ action, cellId, answers })
+	});
+	await readJson(response, 'Failed to send answers.');
 }
 
 /**

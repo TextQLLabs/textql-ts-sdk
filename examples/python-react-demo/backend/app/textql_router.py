@@ -8,6 +8,7 @@ main.py at startup.
 import asyncio
 import json
 import logging
+import os
 import re
 from contextlib import aclosing
 from datetime import datetime, timedelta, timezone
@@ -45,8 +46,29 @@ from textql_sdk.models import (
 _sdk: Optional[Any] = None
 _streaming: Optional[Any] = None
 _connectors: Optional[Any] = None
+_http: Optional[httpx.AsyncClient] = None
 
 WATCHDOG_TIMEOUT_S = 30.0
+
+# Every SSE route sends these; /send adds its own on top.
+_SSE_HEADERS = {
+    "Cache-Control": "no-cache",
+    "X-Accel-Buffering": "no",
+}
+
+# The demo org's connector, overridable so a fresh install can point elsewhere.
+_FALLBACK_CONNECTOR_IDS = "57"
+
+
+def _default_connector_ids() -> list[int]:
+    """`TEXTQL_CONNECTOR_IDS` as ints. Read per call: .env loads after this import."""
+    raw = os.getenv("TEXTQL_CONNECTOR_IDS") or _FALLBACK_CONNECTOR_IDS
+    try:
+        return [int(part) for part in raw.split(",") if part.strip()]
+    except ValueError:
+        logger.warning("[config] ignoring malformed TEXTQL_CONNECTOR_IDS=%r", raw)
+        return [int(_FALLBACK_CONNECTOR_IDS)]
+
 
 # `type` names the oneof case the way the payload key is spelled in the JSON
 # below it, so the browser can read `event[event.type]`.
@@ -57,10 +79,6 @@ _PAYLOAD_JSON_NAMES = {
 
 router = APIRouter(prefix="/v3/textql", tags=["TextQL"])
 
-
-# ---------------------------------------------------------------------------
-# Pydantic models
-# ---------------------------------------------------------------------------
 
 class ChatSummary(BaseModel):
     """One row, in both spellings the two callers expect.
@@ -142,7 +160,10 @@ class ConfigResponse(BaseModel):
 
 class CreateChatRequest(BaseModel):
     model: str = Field("MODEL_OPUS_4_8", description="TextQL model identifier")
-    connector_ids: list[int] = Field([57], description="Connector IDs to enable")
+    connector_ids: list[int] = Field(
+        default_factory=_default_connector_ids,
+        description="Connector IDs to enable",
+    )
     sql_enabled: bool = True
     python_enabled: bool = True
 
@@ -167,31 +188,40 @@ class SendMessageRequest(BaseModel):
     )
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
+def _require(value: Any, name: str) -> Any:
+    if value is None:
+        raise RuntimeError(f"{name} not initialised — lifespan has not run yet")
+    return value
+
 
 def _get_sdk() -> Any:
-    if _sdk is None:
-        raise RuntimeError("SDK not initialised — lifespan has not run yet")
-    return _sdk
+    return _require(_sdk, "SDK")
 
 
 def _get_streaming() -> Any:
-    if _streaming is None:
-        raise RuntimeError("Streaming client not initialised — lifespan has not run yet")
-    return _streaming
+    return _require(_streaming, "Streaming client")
+
+
+def _get_connectors_client() -> Any:
+    return _require(_connectors, "Connector client")
+
+
+def _get_http() -> httpx.AsyncClient:
+    return cast(httpx.AsyncClient, _require(_http, "HTTP client"))
+
+
+def _unwrap(result: Any, op: str, **context: Any) -> Any:
+    """The SDK result, or a 502 when the call came back as a ConnectError."""
+    if isinstance(result, ConnectError):
+        where = " ".join(f"{key}={value}" for key, value in context.items())
+        logger.error("[%s] SDK error | %s%s", op, f"{where} | " if where else "", result)
+        raise HTTPException(status_code=502, detail=f"{op} failed: {result}")
+    return result
 
 
 def _connector_type_name(value: int) -> str:
     """The deployment's enum can be ahead of the SDK's copy of the proto."""
     return ConnectorType.Name(value) if value in ConnectorType.values() else "UNKNOWN"
-
-
-def _get_connectors_client() -> Any:
-    if _connectors is None:
-        raise RuntimeError("Connector client not initialised — lifespan has not run yet")
-    return _connectors
 
 
 # A halted cell is resolved by its own RPC pair; the cell id is the whole request.
@@ -238,19 +268,23 @@ def _event_to_dict(event: WatchChatEvent) -> dict:
     }
 
 
-async def _watch_stream(
+def _sse(payload: dict) -> str:
+    return f"data: {json.dumps(payload)}\n\n"
+
+
+async def _watch_events(
     chat_id: str,
     latest_cell_id: str = "",
     cursor: str = "",
     stop_on_run_complete: bool = False,
-) -> AsyncGenerator[str, None]:
-    """Yield SSE-formatted lines from a watch_chat subscription.
+) -> AsyncGenerator[dict, None]:
+    """Event dicts from a watch_chat subscription.
 
-    If stop_on_run_complete is True the generator returns after the first
-    run_complete or run_error event (used by /send to bound the stream).
+    stop_on_run_complete bounds the stream at the first run_complete or run_error,
+    which is what /send needs and /watch does not.
     """
     logger.info(
-        "[_watch_stream] starting | chat_id=%s latest_cell_id=%r cursor=%r stop_on_run_complete=%s",
+        "[_watch_events] starting | chat_id=%s latest_cell_id=%r cursor=%r stop_on_run_complete=%s",
         chat_id, latest_cell_id, cursor, stop_on_run_complete,
     )
     streaming = _get_streaming()
@@ -271,69 +305,55 @@ async def _watch_stream(
                 event = await asyncio.wait_for(anext(events, None), WATCHDOG_TIMEOUT_S)
             except asyncio.TimeoutError:
                 logger.warning(
-                    "[_watch_stream] watchdog timeout after %.1fs | chat_id=%s events_received=%d",
+                    "[_watch_events] watchdog timeout after %.1fs | chat_id=%s events_received=%d",
                     WATCHDOG_TIMEOUT_S, chat_id, event_count,
                 )
-                yield f"data: {json.dumps({'type': 'timeout'})}\n\n"
+                yield {"type": "timeout"}
                 return
 
             if event is None:
                 logger.info(
-                    "[_watch_stream] stream ended normally | chat_id=%s events_received=%d",
+                    "[_watch_events] stream ended normally | chat_id=%s events_received=%d",
                     chat_id, event_count,
                 )
-                yield f"data: {json.dumps({'type': 'streamEnded'})}\n\n"
+                yield {"type": "streamEnded"}
                 return
 
             data = _event_to_dict(event)
             event_count += 1
             event_type = data.get("type", "unknown")
 
-            if event_type == "cell":
-                logger.debug(
-                    "[_watch_stream] SSE cell event | chat_id=%s #%d cell_id=%s kind=%s complete=%s",
-                    chat_id, event_count,
-                    event.cell.id,
-                    event.cell.WhichOneof("value"),
-                    event.cell.complete,
-                )
-            elif event_type == "runStarted":
-                logger.info("[_watch_stream] SSE run_started | chat_id=%s", chat_id)
-            elif event_type == "runComplete":
-                logger.info(
-                    "[_watch_stream] SSE run_complete | chat_id=%s final_cell_id=%s total_events=%d",
-                    chat_id, event.run_complete.final_cell_id, event_count,
-                )
-            elif event_type == "runError":
+            if event_type == "runError":
                 logger.error(
-                    "[_watch_stream] SSE run_error | chat_id=%s error=%s",
+                    "[_watch_events] SSE run_error | chat_id=%s error=%s",
                     chat_id, event.run_error.error,
-                )
-            elif event_type == "handoffPending":
-                logger.info(
-                    "[_watch_stream] SSE handoff_pending | chat_id=%s marker=%s",
-                    chat_id, event.handoff_pending.handoff_marker,
                 )
             else:
                 logger.debug(
-                    "[_watch_stream] SSE event | chat_id=%s #%d type=%s",
-                    chat_id, event_count, event_type,
+                    "[_watch_events] SSE %s | chat_id=%s #%d", event_type, chat_id, event_count
                 )
 
-            yield f"data: {json.dumps(data)}\n\n"
+            yield data
 
             if stop_on_run_complete and event_type in ("runComplete", "runError"):
                 logger.info(
-                    "[_watch_stream] stopping after terminal event '%s' | chat_id=%s",
+                    "[_watch_events] stopping after terminal event '%s' | chat_id=%s",
                     event_type, chat_id,
                 )
                 return
 
 
+async def _watch_stream(
+    chat_id: str,
+    latest_cell_id: str = "",
+    cursor: str = "",
+    stop_on_run_complete: bool = False,
+) -> AsyncGenerator[str, None]:
+    events = _watch_events(chat_id, latest_cell_id, cursor, stop_on_run_complete)
+    async with aclosing(events) as stream:
+        async for event in stream:
+            yield _sse(event)
 
-# ---------------------------------------------------------------------------
-# Thread list facets
-# ---------------------------------------------------------------------------
 
 _SORT_FIELDS = {
     "updated": ChatSortField.CHAT_SORT_FIELD_UPDATED_AT,
@@ -390,10 +410,6 @@ def _proto_ts(value: Any) -> Optional[str]:
     return value.ToDatetime(tzinfo=timezone.utc).isoformat()
 
 
-# ---------------------------------------------------------------------------
-# Routes
-# ---------------------------------------------------------------------------
-
 @router.get("/connectors", response_model=ListConnectorsResponse)
 async def list_connectors():
     """The org's connectors, for the composer's connector picker.
@@ -424,9 +440,8 @@ async def list_connectors():
 async def submit_questions(body: SubmitQuestionsRequest):
     """Answer (or skip) a questions cell, which resumes the paused run.
 
-    A run that asks for clarification parks on a `questions_cell` until this
-    lands, so the watch stream goes quiet in between — that is the run waiting,
-    not a dropped connection.
+    The run parks on the cell until this lands; the watch stream going quiet in
+    between is the run waiting, not a dropped connection.
     """
     logger.info(
         "[submit_questions] request | action=%s cell_id=%s answers=%d",
@@ -439,10 +454,8 @@ async def submit_questions(body: SubmitQuestionsRequest):
         if body.action == "submit"
         else sdk.chats.dismiss_questions_async
     )
-    result = await call(cell_id=body.cellId, answers=answers)
-    if isinstance(result, ConnectError):
-        logger.error("[submit_questions] SDK error | %s", result)
-        raise HTTPException(status_code=502, detail=f"{body.action} questions failed: {result}")
+    _unwrap(await call(cell_id=body.cellId, answers=answers), f"{body.action} questions",
+            cell_id=body.cellId)
     return {"success": True}
 
 
@@ -473,18 +486,15 @@ async def resolve_cell(
 ):
     """Approve or reject a halted cell, which releases the paused run.
 
-    An ontology patch or a context-prompt edit parks the run until someone says
-    yes or no; until then the watch stream simply goes quiet.
+    An ontology patch or a context-prompt edit parks the run — and the watch
+    stream — until someone says yes or no.
     """
     logger.info("[resolve_cell] request | cell_id=%s kind=%s action=%s", cell_id, body.kind, body.action)
     method = _RESOLVERS.get((body.kind, body.action))
     if method is None:
         raise HTTPException(status_code=400, detail=f"Cannot {body.action} a {body.kind} cell")
 
-    result = await getattr(_get_sdk().chats, method)(cell_id=cell_id)
-    if isinstance(result, ConnectError):
-        logger.error("[resolve_cell] SDK error | %s", result)
-        raise HTTPException(status_code=502, detail=f"{method} failed: {result}")
+    _unwrap(await getattr(_get_sdk().chats, method)(cell_id=cell_id), method, cell_id=cell_id)
     return {"cell_id": cell_id, "kind": body.kind, "action": body.action}
 
 
@@ -505,13 +515,11 @@ async def list_chats(
 ):
     """List chats in your org, newest first.
 
-    Goes over Connect rather than `sdk.chats.get_all_async` for the same reason
-    as list_connectors: the facets ThreadsPage sends (creator ids, sources,
+    Over Connect rather than `sdk.chats.get_all_async` for the same reason as
+    list_connectors: the facets ThreadsPage sends (creator ids, sources,
     shared-with-me) are proto fields the generated REST model doesn't carry.
-
-    Two callers, two paging dialects: the sidebar sends `limit` / `offset`, the
-    thread list sends `page`. `page` wins when present and the response answers
-    in both spellings.
+    Two paging dialects: `page` wins over `limit`/`offset`, and the response
+    answers in both spellings.
     """
     if page is not None:
         limit, offset = page_size, page * page_size
@@ -611,7 +619,9 @@ async def list_chat_members():
 @router.get("/chats/{chat_id}/history", response_model=ChatHistoryResponse)
 async def get_chat_history(
     chat_id: str = Path(..., description="Chat ID to retrieve history for"),
-    limit: int = Query(50, ge=1, le=200, description="Cells per page"),
+    limit: Optional[int] = Query(
+        None, ge=1, le=200, description="Cells per page; defaults to 50, or 200 with all_pages"
+    ),
     skip: int = Query(0, ge=0, description="Number of cells to skip (pagination offset)"),
     all_pages: bool = Query(False, description="If True, fetch all pages and return every cell"),
 ):
@@ -619,9 +629,11 @@ async def get_chat_history(
 
     Cells are dumped by their wire aliases, which is the same JSON the watch
     stream sends, so the browser renders a replayed chat and a live one through
-    one path. Use `limit` / `skip` to paginate, or set `all_pages=true` to
-    collect every cell in one response.
+    one path.
     """
+    # Collecting the whole chat pays a round trip per page, so take the biggest
+    # page the RPC allows unless the caller asked for a specific size.
+    limit = limit or (200 if all_pages else 50)
     logger.info(
         "[get_chat_history] request | chat_id=%s limit=%d skip=%d all_pages=%s",
         chat_id, limit, skip, all_pages,
@@ -633,10 +645,10 @@ async def get_chat_history(
 
     while True:
         page_num += 1
-        resp = await sdk.chats.get_history_async(chat_id=chat_id, limit=limit, skip=current_skip)
-        if isinstance(resp, ConnectError):
-            logger.error("[get_chat_history] SDK error on page %d | chat_id=%s error=%s", page_num, chat_id, resp)
-            raise HTTPException(status_code=502, detail=f"get_history failed: {resp}")
+        resp = _unwrap(
+            await sdk.chats.get_history_async(chat_id=chat_id, limit=limit, skip=current_skip),
+            "get_history", chat_id=chat_id, page=page_num,
+        )
 
         cells = resp.cells or []
         logger.debug(
@@ -661,11 +673,8 @@ async def get_chat_history(
 
 @router.post("/chats", response_model=CreateChatResponse)
 async def create_chat(body: CreateChatRequest = CreateChatRequest()):
-    """Create a new multi-turn chat session.
-
-    Returns a `chat_id` you must pass to every subsequent call.
-    The chat persists server-side; pass the same `chat_id` to resume it
-    across API restarts.
+    """Create a chat. The returned `chat_id` is what every other call takes, and
+    it survives API restarts — pass it back to resume the same conversation.
     """
     logger.info(
         "[create_chat] request | model=%s connector_ids=%s sql=%s python=%s",
@@ -673,10 +682,9 @@ async def create_chat(body: CreateChatRequest = CreateChatRequest()):
     )
     sdk = _get_sdk()
     paradigm = _build_paradigm(body)
-    result = await sdk.chats.create_chat_async(model=body.model, paradigm=paradigm)
-    if isinstance(result, ConnectError):
-        logger.error("[create_chat] SDK error | %s", result)
-        raise HTTPException(status_code=502, detail=f"create_chat failed: {result}")
+    result = _unwrap(
+        await sdk.chats.create_chat_async(model=body.model, paradigm=paradigm), "create_chat"
+    )
     if result.chat is None or not result.chat.id:
         logger.error("[create_chat] server returned chat with no ID")
         raise HTTPException(status_code=502, detail="Server returned a chat with no ID")
@@ -689,19 +697,10 @@ async def send_message(
     body: SendMessageRequest,
     chat_id: str = Path(..., description="Chat ID returned by POST /v3/textql/chats"),
 ):
-    """Send a user message and stream the model's response as SSE.
+    """Send a turn; SSE by default, or the run's cells as JSON with `stream: false`.
 
-    **Multi-turn flow**
-
-    1. `POST /v3/textql/chats` once → get `chat_id`.
-    2. Each turn: `POST /v3/textql/chats/{chat_id}/send` with `{"message": "..."}`.
-       Pass `latest_cell_id` from the previous turn's `run_complete` event to
-       skip replaying earlier cells.
-    3. Repeat with the same `chat_id` for every subsequent turn.
-
-    **Steering**: set `steering: true` to redirect an active run mid-flight.
-
-    **Non-streaming**: set `stream: false` to get a plain JSON response.
+    `latest_cell_id` (the previous turn's `run_complete`) skips replaying earlier
+    cells; `steering: true` redirects an active run instead of queueing a turn.
     """
     logger.info(
         "[send_message] request | chat_id=%s steering=%s stream=%s latest_cell_id=%r msg_len=%d",
@@ -709,12 +708,10 @@ async def send_message(
     )
     sdk = _get_sdk()
 
-    sent = await sdk.chats.send_async(
-        chat_id=chat_id, message=body.message, steering=body.steering
+    sent = _unwrap(
+        await sdk.chats.send_async(chat_id=chat_id, message=body.message, steering=body.steering),
+        "send", chat_id=chat_id,
     )
-    if isinstance(sent, ConnectError):
-        logger.error("[send_message] SDK send error | chat_id=%s error=%s", chat_id, sent)
-        raise HTTPException(status_code=502, detail=f"send failed: {sent}")
 
     logger.info("[send_message] message accepted | chat_id=%s cell_id=%s", chat_id, sent.cell_id)
 
@@ -724,44 +721,35 @@ async def send_message(
             _watch_stream(chat_id, latest_cell_id=body.latest_cell_id, stop_on_run_complete=True),
             media_type="text/event-stream",
             headers={
-                "Cache-Control": "no-cache",
-                "X-Accel-Buffering": "no",
+                **_SSE_HEADERS,
                 "X-Cell-Id": sent.cell_id or "",
                 "Access-Control-Expose-Headers": "X-Cell-Id",
             },
         )
 
-    logger.info("[send_message] non-streaming mode — collecting SSE events | chat_id=%s", chat_id)
-    answers: dict[str, str] = {}
+    logger.info("[send_message] non-streaming mode — collecting events | chat_id=%s", chat_id)
+    # Snapshots are cumulative and arrive a few tokens at a time, so the last one
+    # per cell id is the whole cell. Which of them are prose is the caller's call.
+    cells: dict[str, dict] = {}
     final_cell_id = ""
     error_msg = ""
-    async for sse_line in _watch_stream(chat_id, latest_cell_id=body.latest_cell_id, stop_on_run_complete=True):
-        if not sse_line.startswith("data: "):
-            continue
-        data = json.loads(sse_line[len("data: "):])
+    async for data in _watch_events(chat_id, latest_cell_id=body.latest_cell_id, stop_on_run_complete=True):
         if data["type"] == "cell":
-            cell = data["cell"]
-            # The assistant's prose. Snapshots are cumulative and arrive a few
-            # tokens at a time, so keep the latest per cell rather than
-            # concatenating every partial the stream sent.
-            prose = cell.get("mdCell") or cell.get("ansCell")
-            if prose and cell.get("generated"):
-                answers[cell["id"]] = prose.get("content", "")
-        if data["type"] == "runComplete":
+            cells[data["cell"]["id"]] = data["cell"]
+        elif data["type"] == "runComplete":
             final_cell_id = data["runComplete"].get("finalCellId", "")
-        if data["type"] == "runError":
+        elif data["type"] == "runError":
             error_msg = data["runError"].get("error", "unknown error")
 
-    response = "\n\n".join(text for text in answers.values() if text.strip())
     logger.info(
-        "[send_message] non-streaming complete | chat_id=%s final_cell_id=%s error=%r response_len=%d",
-        chat_id, final_cell_id, error_msg or None, len(response),
+        "[send_message] non-streaming complete | chat_id=%s final_cell_id=%s error=%r cells=%d",
+        chat_id, final_cell_id, error_msg or None, len(cells),
     )
     return {
         "chat_id": chat_id,
         "cell_id": sent.cell_id,
         "final_cell_id": final_cell_id,
-        "response": response,
+        "cells": list(cells.values()),
         "error": error_msg or None,
     }
 
@@ -790,26 +778,18 @@ async def watch_chat(
             stop_on_run_complete=False,
         ),
         media_type="text/event-stream",
-        headers={
-            "Cache-Control": "no-cache",
-            "X-Accel-Buffering": "no",
-        },
+        headers=_SSE_HEADERS,
     )
 
 
 @router.delete("/chats/{chat_id}")
 async def close_chat(chat_id: str = Path(..., description="Chat ID to close")):
-    """Signal that the client is done with this chat.
-
-    The chat is not deleted server-side; you can resume the same `chat_id` later.
+    """Signal that the client is done. The chat is not deleted server-side; the
+    same `chat_id` resumes it later.
     """
     logger.info("[close_chat] client closed | chat_id=%s", chat_id)
     return {"chat_id": chat_id, "status": "closed_client_side"}
 
-
-# ---------------------------------------------------------------------------
-# Preview proxy
-# ---------------------------------------------------------------------------
 
 _USERCONTENT_HOST = "textqlusercontent.com"
 _APP_HOST = "app.textql.com"
@@ -886,12 +866,11 @@ async def preview_proxy(
     if not _is_allowed_preview_host(parsed.hostname or ""):
         raise HTTPException(status_code=403, detail="Host not allowed")
 
-    client = httpx.AsyncClient(follow_redirects=True, timeout=30.0)
+    client = _get_http()
     try:
         request = client.build_request("GET", url)
         upstream = await client.send(request, stream=True)
     except httpx.HTTPError as err:
-        await client.aclose()
         logger.error("[preview_proxy] upstream failed | url=%s error=%s", url, err)
         raise HTTPException(status_code=502, detail="Preview fetch failed") from err
 
@@ -904,7 +883,6 @@ async def preview_proxy(
             html = _inject_base_href(upstream.text, str(upstream.url))
         finally:
             await upstream.aclose()
-            await client.aclose()
         if fit == "chart":
             html = (
                 html.replace("</body>", f"{_CHART_FIT_SHIM}</body>")
@@ -919,6 +897,5 @@ async def preview_proxy(
                 yield chunk
         finally:
             await upstream.aclose()
-            await client.aclose()
 
     return StreamingResponse(body(), status_code=upstream.status_code, headers=headers)

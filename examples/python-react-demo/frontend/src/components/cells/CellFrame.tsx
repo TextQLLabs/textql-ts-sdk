@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 
 import {
+	asString,
 	getCellCase,
+	getCellToolSummary,
 	getCellTypeInfo,
 	getToolDisplayName,
 	usesCellShell,
@@ -24,7 +26,7 @@ type Props = {
  */
 export function CellFrame({ cell, actions, children }: Props) {
 	const cellCase = getCellCase(cell);
-	const execError = typeof cell.execError === 'string' ? cell.execError : '';
+	const execError = asString(cell.execError);
 
 	if (!usesCellShell(cellCase)) return <>{children}</>;
 
@@ -32,7 +34,7 @@ export function CellFrame({ cell, actions, children }: Props) {
 		<CellShell
 			icon={getCellTypeInfo(cellCase).icon}
 			title={getToolDisplayName(cell)}
-			summary={typeof cell.toolSummary === 'string' ? cell.toolSummary : null}
+			summary={getCellToolSummary(cell)}
 			error={execError || null}
 			actions={actions}
 		>

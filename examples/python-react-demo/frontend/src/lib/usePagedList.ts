@@ -5,7 +5,6 @@ import type { SortEntry } from './tableSort';
 import { isRecord } from './utils';
 
 type Options<T> = {
-	/** List endpoint, e.g. `/api/chats`. Facets are appended as query params. */
 	endpoint: string;
 	/** Key the rows live under in the response, e.g. `chats`. */
 	rowsKey: string;

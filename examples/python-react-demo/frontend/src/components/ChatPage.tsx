@@ -1,5 +1,5 @@
 import { MessagesSquare, Moon, PanelLeft, PanelLeftClose, PanelRight, Plus, Sun } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -13,7 +13,8 @@ import {
 	type ChatSummary,
 	type StreamEvent
 } from '../lib/api';
-import { getCellCase, settleCells, type CellLike } from '../lib/cells';
+import { getCellCase, getCellContent, settleCells, type CellLike } from '../lib/cells';
+import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
 import { loadLastChatConfig, saveLastChatConfig } from '../lib/chatConfigPrefs';
 import { DEFAULT_CHAT_MODEL } from '../lib/chatModels';
@@ -30,6 +31,7 @@ import { usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Tooltip, toast } from '../primitives';
 import { Composer } from './Composer';
+import { RETRY_BTN } from './pageStyles';
 import { PreviewPanel } from './PreviewPanel';
 import { ThreadsPage } from './ThreadsPage';
 import { ToolSequence } from './ToolSequence';
@@ -45,14 +47,9 @@ type Message = {
 
 type ChatListItem = { id: string; title: string; updatedAt: string | null };
 
-/* --------------------------------------------------------------------------
- * Class strings for the shell chrome, lifted from the TypeScript demo so the
- * two look identical.
- *
- * Keep any property a caller needs to override OUT of the shared base string:
- * two utilities that set the same property are resolved by Tailwind's own rule
- * order, not by the order they appear here.
- * ------------------------------------------------------------------------ */
+/* Keep any property a caller needs to override OUT of these base strings:
+   Tailwind resolves two utilities that set the same property by its own rule
+   order, not by the order they appear in a class string. */
 
 /** Inset hairline ring shared by every "selected row" in the sidebar. */
 const ACTIVE_RING = 'shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--color-line)_70%,transparent)]';
@@ -64,9 +61,6 @@ const OVERLAY_SURFACE = 'bg-paper/88 backdrop-blur-[10px]';
 
 const NEW_CHAT_BTN =
 	'inline-flex min-w-0 cursor-pointer items-center justify-center gap-1.5 rounded-sm border-0 px-2.5 py-[7px] text-[13px] font-medium text-text-2 transition-[background] duration-[120ms] ease-[ease] hover:bg-elevate/82 [&_svg]:shrink-0';
-
-const RETRY_BTN =
-	'm-2 cursor-pointer rounded-sm border-0 bg-transparent px-2.5 py-1.5 text-[12px] text-accent hover:bg-elevate/60';
 
 /** Floating chrome pinned over the chat panel; children opt back into hits. */
 const PANEL_OVERLAYS =
@@ -92,28 +86,6 @@ const MESSAGE_BODY_YOU =
 	'm-0 text-[13px] leading-[1.45] tracking-[-0.01em] whitespace-pre-wrap text-ink wrap-anywhere';
 
 const MOBILE_SIDEBAR_MQ = '(max-width: 780px)';
-
-function dateKey(value: string | null) {
-	if (!value) return 'unknown';
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return 'unknown';
-	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function shortDate(value: string | null) {
-	if (!value) return 'Older';
-	const date = new Date(value);
-	if (Number.isNaN(date.getTime())) return 'Older';
-
-	const today = new Date();
-	const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-	const startOfDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-	const dayDiff = Math.round((startOfToday.getTime() - startOfDay.getTime()) / 86_400_000);
-
-	if (dayDiff === 0) return 'Today';
-	if (dayDiff === 1) return 'Yesterday';
-	return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-}
 
 function isMobileSidebar() {
 	return window.matchMedia(MOBILE_SIDEBAR_MQ).matches;
@@ -149,13 +121,6 @@ function runErrorMessage(raw: string): string {
 	return raw || 'The chat run failed.';
 }
 
-function proseText(cell: CellLike): string {
-	const cellCase = getCellCase(cell);
-	const payload = cellCase ? cell[cellCase] : undefined;
-	if (!isRecord(payload)) return '';
-	return typeof payload.content === 'string' ? payload.content : '';
-}
-
 /** Split replayed history into the alternating turns the conversation renders. */
 function messagesFromHistory(cells: CellLike[]): Message[] {
 	const messages: Message[] = [];
@@ -166,7 +131,7 @@ function messagesFromHistory(cells: CellLike[]): Message[] {
 		if (isHiddenCell(cell)) continue;
 		if (isUserProse(cell)) {
 			assistant = undefined;
-			messages.push({ id: nextId++, role: 'you', body: proseText(cell) });
+			messages.push({ id: nextId++, role: 'you', body: getCellContent(cell) });
 			continue;
 		}
 		if (!assistant) {
@@ -300,9 +265,8 @@ export function ChatPage() {
 	// Collecting preview assets walks every cell in the chat, so debounce it
 	// off the per-snapshot stream path.
 	useEffect(() => {
-		const allCells = messages.flatMap((message) => message.cells ?? []);
 		const handle = setTimeout(() => {
-			const items = collectPreviewItems(allCells);
+			const items = collectPreviewItems(messages.flatMap((message) => message.cells ?? []));
 			setChatAssets(items);
 			previewPanel.openNewItems(items);
 		}, 120);
@@ -315,16 +279,7 @@ export function ChatPage() {
 		if (el) el.scrollTop = el.scrollHeight;
 	}, [messages]);
 
-	const chatGroups = (() => {
-		const groups: { key: string; label: string; chats: ChatListItem[] }[] = [];
-		for (const chat of chats) {
-			const key = dateKey(chat.updatedAt);
-			const existing = groups.find((group) => group.key === key);
-			if (existing) existing.chats.push(chat);
-			else groups.push({ key, label: shortDate(chat.updatedAt), chats: [chat] });
-		}
-		return groups;
-	})();
+	const chatGroups = useMemo(() => groupByDay(chats, (chat) => chat.updatedAt), [chats]);
 
 	function upsertAssistantCell(assistant: Message, cell: CellLike) {
 		// Reassign the array so child props always see a new reference on every
@@ -462,10 +417,12 @@ export function ChatPage() {
 		}
 	}
 
-	function handleHaltResolved() {
+	const handleHaltResolved = useCallback(() => {
 		const id = loadedChatId.current ?? chatId;
 		if (id) void resumeLiveRun(id);
-	}
+		// resumeLiveRun reads refs and setters only, so a stale closure is fine.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [chatId]);
 
 	function onConversationScroll() {
 		const el = conversationRef.current;
@@ -599,7 +556,8 @@ export function ChatPage() {
 	}, [routeId, loadChat, resetToNewChat]);
 
 	function newThread() {
-		if (chatId) void closeChat(chatId);
+		// Best-effort: the new thread opens either way.
+		if (chatId) void closeChat(chatId).catch(() => {});
 		if (isMobileSidebar()) setSidebarOpen(false);
 		if (routeId) {
 			navigate('/');
@@ -611,6 +569,18 @@ export function ChatPage() {
 	function openAssetsPanel() {
 		previewPanel.openPanel(chatAssets);
 	}
+
+	const composerProps = {
+		value: draft,
+		onValueChange: setDraft,
+		selectedConnectorIds,
+		onConnectorIdsChange: setSelectedConnectorIds,
+		selectedModel,
+		onModelChange: setSelectedModel,
+		sending,
+		configLocked,
+		onSend: () => void send()
+	};
 
 	// Refreshing /chat/:id has no messages yet; switching chats keeps the
 	// previous transcript until the new one loads.
@@ -701,7 +671,11 @@ export function ChatPage() {
 								<UnicodeSpinner label="Loading chats" />
 							</div>
 						) : chatsError ? (
-							<button type="button" className={RETRY_BTN} onClick={() => void loadChats()}>
+							<button
+								type="button"
+								className={cx(RETRY_BTN, 'm-2')}
+								onClick={() => void loadChats()}
+							>
 								Retry
 							</button>
 						) : chats.length === 0 ? (
@@ -712,7 +686,7 @@ export function ChatPage() {
 									<p className="m-0 px-2.5 pt-1 pb-1.5 text-[11px] font-medium tracking-[0.01em] text-muted">
 										{group.label}
 									</p>
-									{group.chats.map((chat) => (
+									{group.rows.map((chat) => (
 										<div
 											key={chat.id}
 											className={cx(
@@ -893,12 +867,12 @@ export function ChatPage() {
 							<div className="flex flex-wrap justify-center gap-1">
 								<button
 									type="button"
-									className={RETRY_BTN}
+									className={cx(RETRY_BTN, 'm-2')}
 									onClick={() => chatId && void loadChat(chatId)}
 								>
 									Retry
 								</button>
-								<button type="button" className={RETRY_BTN} onClick={newThread}>
+								<button type="button" className={cx(RETRY_BTN, 'm-2')} onClick={newThread}>
 									New chat
 								</button>
 							</div>
@@ -908,17 +882,7 @@ export function ChatPage() {
 							className="flex min-h-0 flex-col items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5"
 							aria-label="New chat"
 						>
-							<Composer
-								value={draft}
-								onValueChange={setDraft}
-								selectedConnectorIds={selectedConnectorIds}
-								onConnectorIdsChange={setSelectedConnectorIds}
-								selectedModel={selectedModel}
-								onModelChange={setSelectedModel}
-								sending={sending}
-								configLocked={configLocked}
-								onSend={() => void send()}
-							/>
+							<Composer {...composerProps} />
 						</section>
 					) : (
 						<>
@@ -986,18 +950,7 @@ export function ChatPage() {
 							</section>
 
 							<footer className="flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5">
-								<Composer
-									value={draft}
-									onValueChange={setDraft}
-									selectedConnectorIds={selectedConnectorIds}
-									onConnectorIdsChange={setSelectedConnectorIds}
-									selectedModel={selectedModel}
-									onModelChange={setSelectedModel}
-									sending={sending}
-									configLocked={configLocked}
-									docked
-									onSend={() => void send()}
-								/>
+								<Composer {...composerProps} docked />
 							</footer>
 						</>
 					)}

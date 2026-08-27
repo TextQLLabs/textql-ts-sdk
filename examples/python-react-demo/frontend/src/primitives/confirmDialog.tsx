@@ -9,8 +9,8 @@ import type { ConfirmOptions } from './modalTypes';
  * component is required.
  *
  * @example
- *   if (!(await confirm({ tone: "danger", title: "Delete thread?" }))) return;
- *   await api.delete(id);
+ *   if (!(await confirm({ title: "Close thread?" }))) return;
+ *   await api.close(id);
  */
 export function confirm(options: ConfirmOptions = {}): Promise<boolean> {
 	// Guard against SSR — confirmations are inherently interactive.
@@ -35,7 +35,7 @@ export function confirm(options: ConfirmOptions = {}): Promise<boolean> {
 		};
 
 		root.render(
-			<Confirm {...options} open onConfirm={() => finish(true)} onCancel={() => finish(false)} />
+			<Confirm {...options} onConfirm={() => finish(true)} onCancel={() => finish(false)} />
 		);
 	});
 }

@@ -1,18 +1,15 @@
 import type { FileContents } from '@pierre/diffs';
 import { useEffect, useRef, useState } from 'react';
 
-import { cx } from '../lib/cx';
 import { useResolvedTheme } from '../lib/themePref';
 
 type Props = {
 	fileName: string;
 	contents: string;
 	lang?: string;
-	/** Fill the parent's height and scroll, instead of the 320px inline cap. */
-	fill?: boolean;
 };
 
-export function PierreCode({ fileName, contents, lang, fill = false }: Props) {
+export function PierreCode({ fileName, contents, lang }: Props) {
 	const wrapperRef = useRef<HTMLDivElement | null>(null);
 	// Pierre's `File` conflicts with the Web File type, so it stays untyped here.
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,14 +113,7 @@ code, pre, [class*="line"] {
 	});
 
 	return (
-		<div
-			className={cx(
-				'overflow-auto rounded-xs bg-ink/5',
-				// Fill the parent (e.g. the ontology viewer) and scroll instead of capping.
-				fill ? 'max-h-none min-h-0 flex-1' : 'max-h-80'
-			)}
-			ref={wrapperRef}
-		>
+		<div className="max-h-80 overflow-auto rounded-xs bg-ink/5" ref={wrapperRef}>
 			{loadError && (
 				<pre className="m-0 px-2.5 py-2 font-mono text-[11.5px] leading-normal whitespace-pre-wrap wrap-anywhere">
 					{contents}
