@@ -19,13 +19,23 @@ type Props = {
 	title?: string;
 	summary?: string | null;
 	error?: string | null;
+	/** Header-right slot: view switchers, copy, show-all. Never body content. */
+	actions?: ReactNode;
 	/** Base typography only — chrome stays uniform across cells. */
 	className?: string;
 	children?: ReactNode;
 };
 
 /** The card every cell renders into: chrome, header, and the error slot. */
-export function CellShell({ icon: Icon, title, summary, error, className, children }: Props) {
+export function CellShell({
+	icon: Icon,
+	title,
+	summary,
+	error,
+	actions,
+	className,
+	children
+}: Props) {
 	return (
 		<div
 			className={cx(
@@ -36,14 +46,17 @@ export function CellShell({ icon: Icon, title, summary, error, className, childr
 				className
 			)}
 		>
-			{title && (
+			{(title || actions) && (
 				<div className="flex min-w-0 items-center gap-[7px] text-ink">
 					{Icon && <Icon className="shrink-0 text-muted" size={14} />}
-					<span className={cx(CELL_BODY, 'shrink-0 font-semibold')}>{title}</span>
+					{title && <span className={cx(CELL_BODY, 'shrink-0 font-semibold')}>{title}</span>}
 					{summary && (
 						<span className={cx(CELL_BODY, 'overflow-hidden text-ellipsis whitespace-nowrap text-muted')}>
 							{summary}
 						</span>
+					)}
+					{actions && (
+						<div className="ml-auto flex min-w-0 items-center gap-1 pl-2">{actions}</div>
 					)}
 				</div>
 			)}

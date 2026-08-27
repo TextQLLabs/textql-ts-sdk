@@ -2,6 +2,7 @@ import {
 	asRecords as recs,
 	asString as str,
 	asStrings as strs,
+	formatElapsed,
 	getCellCase,
 	getCellPayload,
 	isCellFinished,
@@ -43,7 +44,10 @@ export function formatExecTimeMs(value: unknown): string {
 				? Number(value)
 				: NaN;
 	if (!Number.isFinite(n) || n <= 0) return '';
-	return `${n} ms`;
+	// Sub-second stays in ms, where the precision is the point; past that it
+	// matches the running timer's label so a cell doesn't switch units when it
+	// finishes.
+	return n < 1000 ? `${Math.round(n)} ms` : formatElapsed(n);
 }
 
 function humanizeEnum(value: unknown): string {

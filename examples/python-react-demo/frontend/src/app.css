@@ -51,6 +51,10 @@
 	--color-fill: #f1f1f3;
 	/* Cell/preview error text and the tint on an errored cell's border. */
 	--color-danger: #dc2626;
+	/* Segmented-control group background. The selected segment is not another
+	   surface on top of this — it inverts to ink-on-paper, which is the only
+	   treatment that stays unmistakable in both themes. */
+	--color-track: #ececee;
 
 	--radius-xs: 6px;
 	--radius-sm: 10px;
@@ -217,6 +221,7 @@
 	--color-text-3: #a9a9b2;
 	--color-fill: #262828;
 	--color-danger: #f87171;
+	--color-track: #1a1c1c;
 	color-scheme: dark;
 }
 

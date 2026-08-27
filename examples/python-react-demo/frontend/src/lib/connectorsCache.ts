@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { Store, useStore } from './store';
 import { isRecord } from './utils';
 
@@ -68,4 +70,21 @@ export const connectorsCache = new ConnectorsCache();
 
 export function useConnectors(): CacheState {
 	return useStore(connectorsCache);
+}
+
+/**
+ * Resolve a cell's `connectorId` to the connector itself, loading the cache on
+ * demand. Undefined until it lands (or if the id is unknown to this org), so
+ * callers fall back to the bare id rather than blocking on the fetch.
+ */
+export function useConnector(id: unknown): ConnectorItem | undefined {
+	const state = useStore(connectorsCache);
+
+	useEffect(() => {
+		void connectorsCache.load();
+	}, []);
+
+	const numeric = typeof id === 'number' ? id : Number(id);
+	if (!Number.isFinite(numeric)) return undefined;
+	return state.connectors.find((connector) => connector.id === numeric);
 }

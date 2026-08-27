@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { CELL_BODY, CELL_META } from '../../lib/cellText';
 import { cx } from '../../lib/cx';
 import { CellError } from '../CellShell';
+import { CellFrame } from './CellFrame';
 import type { CellComponent, CellComponentProps } from './types';
 
 const PAGE = 8;
@@ -32,7 +33,7 @@ function records(value: unknown): Record<string, unknown>[] {
  * dashboards used to render hundreds of rows into the transcript.
  */
 export function makeListCell(spec: Spec): CellComponent {
-	function ListCell({ payload }: CellComponentProps) {
+	function ListCell({ cell, payload }: CellComponentProps) {
 		const [showAll, setShowAll] = useState(false);
 
 		const error = str(payload.errorMessage);
@@ -41,23 +42,41 @@ export function makeListCell(spec: Spec): CellComponent {
 		const search = str(payload.searchTerm);
 		const shown = showAll ? items : items.slice(0, PAGE);
 
-		if (error) return <CellError message={error} />;
+		if (error) return <CellFrame cell={cell}><CellError message={error} /></CellFrame>;
 
 		if (items.length === 0) {
 			return (
-				<p className={cx(CELL_BODY, 'm-0 text-muted')}>
-					{search ? `No ${spec.noun} matching “${search}”.` : `No ${spec.noun}.`}
-				</p>
+				<CellFrame cell={cell}>
+					<p className={cx(CELL_BODY, 'm-0 text-muted')}>
+						{search ? `No ${spec.noun} matching “${search}”.` : `No ${spec.noun}.`}
+					</p>
+				</CellFrame>
 			);
 		}
 
-		return (
+		const actions = (
 			<>
-				<p className={cx(CELL_META, 'm-0 text-muted')}>
+				<span className={cx(CELL_META, 'text-muted')}>
 					{total} {spec.noun}
 					{search && ` matching “${search}”`}
-				</p>
+				</span>
+				{items.length > PAGE && (
+					<button
+						type="button"
+						className={cx(
+							CELL_META,
+							'cursor-pointer rounded-sm border-0 bg-transparent px-1.5 py-[3px] font-medium text-muted hover:bg-ink/6 hover:text-ink'
+						)}
+						onClick={() => setShowAll((current) => !current)}
+					>
+						{showAll ? 'Fewer' : `All ${items.length}`}
+					</button>
+				)}
+			</>
+		);
 
+		return (
+			<CellFrame cell={cell} actions={actions}>
 				<ul className="m-0 flex list-none flex-col gap-1 p-0">
 					{shown.map((item, i) => (
 						<li key={i} className="flex min-w-0 flex-col gap-px">
@@ -68,20 +87,7 @@ export function makeListCell(spec: Spec): CellComponent {
 						</li>
 					))}
 				</ul>
-
-				{items.length > PAGE && (
-					<button
-						type="button"
-						className={cx(
-							CELL_META,
-							'cursor-pointer self-start border-0 bg-transparent p-0 font-medium text-[#2563eb] hover:underline'
-						)}
-						onClick={() => setShowAll((current) => !current)}
-					>
-						{showAll ? 'Show fewer' : `Show all ${items.length}`}
-					</button>
-				)}
-			</>
+			</CellFrame>
 		);
 	}
 

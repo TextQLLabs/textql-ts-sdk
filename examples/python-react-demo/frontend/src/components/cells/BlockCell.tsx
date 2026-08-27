@@ -6,6 +6,7 @@ import { cx } from '../../lib/cx';
 import { guessPreviewType, previewItemsFromCell, previewPanel } from '../../lib/previewPanel';
 import { toEmbeddablePreviewUrl } from '../../lib/previewUrl';
 import { CellError } from '../CellShell';
+import { CellFrame } from './CellFrame';
 import { Markdown } from '../Markdown';
 import { PierreCode } from '../PierreCode';
 import type { CellComponentProps } from './types';
@@ -60,7 +61,7 @@ export function BlockCell({ cell }: CellComponentProps) {
 	}
 
 	return (
-		<>
+		<CellFrame cell={cell}>
 			{blocks.map((block, i) => {
 				if (block.kind === 'kv') {
 					return (
@@ -229,6 +230,6 @@ export function BlockCell({ cell }: CellComponentProps) {
 					</div>
 				);
 			})}
-		</>
+		</CellFrame>
 	);
 }
