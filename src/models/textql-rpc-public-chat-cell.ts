@@ -367,14 +367,6 @@ export type WsCell = {
 export type TextqlRpcPublicChatCellDurationMs58 = number | string;
 
 export type UseSkillCell = {
-  /**
-   * UseSkillCell is the client projection of a `use_skill` auto-invoke. It
-   *
-   * @remarks
-   *  deliberately carries no body field: the skill's instructions are LLM-facing
-   *  prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
-   *  the transcript. The frontend renders provenance only ("Using skill /trigger").
-   */
   useSkillCell: TextqlRpcPublicCellsUseSkillCell;
   /**
    * UUID
@@ -835,6 +827,9 @@ export type TabularFileCell = {
 export type TextqlRpcPublicChatCellDurationMs54 = number | string;
 
 export type TableauSqlCell = {
+  /**
+   * Deprecated: use tool_summary on Cell instead.
+   */
   tableauSqlCell: TextqlRpcPublicCellsTableauSQLCell;
   /**
    * UUID
@@ -1525,9 +1520,6 @@ export type StreamlitCell = {
 export type TextqlRpcPublicChatCellDurationMs48 = number | string;
 
 export type StatusCell = {
-  /**
-   * Deprecated: use tool_summary on Cell instead.
-   */
   statusCell: TextqlRpcPublicCellsStatusCell;
   /**
    * UUID
@@ -1988,14 +1980,6 @@ export type ReportCell = {
 export type TextqlRpcPublicChatCellDurationMs44 = number | string;
 
 export type QuestionsCell = {
-  /**
-   * QuestionsCell is the agent's "ask the user structured questions" tool. It is a
-   *
-   * @remarks
-   *  haltable cell: the agent pauses until the user submits or dismisses inline.
-   *  On submit the answers go to the agent; on dismiss only the answered count does
-   *  and the agent waits for the user's next message (the dismissal reason).
-   */
   questionsCell: TextqlRpcPublicCellsQuestionsCell;
   /**
    * UUID
@@ -2226,9 +2210,6 @@ export type PyCell = {
 export type TextqlRpcPublicChatCellDurationMs42 = number | string;
 
 export type PreviewCell = {
-  /**
-   * primary interface for ana to render sandbox assets client side
-   */
   previewCell: TextqlRpcPublicCellsPreviewCell;
   /**
    * UUID
@@ -2689,6 +2670,13 @@ export type PlaybookEditorCell = {
 export type TextqlRpcPublicChatCellDurationMs38 = number | string;
 
 export type PatchCell = {
+  /**
+   * EmailRecipient is one resolved recipient of an EmailCell. The frontend
+   *
+   * @remarks
+   *  renders these as chips; the backend uses the resolution to enforce the
+   *  internal-only policy at cell creation time.
+   */
   patchCell: TextqlRpcPublicCellsPatchCell;
   /**
    * UUID
@@ -2919,6 +2907,14 @@ export type OntologySearchMetricsCell = {
 export type TextqlRpcPublicChatCellDurationMs36 = number | string;
 
 export type OntologyQueryCell = {
+  /**
+   * UseSkillCell is the client projection of a `use_skill` auto-invoke. It
+   *
+   * @remarks
+   *  deliberately carries no body field: the skill's instructions are LLM-facing
+   *  prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
+   *  the transcript. The frontend renders provenance only ("Using skill /trigger").
+   */
   ontologyQueryCell: TextqlRpcPublicCellsOntologyQueryCell;
   /**
    * UUID
@@ -4185,9 +4181,6 @@ export type ListDashboardsCell = {
 export type TextqlRpcPublicChatCellDurationMs25 = number | string;
 
 export type ListAppsCell = {
-  /**
-   * create_design_system tool: authors/edits an org Data App design system.
-   */
   listAppsCell: TextqlRpcPublicCellsListAppsCell;
   /**
    * UUID
@@ -4418,6 +4411,9 @@ export type LinkedinSearchCell = {
 export type TextqlRpcPublicChatCellDurationMs23 = number | string;
 
 export type JavascriptCell = {
+  /**
+   * Simplified report info for report history cell
+   */
   javascriptCell: TextqlRpcPublicCellsJavaScriptCell;
   /**
    * UUID
@@ -4648,6 +4644,9 @@ export type ImageCell = {
 export type TextqlRpcPublicChatCellDurationMs21 = number | string;
 
 export type GoogleDriveSearchCell = {
+  /**
+   * Simplified playbook info for display in cells
+   */
   googleDriveSearchCell: TextqlRpcPublicCellsGoogleDriveSearchCell;
   /**
    * UUID
@@ -5338,13 +5337,6 @@ export type FormEditorCell = {
 export type TextqlRpcPublicChatCellDurationMs15 = number | string;
 
 export type FormCell = {
-  /**
-   * FormCell is the v2 form editor cell. It only references a form_v5 row by id;
-   *
-   * @remarks
-   *  the frontend loads the full form via FormService (no chat-cell scanning). The
-   *  cached fields let the inline chat cell render without a round-trip.
-   */
   formCell: TextqlRpcPublicCellsFormCell;
   /**
    * UUID
@@ -6035,14 +6027,6 @@ export type FeedCommentCell = {
 export type TextqlRpcPublicChatCellDurationMs9 = number | string;
 
 export type EmailCell = {
-  /**
-   * EmailCell is the agent's "send an email" output. It is an executable cell:
-   *
-   * @remarks
-   *  the LLM emits the input (to/subject/body) and the framework executes the
-   *  send, mutating the result fields. The cell renders as a transcript ("Email
-   *  sent to maya@acme.com at 2:14pm") with the body visible after the fact.
-   */
   emailCell: TextqlRpcPublicCellsEmailCell;
   /**
    * UUID
@@ -6503,13 +6487,6 @@ export type ContextPromptEditorCell = {
 export type TextqlRpcPublicChatCellDurationMs5 = number | string;
 
 export type ConnectorsCell = {
-  /**
-   * ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
-   *
-   * @remarks
-   *  shows that the tool ran (and a count); connector detail goes to the LLM, never
-   *  to the browser, and never carries secrets.
-   */
   connectorsCell: TextqlRpcPublicCellsConnectorsCell;
   /**
    * UUID
@@ -6740,6 +6717,9 @@ export type CompactionCell = {
 export type TextqlRpcPublicChatCellDurationMs3 = number | string;
 
 export type BashCell = {
+  /**
+   * Preview cell reference for report history
+   */
   bashCell: TextqlRpcPublicCellsBashCell;
   /**
    * UUID
@@ -6855,9 +6835,6 @@ export type BashCell = {
 export type TextqlRpcPublicChatCellDurationMs2 = number | string;
 
 export type AppCell = {
-  /**
-   * AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
-   */
   appCell: TextqlRpcPublicCellsAppCell;
   /**
    * UUID

@@ -10,6 +10,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsGoogleDriveContentCell = {
   fileName?: string | null | undefined;
+  /**
+   * results
+   */
   contentType?: string | null | undefined;
   content?: string | null | undefined;
   fileId?: string | null | undefined;

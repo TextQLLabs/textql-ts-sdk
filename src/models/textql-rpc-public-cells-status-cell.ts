@@ -8,9 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Deprecated: use tool_summary on Cell instead.
- */
 export type TextqlRpcPublicCellsStatusCell = {
   status?: string | undefined;
 };

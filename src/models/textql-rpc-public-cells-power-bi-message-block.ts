@@ -10,6 +10,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsPowerBIMessageBlock = {
   content?: string | undefined;
+  /**
+   * optional, only present for blocks with images
+   */
   imageBase64?: string | undefined;
 };
 

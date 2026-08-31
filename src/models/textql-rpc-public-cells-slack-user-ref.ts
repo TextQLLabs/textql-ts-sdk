@@ -8,6 +8,9 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Reference types for context data
+ */
 export type TextqlRpcPublicCellsSlackUserRef = {
   userId?: string | undefined;
   name?: string | undefined;

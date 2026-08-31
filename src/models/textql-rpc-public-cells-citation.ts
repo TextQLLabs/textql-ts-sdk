@@ -13,9 +13,21 @@ import {
 } from "./textql-rpc-public-cells-citation-lineage-node.js";
 
 export type TextqlRpcPublicCellsCitation = {
+  /**
+   * chosen option names
+   */
   id?: string | undefined;
+  /**
+   * free-text entered for the "Other" option
+   */
   claim?: string | undefined;
+  /**
+   * value per input (sensitive values blanked in the broadcast)
+   */
   sourceCellId?: string | null | undefined;
+  /**
+   * per input: was it filled? lets the summary show provided/empty for sensitive inputs without their value
+   */
   sourceRef?: string | null | undefined;
   sourceLocator?: string | null | undefined;
   anchor?: string | undefined;

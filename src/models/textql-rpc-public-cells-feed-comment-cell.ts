@@ -15,9 +15,6 @@ export type TextqlRpcPublicCellsFeedCommentCell = {
   commentUrl?: string | undefined;
   timestamp?: string | undefined;
   error?: string | undefined;
-  /**
-   * Parent post metadata
-   */
   postTitle?: string | undefined;
   postAuthor?: string | undefined;
   postUpvoteCount?: number | undefined;

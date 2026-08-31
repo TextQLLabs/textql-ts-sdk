@@ -16,9 +16,22 @@ import {
   TextqlRpcPublicPatchesPatchStatus$inboundSchema,
 } from "./textql-rpc-public-patches-patch-status.js";
 
+/**
+ * EmailRecipient is one resolved recipient of an EmailCell. The frontend
+ *
+ * @remarks
+ *  renders these as chips; the backend uses the resolution to enforce the
+ *  internal-only policy at cell creation time.
+ */
 export type TextqlRpcPublicCellsPatchCell = {
   title?: string | undefined;
+  /**
+   * "internal" or "external"
+   */
   description?: string | undefined;
+  /**
+   * populated when class == "internal"
+   */
   number?: number | undefined;
   hasConflicts?: boolean | undefined;
   conflictView?: string | undefined;

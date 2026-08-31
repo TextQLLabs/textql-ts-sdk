@@ -8,12 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Represents a before/after change to a field during an update.
- *
- * @remarks
- *  Used by both PlaybookEditorCell and FeedCreateCell.
- */
 export type TextqlRpcPublicCellsFieldChange = {
   fieldName?: string | undefined;
   oldValue?: string | undefined;

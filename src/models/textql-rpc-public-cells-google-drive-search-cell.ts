@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicCellsGoogleDriveFile$inboundSchema,
 } from "./textql-rpc-public-cells-google-drive-file.js";
 
+/**
+ * Simplified playbook info for display in cells
+ */
 export type TextqlRpcPublicCellsGoogleDriveSearchCell = {
   files?: Array<TextqlRpcPublicCellsGoogleDriveFile> | undefined;
   dataframePreview?: string | null | undefined;

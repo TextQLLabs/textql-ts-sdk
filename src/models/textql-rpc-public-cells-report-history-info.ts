@@ -16,9 +16,6 @@ import {
   TextqlRpcPublicReportsReportBlock$inboundSchema,
 } from "./textql-rpc-public-reports-report-block.js";
 
-/**
- * Simplified report info for report history cell
- */
 export type TextqlRpcPublicCellsReportHistoryInfo = {
   id?: string | undefined;
   chatId?: string | undefined;

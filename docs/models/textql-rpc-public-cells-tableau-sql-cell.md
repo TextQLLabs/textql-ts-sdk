@@ -1,5 +1,7 @@
 # TextqlRpcPublicCellsTableauSQLCell
 
+Deprecated: use tool_summary on Cell instead.
+
 ## Example Usage
 
 ```typescript

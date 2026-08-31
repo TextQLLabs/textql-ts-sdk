@@ -16,6 +16,9 @@ import {
   TextqlRpcPublicCellsImageReference$inboundSchema,
 } from "./textql-rpc-public-cells-image-reference.js";
 
+/**
+ * Simplified report info for report history cell
+ */
 export type TextqlRpcPublicCellsJavaScriptCell = {
   code?: string | undefined;
   title?: string | undefined;

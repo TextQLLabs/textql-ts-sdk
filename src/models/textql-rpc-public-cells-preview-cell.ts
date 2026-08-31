@@ -8,14 +8,8 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * primary interface for ana to render sandbox assets client side
- */
 export type TextqlRpcPublicCellsPreviewCell = {
   target?: string | undefined;
-  /**
-   * "image", "table", "pdf", "html", "dataframe", "download"
-   */
   previewType?: string | undefined;
   name?: string | undefined;
   url?: string | null | undefined;

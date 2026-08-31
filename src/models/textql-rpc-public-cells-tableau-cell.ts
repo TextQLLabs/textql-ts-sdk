@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-cells-tableau-message-block.js";
 
 export type TextqlRpcPublicCellsTableauCell = {
+  /**
+   * "get_feed", "get_post", "get_comments"
+   */
   datasetId?: string | undefined;
   messageBlocks?: Array<TextqlRpcPublicCellsTableauMessageBlock> | undefined;
 };

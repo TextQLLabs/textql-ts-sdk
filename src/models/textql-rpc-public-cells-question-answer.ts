@@ -9,21 +9,15 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsQuestionAnswer = {
-  /**
-   * chosen option names
-   */
   selected?: Array<string> | undefined;
   /**
-   * free-text entered for the "Other" option
+   * short gray subtitle, max one line
    */
   custom?: string | null | undefined;
   /**
-   * value per input (sensitive values blanked in the broadcast)
+   * longer hover tooltip
    */
   inputs?: Array<string> | undefined;
-  /**
-   * per input: was it filled? lets the summary show provided/empty for sensitive inputs without their value
-   */
   provided?: Array<boolean> | undefined;
 };
 

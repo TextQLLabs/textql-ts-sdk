@@ -16,57 +16,17 @@ import {
   TextqlRpcPublicCellsEmailRecipient$inboundSchema,
 } from "./textql-rpc-public-cells-email-recipient.js";
 
-/**
- * EmailCell is the agent's "send an email" output. It is an executable cell:
- *
- * @remarks
- *  the LLM emits the input (to/subject/body) and the framework executes the
- *  send, mutating the result fields. The cell renders as a transcript ("Email
- *  sent to maya@acme.com at 2:14pm") with the body visible after the fact.
- */
 export type TextqlRpcPublicCellsEmailCell = {
-  /**
-   * Inputs (set by the LLM at cell creation time)
-   */
   to?: Array<string> | undefined;
   subject?: string | undefined;
-  /**
-   * markdown — rendered to HTML at send time
-   */
   body?: string | undefined;
-  /**
-   * Resolved recipients after internal-only enforcement
-   */
   recipients?: Array<TextqlRpcPublicCellsEmailRecipient> | undefined;
-  /**
-   * Result fields (populated by Execute) "sent" | "failed" | "blocked"
-   */
   status?: string | undefined;
   sentAt?: string | null | undefined;
   messageId?: string | null | undefined;
   errorMessage?: string | null | undefined;
-  /**
-   * machine-readable error category
-   */
   errorClass?: string | null | undefined;
-  /**
-   * Number of recipients to which the provider call succeeded during this
-   *
-   * @remarks
-   *  Execute pass. Not derivable from Status — a partial-failure cell has
-   *  Status=failed with sent_count > 0.
-   */
   sentCount?: number | undefined;
-  /**
-   * The rendered HTML body of the email — exactly what landed in inboxes,
-   *
-   * @remarks
-   *  including the actor signature footer. The frontend's EmailCell renders
-   *  this verbatim via {@html ...} in its preview, so a viewer sees what
-   *  recipients saw without the FE having to repeat the render pipeline.
-   *  Already sanitized server-side (sanitizeEmailHTML) and self-contained
-   *  for inline use within the chat thread.
-   */
   renderedBodyHtml?: string | null | undefined;
   attachments?: Array<TextqlRpcPublicCellsEmailAttachment> | undefined;
 };
