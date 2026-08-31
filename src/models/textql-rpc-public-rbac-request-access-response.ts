@@ -10,6 +10,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicRbacRequestAccessResponse = {
   success?: boolean | undefined;
+  /**
+   * owner, editor, viewer
+   */
   requestId?: string | undefined;
 };
 

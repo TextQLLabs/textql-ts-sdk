@@ -8,9 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * WhoAmI messages
- */
 export type TextqlRpcPublicRbacSharedObject = {
   objectType?: string | undefined;
   objectId?: string | undefined;

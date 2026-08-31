@@ -174,7 +174,7 @@ run();
 * [getMembersWithApps](docs/sdks/apps/README.md#getmemberswithapps) - GetMembersWithApps
 * [invokeComputeFunction](docs/sdks/apps/README.md#invokecomputefunction) - InvokeAppComputeFunction
 * [listActivitySince](docs/sdks/apps/README.md#listactivitysince) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-* [listVersions](docs/sdks/apps/README.md#listversions) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+* [listVersions](docs/sdks/apps/README.md#listversions) - Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
 * [list](docs/sdks/apps/README.md#list) - ListApps
 * [listMyMemberActivity](docs/sdks/apps/README.md#listmymemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
 * [moveAppToFolder](docs/sdks/apps/README.md#moveapptofolder) - MoveAppToFolder
@@ -185,6 +185,7 @@ run();
 * [setMemberState](docs/sdks/apps/README.md#setmemberstate) - SetAppMemberState
 * [setFavorite](docs/sdks/apps/README.md#setfavorite) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 * [update](docs/sdks/apps/README.md#update) - UpdateApp
+* [verifyRender](docs/sdks/apps/README.md#verifyrender) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 
 ### [AuditLogs](docs/sdks/auditlogs/README.md)
 
@@ -219,6 +220,7 @@ run();
 * [duplicateChat](docs/sdks/chats/README.md#duplicatechat) - DuplicateChat
 * [getApiAnswer](docs/sdks/chats/README.md#getapianswer) - GetAPIChatAnswer
 * [getArtifact](docs/sdks/chats/README.md#getartifact) - GetArtifact
+* [getAutoAttachedFiles](docs/sdks/chats/README.md#getautoattachedfiles) - GetAutoAttachedFiles
 * [get](docs/sdks/chats/README.md#get) - GetChat
 * [getArtifactsSummary](docs/sdks/chats/README.md#getartifactssummary) - GetChatArtifactsSummary
 * [getChatExecutionTiming](docs/sdks/chats/README.md#getchatexecutiontiming) - GetChatExecutionTiming
@@ -487,8 +489,8 @@ run();
 
 * [approveAccessRequest](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
-* [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - AssignRoleToMember
-* [createApiKey](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
+* [assignRoleToMember](docs/sdks/rbac/README.md#assignroletomember) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+* [createApiKey](docs/sdks/rbac/README.md#createapikey) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 * [createPersonalApiKey](docs/sdks/rbac/README.md#createpersonalapikey) - CreatePersonalApiKey
 * [createRole](docs/sdks/rbac/README.md#createrole) - Role management
 * [createServiceAccount](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
@@ -498,30 +500,30 @@ run();
 * [generateShareLink](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 * [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 * [getEmbedUserApiKey](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
-* [getMemberRoles](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
+* [getMemberRoles](docs/sdks/rbac/README.md#getmemberroles) - Member role assignment
 * [getObjectAccess](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 * [getRole](docs/sdks/rbac/README.md#getrole) - GetRole
-* [getRolePermissions](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
+* [getRolePermissions](docs/sdks/rbac/README.md#getrolepermissions) - Permission management
 * [hasObjectAccess](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
 * [listAccessRequests](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 * [listApiKeys](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
-* [listPermissions](docs/sdks/rbac/README.md#listpermissions) - Permission management
+* [listPermissions](docs/sdks/rbac/README.md#listpermissions) - ListPermissions
 * [listRoles](docs/sdks/rbac/README.md#listroles) - ListRoles
 * [listServiceAccounts](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+* [rejectAccessRequest](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
 * [removePermissionFromRole](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
-* [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - Member role assignment
+* [removeRoleFromMember](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
 * [requestAccess](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
-* [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - Object sharing and access control
-* [revokeObjectAccess](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
-* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
-* [setRolePermissions](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-* [shareObject](docs/sdks/rbac/README.md#shareobject) - Describe what a key is allowed to do.
-* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - Group management. Internal only.
+* [revokeApiKey](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
+* [revokeObjectAccess](docs/sdks/rbac/README.md#revokeobjectaccess) - Group management. Internal only.
+* [rotateApiKey](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
+* [setRolePermissions](docs/sdks/rbac/README.md#setrolepermissions) - SetRolePermissions
+* [shareObject](docs/sdks/rbac/README.md#shareobject) - Get current member roles and permissions
+* [shareObjectWithRole](docs/sdks/rbac/README.md#shareobjectwithrole) - Describe what a key is allowed to do.
 * [updateObjectAccess](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
 * [updateObjectVisibility](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](docs/sdks/rbac/README.md#updaterole) - UpdateRole
-* [whoAmI](docs/sdks/rbac/README.md#whoami) - Get current member roles and permissions
+* [whoAmI](docs/sdks/rbac/README.md#whoami) - WhoAmI
 
 ### [Sandbox](docs/sdks/sandbox/README.md)
 
@@ -665,7 +667,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsList`](docs/sdks/apps/README.md#list) - ListApps
 - [`appsListActivitySince`](docs/sdks/apps/README.md#listactivitysince) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 - [`appsListMyMemberActivity`](docs/sdks/apps/README.md#listmymemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
-- [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+- [`appsListVersions`](docs/sdks/apps/README.md#listversions) - Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
 - [`appsMoveAppToFolder`](docs/sdks/apps/README.md#moveapptofolder) - MoveAppToFolder
 - [`appsPresenceHeartbeat`](docs/sdks/apps/README.md#presenceheartbeat) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
 - [`appsRecordMemberActivity`](docs/sdks/apps/README.md#recordmemberactivity) - RecordAppMemberActivity
@@ -674,6 +676,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`appsSetFavorite`](docs/sdks/apps/README.md#setfavorite) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 - [`appsSetMemberState`](docs/sdks/apps/README.md#setmemberstate) - SetAppMemberState
 - [`appsUpdate`](docs/sdks/apps/README.md#update) - UpdateApp
+- [`appsVerifyRender`](docs/sdks/apps/README.md#verifyrender) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 - [`auditLogsConfigureOtlpExport`](docs/sdks/auditlogs/README.md#configureotlpexport) - ConfigureOtlpExport
 - [`auditLogsConfigureS3Export`](docs/sdks/auditlogs/README.md#configures3export) - ConfigureS3Export
 - [`auditLogsDeleteOtlpExportConfig`](docs/sdks/auditlogs/README.md#deleteotlpexportconfig) - DeleteOtlpExportConfig
@@ -705,6 +708,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsGetApiAnswer`](docs/sdks/chats/README.md#getapianswer) - GetAPIChatAnswer
 - [`chatsGetArtifact`](docs/sdks/chats/README.md#getartifact) - GetArtifact
 - [`chatsGetArtifactsSummary`](docs/sdks/chats/README.md#getartifactssummary) - GetChatArtifactsSummary
+- [`chatsGetAutoAttachedFiles`](docs/sdks/chats/README.md#getautoattachedfiles) - GetAutoAttachedFiles
 - [`chatsGetChatExecutionTiming`](docs/sdks/chats/README.md#getchatexecutiontiming) - GetChatExecutionTiming
 - [`chatsGetCompletionParameters`](docs/sdks/chats/README.md#getcompletionparameters) - List distinct chat creators the user can access
 - [`chatsGetCompletionParametersBatch`](docs/sdks/chats/README.md#getcompletionparametersbatch) - GetCompletionParametersBatch
@@ -940,8 +944,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`powerbiUnsyncItems`](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
 - [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 - [`rbacAssignPermissionToRole`](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
-- [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - AssignRoleToMember
-- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - CreateApiKey
+- [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+- [`rbacCreateApiKey`](docs/sdks/rbac/README.md#createapikey) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 - [`rbacCreatePersonalApiKey`](docs/sdks/rbac/README.md#createpersonalapikey) - CreatePersonalApiKey
 - [`rbacCreateRole`](docs/sdks/rbac/README.md#createrole) - Role management
 - [`rbacCreateServiceAccount`](docs/sdks/rbac/README.md#createserviceaccount) - CreateServiceAccount
@@ -951,30 +955,30 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`rbacGenerateShareLink`](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 - [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 - [`rbacGetEmbedUserApiKey`](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
-- [`rbacGetMemberRoles`](docs/sdks/rbac/README.md#getmemberroles) - GetMemberRoles
+- [`rbacGetMemberRoles`](docs/sdks/rbac/README.md#getmemberroles) - Member role assignment
 - [`rbacGetObjectAccess`](docs/sdks/rbac/README.md#getobjectaccess) - GetObjectAccess
 - [`rbacGetRole`](docs/sdks/rbac/README.md#getrole) - GetRole
-- [`rbacGetRolePermissions`](docs/sdks/rbac/README.md#getrolepermissions) - GetRolePermissions
+- [`rbacGetRolePermissions`](docs/sdks/rbac/README.md#getrolepermissions) - Permission management
 - [`rbacHasObjectAccess`](docs/sdks/rbac/README.md#hasobjectaccess) - HasObjectAccess
 - [`rbacListAccessRequests`](docs/sdks/rbac/README.md#listaccessrequests) - ListAccessRequests
 - [`rbacListApiKeys`](docs/sdks/rbac/README.md#listapikeys) - ListApiKeys
-- [`rbacListPermissions`](docs/sdks/rbac/README.md#listpermissions) - Permission management
+- [`rbacListPermissions`](docs/sdks/rbac/README.md#listpermissions) - ListPermissions
 - [`rbacListRoles`](docs/sdks/rbac/README.md#listroles) - ListRoles
 - [`rbacListServiceAccounts`](docs/sdks/rbac/README.md#listserviceaccounts) - ListServiceAccounts
-- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+- [`rbacRejectAccessRequest`](docs/sdks/rbac/README.md#rejectaccessrequest) - RejectAccessRequest
 - [`rbacRemovePermissionFromRole`](docs/sdks/rbac/README.md#removepermissionfromrole) - RemovePermissionFromRole
-- [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - Member role assignment
+- [`rbacRemoveRoleFromMember`](docs/sdks/rbac/README.md#removerolefrommember) - RemoveRoleFromMember
 - [`rbacRequestAccess`](docs/sdks/rbac/README.md#requestaccess) - RequestAccess
-- [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - Object sharing and access control
-- [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - RevokeObjectAccess
-- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - RotateApiKey
-- [`rbacSetRolePermissions`](docs/sdks/rbac/README.md#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Describe what a key is allowed to do.
-- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - Group management. Internal only.
+- [`rbacRevokeApiKey`](docs/sdks/rbac/README.md#revokeapikey) - RevokeApiKey
+- [`rbacRevokeObjectAccess`](docs/sdks/rbac/README.md#revokeobjectaccess) - Group management. Internal only.
+- [`rbacRotateApiKey`](docs/sdks/rbac/README.md#rotateapikey) - Object sharing and access control
+- [`rbacSetRolePermissions`](docs/sdks/rbac/README.md#setrolepermissions) - SetRolePermissions
+- [`rbacShareObject`](docs/sdks/rbac/README.md#shareobject) - Get current member roles and permissions
+- [`rbacShareObjectWithRole`](docs/sdks/rbac/README.md#shareobjectwithrole) - Describe what a key is allowed to do.
 - [`rbacUpdateObjectAccess`](docs/sdks/rbac/README.md#updateobjectaccess) - UpdateObjectAccess
 - [`rbacUpdateObjectVisibility`](docs/sdks/rbac/README.md#updateobjectvisibility) - UpdateObjectVisibility
 - [`rbacUpdateRole`](docs/sdks/rbac/README.md#updaterole) - UpdateRole
-- [`rbacWhoAmI`](docs/sdks/rbac/README.md#whoami) - Get current member roles and permissions
+- [`rbacWhoAmI`](docs/sdks/rbac/README.md#whoami) - WhoAmI
 - [`sandboxAdminGetSandbox`](docs/sdks/sandboxadmin/README.md#getsandbox) - GetSandbox
 - [`sandboxAdminList`](docs/sdks/sandboxadmin/README.md#list) - ListSandboxes
 - [`sandboxAdminListExecutions`](docs/sdks/sandboxadmin/README.md#listexecutions) - ListSandboxExecutions

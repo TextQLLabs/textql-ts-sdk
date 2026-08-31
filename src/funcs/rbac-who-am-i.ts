@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get current member roles and permissions
- *
- * @remarks
- * Get current member roles and permissions
+ * WhoAmI
  */
 export function rbacWhoAmI(
   client: TextqlCore,

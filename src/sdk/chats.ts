@@ -21,6 +21,7 @@ import { chatsGetAll } from "../funcs/chats-get-all.js";
 import { chatsGetApiAnswer } from "../funcs/chats-get-api-answer.js";
 import { chatsGetArtifact } from "../funcs/chats-get-artifact.js";
 import { chatsGetArtifactsSummary } from "../funcs/chats-get-artifacts-summary.js";
+import { chatsGetAutoAttachedFiles } from "../funcs/chats-get-auto-attached-files.js";
 import { chatsGetChatExecutionTiming } from "../funcs/chats-get-chat-execution-timing.js";
 import { chatsGetCompletionParametersBatch } from "../funcs/chats-get-completion-parameters-batch.js";
 import { chatsGetCompletionParameters } from "../funcs/chats-get-completion-parameters.js";
@@ -285,6 +286,20 @@ export class Chats extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ChatServiceGetArtifactResponse> {
     return unwrapAsync(chatsGetArtifact(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetAutoAttachedFiles
+   */
+  async getAutoAttachedFiles(
+    request: operations.ChatServiceGetAutoAttachedFilesRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ChatServiceGetAutoAttachedFilesResponse> {
+    return unwrapAsync(chatsGetAutoAttachedFiles(
       this,
       request,
       options,

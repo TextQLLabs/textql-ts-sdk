@@ -249,9 +249,6 @@ import {
   TextqlRpcPublicChatCellLifecycle$inboundSchema,
 } from "./textql-rpc-public-chat-cell-lifecycle.js";
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs59 = number | string;
 
 export type WsCell = {
@@ -364,15 +361,9 @@ export type WsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs58 = number | string;
 
 export type UseSkillCell = {
@@ -493,15 +484,9 @@ export type UseSkillCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs57 = number | string;
 
 export type ThinkingCell = {
@@ -614,15 +599,9 @@ export type ThinkingCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs56 = number | string;
 
 export type TextCell = {
@@ -735,15 +714,9 @@ export type TextCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs55 = number | string;
 
 export type TabularFileCell = {
@@ -856,15 +829,9 @@ export type TabularFileCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs54 = number | string;
 
 export type TableauSqlCell = {
@@ -977,15 +944,9 @@ export type TableauSqlCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs53 = number | string;
 
 export type TableauSearchFieldsCell = {
@@ -1098,15 +1059,9 @@ export type TableauSearchFieldsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs52 = number | string;
 
 export type TableauCell = {
@@ -1219,15 +1174,9 @@ export type TableauCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs51 = number | string;
 
 export type SummaryCell = {
@@ -1340,15 +1289,9 @@ export type SummaryCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs50 = number | string;
 
 export type SubagentCell = {
@@ -1461,15 +1404,9 @@ export type SubagentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs49 = number | string;
 
 export type StreamlitCell = {
@@ -1582,15 +1519,9 @@ export type StreamlitCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs48 = number | string;
 
 export type StatusCell = {
@@ -1706,15 +1637,9 @@ export type StatusCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs47 = number | string;
 
 export type SqlCell = {
@@ -1827,15 +1752,9 @@ export type SqlCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs46 = number | string;
 
 export type ReportHistoryCell = {
@@ -1948,15 +1867,9 @@ export type ReportHistoryCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs45 = number | string;
 
 export type ReportCell = {
@@ -2069,15 +1982,9 @@ export type ReportCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs44 = number | string;
 
 export type QuestionsCell = {
@@ -2198,15 +2105,9 @@ export type QuestionsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs43 = number | string;
 
 export type PyCell = {
@@ -2319,15 +2220,9 @@ export type PyCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs42 = number | string;
 
 export type PreviewCell = {
@@ -2443,15 +2338,9 @@ export type PreviewCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs41 = number | string;
 
 export type PowerbiDaxCell = {
@@ -2564,15 +2453,9 @@ export type PowerbiDaxCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs40 = number | string;
 
 export type PowerbiCell = {
@@ -2685,15 +2568,9 @@ export type PowerbiCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs39 = number | string;
 
 export type PlaybookEditorCell = {
@@ -2806,15 +2683,9 @@ export type PlaybookEditorCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs38 = number | string;
 
 export type PatchCell = {
@@ -2927,15 +2798,9 @@ export type PatchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs37 = number | string;
 
 export type OntologySearchMetricsCell = {
@@ -3048,15 +2913,9 @@ export type OntologySearchMetricsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs36 = number | string;
 
 export type OntologyQueryCell = {
@@ -3169,15 +3028,9 @@ export type OntologyQueryCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs35 = number | string;
 
 export type OntologyOpenObjectCell = {
@@ -3290,15 +3143,9 @@ export type OntologyOpenObjectCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs34 = number | string;
 
 export type OntologyEditorCell = {
@@ -3411,15 +3258,9 @@ export type OntologyEditorCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs33 = number | string;
 
 export type Microsoft365EmailSearchCell = {
@@ -3532,15 +3373,9 @@ export type Microsoft365EmailSearchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs32 = number | string;
 
 export type Microsoft365EmailContentCell = {
@@ -3654,15 +3489,9 @@ export type Microsoft365EmailContentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs31 = number | string;
 
 export type Microsoft365CalendarCell = {
@@ -3775,15 +3604,9 @@ export type Microsoft365CalendarCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs30 = number | string;
 
 export type MetricsCell = {
@@ -3896,15 +3719,9 @@ export type MetricsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs29 = number | string;
 
 export type MdCell = {
@@ -4017,15 +3834,9 @@ export type MdCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs28 = number | string;
 
 export type McpToolCell = {
@@ -4138,15 +3949,9 @@ export type McpToolCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs27 = number | string;
 
 export type ListUsersCell = {
@@ -4259,15 +4064,9 @@ export type ListUsersCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs26 = number | string;
 
 export type ListDashboardsCell = {
@@ -4380,15 +4179,9 @@ export type ListDashboardsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs25 = number | string;
 
 export type ListAppsCell = {
@@ -4504,15 +4297,9 @@ export type ListAppsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs24 = number | string;
 
 export type LinkedinSearchCell = {
@@ -4625,15 +4412,9 @@ export type LinkedinSearchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs23 = number | string;
 
 export type JavascriptCell = {
@@ -4746,15 +4527,9 @@ export type JavascriptCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs22 = number | string;
 
 export type ImageCell = {
@@ -4867,15 +4642,9 @@ export type ImageCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs21 = number | string;
 
 export type GoogleDriveSearchCell = {
@@ -4988,15 +4757,9 @@ export type GoogleDriveSearchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs20 = number | string;
 
 export type GoogleDriveContentCell = {
@@ -5109,15 +4872,9 @@ export type GoogleDriveContentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs19 = number | string;
 
 export type GoogleCalendarSearchCell = {
@@ -5230,15 +4987,9 @@ export type GoogleCalendarSearchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs18 = number | string;
 
 export type GmailEmailSearchCell = {
@@ -5351,15 +5102,9 @@ export type GmailEmailSearchCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs17 = number | string;
 
 export type GmailEmailContentCell = {
@@ -5472,15 +5217,9 @@ export type GmailEmailContentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs16 = number | string;
 
 export type FormEditorCell = {
@@ -5593,15 +5332,9 @@ export type FormEditorCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs15 = number | string;
 
 export type FormCell = {
@@ -5721,15 +5454,9 @@ export type FormCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs14 = number | string;
 
 export type FeedPostCell = {
@@ -5842,15 +5569,9 @@ export type FeedPostCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs13 = number | string;
 
 export type FeedExplorerCell = {
@@ -5963,15 +5684,9 @@ export type FeedExplorerCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs12 = number | string;
 
 export type FeedEngageCell = {
@@ -6084,15 +5799,9 @@ export type FeedEngageCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs11 = number | string;
 
 export type FeedCreateCell = {
@@ -6205,15 +5914,9 @@ export type FeedCreateCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs10 = number | string;
 
 export type FeedCommentCell = {
@@ -6326,15 +6029,9 @@ export type FeedCommentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs9 = number | string;
 
 export type EmailCell = {
@@ -6455,15 +6152,9 @@ export type EmailCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs8 = number | string;
 
 export type DocumentCell = {
@@ -6576,15 +6267,9 @@ export type DocumentCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs7 = number | string;
 
 export type DashboardCell = {
@@ -6697,15 +6382,9 @@ export type DashboardCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs6 = number | string;
 
 export type ContextPromptEditorCell = {
@@ -6818,15 +6497,9 @@ export type ContextPromptEditorCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs5 = number | string;
 
 export type ConnectorsCell = {
@@ -6946,15 +6619,9 @@ export type ConnectorsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs4 = number | string;
 
 export type CompactionCell = {
@@ -7067,15 +6734,9 @@ export type CompactionCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs3 = number | string;
 
 export type BashCell = {
@@ -7188,15 +6849,9 @@ export type BashCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs2 = number | string;
 
 export type AppCell = {
@@ -7312,15 +6967,9 @@ export type AppCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 
-/**
- * LLM-generated summary of what this tool call does
- */
 export type TextqlRpcPublicChatCellDurationMs1 = number | string;
 
 export type AnsCell = {
@@ -7433,9 +7082,6 @@ export type AnsCell = {
   execError?: string | null | undefined;
   senderMemberId?: string | null | undefined;
   toolSummary?: string | null | undefined;
-  /**
-   * LLM-generated summary of what this tool call does
-   */
   durationMs?: number | string | null | undefined;
 };
 

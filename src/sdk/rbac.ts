@@ -73,7 +73,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * AssignRoleToMember
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   *
+   * @remarks
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
    */
   async assignRoleToMember(
     request: operations.RBACServiceAssignRoleToMemberRequest,
@@ -87,7 +90,11 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * CreateApiKey
+   * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+   *
+   * @remarks
+   * SCIM group-mapping migration tooling: one-time role<->group conversion,
+   *  internal only.
    */
   async createApiKey(
     request: operations.RBACServiceCreateApiKeyRequest,
@@ -232,7 +239,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * GetMemberRoles
+   * Member role assignment
+   *
+   * @remarks
+   * Member role assignment
    */
   async getMemberRoles(
     request: operations.RBACServiceGetMemberRolesRequest,
@@ -274,7 +284,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * GetRolePermissions
+   * Permission management
+   *
+   * @remarks
+   * Permission management
    */
   async getRolePermissions(
     request: operations.RBACServiceGetRolePermissionsRequest,
@@ -330,10 +343,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Permission management
-   *
-   * @remarks
-   * Permission management
+   * ListPermissions
    */
   async listPermissions(
     request: operations.RBACServiceListPermissionsRequest,
@@ -375,11 +385,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
-   *
-   * @remarks
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,
-   *  internal only.
+   * RejectAccessRequest
    */
   async rejectAccessRequest(
     request: operations.RBACServiceRejectAccessRequestRequest,
@@ -407,10 +413,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Member role assignment
-   *
-   * @remarks
-   * Member role assignment
+   * RemoveRoleFromMember
    */
   async removeRoleFromMember(
     request: operations.RBACServiceRemoveRoleFromMemberRequest,
@@ -438,10 +441,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Object sharing and access control
-   *
-   * @remarks
-   * Object sharing and access control
+   * RevokeApiKey
    */
   async revokeApiKey(
     request: operations.RBACServiceRevokeApiKeyRequest,
@@ -455,7 +455,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RevokeObjectAccess
+   * Group management. Internal only.
+   *
+   * @remarks
+   * Group management. Internal only.
    */
   async revokeObjectAccess(
     request: operations.RBACServiceRevokeObjectAccessRequest,
@@ -469,7 +472,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RotateApiKey
+   * Object sharing and access control
+   *
+   * @remarks
+   * Object sharing and access control
    */
   async rotateApiKey(
     request: operations.RBACServiceRotateApiKeyRequest,
@@ -483,10 +489,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-   *
-   * @remarks
-   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   * SetRolePermissions
    */
   async setRolePermissions(
     request: operations.RBACServiceSetRolePermissionsRequest,
@@ -500,10 +503,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Describe what a key is allowed to do.
+   * Get current member roles and permissions
    *
    * @remarks
-   * Describe what a key is allowed to do.
+   * Get current member roles and permissions
    */
   async shareObject(
     request: operations.RBACServiceShareObjectRequest,
@@ -517,10 +520,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Group management. Internal only.
+   * Describe what a key is allowed to do.
    *
    * @remarks
-   * Group management. Internal only.
+   * Describe what a key is allowed to do.
    */
   async shareObjectWithRole(
     request: operations.RBACServiceShareObjectWithRoleRequest,
@@ -576,10 +579,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Get current member roles and permissions
-   *
-   * @remarks
-   * Get current member roles and permissions
+   * WhoAmI
    */
   async whoAmI(
     request: operations.RBACServiceWhoAmIRequest,

@@ -286,6 +286,7 @@ export type TextqlRpcAuthOrganization = {
    */
   assetUrlExpiry?: TextqlRpcAuthAssetUrlExpiry | undefined;
   emailOutputEnabled?: boolean | null | undefined;
+  defaultPlaybookPrivate?: boolean | null | undefined;
   /**
    * Mirror of the email_output_enabled feature flag (in feature_flags table,
    *
@@ -293,9 +294,9 @@ export type TextqlRpcAuthOrganization = {
    *  not on the organization row). Surfaces in settings UIs alongside the
    *  org-row toggles.
    */
-  defaultPlaybookPrivate?: boolean | null | undefined;
   defaultDashboardOutput?: boolean | null | undefined;
   defaultMethodology?: number | null | undefined;
+  scimNewGroupDefaultRoleType?: string | null | undefined;
   /**
    * Org-wide default response methodology for new chats, as a
    *
@@ -304,38 +305,42 @@ export type TextqlRpcAuthOrganization = {
    *  with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
    *  per-member (Member.default_methodology) and per-chat.
    */
-  scimNewGroupDefaultRoleType?: string | null | undefined;
   groupsFeatureEnabled?: boolean | null | undefined;
   availableProviders?: Array<string> | undefined;
   showTextqlUsage?: boolean | null | undefined;
+  tracesEnabled?: boolean | null | undefined;
   /**
    * When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
    *
    * @remarks
    *  staff activity in its usage views; when false (default) they are filtered out.
    */
-  tracesEnabled?: boolean | null | undefined;
   allowLlmDataRetention?: boolean | null | undefined;
   soxDbSessionMetadataEnabled?: boolean | null | undefined;
   smsEnabled?: boolean | null | undefined;
   scimAssignDefaultRole?: boolean | null | undefined;
   migrationBannerDismissed?: boolean | null | undefined;
   /**
-   * dismiss legacy-context migration banner org-wide
-   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   configMigrationsEnabled?: boolean | null | undefined;
   /**
-   * Deprecated: superseded by config_objects_enabled (field 80); no longer populated.
+   * dismiss legacy-context migration banner org-wide
    */
   sandboxObservabilityEnabled?: boolean | null | undefined;
+  /**
+   * Deprecated: superseded by config_objects_enabled (field 80); no longer populated.
+   */
   dataAppsEnabled?: boolean | null | undefined;
+  issuesEnabled?: boolean | null | undefined;
   /**
    * Internal gate for the data apps feature (apps resource + html generative dashboards).
    */
-  issuesEnabled?: boolean | null | undefined;
   configObjectsEnabled?: boolean | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
+  configObjectsPlaybooksEnabled?: boolean | null | undefined;
   /**
    * config_objects feature_flags row: the umbrella half of the config-management predicate
    *
@@ -348,7 +353,7 @@ export type TextqlRpcAuthOrganization = {
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configObjectsPlaybooksEnabled?: boolean | null | undefined;
+  configObjectsDashboardsEnabled?: boolean | null | undefined;
   /**
    * Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
    *
@@ -359,30 +364,23 @@ export type TextqlRpcAuthOrganization = {
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
-  configObjectsDashboardsEnabled?: boolean | null | undefined;
-  /**
-   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
-   */
   configAutofixEnabled?: boolean | null | undefined;
+  helmChartVersion?: string | null | undefined;
   /**
    * Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
    *
    * @remarks
    *  every org with the config-object checks surface on. Retained only because proto/api is additive-only.
    */
-  helmChartVersion?: string | null | undefined;
   spendTransparencyEnabled?: boolean | null | undefined;
+  sharingDisabled?: boolean | null | undefined;
   /**
-   * Internal flag: show dollar costs (spend transparency) across the product.
+   * Org-level opt-in: show dollar costs alongside ACU figures across the product.
    *
    * @remarks
-   *  Only rendered for internal (@textql.com) users while pricing is verified.
+   *  Which figures a given viewer sees is enforced separately, per-RPC.
    */
-  sharingDisabled?: boolean | null | undefined;
   appWritebackAutoApproveEnabled?: boolean | null | undefined;
-  /**
-   * Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
-   */
   subagentsEnabled?: boolean | null | undefined;
 };
 

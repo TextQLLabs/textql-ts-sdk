@@ -26,6 +26,7 @@ import { appsRestoreAppVersion } from "../funcs/apps-restore-app-version.js";
 import { appsSetFavorite } from "../funcs/apps-set-favorite.js";
 import { appsSetMemberState } from "../funcs/apps-set-member-state.js";
 import { appsUpdate } from "../funcs/apps-update.js";
+import { appsVerifyRender } from "../funcs/apps-verify-render.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -239,10 +240,11 @@ export class Apps extends ClientSDK {
   }
 
   /**
-   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   * Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
    *
    * @remarks
-   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   * Renders the live artifact in the production sandbox and returns browser diagnostics.
+   *  This is synchronous so callers can verify an app before sharing its URL.
    */
   async listVersions(
     request: operations.AppServiceListAppVersionsRequest,
@@ -408,6 +410,23 @@ export class Apps extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.AppServiceUpdateAppResponse> {
     return unwrapAsync(appsUpdate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   *
+   * @remarks
+   * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+   */
+  async verifyRender(
+    request: operations.AppServiceVerifyAppRenderRequest,
+    options?: RequestOptions,
+  ): Promise<operations.AppServiceVerifyAppRenderResponse> {
+    return unwrapAsync(appsVerifyRender(
       this,
       request,
       options,

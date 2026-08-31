@@ -29,15 +29,12 @@ import {
 } from "./textql-rpc-public-rbac-shared-object.js";
 
 /**
- * The credential that authenticated the request.
+ * Get current member roles and permissions messages
  */
 export type TextqlRpcPublicRbacWhoAmIResponse = {
   memberId?: string | undefined;
   orgId?: string | undefined;
   email?: string | null | undefined;
-  /**
-   * Get current member roles and permissions messages
-   */
   credential?: TextqlRpcPublicRbacCallerCredential | undefined;
   roles?: Array<TextqlRpcPublicRbacRole> | undefined;
   permissions?: Array<TextqlRpcPublicRbacPermission> | undefined;

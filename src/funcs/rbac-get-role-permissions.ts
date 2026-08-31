@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetRolePermissions
+ * Permission management
+ *
+ * @remarks
+ * Permission management
  */
 export function rbacGetRolePermissions(
   client: TextqlCore,

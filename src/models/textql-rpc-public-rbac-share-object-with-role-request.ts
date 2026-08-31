@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * The credential that authenticated the request.
+ */
 export type TextqlRpcPublicRbacShareObjectWithRoleRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;

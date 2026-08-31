@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacShareObjectWithRoleRequest
 
+The credential that authenticated the request.
+
 ## Example Usage
 
 ```typescript

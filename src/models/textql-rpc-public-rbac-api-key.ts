@@ -15,6 +15,9 @@ import {
 export type TextqlRpcPublicRbacApiKey = {
   id?: string | undefined;
   memberId?: string | undefined;
+  /**
+   * pending, approved, rejected
+   */
   clientId?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

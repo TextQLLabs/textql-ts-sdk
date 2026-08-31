@@ -1,7 +1,5 @@
 # TextqlRpcPublicChatCellDurationMs40
 
-LLM-generated summary of what this tool call does
-
 
 ## Supported Types
 

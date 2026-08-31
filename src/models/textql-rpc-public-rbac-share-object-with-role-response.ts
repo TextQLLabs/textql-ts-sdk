@@ -9,7 +9,7 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * Object access management messages
+ * Which LLM models the caller may run.
  */
 export type TextqlRpcPublicRbacShareObjectWithRoleResponse = {
   success?: boolean | undefined;
