@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Access request management messages
+ */
 export type TextqlRpcPublicRbacRejectAccessRequestRequest = {
   requestId?: string | undefined;
   rejectionReason?: string | null | undefined;

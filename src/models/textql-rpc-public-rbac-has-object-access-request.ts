@@ -8,6 +8,9 @@ export type TextqlRpcPublicRbacHasObjectAccessRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | null | undefined;
+  /**
+   * owner, editor, viewer
+   */
   roleId?: string | null | undefined;
 };
 

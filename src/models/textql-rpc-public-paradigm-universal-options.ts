@@ -48,6 +48,7 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
   apiAccessKeyIds?: Array<string> | undefined;
   feedEnabled?: boolean | null | undefined;
   fileGenerationDisabled?: boolean | undefined;
+  readFileEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -86,6 +87,7 @@ export const TextqlRpcPublicParadigmUniversalOptions$inboundSchema:
     apiAccessKeyIds: types.optional(z.array(types.string())),
     feedEnabled: z.optional(z.nullable(types.boolean())),
     fileGenerationDisabled: types.optional(types.boolean()),
+    readFileEnabled: types.optional(types.boolean()),
   });
 /** @internal */
 export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
@@ -122,6 +124,7 @@ export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
   apiAccessKeyIds?: Array<string> | undefined;
   feedEnabled?: boolean | null | undefined;
   fileGenerationDisabled?: boolean | undefined;
+  readFileEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -163,6 +166,7 @@ export const TextqlRpcPublicParadigmUniversalOptions$outboundSchema:
     apiAccessKeyIds: z.optional(z.array(z.string())),
     feedEnabled: z.optional(z.nullable(z.boolean())),
     fileGenerationDisabled: z.optional(z.boolean()),
+    readFileEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicParadigmUniversalOptionsToJSON(

@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacRemoveRoleFromMemberResponse
 
-Member role management messages
-
 ## Example Usage
 
 ```typescript

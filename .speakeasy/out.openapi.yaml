@@ -987,8 +987,10 @@ paths:
     post:
       tags:
         - AppService
-      summary: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
-      description: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+      summary: Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
+      description: |-
+        Renders the live artifact in the production sandbox and returns browser diagnostics.
+         This is synchronous so callers can verify an app before sharing its URL.
       operationId: AppService_ListAppVersions
       x-speakeasy-group: apps
       x-speakeasy-name-override: listVersions
@@ -1403,6 +1405,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.app.UpdateAppResponse'
+  /textql.rpc.public.app.AppService/VerifyAppRender:
+    post:
+      tags:
+        - AppService
+      summary: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+      description: Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+      operationId: AppService_VerifyAppRender
+      x-speakeasy-group: apps
+      x-speakeasy-name-override: verifyRender
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.app.VerifyAppRenderRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.app.VerifyAppRenderResponse'
   /textql.rpc.public.audit_log.AuditLogService/ConfigureOtlpExport:
     post:
       tags:
@@ -2444,6 +2484,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.chat.GetArtifactResponse'
+  /textql.rpc.public.chat.ChatService/GetAutoAttachedFiles:
+    post:
+      tags:
+        - ChatService
+      summary: GetAutoAttachedFiles
+      operationId: ChatService_GetAutoAttachedFiles
+      x-speakeasy-group: chats
+      x-speakeasy-name-override: getAutoAttachedFiles
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.chat.GetAutoAttachedFilesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.chat.GetAutoAttachedFilesResponse'
   /textql.rpc.public.chat.ChatService/GetChat:
     post:
       tags:
@@ -11337,7 +11414,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: AssignRoleToMember
+      summary: Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+      description: Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
       operationId: RBACService_AssignRoleToMember
       x-speakeasy-group: rbac
       x-speakeasy-name-override: assignRoleToMember
@@ -11374,7 +11452,10 @@ paths:
     post:
       tags:
         - RBACService
-      summary: CreateApiKey
+      summary: 'SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.'
+      description: |-
+        SCIM group-mapping migration tooling: one-time role<->group conversion,
+         internal only.
       operationId: RBACService_CreateApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: createApiKey
@@ -11745,7 +11826,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: GetMemberRoles
+      summary: Member role assignment
+      description: Member role assignment
       operationId: RBACService_GetMemberRoles
       x-speakeasy-group: rbac
       x-speakeasy-name-override: getMemberRoles
@@ -11856,7 +11938,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: GetRolePermissions
+      summary: Permission management
+      description: Permission management
       operationId: RBACService_GetRolePermissions
       x-speakeasy-group: rbac
       x-speakeasy-name-override: getRolePermissions
@@ -12004,8 +12087,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Permission management
-      description: Permission management
+      summary: ListPermissions
       operationId: RBACService_ListPermissions
       x-speakeasy-group: rbac
       x-speakeasy-name-override: listPermissions
@@ -12116,10 +12198,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: 'SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.'
-      description: |-
-        SCIM group-mapping migration tooling: one-time role<->group conversion,
-         internal only.
+      summary: RejectAccessRequest
       operationId: RBACService_RejectAccessRequest
       x-speakeasy-group: rbac
       x-speakeasy-name-override: rejectAccessRequest
@@ -12193,8 +12272,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Member role assignment
-      description: Member role assignment
+      summary: RemoveRoleFromMember
       operationId: RBACService_RemoveRoleFromMember
       x-speakeasy-group: rbac
       x-speakeasy-name-override: removeRoleFromMember
@@ -12268,8 +12346,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Object sharing and access control
-      description: Object sharing and access control
+      summary: RevokeApiKey
       operationId: RBACService_RevokeApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: revokeApiKey
@@ -12306,7 +12383,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: RevokeObjectAccess
+      summary: Group management. Internal only.
+      description: Group management. Internal only.
       operationId: RBACService_RevokeObjectAccess
       x-speakeasy-group: rbac
       x-speakeasy-name-override: revokeObjectAccess
@@ -12343,7 +12421,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: RotateApiKey
+      summary: Object sharing and access control
+      description: Object sharing and access control
       operationId: RBACService_RotateApiKey
       x-speakeasy-group: rbac
       x-speakeasy-name-override: rotateApiKey
@@ -12380,8 +12459,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-      description: Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+      summary: SetRolePermissions
       operationId: RBACService_SetRolePermissions
       x-speakeasy-group: rbac
       x-speakeasy-name-override: setRolePermissions
@@ -12418,8 +12496,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Describe what a key is allowed to do.
-      description: Describe what a key is allowed to do.
+      summary: Get current member roles and permissions
+      description: Get current member roles and permissions
       operationId: RBACService_ShareObject
       x-speakeasy-group: rbac
       x-speakeasy-name-override: shareObject
@@ -12456,8 +12534,8 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Group management. Internal only.
-      description: Group management. Internal only.
+      summary: Describe what a key is allowed to do.
+      description: Describe what a key is allowed to do.
       operationId: RBACService_ShareObjectWithRole
       x-speakeasy-group: rbac
       x-speakeasy-name-override: shareObjectWithRole
@@ -12605,8 +12683,7 @@ paths:
     post:
       tags:
         - RBACService
-      summary: Get current member roles and permissions
-      description: Get current member roles and permissions
+      summary: WhoAmI
       operationId: RBACService_WhoAmI
       x-speakeasy-group: rbac
       x-speakeasy-name-override: whoAmI
@@ -15966,14 +16043,14 @@ components:
         defaultPlaybookPrivate:
           type: boolean
           title: default_playbook_private
-          description: |-
-            Mirror of the email_output_enabled feature flag (in feature_flags table,
-             not on the organization row). Surfaces in settings UIs alongside the
-             org-row toggles.
           nullable: true
         defaultDashboardOutput:
           type: boolean
           title: default_dashboard_output
+          description: |-
+            Mirror of the email_output_enabled feature flag (in feature_flags table,
+             not on the organization row). Surfaces in settings UIs alongside the
+             org-row toggles.
           nullable: true
         defaultMethodology:
           type: integer
@@ -15983,15 +16060,15 @@ components:
         scimNewGroupDefaultRoleType:
           type: string
           title: scim_new_group_default_role_type
+          nullable: true
+        groupsFeatureEnabled:
+          type: boolean
+          title: groups_feature_enabled
           description: |-
             Org-wide default response methodology for new chats, as a
              textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
              with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
              per-member (Member.default_methodology) and per-chat.
-          nullable: true
-        groupsFeatureEnabled:
-          type: boolean
-          title: groups_feature_enabled
           nullable: true
         availableProviders:
           type: array
@@ -16005,13 +16082,13 @@ components:
         tracesEnabled:
           type: boolean
           title: traces_enabled
-          description: |-
-            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
-             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         allowLlmDataRetention:
           type: boolean
           title: allow_llm_data_retention
+          description: |-
+            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
+             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         soxDbSessionMetadataEnabled:
           type: boolean
@@ -16032,30 +16109,35 @@ components:
         configMigrationsEnabled:
           type: boolean
           title: config_migrations_enabled
-          description: dismiss legacy-context migration banner org-wide
           nullable: true
           deprecated: true
         sandboxObservabilityEnabled:
           type: boolean
           title: sandbox_observability_enabled
-          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
+          description: dismiss legacy-context migration banner org-wide
           nullable: true
         dataAppsEnabled:
           type: boolean
           title: data_apps_enabled
+          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
           nullable: true
         issuesEnabled:
           type: boolean
           title: issues_enabled
-          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
         configObjectsEnabled:
           type: boolean
           title: config_objects_enabled
+          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
         configObjectsPlaybooksEnabled:
           type: boolean
           title: config_objects_playbooks_enabled
+          nullable: true
+          deprecated: true
+        configObjectsDashboardsEnabled:
+          type: boolean
+          title: config_objects_dashboards_enabled
           description: |-
             config_objects feature_flags row: the umbrella half of the config-management predicate
              (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
@@ -16065,9 +16147,9 @@ components:
              config_migrations_enabled (field 74).
           nullable: true
           deprecated: true
-        configObjectsDashboardsEnabled:
+        configAutofixEnabled:
           type: boolean
-          title: config_objects_dashboards_enabled
+          title: config_autofix_enabled
           description: |-
             Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
              object type — config management is one-way, so a per-type switch that cannot
@@ -16075,37 +16157,31 @@ components:
              because proto/api is additive-only.
           nullable: true
           deprecated: true
-        configAutofixEnabled:
-          type: boolean
-          title: config_autofix_enabled
-          nullable: true
-          deprecated: true
         helmChartVersion:
           type: string
           title: helm_chart_version
-          description: |-
-            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
-             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         spendTransparencyEnabled:
           type: boolean
           title: spend_transparency_enabled
+          description: |-
+            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
+             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         sharingDisabled:
           type: boolean
           title: sharing_disabled
-          description: |-
-            Internal flag: show dollar costs (spend transparency) across the product.
-             Only rendered for internal (@textql.com) users while pricing is verified.
           nullable: true
         appWritebackAutoApproveEnabled:
           type: boolean
           title: app_writeback_auto_approve_enabled
+          description: |-
+            Org-level opt-in: show dollar costs alongside ACU figures across the product.
+             Which figures a given viewer sees is enforced separately, per-RPC.
           nullable: true
         subagentsEnabled:
           type: boolean
           title: subagents_enabled
-          description: Auto-merge Data App editor writeback config patches (recommended on); when off the writeback opens a reviewable patch instead.
           nullable: true
       title: Organization
       additionalProperties: false
@@ -18435,6 +18511,38 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.app.App'
       title: UpdateAppResponse
       additionalProperties: false
+    textql.rpc.public.app.VerifyAppRenderRequest:
+      type: object
+      properties:
+        appId:
+          type: string
+          title: app_id
+      title: VerifyAppRenderRequest
+      additionalProperties: false
+    textql.rpc.public.app.VerifyAppRenderResponse:
+      type: object
+      properties:
+        ready:
+          type: boolean
+          title: ready
+        screenshotUrl:
+          type: string
+          title: screenshot_url
+          nullable: true
+        consoleErrors:
+          type: array
+          items:
+            type: string
+          title: console_errors
+        renderError:
+          type: string
+          title: render_error
+          nullable: true
+      title: VerifyAppRenderResponse
+      additionalProperties: false
+      description: |-
+        Version history entry. Git-backed apps derive one per library commit (published_by/at
+         carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
     textql.rpc.public.audit_log.AuditLogEntry:
       type: object
       properties:
@@ -21939,6 +22047,24 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.dataset.Dataset'
       title: AttachDatasetResponse
       additionalProperties: false
+    textql.rpc.public.chat.AutoAttachedLibraryFile:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        pullCount:
+          type: integer
+          title: pull_count
+          format: int32
+        firstPulledAt:
+          title: first_pulled_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastPulledAt:
+          title: last_pulled_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: AutoAttachedLibraryFile
+      additionalProperties: false
     textql.rpc.public.chat.BookmarkChatRequest:
       type: object
       properties:
@@ -22011,7 +22137,6 @@ components:
                 - string
               title: duration_ms
               format: int64
-              description: LLM-generated summary of what this tool call does
               nullable: true
         - oneOf:
             - properties:
@@ -22087,7 +22212,6 @@ components:
             - properties:
                 feedCreateCell:
                   title: feed_create_cell
-                  description: 55 is tool_summary outside the oneof
                   $ref: '#/components/schemas/textql.rpc.public.cells.FeedCreateCell'
               title: feed_create_cell
               required:
@@ -22186,7 +22310,6 @@ components:
             - properties:
                 listAppsCell:
                   title: list_apps_cell
-                  description: 66 is duration_ms outside the oneof
                   $ref: '#/components/schemas/textql.rpc.public.cells.ListAppsCell'
               title: list_apps_cell
               required:
@@ -22264,6 +22387,7 @@ components:
             - properties:
                 ontologyQueryCell:
                   title: ontology_query_cell
+                  description: 55 is tool_summary outside the oneof
                   $ref: '#/components/schemas/textql.rpc.public.cells.OntologyQueryCell'
               title: ontology_query_cell
               required:
@@ -22413,6 +22537,7 @@ components:
             - properties:
                 thinkingCell:
                   title: thinking_cell
+                  description: 66 is duration_ms outside the oneof
                   $ref: '#/components/schemas/textql.rpc.public.cells.ThinkingCell'
               title: thinking_cell
               required:
@@ -22580,7 +22705,7 @@ components:
           title: fast_mode
           description: |-
             fast_mode enables Anthropic's fast inference mode (speed: "fast").
-             Currently supported on Opus 4.6 only. Pricing is 6x standard rates.
+             Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
           nullable: true
         agentId:
           type: string
@@ -22858,7 +22983,7 @@ components:
           title: fast_mode
           description: |-
             fast_mode enables Anthropic's fast inference (speed: "fast") for this chat.
-             Currently supported on Opus 4.6 only. Pricing is 6x standard rates.
+             Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
           nullable: true
         maxThinking:
           type: boolean
@@ -23169,6 +23294,27 @@ components:
                 - streamlit
       title: GetArtifactResponse
       additionalProperties: false
+    textql.rpc.public.chat.GetAutoAttachedFilesRequest:
+      type: object
+      properties:
+        chatId:
+          type: string
+          title: chat_id
+      title: GetAutoAttachedFilesRequest
+      required:
+        - chatId
+      additionalProperties: false
+    textql.rpc.public.chat.GetAutoAttachedFilesResponse:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.AutoAttachedLibraryFile'
+          title: files
+      title: GetAutoAttachedFilesResponse
+      additionalProperties: false
+      description: A library file injected via org auto-attach (not an explicit read_file/tql pull).
     textql.rpc.public.chat.GetChatArtifactsSummaryRequest:
       type: object
       properties:
@@ -31367,6 +31513,9 @@ components:
         fileGenerationDisabled:
           type: boolean
           title: file_generation_disabled
+        readFileEnabled:
+          type: boolean
+          title: read_file_enabled
       title: UniversalOptions
       additionalProperties: false
     textql.rpc.public.patches.AddOntologySubmoduleRequest:
@@ -36153,6 +36302,7 @@ components:
         clientId:
           type: string
           title: client_id
+          description: pending, approved, rejected
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
@@ -36244,6 +36394,7 @@ components:
           title: permission_id
       title: AssignPermissionToRoleRequest
       additionalProperties: false
+      description: Permission management requests/responses
     textql.rpc.public.rbac.AssignPermissionToRoleResponse:
       type: object
       properties:
@@ -36312,7 +36463,6 @@ components:
           title: scopes
       title: CallerCredential
       additionalProperties: false
-      description: Get current member roles and permissions messages
     textql.rpc.public.rbac.CallerModelAccess:
       type: object
       properties:
@@ -36642,6 +36792,7 @@ components:
           title: object_id
       title: GetObjectAccessRequest
       additionalProperties: false
+      description: Object access management messages
     textql.rpc.public.rbac.GetObjectAccessResponse:
       type: object
       properties:
@@ -36702,6 +36853,7 @@ components:
         roleId:
           type: string
           title: role_id
+          description: owner, editor, viewer
           nullable: true
       title: HasObjectAccessRequest
       additionalProperties: false
@@ -36740,7 +36892,6 @@ components:
           title: requests
       title: ListAccessRequestsResponse
       additionalProperties: false
-      description: Access request management messages
     textql.rpc.public.rbac.ListApiKeysRequest:
       type: object
       properties:
@@ -36806,7 +36957,6 @@ components:
           title: permissions
       title: ListPermissionsResponse
       additionalProperties: false
-      description: Permission management requests/responses
     textql.rpc.public.rbac.ListRolesRequest:
       type: object
       title: ListRolesRequest
@@ -36862,6 +37012,7 @@ components:
           title: roles
       title: MemberRoles
       additionalProperties: false
+      description: Member role management messages
     textql.rpc.public.rbac.ObjectAccess:
       type: object
       properties:
@@ -36943,6 +37094,7 @@ components:
           nullable: true
       title: RejectAccessRequestRequest
       additionalProperties: false
+      description: Access request management messages
     textql.rpc.public.rbac.RejectAccessRequestResponse:
       type: object
       properties:
@@ -36989,7 +37141,6 @@ components:
           title: success
       title: RemoveRoleFromMemberResponse
       additionalProperties: false
-      description: Member role management messages
     textql.rpc.public.rbac.RequestAccessRequest:
       type: object
       properties:
@@ -37020,6 +37171,7 @@ components:
         requestId:
           type: string
           title: request_id
+          description: owner, editor, viewer
       title: RequestAccessResponse
       additionalProperties: false
     textql.rpc.public.rbac.RevokeApiKeyRequest:
@@ -37208,7 +37360,6 @@ components:
           title: is_public
       title: ShareObjectRequest
       additionalProperties: false
-      description: Which LLM models the caller may run.
     textql.rpc.public.rbac.ShareObjectResponse:
       type: object
       properties:
@@ -37217,6 +37368,7 @@ components:
           title: success
       title: ShareObjectResponse
       additionalProperties: false
+      description: WhoAmI messages
     textql.rpc.public.rbac.ShareObjectWithRoleRequest:
       type: object
       properties:
@@ -37241,6 +37393,7 @@ components:
           title: is_public
       title: ShareObjectWithRoleRequest
       additionalProperties: false
+      description: The credential that authenticated the request.
     textql.rpc.public.rbac.ShareObjectWithRoleResponse:
       type: object
       properties:
@@ -37249,7 +37402,7 @@ components:
           title: success
       title: ShareObjectWithRoleResponse
       additionalProperties: false
-      description: Object access management messages
+      description: Which LLM models the caller may run.
     textql.rpc.public.rbac.SharedObject:
       type: object
       properties:
@@ -37279,7 +37432,6 @@ components:
           nullable: true
       title: SharedObject
       additionalProperties: false
-      description: WhoAmI messages
     textql.rpc.public.rbac.UpdateObjectAccessRequest:
       type: object
       properties:
@@ -37405,7 +37557,7 @@ components:
           title: shared_access_truncated
       title: WhoAmIResponse
       additionalProperties: false
-      description: The credential that authenticated the request.
+      description: Get current member roles and permissions messages
     textql.rpc.public.reports.CardBlock:
       type: object
       properties:

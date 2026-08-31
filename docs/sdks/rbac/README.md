@@ -6,8 +6,8 @@
 
 * [approveAccessRequest](#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](#assignpermissiontorole) - AssignPermissionToRole
-* [assignRoleToMember](#assignroletomember) - AssignRoleToMember
-* [createApiKey](#createapikey) - CreateApiKey
+* [assignRoleToMember](#assignroletomember) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+* [createApiKey](#createapikey) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
 * [createPersonalApiKey](#createpersonalapikey) - CreatePersonalApiKey
 * [createRole](#createrole) - Role management
 * [createServiceAccount](#createserviceaccount) - CreateServiceAccount
@@ -17,30 +17,30 @@
 * [generateShareLink](#generatesharelink) - GenerateShareLink
 * [getCurrentMemberRolesAndPermissions](#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 * [getEmbedUserApiKey](#getembeduserapikey) - GetEmbedUserApiKey
-* [getMemberRoles](#getmemberroles) - GetMemberRoles
+* [getMemberRoles](#getmemberroles) - Member role assignment
 * [getObjectAccess](#getobjectaccess) - GetObjectAccess
 * [getRole](#getrole) - GetRole
-* [getRolePermissions](#getrolepermissions) - GetRolePermissions
+* [getRolePermissions](#getrolepermissions) - Permission management
 * [hasObjectAccess](#hasobjectaccess) - HasObjectAccess
 * [listAccessRequests](#listaccessrequests) - ListAccessRequests
 * [listApiKeys](#listapikeys) - ListApiKeys
-* [listPermissions](#listpermissions) - Permission management
+* [listPermissions](#listpermissions) - ListPermissions
 * [listRoles](#listroles) - ListRoles
 * [listServiceAccounts](#listserviceaccounts) - ListServiceAccounts
-* [rejectAccessRequest](#rejectaccessrequest) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+* [rejectAccessRequest](#rejectaccessrequest) - RejectAccessRequest
 * [removePermissionFromRole](#removepermissionfromrole) - RemovePermissionFromRole
-* [removeRoleFromMember](#removerolefrommember) - Member role assignment
+* [removeRoleFromMember](#removerolefrommember) - RemoveRoleFromMember
 * [requestAccess](#requestaccess) - RequestAccess
-* [revokeApiKey](#revokeapikey) - Object sharing and access control
-* [revokeObjectAccess](#revokeobjectaccess) - RevokeObjectAccess
-* [rotateApiKey](#rotateapikey) - RotateApiKey
-* [setRolePermissions](#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-* [shareObject](#shareobject) - Describe what a key is allowed to do.
-* [shareObjectWithRole](#shareobjectwithrole) - Group management. Internal only.
+* [revokeApiKey](#revokeapikey) - RevokeApiKey
+* [revokeObjectAccess](#revokeobjectaccess) - Group management. Internal only.
+* [rotateApiKey](#rotateapikey) - Object sharing and access control
+* [setRolePermissions](#setrolepermissions) - SetRolePermissions
+* [shareObject](#shareobject) - Get current member roles and permissions
+* [shareObjectWithRole](#shareobjectwithrole) - Describe what a key is allowed to do.
 * [updateObjectAccess](#updateobjectaccess) - UpdateObjectAccess
 * [updateObjectVisibility](#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](#updaterole) - UpdateRole
-* [whoAmI](#whoami) - Get current member roles and permissions
+* [whoAmI](#whoami) - WhoAmI
 
 ## approveAccessRequest
 
@@ -190,7 +190,7 @@ run();
 
 ## assignRoleToMember
 
-AssignRoleToMember
+Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
 
 ### Example Usage
 
@@ -263,7 +263,8 @@ run();
 
 ## createApiKey
 
-CreateApiKey
+SCIM group-mapping migration tooling: one-time role<->group conversion,
+ internal only.
 
 ### Example Usage
 
@@ -993,7 +994,7 @@ run();
 
 ## getMemberRoles
 
-GetMemberRoles
+Member role assignment
 
 ### Example Usage
 
@@ -1212,7 +1213,7 @@ run();
 
 ## getRolePermissions
 
-GetRolePermissions
+Permission management
 
 ### Example Usage
 
@@ -1504,7 +1505,7 @@ run();
 
 ## listPermissions
 
-Permission management
+ListPermissions
 
 ### Example Usage
 
@@ -1723,8 +1724,7 @@ run();
 
 ## rejectAccessRequest
 
-SCIM group-mapping migration tooling: one-time role<->group conversion,
- internal only.
+RejectAccessRequest
 
 ### Example Usage
 
@@ -1870,7 +1870,7 @@ run();
 
 ## removeRoleFromMember
 
-Member role assignment
+RemoveRoleFromMember
 
 ### Example Usage
 
@@ -2016,7 +2016,7 @@ run();
 
 ## revokeApiKey
 
-Object sharing and access control
+RevokeApiKey
 
 ### Example Usage
 
@@ -2089,7 +2089,7 @@ run();
 
 ## revokeObjectAccess
 
-RevokeObjectAccess
+Group management. Internal only.
 
 ### Example Usage
 
@@ -2162,7 +2162,7 @@ run();
 
 ## rotateApiKey
 
-RotateApiKey
+Object sharing and access control
 
 ### Example Usage
 
@@ -2235,7 +2235,7 @@ run();
 
 ## setRolePermissions
 
-Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+SetRolePermissions
 
 ### Example Usage
 
@@ -2308,7 +2308,7 @@ run();
 
 ## shareObject
 
-Describe what a key is allowed to do.
+Get current member roles and permissions
 
 ### Example Usage
 
@@ -2385,7 +2385,7 @@ run();
 
 ## shareObjectWithRole
 
-Group management. Internal only.
+Describe what a key is allowed to do.
 
 ### Example Usage
 
@@ -2685,7 +2685,7 @@ run();
 
 ## whoAmI
 
-Get current member roles and permissions
+WhoAmI
 
 ### Example Usage
 

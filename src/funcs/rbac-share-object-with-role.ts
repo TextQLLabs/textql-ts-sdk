@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Group management. Internal only.
+ * Describe what a key is allowed to do.
  *
  * @remarks
- * Group management. Internal only.
+ * Describe what a key is allowed to do.
  */
 export function rbacShareObjectWithRole(
   client: TextqlCore,

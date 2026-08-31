@@ -27,10 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+ * Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
  *
  * @remarks
- * Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+ * Renders the live artifact in the production sandbox and returns browser diagnostics.
+ *  This is synchronous so callers can verify an app before sharing its URL.
  */
 export function appsListVersions(
   client: TextqlCore,

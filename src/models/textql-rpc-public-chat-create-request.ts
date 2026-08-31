@@ -51,7 +51,7 @@ export type TextqlRpcPublicChatCreateRequest = {
    * fast_mode enables Anthropic's fast inference (speed: "fast") for this chat.
    *
    * @remarks
-   *  Currently supported on Opus 4.6 only. Pricing is 6x standard rates.
+   *  Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
    */
   fastMode?: boolean | null | undefined;
   /**

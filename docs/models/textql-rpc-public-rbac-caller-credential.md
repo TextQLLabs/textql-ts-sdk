@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacCallerCredential
 
-Get current member roles and permissions messages
-
 ## Example Usage
 
 ```typescript

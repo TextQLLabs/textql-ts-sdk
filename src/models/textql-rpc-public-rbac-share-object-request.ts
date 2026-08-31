@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Which LLM models the caller may run.
- */
 export type TextqlRpcPublicRbacShareObjectRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;

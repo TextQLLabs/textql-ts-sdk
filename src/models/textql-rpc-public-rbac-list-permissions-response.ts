@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicRbacPermission$inboundSchema,
 } from "./textql-rpc-public-rbac-permission.js";
 
-/**
- * Permission management requests/responses
- */
 export type TextqlRpcPublicRbacListPermissionsResponse = {
   permissions?: Array<TextqlRpcPublicRbacPermission> | undefined;
 };
