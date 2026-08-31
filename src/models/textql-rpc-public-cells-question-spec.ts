@@ -24,17 +24,8 @@ export type TextqlRpcPublicCellsQuestionSpec = {
   question?: string | undefined;
   explanation?: string | null | undefined;
   kind?: TextqlRpcPublicCellsQuestionKind | undefined;
-  /**
-   * choice / multichoice
-   */
   options?: Array<TextqlRpcPublicCellsQuestionOption> | undefined;
-  /**
-   * adds a free-text "Other" option
-   */
   allowCustom?: boolean | undefined;
-  /**
-   * inputs
-   */
   inputs?: Array<TextqlRpcPublicCellsQuestionInput> | undefined;
 };
 

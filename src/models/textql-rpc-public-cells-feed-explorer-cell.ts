@@ -9,20 +9,11 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsFeedExplorerCell = {
-  /**
-   * "get_feed", "get_post", "get_comments"
-   */
   operation?: string | undefined;
   postId?: string | null | undefined;
   filter?: string | null | undefined;
   limit?: number | null | undefined;
-  /**
-   * JSON-serialized result
-   */
   result?: string | undefined;
-  /**
-   * when set, get results for specific feed channel
-   */
   channelId?: string | null | undefined;
 };
 

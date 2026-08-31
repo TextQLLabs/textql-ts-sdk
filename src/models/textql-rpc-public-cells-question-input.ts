@@ -12,17 +12,14 @@ import {
   TextqlRpcPublicCellsQuestionInputKind$inboundSchema,
 } from "./textql-rpc-public-cells-question-input-kind.js";
 
+/**
+ * EmailAttachment is delivered-attachment metadata surfaced to the frontend
+ */
 export type TextqlRpcPublicCellsQuestionInput = {
   kind?: TextqlRpcPublicCellsQuestionInputKind | undefined;
   label?: string | undefined;
   explanation?: string | null | undefined;
-  /**
-   * formfield inputs: the value is never shown to the agent
-   */
   sensitive?: boolean | undefined;
-  /**
-   * pretty destination path, for the user to verify
-   */
   formPathLabel?: string | null | undefined;
 };
 

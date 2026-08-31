@@ -1,8 +1,5 @@
 # TextqlRpcPublicCellsFieldChange
 
-Represents a before/after change to a field during an update.
- Used by both PlaybookEditorCell and FeedCreateCell.
-
 ## Example Usage
 
 ```typescript

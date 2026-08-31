@@ -14,9 +14,6 @@ import {
 
 export type TextqlRpcPublicCellsListDashboardsCell = {
   searchTerm?: string | undefined;
-  /**
-   * Set for single-dashboard lookup
-   */
   dashboardId?: string | undefined;
   totalCount?: number | undefined;
   sandboxAvailable?: boolean | undefined;

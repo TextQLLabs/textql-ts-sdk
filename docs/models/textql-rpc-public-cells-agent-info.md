@@ -15,5 +15,5 @@ let value: TextqlRpcPublicCellsAgentInfo = {};
 | `id`               | *string*           | :heavy_minus_sign: | N/A                |
 | `name`             | *string*           | :heavy_minus_sign: | N/A                |
 | `avatarUrl`        | *string*           | :heavy_minus_sign: | N/A                |
-| `type`             | *string*           | :heavy_minus_sign: | "human" or "bot"   |
+| `type`             | *string*           | :heavy_minus_sign: | N/A                |
 | `email`            | *string*           | :heavy_minus_sign: | N/A                |

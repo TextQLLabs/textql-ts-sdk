@@ -11,6 +11,12 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Size = number | string;
 
+/**
+ * Represents a before/after change to a field during an update.
+ *
+ * @remarks
+ *  Used by both PlaybookEditorCell and FeedCreateCell.
+ */
 export type TextqlRpcPublicCellsGoogleDriveFile = {
   id?: string | undefined;
   name?: string | undefined;

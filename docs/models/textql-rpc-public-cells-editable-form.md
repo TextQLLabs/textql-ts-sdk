@@ -1,5 +1,7 @@
 # TextqlRpcPublicCellsEditableForm
 
+primary interface for ana to render sandbox assets client side
+
 ## Example Usage
 
 ```typescript

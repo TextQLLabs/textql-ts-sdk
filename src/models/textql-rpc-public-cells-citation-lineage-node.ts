@@ -8,27 +8,23 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * QuestionsCell is the agent's "ask the user structured questions" tool. It is a
+ *
+ * @remarks
+ *  haltable cell: the agent pauses until the user submits or dismisses inline.
+ *  On submit the answers go to the agent; on dismiss only the answered count does
+ *  and the agent waits for the user's next message (the dismissal reason).
+ */
 export type TextqlRpcPublicCellsCitationLineageNode = {
   cellId?: string | undefined;
-  /**
-   * "sql" | "python"
-   */
   kind?: string | undefined;
   /**
-   * Produced dataframe name, if applicable
+   * prefill (pending) / summary (answered); sensitive values blanked
    */
   dataframeName?: string | null | undefined;
-  /**
-   * SQL only: connector ID; display name resolves client-side
-   */
   connectorId?: number | null | undefined;
-  /**
-   * SQL only: referenced tables
-   */
   tables?: Array<string> | undefined;
-  /**
-   * upstream cell(s), for graph lineage
-   */
   inputCellIds?: Array<string> | undefined;
 };
 

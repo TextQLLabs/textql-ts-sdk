@@ -8,7 +8,17 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * FormCell is the v2 form editor cell. It only references a form_v5 row by id;
+ *
+ * @remarks
+ *  the frontend loads the full form via FormService (no chat-cell scanning). The
+ *  cached fields let the inline chat cell render without a round-trip.
+ */
 export type TextqlRpcPublicCellsOrgMemberRef = {
+  /**
+   * list | info | create | edit | view | update | test
+   */
   email?: string | undefined;
   name?: string | undefined;
 };

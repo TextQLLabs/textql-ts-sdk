@@ -20,28 +20,24 @@ import {
   TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
 } from "./textql-rpc-public-dataframe-data-frame-with-info.js";
 
+/**
+ * UseSkillCell is the client projection of a `use_skill` auto-invoke. It
+ *
+ * @remarks
+ *  deliberately carries no body field: the skill's instructions are LLM-facing
+ *  prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
+ *  the transcript. The frontend renders provenance only ("Using skill /trigger").
+ */
 export type TextqlRpcPublicCellsOntologyQueryCell = {
-  /**
-   * input "inspect" | "render" | "execute"
-   */
   action?: string | undefined;
   path?: string | undefined;
-  /**
-   * JSON-encoded map of param name → value
-   */
   paramsJson?: string | undefined;
   connectorId?: number | null | undefined;
-  /**
-   * result
-   */
   declaredParams?: Array<TextqlRpcPublicCellsOntologyQueryParam> | undefined;
   sql?: string | undefined;
   usedConnectorId?: number | null | undefined;
   dataframe?: TextqlRpcPublicDataframeDataFrameWithInfo | undefined;
   dataframePreview?: string | undefined;
-  /**
-   * auth hold
-   */
   authRequired?: boolean | undefined;
   authConnectorName?: string | undefined;
   authLocator?: string | undefined;

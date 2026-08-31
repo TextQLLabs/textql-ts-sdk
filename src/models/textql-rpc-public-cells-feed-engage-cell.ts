@@ -16,9 +16,6 @@ export type TextqlRpcPublicCellsFeedEngageCell = {
   timestamp?: string | undefined;
   error?: string | undefined;
   url?: string | undefined;
-  /**
-   * Title/preview of the post or comment that was voted on
-   */
   thingTitle?: string | undefined;
 };
 

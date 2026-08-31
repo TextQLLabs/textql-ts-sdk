@@ -1,7 +1,5 @@
 # TextqlRpcPublicCellsEmailAttachment
 
-EmailAttachment is delivered-attachment metadata surfaced to the frontend
-
 ## Example Usage
 
 ```typescript

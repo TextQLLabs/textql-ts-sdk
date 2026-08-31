@@ -12,9 +12,6 @@ export type TextqlRpcPublicCellsAppInfo = {
   id?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
-  /**
-   * "draft" or "published" (derived from published_at)
-   */
   status?: string | undefined;
   creatorId?: string | undefined;
   /**

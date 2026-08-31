@@ -16047,15 +16047,15 @@ components:
         defaultDashboardOutput:
           type: boolean
           title: default_dashboard_output
-          description: |-
-            Mirror of the email_output_enabled feature flag (in feature_flags table,
-             not on the organization row). Surfaces in settings UIs alongside the
-             org-row toggles.
           nullable: true
         defaultMethodology:
           type: integer
           title: default_methodology
           format: int32
+          description: |-
+            Mirror of the email_output_enabled feature flag (in feature_flags table,
+             not on the organization row). Surfaces in settings UIs alongside the
+             org-row toggles.
           nullable: true
         scimNewGroupDefaultRoleType:
           type: string
@@ -16064,17 +16064,17 @@ components:
         groupsFeatureEnabled:
           type: boolean
           title: groups_feature_enabled
-          description: |-
-            Org-wide default response methodology for new chats, as a
-             textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
-             with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
-             per-member (Member.default_methodology) and per-chat.
           nullable: true
         availableProviders:
           type: array
           items:
             type: string
           title: available_providers
+          description: |-
+            Org-wide default response methodology for new chats, as a
+             textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
+             with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
+             per-member (Member.default_methodology) and per-chat.
         showTextqlUsage:
           type: boolean
           title: show_textql_usage
@@ -16086,13 +16086,13 @@ components:
         allowLlmDataRetention:
           type: boolean
           title: allow_llm_data_retention
-          description: |-
-            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
-             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         soxDbSessionMetadataEnabled:
           type: boolean
           title: sox_db_session_metadata_enabled
+          description: |-
+            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
+             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         smsEnabled:
           type: boolean
@@ -16114,30 +16114,35 @@ components:
         sandboxObservabilityEnabled:
           type: boolean
           title: sandbox_observability_enabled
-          description: dismiss legacy-context migration banner org-wide
           nullable: true
         dataAppsEnabled:
           type: boolean
           title: data_apps_enabled
-          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
+          description: dismiss legacy-context migration banner org-wide
           nullable: true
         issuesEnabled:
           type: boolean
           title: issues_enabled
+          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
           nullable: true
         configObjectsEnabled:
           type: boolean
           title: config_objects_enabled
-          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
         configObjectsPlaybooksEnabled:
           type: boolean
           title: config_objects_playbooks_enabled
+          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
           deprecated: true
         configObjectsDashboardsEnabled:
           type: boolean
           title: config_objects_dashboards_enabled
+          nullable: true
+          deprecated: true
+        configAutofixEnabled:
+          type: boolean
+          title: config_autofix_enabled
           description: |-
             config_objects feature_flags row: the umbrella half of the config-management predicate
              (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
@@ -16147,41 +16152,36 @@ components:
              config_migrations_enabled (field 74).
           nullable: true
           deprecated: true
-        configAutofixEnabled:
-          type: boolean
-          title: config_autofix_enabled
+        helmChartVersion:
+          type: string
+          title: helm_chart_version
           description: |-
             Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
              object type — config management is one-way, so a per-type switch that cannot
              un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
              because proto/api is additive-only.
           nullable: true
-          deprecated: true
-        helmChartVersion:
-          type: string
-          title: helm_chart_version
-          nullable: true
         spendTransparencyEnabled:
           type: boolean
           title: spend_transparency_enabled
-          description: |-
-            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
-             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         sharingDisabled:
           type: boolean
           title: sharing_disabled
+          description: |-
+            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
+             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         appWritebackAutoApproveEnabled:
           type: boolean
           title: app_writeback_auto_approve_enabled
-          description: |-
-            Org-level opt-in: show dollar costs alongside ACU figures across the product.
-             Which figures a given viewer sees is enforced separately, per-RPC.
           nullable: true
         subagentsEnabled:
           type: boolean
           title: subagents_enabled
+          description: |-
+            Org-level opt-in: show dollar costs alongside ACU figures across the product.
+             Which figures a given viewer sees is enforced separately, per-RPC.
           nullable: true
       title: Organization
       additionalProperties: false
@@ -18935,7 +18935,6 @@ components:
         type:
           type: string
           title: type
-          description: '"human" or "bot"'
         email:
           type: string
           title: email
@@ -18966,7 +18965,6 @@ components:
         action:
           type: string
           title: action
-          description: create | update | publish
         appId:
           type: string
           title: app_id
@@ -18989,9 +18987,6 @@ components:
           type: integer
           title: build_line_count
           format: int32
-          description: |-
-            Size of the app being written, updated live as the tool args stream so the
-             builder loader can show real "N lines / M files" progress during generation.
           nullable: true
         buildFileCount:
           type: integer
@@ -19000,7 +18995,6 @@ components:
           nullable: true
       title: AppCell
       additionalProperties: false
-      description: AppCell records an agent action on a data app (the generative app execution primitive; apps are first-class rows in the apps table).
     textql.rpc.public.cells.AppInfo:
       type: object
       properties:
@@ -19017,7 +19011,6 @@ components:
         status:
           type: string
           title: status
-          description: '"draft" or "published" (derived from published_at)'
         creatorId:
           type: string
           title: creator_id
@@ -19055,6 +19048,7 @@ components:
           format: int32
       title: BashCell
       additionalProperties: false
+      description: Preview cell reference for report history
     textql.rpc.public.cells.ChartReference:
       type: object
       properties:
@@ -19098,16 +19092,20 @@ components:
         id:
           type: string
           title: id
+          description: chosen option names
         claim:
           type: string
           title: claim
+          description: free-text entered for the "Other" option
         sourceCellId:
           type: string
           title: source_cell_id
+          description: value per input (sensitive values blanked in the broadcast)
           nullable: true
         sourceRef:
           type: string
           title: source_ref
+          description: 'per input: was it filled? lets the summary show provided/empty for sensitive inputs without their value'
           nullable: true
         sourceLocator:
           type: string
@@ -19140,32 +19138,33 @@ components:
         kind:
           type: string
           title: kind
-          description: '"sql" | "python"'
         dataframeName:
           type: string
           title: dataframe_name
-          description: Produced dataframe name, if applicable
+          description: prefill (pending) / summary (answered); sensitive values blanked
           nullable: true
         connectorId:
           type: integer
           title: connector_id
           format: int32
-          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         tables:
           type: array
           items:
             type: string
           title: tables
-          description: 'SQL only: referenced tables'
         inputCellIds:
           type: array
           items:
             type: string
           title: input_cell_ids
-          description: upstream cell(s), for graph lineage
       title: CitationLineageNode
       additionalProperties: false
+      description: |-
+        QuestionsCell is the agent's "ask the user structured questions" tool. It is a
+         haltable cell: the agent pauses until the user submits or dismisses inline.
+         On submit the answers go to the agent; on dismiss only the answered count does
+         and the agent waits for the user's next message (the dismissal reason).
     textql.rpc.public.cells.CompactionCell:
       type: object
       properties:
@@ -19197,24 +19196,19 @@ components:
           title: type
       title: ConnectorRef
       additionalProperties: false
-      description: Reference types for context data
     textql.rpc.public.cells.ConnectorsCell:
       type: object
       properties:
         action:
           type: string
           title: action
-          description: list | get
         totalCount:
           type: integer
           title: total_count
           format: int32
+          description: Set for single-dashboard lookup
       title: ConnectorsCell
       additionalProperties: false
-      description: |-
-        ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
-         shows that the tool ran (and a count); connector detail goes to the LLM, never
-         to the browser, and never carries secrets.
     textql.rpc.public.cells.ContextPromptChangeStatus:
       type: string
       title: ContextPromptChangeStatus
@@ -19385,6 +19379,7 @@ components:
           title: form_name
         fields:
           title: fields
+          description: '"image", "table", "pdf", "html", "dataframe", "download"'
           $ref: '#/components/schemas/google.protobuf.Struct'
         status:
           title: status
@@ -19406,6 +19401,7 @@ components:
           nullable: true
       title: EditableForm
       additionalProperties: false
+      description: primary interface for ana to render sandbox assets client side
     textql.rpc.public.cells.EditableFormStatus:
       type: string
       title: EditableFormStatus
@@ -19430,7 +19426,6 @@ components:
           format: int64
       title: EmailAttachment
       additionalProperties: false
-      description: EmailAttachment is delivered-attachment metadata surfaced to the frontend
     textql.rpc.public.cells.EmailCell:
       type: object
       properties:
@@ -19439,24 +19434,20 @@ components:
           items:
             type: string
           title: to
-          description: Inputs (set by the LLM at cell creation time)
         subject:
           type: string
           title: subject
         body:
           type: string
           title: body
-          description: markdown — rendered to HTML at send time
         recipients:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.EmailRecipient'
           title: recipients
-          description: Resolved recipients after internal-only enforcement
         status:
           type: string
           title: status
-          description: Result fields (populated by Execute) "sent" | "failed" | "blocked"
         sentAt:
           type: string
           title: sent_at
@@ -19472,26 +19463,14 @@ components:
         errorClass:
           type: string
           title: error_class
-          description: machine-readable error category
           nullable: true
         sentCount:
           type: integer
           title: sent_count
           format: int32
-          description: |-
-            Number of recipients to which the provider call succeeded during this
-             Execute pass. Not derivable from Status — a partial-failure cell has
-             Status=failed with sent_count > 0.
         renderedBodyHtml:
           type: string
           title: rendered_body_html
-          description: |-
-            The rendered HTML body of the email — exactly what landed in inboxes,
-             including the actor signature footer. The frontend's EmailCell renders
-             this verbatim via {@html ...} in its preview, so a viewer sees what
-             recipients saw without the FE having to repeat the render pipeline.
-             Already sanitized server-side (sanitizeEmailHTML) and self-contained
-             for inline use within the chat thread.
           nullable: true
         attachments:
           type: array
@@ -19500,25 +19479,19 @@ components:
           title: attachments
       title: EmailCell
       additionalProperties: false
-      description: |-
-        EmailCell is the agent's "send an email" output. It is an executable cell:
-         the LLM emits the input (to/subject/body) and the framework executes the
-         send, mutating the result fields. The cell renders as a transcript ("Email
-         sent to maya@acme.com at 2:14pm") with the body visible after the fact.
     textql.rpc.public.cells.EmailRecipient:
       type: object
       properties:
         address:
           type: string
           title: address
+          description: list | get
         class:
           type: string
           title: class
-          description: '"internal" or "external"'
         memberId:
           type: string
           title: member_id
-          description: populated when class == "internal"
           nullable: true
         displayName:
           type: string
@@ -19527,9 +19500,9 @@ components:
       title: EmailRecipient
       additionalProperties: false
       description: |-
-        EmailRecipient is one resolved recipient of an EmailCell. The frontend
-         renders these as chips; the backend uses the resolution to enforce the
-         internal-only policy at cell creation time.
+        ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
+         shows that the tool ran (and a count); connector detail goes to the LLM, never
+         to the browser, and never carries secrets.
     textql.rpc.public.cells.ExaSearchResult:
       type: object
       properties:
@@ -19596,6 +19569,7 @@ components:
         isActive:
           type: boolean
           title: is_active
+          description: '"human" or "bot"'
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
@@ -19674,7 +19648,6 @@ components:
         postTitle:
           type: string
           title: post_title
-          description: Parent post metadata
         postAuthor:
           type: string
           title: post_author
@@ -19696,6 +19669,7 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.cells.FeedAgentAction'
         agent:
           title: agent
+          description: '"all", "bots", or "humans"'
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.cells.FeedAgentInfo'
         errorMessage:
@@ -19748,7 +19722,6 @@ components:
         thingTitle:
           type: string
           title: thing_title
-          description: Title/preview of the post or comment that was voted on
       title: FeedEngageCell
       additionalProperties: false
     textql.rpc.public.cells.FeedExplorerCell:
@@ -19757,7 +19730,6 @@ components:
         operation:
           type: string
           title: operation
-          description: '"get_feed", "get_post", "get_comments"'
         postId:
           type: string
           title: post_id
@@ -19774,11 +19746,9 @@ components:
         result:
           type: string
           title: result
-          description: JSON-serialized result
         channelId:
           type: string
           title: channel_id
-          description: when set, get results for specific feed channel
           nullable: true
       title: FeedExplorerCell
       additionalProperties: false
@@ -19849,9 +19819,6 @@ components:
           title: new_value
       title: FieldChange
       additionalProperties: false
-      description: |-
-        Represents a before/after change to a field during an update.
-         Used by both PlaybookEditorCell and FeedCreateCell.
     textql.rpc.public.cells.FileReference:
       type: object
       properties:
@@ -19872,7 +19839,7 @@ components:
         action:
           type: string
           title: action
-          description: list | info | create | edit | view | update | test
+          description: input "inspect" | "render" | "execute"
         formId:
           type: string
           title: form_id
@@ -19880,17 +19847,16 @@ components:
         formType:
           type: string
           title: form_type
-          description: cached for inline display (e.g. "connector")
+          description: JSON-encoded map of param name → value
           nullable: true
         status:
           type: string
           title: status
-          description: cached submission status (draft|submitting|submitted|rejected)
           nullable: true
         testStatus:
           type: string
           title: test_status
-          description: cached test status (not_run|running|passed|failed)
+          description: result
           nullable: true
         name:
           type: string
@@ -19899,19 +19865,13 @@ components:
         approvalOutcome:
           type: string
           title: approval_outcome
-          description: 'ask_approval outcome once the user acts: submitted | submit_failed | rejected | changes_requested.'
           nullable: true
         testMessage:
           type: string
           title: test_message
-          description: this test's result message (shown by the test row)
           nullable: true
       title: FormCell
       additionalProperties: false
-      description: |-
-        FormCell is the v2 form editor cell. It only references a form_v5 row by id;
-         the frontend loads the full form via FormService (no chat-cell scanning). The
-         cached fields let the inline chat cell render without a round-trip.
     textql.rpc.public.cells.FormEditorAction:
       type: string
       title: FormEditorAction
@@ -20006,6 +19966,7 @@ components:
         contentType:
           type: string
           title: content_type
+          description: results
           nullable: true
         content:
           type: string
@@ -20050,6 +20011,9 @@ components:
           nullable: true
       title: GoogleDriveFile
       additionalProperties: false
+      description: |-
+        Represents a before/after change to a field during an update.
+         Used by both PlaybookEditorCell and FeedCreateCell.
     textql.rpc.public.cells.GoogleDriveSearchCell:
       type: object
       properties:
@@ -20072,6 +20036,7 @@ components:
           format: int32
       title: GoogleDriveSearchCell
       additionalProperties: false
+      description: Simplified playbook info for display in cells
     textql.rpc.public.cells.ImageCell:
       type: object
       properties:
@@ -20144,6 +20109,7 @@ components:
           title: stdout
       title: JavaScriptCell
       additionalProperties: false
+      description: Simplified report info for report history cell
     textql.rpc.public.cells.LinkedinSearchCell:
       type: object
       properties:
@@ -20175,27 +20141,28 @@ components:
         searchTerm:
           type: string
           title: search_term
-          description: create | edit
         appId:
           type: string
           title: app_id
+          description: '"sql" | "python"'
         totalCount:
           type: integer
           title: total_count
           format: int32
+          description: Produced dataframe name, if applicable
         errorMessage:
           type: string
           title: error_message
-          description: in-product viewer route
+          description: 'SQL only: connector ID; display name resolves client-side'
           nullable: true
         apps:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.AppInfo'
           title: apps
+          description: 'SQL only: referenced tables'
       title: ListAppsCell
       additionalProperties: false
-      description: 'create_design_system tool: authors/edits an org Data App design system.'
     textql.rpc.public.cells.ListDashboardsCell:
       type: object
       properties:
@@ -20205,7 +20172,6 @@ components:
         dashboardId:
           type: string
           title: dashboard_id
-          description: Set for single-dashboard lookup
         totalCount:
           type: integer
           title: total_count
@@ -20233,7 +20199,6 @@ components:
         userType:
           type: string
           title: user_type
-          description: '"all", "bots", or "humans"'
         totalCount:
           type: integer
           title: total_count
@@ -20431,14 +20396,12 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.cells.OntologyEditorStatus'
         listFilter:
           title: list_filter
-          description: For list operations
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.cells.OntologyEditorListFilter'
         listCount:
           type: integer
           title: list_count
           format: int32
-          description: Number of items returned by list operation
           nullable: true
         listObjects:
           type: array
@@ -20462,7 +20425,6 @@ components:
           title: list_metrics
         createdObject:
           title: created_object
-          description: For object operations
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyObject'
         createdAttributes:
@@ -20480,7 +20442,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyObject'
         createdAttribute:
           title: created_attribute
-          description: For attribute operations
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyAttribute'
         updatedAttribute:
@@ -20493,7 +20454,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyAttribute'
         createdLink:
           title: created_link
-          description: For link operations
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyRelation'
         updatedLink:
@@ -20506,7 +20466,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyRelation'
         createdMetric:
           title: created_metric
-          description: For metric operations
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.ontology.OntologyMetric'
         updatedMetric:
@@ -20671,14 +20630,12 @@ components:
         action:
           type: string
           title: action
-          description: input "inspect" | "render" | "execute"
         path:
           type: string
           title: path
         paramsJson:
           type: string
           title: params_json
-          description: JSON-encoded map of param name → value
         connectorId:
           type: integer
           title: connector_id
@@ -20689,7 +20646,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.OntologyQueryParam'
           title: declared_params
-          description: result
         sql:
           type: string
           title: sql
@@ -20707,7 +20663,6 @@ components:
         authRequired:
           type: boolean
           title: auth_required
-          description: auth hold
         authConnectorName:
           type: string
           title: auth_connector_name
@@ -20732,6 +20687,11 @@ components:
           nullable: true
       title: OntologyQueryCell
       additionalProperties: false
+      description: |-
+        UseSkillCell is the client projection of a `use_skill` auto-invoke. It
+         deliberately carries no body field: the skill's instructions are LLM-facing
+         prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
+         the transcript. The frontend renders provenance only ("Using skill /trigger").
     textql.rpc.public.cells.OntologyQueryParam:
       type: object
       properties:
@@ -20788,11 +20748,16 @@ components:
         email:
           type: string
           title: email
+          description: list | info | create | edit | view | update | test
         name:
           type: string
           title: name
       title: OrgMemberRef
       additionalProperties: false
+      description: |-
+        FormCell is the v2 form editor cell. It only references a form_v5 row by id;
+         the frontend loads the full form via FormService (no chat-cell scanning). The
+         cached fields let the inline chat cell render without a round-trip.
     textql.rpc.public.cells.PatchCell:
       type: object
       properties:
@@ -20802,10 +20767,12 @@ components:
         description:
           type: string
           title: description
+          description: '"internal" or "external"'
         number:
           type: integer
           title: number
           format: int32
+          description: populated when class == "internal"
         hasConflicts:
           type: boolean
           title: has_conflicts
@@ -20834,6 +20801,10 @@ components:
           title: auto_approved_rule_directory
       title: PatchCell
       additionalProperties: false
+      description: |-
+        EmailRecipient is one resolved recipient of an EmailCell. The frontend
+         renders these as chips; the backend uses the resolution to enforce the
+         internal-only policy at cell creation time.
     textql.rpc.public.cells.PlaybookEditorAction:
       type: string
       title: PlaybookEditorAction
@@ -20855,7 +20826,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.PlaybookInfo'
           title: playbooks
-          description: results
         errorMessage:
           type: string
           title: error_message
@@ -20960,7 +20930,6 @@ components:
           type: integer
           title: connector_id
           format: int32
-          description: 'Deprecated: use connector_ids instead'
           nullable: true
           deprecated: true
         paradigmType:
@@ -20991,7 +20960,6 @@ components:
           title: tagged_teams_user_aad_ids
       title: PlaybookInfo
       additionalProperties: false
-      description: Simplified playbook info for display in cells
     textql.rpc.public.cells.PlaybookReportStyleLight:
       type: string
       title: PlaybookReportStyleLight
@@ -21081,6 +21049,7 @@ components:
         imageBase64:
           type: string
           title: image_base64
+          description: optional, only present for blocks with images
       title: PowerBIMessageBlock
       additionalProperties: false
     textql.rpc.public.cells.PreviewCell:
@@ -21092,7 +21061,6 @@ components:
         previewType:
           type: string
           title: preview_type
-          description: '"image", "table", "pdf", "html", "dataframe", "download"'
         name:
           type: string
           title: name
@@ -21110,7 +21078,6 @@ components:
           nullable: true
       title: PreviewCell
       additionalProperties: false
-      description: primary interface for ana to render sandbox assets client side
     textql.rpc.public.cells.PreviewCellRef:
       type: object
       properties:
@@ -21129,7 +21096,6 @@ components:
           nullable: true
       title: PreviewCellRef
       additionalProperties: false
-      description: Preview cell reference for report history
     textql.rpc.public.cells.PythonCell:
       type: object
       properties:
@@ -21210,24 +21176,22 @@ components:
           items:
             type: string
           title: selected
-          description: chosen option names
         custom:
           type: string
           title: custom
-          description: free-text entered for the "Other" option
+          description: short gray subtitle, max one line
           nullable: true
         inputs:
           type: array
           items:
             type: string
           title: inputs
-          description: value per input (sensitive values blanked in the broadcast)
+          description: longer hover tooltip
         provided:
           type: array
           items:
             type: boolean
           title: provided
-          description: 'per input: was it filled? lets the summary show provided/empty for sensitive inputs without their value'
       title: QuestionAnswer
       additionalProperties: false
     textql.rpc.public.cells.QuestionInput:
@@ -21246,14 +21210,13 @@ components:
         sensitive:
           type: boolean
           title: sensitive
-          description: 'formfield inputs: the value is never shown to the agent'
         formPathLabel:
           type: string
           title: form_path_label
-          description: pretty destination path, for the user to verify
           nullable: true
       title: QuestionInput
       additionalProperties: false
+      description: EmailAttachment is delivered-attachment metadata surfaced to the frontend
     textql.rpc.public.cells.QuestionInputKind:
       type: string
       title: QuestionInputKind
@@ -21276,18 +21239,23 @@ components:
         name:
           type: string
           title: name
+          description: Inputs (set by the LLM at cell creation time)
         description:
           type: string
           title: description
-          description: short gray subtitle, max one line
           nullable: true
         explanation:
           type: string
           title: explanation
-          description: longer hover tooltip
+          description: markdown — rendered to HTML at send time
           nullable: true
       title: QuestionOption
       additionalProperties: false
+      description: |-
+        EmailCell is the agent's "send an email" output. It is an executable cell:
+         the LLM emits the input (to/subject/body) and the framework executes the
+         send, mutating the result fields. The cell renders as a transcript ("Email
+         sent to maya@acme.com at 2:14pm") with the body visible after the fact.
     textql.rpc.public.cells.QuestionSpec:
       type: object
       properties:
@@ -21306,17 +21274,14 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionOption'
           title: options
-          description: choice / multichoice
         allowCustom:
           type: boolean
           title: allow_custom
-          description: adds a free-text "Other" option
         inputs:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionInput'
           title: inputs
-          description: inputs
       title: QuestionSpec
       additionalProperties: false
     textql.rpc.public.cells.QuestionsCell:
@@ -21335,18 +21300,13 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.cells.QuestionAnswer'
           title: answers
-          description: prefill (pending) / summary (answered); sensitive values blanked
         answeredCount:
           type: integer
           title: answered_count
           format: int32
+          description: 'formfield inputs: the value is never shown to the agent'
       title: QuestionsCell
       additionalProperties: false
-      description: |-
-        QuestionsCell is the agent's "ask the user structured questions" tool. It is a
-         haltable cell: the agent pauses until the user submits or dismisses inline.
-         On submit the answers go to the agent; on dismiss only the answered count does
-         and the agent waits for the user's next message (the dismissal reason).
     textql.rpc.public.cells.QuestionsStatus:
       type: string
       title: QuestionsStatus
@@ -21438,7 +21398,6 @@ components:
           title: html_preview
       title: ReportHistoryInfo
       additionalProperties: false
-      description: Simplified report info for report history cell
     textql.rpc.public.cells.SQLCell:
       type: object
       properties:
@@ -21524,6 +21483,7 @@ components:
           title: name
       title: SlackUserRef
       additionalProperties: false
+      description: Reference types for context data
     textql.rpc.public.cells.StatusCell:
       type: object
       properties:
@@ -21532,7 +21492,6 @@ components:
           title: status
       title: StatusCell
       additionalProperties: false
-      description: 'Deprecated: use tool_summary on Cell instead.'
     textql.rpc.public.cells.StreamlitCell:
       type: object
       properties:
@@ -21576,11 +21535,14 @@ components:
         detached:
           type: boolean
           title: detached
+          description: choice / multichoice
         childChatId:
           type: string
           title: child_chat_id
+          description: adds a free-text "Other" option
         status:
           title: status
+          description: inputs
           $ref: '#/components/schemas/textql.rpc.public.cells.SubagentRunStatus'
         finalMessage:
           type: string
@@ -21636,6 +21598,7 @@ components:
         datasetId:
           type: string
           title: dataset_id
+          description: '"get_feed", "get_post", "get_comments"'
         messageBlocks:
           type: array
           items:
@@ -21652,11 +21615,9 @@ components:
         imageBase64:
           type: string
           title: image_base64
-          description: optional, only present for blocks with images
         pdfBase64:
           type: string
           title: pdf_base64
-          description: optional, only present for blocks with PDFs
       title: TableauMessageBlock
       additionalProperties: false
     textql.rpc.public.cells.TableauSQLCell:
@@ -21676,6 +21637,7 @@ components:
           title: dataframe_preview
       title: TableauSQLCell
       additionalProperties: false
+      description: 'Deprecated: use tool_summary on Cell instead.'
     textql.rpc.public.cells.TableauSearchFieldsCell:
       type: object
       properties:
@@ -21786,11 +21748,6 @@ components:
           title: ok
       title: UseSkillCell
       additionalProperties: false
-      description: |-
-        UseSkillCell is the client projection of a `use_skill` auto-invoke. It
-         deliberately carries no body field: the skill's instructions are LLM-facing
-         prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
-         the transcript. The frontend renders provenance only ("Using skill /trigger").
     textql.rpc.public.cells.WebSearchCell:
       type: object
       properties:

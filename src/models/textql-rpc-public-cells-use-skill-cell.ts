@@ -8,14 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * UseSkillCell is the client projection of a `use_skill` auto-invoke. It
- *
- * @remarks
- *  deliberately carries no body field: the skill's instructions are LLM-facing
- *  prompt scaffolding (see compute/pkg/chat/cells/use_skill.go), never sent to
- *  the transcript. The frontend renders provenance only ("Using skill /trigger").
- */
 export type TextqlRpcPublicCellsUseSkillCell = {
   trigger?: string | undefined;
   name?: string | undefined;

@@ -14,9 +14,6 @@ import {
 
 export type TextqlRpcPublicCellsListUsersCell = {
   searchTerm?: string | undefined;
-  /**
-   * "all", "bots", or "humans"
-   */
   userType?: string | undefined;
   totalCount?: number | undefined;
   sandboxAvailable?: boolean | undefined;

@@ -16,6 +16,9 @@ import {
   TextqlRpcPublicCellsEditableFormStatus$inboundSchema,
 } from "./textql-rpc-public-cells-editable-form-status.js";
 
+/**
+ * primary interface for ana to render sandbox assets client side
+ */
 export type TextqlRpcPublicCellsEditableForm = {
   formName?: string | undefined;
   /**

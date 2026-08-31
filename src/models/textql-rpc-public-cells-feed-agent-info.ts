@@ -20,6 +20,9 @@ export type TextqlRpcPublicCellsFeedAgentInfo = {
   id?: string | undefined;
   name?: string | undefined;
   prompt?: string | undefined;
+  /**
+   * "human" or "bot"
+   */
   isActive?: boolean | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

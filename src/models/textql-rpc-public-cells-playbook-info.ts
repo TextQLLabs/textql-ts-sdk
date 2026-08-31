@@ -24,9 +24,6 @@ import {
   TextqlRpcPublicDatasetDataset$inboundSchema,
 } from "./textql-rpc-public-dataset-dataset.js";
 
-/**
- * Simplified playbook info for display in cells
- */
 export type TextqlRpcPublicCellsPlaybookInfo = {
   id?: string | undefined;
   name?: string | undefined;
@@ -231,8 +228,6 @@ export type TextqlRpcPublicCellsPlaybookInfo = {
    */
   status?: TextqlRpcPublicCellsPlaybookStatusLight | undefined;
   /**
-   * Deprecated: use connector_ids instead
-   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   connectorId?: number | null | undefined;
