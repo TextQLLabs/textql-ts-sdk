@@ -350,7 +350,6 @@ run();
 * [getCustomTopicThreads](docs/sdks/observability/README.md#getcustomtopicthreads) - GetCustomTopicThreads
 * [getEngagementSpectrum](docs/sdks/observability/README.md#getengagementspectrum) - GetEngagementSpectrum
 * [getMemberActivity](docs/sdks/observability/README.md#getmemberactivity) - GetMemberActivity
-* [getMemberSignalTrend](docs/sdks/observability/README.md#getmembersignaltrend) - GetMemberSignalTrend
 * [getObservabilityStats](docs/sdks/observability/README.md#getobservabilitystats) - GetObservabilityStats
 * [getThreadWarnings](docs/sdks/observability/README.md#getthreadwarnings) - GetThreadWarnings
 * [listCustomTopics](docs/sdks/observability/README.md#listcustomtopics) - ListCustomTopics
@@ -817,7 +816,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`observabilityGetCustomTopicThreads`](docs/sdks/observability/README.md#getcustomtopicthreads) - GetCustomTopicThreads
 - [`observabilityGetEngagementSpectrum`](docs/sdks/observability/README.md#getengagementspectrum) - GetEngagementSpectrum
 - [`observabilityGetMemberActivity`](docs/sdks/observability/README.md#getmemberactivity) - GetMemberActivity
-- [`observabilityGetMemberSignalTrend`](docs/sdks/observability/README.md#getmembersignaltrend) - GetMemberSignalTrend
 - [`observabilityGetObservabilityStats`](docs/sdks/observability/README.md#getobservabilitystats) - GetObservabilityStats
 - [`observabilityGetThreadWarnings`](docs/sdks/observability/README.md#getthreadwarnings) - GetThreadWarnings
 - [`observabilityListCustomTopics`](docs/sdks/observability/README.md#listcustomtopics) - ListCustomTopics
