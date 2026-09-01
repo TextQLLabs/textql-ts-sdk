@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.796.2
   generationVersion: 2.933.0
-  releaseVersion: 1.4.27
-  configChecksum: 26bb463283fccd9825d345e6359a3401
+  releaseVersion: 1.4.28
+  configChecksum: 5cf9a41e0fed62b67446c8ee5cc608dd
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 6aa817fc-79c0-40f3-acd6-11c9b0033acb
-  pristine_commit_hash: 9785f7edb4934427e5d721581c7ca5fa2af5163a
-  pristine_tree_hash: 5a0950a6de3514063fa20e6dae852444d33b41ad
+  generation_id: a2983cf0-8cd5-4a65-b146-27655a67a1f3
+  pristine_commit_hash: 8415c31f6e8db0642ef400953307ef931cb66d1f
+  pristine_tree_hash: 782c31b414b88ba89254de36ca1384af61355ce6
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -9824,12 +9824,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:ad9c0ac617f855e058a599db9a7c0ac75899a259
-    pristine_git_object: ab1161a55f79ff890e25b36e47ebcbaf00874e3e
+    last_write_checksum: sha1:deb777f2cf514b625c365f035ab97edb6ae0b438
+    pristine_git_object: 934ca4a4c8b1f7993dad42a283f4fc49181d0808
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:5729c8c86d866b10cdca34dc43391ee640212474
-    pristine_git_object: d8c90144db410c9fa3dd6994617fd2e06b8af244
+    last_write_checksum: sha1:4d87011ea9c9b3289a40a364a4ec29daab685bcc
+    pristine_git_object: c14a66704c9a06274819f9f25b359010bb18a88f
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11488,8 +11488,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:366470ca2a4186a8f5d1006211b5633c517f9f4c
-    pristine_git_object: 8b28b564c39d7f443289522302e99779f4fb6d50
+    last_write_checksum: sha1:99bdfed7611b6bc62dea214f8bd1c20b1b16dc68
+    pristine_git_object: a1dd3c1655a29f88893ff587c84a82356c221e57
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -24454,6 +24454,3 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `textql.observability.getMemberSignalTrend()`: **Removed** (Breaking ⚠️)
