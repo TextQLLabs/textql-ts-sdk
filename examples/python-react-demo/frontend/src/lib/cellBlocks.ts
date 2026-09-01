@@ -22,12 +22,12 @@ export type Block =
 	| { kind: 'image'; url: string; alt?: string }
 	| { kind: 'list'; label?: string; items: { title: string; subtitle?: string; href?: string }[] }
 	| {
-			kind: 'table';
-			label?: string;
-			caption?: string;
-			columns: string[];
-			rows: string[][];
-	  };
+		kind: 'table';
+		label?: string;
+		caption?: string;
+		columns: string[];
+		rows: string[][];
+	};
 
 function num(value: unknown): string {
 	if (typeof value === 'number') return String(value);
@@ -41,8 +41,11 @@ function humanizeEnum(value: unknown): string {
 	return titleCase(text.toLowerCase());
 }
 
+const RAW_ONLY_BYTES = 64_000;
+
 function prettyJson(value: unknown): string {
 	if (typeof value === 'string') {
+		if (value.length > RAW_ONLY_BYTES) return value;
 		try {
 			return JSON.stringify(JSON.parse(value), null, 2);
 		} catch {
@@ -93,7 +96,11 @@ function md(blocks: Block[], label: string, value: unknown) {
 }
 
 function code(blocks: Block[], label: string, value: unknown, lang?: string) {
-	if (str(value)) blocks.push({ kind: 'code', label: label || undefined, text: str(value), lang });
+	const raw = str(value);
+	if (!raw) return;
+	// Clearing `lang` is what routes BlockCell to its plain <pre> branch.
+	const safeLang = raw.length > RAW_ONLY_BYTES ? undefined : lang;
+	blocks.push({ kind: 'code', label: label || undefined, text: raw, lang: safeLang });
 }
 
 /** A dataframe preview as a real table, or the raw text when it isn't one. */

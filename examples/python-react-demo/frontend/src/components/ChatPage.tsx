@@ -195,9 +195,32 @@ export function ChatPage() {
 	// re-rendering off a mutated array would miss snapshots.
 	const messagesRef = useRef<Message[]>([]);
 
+	const publishFrame = useRef(0);
+
 	const publishMessages = useCallback(() => {
+		if (publishFrame.current) {
+			cancelAnimationFrame(publishFrame.current);
+			publishFrame.current = 0;
+		}
 		setMessages([...messagesRef.current]);
 	}, []);
+
+	// SSE callbacks only — terminal publishes need publishMessages, since rAF is
+	// paused in a hidden tab and the end of a run still has to land.
+	const publishStreamFrame = useCallback(() => {
+		if (publishFrame.current) return;
+		publishFrame.current = requestAnimationFrame(() => {
+			publishFrame.current = 0;
+			setMessages([...messagesRef.current]);
+		});
+	}, []);
+
+	useEffect(
+		() => () => {
+			if (publishFrame.current) cancelAnimationFrame(publishFrame.current);
+		},
+		[]
+	);
 
 	// Refreshed after every run, so the spinner and the error state are reserved
 	// for the first load — swapping a populated list out mid-chat reads as a
@@ -401,7 +424,7 @@ export function ChatPage() {
 				onEvent: (event) => {
 					if (activeRequest.current !== request) return;
 					applyEvent(event, targetId);
-					publishMessages();
+					publishStreamFrame();
 				}
 			});
 		} catch {
@@ -475,7 +498,7 @@ export function ChatPage() {
 				onEvent: (event) => {
 					if (activeRequest.current !== request) return;
 					applyEvent(event, assistantId);
-					publishMessages();
+					publishStreamFrame();
 				}
 			});
 		} catch (error) {
@@ -557,7 +580,7 @@ export function ChatPage() {
 
 	function newThread() {
 		// Best-effort: the new thread opens either way.
-		if (chatId) void closeChat(chatId).catch(() => {});
+		if (chatId) void closeChat(chatId).catch(() => { });
 		if (isMobileSidebar()) setSidebarOpen(false);
 		if (routeId) {
 			navigate('/');
@@ -782,182 +805,182 @@ export function ChatPage() {
 					<ThreadsPage />
 				</div>
 			) : (
-			<div
-				className={cx(
-					// `workspace` stays a plain class: PreviewPanel's resize handler
-					// finds this element with `closest('.workspace')`, and it sizes the
-					// panel through the `--preview-panel-width` custom property below.
-					'workspace col-start-2 row-start-1 flex h-full min-h-0 min-w-0 max-[780px]:h-dvh',
-					'[&_.preview-panel]:h-full [&_.preview-panel]:min-h-0 [&_.preview-panel]:w-[var(--preview-panel-width,420px)] [&_.preview-panel]:min-w-0 [&_.preview-panel]:flex-none',
-					// Narrow viewports stack the preview under the chat instead.
-					panel.open &&
-					'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
-					panel.resizing && 'cursor-col-resize'
-				)}
-				style={{ ['--preview-panel-width' as string]: `${panel.width}px` }}
-			>
-				<main
+				<div
 					className={cx(
-						'relative min-h-0 min-w-0 flex-auto bg-paper max-[780px]:h-dvh',
-						showNewChat || chatLoadError || chatPending
-							? 'grid grid-rows-[auto_minmax(0,1fr)]'
-							: 'grid grid-rows-[auto_minmax(0,1fr)_auto]',
-						panel.resizing && 'pointer-events-none contain-layout contain-style'
+						// `workspace` stays a plain class: PreviewPanel's resize handler
+						// finds this element with `closest('.workspace')`, and it sizes the
+						// panel through the `--preview-panel-width` custom property below.
+						'workspace col-start-2 row-start-1 flex h-full min-h-0 min-w-0 max-[780px]:h-dvh',
+						'[&_.preview-panel]:h-full [&_.preview-panel]:min-h-0 [&_.preview-panel]:w-[var(--preview-panel-width,420px)] [&_.preview-panel]:min-w-0 [&_.preview-panel]:flex-none',
+						// Narrow viewports stack the preview under the chat instead.
+						panel.open &&
+						'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
+						panel.resizing && 'cursor-col-resize'
 					)}
+					style={{ ['--preview-panel-width' as string]: `${panel.width}px` }}
 				>
-					{!sidebarOpen && (
-						/* Desktop uses the collapsed icon rail, so the floating open/new
-						   buttons are only needed on the mobile drawer layout. */
-						<div className={cx(PANEL_OVERLAYS, 'left-3 max-[780px]:flex min-[781px]:hidden')}>
-							<button
-								type="button"
-								className={cx(ICON_GHOST, OVERLAY_SURFACE)}
-								aria-label="Open sidebar"
-								onClick={() => setSidebarOpen(true)}
-							>
-								<PanelLeft size={16} strokeWidth={1.75} />
-							</button>
-							<button
-								type="button"
-								className={cx(NEW_CHAT_BTN, OVERLAY_SURFACE, 'max-w-[140px] flex-initial')}
-								onClick={newThread}
-							>
-								<Plus size={15} strokeWidth={2} />
-								<span>New chat</span>
-							</button>
-						</div>
-					)}
-
-					{/* Sits in the grid rather than the floating overlays, so a long title
-					    truncates against the panel instead of running under them. */}
-					<header className="flex h-9 min-w-0 items-center pt-1.5 pr-3 pl-4 max-[560px]:pl-3.5">
-						<h1
-							className={cx(
-								'm-0 min-w-0 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-text-3',
-								// The mobile drawer's floating "New chat" pill owns this corner.
-								!sidebarOpen && 'max-[780px]:hidden'
-							)}
-						>
-							{activeChatTitle}
-						</h1>
-					</header>
-
-					<div className={cx(PANEL_OVERLAYS, 'right-3 flex')}>
-						{hasAssets && !panel.open && (
-							<button
-								type="button"
-								className={cx(ICON_GHOST, OVERLAY_SURFACE, 'm-0')}
-								aria-label="Open preview panel"
-								title={`Preview (${chatAssets.length})`}
-								onClick={openAssetsPanel}
-							>
-								<PanelRight size={16} strokeWidth={1.75} />
-							</button>
+					<main
+						className={cx(
+							'relative min-h-0 min-w-0 flex-auto bg-paper max-[780px]:h-dvh',
+							showNewChat || chatLoadError || chatPending
+								? 'grid grid-rows-[auto_minmax(0,1fr)]'
+								: 'grid grid-rows-[auto_minmax(0,1fr)_auto]',
+							panel.resizing && 'pointer-events-none contain-layout contain-style'
 						)}
-					</div>
-
-					{chatPending ? (
-						<section className={CHAT_STATUS} aria-label="Loading chat" aria-busy="true">
-							<UnicodeSpinner label="Loading chat" />
-							<p className={CHAT_STATUS_TEXT}>Loading chat…</p>
-						</section>
-					) : chatLoadError ? (
-						<section className={CHAT_STATUS} aria-label="Chat load error">
-							<p className={CHAT_STATUS_TEXT}>{chatLoadError}</p>
-							<div className="flex flex-wrap justify-center gap-1">
+					>
+						{!sidebarOpen && (
+							/* Desktop uses the collapsed icon rail, so the floating open/new
+							   buttons are only needed on the mobile drawer layout. */
+							<div className={cx(PANEL_OVERLAYS, 'left-3 max-[780px]:flex min-[781px]:hidden')}>
 								<button
 									type="button"
-									className={cx(RETRY_BTN, 'm-2')}
-									onClick={() => chatId && void loadChat(chatId)}
+									className={cx(ICON_GHOST, OVERLAY_SURFACE)}
+									aria-label="Open sidebar"
+									onClick={() => setSidebarOpen(true)}
 								>
-									Retry
+									<PanelLeft size={16} strokeWidth={1.75} />
 								</button>
-								<button type="button" className={cx(RETRY_BTN, 'm-2')} onClick={newThread}>
-									New chat
+								<button
+									type="button"
+									className={cx(NEW_CHAT_BTN, OVERLAY_SURFACE, 'max-w-[140px] flex-initial')}
+									onClick={newThread}
+								>
+									<Plus size={15} strokeWidth={2} />
+									<span>New chat</span>
 								</button>
 							</div>
-						</section>
-					) : showNewChat ? (
-						<section
-							className="flex min-h-0 flex-col items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5"
-							aria-label="New chat"
-						>
-							<Composer {...composerProps} />
-						</section>
-					) : (
-						<>
-							<section
-								ref={conversationRef}
-								className="min-h-0 overflow-y-auto"
-								aria-label="Chat messages"
-								aria-live="polite"
-								onScroll={onConversationScroll}
+						)}
+
+						{/* Sits in the grid rather than the floating overlays, so a long title
+					    truncates against the panel instead of running under them. */}
+						<header className="flex h-9 min-w-0 items-center pt-1.5 pr-3 pl-4 max-[560px]:pl-3.5">
+							<h1
+								className={cx(
+									'm-0 min-w-0 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-text-3',
+									// The mobile drawer's floating "New chat" pill owns this corner.
+									!sidebarOpen && 'max-[780px]:hidden'
+								)}
 							>
-								<div
-									className={cx(
-										// Generous tail so the last message can scroll up toward
-										// center, well clear of the composer.
-										'mx-auto w-[min(720px,calc(100%-48px))] pt-2 pb-[28vh] max-[560px]:w-[calc(100%-28px)]',
-										!sidebarOpen && 'max-[780px]:pt-11'
-									)}
+								{activeChatTitle}
+							</h1>
+						</header>
+
+						<div className={cx(PANEL_OVERLAYS, 'right-3 flex')}>
+							{hasAssets && !panel.open && (
+								<button
+									type="button"
+									className={cx(ICON_GHOST, OVERLAY_SURFACE, 'm-0')}
+									aria-label="Open preview panel"
+									title={`Preview (${chatAssets.length})`}
+									onClick={openAssetsPanel}
 								>
-									<div className="flex flex-col items-stretch gap-4">
-										{messages.map((message) => (
-											<article
-												key={message.id}
-												className={cx(
-													'flex max-w-full flex-col',
-													message.role === 'you'
-														? 'w-full gap-1.5'
-														: 'w-full gap-2 border-0 bg-transparent px-0 py-0.5 [&_.streaming-indicator]:mt-1.5 [&_.streaming-indicator]:inline-block'
-												)}
-											>
-												{message.role === 'assistant' ? (
-													<>
-														<span className="text-[12px] font-medium text-accent">Assistant</span>
-														{message.cells && message.cells.length > 0 ? (
-															<ToolSequence
-																cells={message.cells}
-																streaming={message.streaming ?? false}
-																onAnswered={handleHaltResolved}
-															/>
-														) : message.body ? (
-															<p className={MESSAGE_BODY}>{message.body}</p>
-														) : message.streaming ? (
-															<UnicodeSpinner
-																className="streaming-indicator"
-																label="Waiting for response"
-															/>
-														) : null}
-													</>
-												) : message.body ? (
-													<>
-														<span
-															className="min-w-0 truncate text-[12px] font-medium text-text-3"
-															title={memberEmail ?? undefined}
-														>
-															{memberEmail ?? 'You'}
-														</span>
-														<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
-															<p className={MESSAGE_BODY_YOU}>{message.body}</p>
-														</div>
-													</>
-												) : null}
-											</article>
-										))}
-									</div>
+									<PanelRight size={16} strokeWidth={1.75} />
+								</button>
+							)}
+						</div>
+
+						{chatPending ? (
+							<section className={CHAT_STATUS} aria-label="Loading chat" aria-busy="true">
+								<UnicodeSpinner label="Loading chat" />
+								<p className={CHAT_STATUS_TEXT}>Loading chat…</p>
+							</section>
+						) : chatLoadError ? (
+							<section className={CHAT_STATUS} aria-label="Chat load error">
+								<p className={CHAT_STATUS_TEXT}>{chatLoadError}</p>
+								<div className="flex flex-wrap justify-center gap-1">
+									<button
+										type="button"
+										className={cx(RETRY_BTN, 'm-2')}
+										onClick={() => chatId && void loadChat(chatId)}
+									>
+										Retry
+									</button>
+									<button type="button" className={cx(RETRY_BTN, 'm-2')} onClick={newThread}>
+										New chat
+									</button>
 								</div>
 							</section>
+						) : showNewChat ? (
+							<section
+								className="flex min-h-0 flex-col items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5"
+								aria-label="New chat"
+							>
+								<Composer {...composerProps} />
+							</section>
+						) : (
+							<>
+								<section
+									ref={conversationRef}
+									className="min-h-0 overflow-y-auto"
+									aria-label="Chat messages"
+									aria-live="polite"
+									onScroll={onConversationScroll}
+								>
+									<div
+										className={cx(
+											// Generous tail so the last message can scroll up toward
+											// center, well clear of the composer.
+											'mx-auto w-[min(720px,calc(100%-48px))] pt-2 pb-[28vh] max-[560px]:w-[calc(100%-28px)]',
+											!sidebarOpen && 'max-[780px]:pt-11'
+										)}
+									>
+										<div className="flex flex-col items-stretch gap-4">
+											{messages.map((message) => (
+												<article
+													key={message.id}
+													className={cx(
+														'flex max-w-full flex-col',
+														message.role === 'you'
+															? 'w-full gap-1.5'
+															: 'w-full gap-2 border-0 bg-transparent px-0 py-0.5 [&_.streaming-indicator]:mt-1.5 [&_.streaming-indicator]:inline-block'
+													)}
+												>
+													{message.role === 'assistant' ? (
+														<>
+															<span className="text-[12px] font-medium text-accent">Assistant</span>
+															{message.cells && message.cells.length > 0 ? (
+																<ToolSequence
+																	cells={message.cells}
+																	streaming={message.streaming ?? false}
+																	onAnswered={handleHaltResolved}
+																/>
+															) : message.body ? (
+																<p className={MESSAGE_BODY}>{message.body}</p>
+															) : message.streaming ? (
+																<UnicodeSpinner
+																	className="streaming-indicator"
+																	label="Waiting for response"
+																/>
+															) : null}
+														</>
+													) : message.body ? (
+														<>
+															<span
+																className="min-w-0 truncate text-[12px] font-medium text-text-3"
+																title={memberEmail ?? undefined}
+															>
+																{memberEmail ?? 'You'}
+															</span>
+															<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
+																<p className={MESSAGE_BODY_YOU}>{message.body}</p>
+															</div>
+														</>
+													) : null}
+												</article>
+											))}
+										</div>
+									</div>
+								</section>
 
-							<footer className="flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5">
-								<Composer {...composerProps} docked />
-							</footer>
-						</>
-					)}
-				</main>
+								<footer className="flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5">
+									<Composer {...composerProps} docked />
+								</footer>
+							</>
+						)}
+					</main>
 
-				{panel.open && <PreviewPanel />}
-			</div>
+					{panel.open && <PreviewPanel />}
+				</div>
 			)}
 		</div>
 	);
