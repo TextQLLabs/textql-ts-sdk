@@ -56,18 +56,32 @@ _SSE_HEADERS = {
     "X-Accel-Buffering": "no",
 }
 
-# The demo org's connector, overridable so a fresh install can point elsewhere.
-_FALLBACK_CONNECTOR_IDS = "57"
+_FALLBACK_USERCONTENT_HOST = "textqlusercontent.com"
+_FALLBACK_APP_HOST = "app.textql.com"
+
+
+def _usercontent_host() -> str:
+    """Read per call: .env loads after this import."""
+    return os.getenv("VITE_USERCONTENT_HOST") or _FALLBACK_USERCONTENT_HOST
+
+
+def _app_host() -> str:
+    return os.getenv("VITE_APP_HOST") or _FALLBACK_APP_HOST
 
 
 def _default_connector_ids() -> list[int]:
-    """`TEXTQL_CONNECTOR_IDS` as ints. Read per call: .env loads after this import."""
-    raw = os.getenv("TEXTQL_CONNECTOR_IDS") or _FALLBACK_CONNECTOR_IDS
+    """`TEXTQL_CONNECTOR_IDS` as ints, or empty to let create_chat ask the org.
+
+    Read per call: .env loads after this import.
+    """
+    raw = os.getenv("TEXTQL_CONNECTOR_IDS")
+    if not raw:
+        return []
     try:
         return [int(part) for part in raw.split(",") if part.strip()]
     except ValueError:
         logger.warning("[config] ignoring malformed TEXTQL_CONNECTOR_IDS=%r", raw)
-        return [int(_FALLBACK_CONNECTOR_IDS)]
+        return []
 
 
 # `type` names the oneof case the way the payload key is spelled in the JSON
@@ -410,6 +424,23 @@ def _proto_ts(value: Any) -> Optional[str]:
     return value.ToDatetime(tzinfo=timezone.utc).isoformat()
 
 
+async def _first_connector_id() -> list[int]:
+    """The org's first connector, for a request that named none.
+
+    A chat's paradigm is fixed at creation and one with no connector fails every
+    run, so guessing beats failing a turn later. The frontend picks explicitly;
+    this is for a bare `POST /chats`.
+    """
+    connectors = _get_connectors_client()
+    resp = await connectors.get_connectors(GetConnectorsRequest())
+    if not resp.connectors:
+        raise HTTPException(
+            status_code=400,
+            detail="This org has no connectors, so a chat cannot be created.",
+        )
+    return [resp.connectors[0].id]
+
+
 @router.get("/connectors", response_model=ListConnectorsResponse)
 async def list_connectors():
     """The org's connectors, for the composer's connector picker.
@@ -681,6 +712,9 @@ async def create_chat(body: CreateChatRequest = CreateChatRequest()):
         body.model, body.connector_ids, body.sql_enabled, body.python_enabled,
     )
     sdk = _get_sdk()
+    if not body.connector_ids:
+        body.connector_ids = await _first_connector_id()
+        logger.info("[create_chat] defaulted connector_ids=%s", body.connector_ids)
     paradigm = _build_paradigm(body)
     result = _unwrap(
         await sdk.chats.create_chat_async(model=body.model, paradigm=paradigm), "create_chat"
@@ -790,10 +824,6 @@ async def close_chat(chat_id: str = Path(..., description="Chat ID to close")):
     logger.info("[close_chat] client closed | chat_id=%s", chat_id)
     return {"chat_id": chat_id, "status": "closed_client_side"}
 
-
-_USERCONTENT_HOST = "textqlusercontent.com"
-_APP_HOST = "app.textql.com"
-
 # Mirrors frontend/src/lib/chartFitShim.ts — charts are measured in the iframe
 # and posted out so the panel can scale them to fit.
 _CHART_FIT_SHIM = """
@@ -814,10 +844,11 @@ _DROPPED_HEADERS = {
 
 
 def _is_allowed_preview_host(hostname: str) -> bool:
+    usercontent = _usercontent_host()
     return (
-        hostname == _USERCONTENT_HOST
-        or hostname.endswith(f".{_USERCONTENT_HOST}")
-        or hostname == _APP_HOST
+        hostname == usercontent
+        or hostname.endswith(f".{usercontent}")
+        or hostname == _app_host()
     )
 
 

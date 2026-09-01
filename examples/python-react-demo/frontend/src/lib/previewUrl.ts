@@ -8,8 +8,11 @@
 
 export const PREVIEW_PROXY_PATH = '/v3/textql/preview-proxy';
 
-const USERCONTENT_HOST = 'textqlusercontent.com';
-const APP_HOST = 'app.textql.com';
+// From the demo root .env, the same file the backend reads. The VITE_ prefix is
+// what makes a variable public: Vite exposes only those, so the API key sharing
+// that file cannot reach the browser.
+const usercontentHost = import.meta.env.VITE_USERCONTENT_HOST || 'textqlusercontent.com';
+const appHost = import.meta.env.VITE_APP_HOST || 'app.textql.com';
 
 const PROXY_PREFIXES = [
 	'/asset/proxy/',
@@ -19,7 +22,7 @@ const PROXY_PREFIXES = [
 ];
 
 function isUserContentHost(hostname: string): boolean {
-	return hostname === USERCONTENT_HOST || hostname.endsWith(`.${USERCONTENT_HOST}`);
+	return hostname === usercontentHost || hostname.endsWith(`.${usercontentHost}`);
 }
 
 function pathIsProxied(pathname: string): boolean {
@@ -45,8 +48,8 @@ export function toEmbeddablePreviewUrl(url: string | null | undefined): string |
 		if (parsed.origin === localOrigin) {
 			if (pathIsProxied(parsed.pathname)) {
 				const upstreamOrigin = parsed.pathname.startsWith('/sandbox/proxy')
-					? `https://${APP_HOST}`
-					: `https://${USERCONTENT_HOST}`;
+					? `https://${appHost}`
+					: `https://${usercontentHost}`;
 				return proxyUrl(`${upstreamOrigin}${pathWithQuery}`);
 			}
 			return pathWithQuery;
@@ -56,7 +59,7 @@ export function toEmbeddablePreviewUrl(url: string | null | undefined): string |
 			return proxyUrl(parsed.href);
 		}
 
-		if (parsed.hostname === APP_HOST && pathIsProxied(parsed.pathname)) {
+		if (parsed.hostname === appHost && pathIsProxied(parsed.pathname)) {
 			return proxyUrl(parsed.href);
 		}
 

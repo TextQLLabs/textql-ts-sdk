@@ -11,6 +11,7 @@ import os
 import ssl
 
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import httpx
 import truststore
@@ -25,7 +26,7 @@ from textql_sdk.streaming import create_connect_client, create_streaming_client
 from app import textql_router
 from app.textql_router import router
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 logging.basicConfig(
     level=os.getenv("LOG_LEVEL", "INFO"),

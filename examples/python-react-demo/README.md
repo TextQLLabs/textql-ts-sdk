@@ -49,10 +49,10 @@ API Keys**, click **+ Create API Key** (admin only).
 **2. Backend** (Python 3.11 — see `backend/.python-version`):
 
 ```sh
+cp .env.example .env      # one file at the demo root; then put your key in it
 cd backend
 python3.11 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-cp .env.example .env      # then put your key in it
 .venv/bin/uvicorn app.main:app --port 8787 --reload
 ```
 
@@ -84,23 +84,24 @@ process.
 
 | Set where | Variable | Why |
 | --- | --- | --- |
-| `backend/.env` | `TEXTQL_SERVER_URL=https://textql.internal.example.com` | The host the SDK calls (`main.py:47`). Give it the plain host — the SDK appends the `/rpc/public` mount itself, for both unary and streaming calls. |
-| `backend/.env` | `ALLOWED_ORIGINS=https://demo.internal.example.com` | CORS (`main.py:36`). Defaults to `http://localhost:5173,http://127.0.0.1:5173`, which is only right while you are on the Vite dev server. |
+| `.env` | `TEXTQL_SERVER_URL=https://textql.internal.example.com` | The host the SDK calls (`main.py:47`). Give it the plain host — the SDK appends the `/rpc/public` mount itself, for both unary and streaming calls. |
+| `.env` | `ALLOWED_ORIGINS=https://demo.internal.example.com` | CORS (`main.py:36`). Defaults to `http://localhost:5173,http://127.0.0.1:5173`, which is only right while you are on the Vite dev server. |
 | frontend shell | `BACKEND_URL=http://backend-host:8787 npm run dev` | Where Vite proxies `/v3` (`vite.config.ts:17`). Defaults to `http://127.0.0.1:8787`. Dev only — a built frontend is served same-origin and does not proxy. |
+| `.env` | `VITE_USERCONTENT_HOST=assets.internal.example.com` | Asset host the preview proxy fetches from. Defaults to `textqlusercontent.com`. See below. |
+| `.env` | `VITE_APP_HOST=textql.internal.example.com` | Second allowed asset host, used by sandbox embeds. Defaults to `app.textql.com`. |
 
-### Hardcoded — needs a code edit
+### Asset hosts
 
 Preview assets (charts, images, sandbox embeds) are fetched through the backend's
 `/v3/textql/preview-proxy` route, because those origins refuse to be framed from
-anywhere but the main TextQL app. Both ends of that proxy carry their own copy of
-the allowed hosts, and both have to agree:
+anywhere but the main TextQL app. Both ends of that proxy need the same host
+list: the backend to decide what it will fetch (`_is_allowed_preview_host`), the
+browser to decide which URLs to rewrite (`toEmbeddablePreviewUrl`).
 
-- **`backend/app/textql_router.py:794-795`** — `_USERCONTENT_HOST` / `_APP_HOST`,
-  gating `_is_allowed_preview_host` (`:816`). Miss this and every asset 403s at
-  your own backend.
-- **`frontend/src/lib/previewUrl.ts:11-12`** — the same two constants, deciding
-  which URLs get rewritten to the proxy. Miss this and the URL passes through
-  untouched, so the iframe hits the asset host directly and fails to frame.
+Set them once in the root `.env`: the backend reads them with `os.getenv`, the
+browser through `import.meta.env`. Both processes load that one file — Vite via
+`envDir` — and only `VITE_`-prefixed names are exposed to the browser, which is
+what keeps `TEXTQL_API_KEY` in the Python process.
 
 Check what your deployment actually serves assets from rather than assuming it
 matches `TEXTQL_SERVER_URL`: even on SaaS these are two different hosts — the API
