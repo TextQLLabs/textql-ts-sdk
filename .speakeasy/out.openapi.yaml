@@ -6657,43 +6657,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberActivityResponse'
-  /textql.rpc.public.observe.ObservabilityService/GetMemberSignalTrend:
-    post:
-      tags:
-        - ObservabilityService
-      summary: GetMemberSignalTrend
-      operationId: ObservabilityService_GetMemberSignalTrend
-      x-speakeasy-group: observability
-      x-speakeasy-name-override: getMemberSignalTrend
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberSignalTrendRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.observe.GetMemberSignalTrendResponse'
   /textql.rpc.public.observe.ObservabilityService/GetObservabilityStats:
     post:
       tags:
@@ -16052,14 +16015,14 @@ components:
           type: integer
           title: default_methodology
           format: int32
-          description: |-
-            Mirror of the email_output_enabled feature flag (in feature_flags table,
-             not on the organization row). Surfaces in settings UIs alongside the
-             org-row toggles.
           nullable: true
         scimNewGroupDefaultRoleType:
           type: string
           title: scim_new_group_default_role_type
+          description: |-
+            Mirror of the email_output_enabled feature flag (in feature_flags table,
+             not on the organization row). Surfaces in settings UIs alongside the
+             org-row toggles.
           nullable: true
         groupsFeatureEnabled:
           type: boolean
@@ -16070,14 +16033,14 @@ components:
           items:
             type: string
           title: available_providers
+        showTextqlUsage:
+          type: boolean
+          title: show_textql_usage
           description: |-
             Org-wide default response methodology for new chats, as a
              textql.rpc.public.chat.Methodology enum value (int to avoid an import cycle
              with the public package). 0 = UNKNOWN/unset -> ADAPTIVE. Overridable
              per-member (Member.default_methodology) and per-chat.
-        showTextqlUsage:
-          type: boolean
-          title: show_textql_usage
           nullable: true
         tracesEnabled:
           type: boolean
@@ -16090,13 +16053,13 @@ components:
         soxDbSessionMetadataEnabled:
           type: boolean
           title: sox_db_session_metadata_enabled
-          description: |-
-            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
-             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         smsEnabled:
           type: boolean
           title: sms_enabled
+          description: |-
+            When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
+             staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
         scimAssignDefaultRole:
           type: boolean
@@ -16118,31 +16081,36 @@ components:
         dataAppsEnabled:
           type: boolean
           title: data_apps_enabled
-          description: dismiss legacy-context migration banner org-wide
           nullable: true
         issuesEnabled:
           type: boolean
           title: issues_enabled
-          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
+          description: dismiss legacy-context migration banner org-wide
           nullable: true
         configObjectsEnabled:
           type: boolean
           title: config_objects_enabled
+          description: 'Deprecated: superseded by config_objects_enabled (field 80); no longer populated.'
           nullable: true
         configObjectsPlaybooksEnabled:
           type: boolean
           title: config_objects_playbooks_enabled
-          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
           deprecated: true
         configObjectsDashboardsEnabled:
           type: boolean
           title: config_objects_dashboards_enabled
+          description: Internal gate for the data apps feature (apps resource + html generative dashboards).
           nullable: true
           deprecated: true
         configAutofixEnabled:
           type: boolean
           title: config_autofix_enabled
+          nullable: true
+          deprecated: true
+        helmChartVersion:
+          type: string
+          title: helm_chart_version
           description: |-
             config_objects feature_flags row: the umbrella half of the config-management predicate
              (library.ConfigManagedOrg = this flag AND the org already having a Library — the flag
@@ -16151,37 +16119,29 @@ components:
              reconcile takeover, the lazy row-to-config migration. Supersedes
              config_migrations_enabled (field 74).
           nullable: true
-          deprecated: true
-        helmChartVersion:
-          type: string
-          title: helm_chart_version
+        spendTransparencyEnabled:
+          type: boolean
+          title: spend_transparency_enabled
           description: |-
             Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
              object type — config management is one-way, so a per-type switch that cannot
              un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
              because proto/api is additive-only.
           nullable: true
-        spendTransparencyEnabled:
-          type: boolean
-          title: spend_transparency_enabled
-          nullable: true
         sharingDisabled:
           type: boolean
           title: sharing_disabled
-          description: |-
-            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
-             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         appWritebackAutoApproveEnabled:
           type: boolean
           title: app_writeback_auto_approve_enabled
+          description: |-
+            Deprecated: never populated. The autofix sweep no longer has a per-org opt-in — it runs for
+             every org with the config-object checks surface on. Retained only because proto/api is additive-only.
           nullable: true
         subagentsEnabled:
           type: boolean
           title: subagents_enabled
-          description: |-
-            Org-level opt-in: show dollar costs alongside ACU figures across the product.
-             Which figures a given viewer sees is enforced separately, per-RPC.
           nullable: true
       title: Organization
       additionalProperties: false
@@ -30332,25 +30292,6 @@ components:
           title: members
       title: GetMemberActivityResponse
       additionalProperties: false
-    textql.rpc.public.observe.GetMemberSignalTrendRequest:
-      type: object
-      properties:
-        days:
-          type: integer
-          title: days
-          format: int32
-      title: GetMemberSignalTrendRequest
-      additionalProperties: false
-    textql.rpc.public.observe.GetMemberSignalTrendResponse:
-      type: object
-      properties:
-        points:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.observe.MemberSignalTrendPoint'
-          title: points
-      title: GetMemberSignalTrendResponse
-      additionalProperties: false
     textql.rpc.public.observe.GetObservabilityStatsRequest:
       type: object
       properties:
@@ -30608,34 +30549,6 @@ components:
           title: by_source
       title: MemberChatSourceStat
       additionalProperties: false
-    textql.rpc.public.observe.MemberSignalTrendPoint:
-      type: object
-      properties:
-        memberId:
-          type: string
-          title: member_id
-        bucketStart:
-          type: string
-          title: bucket_start
-          description: YYYY-MM-DD, week start
-        positive:
-          type: integer
-          title: positive
-          format: int32
-        negative:
-          type: integer
-          title: negative
-          format: int32
-        analyzed:
-          type: integer
-          title: analyzed
-          format: int32
-          description: distinct analyzed threads in the bucket
-      title: MemberSignalTrendPoint
-      additionalProperties: false
-      description: |-
-        One (member, week) bucket of signal quality. Weeks with no signals and no
-         analyzed threads are omitted; the client zero-fills the axis.
     textql.rpc.public.observe.ObservabilitySummary:
       type: object
       properties:
