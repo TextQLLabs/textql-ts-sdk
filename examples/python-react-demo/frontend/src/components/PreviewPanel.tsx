@@ -8,12 +8,17 @@ import { cx } from '../lib/cx';
 import {
 	clampPreviewWidth,
 	guessPreviewType,
+	INSIGHT_TYPES,
+	isInsightType,
 	previewPanel,
 	usePreviewPanel,
 	type PreviewItem
 } from '../lib/previewPanel';
 import { PREVIEW_PROXY_PATH, toEmbeddablePreviewUrl } from '../lib/previewUrl';
 import { CellError } from './CellShell';
+import { CitationList } from './CitationList';
+import { PreviewPicker } from './PreviewPicker';
+import { TimelinePanel } from './TimelinePanel';
 import { Markdown } from './Markdown';
 import { PierreCode } from './PierreCode';
 
@@ -38,10 +43,21 @@ const CHART_H_DEFAULT = 720;
 const CSV_ROW_CAP = 500;
 
 const FRAME = 'w-full rounded-[8px] border border-line bg-elevate';
-const CELL = 'max-w-[260px] overflow-hidden px-3 py-[7px] text-left text-ellipsis whitespace-nowrap';
+const CELL =
+	'w-[1%] max-w-[260px] overflow-hidden px-3 py-[7px] text-left text-ellipsis whitespace-nowrap';
+/** A data column: content-width, with the product's 96px floor. */
+const DATA_CELL = `${CELL} min-w-[96px]`;
 /** Muted, sticky row-number gutter. */
 const ROWNUM =
 	'sticky left-0 w-[1%] max-w-none border-r border-line/55 bg-fill text-right tabular-nums text-muted select-none';
+/**
+ * Trailing column that soaks up whatever width the data doesn't need, the way
+ * the product's DataTable does. Without it a two-column CSV stretches its text
+ * column across the panel and strands the numbers against the far edge; with
+ * it, columns sit at their content width and the slack goes here. Collapses to
+ * nothing once the table is wide enough to scroll.
+ */
+const SPACER = 'w-full p-0';
 const EMPTY = cx(CELL_BODY, 'm-0 text-[#a1a1aa]');
 
 /** Trust a recognized declared type; otherwise sniff the URL extension. */
@@ -131,7 +147,7 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 								<th
 									key={i}
 									className={cx(
-										CELL,
+										DATA_CELL,
 										CELL_LABEL,
 										'sticky top-0 z-1 border-b border-line bg-fill text-muted',
 										numCols[i] && 'text-right'
@@ -141,6 +157,7 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 									{h}
 								</th>
 							))}
+							<th aria-hidden="true" className={cx(SPACER, 'sticky top-0 z-1 border-b border-line bg-fill')} />
 						</tr>
 					</thead>
 					<tbody className="[&_tr:last-child_td]:border-b-0">
@@ -151,7 +168,7 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 									<td
 										key={ci}
 										className={cx(
-											CELL,
+											DATA_CELL,
 											'border-b border-line/55 group-hover/csv:bg-ink/3',
 											numCols[ci] && 'text-right tabular-nums'
 										)}
@@ -160,6 +177,10 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 										{c}
 									</td>
 								))}
+								<td
+									aria-hidden="true"
+									className={cx(SPACER, 'border-b border-line/55 group-hover/csv:bg-ink/3')}
+								/>
 							</tr>
 						))}
 					</tbody>
@@ -324,6 +345,17 @@ export function PreviewPanel() {
 	function renderBody() {
 		if (!item) return <p className={EMPTY}>No preview selected.</p>;
 		if (item.error) return <CellError message={item.error} />;
+		// Insight tabs read the chat off the store: they are views onto the whole
+		// conversation, not a file the item could carry.
+		if (item.previewType === INSIGHT_TYPES.citations) {
+			if (panel.citations.length === 0) {
+				return <p className={EMPTY}>No citations in this chat yet.</p>;
+			}
+			return <CitationList citations={panel.citations} selectedKey={panel.citationKey} />;
+		}
+		if (item.previewType === INSIGHT_TYPES.timeline) {
+			return <TimelinePanel cells={panel.insightCells} />;
+		}
 		if (isImage(item) && embedUrl) {
 			return <img className={cx(FRAME, 'block h-auto')} src={embedUrl} alt={item.name} />;
 		}
@@ -432,11 +464,12 @@ export function PreviewPanel() {
 								onClick={() => previewPanel.select(tab.id)}
 							>
 								<span className={cx(CELL_BODY, 'min-w-0 flex-1 overflow-hidden font-[550] text-ellipsis whitespace-nowrap')}>{tab.name}</span>
+								{/* The kind, for files. An insight tab's name already says it. */}
 								<span
 									className={cx(
 										CELL_LABEL,
 										'text-[#a1a1aa]',
-										tab.id === item?.id ? 'inline' : 'hidden'
+										tab.id === item?.id && !isInsightType(tab.previewType) ? 'inline' : 'hidden'
 									)}
 								>
 									{titleCase(tab.previewType) || 'File'}
@@ -456,6 +489,8 @@ export function PreviewPanel() {
 						</div>
 					))}
 				</div>
+
+				<PreviewPicker catalog={panel.catalog} citationCount={panel.citations.length} />
 
 				<button
 					type="button"

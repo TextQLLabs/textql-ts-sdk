@@ -41,6 +41,44 @@ then holds the SSE stream open until `runComplete`. The next turn passes the
 previous one's `finalCellId` as `latest_cell_id`, so the server replays from
 there instead of from the top of the chat.
 
+## Citations
+
+A cited answer arrives as `mdCell.citations`: a list of claims, each with the
+`anchor` text it was written against, a `rationale`, and the `lineage` of cells
+(and connector) the figure came from. The inline `[[tqlcite …]]` markers the
+agent writes are stripped from `content` server-side, so the numbered marker in
+the prose is a client job — `src/lib/citationMarkers.ts` finds the anchor in the
+rendered HTML and injects it, matching on exact text first and then on
+letters-and-digits only, since inline markup (`**42%**`) splits the anchor
+across text nodes. Hovering a marker shows the source, the step that produced
+it, and the rationale; clicking one opens the side panel's **Citations** tab
+scrolled to that citation, the way the marker opens thread insights in the
+product. The `N sources` line under a cited answer opens the same tab.
+
+Citations only appear when the org has tracing on. `mdCell.citations` is simply
+absent otherwise, and nothing in the transcript changes.
+
+## The side panel
+
+Tabs are not only files. The panel's `+` opens one menu over everything it can
+show, grouped: **Insights** (Citations, Timeline) above the chat's **Files**.
+Tabs accumulate as you open them, so `+` is also how you get a closed one back.
+
+The two insight tabs are views onto the whole conversation rather than one
+asset, so they read the chat off the store (`previewPanel.setInsights`) instead
+of carrying content on the tab — the transcript pushes citations and cells on
+the same debounce that collects assets, which is what keeps an open tab in step
+with a streaming answer.
+
+**Timeline** is the run: total active time, where it went (LLM / queries /
+tools), and every step in order with a bar. Bars are laid end-to-end by measured
+duration, so the window is work done, not wall clock — idle time between
+messages would otherwise dwarf everything. A step's duration is its reported
+`executionTimeMs`, or the gap to the next cell for the cells that don't report
+one, which means a gap silently includes the model's thinking between two
+steps. The product's panel gets that split exactly, from per-completion timings
+over RPC; this demo has only the cells.
+
 ## Setup
 
 **1. Get a TextQL API key** — in the TextQL app under **Settings → Developers →
@@ -117,6 +155,8 @@ frontend/
   src/lib/api.ts        the nine calls the UI makes, plus the SSE reader
   src/lib/cells.ts      the oneof switch: which payload, what to call it
   src/lib/cellBlocks.ts groups a run's cells into tool batches
+  src/lib/citations.ts  mdCell.citations, coerced, numbered, sources resolved
+  src/lib/timeline.ts   the run rebuilt from cells, for the Timeline tab
   src/components/       ChatPage, Composer, ToolSequence, CellDetail, …
 ```
 

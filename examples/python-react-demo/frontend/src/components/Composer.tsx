@@ -6,6 +6,7 @@ import { connectorIconSrc } from '../lib/connectorIcons';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import { useDismissable } from '../lib/useDismissable';
+import { FLYOUT, FLYOUT_ROW, FLYOUT_SEARCH, FLYOUT_SECTION, FLYOUT_STATE } from './pageStyles';
 
 type Flyout = 'models' | 'connectors';
 
@@ -31,15 +32,9 @@ const ROOT_ITEMS = [
 
 const TEXTAREA_MAX_PX = 160;
 
-const POPOVER =
-	'overflow-hidden rounded-[12px] border border-[color-mix(in_srgb,var(--color-line)_90%,#d4d4d8)] bg-elevate shadow-[0_1px_2px_rgba(15,15,20,0.04),0_14px_32px_rgba(15,15,20,0.1)]';
-const MENU_SECTION = 'flex flex-col p-0.5';
-const MENU_ROW =
-	'flex w-full items-center justify-between gap-2 rounded-[7px] px-2 py-1.5 text-left text-[12.5px] text-text-strong';
 /** `flex-direction`/`gap` are set per variant so the two never collide. */
 const MENU_ROW_MAIN = 'inline-flex min-w-0';
 const CHECK_MARK = 'inline-flex shrink-0 items-center justify-center text-text-3';
-const STATE_COPY = 'm-0 text-[11.5px] leading-[1.35] text-muted';
 
 export function Composer({
 	value = '',
@@ -235,16 +230,16 @@ export function Composer({
 						{menuOpen && !configLocked && (
 							<div className="absolute bottom-[calc(100%+8px)] left-0 z-20">
 								<div
-									className={cx(POPOVER, 'relative w-[min(240px,calc(100vw-32px))]')}
+									className={cx(FLYOUT, 'relative w-[min(240px,calc(100vw-32px))]')}
 									role="menu"
 									aria-label="Composer settings"
 								>
-									<div className={MENU_SECTION}>
+									<div className={FLYOUT_SECTION}>
 										{ROOT_ITEMS.map((item) => (
 											<button
 												key={item.id}
 												type="button"
-												className={cx(MENU_ROW, flyout === item.id ? 'bg-fill' : 'bg-transparent hover:bg-fill')}
+												className={cx(FLYOUT_ROW, flyout === item.id ? 'bg-fill' : 'bg-transparent hover:bg-fill')}
 												role="menuitem"
 												aria-haspopup="menu"
 												aria-expanded={flyout === item.id}
@@ -279,20 +274,20 @@ export function Composer({
 								{flyout === 'models' && (
 									<div
 										className={cx(
-										POPOVER,
+										FLYOUT,
 										'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
 										'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
 									)}
 										role="menu"
 										aria-label="Models"
 									>
-										<div className={cx(MENU_SECTION, 'max-h-60 overflow-y-auto pb-1')}>
+										<div className={cx(FLYOUT_SECTION, 'max-h-60 overflow-y-auto pb-1')}>
 											{CHAT_MODELS.map((model) => (
 												<button
 													key={model.id}
 													type="button"
 													className={cx(
-														MENU_ROW,
+														FLYOUT_ROW,
 												selectedModel === model.id ? 'bg-fill' : 'bg-transparent hover:bg-fill'
 													)}
 													role="menuitem"
@@ -323,7 +318,7 @@ export function Composer({
 								{flyout === 'connectors' && (
 									<div
 										className={cx(
-										POPOVER,
+										FLYOUT,
 										'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
 										'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
 									)}
@@ -334,7 +329,7 @@ export function Composer({
 											<span className="sr-only">Search connectors</span>
 											<input
 												ref={searchRef}
-												className="w-full rounded-[7px] border-0 bg-fill px-2 py-1.5 text-[12px] text-ink outline-0 placeholder:text-[#a1a1aa] focus:bg-sidebar"
+												className={FLYOUT_SEARCH}
 												type="search"
 												value={connectorQuery}
 												onChange={(event) => setConnectorQuery(event.target.value)}
@@ -349,10 +344,10 @@ export function Composer({
 											aria-busy={connectors.loading}
 										>
 											{connectors.loading && !connectors.loaded ? (
-												<p className={cx(STATE_COPY, 'p-2')}>Loading connectors…</p>
+												<p className={cx(FLYOUT_STATE, 'p-2')}>Loading connectors…</p>
 											) : connectors.error && !connectors.loaded ? (
 												<div className="flex flex-col items-start gap-1.5 px-2 py-1.5">
-													<p className={STATE_COPY}>
+													<p className={FLYOUT_STATE}>
 														Couldn’t load connectors.
 													</p>
 													<button
@@ -364,9 +359,9 @@ export function Composer({
 													</button>
 												</div>
 											) : connectors.connectors.length === 0 ? (
-												<p className={cx(STATE_COPY, 'p-2')}>No connectors available.</p>
+												<p className={cx(FLYOUT_STATE, 'p-2')}>No connectors available.</p>
 											) : filteredConnectors.length === 0 ? (
-												<p className={cx(STATE_COPY, 'p-2')}>No matches.</p>
+												<p className={cx(FLYOUT_STATE, 'p-2')}>No matches.</p>
 											) : (
 												filteredConnectors.map((connector) => (
 													<button

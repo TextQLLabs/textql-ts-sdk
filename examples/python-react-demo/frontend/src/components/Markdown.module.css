@@ -162,3 +162,72 @@
 	line-height: 1.55;
 	color: var(--color-muted);
 }
+
+/* Inline citation marker. Injected as DOM by `citationMarkers.ts`, so it is
+   styled from here rather than with utilities: the element never passes
+   through JSX. Number by default, link glyph on hover — one grid cell, two
+   layers, so the pill never changes width. */
+.md :global(.citation-marker) {
+	display: inline-grid;
+	place-items: center;
+	min-width: 1rem;
+	height: 1rem;
+	margin-left: 2px;
+	padding: 0 0.25rem;
+	border: 0;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--color-ink) 10%, transparent);
+	color: var(--color-text-3);
+	font-family: inherit;
+	font-size: 10px;
+	font-weight: 700;
+	line-height: 1;
+	vertical-align: super;
+	cursor: pointer;
+	user-select: none;
+	transition:
+		background 120ms,
+		color 120ms,
+		transform 120ms;
+}
+
+.md :global(.citation-marker:hover),
+.md :global(.citation-marker:focus-visible) {
+	background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+	color: var(--color-accent);
+	transform: translateY(-1px);
+	outline: none;
+}
+
+.md :global(.citation-marker__num),
+.md :global(.citation-marker__icon) {
+	grid-area: 1 / 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.md :global(.citation-marker__icon) {
+	visibility: hidden;
+}
+
+.md :global(.citation-marker:hover .citation-marker__num),
+.md :global(.citation-marker:focus-visible .citation-marker__num) {
+	visibility: hidden;
+}
+
+.md :global(.citation-marker:hover .citation-marker__icon),
+.md :global(.citation-marker:focus-visible .citation-marker__icon) {
+	visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.md :global(.citation-marker) {
+		transition: none;
+	}
+
+	.md :global(.citation-marker:hover),
+	.md :global(.citation-marker:focus-visible) {
+		transform: none;
+	}
+}

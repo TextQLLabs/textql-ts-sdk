@@ -2,7 +2,6 @@ import { ChevronRight } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import {
-	asString,
 	buildSegments,
 	getActiveSummary,
 	getBatchHeadline,
@@ -25,6 +24,7 @@ import {
 	previewPanel,
 	usePreviewSelection
 } from '../lib/previewPanel';
+import { AssistantMessage } from './AssistantMessage';
 import { CellDetail } from './CellDetail';
 import { HaltCell } from './HaltCell';
 import { Collapse } from './Collapse';
@@ -44,10 +44,6 @@ const STEP_LABEL =
 		CELL_BODY,
 		'min-w-0 overflow-hidden font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] group-hover:text-text-3'
 	);
-
-function assistantHtml(cell: CellLike): string {
-	return asString(getCellPayload(cell).renderedHtml);
-}
 
 function batchLabel(cells: CellLike[], active: boolean): string {
 	if (active) return getActiveSummary(cells);
@@ -133,14 +129,13 @@ export const ToolSequence = memo(function ToolSequence({
 				const active = isSegmentActive(segment, segIdx);
 
 				if (segment.type === 'assistant') {
-					const live = active && !segment.cell.complete;
 					return (
-						<div className="py-0.5" key={key}>
-							<Markdown
-								renderedHtml={live ? '' : assistantHtml(segment.cell)}
-								content={getCellContent(segment.cell)}
-							/>
-						</div>
+						<AssistantMessage
+							cell={segment.cell}
+							key={key}
+							live={active && !segment.cell.complete}
+							turnCells={cells}
+						/>
 					);
 				}
 

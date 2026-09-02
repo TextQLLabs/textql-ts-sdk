@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
+import type { CitationView } from './citations';
 import {
 	asRecords as records,
 	asString,
@@ -21,6 +22,23 @@ export type PreviewItem = {
 	error?: string | null;
 	toolSummary?: string | null;
 };
+
+/**
+ * Panel tabs that aren't assets. Citations and the timeline are views onto the
+ * whole chat rather than a file, so their content is read from the store (see
+ * `setInsights`) instead of being carried on the item — but they are tabs like
+ * any other, and get the tab bar, width and close behaviour for free.
+ */
+export const INSIGHT_TYPES = { citations: 'citations', timeline: 'timeline' } as const;
+
+export const INSIGHT_ITEMS: Record<keyof typeof INSIGHT_TYPES, PreviewItem> = {
+	citations: { id: 'insight:citations', name: 'Citations', previewType: INSIGHT_TYPES.citations },
+	timeline: { id: 'insight:timeline', name: 'Timeline', previewType: INSIGHT_TYPES.timeline }
+};
+
+export function isInsightType(previewType: string): boolean {
+	return previewType === INSIGHT_TYPES.citations || previewType === INSIGHT_TYPES.timeline;
+}
 
 const WIDTH_KEY = 'chat-demo.previewPanelWidth';
 const MIN_WIDTH = 280;
@@ -254,6 +272,14 @@ export function cellOpensInPreviewPanel(cell: CellLike): boolean {
 type PanelState = {
 	open: boolean;
 	selectedId: string | null;
+	/** Citation to highlight in the citations tab, set by an inline marker click. */
+	citationKey: string | null;
+	/** Every citation in the chat, in transcript order. */
+	citations: CitationView[];
+	/** The chat's cells, for the timeline tab. */
+	insightCells: CellLike[];
+	/** Everything the picker can open: the chat's assets. */
+	catalog: PreviewItem[];
 	/** Open tabs (Cursor-style); accumulate on open, remove on close. */
 	tabs: PreviewItem[];
 	width: number;
@@ -266,6 +292,10 @@ class PreviewPanelState extends Store<PanelState> {
 		super({
 			open: false,
 			selectedId: null,
+			citationKey: null,
+			citations: [],
+			insightCells: [],
+			catalog: [],
 			tabs: [],
 			width: loadWidth(),
 			resizing: false
@@ -286,6 +316,9 @@ class PreviewPanelState extends Store<PanelState> {
 	}
 	get resizing() {
 		return this.state.resizing;
+	}
+	get citations() {
+		return this.state.citations;
 	}
 
 	get selected(): PreviewItem | null {
@@ -385,7 +418,26 @@ class PreviewPanelState extends Store<PanelState> {
 
 	select(id: string) {
 		if (!this.state.tabs.some((tab) => tab.id === id)) return;
-		this.set({ selectedId: id, open: true });
+		const citationKey = id === this.state.selectedId ? this.state.citationKey : null;
+		this.set({ selectedId: id, citationKey, open: true });
+	}
+
+	/** Open the citations tab, scrolled to the citation whose marker was clicked. */
+	openCitations(key: string | null) {
+		this.openItem(INSIGHT_ITEMS.citations);
+		this.set({ citationKey: key });
+	}
+
+	/**
+	 * What the insight tabs read. Called from the transcript on the same
+	 * debounce as the asset walk, so an open tab follows a streaming answer.
+	 */
+	setInsights(input: { citations: CitationView[]; cells: CellLike[]; catalog: PreviewItem[] }) {
+		this.set({
+			citations: input.citations,
+			insightCells: input.cells,
+			catalog: input.catalog
+		});
 	}
 
 	closeTab(id: string) {
@@ -414,7 +466,15 @@ class PreviewPanelState extends Store<PanelState> {
 	}
 
 	reset() {
-		this.set({ open: false, selectedId: null, tabs: [] });
+		this.set({
+			open: false,
+			selectedId: null,
+			citationKey: null,
+			citations: [],
+			insightCells: [],
+			catalog: [],
+			tabs: []
+		});
 	}
 
 	setWidth(value: number) {

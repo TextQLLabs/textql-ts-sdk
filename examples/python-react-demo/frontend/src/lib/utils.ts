@@ -19,6 +19,23 @@ export function storageSet(key: string, value: string): void {
   }
 }
 
+/** Markdown to one line of plain text, for labels that can't render markup. */
+export function stripMarkdown(value: string): string {
+  return value
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/\*{1,3}([^*\n]+)\*{1,3}/g, '$1')
+    .replace(/_{1,3}([^_\n]+)_{1,3}/g, '$1')
+    .replace(/`+([^`\n]+)`+/g, '$1')
+    .replace(/~~([^~\n]+)~~/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^>\s?/gm, '')
+    .replace(/^[-*_]{3,}\s*$/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function prefersReducedMotion(): boolean {
   return (
     typeof matchMedia === 'function' &&

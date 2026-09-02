@@ -50,3 +50,16 @@ export const MENU_ITEM =
 
 /** Spinner shown inside a row; `row-spinner` stays a plain class for parity. */
 export const ROW_SPINNER = 'row-spinner shrink-0 opacity-85';
+
+/**
+ * Floating menu surface, shared by the composer's flyouts and the preview
+ * panel's picker so the two read as the same control.
+ */
+export const FLYOUT =
+	'overflow-hidden rounded-[12px] border border-[color-mix(in_srgb,var(--color-line)_90%,#d4d4d8)] bg-elevate shadow-[0_1px_2px_rgba(15,15,20,0.04),0_14px_32px_rgba(15,15,20,0.1)]';
+export const FLYOUT_SECTION = 'flex flex-col p-0.5';
+export const FLYOUT_ROW =
+	'flex w-full items-center justify-between gap-2 rounded-[7px] px-2 py-1.5 text-left text-[12.5px] text-text-strong';
+export const FLYOUT_SEARCH =
+	'w-full rounded-[7px] border-0 bg-fill px-2 py-1.5 text-[12px] text-ink outline-0 placeholder:text-[#a1a1aa] focus:bg-sidebar';
+export const FLYOUT_STATE = 'm-0 text-[11.5px] leading-[1.35] text-muted';

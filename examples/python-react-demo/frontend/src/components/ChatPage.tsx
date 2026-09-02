@@ -14,6 +14,7 @@ import {
 	type StreamEvent
 } from '../lib/api';
 import { getCellCase, getCellContent, settleCells, type CellLike } from '../lib/cells';
+import { collectCitations } from '../lib/citations';
 import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
 import { loadLastChatConfig, saveLastChatConfig } from '../lib/chatConfigPrefs';
@@ -22,6 +23,7 @@ import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import {
 	collectPreviewItems,
+	INSIGHT_ITEMS,
 	previewPanel,
 	usePreviewPanel,
 	type PreviewItem
@@ -285,12 +287,14 @@ export function ChatPage() {
 		saveLastChatConfig({ model: selectedModel, connectorIds: [...selectedConnectorIds] });
 	}, [prefsReady, configLocked, selectedModel, selectedConnectorIds]);
 
-	// Collecting preview assets walks every cell in the chat, so debounce it
-	// off the per-snapshot stream path.
+	// Walking every cell in the chat feeds both the asset tabs and the panel's
+	// insight tabs, so it is debounced off the per-snapshot stream path.
 	useEffect(() => {
 		const handle = setTimeout(() => {
-			const items = collectPreviewItems(messages.flatMap((message) => message.cells ?? []));
+			const cells = messages.flatMap((message) => message.cells ?? []);
+			const items = collectPreviewItems(cells);
 			setChatAssets(items);
+			previewPanel.setInsights({ citations: collectCitations(cells), cells, catalog: items });
 			previewPanel.openNewItems(items);
 		}, 120);
 		return () => clearTimeout(handle);
@@ -589,8 +593,15 @@ export function ChatPage() {
 		resetToNewChat();
 	}
 
-	function openAssetsPanel() {
-		previewPanel.openPanel(chatAssets);
+	function openPanelDefaultTab() {
+		if (hasAssets) {
+			previewPanel.openPanel(chatAssets);
+			return;
+		}
+		// Nothing to preview: open onto whichever insight the chat actually has.
+		previewPanel.openItem(
+			previewPanel.citations.length > 0 ? INSIGHT_ITEMS.citations : INSIGHT_ITEMS.timeline
+		);
 	}
 
 	const composerProps = {
@@ -611,6 +622,9 @@ export function ChatPage() {
 	const showNewChat = messages.length === 0 && !chatLoadError && !chatPending;
 	const activeChatTitle = chats.find((chat) => chat.id === chatId)?.title ?? '';
 	const hasAssets = chatAssets.length > 0;
+	// The panel is more than assets now — citations and the timeline are always
+	// there for a chat with any cells, so the toggle has to be too.
+	const hasPanelContent = hasAssets || messages.some((message) => (message.cells?.length ?? 0) > 0);
 
 	return (
 		<div
@@ -866,13 +880,13 @@ export function ChatPage() {
 						</header>
 
 						<div className={cx(PANEL_OVERLAYS, 'right-3 flex')}>
-							{hasAssets && !panel.open && (
+							{hasPanelContent && !panel.open && (
 								<button
 									type="button"
 									className={cx(ICON_GHOST, OVERLAY_SURFACE, 'm-0')}
-									aria-label="Open preview panel"
-									title={`Preview (${chatAssets.length})`}
-									onClick={openAssetsPanel}
+									aria-label="Open side panel"
+									title={hasAssets ? `Preview (${chatAssets.length})` : 'Panel'}
+									onClick={openPanelDefaultTab}
 								>
 									<PanelRight size={16} strokeWidth={1.75} />
 								</button>
