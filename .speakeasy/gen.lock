@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 46b3828837f9162ae277b161691b0ce8
+  docChecksum: e503177626f879e2237d3a4cc8727ce2
   docVersion: 1.0.0
   speakeasyVersion: 1.796.2
   generationVersion: 2.933.0
-  releaseVersion: 1.4.28
-  configChecksum: 5cf9a41e0fed62b67446c8ee5cc608dd
+  releaseVersion: 1.4.29
+  configChecksum: b745bb9cb26fe2d9ed3a60b3a49effbd
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: a2983cf0-8cd5-4a65-b146-27655a67a1f3
-  pristine_commit_hash: 8415c31f6e8db0642ef400953307ef931cb66d1f
-  pristine_tree_hash: 782c31b414b88ba89254de36ca1384af61355ce6
+  generation_id: 8418a04e-963b-400d-8a76-86d4ae6c8d45
+  pristine_commit_hash: 8a22fbd35fb35400e3998dabcd3a94c00b2146b0
+  pristine_tree_hash: 8bf8c47aa9e9e5e2e139d2dacce35b6e646b0c71
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -5516,8 +5516,8 @@ trackedFiles:
     pristine_git_object: 5172a480364cf0b5514b50e8ab9f5bbfbe15b5a3
   docs/models/textql-rpc-public-chat-chat.md:
     id: 42b2d9b3025b
-    last_write_checksum: sha1:bfd3277ea51db159e1b8961bbd38b0353bcb952b
-    pristine_git_object: 8ae9cf48dcc7306e44920b78c9823c32a2a7d43c
+    last_write_checksum: sha1:ce1c236947b4ed037526b980aaf7b566869483e5
+    pristine_git_object: 50c2f475473de89bd55ffe7eb05196f48b3263ca
   docs/models/textql-rpc-public-chat-check-chat-permissions-request.md:
     id: 83ab4a2e3f45
     last_write_checksum: sha1:0e01d2ba2fae4b3fb69011c751cce529d929335b
@@ -5544,8 +5544,8 @@ trackedFiles:
     pristine_git_object: a7ddee1f54fc8a0461b5fbcd784066f67c3440f6
   docs/models/textql-rpc-public-chat-create-request.md:
     id: d2eac1bd95fb
-    last_write_checksum: sha1:802387fa0361169ca14b4b4c6b62af3d5c0feab8
-    pristine_git_object: bce5015473d40160328637beb082e85e96b7655e
+    last_write_checksum: sha1:e082b7e2c2dd812fe9da6a544ea5254b60b97aa0
+    pristine_git_object: 7e0d1e12b07420dabad4ca4b26fd25401d9999de
   docs/models/textql-rpc-public-chat-create-response.md:
     id: 85236d08cf9d
     last_write_checksum: sha1:f1845966bd46112136568ea457904c134901a916
@@ -5724,8 +5724,8 @@ trackedFiles:
     pristine_git_object: e0b0ccbee14c9fead35e70a4cfc68d259cd5c616
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:a88b3dce7ddbba78a55cfc1eee3d8ff394bf04b1
-    pristine_git_object: 3e4ea76744c03b09b247cf7485d47e3ab2d8504f
+    last_write_checksum: sha1:198a6ca61bbb023409319e6eafc06f1b149bc3cc
+    pristine_git_object: 32c3772d819ccd4644cee1aa0b81a2086ac57fae
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:734ef8bd75c7d62327aa20e7bc09b8350217c50b
@@ -9824,12 +9824,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:deb777f2cf514b625c365f035ab97edb6ae0b438
-    pristine_git_object: 934ca4a4c8b1f7993dad42a283f4fc49181d0808
+    last_write_checksum: sha1:ca36855a476657b4459c0f5a7fd8e11731fa76d4
+    pristine_git_object: 53bf8ff5d48e8ab5dd17bdee6410843d07268285
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:4d87011ea9c9b3289a40a364a4ec29daab685bcc
-    pristine_git_object: c14a66704c9a06274819f9f25b359010bb18a88f
+    last_write_checksum: sha1:8c3ce56c4dae9ce5f7083a80fb979a2d54a50a81
+    pristine_git_object: 1dd504b6b1046a840071558e83fd3f231da9792d
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11488,8 +11488,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:99bdfed7611b6bc62dea214f8bd1c20b1b16dc68
-    pristine_git_object: a1dd3c1655a29f88893ff587c84a82356c221e57
+    last_write_checksum: sha1:665cdc63503be6c5d8442b1cf147d7065160ed68
+    pristine_git_object: cf23d3a6b61752260a8b9b1749c7968e90bb18e7
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -14304,8 +14304,8 @@ trackedFiles:
     pristine_git_object: a5958df718d6e84c222501e6b4d38a2a76bf832c
   src/models/textql-rpc-public-chat-chat.ts:
     id: 3cc8b24fd546
-    last_write_checksum: sha1:ea40f239ca8676eb360ebc826842cb4b26ad982e
-    pristine_git_object: 094a417a640d80ae060ce96320118b205998d663
+    last_write_checksum: sha1:2287f4c911391b790cc36f6a002838c81b571a86
+    pristine_git_object: e97a361e8d9a55300beba39581dd532e946eaa15
   src/models/textql-rpc-public-chat-check-chat-permissions-request.ts:
     id: 371805816a0c
     last_write_checksum: sha1:28ddda61908ebc0776cbaef69bc5e6afd8ca1537
@@ -14332,8 +14332,8 @@ trackedFiles:
     pristine_git_object: 42434685d448fbb3292272d063ce9742dd21c109
   src/models/textql-rpc-public-chat-create-request.ts:
     id: ad4a54ec0033
-    last_write_checksum: sha1:336d9517d235af6b6c7752e76f55426fe07e40bc
-    pristine_git_object: 76523e63df3df3d74367707bc7f09d57199c8e97
+    last_write_checksum: sha1:1e47a5da842f7ae06996aeef6cdc7f0129aebebc
+    pristine_git_object: 736edca4b50081def9c18bcdcc3fb318d42d9c48
   src/models/textql-rpc-public-chat-create-response.ts:
     id: f659caec0487
     last_write_checksum: sha1:2d4722dc0ffe0f67b617e2571bca7affaf4e9bfe
@@ -14492,8 +14492,8 @@ trackedFiles:
     pristine_git_object: 69f15a5c681165af62ef10572fa3ca6c78ec9c25
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:7079fb5c1db9752578d10874ee5cc6ce26f5dda1
-    pristine_git_object: a7e788875a70f567b17c2133ba153c322bfeb8a2
+    last_write_checksum: sha1:7f2e2ad34cd07c7fa05b95fb5297565eb3614788
+    pristine_git_object: 2ea2ffca0dba8105d3e334774f914bfdad69d803
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:08749962dde2aaa6f8c665fc006a320d071b6a61
@@ -24454,3 +24454,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelFable51)` **Added**\n  *  `response.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelFable51)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelFable51)` **Added**\n  *  `response.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelFable51)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelFable51)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelFable51)` **Added**\n  *  `response.chat.model.enum(modelFable51)` **Added**\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model.enum(modelFable51)` **Added**\n  *  `response.chat.model.enum(modelFable51)` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelFable51)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelFable51)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelFable51)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelFable51)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelFable51)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelFable51)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelFable51)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelFable51)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelFable51)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelFable51)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelFable51)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelFable51)` **Added**\n  *  `response.playbook.llmModel.enum(modelFable51)` **Added**\n* `textql.rbac.createRole()`:  `response.role.allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[].allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.getMemberRoles()`:  `response.memberRoles.Map<textql.rpc.public.rbac.MemberRoles>.roles[].allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.getRole()`:  `response.role.allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.listRoles()`:  `response.roles[].allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.updateRole()`: \n  *  `request.body.allowedModels[].enum(modelFable51)` **Added**\n  *  `response.role.allowedModels[].enum(modelFable51)` **Added**\n* `textql.rbac.whoAmI()`:  `response.roles[].allowedModels[].enum(modelFable51)` **Added**\n* `textql.settings.updateModels()`: \n  *  `request.body.defaultModel.enum(modelFable51)` **Added**\n* `textql.settings.update()`: \n  *  `request.body.enabledModels[].enum(modelFable51)` **Added**\n"
