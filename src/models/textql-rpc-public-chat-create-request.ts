@@ -58,7 +58,7 @@ export type TextqlRpcPublicChatCreateRequest = {
    * max_thinking runs extended thinking at max effort with visible reasoning.
    *
    * @remarks
-   *  Supported on Sonnet 5, Fable 5, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
+   *  Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
    */
   maxThinking?: boolean | null | undefined;
   modelName?: string | null | undefined;
