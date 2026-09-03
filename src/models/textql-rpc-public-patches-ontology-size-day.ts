@@ -13,11 +13,33 @@ import {
   TextqlRpcPublicPatchesDate$inboundSchema,
 } from "./textql-rpc-public-patches-date.js";
 
+/**
+ * Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+ *
+ * @remarks
+ *  month and day.
+ */
 export type TotalBytes = number | string;
 
+/**
+ * copied from google.type.Date; not available in buf's google/protobuf/*
+ */
 export type TextqlRpcPublicPatchesOntologySizeDay = {
   date?: TextqlRpcPublicPatchesDate | undefined;
+  /**
+   * Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+   *
+   * @remarks
+   *  month and day.
+   */
   totalBytes?: number | string | undefined;
+  /**
+   * Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+   *
+   * @remarks
+   *  to specify a year by itself or a year and month where the day isn't
+   *  significant.
+   */
   fileCount?: number | undefined;
 };
 

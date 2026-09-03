@@ -391,6 +391,7 @@ run();
 * [getPatchByNumber](docs/sdks/ontology/README.md#getpatchbynumber) - GetPatchByNumber
 * [getPatchCapabilities](docs/sdks/ontology/README.md#getpatchcapabilities) - PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
 * [getRawPatch](docs/sdks/ontology/README.md#getrawpatch) - GetRawPatch
+* [getSkill](docs/sdks/ontology/README.md#getskill) - GetSkill
 * [getUsageDetailsForFile](docs/sdks/ontology/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
 * [listApprovalRules](docs/sdks/ontology/README.md#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](docs/sdks/ontology/README.md#listchatsforfile) - ListChatsForFile
@@ -852,6 +853,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyGetRawPatch`](docs/sdks/ontology/README.md#getrawpatch) - GetRawPatch
 - [`ontologyGetRemote`](docs/sdks/ontology/README.md#getremote) - GetOntologyRemote
 - [`ontologyGetSizeTimeline`](docs/sdks/ontology/README.md#getsizetimeline) - GetOntologySizeTimeline
+- [`ontologyGetSkill`](docs/sdks/ontology/README.md#getskill) - GetSkill
 - [`ontologyGetSyncConflicts`](docs/sdks/ontology/README.md#getsyncconflicts) - GetOntologySyncConflicts
 - [`ontologyGetUsageDetailsForFile`](docs/sdks/ontology/README.md#getusagedetailsforfile) - GetUsageDetailsForFile
 - [`ontologyGetUsageSummary`](docs/sdks/ontology/README.md#getusagesummary) - GetOntologyUsageSummary

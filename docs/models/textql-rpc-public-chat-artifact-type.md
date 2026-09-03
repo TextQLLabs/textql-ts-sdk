@@ -1,7 +1,5 @@
 # TextqlRpcPublicChatArtifactType
 
-Artifact types for drawer items
-
 ## Example Usage
 
 ```typescript

@@ -29,6 +29,8 @@ export type TextqlRpcPublicChatUpdateChatRequest = {
   fastMode?: boolean | null | undefined;
   /**
    * update max thinking mode
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   maxThinking?: boolean | null | undefined;
 };

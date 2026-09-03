@@ -36,6 +36,7 @@
 * [getPatchByNumber](#getpatchbynumber) - GetPatchByNumber
 * [getPatchCapabilities](#getpatchcapabilities) - PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
 * [getRawPatch](#getrawpatch) - GetRawPatch
+* [getSkill](#getskill) - GetSkill
 * [getUsageDetailsForFile](#getusagedetailsforfile) - GetUsageDetailsForFile
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](#listchatsforfile) - ListChatsForFile
@@ -2410,6 +2411,79 @@ run();
 ### Response
 
 **Promise\<[operations.OntologyManagementServiceGetRawPatchResponse](../../models/operations/ontology-management-service-get-raw-patch-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## getSkill
+
+GetSkill
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="OntologyManagementService_GetSkill" method="post" path="/textql.rpc.public.patches.OntologyManagementService/GetSkill" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.ontology.getSkill({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { ontologyGetSkill } from "@textql/sdk/funcs/ontology-get-skill.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await ontologyGetSkill(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("ontologyGetSkill failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.OntologyManagementServiceGetSkillRequest](../../models/operations/ontology-management-service-get-skill-request.md)                                                | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.OntologyManagementServiceGetSkillResponse](../../models/operations/ontology-management-service-get-skill-response.md)\>**
 
 ### Errors
 

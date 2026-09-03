@@ -6,6 +6,9 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicPatchesSetOntologyFileGoldenRequest = {
   path?: string | undefined;
+  /**
+   * true = certify, false = retire
+   */
   golden?: boolean | undefined;
 };
 

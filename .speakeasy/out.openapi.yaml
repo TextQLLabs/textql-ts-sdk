@@ -8074,6 +8074,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.patches.GetRawPatchResponse'
+  /textql.rpc.public.patches.OntologyManagementService/GetSkill:
+    post:
+      tags:
+        - OntologyManagementService
+      summary: GetSkill
+      operationId: OntologyManagementService_GetSkill
+      x-speakeasy-group: ontology
+      x-speakeasy-name-override: getSkill
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.patches.GetSkillRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.patches.GetSkillResponse'
   /textql.rpc.public.patches.OntologyManagementService/GetUsageDetailsForFile:
     post:
       tags:
@@ -15959,6 +15996,11 @@ components:
           type: boolean
           title: max_thinking_enabled
           nullable: true
+          deprecated: true
+        configurableThinkingEnabled:
+          type: boolean
+          title: configurable_thinking_enabled
+          nullable: true
         sandboxStateRetentionDays:
           type: integer
           title: sandbox_state_retention_days
@@ -15967,6 +16009,10 @@ components:
         sandboxLeaseConfigEnabled:
           type: boolean
           title: sandbox_lease_config_enabled
+          nullable: true
+        voiceInputEnabled:
+          type: boolean
+          title: voice_input_enabled
           nullable: true
         deleteInactiveThreadsEnabled:
           type: boolean
@@ -19791,6 +19837,9 @@ components:
         fileType:
           type: string
           title: file_type
+        artifactId:
+          type: string
+          title: artifact_id
       title: FileReference
       additionalProperties: false
     textql.rpc.public.cells.FormCell:
@@ -20043,6 +20092,9 @@ components:
         url:
           type: string
           title: url
+        artifactId:
+          type: string
+          title: artifact_id
       title: ImageReference
       additionalProperties: false
     textql.rpc.public.cells.JavaScriptCell:
@@ -21865,7 +21917,6 @@ components:
         - ARTIFACT_TYPE_DASHBOARD_PREVIEW
         - ARTIFACT_TYPE_SKILL
         - ARTIFACT_TYPE_PATCH_DIFF
-      description: Artifact types for drawer items
     textql.rpc.public.chat.AttachAgentToChatRequest:
       type: object
       properties:
@@ -22645,6 +22696,7 @@ components:
              Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
              Thinking tokens bill as output tokens.
           nullable: true
+          deprecated: true
       title: Chat
       additionalProperties: false
     textql.rpc.public.chat.ChatExecutionTiming:
@@ -22909,6 +22961,7 @@ components:
             max_thinking runs extended thinking at max effort with visible reasoning.
              Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
           nullable: true
+          deprecated: true
         modelName:
           type: string
           title: model_name
@@ -23006,6 +23059,7 @@ components:
           type: boolean
           title: max_thinking
           nullable: true
+          deprecated: true
       title: DuplicateChatRequest
       required:
         - chatId
@@ -23969,6 +24023,7 @@ components:
           type: boolean
           title: max_thinking
           nullable: true
+          deprecated: true
       title: RunChatRequest
       required:
         - chatId
@@ -24169,6 +24224,7 @@ components:
           title: max_thinking
           description: update max thinking mode
           nullable: true
+          deprecated: true
       title: UpdateChatRequest
       required:
         - chatId
@@ -31515,6 +31571,7 @@ components:
           type: integer
           title: connector_id
           format: int32
+          description: 'deprecated: use connector_ids'
         apiConnectorIds:
           type: array
           items:
@@ -31531,15 +31588,19 @@ components:
             type: integer
             format: int32
           title: connector_ids
+          description: multiple connectors (OR logic); overrides connector_id when non-empty
         matchNoConnector:
           type: boolean
           title: match_no_connector
+          description: true = only match when no connector is active
         matchNoApiConnector:
           type: boolean
           title: match_no_api_connector
+          description: true = only match when no API connector is active
         matchAll:
           type: boolean
           title: match_all
+          description: true = always attach regardless of other conditions
       title: AutoAttachEntry
       additionalProperties: false
     textql.rpc.public.patches.CodeownerEntry:
@@ -31564,6 +31625,7 @@ components:
         path:
           type: string
           title: path
+          description: path is the config file the finding is attributed to.
         message:
           type: string
           title: message
@@ -31636,7 +31698,6 @@ components:
           title: use_hosted_github_app
       title: ConfigureOntologyRemoteRequest
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersRequest with an empty entry set.'
     textql.rpc.public.patches.ConfigureOntologyRemoteResponse:
       type: object
       properties:
@@ -31645,6 +31706,7 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyRemote'
       title: ConfigureOntologyRemoteResponse
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersRequest with an empty entry set.'
     textql.rpc.public.patches.ContextPatchAutoApproveRule:
       type: object
       properties:
@@ -31783,10 +31845,6 @@ components:
           title: upload_key
       title: CreateOntologyFileUploadUrlResponse
       additionalProperties: false
-      description: |-
-        Counts of the entries a caller may see beneath a subtree. Excludes the subtree
-         root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
-         are bookkeeping rather than Ontology content.
     textql.rpc.public.patches.DailyFileUsage:
       type: object
       properties:
@@ -31926,7 +31984,6 @@ components:
         chatId:
           type: string
           title: chat_id
-          description: default 7d
         title:
           type: string
           title: title
@@ -31998,9 +32055,16 @@ components:
         commitMessage:
           type: string
           title: commit_message
+          description: |-
+            Last frame for this walk. Earlier frames are partial counts; the final
+             frame always carries the complete total — the walk is never truncated.
           nullable: true
       title: FinalizeOntologyFileUploadRequest
       additionalProperties: false
+      description: |-
+        Counts of the entries a caller may see beneath a subtree. Excludes the subtree
+         root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
+         are bookkeeping rather than Ontology content.
     textql.rpc.public.patches.FinalizeOntologyFileUploadResponse:
       type: object
       properties:
@@ -32039,6 +32103,12 @@ components:
       type: object
       title: GetConfigExportCapabilitiesRequest
       additionalProperties: false
+      description: |-
+        GetConfigExportCapabilities tells the UI whether to offer "Save as config":
+         which object types currently have a working exporter (registered AND its
+         dependencies — e.g. the ontology parser — reachable), and whether the caller
+         holds the permission SaveObjectAsConfig requires. Authn-only: the response
+         carries the authorization answer instead of failing the call.
     textql.rpc.public.patches.GetConfigExportCapabilitiesResponse:
       type: object
       properties:
@@ -32129,6 +32199,13 @@ components:
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetFileUsageTimelineRequest
       additionalProperties: false
+      description: |-
+        Aggregate ontology-usage health for the window — the roll-ups the Ontology
+         Health hero needs without paging every file to the client. pulled_files,
+         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
+         total_files, dead_files, and reclaimable_tokens come from the current git
+         tree diffed against the set of pulled paths (a dead file is one present in
+         the ontology but never pulled in the window).
     textql.rpc.public.patches.GetFileUsageTimelineResponse:
       type: object
       properties:
@@ -32254,6 +32331,7 @@ components:
       type: object
       title: GetOntologyRemoteRequest
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersResponse.'
     textql.rpc.public.patches.GetOntologyRemoteResponse:
       type: object
       properties:
@@ -32278,14 +32356,10 @@ components:
       properties:
         observationPeriod:
           title: observation_period
-          description: |-
-            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-             a year.
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetOntologySizeTimelineRequest
       additionalProperties: false
-      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.GetOntologySizeTimelineResponse:
       type: object
       properties:
@@ -32380,10 +32454,8 @@ components:
         patchId:
           type: string
           title: patch_id
-          description: Library path of the file that defines the object
       title: GetPatchCapabilitiesRequest
       additionalProperties: false
-      description: PatchObject is one config object parsed from a patch ref.
     textql.rpc.public.patches.GetPatchCapabilitiesResponse:
       type: object
       properties:
@@ -32408,12 +32480,6 @@ components:
           nullable: true
       title: GetPatchRequest
       additionalProperties: false
-      description: |-
-        GetConfigExportCapabilities tells the UI whether to offer "Save as config":
-         which object types currently have a working exporter (registered AND its
-         dependencies — e.g. the ontology parser — reachable), and whether the caller
-         holds the permission SaveObjectAsConfig requires. Authn-only: the response
-         carries the authorization answer instead of failing the call.
     textql.rpc.public.patches.GetRawPatchRequest:
       type: object
       properties:
@@ -32430,6 +32496,28 @@ components:
           type: string
           title: raw_patch
       title: GetRawPatchResponse
+      additionalProperties: false
+    textql.rpc.public.patches.GetSkillRequest:
+      type: object
+      properties:
+        trigger:
+          type: string
+          title: trigger
+      title: GetSkillRequest
+      additionalProperties: false
+    textql.rpc.public.patches.GetSkillResponse:
+      type: object
+      properties:
+        skill:
+          title: skill
+          $ref: '#/components/schemas/textql.rpc.public.patches.Skill'
+        body:
+          type: string
+          title: body
+        builtin:
+          type: boolean
+          title: builtin
+      title: GetSkillResponse
       additionalProperties: false
     textql.rpc.public.patches.GetUsageDetailsForFileRequest:
       type: object
@@ -32501,9 +32589,10 @@ components:
         setByMemberId:
           type: string
           title: set_by_member_id
-          description: 'deprecated: use connector_ids'
+          description: backend
         setAt:
           title: set_at
+          description: backend
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: GoldenEntry
@@ -32547,15 +32636,9 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.FileChatUsage'
           title: chats
+          description: default 7d
       title: ListChatsForFileResponse
       additionalProperties: false
-      description: |-
-        Aggregate ontology-usage health for the window — the roll-ups the Ontology
-         Health hero needs without paging every file to the client. pulled_files,
-         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
-         total_files, dead_files, and reclaimable_tokens come from the current git
-         tree diffed against the set of pulled paths (a dead file is one present in
-         the ontology but never pulled in the window).
     textql.rpc.public.patches.ListContextPatchAutoApproveRulesRequest:
       type: object
       title: ListContextPatchAutoApproveRulesRequest
@@ -32582,7 +32665,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.GoldenEntry'
           title: golden
-          description: full active list after the change
       title: ListGoldenFilesResponse
       additionalProperties: false
     textql.rpc.public.patches.ListOntologyEntriesRequest:
@@ -32704,9 +32786,10 @@ components:
         patchRef:
           type: string
           title: patch_ref
-          description: path is the config file the finding is attributed to.
+          description: git ref of the patch to inspect
       title: ListPatchObjectsRequest
       additionalProperties: false
+      description: ListPatchObjectsRequest inspects the config objects at a patch's git ref.
     textql.rpc.public.patches.ListPatchObjectsResponse:
       type: object
       properties:
@@ -32715,10 +32798,8 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.PatchObject'
           title: objects
-          description: git ref of the patch to inspect
       title: ListPatchObjectsResponse
       additionalProperties: false
-      description: ListPatchObjectsRequest inspects the config objects at a patch's git ref.
     textql.rpc.public.patches.ListPatchReviewersRequest:
       type: object
       properties:
@@ -32735,6 +32816,7 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.PatchReviewer'
           title: reviewers
+          description: Code owners first, then admins, matching the sidebar's display order.
       title: ListPatchReviewersResponse
       additionalProperties: false
     textql.rpc.public.patches.ListPatchesRequest:
@@ -32853,14 +32935,22 @@ components:
           title: can_read
         configSyncStatus:
           title: config_sync_status
+          description: Sync state of config-managed entries; UNSPECIFIED for non-config-managed.
           $ref: '#/components/schemas/textql.rpc.public.config_source.ConfigSyncStatus'
         configObjectId:
           type: string
           title: config_object_id
+          description: |-
+            config_object_id is the id of the object this file defines (the playbook
+             id), enabling file -> object links. Empty when no object is materialized yet.
           nullable: true
         configSyncError:
           type: string
           title: config_sync_error
+          description: |-
+            config_sync_error is the latest sync failure message for a config-managed
+             entry whose status is ERROR; empty otherwise. Lets the file view surface the
+             error inline without a second fetch.
           nullable: true
       title: OntologyEntry
       additionalProperties: false
@@ -33046,9 +33136,11 @@ components:
           title: default_branch
         createdAt:
           title: created_at
+          description: 'Deprecated: use SetOntologyOwnersRequest.entries with OntologyOwnerEntry.'
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         updatedAt:
           title: updated_at
+          description: 'Deprecated: use SetOntologyOwnersRequest.entries with OntologyOwnerEntry.'
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         syncEnabled:
@@ -33094,12 +33186,15 @@ components:
           nullable: true
       title: OntologyRemote
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersResponse.'
+      description: 'Deprecated: use SetOntologyOwnersRequest.'
     textql.rpc.public.patches.OntologySizeDay:
       type: object
       properties:
         date:
           title: date
+          description: |-
+            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+             a year.
           $ref: '#/components/schemas/textql.rpc.public.patches.Date'
         totalBytes:
           type:
@@ -33107,12 +33202,20 @@ components:
             - string
           title: total_bytes
           format: int64
+          description: |-
+            Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+             month and day.
         fileCount:
           type: integer
           title: file_count
           format: int32
+          description: |-
+            Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+             to specify a year by itself or a year and month where the day isn't
+             significant.
       title: OntologySizeDay
       additionalProperties: false
+      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.OntologySubmodule:
       type: object
       properties:
@@ -33247,10 +33350,12 @@ components:
         headAtMerge:
           type: string
           title: head_at_merge
+          description: for showing diffs post-merge
           nullable: true
         reviewerId:
           type: string
           title: reviewer_id
+          description: for auditing reviews
           nullable: true
         createdAt:
           title: created_at
@@ -33276,6 +33381,11 @@ components:
           format: int32
         capabilities:
           title: capabilities
+          description: |-
+            capabilities is populated for open patches in ListPatches so the UI can
+             render only the action buttons the caller is permitted to use. Nil for
+             non-open patches (no actions are available) and for endpoints that don't
+             compute it.
           nullable: true
           $ref: '#/components/schemas/textql.rpc.public.patches.PatchCapabilities'
         codeOwnerStatus:
@@ -33316,6 +33426,11 @@ components:
           title: caller_approved
       title: PatchCapabilities
       additionalProperties: false
+      description: |-
+        PatchCapabilities describes which patch actions the calling member is
+         permitted to perform. This is a read-only mirror of the authority checks in
+         ApprovePatch and DenyPatch; computing it has no side effects and emits no
+         audit log.
     textql.rpc.public.patches.PatchCodeownerStatus:
       type: object
       properties:
@@ -33387,6 +33502,7 @@ components:
         oldContent:
           type: string
           title: old_content
+          description: 'optional: provide full file content for easy navigation'
           nullable: true
         newContent:
           type: string
@@ -33479,17 +33595,20 @@ components:
         path:
           type: string
           title: path
+          description: Library path of the file that defines the object
         name:
           type: string
           title: name
+          description: resolved display name
         type:
           type: string
           title: type
+          description: |-
+            type is the granular object type: "playbook", "dashboard/streamlit",
+             "dashboard/dash" (the dashboard subtype is load-bearing for previewability).
       title: PatchObject
       additionalProperties: false
-      description: |-
-        ValidateConfigResponse: ok == true with no diagnostics means functionally valid
-         against current org state — not a merge guarantee.
+      description: PatchObject is one config object parsed from a patch ref.
     textql.rpc.public.patches.PatchReviewer:
       type: object
       properties:
@@ -33549,11 +33668,6 @@ components:
           format: int32
       title: PatchStatusCounts
       additionalProperties: false
-      description: |-
-        PatchCapabilities describes which patch actions the calling member is
-         permitted to perform. This is a read-only mirror of the authority checks in
-         ApprovePatch and DenyPatch; computing it has no side effects and emits no
-         audit log.
     textql.rpc.public.patches.PlanOntologyMergeRequest:
       type: object
       title: PlanOntologyMergeRequest
@@ -33563,6 +33677,9 @@ components:
       properties:
         outcome:
           title: outcome
+          description: |-
+            True ⇒ the org's live Ontology HEAD differed from the last reconciled commit,
+             so a catch-up reconcile was enqueued. False ⇒ already converged (no-op).
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyMergeOutcome'
         localHeadHash:
           type: string
@@ -33734,7 +33851,6 @@ components:
         patchId:
           type: string
           title: patch_id
-          description: Code owners first, then admins, matching the sidebar's display order.
         expectedGitRef:
           type: string
           title: expected_git_ref
@@ -33765,11 +33881,10 @@ components:
       title: SaveAllObjectsAsConfigRequest
       additionalProperties: false
       description: |-
-        SaveObjectAsConfig renders an existing DB object (object_type keyed like
-         config_source: "playbook", later "dashboard", ...) as a config file and
-         authors it as a new OPEN patch under the type's default ontology folder. The
-         file can be moved/edited like any patch file before merging; on merge,
-         reconcile takes over the original object when content and permissions allow.
+        SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
+         object of the type the caller can read (and that has no config history) into
+         ONE open patch. Objects the config format cannot express are skipped with a
+         per-object reason rather than failing the batch.
     textql.rpc.public.patches.SaveAllObjectsAsConfigResponse:
       type: object
       properties:
@@ -33781,7 +33896,7 @@ components:
           items:
             type: string
           title: file_paths
-          description: Ontology-relative path the config file was placed at.
+          description: Ontology-relative paths of the config files in the patch.
         skipped:
           type: array
           items:
@@ -33791,6 +33906,7 @@ components:
           type: integer
           title: already_managed_count
           format: int32
+          description: Objects excluded up front because a config file already manages them.
       title: SaveAllObjectsAsConfigResponse
       additionalProperties: false
     textql.rpc.public.patches.SaveObjectAsConfigRequest:
@@ -33804,6 +33920,12 @@ components:
           title: object_id
       title: SaveObjectAsConfigRequest
       additionalProperties: false
+      description: |-
+        SaveObjectAsConfig renders an existing DB object (object_type keyed like
+         config_source: "playbook", later "dashboard", ...) as a config file and
+         authors it as a new OPEN patch under the type's default ontology folder. The
+         file can be moved/edited like any patch file before merging; on merge,
+         reconcile takes over the original object when content and permissions allow.
     textql.rpc.public.patches.SaveObjectAsConfigResponse:
       type: object
       properties:
@@ -33813,6 +33935,7 @@ components:
         filePath:
           type: string
           title: file_path
+          description: Ontology-relative path the config file was placed at.
       title: SaveObjectAsConfigResponse
       additionalProperties: false
     textql.rpc.public.patches.SetOntologyFileGoldenRequest:
@@ -33824,6 +33947,7 @@ components:
         golden:
           type: boolean
           title: golden
+          description: true = certify, false = retire
       title: SetOntologyFileGoldenRequest
       additionalProperties: false
     textql.rpc.public.patches.SetOntologyFileGoldenResponse:
@@ -33834,6 +33958,7 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.GoldenEntry'
           title: golden
+          description: full active list after the change
       title: SetOntologyFileGoldenResponse
       additionalProperties: false
     textql.rpc.public.patches.SetOntologyOwnersRequest:
@@ -33853,13 +33978,6 @@ components:
           nullable: true
       title: SetOntologyOwnersRequest
       additionalProperties: false
-      description: |-
-        Returns the *effective* owners for a directory after walking ancestor
-         OWNERS files: for every role in the org, the resolved permission the
-         role would have on this directory (per `permissionForDirWithRoles`).
-         Use this when you need to compare permissions across paths — the
-         literal GetOntologyOwners only reflects the OWNERS file at the exact
-         path, missing inheritance.
     textql.rpc.public.patches.SetOntologyOwnersResponse:
       type: object
       properties:
@@ -33868,6 +33986,13 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwners'
       title: SetOntologyOwnersResponse
       additionalProperties: false
+      description: |-
+        Returns the *effective* owners for a directory after walking ancestor
+         OWNERS files: for every role in the org, the resolved permission the
+         role would have on this directory (per `permissionForDirWithRoles`).
+         Use this when you need to compare permissions across paths — the
+         literal GetOntologyOwners only reflects the OWNERS file at the exact
+         path, missing inheritance.
     textql.rpc.public.patches.Skill:
       type: object
       properties:
@@ -33911,11 +34036,6 @@ components:
           title: reason
       title: SkippedConfigExport
       additionalProperties: false
-      description: |-
-        SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
-         object of the type the caller can read (and that has no config history) into
-         ONE open patch. Objects the config format cannot express are skipped with a
-         per-object reason rather than failing the batch.
     textql.rpc.public.patches.TriggerConfigDriftReconcileRequest:
       type: object
       title: TriggerConfigDriftReconcileRequest
@@ -34060,6 +34180,9 @@ components:
           title: patch_id
       title: ValidateConfigRequest
       additionalProperties: false
+      description: |-
+        ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
+         working-tree source is served by the Ana chat-cell tool, not this RPC.
     textql.rpc.public.patches.ValidateConfigResponse:
       type: object
       properties:
@@ -34074,8 +34197,8 @@ components:
       title: ValidateConfigResponse
       additionalProperties: false
       description: |-
-        ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
-         working-tree source is served by the Ana chat-cell tool, not this RPC.
+        ValidateConfigResponse: ok == true with no diagnostics means functionally valid
+         against current org state — not a merge guarantee.
     textql.rpc.public.playbook.CancelTemplateExecutionRequest:
       type: object
       properties:
@@ -39259,10 +39382,17 @@ components:
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         maxThinkingEnabled:
           title: max_thinking_enabled
+          deprecated: true
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        configurableThinkingEnabled:
+          title: configurable_thinking_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         clearDefaultConnectorIds:
           type: boolean
           title: clear_default_connector_ids
+        voiceInputEnabled:
+          title: voice_input_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
         defaultDashboardOutput:
           title: default_dashboard_output
           $ref: '#/components/schemas/google.protobuf.BoolValue'

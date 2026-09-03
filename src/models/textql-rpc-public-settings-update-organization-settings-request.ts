@@ -163,7 +163,29 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  has no plan to be removed.
    */
   maxThinkingEnabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  configurableThinkingEnabled?: boolean | undefined;
   clearDefaultConnectorIds?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
+  voiceInputEnabled?: boolean | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -280,7 +302,9 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound =
     hideApiConnectors?: boolean | undefined;
     fastModeEnabled?: boolean | undefined;
     maxThinkingEnabled?: boolean | undefined;
+    configurableThinkingEnabled?: boolean | undefined;
     clearDefaultConnectorIds?: boolean | undefined;
+    voiceInputEnabled?: boolean | undefined;
     defaultDashboardOutput?: boolean | undefined;
     defaultMethodology?: string | undefined;
     tracesEnabled?: boolean | undefined;
@@ -330,7 +354,9 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
     hideApiConnectors: z.optional(z.boolean()),
     fastModeEnabled: z.optional(z.boolean()),
     maxThinkingEnabled: z.optional(z.boolean()),
+    configurableThinkingEnabled: z.optional(z.boolean()),
     clearDefaultConnectorIds: z.optional(z.boolean()),
+    voiceInputEnabled: z.optional(z.boolean()),
     defaultDashboardOutput: z.optional(z.boolean()),
     defaultMethodology: z.optional(
       TextqlRpcPublicChatMethodology$outboundSchema,

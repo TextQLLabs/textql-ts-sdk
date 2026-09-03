@@ -18,9 +18,6 @@ import {
 export type TextqlRpcPublicChatArtifactSummary = {
   id?: string | undefined;
   name?: string | undefined;
-  /**
-   * Artifact types for drawer items
-   */
   type?: TextqlRpcPublicChatArtifactType | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

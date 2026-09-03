@@ -9,7 +9,7 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * Deprecated: use SetOntologyOwnersResponse.
+ * Deprecated: use SetOntologyOwnersRequest.
  */
 export type TextqlRpcPublicPatchesOntologyRemote = {
   id?: string | undefined;

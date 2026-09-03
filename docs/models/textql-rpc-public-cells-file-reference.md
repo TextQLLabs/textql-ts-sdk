@@ -15,3 +15,4 @@ let value: TextqlRpcPublicCellsFileReference = {};
 | `name`             | *string*           | :heavy_minus_sign: | N/A                |
 | `url`              | *string*           | :heavy_minus_sign: | N/A                |
 | `fileType`         | *string*           | :heavy_minus_sign: | N/A                |
+| `artifactId`       | *string*           | :heavy_minus_sign: | N/A                |

@@ -36,7 +36,13 @@ export type TextqlRpcPublicPatchesPatch = {
   status?: TextqlRpcPublicPatchesPatchStatus | undefined;
   gitRef?: string | undefined;
   revision?: number | undefined;
+  /**
+   * for showing diffs post-merge
+   */
   headAtMerge?: string | null | undefined;
+  /**
+   * for auditing reviews
+   */
   reviewerId?: string | null | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -230,6 +236,14 @@ export type TextqlRpcPublicPatchesPatch = {
   authorName?: string | null | undefined;
   approvalCount?: number | undefined;
   requiredApprovals?: number | undefined;
+  /**
+   * PatchCapabilities describes which patch actions the calling member is
+   *
+   * @remarks
+   *  permitted to perform. This is a read-only mirror of the authority checks in
+   *  ApprovePatch and DenyPatch; computing it has no side effects and emits no
+   *  audit log.
+   */
   capabilities?: TextqlRpcPublicPatchesPatchCapabilities | undefined;
   codeOwnerStatus?:
     | Array<TextqlRpcPublicPatchesPatchCodeownerStatus>

@@ -28,6 +28,9 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
   model?: TextqlRpcPublicChatLlmModel | undefined;
   fastMode?: boolean | null | undefined;
   methodology?: TextqlRpcPublicChatMethodology | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   maxThinking?: boolean | null | undefined;
 };
 

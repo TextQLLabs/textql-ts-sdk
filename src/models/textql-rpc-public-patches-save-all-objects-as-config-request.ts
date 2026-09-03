@@ -5,13 +5,12 @@
 import * as z from "zod/v4-mini";
 
 /**
- * SaveObjectAsConfig renders an existing DB object (object_type keyed like
+ * SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
  *
  * @remarks
- *  config_source: "playbook", later "dashboard", ...) as a config file and
- *  authors it as a new OPEN patch under the type's default ontology folder. The
- *  file can be moved/edited like any patch file before merging; on merge,
- *  reconcile takes over the original object when content and permissions allow.
+ *  object of the type the caller can read (and that has no config history) into
+ *  ONE open patch. Objects the config format cannot express are skipped with a
+ *  per-object reason rather than failing the batch.
  */
 export type TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest = {
   objectType?: string | undefined;

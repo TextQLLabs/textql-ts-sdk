@@ -12,6 +12,7 @@ export type TextqlRpcPublicCellsFileReference = {
   name?: string | undefined;
   url?: string | undefined;
   fileType?: string | undefined;
+  artifactId?: string | undefined;
 };
 
 /** @internal */
@@ -22,6 +23,7 @@ export const TextqlRpcPublicCellsFileReference$inboundSchema: z.ZodMiniType<
   name: types.optional(types.string()),
   url: types.optional(types.string()),
   fileType: types.optional(types.string()),
+  artifactId: types.optional(types.string()),
 });
 
 export function textqlRpcPublicCellsFileReferenceFromJSON(

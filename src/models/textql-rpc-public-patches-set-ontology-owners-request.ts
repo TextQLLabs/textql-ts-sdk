@@ -9,16 +9,6 @@ import {
   TextqlRpcPublicPatchesOntologyOwnerEntry$outboundSchema,
 } from "./textql-rpc-public-patches-ontology-owner-entry.js";
 
-/**
- * Returns the *effective* owners for a directory after walking ancestor
- *
- * @remarks
- *  OWNERS files: for every role in the org, the resolved permission the
- *  role would have on this directory (per `permissionForDirWithRoles`).
- *  Use this when you need to compare permissions across paths — the
- *  literal GetOntologyOwners only reflects the OWNERS file at the exact
- *  path, missing inheritance.
- */
 export type TextqlRpcPublicPatchesSetOntologyOwnersRequest = {
   path?: string | undefined;
   entries?: Array<TextqlRpcPublicPatchesOntologyOwnerEntry> | undefined;

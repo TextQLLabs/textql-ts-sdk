@@ -1,7 +1,7 @@
 # TextqlRpcPublicPatchesValidateConfigResponse
 
-ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
- working-tree source is served by the Ana chat-cell tool, not this RPC.
+ValidateConfigResponse: ok == true with no diagnostics means functionally valid
+ against current org state — not a merge guarantee.
 
 ## Example Usage
 

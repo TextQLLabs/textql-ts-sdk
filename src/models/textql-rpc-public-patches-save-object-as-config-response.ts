@@ -14,6 +14,9 @@ import {
 
 export type TextqlRpcPublicPatchesSaveObjectAsConfigResponse = {
   patch?: TextqlRpcPublicPatchesPatch | undefined;
+  /**
+   * Ontology-relative path the config file was placed at.
+   */
   filePath?: string | undefined;
 };
 

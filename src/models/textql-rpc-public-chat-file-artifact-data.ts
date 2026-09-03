@@ -20,9 +20,6 @@ export type TextqlRpcPublicChatFileArtifactData = {
    * Cell ID or composite "cellId:type:url" for multi-artifact cells
    */
   url?: string | undefined;
-  /**
-   * Artifact types for drawer items
-   */
   type?: TextqlRpcPublicChatArtifactType | undefined;
 };
 

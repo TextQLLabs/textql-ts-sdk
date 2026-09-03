@@ -13,10 +13,10 @@ import {
 } from "./textql-rpc-public-patches-config-diagnostic.js";
 
 /**
- * ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
+ * ValidateConfigResponse: ok == true with no diagnostics means functionally valid
  *
  * @remarks
- *  working-tree source is served by the Ana chat-cell tool, not this RPC.
+ *  against current org state — not a merge guarantee.
  */
 export type TextqlRpcPublicPatchesValidateConfigResponse = {
   ok?: boolean | undefined;

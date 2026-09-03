@@ -29,6 +29,9 @@ export type TextqlRpcPublicPatchesPatchDiff = {
   isCopy?: boolean | undefined;
   isRename?: boolean | undefined;
   isDelete?: boolean | undefined;
+  /**
+   * optional: provide full file content for easy navigation
+   */
   oldContent?: string | null | undefined;
   newContent?: string | null | undefined;
 };

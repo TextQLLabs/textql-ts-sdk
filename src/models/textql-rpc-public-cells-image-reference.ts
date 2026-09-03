@@ -11,6 +11,7 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicCellsImageReference = {
   name?: string | undefined;
   url?: string | undefined;
+  artifactId?: string | undefined;
 };
 
 /** @internal */
@@ -20,6 +21,7 @@ export const TextqlRpcPublicCellsImageReference$inboundSchema: z.ZodMiniType<
 > = z.object({
   name: types.optional(types.string()),
   url: types.optional(types.string()),
+  artifactId: types.optional(types.string()),
 });
 
 export function textqlRpcPublicCellsImageReferenceFromJSON(
