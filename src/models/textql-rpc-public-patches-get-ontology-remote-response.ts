@@ -14,7 +14,7 @@ import {
 
 export type TextqlRpcPublicPatchesGetOntologyRemoteResponse = {
   /**
-   * Deprecated: use SetOntologyOwnersResponse.
+   * Deprecated: use SetOntologyOwnersRequest.
    */
   remote?: TextqlRpcPublicPatchesOntologyRemote | undefined;
   hostedGithubAppAvailable?: boolean | undefined;

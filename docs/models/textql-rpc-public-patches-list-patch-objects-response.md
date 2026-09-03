@@ -1,7 +1,5 @@
 # TextqlRpcPublicPatchesListPatchObjectsResponse
 
-ListPatchObjectsRequest inspects the config objects at a patch's git ref.
-
 ## Example Usage
 
 ```typescript
@@ -14,4 +12,4 @@ let value: TextqlRpcPublicPatchesListPatchObjectsResponse = {};
 
 | Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `objects`                                                                                         | [models.TextqlRpcPublicPatchesPatchObject](../models/textql-rpc-public-patches-patch-object.md)[] | :heavy_minus_sign:                                                                                | git ref of the patch to inspect                                                                   |
+| `objects`                                                                                         | [models.TextqlRpcPublicPatchesPatchObject](../models/textql-rpc-public-patches-patch-object.md)[] | :heavy_minus_sign:                                                                                | N/A                                                                                               |

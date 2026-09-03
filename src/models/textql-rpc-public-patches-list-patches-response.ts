@@ -19,14 +19,6 @@ import {
 export type TextqlRpcPublicPatchesListPatchesResponse = {
   patches?: Array<TextqlRpcPublicPatchesPatch> | undefined;
   nextPageToken?: string | null | undefined;
-  /**
-   * PatchCapabilities describes which patch actions the calling member is
-   *
-   * @remarks
-   *  permitted to perform. This is a read-only mirror of the authority checks in
-   *  ApprovePatch and DenyPatch; computing it has no side effects and emits no
-   *  audit log.
-   */
   counts?: TextqlRpcPublicPatchesPatchStatusCounts | undefined;
 };
 

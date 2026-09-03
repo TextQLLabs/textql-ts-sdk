@@ -12,9 +12,12 @@ import {
   TextqlRpcPublicPatchesOntologyRemote$inboundSchema,
 } from "./textql-rpc-public-patches-ontology-remote.js";
 
+/**
+ * Deprecated: use SetOntologyOwnersRequest with an empty entry set.
+ */
 export type TextqlRpcPublicPatchesConfigureOntologyRemoteResponse = {
   /**
-   * Deprecated: use SetOntologyOwnersResponse.
+   * Deprecated: use SetOntologyOwnersRequest.
    */
   remote?: TextqlRpcPublicPatchesOntologyRemote | undefined;
 };

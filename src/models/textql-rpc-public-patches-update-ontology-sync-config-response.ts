@@ -14,7 +14,7 @@ import {
 
 export type TextqlRpcPublicPatchesUpdateOntologySyncConfigResponse = {
   /**
-   * Deprecated: use SetOntologyOwnersResponse.
+   * Deprecated: use SetOntologyOwnersRequest.
    */
   remote?: TextqlRpcPublicPatchesOntologyRemote | undefined;
 };

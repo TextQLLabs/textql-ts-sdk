@@ -775,6 +775,8 @@ export * from "./textql-rpc-public-patches-get-patch-capabilities-response.js";
 export * from "./textql-rpc-public-patches-get-patch-request.js";
 export * from "./textql-rpc-public-patches-get-raw-patch-request.js";
 export * from "./textql-rpc-public-patches-get-raw-patch-response.js";
+export * from "./textql-rpc-public-patches-get-skill-request.js";
+export * from "./textql-rpc-public-patches-get-skill-response.js";
 export * from "./textql-rpc-public-patches-get-usage-details-for-file-request.js";
 export * from "./textql-rpc-public-patches-get-usage-details-for-file-response.js";
 export * from "./textql-rpc-public-patches-github-installation-repo.js";

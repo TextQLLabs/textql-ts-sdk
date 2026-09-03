@@ -4,13 +4,7 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * PatchObject is one config object parsed from a patch ref.
- */
 export type TextqlRpcPublicPatchesGetPatchCapabilitiesRequest = {
-  /**
-   * Library path of the file that defines the object
-   */
   patchId?: string | undefined;
 };
 

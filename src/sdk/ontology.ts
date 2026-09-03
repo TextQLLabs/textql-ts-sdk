@@ -32,6 +32,7 @@ import { ontologyGetPatch } from "../funcs/ontology-get-patch.js";
 import { ontologyGetRawPatch } from "../funcs/ontology-get-raw-patch.js";
 import { ontologyGetRemote } from "../funcs/ontology-get-remote.js";
 import { ontologyGetSizeTimeline } from "../funcs/ontology-get-size-timeline.js";
+import { ontologyGetSkill } from "../funcs/ontology-get-skill.js";
 import { ontologyGetSyncConflicts } from "../funcs/ontology-get-sync-conflicts.js";
 import { ontologyGetUsageDetailsForFile } from "../funcs/ontology-get-usage-details-for-file.js";
 import { ontologyGetUsageSummary } from "../funcs/ontology-get-usage-summary.js";
@@ -571,6 +572,20 @@ export class Ontology extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.OntologyManagementServiceGetRawPatchResponse> {
     return unwrapAsync(ontologyGetRawPatch(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * GetSkill
+   */
+  async getSkill(
+    request: operations.OntologyManagementServiceGetSkillRequest,
+    options?: RequestOptions,
+  ): Promise<operations.OntologyManagementServiceGetSkillResponse> {
+    return unwrapAsync(ontologyGetSkill(
       this,
       request,
       options,

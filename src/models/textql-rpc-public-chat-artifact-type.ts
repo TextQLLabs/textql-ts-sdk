@@ -6,9 +6,6 @@ import * as z from "zod/v4-mini";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
-/**
- * Artifact types for drawer items
- */
 export const TextqlRpcPublicChatArtifactType = {
   ArtifactTypeUnknown: "ARTIFACT_TYPE_UNKNOWN",
   ArtifactTypeImage: "ARTIFACT_TYPE_IMAGE",
@@ -27,9 +24,6 @@ export const TextqlRpcPublicChatArtifactType = {
   ArtifactTypeSkill: "ARTIFACT_TYPE_SKILL",
   ArtifactTypePatchDiff: "ARTIFACT_TYPE_PATCH_DIFF",
 } as const;
-/**
- * Artifact types for drawer items
- */
 export type TextqlRpcPublicChatArtifactType = OpenEnum<
   typeof TextqlRpcPublicChatArtifactType
 >;

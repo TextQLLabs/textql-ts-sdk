@@ -17,6 +17,14 @@ import {
 } from "./textql-rpc-public-patches-patch-status.js";
 
 export type TextqlRpcPublicPatchesGetPatchCapabilitiesResponse = {
+  /**
+   * PatchCapabilities describes which patch actions the calling member is
+   *
+   * @remarks
+   *  permitted to perform. This is a read-only mirror of the authority checks in
+   *  ApprovePatch and DenyPatch; computing it has no side effects and emits no
+   *  audit log.
+   */
   capabilities?: TextqlRpcPublicPatchesPatchCapabilities | undefined;
   status?: TextqlRpcPublicPatchesPatchStatus | undefined;
 };

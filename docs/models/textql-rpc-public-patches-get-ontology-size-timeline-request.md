@@ -1,7 +1,5 @@
 # TextqlRpcPublicPatchesGetOntologySizeTimelineRequest
 
-copied from google.type.Date; not available in buf's google/protobuf/*
-
 ## Example Usage
 
 ```typescript

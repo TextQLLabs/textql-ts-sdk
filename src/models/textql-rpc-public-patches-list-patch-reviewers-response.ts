@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-patches-patch-reviewer.js";
 
 export type TextqlRpcPublicPatchesListPatchReviewersResponse = {
+  /**
+   * Code owners first, then admins, matching the sidebar's display order.
+   */
   reviewers?: Array<TextqlRpcPublicPatchesPatchReviewer> | undefined;
 };
 

@@ -19,10 +19,13 @@ import {
 export type TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse = {
   patch?: TextqlRpcPublicPatchesPatch | undefined;
   /**
-   * Ontology-relative path the config file was placed at.
+   * Ontology-relative paths of the config files in the patch.
    */
   filePaths?: Array<string> | undefined;
   skipped?: Array<TextqlRpcPublicPatchesSkippedConfigExport> | undefined;
+  /**
+   * Objects excluded up front because a config file already manages them.
+   */
   alreadyManagedCount?: number | undefined;
 };
 

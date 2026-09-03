@@ -218,6 +218,7 @@ export * from "./ontology-management-service-get-patch-by-number.js";
 export * from "./ontology-management-service-get-patch-capabilities.js";
 export * from "./ontology-management-service-get-patch.js";
 export * from "./ontology-management-service-get-raw-patch.js";
+export * from "./ontology-management-service-get-skill.js";
 export * from "./ontology-management-service-get-usage-details-for-file.js";
 export * from "./ontology-management-service-list-approval-rules.js";
 export * from "./ontology-management-service-list-chats-for-file.js";

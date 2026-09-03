@@ -11,7 +11,7 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicPatchesGoldenEntry = {
   path?: string | undefined;
   /**
-   * deprecated: use connector_ids
+   * backend
    */
   setByMemberId?: string | undefined;
   /**

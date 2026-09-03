@@ -14,3 +14,4 @@ let value: TextqlRpcPublicCellsImageReference = {};
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `name`             | *string*           | :heavy_minus_sign: | N/A                |
 | `url`              | *string*           | :heavy_minus_sign: | N/A                |
+| `artifactId`       | *string*           | :heavy_minus_sign: | N/A                |

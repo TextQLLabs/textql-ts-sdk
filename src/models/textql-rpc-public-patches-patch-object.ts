@@ -9,14 +9,23 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * ValidateConfigResponse: ok == true with no diagnostics means functionally valid
- *
- * @remarks
- *  against current org state — not a merge guarantee.
+ * PatchObject is one config object parsed from a patch ref.
  */
 export type TextqlRpcPublicPatchesPatchObject = {
+  /**
+   * Library path of the file that defines the object
+   */
   path?: string | undefined;
+  /**
+   * resolved display name
+   */
   name?: string | undefined;
+  /**
+   * type is the granular object type: "playbook", "dashboard/streamlit",
+   *
+   * @remarks
+   *  "dashboard/dash" (the dashboard subtype is load-bearing for previewability).
+   */
   type?: string | undefined;
 };
 

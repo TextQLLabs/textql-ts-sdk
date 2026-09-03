@@ -8,14 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * PatchCapabilities describes which patch actions the calling member is
- *
- * @remarks
- *  permitted to perform. This is a read-only mirror of the authority checks in
- *  ApprovePatch and DenyPatch; computing it has no side effects and emits no
- *  audit log.
- */
 export type TextqlRpcPublicPatchesPatchStatusCounts = {
   open?: number | undefined;
   draftMine?: number | undefined;

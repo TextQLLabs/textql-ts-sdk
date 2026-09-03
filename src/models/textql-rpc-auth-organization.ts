@@ -272,9 +272,14 @@ export type TextqlRpcAuthOrganization = {
   googleConnectorEnabled?: boolean | null | undefined;
   hideApiConnectors?: boolean | null | undefined;
   fastModeEnabled?: boolean | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   maxThinkingEnabled?: boolean | null | undefined;
+  configurableThinkingEnabled?: boolean | null | undefined;
   sandboxStateRetentionDays?: number | null | undefined;
   sandboxLeaseConfigEnabled?: boolean | null | undefined;
+  voiceInputEnabled?: boolean | null | undefined;
   deleteInactiveThreadsEnabled?: boolean | null | undefined;
   threadRetentionDays?: number | null | undefined;
   threadHardDeleteGraceDays?: number | null | undefined;
@@ -444,8 +449,10 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   hideApiConnectors: z.optional(z.nullable(types.boolean())),
   fastModeEnabled: z.optional(z.nullable(types.boolean())),
   maxThinkingEnabled: z.optional(z.nullable(types.boolean())),
+  configurableThinkingEnabled: z.optional(z.nullable(types.boolean())),
   sandboxStateRetentionDays: z.optional(z.nullable(types.number())),
   sandboxLeaseConfigEnabled: z.optional(z.nullable(types.boolean())),
+  voiceInputEnabled: z.optional(z.nullable(types.boolean())),
   deleteInactiveThreadsEnabled: z.optional(z.nullable(types.boolean())),
   threadRetentionDays: z.optional(z.nullable(types.number())),
   threadHardDeleteGraceDays: z.optional(z.nullable(types.number())),

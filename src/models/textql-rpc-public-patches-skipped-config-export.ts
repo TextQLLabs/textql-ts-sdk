@@ -8,14 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
- *
- * @remarks
- *  object of the type the caller can read (and that has no config history) into
- *  ONE open patch. Objects the config format cannot express are skipped with a
- *  per-object reason rather than failing the batch.
- */
 export type TextqlRpcPublicPatchesSkippedConfigExport = {
   objectId?: string | undefined;
   objectName?: string | undefined;

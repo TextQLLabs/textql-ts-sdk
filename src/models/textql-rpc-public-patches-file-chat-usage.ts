@@ -9,9 +9,6 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicPatchesFileChatUsage = {
-  /**
-   * default 7d
-   */
   chatId?: string | undefined;
   title?: string | undefined;
   /**
