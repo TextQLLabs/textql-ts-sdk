@@ -16,10 +16,8 @@ type Props = {
 const MARKER_BADGE =
 	'mt-px flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-fill px-1 text-[10.5px] font-bold text-muted tabular-nums';
 
-/**
- * Every citation in the chat, as the preview panel's Citations tab. Clicking an
- * inline marker opens the panel here and selects that row.
- */
+/** The panel's Citations tab: every citation in the chat. An inline marker
+ *  click lands here with its own row selected. */
 export function CitationList({ citations, selectedKey }: Props) {
 	const connectors = useConnectorMap();
 	const selectedRef = useRef<HTMLLIElement | null>(null);

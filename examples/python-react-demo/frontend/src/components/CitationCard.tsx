@@ -20,10 +20,8 @@ type Props = CitationCardPlacement & {
 	onPointerLeave: () => void;
 };
 
-/**
- * Hover card for one inline marker: where the figure came from, the step that
- * produced it, and the model's own one-line reason for citing it.
- */
+/** Hover card for one inline marker: source, producing step, and the model's
+ *  own reason for citing it. */
 export function CitationCard({ citation, top, left, below, onPointerEnter, onPointerLeave }: Props) {
 	const connectors = useConnectorMap();
 	const source = citationSource(citation, connectors);

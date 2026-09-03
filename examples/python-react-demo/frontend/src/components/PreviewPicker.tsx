@@ -24,11 +24,8 @@ type Props = {
 	citationCount: number;
 };
 
-/**
- * The panel's "+" — one menu over everything it can show, grouped so the
- * chat-wide views (citations, timeline) sit apart from the run's files. Tabs
- * accumulate as you open them, so this is also how you get a closed one back.
- */
+/** The panel's "+": one menu over everything it can show. Tabs accumulate as
+ *  you open them, so this is also how a closed one comes back. */
 export function PreviewPicker({ catalog, citationCount }: Props) {
 	const [open, setOpen] = useState(false);
 	const [query, setQuery] = useState('');

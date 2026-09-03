@@ -11,11 +11,8 @@ import {
 } from './cells';
 
 /**
- * The chat's run, reconstructed from its cells — the demo's version of the
- * product's thread timeline. Cells are all we have here (the real panel also
- * pulls per-completion LLM timings over RPC), so a step's duration is its
- * reported `executionTimeMs`, or the wall-clock gap to the next cell when the
- * cell doesn't report one.
+ * Cells are all the demo has (the product also pulls per-completion LLM timings
+ * over RPC), so a step lasts its `executionTimeMs`, else the gap to the next cell.
  */
 
 /** Matches the product's lanes: LLM indigo, queries green, tools amber. */

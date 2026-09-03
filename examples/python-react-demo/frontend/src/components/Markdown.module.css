@@ -163,10 +163,8 @@
 	color: var(--color-muted);
 }
 
-/* Inline citation marker. Injected as DOM by `citationMarkers.ts`, so it is
-   styled from here rather than with utilities: the element never passes
-   through JSX. Number by default, link glyph on hover — one grid cell, two
-   layers, so the pill never changes width. */
+/* Injected as DOM by `citationMarkers.ts`, so it can't carry utilities. Number
+   and glyph share one grid cell, so hovering never changes the pill's width. */
 .md :global(.citation-marker) {
 	display: inline-grid;
 	place-items: center;

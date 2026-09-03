@@ -5,11 +5,8 @@ import { connectorIconSrc } from './connectorIcons';
 import { type ConnectorItem } from './connectorsCache';
 import type { IconComponent } from './icon';
 
-/**
- * What a citation is attributed to. The source is where the data came from —
- * the connector behind the upstream SQL — not the cell type that last touched
- * it, so the connector wins over the "SQL"/"Python" kind whenever it resolves.
- */
+/** The source is the connector behind the upstream SQL, not the cell type that
+ *  last touched the data — so a resolved connector beats the SQL/Python kind. */
 export type CitationSource = {
 	/** Dedupe key: one chip per distinct source, not per citation. */
 	key: string;
@@ -48,7 +45,6 @@ export function citationSource(
 	return connectorSource(citation.connectorId, connectors) ?? kindSource(citation);
 }
 
-/** The distinct sources behind a set of citations, for the stacked-icon chip. */
 export function distinctSources(
 	citations: CitationView[],
 	connectors: Map<number, ConnectorItem>

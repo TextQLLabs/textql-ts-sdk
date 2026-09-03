@@ -130,9 +130,8 @@ export const Markdown = memo(function Markdown({
 	const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 	const [card, setCard] = useState<CitationCardPlacement | null>(null);
 
-	// Read at click time: a marker outlives the render that built it, and the
-	// decoration is skipped while the citations are unchanged, so the listener
-	// must not close over the handler it was given.
+	// Read at click time: markers outlive the render that built them, and the
+	// decoration is skipped while the citations are unchanged.
 	const clickHandler = useRef(onCitationClick);
 	useEffect(() => {
 		clickHandler.current = onCitationClick;
@@ -166,11 +165,8 @@ export const Markdown = memo(function Markdown({
 		[]
 	);
 
-	/**
-	 * Built as DOM rather than JSX because the marker has to land *inside* the
-	 * rendered HTML, between two words of a paragraph React does not own. The
-	 * link glyph is cloned out of the hidden lucide instance below.
-	 */
+	/** DOM rather than JSX: the marker lands between two words of a paragraph
+	 *  React doesn't own. The glyph is cloned from the hidden lucide instance. */
 	const buildMarker = useCallback(
 		(citation: CitationView) => {
 			const marker = document.createElement('button');

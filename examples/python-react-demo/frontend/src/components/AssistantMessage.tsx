@@ -14,7 +14,6 @@ type Props = {
 	live: boolean;
 };
 
-/** One block of assistant prose, plus the sources it cited. */
 export function AssistantMessage({ cell, turnCells, live }: Props) {
 	const citations = useMemo(() => buildCitationViews(cell, turnCells), [cell, turnCells]);
 

@@ -31,7 +31,6 @@ function turnSummary(turn: TimelineTurn): string {
 	return parts.join(' · ');
 }
 
-/** Bar for one step, positioned within the run's total active time. */
 function StepBar({ step, totalMs }: { step: TimelineStep; totalMs: number }) {
 	if (totalMs <= 0) return null;
 	const left = (step.startMs / totalMs) * 100;
@@ -51,12 +50,8 @@ function StepBar({ step, totalMs }: { step: TimelineStep; totalMs: number }) {
 	);
 }
 
-/**
- * The chat's run: how long it took, where the time went, and every step in
- * order. Ported from the product's thread insights Timeline tab — bars are laid
- * end-to-end by measured duration, so the window is active work, not wall clock
- * (idle time between messages would otherwise dwarf everything else).
- */
+/** Bars are laid end-to-end by measured duration, so the window is active work,
+ *  not wall clock — idle time between messages would dwarf everything else. */
 export function TimelinePanel({ cells }: { cells: CellLike[] }) {
 	const timeline = useMemo(() => buildTimeline(cells), [cells]);
 	const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());

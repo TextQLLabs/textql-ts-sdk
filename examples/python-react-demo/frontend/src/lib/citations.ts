@@ -1,11 +1,8 @@
 import { asRecords, asString, asStrings, getCellPayload, getCellToolSummary, type CellLike } from './cells';
 
 /**
- * Citations ride along on a markdown cell: the agent writes inline
- * `[[tqlcite …]]` markers, the API strips them out of `content` before the
- * delta ships, and what reaches us is this list plus the `anchor` text each one
- * was attached to. Placing the numbered marker back into the rendered prose is
- * therefore a client job — see `citationMarkers.ts`.
+ * The API strips the agent's inline `[[tqlcite …]]` markers out of `content`
+ * and sends this instead, so re-placing them is a client job (citationMarkers).
  */
 export type CitationLineageNode = {
 	cellId: string;
@@ -27,14 +24,13 @@ export type Citation = {
 	lineage: CitationLineageNode[];
 };
 
-/** A citation plus what the UI shows around it. */
 export type CitationView = Citation & {
 	key: string;
 	/** The answer this citation belongs to, for grouping the chat-wide list. */
 	cellId: string;
 	/** 1-based; the number drawn in the inline marker. */
 	marker: number;
-	/** Summary of the cell that produced the figure, when it is still in the turn. */
+	/** Producing cell's summary; empty when that cell is outside the turn. */
 	sourceSummary: string;
 	/** First SQL connector in the lineage — the source's real origin. */
 	connectorId?: number;
@@ -69,10 +65,8 @@ function toCitation(raw: Record<string, unknown>): Citation {
 const EMPTY: Citation[] = [];
 const CITATIONS = new WeakMap<CellLike, Citation[]>();
 
-/**
- * Memoized per cell object so the coerced array keeps its identity across the
- * renders one stream event triggers — the marker decoration is keyed on it.
- */
+/** Memoized per cell: the marker decoration is keyed on the array's identity,
+ *  which must survive the renders one stream event triggers. */
 export function getCitations(cell: CellLike): Citation[] {
 	const cached = CITATIONS.get(cell);
 	if (cached) return cached;
@@ -94,10 +88,8 @@ function sqlConnectorId(citation: Citation): number | undefined {
 
 const EMPTY_VIEWS: CitationView[] = [];
 
-/**
- * `turnCells` is the whole assistant turn, which is where the producing cell's
- * summary comes from: a citation names its source cell by id, not by title.
- */
+/** `turnCells` resolves `sourceCellId` to a summary — a citation names its
+ *  producing cell by id, not by title. */
 export function buildCitationViews(cell: CellLike, turnCells: CellLike[]): CitationView[] {
 	const citations = getCitations(cell);
 	if (citations.length === 0) return EMPTY_VIEWS;
@@ -117,7 +109,6 @@ export function buildCitationViews(cell: CellLike, turnCells: CellLike[]): Citat
 	});
 }
 
-/** Every citation in the chat, in transcript order. */
 export function collectCitations(cells: CellLike[]): CitationView[] {
 	return cells.flatMap((cell) => buildCitationViews(cell, cells));
 }
@@ -129,7 +120,6 @@ export function lineageKindLabel(citation: Citation): string {
 	return 'Source';
 }
 
-/** Tables and dataframes the claim passed through, deduped, in lineage order. */
 export function lineageTrail(citation: Citation): string[] {
 	const seen = new Set<string>();
 	for (const node of citation.lineage) {

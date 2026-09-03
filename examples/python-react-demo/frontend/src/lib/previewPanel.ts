@@ -23,12 +23,8 @@ export type PreviewItem = {
 	toolSummary?: string | null;
 };
 
-/**
- * Panel tabs that aren't assets. Citations and the timeline are views onto the
- * whole chat rather than a file, so their content is read from the store (see
- * `setInsights`) instead of being carried on the item — but they are tabs like
- * any other, and get the tab bar, width and close behaviour for free.
- */
+/** Tabs that aren't assets. Being views onto the whole chat, their content is
+ *  read from the store (`setInsights`) rather than carried on the item. */
 export const INSIGHT_TYPES = { citations: 'citations', timeline: 'timeline' } as const;
 
 export const INSIGHT_ITEMS: Record<keyof typeof INSIGHT_TYPES, PreviewItem> = {
@@ -428,10 +424,8 @@ class PreviewPanelState extends Store<PanelState> {
 		this.set({ citationKey: key });
 	}
 
-	/**
-	 * What the insight tabs read. Called from the transcript on the same
-	 * debounce as the asset walk, so an open tab follows a streaming answer.
-	 */
+	/** What the insight tabs read. Called on the same debounce as the asset walk,
+	 *  so an open tab follows a streaming answer. */
 	setInsights(input: { citations: CitationView[]; cells: CellLike[]; catalog: PreviewItem[] }) {
 		this.set({
 			citations: input.citations,

@@ -50,13 +50,8 @@ const DATA_CELL = `${CELL} min-w-[96px]`;
 /** Muted, sticky row-number gutter. */
 const ROWNUM =
 	'sticky left-0 w-[1%] max-w-none border-r border-line/55 bg-fill text-right tabular-nums text-muted select-none';
-/**
- * Trailing column that soaks up whatever width the data doesn't need, the way
- * the product's DataTable does. Without it a two-column CSV stretches its text
- * column across the panel and strands the numbers against the far edge; with
- * it, columns sit at their content width and the slack goes here. Collapses to
- * nothing once the table is wide enough to scroll.
- */
+/** Soaks up the width the data doesn't need, as the product's DataTable does:
+ *  without it a two-column CSV strands its numbers against the far edge. */
 const SPACER = 'w-full p-0';
 const EMPTY = cx(CELL_BODY, 'm-0 text-[#a1a1aa]');
 
