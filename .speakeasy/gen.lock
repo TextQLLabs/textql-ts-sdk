@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 1.4.32
-  configChecksum: fd4af967af7eb3a9c7475bd6e2e7d2df
+  releaseVersion: 1.4.33
+  configChecksum: 91bb9fff763723ab496a5efe06d7b439
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: f4e49047-7092-4929-b780-0c997c5cac55
-  pristine_commit_hash: 9629a44086b698dad639c50744bf52c41ee09523
-  pristine_tree_hash: 281eec837f1e6fee4acf6c949cd43adf06a8557e
+  generation_id: f10d9b41-d026-4ff8-b1ce-3695829b295b
+  pristine_commit_hash: 2d1040a91787745b9be681696f208d27d753b251
+  pristine_tree_hash: 59f074def0e5b0b079dcffd9e7b9de992970037e
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -9840,12 +9840,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:7778bc589b4bc20aedd0513977cd8a177f89ba5d
-    pristine_git_object: fb9a11f1a66c70fcee81417c497e771d8252f1df
+    last_write_checksum: sha1:08569b7500b279db1d7bac495d2d7d95ee900f60
+    pristine_git_object: 0609c6ba0eed6499c0f822452a00e184d191765e
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:02995b8588a04757993bc6235372da578b638d35
-    pristine_git_object: ca0f2497d7d441050ea98cfb23133e4dee25688f
+    last_write_checksum: sha1:657d3b6ca542e20be4b71d60919ce77bf7a7f5e4
+    pristine_git_object: e25b5a0123d8b270f853261b731f9a15f8a2fa22
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11508,8 +11508,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:1768048fd7230f76ddff5fc3e4caccedb007c205
-    pristine_git_object: a96f1a0038fa0a6b840b4c4f1fe0f3530d95c3d7
+    last_write_checksum: sha1:d44b4d17204f1db510d30e454e979790de2cc8a8
+    pristine_git_object: 5533628f3ecff0fa0ee1a706ea20b2152f789e6a
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -24498,15 +24498,3 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: |
-  ## Typescript SDK Changes:
-  * `textql.chats.attachApp()`:  `response.cell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.attachDashboard()`:  `response.cell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.attachDataset()`:  `response.cell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.checkStreamlitHealth()`:  `response.cell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.getHistory()`:  `response.cells[].union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.queryOneShot()`:  `response.cells[].union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.chats.run()`:  `response.cells[].union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
-  * `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(list_apps_cell).listAppsCell.apps[]` **Changed**
