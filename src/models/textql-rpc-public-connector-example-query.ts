@@ -21,10 +21,10 @@ import {
 } from "./textql-rpc-public-connector-message-segment.js";
 
 export type TextqlRpcPublicConnectorExampleQuery = {
-  /**
-   * dataset IDs for selected Tableau collections
-   */
   id?: string | undefined;
+  /**
+   * If set, only return queries with this feature type
+   */
   label?: string | undefined;
   message?: string | undefined;
   isMultiSource?: boolean | undefined;

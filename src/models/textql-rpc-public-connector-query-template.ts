@@ -22,7 +22,13 @@ export type EventCount = number | string;
 export type TextqlRpcPublicConnectorQueryTemplate = {
   templateId?: string | undefined;
   normalizedSql?: string | undefined;
+  /**
+   * 0.0-1.0
+   */
   tables?: Array<string> | undefined;
+  /**
+   * milliseconds
+   */
   joins?: Array<TextqlRpcPublicConnectorQueryJoinInfo> | undefined;
   eventCount?: number | string | undefined;
   /**

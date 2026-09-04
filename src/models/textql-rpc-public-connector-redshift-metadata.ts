@@ -14,6 +14,13 @@ export type TextqlRpcPublicConnectorRedshiftMetadata = {
   user?: string | undefined;
   password?: string | undefined;
   database?: string | undefined;
+  /**
+   * Set on responses: secret_id, role_arn and external_id have been blanked.
+   *
+   * @remarks
+   *  Echo the ref back with all three still blank on update to keep the stored
+   *  ones; setting any of them replaces the location and requires secret_id.
+   */
   schemas?: Array<string> | undefined;
   dialect?: string | undefined;
   sslMode?: boolean | undefined;

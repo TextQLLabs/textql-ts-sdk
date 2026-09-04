@@ -10,6 +10,13 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicConnectorPrimaryKeyMetadata = {
   columns?: Array<string> | undefined;
+  /**
+   * Optional: If provided, confidential fields will be preserved from the existing connector
+   *
+   * @remarks
+   *  when the corresponding field in config is empty. This allows testing updates without
+   *  requiring the user to re-enter credentials.
+   */
   descriptions?: Array<string> | undefined;
 };
 

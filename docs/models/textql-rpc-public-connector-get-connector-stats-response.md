@@ -1,5 +1,7 @@
 # TextqlRpcPublicConnectorGetConnectorStatsResponse
 
+A segment of an example query message - either plain text or a styled feature word
+
 ## Example Usage
 
 ```typescript
@@ -18,4 +20,4 @@ let value: TextqlRpcPublicConnectorGetConnectorStatsResponse = {
 
 | Field                                                                                                                | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          |
 | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `stats`                                                                                                              | [models.TextqlRpcPublicConnectorConnectorStatEntry](../models/textql-rpc-public-connector-connector-stat-entry.md)[] | :heavy_minus_sign:                                                                                                   | N/A                                                                                                                  |
+| `stats`                                                                                                              | [models.TextqlRpcPublicConnectorConnectorStatEntry](../models/textql-rpc-public-connector-connector-stat-entry.md)[] | :heavy_minus_sign:                                                                                                   | The text content of this segment                                                                                     |

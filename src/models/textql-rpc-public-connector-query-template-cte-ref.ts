@@ -9,6 +9,9 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicConnectorQueryTemplateCteRef = {
+  /**
+   * 0 = all-time
+   */
   templateId?: string | undefined;
   cteName?: string | undefined;
 };

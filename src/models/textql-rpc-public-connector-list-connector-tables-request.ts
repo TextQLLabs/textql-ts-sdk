@@ -5,9 +5,6 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicConnectorListConnectorTablesRequest = {
-  /**
-   * Apache Arrow IPC format binary data
-   */
   connectorId?: number | undefined;
 };
 

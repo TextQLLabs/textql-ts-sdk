@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-connector-example-query.js";
 
 export type TextqlRpcPublicConnectorGetExampleQueriesResponse = {
-  /**
-   * PowerBI report IDs
-   */
   examples?: Array<TextqlRpcPublicConnectorExampleQuery> | undefined;
 };
 

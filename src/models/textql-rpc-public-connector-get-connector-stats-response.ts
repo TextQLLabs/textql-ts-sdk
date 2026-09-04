@@ -12,7 +12,13 @@ import {
   TextqlRpcPublicConnectorConnectorStatEntry$inboundSchema,
 } from "./textql-rpc-public-connector-connector-stat-entry.js";
 
+/**
+ * A segment of an example query message - either plain text or a styled feature word
+ */
 export type TextqlRpcPublicConnectorGetConnectorStatsResponse = {
+  /**
+   * The text content of this segment
+   */
   stats?: Array<TextqlRpcPublicConnectorConnectorStatEntry> | undefined;
 };
 
