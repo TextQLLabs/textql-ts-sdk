@@ -9,26 +9,17 @@ import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * If set, this is a feature word to be styled
- */
 export type TextqlRpcPublicConnectorConnectorStatEntryQueryCount =
   | number
   | string;
 
 export type AvgQueryTimeMs = number | string;
 
-/**
- * A segment of an example query message - either plain text or a styled feature word
- */
 export type TextqlRpcPublicConnectorConnectorStatEntry = {
   /**
-   * The text content of this segment
+   * dataset IDs for selected Tableau collections
    */
   connectorId?: number | undefined;
-  /**
-   * If set, this is a feature word to be styled
-   */
   queryCount?: number | string | undefined;
   errorRate?: number | undefined;
   avgQueryTimeMs?: number | string | undefined;

@@ -10,9 +10,6 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicConnectorPowerBIConnectorContext = {
   reportIds?: Array<string> | undefined;
-  /**
-   * If set, only return queries with this feature type
-   */
   datasetIds?: Array<string> | undefined;
   collectionIds?: Array<string> | undefined;
 };

@@ -19017,6 +19017,7 @@ components:
         status:
           type: string
           title: status
+          deprecated: true
         creatorId:
           type: string
           title: creator_id
@@ -19033,7 +19034,15 @@ components:
         publishedAt:
           title: published_at
           nullable: true
+          deprecated: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
+        scheduleEnabled:
+          type: boolean
+          title: schedule_enabled
+        cronString:
+          type: string
+          title: cron_string
+          nullable: true
       title: AppInfo
       additionalProperties: false
     textql.rpc.public.cells.BashCell:
@@ -25297,14 +25306,13 @@ components:
           type: integer
           title: connector_id
           format: int32
-          description: The text content of this segment
+          description: dataset IDs for selected Tableau collections
         queryCount:
           type:
             - integer
             - string
           title: query_count
           format: int64
-          description: If set, this is a feature word to be styled
         errorRate:
           type: number
           title: error_rate
@@ -25328,7 +25336,6 @@ components:
           format: int32
       title: ConnectorStatEntry
       additionalProperties: false
-      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.ConnectorTable:
       type: object
       properties:
@@ -25606,10 +25613,10 @@ components:
         id:
           type: string
           title: id
-          description: dataset IDs for selected Tableau collections
         label:
           type: string
           title: label
+          description: If set, only return queries with this feature type
         message:
           type: string
           title: message
@@ -25846,6 +25853,7 @@ components:
           type: integer
           title: days
           format: int32
+          description: PowerBI report IDs
       title: GetConnectorStatsRequest
       additionalProperties: false
     textql.rpc.public.connector.GetConnectorStatsResponse:
@@ -25856,8 +25864,10 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorStatEntry'
           title: stats
+          description: The text content of this segment
       title: GetConnectorStatsResponse
       additionalProperties: false
+      description: A segment of an example query message - either plain text or a styled feature word
     textql.rpc.public.connector.GetConnectorUsageRequest:
       type: object
       properties:
@@ -25933,7 +25943,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.ExampleQuery'
           title: examples
-          description: PowerBI report IDs
       title: GetExampleQueriesResponse
       additionalProperties: false
     textql.rpc.public.connector.GetTablePreviewRequest:
@@ -26098,7 +26107,6 @@ components:
           type: integer
           title: connector_id
           format: int32
-          description: Apache Arrow IPC format binary data
       title: ListConnectorTablesRequest
       additionalProperties: false
     textql.rpc.public.connector.ListConnectorTablesResponse:
@@ -26125,16 +26133,17 @@ components:
           type: integer
           title: limit
           format: int32
+          description: Display name (e.g., "Explore Data")
         offset:
           type: integer
           title: offset
           format: int32
-          description: 0.0-1.0
+          description: Query text to send (plain text, no formatting)
         days:
           type: integer
           title: days
           format: int32
-          description: milliseconds
+          description: True if requires multiple connectors
       title: ListQueryTemplatesRequest
       additionalProperties: false
     textql.rpc.public.connector.ListQueryTemplatesResponse:
@@ -26145,7 +26154,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.QueryTemplate'
           title: templates
-          description: 0 = all-time
         totalCount:
           type: integer
           title: total_count
@@ -26381,7 +26389,6 @@ components:
           items:
             type: string
           title: dataset_ids
-          description: If set, only return queries with this feature type
         collectionIds:
           type: array
           items:
@@ -26424,6 +26431,10 @@ components:
           items:
             type: string
           title: descriptions
+          description: |-
+            Optional: If provided, confidential fields will be preserved from the existing connector
+             when the corresponding field in config is empty. This allows testing updates without
+             requiring the user to re-enter credentials.
       title: PrimaryKeyMetadata
       additionalProperties: false
     textql.rpc.public.connector.QueryJoinInfo:
@@ -26468,11 +26479,13 @@ components:
           items:
             type: string
           title: tables
+          description: 0.0-1.0
         joins:
           type: array
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.QueryJoinInfo'
           title: joins
+          description: milliseconds
         eventCount:
           type:
             - integer
@@ -26502,6 +26515,7 @@ components:
         templateId:
           type: string
           title: template_id
+          description: 0 = all-time
         cteName:
           type: string
           title: cte_name
@@ -26531,6 +26545,10 @@ components:
           items:
             type: string
           title: schemas
+          description: |-
+            Set on responses: secret_id, role_arn and external_id have been blanked.
+             Echo the ref back with all three still blank on update to keep the stored
+             ones; setting any of them replaces the location and requires secret_id.
         dialect:
           type: string
           title: dialect

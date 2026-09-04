@@ -12,6 +12,9 @@ export type TextqlRpcPublicCellsAppInfo = {
   id?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   status?: string | undefined;
   creatorId?: string | undefined;
   /**
@@ -390,6 +393,8 @@ export type TextqlRpcPublicCellsAppInfo = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   publishedAt?: Date | undefined;
+  scheduleEnabled?: boolean | undefined;
+  cronString?: string | null | undefined;
 };
 
 /** @internal */
@@ -406,6 +411,8 @@ export const TextqlRpcPublicCellsAppInfo$inboundSchema: z.ZodMiniType<
   updatedAt: types.optional(types.date()),
   refreshedAt: types.optional(types.date()),
   publishedAt: types.optional(types.date()),
+  scheduleEnabled: types.optional(types.boolean()),
+  cronString: z.optional(z.nullable(types.string())),
 });
 
 export function textqlRpcPublicCellsAppInfoFromJSON(
