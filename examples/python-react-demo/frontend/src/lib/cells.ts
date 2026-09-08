@@ -53,6 +53,15 @@ export function asStrings(value: unknown): string[] {
 }
 
 
+/** Cells by id; id-less cells are unaddressable and left out. */
+export function cellsById(cells: CellLike[]): Map<string, CellLike> {
+	const byId = new Map<string, CellLike>();
+	for (const cell of cells) {
+		if (typeof cell.id === 'string' && cell.id) byId.set(cell.id, cell);
+	}
+	return byId;
+}
+
 export type CellLike = Record<string, unknown> & {
 	id?: string;
 	complete?: boolean;

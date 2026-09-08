@@ -1,7 +1,13 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { ChatPage } from './components/ChatPage';
 import { Toaster } from './primitives';
+
+// Pulls in React Flow; most sessions never open a citation's lineage.
+const CitationLineageModal = lazy(() =>
+	import('./components/CitationLineageModal').then((m) => ({ default: m.CitationLineageModal }))
+);
 
 /**
  * `ChatPage` is the whole shell — sidebar, conversation, composer — and the
@@ -13,6 +19,9 @@ export function App() {
 	return (
 		<BrowserRouter>
 			<Toaster />
+			<Suspense fallback={null}>
+				<CitationLineageModal />
+			</Suspense>
 			<Routes>
 				<Route path="/" element={<ChatPage />} />
 				<Route path="/chat/:id" element={<ChatPage />} />

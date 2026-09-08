@@ -51,9 +51,22 @@ the prose is a client job — `src/lib/citationMarkers.ts` finds the anchor in t
 rendered HTML and injects it, matching on exact text first and then on
 letters-and-digits only, since inline markup (`**42%**`) splits the anchor
 across text nodes. Hovering a marker shows the source, the step that produced
-it, and the rationale; clicking one opens the side panel's **Citations** tab
-scrolled to that citation, the way the marker opens thread insights in the
-product. The `N sources` line under a cited answer opens the same tab.
+it, and the rationale; clicking one opens the side panel's **Citations** tab on
+that citation, the way the marker opens thread insights in the product. The
+`N sources` line under a cited answer opens the same tab on the list.
+
+A citation opened in the tab shows its **data lineage**: a graph drawn with
+React Flow (`src/components/lineage/`) from `citation.lineage`, laid out
+connector → tables → SQL result → Python transforms → the cited sentence.
+Each SQL lineage node carries its connector and tables inline, so
+`src/lib/lineageGraph.ts` splits those out into their own nodes and layers the
+rest by longest path from the sources. Nodes backed by a SQL or Python cell in
+the chat are marked *View code*; clicking one, or **Expand**, opens the
+full-window lineage modal, where the same graph sits beside a panel with that
+cell's query or code and its result — the server's `dataframePreview` for SQL,
+parsed back into a table. That modal is the product's `CitationLineageModal`,
+mounted once at the app root and driven by a store so the tab can open it
+without owning it.
 
 Citations only appear when the org has tracing on. `mdCell.citations` is simply
 absent otherwise, and nothing in the transcript changes.

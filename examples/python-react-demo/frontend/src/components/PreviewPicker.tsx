@@ -7,7 +7,14 @@ import { cx } from '../lib/cx';
 import { INSIGHT_ITEMS, previewPanel, type PreviewItem } from '../lib/previewPanel';
 import { useDismissable } from '../lib/useDismissable';
 import type { IconComponent } from '../lib/icon';
-import { FLYOUT, FLYOUT_ROW, FLYOUT_SEARCH, FLYOUT_SECTION, FLYOUT_STATE } from './pageStyles';
+import {
+	FLYOUT,
+	FLYOUT_ROW,
+	FLYOUT_SEARCH,
+	FLYOUT_SECTION,
+	FLYOUT_STATE,
+	PANEL_ICON_BTN
+} from './pageStyles';
 
 type Entry = {
 	item: PreviewItem;
@@ -76,7 +83,7 @@ export function PreviewPicker({ catalog, citationCount }: Props) {
 			<button
 				type="button"
 				className={cx(
-					'inline-flex size-7 cursor-pointer items-center justify-center rounded-[7px] border-0 bg-transparent',
+					PANEL_ICON_BTN,
 					open ? 'bg-ink/6 text-ink' : 'text-[#71717a] hover:bg-ink/5 hover:text-ink'
 				)}
 				aria-label="Open a view"

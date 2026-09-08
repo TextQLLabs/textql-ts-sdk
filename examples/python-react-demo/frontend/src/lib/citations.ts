@@ -1,4 +1,5 @@
 import { asRecords, asString, asStrings, getCellPayload, getCellToolSummary, type CellLike } from './cells';
+import { stripMarkdown } from './utils';
 
 /**
  * The API strips the agent's inline `[[tqlcite …]]` markers out of `content`
@@ -11,6 +12,8 @@ export type CitationLineageNode = {
 	dataframeName: string;
 	connectorId?: number;
 	tables: string[];
+	/** Upstream lineage cells this one read from; edges in the lineage graph. */
+	inputCellIds: string[];
 };
 
 export type Citation = {
@@ -46,7 +49,8 @@ function toLineageNode(node: Record<string, unknown>): CitationLineageNode {
 		kind: asString(node.kind),
 		dataframeName: asString(node.dataframeName),
 		connectorId: asNumber(node.connectorId),
-		tables: asStrings(node.tables)
+		tables: asStrings(node.tables),
+		inputCellIds: asStrings(node.inputCellIds)
 	};
 }
 
@@ -87,26 +91,36 @@ function sqlConnectorId(citation: Citation): number | undefined {
 }
 
 const EMPTY_VIEWS: CitationView[] = [];
+const VIEWS = new WeakMap<CellLike, { signature: string; views: CitationView[] }>();
 
 /** `turnCells` resolves `sourceCellId` to a summary — a citation names its
- *  producing cell by id, not by title. */
+ *  producing cell by id, not by title. Memoized per cell on those summaries:
+ *  the chat is re-walked every stream tick, and an open lineage view would
+ *  otherwise relayout its graph on each one. */
 export function buildCitationViews(cell: CellLike, turnCells: CellLike[]): CitationView[] {
 	const citations = getCitations(cell);
 	if (citations.length === 0) return EMPTY_VIEWS;
-	const cellId = asString(cell.id);
-	return citations.map((citation, index) => {
+	const summaries = citations.map((citation) => {
 		const source = citation.sourceCellId
 			? turnCells.find((candidate) => candidate.id === citation.sourceCellId)
 			: undefined;
-		return {
-			...citation,
-			key: citationKey(citation, cellId, index),
-			cellId,
-			marker: index + 1,
-			sourceSummary: (source && getCellToolSummary(source)) || '',
-			connectorId: sqlConnectorId(citation)
-		};
+		return (source && getCellToolSummary(source)) || '';
 	});
+	const signature = summaries.join('\u0000');
+	const cached = VIEWS.get(cell);
+	if (cached && cached.signature === signature) return cached.views;
+
+	const cellId = asString(cell.id);
+	const views = citations.map((citation, index) => ({
+		...citation,
+		key: citationKey(citation, cellId, index),
+		cellId,
+		marker: index + 1,
+		sourceSummary: summaries[index]!,
+		connectorId: sqlConnectorId(citation)
+	}));
+	VIEWS.set(cell, { signature, views });
+	return views;
 }
 
 export function collectCitations(cells: CellLike[]): CitationView[] {
@@ -120,11 +134,10 @@ export function lineageKindLabel(citation: Citation): string {
 	return 'Source';
 }
 
-export function lineageTrail(citation: Citation): string[] {
-	const seen = new Set<string>();
-	for (const node of citation.lineage) {
-		for (const table of node.tables) seen.add(table);
-		if (node.dataframeName) seen.add(node.dataframeName);
-	}
-	return [...seen];
+/** What a citation is called wherever it is listed: the producing step's
+ *  summary if there is one, else the claim itself. */
+export function citationTitle(citation: CitationView): string {
+	return (
+		stripMarkdown(citation.sourceSummary || citation.claim || citation.anchor) || 'Cited figure'
+	);
 }

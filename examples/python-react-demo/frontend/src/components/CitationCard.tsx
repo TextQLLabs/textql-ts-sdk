@@ -1,9 +1,10 @@
 import { CELL_BODY, CELL_META } from '../lib/cellText';
-import type { CitationView } from '../lib/citations';
+import { citationTitle, type CitationView } from '../lib/citations';
 import { citationSource } from '../lib/citationSource';
 import { useConnectorMap } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import { stripMarkdown } from '../lib/utils';
+import { SourceIcon } from './SourceIcon';
 
 export const CITATION_CARD_WIDTH = 260;
 
@@ -25,8 +26,6 @@ type Props = CitationCardPlacement & {
 export function CitationCard({ citation, top, left, below, onPointerEnter, onPointerLeave }: Props) {
 	const connectors = useConnectorMap();
 	const source = citationSource(citation, connectors);
-	const Icon = source.icon;
-	const title = stripMarkdown(citation.sourceSummary || citation.claim || citation.anchor);
 
 	return (
 		<div
@@ -42,18 +41,12 @@ export function CitationCard({ citation, top, left, below, onPointerEnter, onPoi
 			onPointerLeave={onPointerLeave}
 		>
 			<div className={cx(CELL_META, 'mb-1 flex items-center gap-1.5 text-muted')}>
-				{source.logoUrl ? (
-					<img className="size-3.5 shrink-0 rounded object-contain" src={source.logoUrl} alt="" />
-				) : (
-					Icon && <Icon size={14} className="shrink-0" />
-				)}
+				<SourceIcon source={source} size={14} className="rounded" />
 				<span className="truncate">{source.label}</span>
 			</div>
-			{title && (
-				<div className={cx(CELL_BODY, 'line-clamp-2 font-medium text-ink wrap-anywhere')}>
-					{title}
-				</div>
-			)}
+			<div className={cx(CELL_BODY, 'line-clamp-2 font-medium text-ink wrap-anywhere')}>
+				{citationTitle(citation)}
+			</div>
 			{citation.rationale && (
 				<div className={cx(CELL_BODY, 'mt-1.5 line-clamp-2 text-muted wrap-anywhere')}>
 					{stripMarkdown(citation.rationale)}

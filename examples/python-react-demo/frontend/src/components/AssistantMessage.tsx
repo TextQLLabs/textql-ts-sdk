@@ -23,15 +23,13 @@ export function AssistantMessage({ cell, turnCells, live }: Props) {
 				renderedHtml={live ? '' : asString(getCellPayload(cell).renderedHtml)}
 				content={getCellContent(cell)}
 				citations={citations}
-				// Both the marker and the chip open the panel's Citations tab, which
-				// lists the whole chat; the marker just says which row to land on.
 				onCitationClick={(key) => previewPanel.openCitations(key)}
 			/>
 			{citations.length > 0 && (
 				<div className="mt-1 flex items-start">
 					<CitationSources
 						citations={citations}
-						onOpen={() => previewPanel.openCitations(citations[0]?.key ?? null)}
+						onOpen={() => previewPanel.openCitations(null)}
 					/>
 				</div>
 			)}

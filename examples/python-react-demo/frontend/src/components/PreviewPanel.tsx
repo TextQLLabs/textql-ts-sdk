@@ -16,6 +16,7 @@ import {
 } from '../lib/previewPanel';
 import { PREVIEW_PROXY_PATH, toEmbeddablePreviewUrl } from '../lib/previewUrl';
 import { CellError } from './CellShell';
+import { PANEL_ICON_BTN } from './pageStyles';
 import { CitationList } from './CitationList';
 import { PreviewPicker } from './PreviewPicker';
 import { TimelinePanel } from './TimelinePanel';
@@ -232,6 +233,15 @@ export function PreviewPanel() {
 	const item = previewPanel.selected;
 	const tabs = panel.tabs;
 	const panelRef = useRef<HTMLElement | null>(null);
+	const tabListRef = useRef<HTMLDivElement | null>(null);
+
+	// A newly opened tab is appended, so on a full strip it sits past the
+	// visible end and the user would not see which tab just opened.
+	useEffect(() => {
+		tabListRef.current
+			?.querySelector('[role="tab"][aria-selected="true"]')
+			?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+	}, [item?.id]);
 
 	const rawEmbedUrl = toEmbeddablePreviewUrl(item?.url);
 	const isChart = item ? CHART_TYPES.has(previewKind(item)) : false;
@@ -343,10 +353,13 @@ export function PreviewPanel() {
 		// Insight tabs read the chat off the store: they are views onto the whole
 		// conversation, not a file the item could carry.
 		if (item.previewType === INSIGHT_TYPES.citations) {
-			if (panel.citations.length === 0) {
-				return <p className={EMPTY}>No citations in this chat yet.</p>;
-			}
-			return <CitationList citations={panel.citations} selectedKey={panel.citationKey} />;
+			return (
+				<CitationList
+					citations={panel.citations}
+					cells={panel.insightCells}
+					selectedKey={panel.citationKey}
+				/>
+			);
 		}
 		if (item.previewType === INSIGHT_TYPES.timeline) {
 			return <TimelinePanel cells={panel.insightCells} />;
@@ -438,7 +451,12 @@ export function PreviewPanel() {
 			/>
 
 			<header className="flex min-h-9 items-stretch gap-1 border-b border-line/80 bg-elevate pr-1.5">
-				<div className="flex min-w-0 flex-1 items-stretch overflow-x-auto [scrollbar-width:thin]" role="tablist" aria-label="Open previews">
+				<div
+					className="flex min-w-0 flex-1 items-stretch overflow-x-auto [scrollbar-width:thin]"
+					ref={tabListRef}
+					role="tablist"
+					aria-label="Open previews"
+				>
 					{tabs.map((tab) => (
 						<div
 							key={tab.id}
@@ -489,7 +507,7 @@ export function PreviewPanel() {
 
 				<button
 					type="button"
-					className="inline-flex size-7 shrink-0 cursor-pointer items-center justify-center self-center rounded-[7px] border-0 bg-transparent text-[#71717a] hover:bg-ink/5 hover:text-ink"
+					className={cx(PANEL_ICON_BTN, 'shrink-0 self-center text-[#71717a] hover:bg-ink/5 hover:text-ink')}
 					aria-label="Close preview panel"
 					onClick={() => previewPanel.close()}
 				>

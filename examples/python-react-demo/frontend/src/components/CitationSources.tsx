@@ -3,6 +3,7 @@ import type { CitationView } from '../lib/citations';
 import { distinctSources } from '../lib/citationSource';
 import { useConnectorMap } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
+import { SourceIcon } from './SourceIcon';
 
 type Props = {
 	citations: CitationView[];
@@ -25,21 +26,14 @@ export function CitationSources({ citations, onOpen }: Props) {
 			onClick={onOpen}
 		>
 			<span className="flex items-center -space-x-1.5">
-				{sources.slice(0, 3).map((source) => {
-					const Icon = source.icon;
-					return (
-						<span
-							className="flex size-5 items-center justify-center rounded-full bg-fill ring-2 ring-paper"
-							key={source.key}
-						>
-							{source.logoUrl ? (
-								<img className="size-3 object-contain" src={source.logoUrl} alt="" />
-							) : (
-								Icon && <Icon size={12} />
-							)}
-						</span>
-					);
-				})}
+				{sources.slice(0, 3).map((source) => (
+					<span
+						className="flex size-5 items-center justify-center rounded-full bg-fill ring-2 ring-paper"
+						key={source.key}
+					>
+						<SourceIcon source={source} size={12} />
+					</span>
+				))}
 			</span>
 			<span>
 				{citations.length} {citations.length === 1 ? 'source' : 'sources'}

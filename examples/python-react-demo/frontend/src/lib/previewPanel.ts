@@ -268,7 +268,7 @@ export function cellOpensInPreviewPanel(cell: CellLike): boolean {
 type PanelState = {
 	open: boolean;
 	selectedId: string | null;
-	/** Citation to highlight in the citations tab, set by an inline marker click. */
+	/** The citation the citations tab is open on; null is the list. */
 	citationKey: string | null;
 	/** Every citation in the chat, in transcript order. */
 	citations: CitationView[];
@@ -418,9 +418,13 @@ class PreviewPanelState extends Store<PanelState> {
 		this.set({ selectedId: id, citationKey, open: true });
 	}
 
-	/** Open the citations tab, scrolled to the citation whose marker was clicked. */
+	/** Open the citations tab, on one citation or (null) the list. */
 	openCitations(key: string | null) {
 		this.openItem(INSIGHT_ITEMS.citations);
+		this.set({ citationKey: key });
+	}
+
+	selectCitation(key: string | null) {
 		this.set({ citationKey: key });
 	}
 
