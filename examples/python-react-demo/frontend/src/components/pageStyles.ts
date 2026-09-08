@@ -51,6 +51,10 @@ export const MENU_ITEM =
 /** Spinner shown inside a row; `row-spinner` stays a plain class for parity. */
 export const ROW_SPINNER = 'row-spinner shrink-0 opacity-85';
 
+/** Icon-only button in a panel header (close, picker, dialog close). */
+export const PANEL_ICON_BTN =
+	'inline-flex size-7 cursor-pointer items-center justify-center rounded-[7px] border-0 bg-transparent';
+
 /** Floating menu surface, shared by the composer's flyouts and the panel's
  *  picker so the two read as one control. */
 export const FLYOUT =

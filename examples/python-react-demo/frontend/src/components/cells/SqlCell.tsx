@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { asString as str, getCellExecTime } from '../../lib/cells';
 import { connectorIconSrc } from '../../lib/connectorIcons';
 import { useConnector } from '../../lib/connectorsCache';
-import { CELL_CODE, CELL_META } from '../../lib/cellText';
+import { CELL_META, CODE_PRE } from '../../lib/cellText';
 import { cx } from '../../lib/cx';
+import { useCopyToClipboard } from '../../lib/useCopyToClipboard';
 import { ViewSwitcher, ViewSwitcherList, ViewSwitcherPanel, type View } from '../../primitives';
 import { CellError } from '../CellShell';
 import { PierreCode } from '../PierreCode';
@@ -26,7 +27,7 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 	];
 
 	const [view, setView] = useState(views[0]?.value ?? 'query');
-	const [copied, setCopied] = useState(false);
+	const { copied, copy } = useCopyToClipboard();
 
 	// An unapproved connector is the one thing in this cell the user must act on.
 	const authPending = payload.authRequired === true && payload.authCompleted !== true;
@@ -40,12 +41,6 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 	const meta = [payload.agentMemory === true ? 'Agent memory' : '', time].filter(Boolean);
 
 	if (views.length === 0) return <CellFrame cell={cell} />;
-
-	async function copy() {
-		await navigator.clipboard.writeText(view === 'query' ? query : result);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 1200);
-	}
 
 	const actions = (
 		<>
@@ -71,7 +66,7 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 					'cursor-pointer border-0 bg-transparent p-0 text-muted hover:text-ink'
 				)}
 				aria-label="Copy"
-				onClick={() => void copy()}
+				onClick={() => void copy(view === 'query' ? query : result)}
 			>
 				{copied ? <Check size={12} /> : <Copy size={12} />}
 			</button>
@@ -92,14 +87,7 @@ export function SqlCell({ cell, payload }: CellComponentProps) {
 				</ViewSwitcherPanel>
 
 				<ViewSwitcherPanel value="result">
-					<pre
-						className={cx(
-							CELL_CODE,
-							'm-0 max-h-80 overflow-auto rounded-xs bg-ink/5 px-2.5 py-2 whitespace-pre'
-						)}
-					>
-						{result}
-					</pre>
+					<pre className={cx(CODE_PRE, 'max-h-80')}>{result}</pre>
 				</ViewSwitcherPanel>
 			</CellFrame>
 		</ViewSwitcher>

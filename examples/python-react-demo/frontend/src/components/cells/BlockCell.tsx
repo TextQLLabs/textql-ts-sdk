@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { buildCellBlocks } from '../../lib/cellBlocks';
 import { getCellToolSummary } from '../../lib/cells';
-import { CELL_BODY, CELL_CODE, CELL_LABEL, CELL_META } from '../../lib/cellText';
+import { CELL_BODY, CELL_LABEL, CELL_META, CODE_PRE } from '../../lib/cellText';
 import { cx } from '../../lib/cx';
 import {
 	guessPreviewType,
@@ -13,6 +13,7 @@ import {
 } from '../../lib/previewPanel';
 import { toEmbeddablePreviewUrl } from '../../lib/previewUrl';
 import { CellError } from '../CellShell';
+import { DataframeTable } from '../DataframeTable';
 import { CellFrame } from './CellFrame';
 import { Markdown } from '../Markdown';
 import { PierreCode } from '../PierreCode';
@@ -97,7 +98,7 @@ export function BlockCell({ cell }: CellComponentProps) {
 									lang={block.lang}
 								/>
 							) : (
-								<pre className={cx(CELL_CODE, 'm-0 max-h-80 overflow-auto rounded-xs bg-ink/5 px-2.5 py-2 whitespace-pre')}>
+								<pre className={cx(CODE_PRE, 'max-h-80')}>
 									{block.text}
 								</pre>
 							)}
@@ -135,45 +136,7 @@ export function BlockCell({ cell }: CellComponentProps) {
 					return (
 						<div key={i} className="contents">
 							{block.label && <p className={BLOCK_LABEL}>{block.label}</p>}
-							<div className="flex min-w-0 flex-col gap-1">
-								{block.caption && (
-									<p className="m-0 text-[11.5px] leading-[1.5] whitespace-pre-wrap text-muted">
-										{block.caption}
-									</p>
-								)}
-								<div className="max-h-80 overflow-auto rounded-xs border border-line">
-									<table className="w-full border-collapse text-left font-mono text-[11.5px]">
-										<thead>
-											<tr>
-												{block.columns.map((column, c) => (
-													<th
-														key={c}
-														// Sticky so the header survives scrolling a long result;
-														// it needs its own background to cover the rows beneath.
-														className="sticky top-0 z-[1] border-b border-line bg-fill px-2 py-1 font-medium whitespace-nowrap text-muted"
-													>
-														{column}
-													</th>
-												))}
-											</tr>
-										</thead>
-										<tbody>
-											{block.rows.map((row, r) => (
-												<tr key={r} className="border-b border-line/60 last:border-b-0">
-													{row.map((value, c) => (
-														<td
-															key={c}
-															className="px-2 py-1 align-top whitespace-nowrap text-text-strong"
-														>
-															{value}
-														</td>
-													))}
-												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
-							</div>
+							<DataframeTable caption={block.caption} columns={block.columns} rows={block.rows} />
 						</div>
 					);
 				}
