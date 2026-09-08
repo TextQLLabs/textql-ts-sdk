@@ -32,6 +32,9 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelQwen37Plus: "MODEL_QWEN3_7_PLUS",
   ModelKimiK3: "MODEL_KIMI_K3",
   ModelDeepseekV4Flash0731: "MODEL_DEEPSEEK_V4_FLASH_0731",
+  ModelDeepseekV4FlashVisionExp: "MODEL_DEEPSEEK_V4_FLASH_VISION_EXP",
+  ModelGlm53Flash: "MODEL_GLM_5_3_FLASH",
+  ModelGlm53: "MODEL_GLM_5_3",
   ModelMuseSpark11: "MODEL_MUSE_SPARK_1_1",
   ModelMuseSpark12: "MODEL_MUSE_SPARK_1_2",
 } as const;
