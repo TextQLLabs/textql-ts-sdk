@@ -13,6 +13,10 @@ import {
   TextqlRpcPublicChatLlmModel$outboundSchema,
 } from "./textql-rpc-public-chat-llm-model.js";
 import {
+  TextqlRpcPublicChatMethodology,
+  TextqlRpcPublicChatMethodology$outboundSchema,
+} from "./textql-rpc-public-chat-methodology.js";
+import {
   TextqlRpcPublicParadigmParadigmOptions,
   TextqlRpcPublicParadigmParadigmOptions$Outbound,
   TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
@@ -57,6 +61,7 @@ export type TextqlRpcPublicAgentUpdateAgentRequest = {
   subagentAgentIds?: Array<string> | undefined;
   updateSubagents?: boolean | null | undefined;
   allowAdHocSubagents?: boolean | null | undefined;
+  methodology?: TextqlRpcPublicChatMethodology | undefined;
 };
 
 /** @internal */
@@ -89,6 +94,7 @@ export type TextqlRpcPublicAgentUpdateAgentRequest$Outbound = {
   subagentAgentIds?: Array<string> | undefined;
   updateSubagents?: boolean | null | undefined;
   allowAdHocSubagents?: boolean | null | undefined;
+  methodology?: string | undefined;
 };
 
 /** @internal */
@@ -129,6 +135,7 @@ export const TextqlRpcPublicAgentUpdateAgentRequest$outboundSchema:
     subagentAgentIds: z.optional(z.array(z.string())),
     updateSubagents: z.optional(z.nullable(z.boolean())),
     allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
+    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
   });
 
 export function textqlRpcPublicAgentUpdateAgentRequestToJSON(
