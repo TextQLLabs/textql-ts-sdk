@@ -567,11 +567,17 @@ run();
 
 ### [Secrets](docs/sdks/secrets/README.md)
 
+* [deleteApiAccessKey](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
 * [deleteSecret](docs/sdks/secrets/README.md#deletesecret) - DeleteSecret
+* [getApiAccessKey](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 * [getMembersWithSecrets](docs/sdks/secrets/README.md#getmemberswithsecrets) - GetMembersWithSecrets
+* [listApiAccessKeys](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
+* [listApiProviders](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders
 * [listSecrets](docs/sdks/secrets/README.md#listsecrets) - ListSecrets
 * [putSecret](docs/sdks/secrets/README.md#putsecret) - PutSecret
+* [testApiAccessKey](docs/sdks/secrets/README.md#testapiaccesskey) - TestApiAccessKey
 * [update](docs/sdks/secrets/README.md#update) - UpdateSecret
+* [upsertApiAccessKey](docs/sdks/secrets/README.md#upsertapiaccesskey) - ---- API Connectors (deprecated) ----
 
 ### [Settings](docs/sdks/settings/README.md)
 
@@ -1007,11 +1013,17 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`scimListScimOAuthClients`](docs/sdks/scim/README.md#listscimoauthclients) - ListScimOAuthClients
 - [`scimRevokeOAuthClient`](docs/sdks/scim/README.md#revokeoauthclient) - RevokeScimOAuthClient
 - [`scimRevokeScimToken`](docs/sdks/scim/README.md#revokescimtoken) - RevokeScimToken
+- [`secretsDeleteApiAccessKey`](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
 - [`secretsDeleteSecret`](docs/sdks/secrets/README.md#deletesecret) - DeleteSecret
+- [`secretsGetApiAccessKey`](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 - [`secretsGetMembersWithSecrets`](docs/sdks/secrets/README.md#getmemberswithsecrets) - GetMembersWithSecrets
+- [`secretsListApiAccessKeys`](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
+- [`secretsListApiProviders`](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders
 - [`secretsListSecrets`](docs/sdks/secrets/README.md#listsecrets) - ListSecrets
 - [`secretsPutSecret`](docs/sdks/secrets/README.md#putsecret) - PutSecret
+- [`secretsTestApiAccessKey`](docs/sdks/secrets/README.md#testapiaccesskey) - TestApiAccessKey
 - [`secretsUpdate`](docs/sdks/secrets/README.md#update) - UpdateSecret
+- [`secretsUpsertApiAccessKey`](docs/sdks/secrets/README.md#upsertapiaccesskey) - ---- API Connectors (deprecated) ----
 - [`settingsCheckMemberStatus`](docs/sdks/settings/README.md#checkmemberstatus) - CheckMemberStatus
 - [`settingsDeleteMember`](docs/sdks/settings/README.md#deletemember) - DeleteOrganizationMember
 - [`settingsGet`](docs/sdks/settings/README.md#get) - GetOrganizationSettings

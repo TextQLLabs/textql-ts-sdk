@@ -13767,6 +13767,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.scim.RevokeScimTokenResponse'
+  /textql.rpc.public.secret.SecretService/DeleteApiAccessKey:
+    post:
+      tags:
+        - SecretService
+      summary: DeleteApiAccessKey
+      operationId: SecretService_DeleteApiAccessKey
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: deleteApiAccessKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiAccessKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiAccessKeyResponse'
   /textql.rpc.public.secret.SecretService/DeleteSecret:
     post:
       tags:
@@ -13804,6 +13841,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.DeleteSecretResponse'
+  /textql.rpc.public.secret.SecretService/GetApiAccessKey:
+    post:
+      tags:
+        - SecretService
+      summary: GetApiAccessKey
+      operationId: SecretService_GetApiAccessKey
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: getApiAccessKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.GetApiAccessKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.GetApiAccessKeyResponse'
   /textql.rpc.public.secret.SecretService/GetMembersWithSecrets:
     post:
       tags:
@@ -13841,6 +13915,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.GetMembersWithSecretsResponse'
+  /textql.rpc.public.secret.SecretService/ListApiAccessKeys:
+    post:
+      tags:
+        - SecretService
+      summary: ListApiAccessKeys
+      operationId: SecretService_ListApiAccessKeys
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: listApiAccessKeys
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.ListApiAccessKeysRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.ListApiAccessKeysResponse'
+  /textql.rpc.public.secret.SecretService/ListApiProviders:
+    post:
+      tags:
+        - SecretService
+      summary: ListApiProviders
+      operationId: SecretService_ListApiProviders
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: listApiProviders
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.ListApiProvidersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.ListApiProvidersResponse'
   /textql.rpc.public.secret.SecretService/ListSecrets:
     post:
       tags:
@@ -13915,6 +14063,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.PutSecretResponse'
+  /textql.rpc.public.secret.SecretService/TestApiAccessKey:
+    post:
+      tags:
+        - SecretService
+      summary: TestApiAccessKey
+      operationId: SecretService_TestApiAccessKey
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: testApiAccessKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.TestApiAccessKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.TestApiAccessKeyResponse'
   /textql.rpc.public.secret.SecretService/UpdateSecret:
     post:
       tags:
@@ -13952,6 +14137,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.UpdateSecretResponse'
+  /textql.rpc.public.secret.SecretService/UpsertApiAccessKey:
+    post:
+      tags:
+        - SecretService
+      summary: '---- API Connectors (deprecated) ----'
+      description: '---- API Connectors (deprecated) ----'
+      operationId: SecretService_UpsertApiAccessKey
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: upsertApiAccessKey
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.UpsertApiAccessKeyRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.UpsertApiAccessKeyResponse'
   /textql.rpc.public.settings.SettingsService/CheckMemberStatus:
     post:
       tags:
@@ -16534,6 +16757,9 @@ components:
         allowAdHocSubagents:
           type: boolean
           title: allow_ad_hoc_subagents
+        methodology:
+          title: methodology
+          $ref: '#/components/schemas/textql.rpc.public.chat.Methodology'
       title: Agent
       additionalProperties: false
     textql.rpc.public.agent.AgentDBColumn:
@@ -16953,6 +17179,10 @@ components:
           type: boolean
           title: allow_ad_hoc_subagents
           nullable: true
+        methodology:
+          title: methodology
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.Methodology'
       title: CreateAgentRequest
       additionalProperties: false
     textql.rpc.public.agent.CreateAgentResponse:
@@ -17312,6 +17542,11 @@ components:
           type: boolean
           title: allow_ad_hoc_subagents
           nullable: true
+        methodology:
+          title: methodology
+          description: Omitted leaves the saved methodology unchanged.
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.Methodology'
       title: UpdateAgentRequest
       additionalProperties: false
     textql.rpc.public.agent.UpdateAgentResponse:
@@ -39045,6 +39280,239 @@ components:
           $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: ScimToken
       additionalProperties: false
+    textql.rpc.public.secret.ApiAccessKey:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        orgId:
+          type: string
+          title: org_id
+        memberId:
+          type: string
+          title: member_id
+        hosts:
+          type: array
+          items:
+            type: string
+          title: hosts
+        headers:
+          type: object
+          title: headers
+          additionalProperties:
+            type: string
+            title: value
+        queryParams:
+          type: object
+          title: query_params
+          additionalProperties:
+            type: string
+            title: value
+        description:
+          type: string
+          title: description
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        provider:
+          type: string
+          title: provider
+        authType:
+          type: string
+          title: auth_type
+          description: '"token", "oauth_u2m", "oauth_per_member"'
+        memberOauthAuthenticated:
+          type: boolean
+          title: member_oauth_authenticated
+        memberOauthDisplayName:
+          type: string
+          title: member_oauth_display_name
+        httpBasicAuth:
+          title: http_basic_auth
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.secret.HttpBasicAuth'
+        body:
+          type: object
+          title: body
+          additionalProperties:
+            type: string
+            title: value
+        contentType:
+          title: content_type
+          $ref: '#/components/schemas/textql.rpc.public.secret.BodyContentType'
+        canWrite:
+          type: boolean
+          title: can_write
+        accessType:
+          type: string
+          title: access_type
+          nullable: true
+        isPublic:
+          type: boolean
+          title: is_public
+        testUrl:
+          type: string
+          title: test_url
+        name:
+          type: string
+          title: name
+        authPrefix:
+          type: string
+          title: auth_prefix
+        testMethod:
+          type: string
+          title: test_method
+      title: ApiAccessKey
+      additionalProperties: false
+    textql.rpc.public.secret.ApiAccessKey.BodyEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: BodyEntry
+      additionalProperties: false
+    textql.rpc.public.secret.ApiAccessKey.HeadersEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: HeadersEntry
+      additionalProperties: false
+    textql.rpc.public.secret.ApiAccessKey.QueryParamsEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: QueryParamsEntry
+      additionalProperties: false
+    textql.rpc.public.secret.ApiAccessRef:
+      type: object
+      properties:
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+        revision:
+          type:
+            - integer
+            - string
+          title: revision
+          format: int64
+      title: ApiAccessRef
+      additionalProperties: false
+    textql.rpc.public.secret.ApiProvider:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        name:
+          type: string
+          title: name
+        iconUrl:
+          type: string
+          title: icon_url
+        authType:
+          type: string
+          title: auth_type
+        description:
+          type: string
+          title: description
+        docsUrl:
+          type: string
+          title: docs_url
+        defaultHosts:
+          type: array
+          items:
+            type: string
+          title: default_hosts
+        tokenLabel:
+          type: string
+          title: token_label
+        authHeader:
+          type: string
+          title: auth_header
+        authPrefix:
+          type: string
+          title: auth_prefix
+        oauthSupported:
+          type: boolean
+          title: oauth_supported
+        oauthConfigured:
+          type: boolean
+          title: oauth_configured
+        memberAuthenticated:
+          type: boolean
+          title: member_authenticated
+        memberAuthDisplayName:
+          type: string
+          title: member_auth_display_name
+        envVarFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.secret.EnvVarField'
+          title: env_var_fields
+        oauthHasDefaultUrls:
+          type: boolean
+          title: oauth_has_default_urls
+        oauthAuthUrl:
+          type: string
+          title: oauth_auth_url
+        oauthTokenUrl:
+          type: string
+          title: oauth_token_url
+        oauthScopes:
+          type: string
+          title: oauth_scopes
+        oauthUsePkce:
+          type: boolean
+          title: oauth_use_pkce
+        oauthTokenAuthMethod:
+          type: string
+          title: oauth_token_auth_method
+        testUrl:
+          type: string
+          title: test_url
+      title: ApiProvider
+      additionalProperties: false
+    textql.rpc.public.secret.BodyContentType:
+      type: string
+      title: BodyContentType
+      enum:
+        - BODY_CONTENT_TYPE_NONE
+        - BODY_CONTENT_TYPE_JSON
+        - BODY_CONTENT_TYPE_FORM
+    textql.rpc.public.secret.DeleteApiAccessKeyRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+      title: DeleteApiAccessKeyRequest
+      additionalProperties: false
+    textql.rpc.public.secret.DeleteApiAccessKeyResponse:
+      type: object
+      title: DeleteApiAccessKeyResponse
+      additionalProperties: false
     textql.rpc.public.secret.DeleteSecretRequest:
       type: object
       properties:
@@ -39056,6 +39524,45 @@ components:
     textql.rpc.public.secret.DeleteSecretResponse:
       type: object
       title: DeleteSecretResponse
+      additionalProperties: false
+    textql.rpc.public.secret.EnvVarField:
+      type: object
+      properties:
+        envVar:
+          type: string
+          title: env_var
+        label:
+          type: string
+          title: label
+        required:
+          type: boolean
+          title: required
+        secret:
+          type: boolean
+          title: secret
+        defaultValue:
+          type: string
+          title: default_value
+        placeholder:
+          type: string
+          title: placeholder
+      title: EnvVarField
+      additionalProperties: false
+    textql.rpc.public.secret.GetApiAccessKeyRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+      title: GetApiAccessKeyRequest
+      additionalProperties: false
+    textql.rpc.public.secret.GetApiAccessKeyResponse:
+      type: object
+      properties:
+        apiAccessKey:
+          title: api_access_key
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessKey'
+      title: GetApiAccessKeyResponse
       additionalProperties: false
     textql.rpc.public.secret.GetMembersWithSecretsRequest:
       type: object
@@ -39070,6 +39577,45 @@ components:
             $ref: '#/components/schemas/textql.rpc.identity.MemberPreview'
           title: members
       title: GetMembersWithSecretsResponse
+      additionalProperties: false
+    textql.rpc.public.secret.HttpBasicAuth:
+      type: object
+      properties:
+        username:
+          type: string
+          title: username
+        password:
+          type: string
+          title: password
+      title: HttpBasicAuth
+      additionalProperties: false
+    textql.rpc.public.secret.ListApiAccessKeysRequest:
+      type: object
+      title: ListApiAccessKeysRequest
+      additionalProperties: false
+    textql.rpc.public.secret.ListApiAccessKeysResponse:
+      type: object
+      properties:
+        apiAccessKeys:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessKey'
+          title: api_access_keys
+      title: ListApiAccessKeysResponse
+      additionalProperties: false
+    textql.rpc.public.secret.ListApiProvidersRequest:
+      type: object
+      title: ListApiProvidersRequest
+      additionalProperties: false
+    textql.rpc.public.secret.ListApiProvidersResponse:
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.secret.ApiProvider'
+          title: providers
+      title: ListApiProvidersResponse
       additionalProperties: false
     textql.rpc.public.secret.ListSecretsRequest:
       type: object
@@ -39146,6 +39692,29 @@ components:
           title: is_public
       title: Secret
       additionalProperties: false
+    textql.rpc.public.secret.TestApiAccessKeyRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: TestApiAccessKeyRequest
+      additionalProperties: false
+    textql.rpc.public.secret.TestApiAccessKeyResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+        statusCode:
+          type: integer
+          title: status_code
+          format: int32
+        message:
+          type: string
+          title: message
+      title: TestApiAccessKeyResponse
+      additionalProperties: false
     textql.rpc.public.secret.UpdateSecretRequest:
       type: object
       properties:
@@ -39169,6 +39738,116 @@ components:
     textql.rpc.public.secret.UpdateSecretResponse:
       type: object
       title: UpdateSecretResponse
+      additionalProperties: false
+    textql.rpc.public.secret.UpsertApiAccessKeyRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        persistToDb:
+          type: boolean
+          title: persist_to_db
+        hosts:
+          type: array
+          items:
+            type: string
+          title: hosts
+        headers:
+          type: object
+          title: headers
+          additionalProperties:
+            type: string
+            title: value
+        queryParams:
+          type: object
+          title: query_params
+          additionalProperties:
+            type: string
+            title: value
+        description:
+          type: string
+          title: description
+        expiresAt:
+          title: expires_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        provider:
+          type: string
+          title: provider
+        authValue:
+          type: string
+          title: auth_value
+        authValueExtra:
+          type: string
+          title: auth_value_extra
+        authType:
+          type: string
+          title: auth_type
+        httpBasicAuth:
+          title: http_basic_auth
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.secret.HttpBasicAuth'
+        body:
+          type: object
+          title: body
+          additionalProperties:
+            type: string
+            title: value
+        contentType:
+          title: content_type
+          $ref: '#/components/schemas/textql.rpc.public.secret.BodyContentType'
+        testUrl:
+          type: string
+          title: test_url
+        name:
+          type: string
+          title: name
+        testMethod:
+          type: string
+          title: test_method
+      title: UpsertApiAccessKeyRequest
+      additionalProperties: false
+    textql.rpc.public.secret.UpsertApiAccessKeyRequest.BodyEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: BodyEntry
+      additionalProperties: false
+    textql.rpc.public.secret.UpsertApiAccessKeyRequest.HeadersEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: HeadersEntry
+      additionalProperties: false
+    textql.rpc.public.secret.UpsertApiAccessKeyRequest.QueryParamsEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: QueryParamsEntry
+      additionalProperties: false
+    textql.rpc.public.secret.UpsertApiAccessKeyResponse:
+      type: object
+      properties:
+        apiAccessKey:
+          title: api_access_key
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessKey'
+      title: UpsertApiAccessKeyResponse
       additionalProperties: false
     textql.rpc.public.settings.CheckMemberStatusRequest:
       type: object

@@ -16,6 +16,10 @@ import {
   TextqlRpcPublicChatLlmModel$inboundSchema,
 } from "./textql-rpc-public-chat-llm-model.js";
 import {
+  TextqlRpcPublicChatMethodology,
+  TextqlRpcPublicChatMethodology$inboundSchema,
+} from "./textql-rpc-public-chat-methodology.js";
+import {
   TextqlRpcPublicParadigmParadigmOptions,
   TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
 } from "./textql-rpc-public-paradigm-paradigm-options.js";
@@ -169,6 +173,7 @@ export type TextqlRpcPublicAgentAgent = {
   feedEnabled?: boolean | undefined;
   subagentAgentIds?: Array<string> | undefined;
   allowAdHocSubagents?: boolean | undefined;
+  methodology?: TextqlRpcPublicChatMethodology | undefined;
 };
 
 /** @internal */
@@ -215,6 +220,7 @@ export const TextqlRpcPublicAgentAgent$inboundSchema: z.ZodMiniType<
   feedEnabled: types.optional(types.boolean()),
   subagentAgentIds: types.optional(z.array(types.string())),
   allowAdHocSubagents: types.optional(types.boolean()),
+  methodology: types.optional(TextqlRpcPublicChatMethodology$inboundSchema),
 });
 
 export function textqlRpcPublicAgentAgentFromJSON(
