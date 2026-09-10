@@ -347,6 +347,12 @@ export type Segment =
 
 const TEXT_CASES = new Set(['mdCell', 'ansCell']);
 
+function isBlankProse(cell: CellLike): boolean {
+	const payload = getCellPayload(cell);
+	if (asString(payload.content).trim() || asString(payload.renderedHtml).trim()) return false;
+	return asRecords(payload.images).length === 0 && asRecords(payload.citations).length === 0;
+}
+
 export function buildSegments(cells: CellLike[]): Segment[] {
 	const result: Segment[] = [];
 	let currentGroup: CellLike[] = [];
@@ -361,14 +367,13 @@ export function buildSegments(cells: CellLike[]): Segment[] {
 	for (const cell of cells) {
 		const cellCase = getCellCase(cell);
 		if (cellCase && TEXT_CASES.has(cellCase)) {
+			if (isBlankProse(cell)) continue;
 			flushGroup();
 			result.push({ type: 'assistant', cell });
 		} else if (cellCase === 'questionsCell') {
 			flushGroup();
 			result.push({ type: 'questions', cell });
 		} else if (getHalt(cell)) {
-			// A cell the run is parked on comes out of the batch: collapsed inside
-			// one, the thing blocking the chat is invisible.
 			flushGroup();
 			result.push({ type: 'halt', cell });
 		} else {

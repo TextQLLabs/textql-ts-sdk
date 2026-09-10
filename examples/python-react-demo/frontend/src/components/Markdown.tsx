@@ -239,7 +239,7 @@ export const Markdown = memo(function Markdown({
 			</>
 		);
 	}
-	if (content) {
+	if (content.trim()) {
 		return <p className={`md-plain ${styles.mdPlain}${muted ? ` ${styles.mdPlainMuted}` : ''}`}>{content}</p>;
 	}
 	return null;
