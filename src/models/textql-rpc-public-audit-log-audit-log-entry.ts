@@ -22,16 +22,21 @@ export type TextqlRpcPublicAuditLogAuditLogEntry = {
   resourceType?: string | undefined;
   resourceId?: string | undefined;
   /**
-   * `Struct` represents a structured data value, consisting of fields
+   * Represents a JSON object.
    *
    * @remarks
-   *  which map to dynamically typed values. In some languages, `Struct`
-   *  might be supported by a native representation. For example, in
-   *  scripting languages like JS a struct is represented as an
-   *  object. The details of that representation are described together
-   *  with the proto support for the language.
    *
-   *  The JSON representation for `Struct` is JSON object.
+   *  An unordered key-value map, intending to perfectly capture the semantics of a
+   *  JSON object. This enables parsing any arbitrary JSON payload as a message
+   *  field in ProtoJSON format.
+   *
+   *  This follows RFC 8259 guidelines for interoperable JSON: notably this type
+   *  cannot represent large Int64 values or `NaN`/`Infinity` numbers,
+   *  since the JSON format generally does not support those values in its number
+   *  type.
+   *
+   *  If you do not intend to parse arbitrary JSON into your message, a custom
+   *  typed message should be preferred instead of using this type.
    */
   details?: { [k: string]: GoogleProtobufValue | null } | undefined;
   ipAddress?: string | undefined;
@@ -111,8 +116,8 @@ export type TextqlRpcPublicAuditLogAuditLogEntry = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
