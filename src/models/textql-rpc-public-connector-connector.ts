@@ -206,8 +206,8 @@ export type TrinoMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -316,8 +316,8 @@ export type TableauMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -432,8 +432,8 @@ export type SupabaseMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -542,8 +542,8 @@ export type SqlServerMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -652,8 +652,8 @@ export type SnowflakeMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -762,8 +762,8 @@ export type SapHanaMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -872,8 +872,8 @@ export type RedshiftMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -982,8 +982,8 @@ export type PowerbiMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1092,8 +1092,8 @@ export type PostgresMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1202,8 +1202,8 @@ export type OracleMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1312,8 +1312,8 @@ export type MysqlMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1422,8 +1422,8 @@ export type MotherduckMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1532,8 +1532,8 @@ export type MongodbMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1642,8 +1642,8 @@ export type Microsoft365Metadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1752,8 +1752,8 @@ export type KdbMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1862,8 +1862,8 @@ export type GoogleMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -1972,8 +1972,8 @@ export type GoogleDriveMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2082,8 +2082,8 @@ export type GoogleCalendarMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2192,8 +2192,8 @@ export type GmailMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2302,8 +2302,8 @@ export type FireboltMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2412,8 +2412,8 @@ export type ExasolMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2522,8 +2522,8 @@ export type DremioMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2632,8 +2632,8 @@ export type DatabricksMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2742,8 +2742,8 @@ export type ClickhouseMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2852,8 +2852,8 @@ export type BigqueryMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -2962,8 +2962,8 @@ export type AzureSynapseMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -3072,8 +3072,8 @@ export type AuroraMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
@@ -3182,8 +3182,8 @@ export type AthenaMetadata = {
    *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
    *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
    *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
-   *  is required. A proto3 JSON serializer should always use UTC (as indicated by
-   *  "Z") when printing the Timestamp type and a proto3 JSON parser should be
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
    *  able to accept both UTC and other timezones (as indicated by an offset).
    *
    *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
