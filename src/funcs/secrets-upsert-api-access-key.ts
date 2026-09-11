@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ---- API Connectors (deprecated) ----
- *
- * @remarks
- * ---- API Connectors (deprecated) ----
+ * UpsertApiAccessKey
  */
 export function secretsUpsertApiAccessKey(
   client: TextqlCore,

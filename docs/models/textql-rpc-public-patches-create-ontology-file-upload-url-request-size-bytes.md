@@ -1,5 +1,7 @@
 # TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes
 
+when true, reserved files like OWNERS are included
+
 
 ## Supported Types
 

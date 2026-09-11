@@ -1,7 +1,5 @@
 # TextqlRpcPublicPatchesConfigureOntologyRemoteResponse
 
-Deprecated: use SetOntologyOwnersRequest with an empty entry set.
-
 ## Example Usage
 
 ```typescript
@@ -20,4 +18,4 @@ let value: TextqlRpcPublicPatchesConfigureOntologyRemoteResponse = {
 
 | Field                                                                                                 | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `remote`                                                                                              | [models.TextqlRpcPublicPatchesOntologyRemote](../models/textql-rpc-public-patches-ontology-remote.md) | :heavy_minus_sign:                                                                                    | Deprecated: use SetOntologyOwnersRequest.                                                             |
+| `remote`                                                                                              | [models.TextqlRpcPublicPatchesOntologyRemote](../models/textql-rpc-public-patches-ontology-remote.md) | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |

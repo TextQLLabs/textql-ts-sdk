@@ -7105,12 +7105,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
-      description: |-
-        Streams how many folders and files a subtree holds, so the UI can report the
-         size of the whole Ontology rather than only the directories it has lazily
-         listed. Counts rise monotonically across frames; the last frame sets
-         `final`. A cache hit emits a single `final` frame with `from_cache` set.
+      summary: CreateOntologyFileUploadUrl
       operationId: OntologyManagementService_CreateOntologyFileUploadUrl
       x-speakeasy-group: ontology
       x-speakeasy-name-override: createFileUploadUrl
@@ -7369,7 +7364,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: FinalizeOntologyFileUpload
+      summary: Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+      description: |-
+        Streams how many folders and files a subtree holds, so the UI can report the
+         size of the whole Ontology rather than only the directories it has lazily
+         listed. Counts rise monotonically across frames; the last frame sets
+         `final`. A cache hit emits a single `final` frame with `from_cache` set.
       operationId: OntologyManagementService_FinalizeOntologyFileUpload
       x-speakeasy-group: ontology
       x-speakeasy-name-override: finalizeFileUpload
@@ -7406,7 +7406,10 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: GetCodeownerCoverage
+      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.'
+      description: |-
+        Deprecated: use SetOntologyOwners with the desired entry set. An empty
+         desired set removes every entry and opens the directory.
       operationId: OntologyManagementService_GetCodeownerCoverage
       x-speakeasy-group: ontology
       x-speakeasy-name-override: getCodeownerCoverage
@@ -8263,10 +8266,8 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.'
-      description: |-
-        Deprecated: use SetOntologyOwners with the desired entry set. An empty
-         desired set removes every entry and opens the directory.
+      summary: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
+      description: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
       operationId: OntologyManagementService_ListGoldenFiles
       x-speakeasy-group: ontology
       x-speakeasy-name-override: listGoldenFiles
@@ -8303,7 +8304,15 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: ListOntologyEntries
+      summary: 'PlanConfigAccessDerivation lists the config-managed objects of one type whose  access rows the OWNERS derivation would rewrite, and writes nothing. "Would  rewrite" is the engine''s own diff: a row inserted or deleted, or a kept row whose  level, expiry, duplicate or public flag would change. An object under a malformed  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those  rows on its next pass, so an operator cycles the flag on the orgs this names before  deploying it.'
+      description: |-
+        PlanConfigAccessDerivation lists the config-managed objects of one type whose
+         access rows the OWNERS derivation would rewrite, and writes nothing. "Would
+         rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose
+         level, expiry, duplicate or public flag would change. An object under a malformed
+         OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those
+         rows on its next pass, so an operator cycles the flag on the orgs this names before
+         deploying it.
       operationId: OntologyManagementService_ListOntologyEntries
       x-speakeasy-group: ontology
       x-speakeasy-name-override: listEntries
@@ -8643,7 +8652,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: PlanOntologyMerge
+      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
+      description: |-
+        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+         caller's org: if the Ontology repo's live HEAD differs from the last
+         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+         equivalent of waiting for the periodic drift scan.
       operationId: OntologyManagementService_PlanOntologyMerge
       x-speakeasy-group: ontology
       x-speakeasy-name-override: planMerge
@@ -8754,7 +8768,12 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: PushOntologyToRemote
+      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+      description: |-
+        Lists the skills under the ontology's flat skills/ root that the caller can
+         read (OWNERS-filtered). Returns display metadata only — never instruction
+         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+         omitted unless include_unlisted is set.
       operationId: OntologyManagementService_PushOntologyToRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: pushToRemote
@@ -8828,12 +8847,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-      description: |-
-        Lists the skills under the ontology's flat skills/ root that the caller can
-         read (OWNERS-filtered). Returns display metadata only — never instruction
-         bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-         omitted unless include_unlisted is set.
+      summary: RemoveOntologyRemote
       operationId: OntologyManagementService_RemoveOntologyRemote
       x-speakeasy-group: ontology
       x-speakeasy-name-override: removeRemote
@@ -8981,12 +8995,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller''s org: if the Ontology repo''s live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.'
-      description: |-
-        TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-         caller's org: if the Ontology repo's live HEAD differs from the last
-         reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-         equivalent of waiting for the periodic drift scan.
+      summary: ResolveOntologySyncConflict
       operationId: OntologyManagementService_ResolveOntologySyncConflict
       x-speakeasy-group: ontology
       x-speakeasy-name-override: resolveSyncConflict
@@ -9171,8 +9180,7 @@ paths:
     post:
       tags:
         - OntologyManagementService
-      summary: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
-      description: 'Deprecated: use SetOntologyOwners with the complete desired entry set.'
+      summary: SetOntologyFileGolden
       operationId: OntologyManagementService_SetOntologyFileGolden
       x-speakeasy-group: ontology
       x-speakeasy-name-override: setFileGolden
@@ -13804,43 +13812,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiAccessKeyResponse'
-  /textql.rpc.public.secret.SecretService/DeleteSecret:
-    post:
-      tags:
-        - SecretService
-      summary: DeleteSecret
-      operationId: SecretService_DeleteSecret
-      x-speakeasy-group: secrets
-      x-speakeasy-name-override: deleteSecret
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.secret.DeleteSecretRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.secret.DeleteSecretResponse'
   /textql.rpc.public.secret.SecretService/GetApiAccessKey:
     post:
       tags:
@@ -13878,43 +13849,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.GetApiAccessKeyResponse'
-  /textql.rpc.public.secret.SecretService/GetMembersWithSecrets:
-    post:
-      tags:
-        - SecretService
-      summary: GetMembersWithSecrets
-      operationId: SecretService_GetMembersWithSecrets
-      x-speakeasy-group: secrets
-      x-speakeasy-name-override: getMembersWithSecrets
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.secret.GetMembersWithSecretsRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.secret.GetMembersWithSecretsResponse'
   /textql.rpc.public.secret.SecretService/ListApiAccessKeys:
     post:
       tags:
@@ -13989,85 +13923,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.ListApiProvidersResponse'
-  /textql.rpc.public.secret.SecretService/ListSecrets:
-    post:
-      tags:
-        - SecretService
-      summary: ListSecrets
-      operationId: SecretService_ListSecrets
-      x-speakeasy-group: secrets
-      x-speakeasy-name-override: listSecrets
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.secret.ListSecretsRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.secret.ListSecretsResponse'
-  /textql.rpc.public.secret.SecretService/PutSecret:
-    post:
-      tags:
-        - SecretService
-      summary: PutSecret
-      operationId: SecretService_PutSecret
-      x-speakeasy-group: secrets
-      x-speakeasy-name-override: putSecret
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.secret.PutSecretRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.secret.PutSecretResponse'
   /textql.rpc.public.secret.SecretService/TestApiAccessKey:
     post:
       tags:
         - SecretService
-      summary: TestApiAccessKey
+      summary: '---- API Connectors (deprecated) ----'
+      description: '---- API Connectors (deprecated) ----'
       operationId: SecretService_TestApiAccessKey
       x-speakeasy-group: secrets
       x-speakeasy-name-override: testApiAccessKey
@@ -14100,49 +13961,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.TestApiAccessKeyResponse'
-  /textql.rpc.public.secret.SecretService/UpdateSecret:
-    post:
-      tags:
-        - SecretService
-      summary: UpdateSecret
-      operationId: SecretService_UpdateSecret
-      x-speakeasy-group: secrets
-      x-speakeasy-name-override: update
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.secret.UpdateSecretRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.secret.UpdateSecretResponse'
   /textql.rpc.public.secret.SecretService/UpsertApiAccessKey:
     post:
       tags:
         - SecretService
-      summary: '---- API Connectors (deprecated) ----'
-      description: '---- API Connectors (deprecated) ----'
+      summary: UpsertApiAccessKey
       operationId: SecretService_UpsertApiAccessKey
       x-speakeasy-group: secrets
       x-speakeasy-name-override: upsertApiAccessKey
@@ -15928,19 +15751,24 @@ components:
         phoneNumber:
           type: string
           title: phone_number
+          description: 'Deprecated: agent SMS/texting feature removed; no longer read or written.'
           nullable: true
+          deprecated: true
         phoneVerified:
           type: boolean
           title: phone_verified
           nullable: true
+          deprecated: true
         personalAgentId:
           type: string
           title: personal_agent_id
           nullable: true
+          deprecated: true
         agentNumber:
           type: string
           title: agent_number
           nullable: true
+          deprecated: true
         defaultMethodology:
           type: integer
           title: default_methodology
@@ -16330,6 +16158,7 @@ components:
             When true, the ANA_INTERNAL ("TextQL Usage") connector includes @textql.com
              staff activity in its usage views; when false (default) they are filtered out.
           nullable: true
+          deprecated: true
         scimAssignDefaultRole:
           type: boolean
           title: scim_assign_default_role
@@ -16346,6 +16175,7 @@ components:
         sandboxObservabilityEnabled:
           type: boolean
           title: sandbox_observability_enabled
+          description: agent SMS/texting feature removed; no longer read or written
           nullable: true
         dataAppsEnabled:
           type: boolean
@@ -24021,6 +23851,7 @@ components:
         - MODEL_GEMINI_3_5_FLASH
         - MODEL_GPT_5_6_TERRA
         - MODEL_GPT_5_6_LUNA
+        - MODEL_GPT_6_ASTRA
         - MODEL_DEEPSEEK_3_2
         - MODEL_GLM_5
         - MODEL_VLLM
@@ -31684,6 +31515,7 @@ components:
         smsMode:
           type: boolean
           title: sms_mode
+          deprecated: true
         apiAccessKeyIds:
           type: array
           items:
@@ -31962,7 +31794,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyRemote'
       title: ConfigureOntologyRemoteResponse
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersRequest with an empty entry set.'
     textql.rpc.public.patches.ContextPatchAutoApproveRule:
       type: object
       properties:
@@ -32088,6 +31919,7 @@ components:
             - string
           title: size_bytes
           format: int64
+          description: when true, reserved files like OWNERS are included
       title: CreateOntologyFileUploadUrlRequest
       additionalProperties: false
     textql.rpc.public.patches.CreateOntologyFileUploadUrlResponse:
@@ -32311,16 +32143,9 @@ components:
         commitMessage:
           type: string
           title: commit_message
-          description: |-
-            Last frame for this walk. Earlier frames are partial counts; the final
-             frame always carries the complete total — the walk is never truncated.
           nullable: true
       title: FinalizeOntologyFileUploadRequest
       additionalProperties: false
-      description: |-
-        Counts of the entries a caller may see beneath a subtree. Excludes the subtree
-         root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
-         are bookkeeping rather than Ontology content.
     textql.rpc.public.patches.FinalizeOntologyFileUploadResponse:
       type: object
       properties:
@@ -32329,6 +32154,10 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyFile'
       title: FinalizeOntologyFileUploadResponse
       additionalProperties: false
+      description: |-
+        Counts of the entries a caller may see beneath a subtree. Excludes the subtree
+         root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
+         are bookkeeping rather than Ontology content.
     textql.rpc.public.patches.GetCodeownerCoverageRequest:
       type: object
       title: GetCodeownerCoverageRequest
@@ -32448,6 +32277,7 @@ components:
         pathPrefix:
           type: string
           title: path_prefix
+          description: default 7d
           nullable: true
         observationPeriod:
           title: observation_period
@@ -32455,13 +32285,6 @@ components:
           $ref: '#/components/schemas/google.protobuf.Duration'
       title: GetFileUsageTimelineRequest
       additionalProperties: false
-      description: |-
-        Aggregate ontology-usage health for the window — the roll-ups the Ontology
-         Health hero needs without paging every file to the client. pulled_files,
-         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
-         total_files, dead_files, and reclaimable_tokens come from the current git
-         tree diffed against the set of pulled paths (a dead file is one present in
-         the ontology but never pulled in the window).
     textql.rpc.public.patches.GetFileUsageTimelineResponse:
       type: object
       properties:
@@ -32472,6 +32295,13 @@ components:
           title: days
       title: GetFileUsageTimelineResponse
       additionalProperties: false
+      description: |-
+        Aggregate ontology-usage health for the window — the roll-ups the Ontology
+         Health hero needs without paging every file to the client. pulled_files,
+         avg_hit_rate, and error_files are Postgres aggregates over the pull/run data;
+         total_files, dead_files, and reclaimable_tokens come from the current git
+         tree diffed against the set of pulled paths (a dead file is one present in
+         the ontology but never pulled in the window).
     textql.rpc.public.patches.GetOntologyAnaConfigRequest:
       type: object
       properties:
@@ -32515,6 +32345,7 @@ components:
           title: code_challenge
       title: GetOntologyGithubOAuthURLRequest
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersRequest with an empty entry set.'
     textql.rpc.public.patches.GetOntologyGithubOAuthURLResponse:
       type: object
       properties:
@@ -32587,7 +32418,7 @@ components:
       type: object
       title: GetOntologyRemoteRequest
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersResponse.'
+      description: 'Deprecated: use SetOntologyOwnersRequest.'
     textql.rpc.public.patches.GetOntologyRemoteResponse:
       type: object
       properties:
@@ -32607,6 +32438,7 @@ components:
           title: github_oauth_available
       title: GetOntologyRemoteResponse
       additionalProperties: false
+      description: 'Deprecated: use SetOntologyOwnersResponse.'
     textql.rpc.public.patches.GetOntologySizeTimelineRequest:
       type: object
       properties:
@@ -32624,8 +32456,12 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.OntologySizeDay'
           title: days
+          description: |-
+            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+             a year.
       title: GetOntologySizeTimelineResponse
       additionalProperties: false
+      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.GetOntologySyncConflictsRequest:
       type: object
       title: GetOntologySyncConflictsRequest
@@ -32881,6 +32717,7 @@ components:
           type: integer
           title: limit
           format: int32
+          description: default 7d
           nullable: true
       title: ListChatsForFileRequest
       additionalProperties: false
@@ -32892,7 +32729,6 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.patches.FileChatUsage'
           title: chats
-          description: default 7d
       title: ListChatsForFileResponse
       additionalProperties: false
     textql.rpc.public.patches.ListContextPatchAutoApproveRulesRequest:
@@ -33387,16 +33223,17 @@ components:
         authType:
           type: string
           title: auth_type
+          description: |-
+            Effective permission for principals omitted from entries. Unrestricted
+             paths grant full access; restricted paths leave this unspecified.
         defaultBranch:
           type: string
           title: default_branch
         createdAt:
           title: created_at
-          description: 'Deprecated: use SetOntologyOwnersRequest.entries with OntologyOwnerEntry.'
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         updatedAt:
           title: updated_at
-          description: 'Deprecated: use SetOntologyOwnersRequest.entries with OntologyOwnerEntry.'
           nullable: true
           $ref: '#/components/schemas/google.protobuf.Timestamp'
         syncEnabled:
@@ -33442,15 +33279,11 @@ components:
           nullable: true
       title: OntologyRemote
       additionalProperties: false
-      description: 'Deprecated: use SetOntologyOwnersRequest.'
     textql.rpc.public.patches.OntologySizeDay:
       type: object
       properties:
         date:
           title: date
-          description: |-
-            Year of the date. Must be from 1 to 9999, or 0 to specify a date without
-             a year.
           $ref: '#/components/schemas/textql.rpc.public.patches.Date'
         totalBytes:
           type:
@@ -33458,20 +33291,12 @@ components:
             - string
           title: total_bytes
           format: int64
-          description: |-
-            Month of a year. Must be from 1 to 12, or 0 to specify a year without a
-             month and day.
         fileCount:
           type: integer
           title: file_count
           format: int32
-          description: |-
-            Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
-             to specify a year by itself or a year and month where the day isn't
-             significant.
       title: OntologySizeDay
       additionalProperties: false
-      description: copied from google.type.Date; not available in buf's google/protobuf/*
     textql.rpc.public.patches.OntologySubmodule:
       type: object
       properties:
@@ -33933,9 +33758,6 @@ components:
       properties:
         outcome:
           title: outcome
-          description: |-
-            True ⇒ the org's live Ontology HEAD differed from the last reconciled commit,
-             so a catch-up reconcile was enqueued. False ⇒ already converged (no-op).
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyMergeOutcome'
         localHeadHash:
           type: string
@@ -34242,13 +34064,6 @@ components:
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyOwners'
       title: SetOntologyOwnersResponse
       additionalProperties: false
-      description: |-
-        Returns the *effective* owners for a directory after walking ancestor
-         OWNERS files: for every role in the org, the resolved permission the
-         role would have on this directory (per `permissionForDirWithRoles`).
-         Use this when you need to compare permissions across paths — the
-         literal GetOntologyOwners only reflects the OWNERS file at the exact
-         path, missing inheritance.
     textql.rpc.public.patches.Skill:
       type: object
       properties:
@@ -39513,18 +39328,6 @@ components:
       type: object
       title: DeleteApiAccessKeyResponse
       additionalProperties: false
-    textql.rpc.public.secret.DeleteSecretRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          title: name
-      title: DeleteSecretRequest
-      additionalProperties: false
-    textql.rpc.public.secret.DeleteSecretResponse:
-      type: object
-      title: DeleteSecretResponse
-      additionalProperties: false
     textql.rpc.public.secret.EnvVarField:
       type: object
       properties:
@@ -39563,20 +39366,6 @@ components:
           title: api_access_key
           $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessKey'
       title: GetApiAccessKeyResponse
-      additionalProperties: false
-    textql.rpc.public.secret.GetMembersWithSecretsRequest:
-      type: object
-      title: GetMembersWithSecretsRequest
-      additionalProperties: false
-    textql.rpc.public.secret.GetMembersWithSecretsResponse:
-      type: object
-      properties:
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.identity.MemberPreview'
-          title: members
-      title: GetMembersWithSecretsResponse
       additionalProperties: false
     textql.rpc.public.secret.HttpBasicAuth:
       type: object
@@ -39617,81 +39406,6 @@ components:
           title: providers
       title: ListApiProvidersResponse
       additionalProperties: false
-    textql.rpc.public.secret.ListSecretsRequest:
-      type: object
-      title: ListSecretsRequest
-      additionalProperties: false
-    textql.rpc.public.secret.ListSecretsResponse:
-      type: object
-      properties:
-        secrets:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.secret.Secret'
-          title: secrets
-      title: ListSecretsResponse
-      additionalProperties: false
-    textql.rpc.public.secret.PutSecretRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          title: name
-        value:
-          type: string
-          title: value
-        description:
-          type: string
-          title: description
-          nullable: true
-        link:
-          type: string
-          title: link
-          nullable: true
-        isPrivate:
-          type: boolean
-          title: is_private
-      title: PutSecretRequest
-      additionalProperties: false
-    textql.rpc.public.secret.PutSecretResponse:
-      type: object
-      title: PutSecretResponse
-      additionalProperties: false
-    textql.rpc.public.secret.Secret:
-      type: object
-      properties:
-        id:
-          type: string
-          title: id
-        name:
-          type: string
-          title: name
-        createdAt:
-          title: created_at
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-        updatedAt:
-          title: updated_at
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
-        description:
-          type: string
-          title: description
-          nullable: true
-        link:
-          type: string
-          title: link
-          nullable: true
-        createdBy:
-          type: string
-          title: created_by
-        accessType:
-          type: string
-          title: access_type
-          nullable: true
-        isPublic:
-          type: boolean
-          title: is_public
-      title: Secret
-      additionalProperties: false
     textql.rpc.public.secret.TestApiAccessKeyRequest:
       type: object
       properties:
@@ -39714,30 +39428,6 @@ components:
           type: string
           title: message
       title: TestApiAccessKeyResponse
-      additionalProperties: false
-    textql.rpc.public.secret.UpdateSecretRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          title: name
-        value:
-          type: string
-          title: value
-          nullable: true
-        description:
-          type: string
-          title: description
-          nullable: true
-        link:
-          type: string
-          title: link
-          nullable: true
-      title: UpdateSecretRequest
-      additionalProperties: false
-    textql.rpc.public.secret.UpdateSecretResponse:
-      type: object
-      title: UpdateSecretResponse
       additionalProperties: false
     textql.rpc.public.secret.UpsertApiAccessKeyRequest:
       type: object

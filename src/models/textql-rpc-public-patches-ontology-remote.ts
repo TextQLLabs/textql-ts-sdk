@@ -8,12 +8,15 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Deprecated: use SetOntologyOwnersRequest.
- */
 export type TextqlRpcPublicPatchesOntologyRemote = {
   id?: string | undefined;
   remoteUrl?: string | undefined;
+  /**
+   * Effective permission for principals omitted from entries. Unrestricted
+   *
+   * @remarks
+   *  paths grant full access; restricted paths leave this unspecified.
+   */
   authType?: string | undefined;
   defaultBranch?: string | undefined;
   /**

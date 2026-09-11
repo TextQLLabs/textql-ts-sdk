@@ -1,5 +1,7 @@
 # TextqlRpcPublicPatchesGetOntologyRemoteResponse
 
+Deprecated: use SetOntologyOwnersResponse.
+
 ## Example Usage
 
 ```typescript
@@ -18,7 +20,7 @@ let value: TextqlRpcPublicPatchesGetOntologyRemoteResponse = {
 
 | Field                                                                                                 | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `remote`                                                                                              | [models.TextqlRpcPublicPatchesOntologyRemote](../models/textql-rpc-public-patches-ontology-remote.md) | :heavy_minus_sign:                                                                                    | Deprecated: use SetOntologyOwnersRequest.                                                             |
+| `remote`                                                                                              | [models.TextqlRpcPublicPatchesOntologyRemote](../models/textql-rpc-public-patches-ontology-remote.md) | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |
 | `hostedGithubAppAvailable`                                                                            | *boolean*                                                                                             | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |
 | `hostedGithubAppSlug`                                                                                 | *string*                                                                                              | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |
 | `githubOauthAvailable`                                                                                | *boolean*                                                                                             | :heavy_minus_sign:                                                                                    | N/A                                                                                                   |

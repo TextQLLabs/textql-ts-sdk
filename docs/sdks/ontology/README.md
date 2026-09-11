@@ -10,15 +10,15 @@
 * [createApprovalRule](#createapprovalrule) - CreateApprovalRule
 * [createContextPatchAutoApproveRule](#createcontextpatchautoapproverule) - CreateContextPatchAutoApproveRule
 * [createDirectory](#createdirectory) - CreateOntologyDirectory
-* [createFileUploadUrl](#createfileuploadurl) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+* [createFileUploadUrl](#createfileuploadurl) - CreateOntologyFileUploadUrl
 * [deleteApprovalRule](#deleteapprovalrule) - DeleteApprovalRule
 * [deleteContextPatchAutoApproveRule](#deletecontextpatchautoapproverule) - DeleteContextPatchAutoApproveRule
 * [deleteDirectory](#deletedirectory) - DeleteOntologyDirectory
 * [deleteFile](#deletefile) - DeleteOntologyFile
 * [denyPatch](#denypatch) - DenyPatch
 * [exchangeGithubCode](#exchangegithubcode) - ExchangeOntologyGithubCode
-* [finalizeFileUpload](#finalizefileupload) - FinalizeOntologyFileUpload
-* [getCodeownerCoverage](#getcodeownercoverage) - GetCodeownerCoverage
+* [finalizeFileUpload](#finalizefileupload) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+* [getCodeownerCoverage](#getcodeownercoverage) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
 * [getConfigExportCapabilities](#getconfigexportcapabilities) - GetConfigExportCapabilities
 * [getEffectiveOwners](#geteffectiveowners) - GetEffectiveOntologyOwners
 * [getFileUsage](#getfileusage) - GetFileUsage
@@ -41,8 +41,8 @@
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
-* [listEntries](#listentries) - ListOntologyEntries
+* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the complete desired entry set.
+* [listEntries](#listentries) - PlanConfigAccessDerivation lists the config-managed objects of one type whose  access rows the OWNERS derivation would rewrite, and writes nothing. "Would  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose  level, expiry, duplicate or public flag would change. An object under a malformed  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those  rows on its next pass, so an operator cycles the flag on the orgs this names before  deploying it.
 * [listHistory](#listhistory) - ListOntologyHistory
 * [listImports](#listimports) - ListOntologyImports
 * [listSubmodules](#listsubmodules) - ListOntologySubmodules
@@ -51,21 +51,21 @@
 * [listPatchReviewers](#listpatchreviewers) - ListPatchReviewers
 * [listPatches](#listpatches) - ListPatches
 * [listSkills](#listskills) - ListSkills
-* [planMerge](#planmerge) - PlanOntologyMerge
+* [planMerge](#planmerge) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [previewPullFromRemote](#previewpullfromremote) - PreviewOntologyPullFromRemote
 * [pullFromRemote](#pullfromremote) - PullOntologyFromRemote
-* [pushToRemote](#pushtoremote) - PushOntologyToRemote
+* [pushToRemote](#pushtoremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [recover](#recover) - RecoverOntology
-* [removeRemote](#removeremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [removeRemote](#removeremote) - RemoveOntologyRemote
 * [removeSubmodule](#removesubmodule) - RemoveOntologySubmodule
 * [renameFile](#renamefile) - RenameOntologyFile
 * [requestPatchReview](#requestpatchreview) - RequestPatchReview
-* [resolveSyncConflict](#resolvesyncconflict) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [resolveSyncConflict](#resolvesyncconflict) - ResolveOntologySyncConflict
 * [restorePatch](#restorepatch) - RestorePatch
 * [revertPatch](#revertpatch) - RevertPatch
 * [saveAllObjectsAsConfig](#saveallobjectsasconfig) - SaveAllObjectsAsConfig
 * [saveObjectAsConfig](#saveobjectasconfig) - SaveObjectAsConfig
-* [setFileGolden](#setfilegolden) - Deprecated: use SetOntologyOwners with the complete desired entry set.
+* [setFileGolden](#setfilegolden) - SetOntologyFileGolden
 * [setOwners](#setowners) - SetOntologyOwners
 * [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
 * [updateApprovalRule](#updateapprovalrule) - UpdateApprovalRule
@@ -515,10 +515,7 @@ run();
 
 ## createFileUploadUrl
 
-Streams how many folders and files a subtree holds, so the UI can report the
- size of the whole Ontology rather than only the directories it has lazily
- listed. Counts rise monotonically across frames; the last frame sets
- `final`. A cache hit emits a single `final` frame with `from_cache` set.
+CreateOntologyFileUploadUrl
 
 ### Example Usage
 
@@ -1029,7 +1026,10 @@ run();
 
 ## finalizeFileUpload
 
-FinalizeOntologyFileUpload
+Streams how many folders and files a subtree holds, so the UI can report the
+ size of the whole Ontology rather than only the directories it has lazily
+ listed. Counts rise monotonically across frames; the last frame sets
+ `final`. A cache hit emits a single `final` frame with `from_cache` set.
 
 ### Example Usage
 
@@ -1102,7 +1102,8 @@ run();
 
 ## getCodeownerCoverage
 
-GetCodeownerCoverage
+Deprecated: use SetOntologyOwners with the desired entry set. An empty
+ desired set removes every entry and opens the directory.
 
 ### Example Usage
 
@@ -2785,8 +2786,7 @@ run();
 
 ## listGoldenFiles
 
-Deprecated: use SetOntologyOwners with the desired entry set. An empty
- desired set removes every entry and opens the directory.
+Deprecated: use SetOntologyOwners with the complete desired entry set.
 
 ### Example Usage
 
@@ -2859,7 +2859,13 @@ run();
 
 ## listEntries
 
-ListOntologyEntries
+PlanConfigAccessDerivation lists the config-managed objects of one type whose
+ access rows the OWNERS derivation would rewrite, and writes nothing. "Would
+ rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose
+ level, expiry, duplicate or public flag would change. An object under a malformed
+ OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those
+ rows on its next pass, so an operator cycles the flag on the orgs this names before
+ deploying it.
 
 ### Example Usage
 
@@ -3521,7 +3527,10 @@ run();
 
 ## planMerge
 
-PlanOntologyMerge
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 
@@ -3740,7 +3749,10 @@ run();
 
 ## pushToRemote
 
-PushOntologyToRemote
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+ omitted unless include_unlisted is set.
 
 ### Example Usage
 
@@ -3886,10 +3898,7 @@ run();
 
 ## removeRemote
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
- omitted unless include_unlisted is set.
+RemoveOntologyRemote
 
 ### Example Usage
 
@@ -4181,10 +4190,7 @@ run();
 
 ## resolveSyncConflict
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+ResolveOntologySyncConflict
 
 ### Example Usage
 
@@ -4549,7 +4555,7 @@ run();
 
 ## setFileGolden
 
-Deprecated: use SetOntologyOwners with the complete desired entry set.
+SetOntologyFileGolden
 
 ### Example Usage
 

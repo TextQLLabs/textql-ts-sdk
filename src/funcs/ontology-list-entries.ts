@@ -27,7 +27,16 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ListOntologyEntries
+ * PlanConfigAccessDerivation lists the config-managed objects of one type whose  access rows the OWNERS derivation would rewrite, and writes nothing. "Would  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose  level, expiry, duplicate or public flag would change. An object under a malformed  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those  rows on its next pass, so an operator cycles the flag on the orgs this names before  deploying it.
+ *
+ * @remarks
+ * PlanConfigAccessDerivation lists the config-managed objects of one type whose
+ *  access rows the OWNERS derivation would rewrite, and writes nothing. "Would
+ *  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose
+ *  level, expiry, duplicate or public flag would change. An object under a malformed
+ *  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those
+ *  rows on its next pass, so an operator cycles the flag on the orgs this names before
+ *  deploying it.
  */
 export function ontologyListEntries(
   client: TextqlCore,

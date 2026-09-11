@@ -1,5 +1,7 @@
 # TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest
 
+Deprecated: use SetOntologyOwnersRequest with an empty entry set.
+
 ## Example Usage
 
 ```typescript

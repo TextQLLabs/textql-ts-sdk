@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Deprecated: use SetOntologyOwnersRequest with an empty entry set.
+ */
 export type TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest = {
   state?: string | undefined;
   codeChallenge?: string | undefined;

@@ -44,6 +44,9 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
   powerbiSelections?:
     | Array<TextqlRpcPowerbiSelectionPowerBISelection>
     | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   smsMode?: boolean | undefined;
   apiAccessKeyIds?: Array<string> | undefined;
   feedEnabled?: boolean | null | undefined;
