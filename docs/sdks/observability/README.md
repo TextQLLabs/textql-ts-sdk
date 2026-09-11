@@ -5,9 +5,9 @@
 ### Available Operations
 
 * [activateCustomTopic](#activatecustomtopic) - ActivateCustomTopic
-* [backfillCustomTopic](#backfillcustomtopic) - BackfillCustomTopic
+* [backfillCustomTopic](#backfillcustomtopic) - Custom topics
 * [backfillThreadWarnings](#backfillthreadwarnings) - BackfillThreadWarnings
-* [createCustomTopic](#createcustomtopic) - Custom topics
+* [createCustomTopic](#createcustomtopic) - CreateCustomTopic
 * [deactivateCustomTopic](#deactivatecustomtopic) - DeactivateCustomTopic
 * [deleteCustomTopic](#deletecustomtopic) - DeleteCustomTopic
 * [exportCsv](#exportcsv) - ExportObservabilityCsv
@@ -109,7 +109,7 @@ run();
 
 ## backfillCustomTopic
 
-BackfillCustomTopic
+Custom topics
 
 ### Example Usage
 
@@ -261,7 +261,7 @@ run();
 
 ## createCustomTopic
 
-Custom topics
+CreateCustomTopic
 
 ### Example Usage
 

@@ -27,15 +27,15 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * CreateCustomTopic
+ * ExportRolePermissions
  */
-export function observabilityCreateCustomTopic(
+export function rbacExportRolePermissions(
   client: TextqlCore,
-  request: operations.ObservabilityServiceCreateCustomTopicRequest,
+  request: operations.RBACServiceExportRolePermissionsRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.ObservabilityServiceCreateCustomTopicResponse,
+    operations.RBACServiceExportRolePermissionsResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -55,12 +55,12 @@ export function observabilityCreateCustomTopic(
 
 async function $do(
   client: TextqlCore,
-  request: operations.ObservabilityServiceCreateCustomTopicRequest,
+  request: operations.RBACServiceExportRolePermissionsRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.ObservabilityServiceCreateCustomTopicResponse,
+      operations.RBACServiceExportRolePermissionsResponse,
       | TextqlError
       | ResponseValidationError
       | ConnectionError
@@ -77,7 +77,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        operations.ObservabilityServiceCreateCustomTopicRequest$outboundSchema,
+        operations.RBACServiceExportRolePermissionsRequest$outboundSchema,
         value,
       ),
     "Input validation failed",
@@ -89,7 +89,7 @@ async function $do(
   const body = encodeJSON("body", payload.body, { explode: true });
 
   const path = pathToFunc(
-    "/textql.rpc.public.observe.ObservabilityService/CreateCustomTopic",
+    "/textql.rpc.public.rbac.RBACService/ExportRolePermissions",
   )();
 
   const headers = new Headers(compactMap({
@@ -114,7 +114,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "ObservabilityService_CreateCustomTopic",
+    operationID: "RBACService_ExportRolePermissions",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -154,7 +154,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    operations.ObservabilityServiceCreateCustomTopicResponse,
+    operations.RBACServiceExportRolePermissionsResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -166,13 +166,13 @@ async function $do(
   >(
     M.json(
       200,
-      operations.ObservabilityServiceCreateCustomTopicResponse$inboundSchema,
+      operations.RBACServiceExportRolePermissionsResponse$inboundSchema,
     ),
     M.fail("4XX"),
     M.fail("5XX"),
     M.json(
       "default",
-      operations.ObservabilityServiceCreateCustomTopicResponse$inboundSchema,
+      operations.RBACServiceExportRolePermissionsResponse$inboundSchema,
     ),
   )(response, req);
   if (!result.ok) {

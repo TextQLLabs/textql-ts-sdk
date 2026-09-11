@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 1b9ad417afde8905948c1d3745843c7e
+  docChecksum: 6cbf7e65580bac2a20293072e8fe313c
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 1.4.38
-  configChecksum: 39c31d4eaec55bab79c72a2eb0de9108
+  releaseVersion: 1.4.39
+  configChecksum: c0dc5bf408582063e52cd3f7f807029b
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 0af85f18-8924-4a21-85c5-8beae2aef317
-  pristine_commit_hash: 5d8c350cf892ccd38fe438f060192c795dbcf534
-  pristine_tree_hash: d821cfb15cbc9817e8e8e45a1a4513eb035e963a
+  generation_id: 6a5227df-b156-45a6-a6ce-49c717715f31
+  pristine_commit_hash: 285378a3f99ffa479966680363ca71be90103e33
+  pristine_tree_hash: efa894d2fc819951476cbafc33d7f954c5629b81
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -3126,6 +3126,14 @@ trackedFiles:
     id: 1c5e929cd62b
     last_write_checksum: sha1:c9c3dad081f58339f934d8a393ec0655acbd08b0
     pristine_git_object: a77d62072668de08ba969927f33fd9045628caa0
+  docs/models/operations/rbac-service-export-role-permissions-request.md:
+    id: da9520e5c492
+    last_write_checksum: sha1:cfd42af4990cf9ac21ced240c38b9a8436330136
+    pristine_git_object: 68d58561c7cf686dca06a088f195b6af58ce4fe6
+  docs/models/operations/rbac-service-export-role-permissions-response.md:
+    id: fafed41defa1
+    last_write_checksum: sha1:da973147a367b51ddd4aba99ae1e81cc860b967e
+    pristine_git_object: 3ac70570e92d6607e822ad77e0b5226d6160a933
   docs/models/operations/rbac-service-generate-share-link-request.md:
     id: 8b983bb9ad4c
     last_write_checksum: sha1:37350a1fca72668d0a7e86944231c47b821233e1
@@ -5744,8 +5752,8 @@ trackedFiles:
     pristine_git_object: 13a90b78da7ac380f97499dad92208f17947d807
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:4ed185f1d19316cf7203677642a786eff7894830
-    pristine_git_object: d006271ef8aa28fdf48f76e3efdfb6d27dee5f7e
+    last_write_checksum: sha1:6b0ac51b7b3cd0c985dce39cdbd2f176a891bc4c
+    pristine_git_object: 33889003592771a33ed246891a3b692840b365e1
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:ea1ded1e3605b0d28c995b7c683b9a03b7fd2c75
@@ -8686,6 +8694,14 @@ trackedFiles:
     id: 9c8457662df3
     last_write_checksum: sha1:95f87c49e52e8ce9fe51aa75c38daf1caae89340
     pristine_git_object: 228fa17c02529c65021340a8b064ad74639d7d34
+  docs/models/textql-rpc-public-rbac-export-role-permissions-request.md:
+    id: 78909348e460
+    last_write_checksum: sha1:fc2dacf287efc6d6897fa2993c2ffe9e984fe737
+    pristine_git_object: 9964bf7ecd9bfa04ba229b1a991a5a1f83e9fbd8
+  docs/models/textql-rpc-public-rbac-export-role-permissions-response.md:
+    id: e727f99caf1f
+    last_write_checksum: sha1:b2e81238f26f2a43aae4174dd43c413a144aadd0
+    pristine_git_object: b39f7399fd8feb76dd79aa2361ba9fcb1dec030e
   docs/models/textql-rpc-public-rbac-generate-share-link-request.md:
     id: 22e05bb404ed
     last_write_checksum: sha1:823a29eae2daff18dd3750eab79471523d6c7ad3
@@ -9824,8 +9840,8 @@ trackedFiles:
     pristine_git_object: 05dd3e234cd0bdba79110a4d2682e7cbc3afd520
   docs/sdks/observability/README.md:
     id: bab967736831
-    last_write_checksum: sha1:e6d4e1c40a028722c3d71730398163e6510f1cfd
-    pristine_git_object: e89ee95f86ebc5b9c0440204cde0454550a96989
+    last_write_checksum: sha1:59c54ceb88b5b7a33442f04c8eecc3368838c4af
+    pristine_git_object: 4b8b738d9cb97cbc825b5192947e29dfd3a9f33f
   docs/sdks/ontology/README.md:
     id: 0dbbd337a8ee
     last_write_checksum: sha1:a0d852ffc37f546e13050fc79eacbe4fafeb5605
@@ -9840,8 +9856,8 @@ trackedFiles:
     pristine_git_object: de2ce500467143b93ecc11092901cd6f8c8620ff
   docs/sdks/rbac/README.md:
     id: e80ec65410f2
-    last_write_checksum: sha1:c7483774c1cdf4514d8e5a6d0eef09227929d4c5
-    pristine_git_object: fdc384e3e5ca654caf64f301f8590690aa590574
+    last_write_checksum: sha1:fa4a1972d6d577f7edb3ecf2b6bf483e0b622ffb
+    pristine_git_object: 8c619c4ac68cdce806e4a4e2cf0a6b848aa216d6
   docs/sdks/sandbox/README.md:
     id: 16b3b8b0e152
     last_write_checksum: sha1:a3debec3efa699bfd3913bcff7a95325da043883
@@ -9880,12 +9896,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:c13e88ff36aabf802fd2ea8342e28ad8f28e0950
-    pristine_git_object: 257792cf1039fbe3ec83b1301c14bedb3fcb4034
+    last_write_checksum: sha1:b3fe2eac76431a5cf14afb1ae36ec2bd5ef46b06
+    pristine_git_object: b0b4cceea07a74b67a8987044c1688f839e1eabd
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:e9a0586a8e1ff08834b9e74ea0f858be99d179d7
-    pristine_git_object: 87728ffcf269e17d3dae20d908c6dc0c8b654a80
+    last_write_checksum: sha1:8258001946c541682f4f2d6b31675ae804700787
+    pristine_git_object: 01037baf85987bffc779ee472d5f5933382cb5bc
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -10516,16 +10532,16 @@ trackedFiles:
     pristine_git_object: 3dcf350bec0e1696af5d6b7fe561c30954dd64d1
   src/funcs/observability-backfill-custom-topic.ts:
     id: d2f29c0d11e6
-    last_write_checksum: sha1:ae0cf9403c3f24a67e292e60f91d76eec767811e
-    pristine_git_object: 7a19f5b39086aec45173ac9c708850fd465a963b
+    last_write_checksum: sha1:96aad9bf7eb116c831015b32281bb6fd16fc648f
+    pristine_git_object: fdacbcbb1ebe59eaa605ba6b22164d25d7df28d9
   src/funcs/observability-backfill-thread-warnings.ts:
     id: 807c8fa4b4aa
     last_write_checksum: sha1:c85a9f6b0fe0184b551e0283dfb4f9a273a1ec8b
     pristine_git_object: e9a817d1312d8166c72f9107380f5d426346b431
   src/funcs/observability-create-custom-topic.ts:
     id: f222920620fd
-    last_write_checksum: sha1:29e2e30ee19d621a29f64849290a5e85d6a320f0
-    pristine_git_object: b57b1afa9fb2df433d3cd64cbf56a76f3b814a2c
+    last_write_checksum: sha1:b790f11248b6122c57e7d7e3db5715bbb58f499d
+    pristine_git_object: d9d19af3de6365bf8a5188bfb0f584ae1bc6ebe1
   src/funcs/observability-deactivate-custom-topic.ts:
     id: 5f9cca43b9a8
     last_write_checksum: sha1:1ece722403ecc2546b5ba686e2016b2e1f697f28
@@ -11142,6 +11158,10 @@ trackedFiles:
     id: 680f098f8054
     last_write_checksum: sha1:18f0ec7e80bf84e57e3001b557af1a09cdb96e32
     pristine_git_object: f24a59b1a7edce5bc161a2a7d41876688faedd5d
+  src/funcs/rbac-export-role-permissions.ts:
+    id: 092f06e4a712
+    last_write_checksum: sha1:efcf44b9c68603ef3c4a61230f38f9f7190f8d34
+    pristine_git_object: a929e6950b35547c022e4462418631dbc88e7720
   src/funcs/rbac-generate-share-link.ts:
     id: d5fdcc4a40be
     last_write_checksum: sha1:3461124dcf9b7036a3822e342335d9ae04450dce
@@ -11552,8 +11572,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:3ce86313a569e0128b8986d06220273d62921bea
-    pristine_git_object: f678319124243ad10100b8a0985219dd107695b5
+    last_write_checksum: sha1:dc5fcf932fd1b9e95b6a7901c0bcdb653bd8a0db
+    pristine_git_object: 408045b2455807ebf7a0baf0eebe56ca077584c6
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -11644,8 +11664,8 @@ trackedFiles:
     pristine_git_object: c245708ebadfb181e7694330adadcd258e0915d7
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:1ac36e6b026033a3dd7c6f3e15443806e5394c98
-    pristine_git_object: 55074c02e0adec9bea074e80feac278559186043
+    last_write_checksum: sha1:e0825587aacbc9fc74ab6fd944724a1dd7a7ef4f
+    pristine_git_object: 06c00e152c2cf8b0bfc1b84850ba4770750134b6
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:e159e3a4e22d0fa5bc724eaaf0438eb903522d3f
@@ -12220,8 +12240,8 @@ trackedFiles:
     pristine_git_object: fe653ee3b7287acd373c25531bdae78b95b9277f
   src/models/operations/index.ts:
     id: 0d9ffaf774d2
-    last_write_checksum: sha1:292a33894dd865eafcd7e843d930214d1b4bf460
-    pristine_git_object: 7684dcf0becc3e5863b5efe891bc5a50c52a11ac
+    last_write_checksum: sha1:9c2d49b8e0484d7c6d2d3b8f35cf178be15734c2
+    pristine_git_object: 26d64dd8d84996348a7c27fed0d1eb898a04dd09
   src/models/operations/mcp-service-clear-o-auth-token.ts:
     id: 22f21a173140
     last_write_checksum: sha1:23b7fd79741f93952dc0e7e257ac6cd2981fb38c
@@ -12902,6 +12922,10 @@ trackedFiles:
     id: 3c1b22378809
     last_write_checksum: sha1:df1bf8abf1302863550cc04f318bdf80b6d12580
     pristine_git_object: a4a82f7182887423d03dfb2abd03639ee7e0bae7
+  src/models/operations/rbac-service-export-role-permissions.ts:
+    id: 531bfc2f9954
+    last_write_checksum: sha1:6b4c416b811cae037d5f1e2ef4c7776b8adb9a7a
+    pristine_git_object: 6d02abbe36bf3038f2d5426c54b94b5bdfb11027
   src/models/operations/rbac-service-generate-share-link.ts:
     id: c09bc5268f28
     last_write_checksum: sha1:6b37c41281a6cf537a05a264a1d1119733cdb17a
@@ -14564,8 +14588,8 @@ trackedFiles:
     pristine_git_object: 0fe4734e1012a2d6faea6b527100bc8168070921
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:fc9604b858e9ee844c1eca041db3c1b8f924d4be
-    pristine_git_object: 6f85411975d990664dc8a649cbaf747d3ed2257e
+    last_write_checksum: sha1:eb98c7282b57647110bf616e2f750b66f4511348
+    pristine_git_object: 44f57611771aa6efcbfa6b7c53cbc1caacddeae9
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:2dd1466205b57b33a44637fac2921f04af13af8d
@@ -17390,6 +17414,14 @@ trackedFiles:
     id: f7955d66fd9b
     last_write_checksum: sha1:9ba34002b4842d18b290a3e6119385f754ca8a99
     pristine_git_object: 07f8cc2419b50bb4544d88ad3198826b46b17e5b
+  src/models/textql-rpc-public-rbac-export-role-permissions-request.ts:
+    id: 45af1ef110cd
+    last_write_checksum: sha1:64b12f94cac446559feb76248a42060c155ac76d
+    pristine_git_object: cbdc1fdd914219dd08a443985ada469325bc59c7
+  src/models/textql-rpc-public-rbac-export-role-permissions-response.ts:
+    id: 31565d25656e
+    last_write_checksum: sha1:70120aeed21ab41cf59f025d921a96775edacccf
+    pristine_git_object: 245d6d8859999d790cfd0705e290ff023ffb3bcf
   src/models/textql-rpc-public-rbac-generate-share-link-request.ts:
     id: c7d0a5b91adc
     last_write_checksum: sha1:6caf6354e6102c03e5ebcee794f1b1a4aa62fdea
@@ -18352,8 +18384,8 @@ trackedFiles:
     pristine_git_object: 718237923462e1922cbefb595f8003751dd190fb
   src/sdk/observability.ts:
     id: 9c0e070af33d
-    last_write_checksum: sha1:d1255330ba065481db62c0c51df1553b365c3b96
-    pristine_git_object: f54d328afa464deda0e2614453105cfddfe47372
+    last_write_checksum: sha1:af3aa327088a792e54c58b195f9f42d5df125a2f
+    pristine_git_object: 05350c221dea1fa35a8a8f0b409bcb3cf1215055
   src/sdk/ontology.ts:
     id: 6d410ab7f699
     last_write_checksum: sha1:b32feb0d5e5d700e25c810bfe4e88289c7be5175
@@ -18368,8 +18400,8 @@ trackedFiles:
     pristine_git_object: 6f5861101ae4f5a3386c40f9361d5ea52b6510c7
   src/sdk/rbac.ts:
     id: 9959512deb06
-    last_write_checksum: sha1:80d00adeb5a5b97941b7b42cb06ad256fb27b371
-    pristine_git_object: 650a2daa37c272e5177c850c3ab0d376ba3231b8
+    last_write_checksum: sha1:32fb47b10ef892ffbd1f6b056c5c89cab60b20d7
+    pristine_git_object: f220b04a9abb2f9335c6c4631b80d5937b926aba
   src/sdk/sandbox-admin.ts:
     id: e2e03630d005
     last_write_checksum: sha1:41ca5d4ddd1832eaaba6eaaa0d9f677413370e80
@@ -24573,4 +24605,17 @@ examples:
           application/json: {}
         default:
           application/json: {"code": "not_found"}
+  RBACService_ExportRolePermissions:
+    speakeasy-default-RBAC-service-export-role-permissions:
+      parameters:
+        header:
+          Connect-Protocol-Version: 1
+      requestBody:
+        application/json: {}
+      responses:
+        "200":
+          application/json: {}
+        default:
+          application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.duplicate()`:  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.getAgent()`:  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.list()`:  `response.agents[].llmModel` **Changed** (Breaking ⚠️)\n* `textql.agents.update()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.attachAgent()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.run()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.checkHealth()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.createChat()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model` **Changed** (Breaking ⚠️)\n  *  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.get()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.getAll()`:  `response.chats[].model` **Changed** (Breaking ⚠️)\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model` **Changed** (Breaking ⚠️)\n* `textql.agents.create()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.settings.update()`: \n  *  `request.body.enabledModels[]` **Changed** (Breaking ⚠️)\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.chats.update()`:  `response.chat.model` **Changed** (Breaking ⚠️)\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel` **Changed** (Breaking ⚠️)\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel` **Changed** (Breaking ⚠️)\n  *  `response.playbook.llmModel` **Changed** (Breaking ⚠️)\n* `textql.rbac.createRole()`:  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getMemberRoles()`:  `response.memberRoles.Map<textql.rpc.public.rbac.MemberRoles>.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.getRole()`:  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.listRoles()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.updateRole()`: \n  *  `request.body.allowedModels[]` **Changed** (Breaking ⚠️)\n  *  `response.role.allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.rbac.whoAmI()`:  `response.roles[].allowedModels[]` **Changed** (Breaking ⚠️)\n* `textql.settings.updateModels()`: \n  *  `request.body.defaultModel` **Changed** (Breaking ⚠️)\n* `textql.rbac.exportRolePermissions()`: **Added**\n"

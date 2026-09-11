@@ -1031,6 +1031,8 @@ export * from "./textql-rpc-public-rbac-delete-role-request.js";
 export * from "./textql-rpc-public-rbac-delete-role-response.js";
 export * from "./textql-rpc-public-rbac-delete-service-account-request.js";
 export * from "./textql-rpc-public-rbac-delete-service-account-response.js";
+export * from "./textql-rpc-public-rbac-export-role-permissions-request.js";
+export * from "./textql-rpc-public-rbac-export-role-permissions-response.js";
 export * from "./textql-rpc-public-rbac-generate-share-link-request.js";
 export * from "./textql-rpc-public-rbac-generate-share-link-response.js";
 export * from "./textql-rpc-public-rbac-get-current-member-roles-and-permissions-request.js";

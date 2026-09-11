@@ -51,7 +51,10 @@ export class Observability extends ClientSDK {
   }
 
   /**
-   * BackfillCustomTopic
+   * Custom topics
+   *
+   * @remarks
+   * Custom topics
    */
   async backfillCustomTopic(
     request: operations.ObservabilityServiceBackfillCustomTopicRequest,
@@ -79,10 +82,7 @@ export class Observability extends ClientSDK {
   }
 
   /**
-   * Custom topics
-   *
-   * @remarks
-   * Custom topics
+   * CreateCustomTopic
    */
   async createCustomTopic(
     request: operations.ObservabilityServiceCreateCustomTopicRequest,
