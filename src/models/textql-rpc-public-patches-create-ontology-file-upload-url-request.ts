@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 import { smartUnion } from "../types/smart-union.js";
 
+/**
+ * when true, reserved files like OWNERS are included
+ */
 export type TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes =
   | number
   | string;
@@ -12,6 +15,9 @@ export type TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes =
 export type TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequest = {
   path?: string | undefined;
   mimeType?: string | undefined;
+  /**
+   * when true, reserved files like OWNERS are included
+   */
   sizeBytes?: number | string | undefined;
 };
 

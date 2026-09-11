@@ -69,6 +69,9 @@ export type TextqlRpcPublicPatchesListChatsForFileRequest = {
    *  microsecond should be expressed in JSON format as "3.000001s".
    */
   observationPeriod?: string | undefined;
+  /**
+   * default 7d
+   */
   limit?: number | null | undefined;
 };
 

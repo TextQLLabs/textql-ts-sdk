@@ -5,7 +5,7 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Deprecated: use SetOntologyOwnersResponse.
+ * Deprecated: use SetOntologyOwnersRequest.
  */
 export type TextqlRpcPublicPatchesGetOntologyRemoteRequest = {};
 

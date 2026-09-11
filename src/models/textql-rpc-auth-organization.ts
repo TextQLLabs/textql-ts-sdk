@@ -321,6 +321,8 @@ export type TextqlRpcAuthOrganization = {
    *
    * @remarks
    *  staff activity in its usage views; when false (default) they are filtered out.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   smsEnabled?: boolean | null | undefined;
   scimAssignDefaultRole?: boolean | null | undefined;
@@ -329,6 +331,9 @@ export type TextqlRpcAuthOrganization = {
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   configMigrationsEnabled?: boolean | null | undefined;
+  /**
+   * agent SMS/texting feature removed; no longer read or written
+   */
   sandboxObservabilityEnabled?: boolean | null | undefined;
   dataAppsEnabled?: boolean | null | undefined;
   /**

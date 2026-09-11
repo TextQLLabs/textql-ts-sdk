@@ -220,9 +220,23 @@ export type TextqlRpcAuthMember = {
   isServiceAccount?: boolean | undefined;
   isScimManaged?: boolean | undefined;
   steering?: boolean | null | undefined;
+  /**
+   * Deprecated: agent SMS/texting feature removed; no longer read or written.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   phoneNumber?: string | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   phoneVerified?: boolean | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   personalAgentId?: string | null | undefined;
+  /**
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   agentNumber?: string | null | undefined;
   /**
    * Per-member default response methodology for new chats, as a

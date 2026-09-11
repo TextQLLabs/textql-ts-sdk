@@ -13,9 +13,6 @@ import {
 } from "./textql-rpc-public-patches-file-chat-usage.js";
 
 export type TextqlRpcPublicPatchesListChatsForFileResponse = {
-  /**
-   * default 7d
-   */
   chats?: Array<TextqlRpcPublicPatchesFileChatUsage> | undefined;
 };
 

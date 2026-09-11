@@ -12,6 +12,13 @@ import {
   TextqlRpcPublicPatchesOntologyFile$inboundSchema,
 } from "./textql-rpc-public-patches-ontology-file.js";
 
+/**
+ * Counts of the entries a caller may see beneath a subtree. Excludes the subtree
+ *
+ * @remarks
+ *  root itself and reserved names (OWNERS, .gitignore, .DS_Store, .tmp-*), which
+ *  are bookkeeping rather than Ontology content.
+ */
 export type TextqlRpcPublicPatchesFinalizeOntologyFileUploadResponse = {
   file?: TextqlRpcPublicPatchesOntologyFile | undefined;
 };

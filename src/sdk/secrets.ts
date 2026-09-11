@@ -3,15 +3,10 @@
  */
 
 import { secretsDeleteApiAccessKey } from "../funcs/secrets-delete-api-access-key.js";
-import { secretsDeleteSecret } from "../funcs/secrets-delete-secret.js";
 import { secretsGetApiAccessKey } from "../funcs/secrets-get-api-access-key.js";
-import { secretsGetMembersWithSecrets } from "../funcs/secrets-get-members-with-secrets.js";
 import { secretsListApiAccessKeys } from "../funcs/secrets-list-api-access-keys.js";
 import { secretsListApiProviders } from "../funcs/secrets-list-api-providers.js";
-import { secretsListSecrets } from "../funcs/secrets-list-secrets.js";
-import { secretsPutSecret } from "../funcs/secrets-put-secret.js";
 import { secretsTestApiAccessKey } from "../funcs/secrets-test-api-access-key.js";
-import { secretsUpdate } from "../funcs/secrets-update.js";
 import { secretsUpsertApiAccessKey } from "../funcs/secrets-upsert-api-access-key.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
@@ -33,20 +28,6 @@ export class Secrets extends ClientSDK {
   }
 
   /**
-   * DeleteSecret
-   */
-  async deleteSecret(
-    request: operations.SecretServiceDeleteSecretRequest,
-    options?: RequestOptions,
-  ): Promise<operations.SecretServiceDeleteSecretResponse> {
-    return unwrapAsync(secretsDeleteSecret(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * GetApiAccessKey
    */
   async getApiAccessKey(
@@ -54,20 +35,6 @@ export class Secrets extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SecretServiceGetApiAccessKeyResponse> {
     return unwrapAsync(secretsGetApiAccessKey(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * GetMembersWithSecrets
-   */
-  async getMembersWithSecrets(
-    request: operations.SecretServiceGetMembersWithSecretsRequest,
-    options?: RequestOptions,
-  ): Promise<operations.SecretServiceGetMembersWithSecretsResponse> {
-    return unwrapAsync(secretsGetMembersWithSecrets(
       this,
       request,
       options,
@@ -103,35 +70,10 @@ export class Secrets extends ClientSDK {
   }
 
   /**
-   * ListSecrets
-   */
-  async listSecrets(
-    request: operations.SecretServiceListSecretsRequest,
-    options?: RequestOptions,
-  ): Promise<operations.SecretServiceListSecretsResponse> {
-    return unwrapAsync(secretsListSecrets(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * PutSecret
-   */
-  async putSecret(
-    request: operations.SecretServicePutSecretRequest,
-    options?: RequestOptions,
-  ): Promise<operations.SecretServicePutSecretResponse> {
-    return unwrapAsync(secretsPutSecret(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * TestApiAccessKey
+   * ---- API Connectors (deprecated) ----
+   *
+   * @remarks
+   * ---- API Connectors (deprecated) ----
    */
   async testApiAccessKey(
     request: operations.SecretServiceTestApiAccessKeyRequest,
@@ -145,24 +87,7 @@ export class Secrets extends ClientSDK {
   }
 
   /**
-   * UpdateSecret
-   */
-  async update(
-    request: operations.SecretServiceUpdateSecretRequest,
-    options?: RequestOptions,
-  ): Promise<operations.SecretServiceUpdateSecretResponse> {
-    return unwrapAsync(secretsUpdate(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * ---- API Connectors (deprecated) ----
-   *
-   * @remarks
-   * ---- API Connectors (deprecated) ----
+   * UpsertApiAccessKey
    */
   async upsertApiAccessKey(
     request: operations.SecretServiceUpsertApiAccessKeyRequest,
