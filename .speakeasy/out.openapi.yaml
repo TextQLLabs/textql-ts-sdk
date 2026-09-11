@@ -5846,7 +5846,8 @@ paths:
     post:
       tags:
         - ObservabilityService
-      summary: BackfillCustomTopic
+      summary: Custom topics
+      description: Custom topics
       operationId: ObservabilityService_BackfillCustomTopic
       x-speakeasy-group: observability
       x-speakeasy-name-override: backfillCustomTopic
@@ -5920,8 +5921,7 @@ paths:
     post:
       tags:
         - ObservabilityService
-      summary: Custom topics
-      description: Custom topics
+      summary: CreateCustomTopic
       operationId: ObservabilityService_CreateCustomTopic
       x-speakeasy-group: observability
       x-speakeasy-name-override: createCustomTopic
@@ -11719,6 +11719,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.rbac.DeleteServiceAccountResponse'
+  /textql.rpc.public.rbac.RBACService/ExportRolePermissions:
+    post:
+      tags:
+        - RBACService
+      summary: ExportRolePermissions
+      operationId: RBACService_ExportRolePermissions
+      x-speakeasy-group: rbac
+      x-speakeasy-name-override: exportRolePermissions
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.rbac.ExportRolePermissionsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.rbac.ExportRolePermissionsResponse'
   /textql.rpc.public.rbac.RBACService/GenerateShareLink:
     post:
       tags:
@@ -23867,10 +23904,9 @@ components:
         - MODEL_KIMI_K2_7_CODE
         - MODEL_QWEN3_7_PLUS
         - MODEL_KIMI_K3
-        - MODEL_DEEPSEEK_V4_FLASH_0731
-        - MODEL_DEEPSEEK_V4_FLASH_VISION_EXP
         - MODEL_GLM_5_3_FLASH
         - MODEL_GLM_5_3
+        - MODEL_DEEPSEEK_V4P1_FLASH
         - MODEL_MUSE_SPARK_1_1
         - MODEL_MUSE_SPARK_1_2
     textql.rpc.public.chat.LlmUsage:
@@ -36760,6 +36796,25 @@ components:
           type: boolean
           title: success
       title: DeleteServiceAccountResponse
+      additionalProperties: false
+    textql.rpc.public.rbac.ExportRolePermissionsRequest:
+      type: object
+      title: ExportRolePermissionsRequest
+      additionalProperties: false
+    textql.rpc.public.rbac.ExportRolePermissionsResponse:
+      type: object
+      properties:
+        fileName:
+          type: string
+          title: file_name
+        contentType:
+          type: string
+          title: content_type
+        data:
+          type: string
+          title: data
+          format: byte
+      title: ExportRolePermissionsResponse
       additionalProperties: false
     textql.rpc.public.rbac.GenerateShareLinkRequest:
       type: object

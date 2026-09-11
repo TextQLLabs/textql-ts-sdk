@@ -328,9 +328,9 @@ run();
 ### [Observability](docs/sdks/observability/README.md)
 
 * [activateCustomTopic](docs/sdks/observability/README.md#activatecustomtopic) - ActivateCustomTopic
-* [backfillCustomTopic](docs/sdks/observability/README.md#backfillcustomtopic) - BackfillCustomTopic
+* [backfillCustomTopic](docs/sdks/observability/README.md#backfillcustomtopic) - Custom topics
 * [backfillThreadWarnings](docs/sdks/observability/README.md#backfillthreadwarnings) - BackfillThreadWarnings
-* [createCustomTopic](docs/sdks/observability/README.md#createcustomtopic) - Custom topics
+* [createCustomTopic](docs/sdks/observability/README.md#createcustomtopic) - CreateCustomTopic
 * [deactivateCustomTopic](docs/sdks/observability/README.md#deactivatecustomtopic) - DeactivateCustomTopic
 * [deleteCustomTopic](docs/sdks/observability/README.md#deletecustomtopic) - DeleteCustomTopic
 * [exportCsv](docs/sdks/observability/README.md#exportcsv) - ExportObservabilityCsv
@@ -497,6 +497,7 @@ run();
 * [createServiceAccountApiKey](docs/sdks/rbac/README.md#createserviceaccountapikey) - CreateServiceAccountApiKey
 * [deleteRole](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 * [deleteServiceAccount](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
+* [exportRolePermissions](docs/sdks/rbac/README.md#exportrolepermissions) - ExportRolePermissions
 * [generateShareLink](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 * [getCurrentMemberRolesAndPermissions](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 * [getEmbedUserApiKey](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey
@@ -796,9 +797,9 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`metricsExportsTestConnection`](docs/sdks/metricsexports/README.md#testconnection) - TestMetricsExportConnection
 - [`metricsExportsTriggerPush`](docs/sdks/metricsexports/README.md#triggerpush) - TriggerMetricsPush
 - [`observabilityActivateCustomTopic`](docs/sdks/observability/README.md#activatecustomtopic) - ActivateCustomTopic
-- [`observabilityBackfillCustomTopic`](docs/sdks/observability/README.md#backfillcustomtopic) - BackfillCustomTopic
+- [`observabilityBackfillCustomTopic`](docs/sdks/observability/README.md#backfillcustomtopic) - Custom topics
 - [`observabilityBackfillThreadWarnings`](docs/sdks/observability/README.md#backfillthreadwarnings) - BackfillThreadWarnings
-- [`observabilityCreateCustomTopic`](docs/sdks/observability/README.md#createcustomtopic) - Custom topics
+- [`observabilityCreateCustomTopic`](docs/sdks/observability/README.md#createcustomtopic) - CreateCustomTopic
 - [`observabilityDeactivateCustomTopic`](docs/sdks/observability/README.md#deactivatecustomtopic) - DeactivateCustomTopic
 - [`observabilityDeleteCustomTopic`](docs/sdks/observability/README.md#deletecustomtopic) - DeleteCustomTopic
 - [`observabilityExportCsv`](docs/sdks/observability/README.md#exportcsv) - ExportObservabilityCsv
@@ -953,6 +954,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`rbacCreateServiceAccountApiKey`](docs/sdks/rbac/README.md#createserviceaccountapikey) - CreateServiceAccountApiKey
 - [`rbacDeleteRole`](docs/sdks/rbac/README.md#deleterole) - DeleteRole
 - [`rbacDeleteServiceAccount`](docs/sdks/rbac/README.md#deleteserviceaccount) - DeleteServiceAccount
+- [`rbacExportRolePermissions`](docs/sdks/rbac/README.md#exportrolepermissions) - ExportRolePermissions
 - [`rbacGenerateShareLink`](docs/sdks/rbac/README.md#generatesharelink) - GenerateShareLink
 - [`rbacGetCurrentMemberRolesAndPermissions`](docs/sdks/rbac/README.md#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
 - [`rbacGetEmbedUserApiKey`](docs/sdks/rbac/README.md#getembeduserapikey) - GetEmbedUserApiKey

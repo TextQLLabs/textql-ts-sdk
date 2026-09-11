@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * BackfillCustomTopic
+ * Custom topics
+ *
+ * @remarks
+ * Custom topics
  */
 export function observabilityBackfillCustomTopic(
   client: TextqlCore,

@@ -315,6 +315,7 @@ export * from "./rbac-service-create-service-account-api-key.js";
 export * from "./rbac-service-create-service-account.js";
 export * from "./rbac-service-delete-role.js";
 export * from "./rbac-service-delete-service-account.js";
+export * from "./rbac-service-export-role-permissions.js";
 export * from "./rbac-service-generate-share-link.js";
 export * from "./rbac-service-get-current-member-roles-and-permissions.js";
 export * from "./rbac-service-get-embed-user-api-key.js";

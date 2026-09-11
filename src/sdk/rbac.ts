@@ -12,6 +12,7 @@ import { rbacCreateServiceAccountApiKey } from "../funcs/rbac-create-service-acc
 import { rbacCreateServiceAccount } from "../funcs/rbac-create-service-account.js";
 import { rbacDeleteRole } from "../funcs/rbac-delete-role.js";
 import { rbacDeleteServiceAccount } from "../funcs/rbac-delete-service-account.js";
+import { rbacExportRolePermissions } from "../funcs/rbac-export-role-permissions.js";
 import { rbacGenerateShareLink } from "../funcs/rbac-generate-share-link.js";
 import { rbacGetCurrentMemberRolesAndPermissions } from "../funcs/rbac-get-current-member-roles-and-permissions.js";
 import { rbacGetEmbedUserApiKey } from "../funcs/rbac-get-embed-user-api-key.js";
@@ -188,6 +189,20 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceDeleteServiceAccountResponse> {
     return unwrapAsync(rbacDeleteServiceAccount(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * ExportRolePermissions
+   */
+  async exportRolePermissions(
+    request: operations.RBACServiceExportRolePermissionsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceExportRolePermissionsResponse> {
+    return unwrapAsync(rbacExportRolePermissions(
       this,
       request,
       options,
