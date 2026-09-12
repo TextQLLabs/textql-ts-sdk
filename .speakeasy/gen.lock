@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 6cbf7e65580bac2a20293072e8fe313c
+  docChecksum: 02fcb068ed76bbb73f8f1ef9023f8260
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 1.4.40
-  configChecksum: 494e5dab8fb727db8bc59714a1688aec
+  releaseVersion: 1.4.41
+  configChecksum: bc40ae9836d013d22cf4fec94e3a7f86
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 3b008d52-b3df-46db-818a-3b95e2037a38
-  pristine_commit_hash: 0d3bef59d9c99219cee35dacb98c2664504a1d9a
-  pristine_tree_hash: 5003d38c9f56754a3ef4dba23831d7844ec6f553
+  generation_id: 1447972a-2b2d-4eb6-94eb-cd62e19eace6
+  pristine_commit_hash: 7ae57b92a0cfb09fa4d9e1f83f32bdfe012a4309
+  pristine_tree_hash: ec58a241f97fde021d0e4d193e23a2a9d4c755d6
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -4156,8 +4156,8 @@ trackedFiles:
     pristine_git_object: 6aaa096bd8dcd269930c6239af908c91f3c05d38
   docs/models/textql-rpc-auth-organization.md:
     id: 21918368741d
-    last_write_checksum: sha1:8fe4f0c2021f4b2385df585886201be4f8764e29
-    pristine_git_object: 8e58e6a0c9eb325d2457d8753ac09845e51a9e61
+    last_write_checksum: sha1:1a71d6865a06d27d65bc953c32fc601e03de2807
+    pristine_git_object: eecfaa2517fa4948d3621c4398f0adf635f6afa6
   docs/models/textql-rpc-auth-theme.md:
     id: cf13fc927ee9
     last_write_checksum: sha1:306cdfbed1d2254a7d86091cca1eed6f629faba3
@@ -9896,12 +9896,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:ca3a66a7fd78172c83556b16fc0c632c1aa70bef
-    pristine_git_object: c68b4431feace8f6b57c7b366224a81edfa830fb
+    last_write_checksum: sha1:57712fa78c87bb3c2f7c4a4371aa8d64985d66eb
+    pristine_git_object: b747e9faa15c27284fb7086ea67a1e059c5581f3
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:4a602d98b80d90191b3315d54addca442865ab2a
-    pristine_git_object: 73093cbfebd3c94764bfa678340f29e5ee334baf
+    last_write_checksum: sha1:4b558f98bf648ecc3098dc34003d5f46d32af86a
+    pristine_git_object: afc2b5bdc7669aab9dbe40db71dc3c2257847c90
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11572,8 +11572,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:815b8aa62ba550b8fb7feea8f8b1c5bc44a43c90
-    pristine_git_object: 1cbe2c3ac1f8509bbe95b4865e3500e5d827ede9
+    last_write_checksum: sha1:778c1e72b10611616164ef4bee319e9b76ae2a60
+    pristine_git_object: b7345b2ca7c2ade13b170f13d2801fbe4383be8f
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -13328,8 +13328,8 @@ trackedFiles:
     pristine_git_object: 928b7ff5045819c1e1bb1ddc213af3c9e255b9d1
   src/models/textql-rpc-auth-organization.ts:
     id: 139235689f0f
-    last_write_checksum: sha1:e4b2c0b109e45496e5b42cfe9cdfa123c60a1c52
-    pristine_git_object: e9e1d9f615852e47377101397de77541ee45010c
+    last_write_checksum: sha1:6ed27363b05053a98429e6bb24ddeb6c47db8101
+    pristine_git_object: 122cd38dcef380f55b4f610b0753c4dc9f3ce6f0
   src/models/textql-rpc-auth-theme.ts:
     id: 58f1281a43aa
     last_write_checksum: sha1:7d380b1598efb4ec739c70f4252e04dfdf4d5a89
