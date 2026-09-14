@@ -1,5 +1,13 @@
-import { ArrowUp, Boxes, Cable, Check, ChevronRight, Plus, X } from 'lucide-react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { ArrowUp, Boxes, Cable, Check, ChevronRight, Plus, Upload, X } from 'lucide-react';
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	type ReactNode,
+	type DragEvent
+} from 'react';
 
 import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
 import { connectorIconSrc } from '../lib/connectorIcons';
@@ -25,6 +33,8 @@ type Props = {
 	className?: string;
 	attachments?: ReactNode;
 	agentLabel?: string;
+	onFilesDrop?: (files: File[]) => void;
+	filesDisabled?: boolean;
 };
 
 const ROOT_ITEMS = [
@@ -51,8 +61,12 @@ export function Composer({
 	onSend,
 	attachments,
 	agentLabel,
+	onFilesDrop,
+	filesDisabled = false,
 	className = ''
 }: Props) {
+	const [draggingFiles, setDraggingFiles] = useState(false);
+	const dragDepth = useRef(0);
 	const connectors = useConnectors();
 	const [menuOpen, setMenuOpen] = useState(false);
 	const [flyout, setFlyout] = useState<Flyout | null>(null);
@@ -192,13 +206,57 @@ export function Composer({
 		if (flyout === 'connectors') queueMicrotask(() => searchRef.current?.focus());
 	}, [flyout]);
 
+	function isFileDrag(event: DragEvent<HTMLDivElement>) {
+		return Boolean(onFilesDrop) && Array.from(event.dataTransfer.types).includes('Files');
+	}
+
+	function resetFileDrag() {
+		dragDepth.current = 0;
+		setDraggingFiles(false);
+	}
+
 	return (
 		// `composer-shell` stays unhashed so ChatPage's dock can centre it via :global().
-		<div className={cx(
-				'composer-shell flex flex-col gap-2',
+		<div
+			className={cx(
+				'composer-shell relative flex flex-col gap-2',
 				docked ? 'w-[min(720px,100%)]' : 'w-[min(640px,100%)]',
 				className
-			)}>
+			)}
+			onDragEnter={(event) => {
+				if (!isFileDrag(event)) return;
+				event.preventDefault();
+				dragDepth.current += 1;
+				setDraggingFiles(true);
+			}}
+			onDragOver={(event) => {
+				if (!isFileDrag(event)) return;
+				event.preventDefault();
+				event.dataTransfer.dropEffect = filesDisabled ? 'none' : 'copy';
+			}}
+			onDragLeave={() => {
+				dragDepth.current = Math.max(0, dragDepth.current - 1);
+				if (dragDepth.current === 0) setDraggingFiles(false);
+			}}
+			onDrop={(event) => {
+				resetFileDrag();
+				if (!isFileDrag(event)) return;
+				event.preventDefault();
+				if (!filesDisabled) onFilesDrop?.(Array.from(event.dataTransfer.files));
+			}}
+		>
+			{draggingFiles && onFilesDrop && (
+				<div
+					role="status"
+					className="pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed border-accent bg-elevate/95 px-4 py-3 text-center text-accent"
+				>
+					<Upload size={22} aria-hidden="true" />
+					<span className="text-[14px] font-medium">
+						{filesDisabled ? 'Wait for the current operation to finish' : 'Drop files to attach'}
+					</span>
+					<span className="text-[12px] text-muted">Up to 20 MiB per file</span>
+				</div>
+			)}
 			<div className="flex w-full flex-col gap-2 rounded-lg border border-[color-mix(in_srgb,var(--color-line)_95%,#cfcfd4)] bg-elevate px-3.5 pt-3 pb-2.5 shadow-[0_1px_2px_rgba(15,15,20,0.03),0_10px_28px_rgba(15,15,20,0.06)] focus-within:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus-within:shadow-[0_1px_2px_rgba(15,15,20,0.03),0_12px_32px_rgba(15,15,20,0.07),0_0_0_3px_color-mix(in_srgb,var(--color-accent)_12%,transparent)]">
 				{attachments}
 				<textarea
@@ -244,7 +302,10 @@ export function Composer({
 											<button
 												key={item.id}
 												type="button"
-												className={cx(FLYOUT_ROW, flyout === item.id ? 'bg-fill' : 'bg-transparent hover:bg-fill')}
+												className={cx(
+													FLYOUT_ROW,
+													flyout === item.id ? 'bg-fill' : 'bg-transparent hover:bg-fill'
+												)}
 												role="menuitem"
 												aria-haspopup="menu"
 												aria-expanded={flyout === item.id}
@@ -253,16 +314,23 @@ export function Composer({
 												onClick={() => openFlyout(item.id)}
 											>
 												<span className={cx(MENU_ROW_MAIN, 'items-center gap-2')}>
-													<span className="inline-flex size-3.5 shrink-0 items-center justify-center text-[#71717a]" aria-hidden="true">
+													<span
+														className="inline-flex size-3.5 shrink-0 items-center justify-center text-[#71717a]"
+														aria-hidden="true"
+													>
 														<item.Icon size={14} strokeWidth={1.5} />
 													</span>
 													{item.label}
 												</span>
 												<span className="inline-flex min-w-0 items-center gap-1.5">
 													{item.id === 'connectors' && selectedConnectorIds.length > 0 ? (
-														<span className="inline-flex min-w-[18px] items-center justify-center rounded-full bg-sidebar px-1.5 py-px text-[11px] font-semibold text-text-2">{selectedConnectorIds.length}</span>
+														<span className="inline-flex min-w-[18px] items-center justify-center rounded-full bg-sidebar px-1.5 py-px text-[11px] font-semibold text-text-2">
+															{selectedConnectorIds.length}
+														</span>
 													) : item.id === 'models' ? (
-														<span className="max-w-[90px] overflow-hidden text-[10.5px] text-ellipsis whitespace-nowrap text-muted">{selectedModelLabel}</span>
+														<span className="max-w-[90px] overflow-hidden text-[10.5px] text-ellipsis whitespace-nowrap text-muted">
+															{selectedModelLabel}
+														</span>
 													) : null}
 													<ChevronRight
 														className="shrink-0 text-[#a1a1aa]"
@@ -279,10 +347,10 @@ export function Composer({
 								{flyout === 'models' && (
 									<div
 										className={cx(
-										FLYOUT,
-										'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
-										'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
-									)}
+											FLYOUT,
+											'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
+											'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
+										)}
 										role="menu"
 										aria-label="Models"
 									>
@@ -293,7 +361,7 @@ export function Composer({
 													type="button"
 													className={cx(
 														FLYOUT_ROW,
-												selectedModel === model.id ? 'bg-fill' : 'bg-transparent hover:bg-fill'
+														selectedModel === model.id ? 'bg-fill' : 'bg-transparent hover:bg-fill'
 													)}
 													role="menuitem"
 													onClick={() => selectModel(model.id)}
@@ -305,8 +373,12 @@ export function Composer({
 															alt=""
 														/>
 														<span className={cx(MENU_ROW_MAIN, 'flex-col items-start gap-px')}>
-															<span className="overflow-hidden text-[12.5px] font-semibold text-ellipsis whitespace-nowrap text-text-strong">{model.label}</span>
-															<span className="overflow-hidden text-[11px] text-ellipsis whitespace-nowrap text-muted">{model.hint}</span>
+															<span className="overflow-hidden text-[12.5px] font-semibold text-ellipsis whitespace-nowrap text-text-strong">
+																{model.label}
+															</span>
+															<span className="overflow-hidden text-[11px] text-ellipsis whitespace-nowrap text-muted">
+																{model.hint}
+															</span>
 														</span>
 													</span>
 													{selectedModel === model.id && (
@@ -323,10 +395,10 @@ export function Composer({
 								{flyout === 'connectors' && (
 									<div
 										className={cx(
-										FLYOUT,
-										'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
-										'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
-									)}
+											FLYOUT,
+											'absolute bottom-0 left-[calc(100%+4px)] w-[min(272px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
+											'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0 max-[560px]:w-[min(240px,calc(100vw-32px))]'
+										)}
 										role="menu"
 										aria-label="Connectors"
 									>
@@ -352,9 +424,7 @@ export function Composer({
 												<p className={cx(FLYOUT_STATE, 'p-2')}>Loading connectors…</p>
 											) : connectors.error && !connectors.loaded ? (
 												<div className="flex flex-col items-start gap-1.5 px-2 py-1.5">
-													<p className={FLYOUT_STATE}>
-														Couldn’t load connectors.
-													</p>
+													<p className={FLYOUT_STATE}>Couldn’t load connectors.</p>
 													<button
 														type="button"
 														className="rounded-[8px] bg-[color-mix(in_srgb,var(--color-accent)_8%,var(--color-elevate))] px-2.5 py-[5px] text-[12px] font-medium text-accent hover:bg-[color-mix(in_srgb,var(--color-accent)_14%,var(--color-elevate))]"
@@ -374,9 +444,9 @@ export function Composer({
 														type="button"
 														className={cx(
 															'flex w-full items-center gap-2 rounded-[7px] px-2 py-[7px] text-left text-inherit',
-														selectedConnectorIds.includes(connector.id)
-															? 'bg-fill'
-															: 'bg-transparent hover:bg-fill'
+															selectedConnectorIds.includes(connector.id)
+																? 'bg-fill'
+																: 'bg-transparent hover:bg-fill'
 														)}
 														onClick={() => toggleConnector(connector)}
 													>
@@ -385,7 +455,9 @@ export function Composer({
 															src={connectorIconSrc(connector.type)}
 															alt=""
 														/>
-														<span className="min-w-0 flex-1 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-text-strong">{connector.name}</span>
+														<span className="min-w-0 flex-1 overflow-hidden text-[12.5px] font-medium text-ellipsis whitespace-nowrap text-text-strong">
+															{connector.name}
+														</span>
 														{selectedConnectorIds.includes(connector.id) && (
 															<span className={CHECK_MARK} aria-hidden="true">
 																<Check size={14} strokeWidth={1.5} />
@@ -402,7 +474,10 @@ export function Composer({
 					</div>
 
 					<div className="flex shrink-0 items-center gap-2">
-						<span className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]" aria-label={agentLabel ? `Agent: ${agentLabel}` : `Model: ${selectedModelLabel}`}>
+						<span
+							className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]"
+							aria-label={agentLabel ? `Agent: ${agentLabel}` : `Model: ${selectedModelLabel}`}
+						>
 							{agentLabel ?? selectedModelLabel}
 						</span>
 						<button
@@ -421,12 +496,17 @@ export function Composer({
 			{selectedChips.length > 0 && (
 				<div className="flex flex-wrap items-center gap-1.5 px-1" aria-label="Attached connectors">
 					{selectedChips.map((chip) => (
-						<span key={chip.id} className={cx(
+						<span
+							key={chip.id}
+							className={cx(
 								'inline-flex max-w-full items-center gap-1.5 rounded-[7px] border border-line bg-sidebar py-[3px] pl-[7px] text-[12px] leading-[1.2] font-medium text-text-strong [&_img]:size-3.5 [&_img]:shrink-0 [&_img]:object-contain',
 								configLocked ? 'pr-[9px]' : 'pr-[5px]'
-							)}>
+							)}
+						>
 							<img src={connectorIconSrc(chip.type)} alt="" />
-							<span className="max-w-[180px] overflow-hidden text-ellipsis whitespace-nowrap">{chip.name}</span>
+							<span className="max-w-[180px] overflow-hidden text-ellipsis whitespace-nowrap">
+								{chip.name}
+							</span>
 							{!configLocked && (
 								<button
 									type="button"

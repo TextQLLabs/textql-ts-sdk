@@ -5,7 +5,7 @@ This directory contains example scripts demonstrating how to use the @textql/sdk
 ## Complete applications
 
 - [`agent-chat-demo`](./agent-chat-demo): the full Python/React chat interface on
-  React 19.2.0 and Python 3.12.10 with pip, using the TypeScript SDK behind FastAPI,
+  React 19.2.0 and Python 3.12.10 with pip, using `textql-sdk==1.1.24` directly in FastAPI,
   with file/CSV uploads and an agent automatically attached to every new chat.
 - [`python-react-demo`](./python-react-demo): the original React application with
   a FastAPI backend using the Python SDK.

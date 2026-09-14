@@ -33,6 +33,8 @@ concurrency:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    env:
+      TEXTQL_SDK_SHA: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.sdk_sha || '' }}
     steps:
       - name: Check pull request label
         id: check-label
@@ -68,6 +70,7 @@ jobs:
         if: steps.check-label.outputs.short_circuit_label_trigger != 'true'
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.sdk_sha || '' }}
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
 
@@ -78,6 +81,37 @@ jobs:
           repository: speakeasy-api/sdk-generation-action
           ref: 7625cebc33f047f014c65479a7743c3ac337c2f0
           path: _speakeasy
+
+      # The action clones again internally and resets existing PRs to origin/main.
+      # Pin both its worktree and that baseline before it reads SDK configuration.
+      - name: Pin internal SDK checkout
+        if: github.event_name == 'repository_dispatch' && github.event.client_payload.sdk_sha != ''
+        env:
+          SDK_SHA: ${{ github.event.client_payload.sdk_sha }}
+        run: |
+          [[ "$SDK_SHA" =~ ^[0-9a-f]{40}$ ]] || exit 1
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          path = Path("_speakeasy/internal/git/git.go")
+          source = path.read_text()
+          marker = "\tg.repo = r\n"
+          assert source.count(marker) == 1, "Speakeasy clone implementation changed"
+          pin = r"""
+          if sha := os.Getenv("TEXTQL_SDK_SHA"); sha != "" {
+              if !regexp.MustCompile(`^[0-9a-f]{40}$`).MatchString(sha) {
+                  return fmt.Errorf("invalid tested SDK SHA")
+              }
+              if err := g.Reset("--hard", sha); err != nil {
+                  return fmt.Errorf("checkout tested SDK SHA: %w", err)
+              }
+              baseline := plumbing.ReferenceName("refs/remotes/origin/" + strings.TrimPrefix(ref, "refs/heads/"))
+              if err := r.Storer.SetReference(plumbing.NewHashReference(baseline, plumbing.NewHash(sha))); err != nil {
+                  return fmt.Errorf("pin SDK generation baseline: %w", err)
+              }
+          }
+          """
+          path.write_text(source.replace(marker, marker + pin))
+          PYTHON
 
       - name: Run generation workflow
         id: run-workflow

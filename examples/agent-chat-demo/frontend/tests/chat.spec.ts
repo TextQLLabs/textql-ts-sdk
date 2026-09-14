@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 
 const csv = {
 	name: 'revenue.csv',
@@ -37,13 +37,11 @@ test('full chat app uploads files, sends, reloads backend state, and creates a s
 	);
 	await page.screenshot({ path: 'test-results/agent-chat-desktop.png', fullPage: true });
 	await page.getByRole('button', { name: 'New chat', exact: true }).first().click();
-	await page
-		.getByLabel('Upload files or CSVs')
-		.setInputFiles({
-			name: 'notes.txt',
-			mimeType: 'text/plain',
-			buffer: Buffer.from('Quarterly revenue notes.')
-		});
+	await page.getByLabel('Upload files or CSVs').setInputFiles({
+		name: 'notes.txt',
+		mimeType: 'text/plain',
+		buffer: Buffer.from('Quarterly revenue notes.')
+	});
 	await expect(page).toHaveURL(/\/chat\/chat-2$/);
 	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('notes.txt');
 	await expect(page.getByRole('list', { name: 'Attached files' })).not.toContainText('revenue.csv');
@@ -124,16 +122,14 @@ test('missing backend configuration is visible and blocks new messages', async (
 
 test('multiple files retain the complete backend attachment list', async ({ page }) => {
 	await page.goto('/');
-	await page
-		.getByLabel('Upload files or CSVs')
-		.setInputFiles([
-			csv,
-			{
-				name: 'context.txt',
-				mimeType: 'text/plain',
-				buffer: Buffer.from('Fiscal year starts in January.')
-			}
-		]);
+	await page.getByLabel('Upload files or CSVs').setInputFiles([
+		csv,
+		{
+			name: 'context.txt',
+			mimeType: 'text/plain',
+			buffer: Buffer.from('Fiscal year starts in January.')
+		}
+	]);
 	const files = page.getByRole('list', { name: 'Attached files' });
 	await expect(files).toContainText('revenue.csv');
 	await expect(files).toContainText('context.txt');
@@ -148,13 +144,11 @@ test('empty and oversized files are rejected before chat creation', async ({ pag
 		.getByLabel('Upload files or CSVs')
 		.setInputFiles({ name: 'empty.csv', mimeType: 'text/csv', buffer: Buffer.alloc(0) });
 	await expect(page.getByRole('alert')).toContainText('Choose non-empty files up to 20 MiB each.');
-	await page
-		.getByLabel('Upload files or CSVs')
-		.setInputFiles({
-			name: 'large.csv',
-			mimeType: 'text/csv',
-			buffer: Buffer.alloc(20 * 1024 * 1024 + 1)
-		});
+	await page.getByLabel('Upload files or CSVs').setInputFiles({
+		name: 'large.csv',
+		mimeType: 'text/csv',
+		buffer: Buffer.alloc(20 * 1024 * 1024 + 1)
+	});
 	await expect(page.getByRole('alert')).toContainText('Choose non-empty files up to 20 MiB each.');
 	const calls = await (await request.get('http://127.0.0.1:8790/test/calls')).json();
 	expect(calls.some((call: { method: string }) => call.method === 'POST')).toBe(false);
@@ -201,13 +195,11 @@ test('leaving an uploading chat does not put its files in the next chat', async 
 		page.getByRole('button', { name: 'Attach files or CSVs', exact: true })
 	).toBeEnabled();
 	release();
-	await page
-		.getByLabel('Upload files or CSVs')
-		.setInputFiles({
-			name: 'next.txt',
-			mimeType: 'text/plain',
-			buffer: Buffer.from('A different conversation.')
-		});
+	await page.getByLabel('Upload files or CSVs').setInputFiles({
+		name: 'next.txt',
+		mimeType: 'text/plain',
+		buffer: Buffer.from('A different conversation.')
+	});
 	await expect(page).toHaveURL(/\/chat\/chat-2$/);
 	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('next.txt');
 	await expect(page.getByRole('list', { name: 'Attached files' })).not.toContainText('revenue.csv');
@@ -222,4 +214,160 @@ test('mobile layout keeps the upload control accessible', async ({ page }) => {
 		page.getByRole('button', { name: 'Attach files or CSVs', exact: true })
 	).toBeVisible();
 	await page.screenshot({ path: 'test-results/agent-chat-mobile.png', fullPage: true });
+});
+
+async function dragFiles(page: Page, names: string[]) {
+	return page.evaluateHandle((names) => {
+		const transfer = new DataTransfer();
+		for (const name of names)
+			transfer.items.add(new File(['month,revenue\nJan,100\n'], name, { type: 'text/csv' }));
+		return transfer;
+	}, names);
+}
+
+test('drop multiple files onto the composer, keep nested highlight, and preserve attachments', async ({
+	page,
+	request
+}) => {
+	await page.goto('/');
+	await expect(page.getByLabel('Upload files or CSVs')).toBeEnabled();
+	const transfer = await dragFiles(page, ['dropped.csv', 'second.csv']);
+	const composer = page.locator('.composer-shell');
+	const message = page.getByRole('textbox', { name: 'Message', exact: true });
+	await composer.dispatchEvent('dragenter', { dataTransfer: transfer });
+	await expect(page.getByText('Drop files to attach', { exact: true })).toBeVisible();
+	await message.dispatchEvent('dragenter', { dataTransfer: transfer });
+	await composer.dispatchEvent('dragleave', { dataTransfer: transfer });
+	await expect(page.getByText('Drop files to attach', { exact: true })).toBeVisible();
+	await message.dispatchEvent('drop', { dataTransfer: transfer });
+	await expect(page.getByText('Drop files to attach', { exact: true })).toHaveCount(0);
+	const files = page.getByRole('list', { name: 'Attached files' });
+	await expect(files).toContainText('dropped.csv');
+	await expect(files).toContainText('second.csv');
+	const uploadCalls = await (await request.get('http://127.0.0.1:8790/test/calls')).json();
+	expect(
+		uploadCalls.filter(
+			(call: { method: string; path: string }) =>
+				call.method === 'GET' && call.path.endsWith('/files')
+		)
+	).toHaveLength(0);
+	await page.reload();
+	await expect(files).toContainText('dropped.csv');
+	await expect(files).toContainText('second.csv');
+	const calls = await (await request.get('http://127.0.0.1:8790/test/calls')).json();
+	expect(
+		calls.filter(
+			(call: { method: string; path: string }) =>
+				call.method === 'POST' && call.path === '/v3/textql/chats'
+		)
+	).toHaveLength(1);
+	expect(
+		calls.filter(
+			(call: { method: string; path: string }) =>
+				call.method === 'POST' && call.path.endsWith('/files')
+		)
+	).toHaveLength(2);
+	await transfer.dispose();
+});
+
+test('a second drop during upload is blocked and text dragging stays native', async ({
+	page,
+	request
+}) => {
+	let release: () => void = () => {};
+	const pending = new Promise<void>((resolve) => {
+		release = resolve;
+	});
+	await page.route('**/v3/textql/chats/*/files', async (route) => {
+		if (route.request().method() === 'POST') await pending;
+		await route.continue();
+	});
+	await page.goto('/');
+	await expect(page.getByLabel('Upload files or CSVs')).toBeEnabled();
+	const composer = page.locator('.composer-shell');
+	const transfer = await dragFiles(page, ['first.csv']);
+	await composer.dispatchEvent('drop', { dataTransfer: transfer });
+	await expect(page.getByLabel('Upload files or CSVs')).toBeDisabled();
+	const second = await dragFiles(page, ['should-not-upload.csv']);
+	await composer.dispatchEvent('dragenter', { dataTransfer: second });
+	await expect(page.getByText('Wait for the current operation to finish')).toBeVisible();
+	await composer.dispatchEvent('drop', { dataTransfer: second });
+	release();
+	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('first.csv');
+	await expect(page.getByLabel('Upload files or CSVs')).toBeEnabled();
+	const prevented = await composer.evaluate((element) => {
+		const transfer = new DataTransfer();
+		transfer.setData('text/plain', 'ordinary text');
+		const event = new DragEvent('drop', {
+			dataTransfer: transfer,
+			bubbles: true,
+			cancelable: true
+		});
+		element.dispatchEvent(event);
+		return event.defaultPrevented;
+	});
+	expect(prevented).toBe(false);
+	const calls = await (await request.get('http://127.0.0.1:8790/test/calls')).json();
+	expect(
+		calls.filter(
+			(call: { method: string; path: string }) =>
+				call.method === 'POST' && call.path.endsWith('/files')
+		)
+	).toHaveLength(1);
+	await transfer.dispose();
+	await second.dispose();
+});
+
+test('empty dropped files are rejected and leaving composer clears highlight', async ({
+	page,
+	request
+}) => {
+	await page.goto('/');
+	await expect(page.getByLabel('Upload files or CSVs')).toBeEnabled();
+	const composer = page.locator('.composer-shell');
+	const transfer = await page.evaluateHandle(() => {
+		const transfer = new DataTransfer();
+		transfer.items.add(new File([], 'empty.csv', { type: 'text/csv' }));
+		return transfer;
+	});
+	await composer.dispatchEvent('dragenter', { dataTransfer: transfer });
+	await expect(page.getByText('Drop files to attach', { exact: true })).toBeVisible();
+	await composer.dispatchEvent('dragleave', { dataTransfer: transfer });
+	await expect(page.getByText('Drop files to attach', { exact: true })).toHaveCount(0);
+	await composer.dispatchEvent('drop', { dataTransfer: transfer });
+	await expect(page.getByRole('alert')).toContainText('Choose non-empty files up to 20 MiB each.');
+	const calls = await (await request.get('http://127.0.0.1:8790/test/calls')).json();
+	expect(calls.some((call: { method: string }) => call.method === 'POST')).toBe(false);
+	await transfer.dispose();
+});
+
+test('a stale file-list response cannot overwrite a completed upload', async ({ page }) => {
+	await page.goto('/');
+	await page.getByLabel('Upload files or CSVs').setInputFiles(csv);
+	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('revenue.csv');
+	let release: () => void = () => {};
+	let started: () => void = () => {};
+	const pending = new Promise<void>((resolve) => {
+		release = resolve;
+	});
+	const loading = new Promise<void>((resolve) => {
+		started = resolve;
+	});
+	await page.route('**/v3/textql/chats/*/files', async (route) => {
+		if (route.request().method() === 'GET') {
+			started();
+			await pending;
+			await route.fulfill({ json: { files: [] } });
+		} else await route.continue();
+	});
+	await page.reload();
+	await loading;
+	const transfer = await dragFiles(page, ['new.csv']);
+	await page.locator('.composer-shell').dispatchEvent('drop', { dataTransfer: transfer });
+	const files = page.getByRole('list', { name: 'Attached files' });
+	await expect(files).toContainText('new.csv');
+	release();
+	await expect(files).toContainText('revenue.csv');
+	await expect(files).toContainText('new.csv');
+	await transfer.dispose();
 });

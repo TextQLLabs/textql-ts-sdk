@@ -1,5 +1,5 @@
 import { FileText, Paperclip } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { listChatFiles, uploadChatFile, type ChatFile } from '../lib/api';
 
 type Props = {
@@ -9,7 +9,12 @@ type Props = {
 	onBusyChange: (busy: boolean) => void;
 };
 
-export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props) {
+export type ChatFilesHandle = { attach: (files: File[]) => Promise<void> };
+
+export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
+	{ chatId, disabled, ensureChat, onBusyChange },
+	ref
+) {
 	const [files, setFiles] = useState<ChatFile[]>([]);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState('');
@@ -20,6 +25,7 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 	const upload = useRef<AbortController | undefined>(undefined);
 	const uploadChat = useRef<string | undefined>(undefined);
 	const busy = useRef(false);
+	const filesVersion = useRef(0);
 
 	useEffect(() => () => upload.current?.abort(), []);
 
@@ -30,15 +36,16 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 	useEffect(() => {
 		setFiles([]);
 		setError('');
-		if (!chatId) return;
+		if (!chatId || busy.current) return;
+		const version = filesVersion.current;
 		const controller = new AbortController();
 		async function load() {
 			try {
 				const snapshot = await listChatFiles(chatId!, controller.signal);
-				if (controller.signal.aborted) return;
+				if (controller.signal.aborted || version !== filesVersion.current) return;
 				setFiles(snapshot);
 			} catch (cause) {
-				if (!controller.signal.aborted)
+				if (!controller.signal.aborted && version === filesVersion.current)
 					setError(cause instanceof Error ? cause.message : 'Unable to load files.');
 			}
 		}
@@ -53,6 +60,7 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 			return;
 		}
 		busy.current = true;
+		filesVersion.current += 1;
 		setUploading(true);
 		onBusyChange(true);
 		setError('');
@@ -66,7 +74,6 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 				const snapshot = await uploadChatFile(id, file, controller.signal);
 				if (currentChat.current === id) setFiles(snapshot);
 			}
-			if (currentChat.current === id) setRefresh((value) => value + 1);
 		} catch (cause) {
 			if (!controller.signal.aborted)
 				setError(cause instanceof Error ? cause.message : 'Unable to attach files.');
@@ -78,6 +85,8 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 		}
 	}
 
+	useImperativeHandle(ref, () => ({ attach }));
+
 	return (
 		<div className="flex flex-col gap-2 border-b border-line pb-2 text-[12px]">
 			<div className="flex items-center justify-between gap-2">
@@ -88,9 +97,9 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 					onClick={() => input.current?.click()}
 				>
 					<Paperclip size={14} />
-					{uploading ? 'Uploading files…' : 'Attach files or CSVs'}
+					{uploading ? 'Uploading and preparing files…' : 'Attach files or CSVs'}
 				</button>
-				<span className="text-muted">20 MiB per file</span>
+				<span className="text-right text-muted">Drop files here · 20 MiB per file</span>
 			</div>
 			<input
 				ref={input}
@@ -133,4 +142,4 @@ export function ChatFiles({ chatId, disabled, ensureChat, onBusyChange }: Props)
 			)}
 		</div>
 	);
-}
+});
