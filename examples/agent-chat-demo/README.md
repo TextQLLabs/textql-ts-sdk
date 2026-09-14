@@ -104,15 +104,15 @@ all `/v3` requests through FastAPI. `/health` on port 8787 reports Python SDK in
 2. If agent attachment fails, the backend tries to delete the empty partial
    chat and returns an error. If cleanup also fails, the error explicitly asks
    you to inspect the TextQL chat list. No message is sent on either path.
-3. Drop files anywhere in the composer, or use **Attach files or CSVs**. Select one or more nonempty files with filename extensions, up to **20 MiB each**. Files upload
+3. Drop files anywhere in the composer, or use the **+** button to attach files. Select one or more nonempty files with filename extensions, up to **20 MiB each**. Files upload
    sequentially; the send button stays disabled until the uploads finish.
    CSVs use tabular datasets; text, images, spreadsheets, and documents use
    TextQL's corresponding dataset types. Actual format support is determined
    by the TextQL deployment.
 4. For each file, the SDK registers a dataset upload, FastAPI PUTs its bytes
    to signed storage, the SDK finalizes the upload, and `AttachDataset` associates
-   it with the chat. The UI only labels a file **attached** after that final call
-   succeeds. Backend upload/processing errors are shown inline.
+   it with the chat. After attachment succeeds, the UI renders the returned file cell in the
+   conversation under **You**. The composer stays clear for the next message. Backend upload/processing errors are shown inline.
 5. Reopening or refreshing the chat reloads attachments from durable backend
    cells. Successful files remain attached if a later file in a selection fails.
    An interrupted request may have completed server-side: refresh files before

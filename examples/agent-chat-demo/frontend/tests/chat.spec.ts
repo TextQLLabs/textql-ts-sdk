@@ -19,10 +19,24 @@ test('full chat app uploads files, sends, reloads backend state, and creates a s
 		page.getByRole('button', { name: 'Attach files or CSVs', exact: true })
 	).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Composer settings' })).toHaveCount(0);
-	await page.getByLabel('Upload files or CSVs').setInputFiles(csv);
+	await expect(page.locator('.composer-shell')).not.toContainText('Drop files here');
+	await expect(page.locator('.composer-shell')).not.toContainText('20 MiB per file');
+	const avatar = page.getByRole('img', { name: 'Demo analyst (test fixture) profile picture' });
+	await expect(avatar).toBeVisible();
+	await expect(avatar).toHaveJSProperty('naturalWidth', 240);
+	await expect(page.locator('.composer-shell')).toContainText('@Demo analyst (test fixture)');
+	await page.screenshot({ path: 'test-results/agent-wrapper.png', fullPage: true });
+	const picker = page.waitForEvent('filechooser');
+	await page.getByRole('button', { name: 'Attach files or CSVs', exact: true }).click();
+	await (await picker).setFiles(csv);
 	await expect(page).toHaveURL(/\/chat\/chat-1$/);
 	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('revenue.csv');
 	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('attached');
+	await expect(page.locator('.composer-shell')).not.toContainText('revenue.csv');
+	await expect(page.getByRole('region', { name: 'Chat messages' })).toContainText('revenue.csv');
+	await expect(
+		page.getByRole('list', { name: 'Attached files' }).getByRole('listitem')
+	).toHaveCount(1);
 	await page
 		.getByRole('textbox', { name: 'Message', exact: true })
 		.fill('Summarize revenue by month.');
@@ -30,8 +44,12 @@ test('full chat app uploads files, sends, reloads backend state, and creates a s
 	await expect(page.getByRole('region', { name: 'Chat messages' })).toContainText(
 		'browser test fixture'
 	);
+	await expect(
+		page.getByRole('list', { name: 'Attached files' }).getByRole('listitem')
+	).toHaveCount(1);
 	await page.reload();
 	await expect(page.getByRole('list', { name: 'Attached files' })).toContainText('revenue.csv');
+	await expect(page.locator('.composer-shell')).not.toContainText('revenue.csv');
 	await expect(page.getByRole('region', { name: 'Chat messages' })).toContainText(
 		'Summarize revenue by month.'
 	);
@@ -128,14 +146,54 @@ test('multiple files retain the complete backend attachment list', async ({ page
 			name: 'context.txt',
 			mimeType: 'text/plain',
 			buffer: Buffer.from('Fiscal year starts in January.')
-		}
+		},
+		{ name: 'report.pdf', mimeType: 'application/pdf', buffer: Buffer.from('test fixture') },
+		{ name: 'chart.png', mimeType: 'image/png', buffer: Buffer.from('test fixture') }
 	]);
 	const files = page.getByRole('list', { name: 'Attached files' });
 	await expect(files).toContainText('revenue.csv');
 	await expect(files).toContainText('context.txt');
+	await expect(files).toContainText('report.pdf');
+	await expect(files).toContainText('chart.png');
+	for (const name of ['report.pdf', 'chart.png']) {
+		const thumbnail = files.getByRole('img', { name: `Preview of ${name}` });
+		await expect(thumbnail).toBeVisible();
+		await expect(thumbnail).toHaveJSProperty('naturalWidth', 240);
+		const bounds = await files.getByRole('button', { name: `Open ${name}` }).boundingBox();
+		expect(bounds?.width).toBeLessThanOrEqual(160);
+		expect(bounds?.height).toBeLessThan(180);
+	}
+	await expect(files).not.toContainText('http://');
+	await expect(files).not.toContainText('Pages');
+	await expect(page.getByLabel('Preview panel', { exact: true })).toHaveCount(0);
+	await page.screenshot({ path: 'test-results/inline-file-previews.png', fullPage: true });
 	await page.reload();
 	await expect(files).toContainText('revenue.csv');
 	await expect(files).toContainText('context.txt');
+	await expect(files).toContainText('report.pdf');
+	await expect(files).toContainText('chart.png');
+	for (const name of ['report.pdf', 'chart.png']) {
+		const thumbnail = files.getByRole('img', { name: `Preview of ${name}` });
+		await expect(thumbnail).toBeVisible();
+		await expect(thumbnail).toHaveJSProperty('naturalWidth', 240);
+		const bounds = await files.getByRole('button', { name: `Open ${name}` }).boundingBox();
+		expect(bounds?.width).toBeLessThanOrEqual(160);
+		expect(bounds?.height).toBeLessThan(180);
+	}
+	await expect(files).not.toContainText('http://');
+	await expect(files).not.toContainText('Pages');
+	await expect(page.getByLabel('Preview panel', { exact: true })).toHaveCount(0);
+	await page.screenshot({ path: 'test-results/inline-file-previews.png', fullPage: true });
+	await files.getByRole('button', { name: 'Open report.pdf' }).click();
+	const pdfFrame = page.getByLabel('Preview panel', { exact: true }).locator('iframe');
+	await expect(pdfFrame).toHaveAttribute('title', 'report.pdf');
+	await expect(pdfFrame).not.toHaveAttribute('sandbox');
+	await files.getByRole('button', { name: 'Open chart.png' }).click();
+	await expect(page.getByLabel('Preview panel', { exact: true })).toBeVisible();
+	await expect(page.getByLabel('Preview panel', { exact: true }).locator('img')).toHaveJSProperty(
+		'naturalWidth',
+		240
+	);
 });
 
 test('empty and oversized files are rejected before chat creation', async ({ page, request }) => {
@@ -370,4 +428,56 @@ test('a stale file-list response cannot overwrite a completed upload', async ({ 
 	await expect(files).toContainText('revenue.csv');
 	await expect(files).toContainText('new.csv');
 	await transfer.dispose();
+});
+
+test('a completed upload appears in the conversation while a later file is still pending', async ({
+	page
+}) => {
+	let release: () => void = () => {};
+	const pending = new Promise<void>((resolve) => {
+		release = resolve;
+	});
+	let uploads = 0;
+	await page.route('**/v3/textql/chats/*/files', async (route) => {
+		if (route.request().method() === 'POST' && ++uploads === 2) {
+			await pending;
+			await route.fulfill({ status: 502, json: { detail: 'Second file failed.' } });
+		} else await route.continue();
+	});
+	await page.goto('/');
+	await page
+		.getByLabel('Upload files or CSVs')
+		.setInputFiles([
+			csv,
+			{ name: 'second.csv', mimeType: 'text/csv', buffer: Buffer.from('value\n1') }
+		]);
+	await expect(page.getByRole('region', { name: 'Chat messages' })).toContainText('revenue.csv');
+	await expect(page.locator('.composer-shell')).not.toContainText('revenue.csv');
+	await expect(page.getByLabel('Upload files or CSVs')).toBeDisabled();
+	release();
+	await expect(page.getByRole('alert')).toContainText('Second file failed.');
+	await expect(
+		page.getByRole('list', { name: 'Attached files' }).getByRole('listitem')
+	).toHaveCount(1);
+	await page.reload();
+	await expect(page.getByRole('region', { name: 'Chat messages' })).toContainText('revenue.csv');
+	await expect(page.locator('.composer-shell')).not.toContainText('revenue.csv');
+});
+
+test('broken thumbnails and avatar keep compact readable fallbacks', async ({ page }) => {
+	await page.route('**/test/thumbnail.svg*', (route) => route.fulfill({ status: 404, body: '' }));
+	await page.goto('/');
+	await expect(
+		page.getByRole('img', { name: 'Demo analyst (test fixture) profile picture' })
+	).toHaveAttribute('viewBox', '0 0 100 100');
+	await page.getByLabel('Upload files or CSVs').setInputFiles({
+		name: 'report.pdf',
+		mimeType: 'application/pdf',
+		buffer: Buffer.from('fixture')
+	});
+	const files = page.getByRole('list', { name: 'Attached files' });
+	await expect(files).toContainText('Preview unavailable');
+	await expect(files).toContainText('report.pdf');
+	await expect(files).not.toContainText('http://');
+	await expect(files.getByRole('img')).toHaveCount(0);
 });

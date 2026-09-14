@@ -1,4 +1,14 @@
-import { ArrowUp, Boxes, Cable, Check, ChevronRight, Plus, Upload, X } from 'lucide-react';
+import {
+	ArrowUp,
+	Boxes,
+	Cable,
+	Check,
+	ChevronRight,
+	LoaderCircle,
+	Plus,
+	Upload,
+	X
+} from 'lucide-react';
 import {
 	useCallback,
 	useEffect,
@@ -8,6 +18,8 @@ import {
 	type ReactNode,
 	type DragEvent
 } from 'react';
+
+import { AgentAvatar } from './AgentAvatar';
 
 import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
 import { connectorIconSrc } from '../lib/connectorIcons';
@@ -33,6 +45,10 @@ type Props = {
 	className?: string;
 	attachments?: ReactNode;
 	agentLabel?: string;
+	agentId?: string | null;
+	agentProfileImageUrl?: string | null;
+	onAttachFiles?: () => void;
+	filesUploading?: boolean;
 	onFilesDrop?: (files: File[]) => void;
 	filesDisabled?: boolean;
 };
@@ -61,7 +77,11 @@ export function Composer({
 	onSend,
 	attachments,
 	agentLabel,
+	agentId,
+	agentProfileImageUrl,
 	onFilesDrop,
+	onAttachFiles,
+	filesUploading = false,
 	filesDisabled = false,
 	className = ''
 }: Props) {
@@ -219,7 +239,10 @@ export function Composer({
 		// `composer-shell` stays unhashed so ChatPage's dock can centre it via :global().
 		<div
 			className={cx(
-				'composer-shell relative flex flex-col gap-2',
+				'composer-shell relative flex flex-col',
+				agentLabel
+					? 'gap-1 rounded-2xl border border-[#83b7a4] bg-sidebar p-1 shadow-[0_0_0_4px_rgba(0,132,93,0.07)] focus-within:ring-2 focus-within:ring-[#83b7a4]/30'
+					: 'gap-2',
 				docked ? 'w-[min(720px,100%)]' : 'w-[min(640px,100%)]',
 				className
 			)}
@@ -257,7 +280,24 @@ export function Composer({
 					<span className="text-[12px] text-muted">Up to 20 MiB per file</span>
 				</div>
 			)}
-			<div className="flex w-full flex-col gap-2 rounded-lg border border-[color-mix(in_srgb,var(--color-line)_95%,#cfcfd4)] bg-elevate px-3.5 pt-3 pb-2.5 shadow-[0_1px_2px_rgba(15,15,20,0.03),0_10px_28px_rgba(15,15,20,0.06)] focus-within:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus-within:shadow-[0_1px_2px_rgba(15,15,20,0.03),0_12px_32px_rgba(15,15,20,0.07),0_0_0_3px_color-mix(in_srgb,var(--color-accent)_12%,transparent)]">
+			{agentLabel && (
+				<div
+					className="flex min-w-0 items-center gap-2.5 px-3 py-2"
+					aria-label={`Agent: ${agentLabel}`}
+				>
+					<AgentAvatar name={agentLabel} agentId={agentId} imageUrl={agentProfileImageUrl} />
+					<span className="truncate text-[14px] font-medium text-[#00845d]" title={agentLabel}>
+						@{agentLabel}
+					</span>
+				</div>
+			)}
+			<div
+				className={
+					agentLabel
+						? 'flex w-full flex-col gap-3 rounded-xl bg-elevate px-3.5 pt-4 pb-2.5'
+						: 'flex w-full flex-col gap-2 rounded-lg border border-[color-mix(in_srgb,var(--color-line)_95%,#cfcfd4)] bg-elevate px-3.5 pt-3 pb-2.5 shadow-[0_1px_2px_rgba(15,15,20,0.03),0_10px_28px_rgba(15,15,20,0.06)] focus-within:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus-within:shadow-[0_1px_2px_rgba(15,15,20,0.03),0_12px_32px_rgba(15,15,20,0.07),0_0_0_3px_color-mix(in_srgb,var(--color-accent)_12%,transparent)]'
+				}
+			>
 				{attachments}
 				<textarea
 					ref={textareaRef}
@@ -266,12 +306,33 @@ export function Composer({
 					onChange={(event) => onValueChange?.(event.target.value)}
 					onKeyDown={handleComposerKeydown}
 					rows={1}
-					placeholder="Plan, @ for context, / for commands"
+					placeholder={agentLabel ? `Message ${agentLabel}` : 'Plan, @ for context, / for commands'}
 					aria-label="Message"
 				/>
 
 				<div className="flex items-center justify-between gap-2.5">
 					<div className="relative flex min-w-0 flex-1 items-center gap-1.5" ref={menuRootRef}>
+						{onAttachFiles && (
+							<button
+								type="button"
+								className="inline-flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent bg-transparent text-[#a1a1aa] hover:bg-ink/4 hover:text-[#71717a] disabled:cursor-not-allowed disabled:opacity-50"
+								aria-label="Attach files or CSVs"
+								title={filesUploading ? 'Uploading and preparing files…' : 'Attach files or CSVs'}
+								aria-busy={filesUploading}
+								disabled={filesDisabled}
+								onClick={onAttachFiles}
+							>
+								{filesUploading ? (
+									<LoaderCircle
+										size={15}
+										className="animate-spin motion-reduce:animate-none"
+										aria-hidden="true"
+									/>
+								) : (
+									<Plus size={15} strokeWidth={1.5} aria-hidden="true" />
+								)}
+							</button>
+						)}
 						{!configLocked && (
 							<button
 								type="button"
@@ -474,12 +535,14 @@ export function Composer({
 					</div>
 
 					<div className="flex shrink-0 items-center gap-2">
-						<span
-							className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]"
-							aria-label={agentLabel ? `Agent: ${agentLabel}` : `Model: ${selectedModelLabel}`}
-						>
-							{agentLabel ?? selectedModelLabel}
-						</span>
+						{!agentLabel && (
+							<span
+								className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]"
+								aria-label={agentLabel ? `Agent: ${agentLabel}` : `Model: ${selectedModelLabel}`}
+							>
+								{selectedModelLabel}
+							</span>
+						)}
 						<button
 							type="button"
 							className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-[#171717] text-white transition-[opacity,transform] duration-[120ms] hover:not-disabled:-translate-y-px disabled:cursor-not-allowed disabled:opacity-35 motion-reduce:transition-none"

@@ -14,6 +14,12 @@ createServer(async (req, res) => {
 		res.writeHead(status, { 'content-type': 'application/json' });
 		res.end(JSON.stringify(value));
 	};
+	if (path === '/test/thumbnail.svg') {
+		res.writeHead(200, { 'content-type': 'image/svg+xml' });
+		return res.end(
+			'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="180" viewBox="0 0 240 180"><rect width="240" height="180" fill="white"/><rect x="24" y="20" width="140" height="10" rx="3" fill="#00845d"/><path d="M24 50H210 M24 70H210 M24 90H150" stroke="#d1d5db" stroke-width="5"/><rect x="24" y="115" width="40" height="40" fill="#83b7a4"/><rect x="80" y="100" width="40" height="55" fill="#00845d"/></svg>'
+		);
+	}
 	if (path === '/health') return json({ status: 'test fixture' });
 	if (path === '/test/reset') {
 		chats = [];
@@ -29,6 +35,7 @@ createServer(async (req, res) => {
 			email: null,
 			agent_id: 'test-agent',
 			agent_name: 'Demo analyst (test fixture)',
+			agent_profile_image_url: 'http://127.0.0.1:8790/test/thumbnail.svg',
 			uploads_enabled: true
 		});
 	if (path.endsWith('/connectors')) return json({ connectors: [] });
@@ -56,7 +63,39 @@ createServer(async (req, res) => {
 			const name = body.match(/filename="([^"]+)"/)?.[1];
 			if (!name) return json({ detail: 'Missing file' }, 400);
 			files[id] ??= [];
-			files[id].push({ id: `file-${files[id].length + 1}`, name, status: 'attached' });
+			const datasetId = `file-${files[id].length + 1}`;
+			const cell = {
+				id: `${id}-${datasetId}`,
+				complete: true,
+				...(/\.(txt|md)$/i.test(name)
+					? {
+							textCell: {
+								fileName: name,
+								datasetSourceId: datasetId,
+								content: 'Uploaded text content.'
+							}
+						}
+					: /\.pdf$/i.test(name)
+						? {
+								documentCell: {
+									name,
+									datasetSourceId: datasetId,
+									url: 'https://textqlusercontent.com/asset/proxy/report.pdf',
+									preview: 'http://127.0.0.1:8790/test/thumbnail.svg?signature=test'
+								}
+							}
+						: /\.png$/i.test(name)
+							? {
+									imageCell: {
+										name,
+										datasetSourceId: datasetId,
+										url: 'http://127.0.0.1:8790/test/thumbnail.svg'
+									}
+								}
+							: { tabularFileCell: { fileName: name, datasetSourceId: datasetId } })
+			};
+			files[id].push({ id: datasetId, name, status: 'attached', cell_id: cell.id, cell });
+			histories[id] = [...(histories[id] ?? []), cell];
 		}
 		return json({ files: files[id] ?? [] });
 	}
@@ -76,6 +115,7 @@ createServer(async (req, res) => {
 		res.writeHead(200, { 'content-type': 'text/event-stream' });
 		for (const event of [
 			{ type: 'runStarted', runStarted: {} },
+			...(files[id] ?? []).map((file) => ({ type: 'cell', cell: file.cell })),
 			{ type: 'cell', cell: answer },
 			{ type: 'runComplete', runComplete: { finalCellId: answer.id } }
 		]) {

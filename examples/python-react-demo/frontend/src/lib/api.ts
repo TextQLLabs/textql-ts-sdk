@@ -101,6 +101,7 @@ export type AppConfig = {
 	email: string | null;
 	agentId: string | null;
 	agentName: string | null;
+	agentProfileImageUrl: string | null;
 	uploadsEnabled: boolean;
 };
 
@@ -110,6 +111,7 @@ export async function getConfig(): Promise<AppConfig> {
 		email?: string | null;
 		agent_id?: string | null;
 		agent_name?: string | null;
+		agent_profile_image_url?: string | null;
 		uploads_enabled?: boolean;
 	};
 	const email =
@@ -118,25 +120,43 @@ export async function getConfig(): Promise<AppConfig> {
 		email,
 		agentId: payload.agent_id ?? null,
 		agentName: payload.agent_name ?? null,
+		agentProfileImageUrl: payload.agent_profile_image_url ?? null,
 		uploadsEnabled: payload.uploads_enabled === true
 	};
 }
 
-export type ChatFile = { id: string; name: string; status: string; error?: string };
+export type ChatFile = {
+	id: string;
+	name: string;
+	status: string;
+	error?: string;
+	cell_id: string;
+	cell: CellLike;
+};
 
 export async function listChatFiles(chatId: string, signal?: AbortSignal): Promise<ChatFile[]> {
 	const response = await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}/files`, { signal });
-	const payload = await readJson(response, 'Unable to load attached files.') as { files: ChatFile[] };
+	const payload = (await readJson(response, 'Unable to load attached files.')) as {
+		files: ChatFile[];
+	};
 	return payload.files;
 }
 
-export async function uploadChatFile(chatId: string, file: File, signal?: AbortSignal): Promise<ChatFile[]> {
+export async function uploadChatFile(
+	chatId: string,
+	file: File,
+	signal?: AbortSignal
+): Promise<ChatFile[]> {
 	const body = new FormData();
 	body.append('file', file);
 	const response = await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}/files`, {
-		method: 'POST', body, signal
+		method: 'POST',
+		body,
+		signal
 	});
-	const payload = await readJson(response, 'Unable to upload this file.') as { files: ChatFile[] };
+	const payload = (await readJson(response, 'Unable to upload this file.')) as {
+		files: ChatFile[];
+	};
 	return payload.files;
 }
 

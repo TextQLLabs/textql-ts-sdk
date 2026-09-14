@@ -20,9 +20,16 @@ import {
 	watchChat,
 	type AppConfig,
 	type ChatSummary,
+	type ChatFile,
 	type StreamEvent
 } from '../lib/api';
-import { getCellCase, getCellContent, settleCells, type CellLike } from '../lib/cells';
+import {
+	getCellCase,
+	getCellContent,
+	getCellPayload,
+	settleCells,
+	type CellLike
+} from '../lib/cells';
 import { collectCitations } from '../lib/citations';
 import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
@@ -42,6 +49,7 @@ import { usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Tooltip, toast } from '../primitives';
 import { Composer } from './Composer';
+import { UploadedFilePreview } from './UploadedFilePreview';
 import { ChatFiles, type ChatFilesHandle } from './ChatFiles';
 import { RETRY_BTN } from './pageStyles';
 import { PreviewPanel } from './PreviewPanel';
@@ -133,6 +141,14 @@ function runErrorMessage(raw: string): string {
 	return raw || 'The chat run failed.';
 }
 
+function isUploadedFileCell(cell: CellLike): boolean {
+	return (
+		cell.generated !== true &&
+		Boolean(getCellPayload(cell).datasetSourceId) &&
+		['tabularFileCell', 'textCell', 'documentCell', 'imageCell'].includes(getCellCase(cell) ?? '')
+	);
+}
+
 /** Split replayed history into the alternating turns the conversation renders. */
 function messagesFromHistory(cells: CellLike[]): Message[] {
 	const messages: Message[] = [];
@@ -141,6 +157,13 @@ function messagesFromHistory(cells: CellLike[]): Message[] {
 
 	for (const cell of cells) {
 		if (isHiddenCell(cell)) continue;
+		if (isUploadedFileCell(cell)) {
+			assistant = undefined;
+			const previous = messages[messages.length - 1];
+			if (previous?.role === 'you' && !previous.body && previous.cells) previous.cells.push(cell);
+			else messages.push({ id: nextId++, role: 'you', body: '', cells: [cell] });
+			continue;
+		}
 		if (isUserProse(cell)) {
 			assistant = undefined;
 			messages.push({ id: nextId++, role: 'you', body: getCellContent(cell) });
@@ -321,7 +344,10 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 			const items = collectPreviewItems(cells);
 			setChatAssets(items);
 			previewPanel.setInsights({ citations: collectCitations(cells), cells, catalog: items });
-			previewPanel.openNewItems(items);
+			previewPanel.syncFromCells(items);
+			previewPanel.openNewItems(
+				collectPreviewItems(cells.filter((cell) => !isUploadedFileCell(cell)))
+			);
 		}, 120);
 		return () => clearTimeout(handle);
 	}, [messages]);
@@ -333,6 +359,30 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	}, [messages]);
 
 	const chatGroups = useMemo(() => groupByDay(chats, (chat) => chat.updatedAt), [chats]);
+
+	function reflectUploadedCells(cells: CellLike[]) {
+		for (const cell of cells) {
+			if (!cell.id || !isUploadedFileCell(cell)) continue;
+			const existing = messagesRef.current.find((message) =>
+				message.cells?.some((value) => value.id === cell.id)
+			);
+			if (existing) {
+				existing.cells = existing.cells!.map((value) => (value.id === cell.id ? cell : value));
+				continue;
+			}
+			const previous = messagesRef.current[messagesRef.current.length - 1];
+			if (previous?.role === 'you' && !previous.body && previous.cells)
+				previous.cells = [...previous.cells, cell];
+			else
+				messagesRef.current.push({
+					id: Math.max(Date.now(), ...messagesRef.current.map((message) => message.id + 1)),
+					role: 'you',
+					body: '',
+					cells: [cell]
+				});
+		}
+		publishMessages();
+	}
 
 	function upsertAssistantCell(assistant: Message, cell: CellLike) {
 		// Reassign the array so child props always see a new reference on every
@@ -374,6 +424,10 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 			case 'cell': {
 				const cell = event.cell as CellLike | undefined;
 				if (!isRecord(cell)) return;
+				if (isUploadedFileCell(cell)) {
+					reflectUploadedCells([cell]);
+					return;
+				}
 				// The user's own turn is echoed back; it's already on screen.
 				if (isUserProse(cell) || isHiddenCell(cell)) return;
 				upsertAssistantCell(mountAssistant(assistantId), cell);
@@ -673,12 +727,17 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		sending: sending || uploading || (agentMode && !appConfig),
 		configLocked,
 		agentLabel: agentMode ? (appConfig?.agentName ?? 'Agent configured by backend') : undefined,
+		agentId: agentMode ? appConfig?.agentId : undefined,
+		agentProfileImageUrl: agentMode ? appConfig?.agentProfileImageUrl : undefined,
 		onFilesDrop:
 			agentMode && appConfig?.uploadsEnabled
 				? (files: File[]) => {
 						void chatFiles.current?.attach(files);
 					}
 				: undefined,
+		onAttachFiles:
+			agentMode && appConfig?.uploadsEnabled ? () => chatFiles.current?.openPicker() : undefined,
+		filesUploading: uploading,
 		filesDisabled: sending || uploading || Boolean(openingChatId),
 		attachments: agentMode ? (
 			<>
@@ -698,6 +757,11 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 						chatId={chatId}
 						disabled={sending || Boolean(openingChatId)}
 						ensureChat={ensureChat}
+						onFilesChange={(id: string, files: ChatFile[]) => {
+							if (conversationVersion.current !== uploadVersion || loadedChatId.current !== id)
+								return;
+							reflectUploadedCells(files.map((file) => file.cell).filter(isRecord));
+						}}
 						onBusyChange={(busy) => {
 							if (conversationVersion.current !== uploadVersion) return;
 							uploadBusy.current = busy;
@@ -1008,18 +1072,12 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 									</button>
 								</div>
 							</section>
-						) : showNewChat ? (
-							<section
-								className="flex min-h-0 flex-col items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5"
-								aria-label="New chat"
-							>
-								<Composer {...composerProps} />
-							</section>
 						) : (
 							<>
 								<section
 									ref={conversationRef}
 									className="min-h-0 overflow-y-auto"
+									hidden={showNewChat}
 									aria-label="Chat messages"
 									aria-live="polite"
 									onScroll={onConversationScroll}
@@ -1061,7 +1119,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 																/>
 															) : null}
 														</>
-													) : message.body ? (
+													) : message.body || message.cells?.length ? (
 														<>
 															<span
 																className="min-w-0 truncate text-[12px] font-medium text-text-3"
@@ -1069,9 +1127,23 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 															>
 																{memberEmail ?? 'You'}
 															</span>
-															<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
-																<p className={MESSAGE_BODY_YOU}>{message.body}</p>
-															</div>
+															{message.cells && (
+																<ul
+																	aria-label="Attached files"
+																	className="m-0 flex list-none flex-wrap justify-end gap-2 p-0"
+																>
+																	{message.cells.map((cell) => (
+																		<li key={String(cell.id)} className="min-w-0">
+																			<UploadedFilePreview cell={cell} />
+																		</li>
+																	))}
+																</ul>
+															)}
+															{message.body && (
+																<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
+																	<p className={MESSAGE_BODY_YOU}>{message.body}</p>
+																</div>
+															)}
 														</>
 													) : null}
 												</article>
@@ -1080,8 +1152,15 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 									</div>
 								</section>
 
-								<footer className="flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5">
-									<Composer {...composerProps} docked />
+								<footer
+									aria-label={showNewChat ? 'New chat' : undefined}
+									className={
+										showNewChat
+											? 'flex min-h-0 items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5'
+											: 'flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5'
+									}
+								>
+									<Composer {...composerProps} docked={!showNewChat} />
 								</footer>
 							</>
 						)}

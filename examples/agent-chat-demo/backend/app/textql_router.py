@@ -158,6 +158,7 @@ class ConfigResponse(BaseModel):
     email: str | None = None
     agent_id: str
     agent_name: str | None = None
+    agent_profile_image_url: str | None = None
     model: str | None = None
     uploads_enabled: bool = True
 
@@ -503,6 +504,7 @@ async def get_config():
     return ConfigResponse(
         agent_id=agent_id,
         agent_name=agent.name or None,
+        agent_profile_image_url=agent.profile_image_url or None,
         model=llm_model_pb2.LlmModel.Name(agent.llm_model)
         if agent.llm_model in llm_model_pb2.LlmModel.values()
         else None,
@@ -999,13 +1001,18 @@ def _is_allowed_preview_host(hostname: str) -> bool:
 
 
 def _preview_headers(upstream: httpx.Headers) -> dict[str, str]:
-    return {
-        "content-type": upstream.get("content-type", "application/octet-stream"),
+    content_type = upstream.get("content-type", "application/octet-stream")
+    headers = {
+        "content-type": content_type,
         "content-disposition": "inline",
-        "content-security-policy": "sandbox allow-scripts",
         "cache-control": "no-store",
         "x-content-type-options": "nosniff",
     }
+    # Browser PDF viewers cannot run in a sandboxed document. Keep active
+    # content (including HTML error pages at PDF URLs) isolated as before.
+    if content_type.split(";", 1)[0].strip().lower() != "application/pdf":
+        headers["content-security-policy"] = "sandbox allow-scripts"
+    return headers
 
 
 def _inject_base_href(html: str, document_url: str) -> str:

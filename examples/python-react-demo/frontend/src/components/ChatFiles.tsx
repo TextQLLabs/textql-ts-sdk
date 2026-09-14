@@ -1,4 +1,3 @@
-import { FileText, Paperclip } from 'lucide-react';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { listChatFiles, uploadChatFile, type ChatFile } from '../lib/api';
 
@@ -7,15 +6,15 @@ type Props = {
 	disabled: boolean;
 	ensureChat: () => Promise<string>;
 	onBusyChange: (busy: boolean) => void;
+	onFilesChange: (chatId: string, files: ChatFile[]) => void;
 };
 
-export type ChatFilesHandle = { attach: (files: File[]) => Promise<void> };
+export type ChatFilesHandle = { attach: (files: File[]) => Promise<void>; openPicker: () => void };
 
 export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
-	{ chatId, disabled, ensureChat, onBusyChange },
+	{ chatId, disabled, ensureChat, onBusyChange, onFilesChange },
 	ref
 ) {
-	const [files, setFiles] = useState<ChatFile[]>([]);
 	const [uploading, setUploading] = useState(false);
 	const [error, setError] = useState('');
 	const [refresh, setRefresh] = useState(0);
@@ -26,6 +25,8 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 	const uploadChat = useRef<string | undefined>(undefined);
 	const busy = useRef(false);
 	const filesVersion = useRef(0);
+	const filesChanged = useRef(onFilesChange);
+	filesChanged.current = onFilesChange;
 
 	useEffect(() => () => upload.current?.abort(), []);
 
@@ -34,7 +35,6 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 	}, [chatId]);
 
 	useEffect(() => {
-		setFiles([]);
 		setError('');
 		if (!chatId || busy.current) return;
 		const version = filesVersion.current;
@@ -43,7 +43,7 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 			try {
 				const snapshot = await listChatFiles(chatId!, controller.signal);
 				if (controller.signal.aborted || version !== filesVersion.current) return;
-				setFiles(snapshot);
+				filesChanged.current(chatId!, snapshot);
 			} catch (cause) {
 				if (!controller.signal.aborted && version === filesVersion.current)
 					setError(cause instanceof Error ? cause.message : 'Unable to load files.');
@@ -72,7 +72,8 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 			for (const file of selected) {
 				if (controller.signal.aborted) return;
 				const snapshot = await uploadChatFile(id, file, controller.signal);
-				if (currentChat.current === id) setFiles(snapshot);
+				if (!controller.signal.aborted && currentChat.current === id)
+					filesChanged.current(id, snapshot);
 			}
 		} catch (cause) {
 			if (!controller.signal.aborted)
@@ -85,22 +86,10 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 		}
 	}
 
-	useImperativeHandle(ref, () => ({ attach }));
+	useImperativeHandle(ref, () => ({ attach, openPicker: () => input.current?.click() }));
 
 	return (
-		<div className="flex flex-col gap-2 border-b border-line pb-2 text-[12px]">
-			<div className="flex items-center justify-between gap-2">
-				<button
-					type="button"
-					disabled={disabled || uploading}
-					className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-text-2 hover:bg-fill disabled:opacity-50"
-					onClick={() => input.current?.click()}
-				>
-					<Paperclip size={14} />
-					{uploading ? 'Uploading and preparing files…' : 'Attach files or CSVs'}
-				</button>
-				<span className="text-right text-muted">Drop files here · 20 MiB per file</span>
-			</div>
+		<>
 			<input
 				ref={input}
 				type="file"
@@ -113,21 +102,6 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 					event.target.value = '';
 				}}
 			/>
-			{files.length > 0 && (
-				<ul className="m-0 flex list-none flex-wrap gap-1.5 p-0" aria-label="Attached files">
-					{files.map((file) => (
-						<li
-							key={file.id}
-							className="flex max-w-full items-center gap-1.5 rounded-md border border-line px-2 py-1"
-						>
-							<FileText size={13} className="shrink-0" />
-							<span className="truncate">{file.name}</span>
-							<span className="text-muted">{file.status}</span>
-							{file.error && <span role="alert">{file.error}</span>}
-						</li>
-					))}
-				</ul>
-			)}
 			{error && (
 				<div role="alert" className="flex items-center gap-2 text-red-600">
 					{error}
@@ -140,6 +114,6 @@ export const ChatFiles = forwardRef<ChatFilesHandle, Props>(function ChatFiles(
 					</button>
 				</div>
 			)}
-		</div>
+		</>
 	);
 });

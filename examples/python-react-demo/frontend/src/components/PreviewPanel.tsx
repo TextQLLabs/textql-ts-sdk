@@ -127,15 +127,24 @@ function numericColumns(rows: string[][]): boolean[] {
 
 function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 	if (rows.length === 0 || (rows[0]?.length ?? 0) <= 1) {
-		return <pre className={cx(CELL_CODE, 'm-0 overflow-auto rounded-[8px] border border-line bg-elevate px-3 py-2.5 whitespace-pre')}>
+		return (
+			<pre
+				className={cx(
+					CELL_CODE,
+					'm-0 overflow-auto rounded-[8px] border border-line bg-elevate px-3 py-2.5 whitespace-pre'
+				)}
+			>
 				{raw}
-			</pre>;
+			</pre>
+		);
 	}
 	const numCols = numericColumns(rows);
 	return (
 		<>
 			<div className="max-h-full overflow-auto rounded-sm border border-line bg-elevate">
-				<table className={cx(CELL_BODY, 'w-full border-separate border-spacing-0 text-text-strong')}>
+				<table
+					className={cx(CELL_BODY, 'w-full border-separate border-spacing-0 text-text-strong')}
+				>
 					<thead>
 						<tr>
 							<th className={cx(CELL, ROWNUM, 'z-2 border-b border-line')}></th>
@@ -153,7 +162,10 @@ function CsvTable({ rows, raw }: { rows: string[][]; raw: string }) {
 									{h}
 								</th>
 							))}
-							<th aria-hidden="true" className={cx(SPACER, 'sticky top-0 z-1 border-b border-line bg-fill')} />
+							<th
+								aria-hidden="true"
+								className={cx(SPACER, 'sticky top-0 z-1 border-b border-line bg-fill')}
+							/>
 						</tr>
 					</thead>
 					<tbody className="[&_tr:last-child_td]:border-b-0">
@@ -396,7 +408,11 @@ export function PreviewPanel() {
 					className={cx(FRAME, 'h-[min(70vh,640px)]')}
 					src={embedUrl}
 					title={item.name}
-					sandbox="allow-scripts"
+					sandbox={
+						isPdf(item) && embedUrl.startsWith(`${PREVIEW_PROXY_PATH}?`)
+							? undefined
+							: 'allow-scripts'
+					}
 					referrerPolicy="no-referrer"
 				/>
 			);
@@ -476,7 +492,14 @@ export function PreviewPanel() {
 								title={tab.name}
 								onClick={() => previewPanel.select(tab.id)}
 							>
-								<span className={cx(CELL_BODY, 'min-w-0 flex-1 overflow-hidden font-[550] text-ellipsis whitespace-nowrap')}>{tab.name}</span>
+								<span
+									className={cx(
+										CELL_BODY,
+										'min-w-0 flex-1 overflow-hidden font-[550] text-ellipsis whitespace-nowrap'
+									)}
+								>
+									{tab.name}
+								</span>
 								{/* The kind, for files. An insight tab's name already says it. */}
 								<span
 									className={cx(
@@ -507,7 +530,10 @@ export function PreviewPanel() {
 
 				<button
 					type="button"
-					className={cx(PANEL_ICON_BTN, 'shrink-0 self-center text-[#71717a] hover:bg-ink/5 hover:text-ink')}
+					className={cx(
+						PANEL_ICON_BTN,
+						'shrink-0 self-center text-[#71717a] hover:bg-ink/5 hover:text-ink'
+					)}
 					aria-label="Close preview panel"
 					onClick={() => previewPanel.close()}
 				>
@@ -515,7 +541,11 @@ export function PreviewPanel() {
 				</button>
 			</header>
 
-			{item?.toolSummary && <p className={cx(CELL_META, 'm-0 border-b border-line/70 px-3.5 py-2 text-[#71717a]')}>{item.toolSummary}</p>}
+			{item?.toolSummary && (
+				<p className={cx(CELL_META, 'm-0 border-b border-line/70 px-3.5 py-2 text-[#71717a]')}>
+					{item.toolSummary}
+				</p>
+			)}
 
 			{/* Avoid iframe/layout thrash while dragging the splitter. */}
 			<div
@@ -531,7 +561,10 @@ export function PreviewPanel() {
 			{item?.url && (
 				<footer className="border-t border-line/80 bg-elevate px-3.5 py-2.5">
 					<a
-						className={cx(CELL_BODY, 'inline-flex items-center gap-1.5 font-medium text-[#2563eb] no-underline hover:underline')}
+						className={cx(
+							CELL_BODY,
+							'inline-flex items-center gap-1.5 font-medium text-[#2563eb] no-underline hover:underline'
+						)}
 						href={embedUrl ?? item.url}
 						target="_blank"
 						rel="noreferrer noopener"
