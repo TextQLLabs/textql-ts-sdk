@@ -15,7 +15,7 @@ const CitationLineageModal = lazy(() =>
  * component rather than remounting it on every navigation. `/threads` swaps
  * that pane for the thread list; the sidebar is unaffected.
  */
-export function App() {
+export function App({ agentMode = false }: { agentMode?: boolean }) {
 	return (
 		<BrowserRouter>
 			<Toaster />
@@ -23,9 +23,9 @@ export function App() {
 				<CitationLineageModal />
 			</Suspense>
 			<Routes>
-				<Route path="/" element={<ChatPage />} />
-				<Route path="/chat/:id" element={<ChatPage />} />
-				<Route path="/threads" element={<ChatPage />} />
+				<Route path="/" element={<ChatPage agentMode={agentMode} />} />
+				<Route path="/chat/:id" element={<ChatPage agentMode={agentMode} />} />
+				<Route path="/threads" element={<ChatPage agentMode={agentMode} />} />
 				<Route path="*" element={<Navigate to="/" replace />} />
 			</Routes>
 		</BrowserRouter>

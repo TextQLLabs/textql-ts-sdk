@@ -10,6 +10,7 @@ import {
 	listChats,
 	sendMessage,
 	watchChat,
+	type AppConfig,
 	type ChatSummary,
 	type StreamEvent
 } from '../lib/api';
@@ -33,6 +34,7 @@ import { usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Tooltip, toast } from '../primitives';
 import { Composer } from './Composer';
+import { ChatFiles } from './ChatFiles';
 import { RETRY_BTN } from './pageStyles';
 import { PreviewPanel } from './PreviewPanel';
 import { ThreadsPage } from './ThreadsPage';
@@ -145,13 +147,13 @@ function messagesFromHistory(cells: CellLike[]): Message[] {
 	return messages;
 }
 
-export function ChatPage() {
+export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	const navigate = useNavigate();
 	const routeId = useParams().id;
 	const panel = usePreviewPanel();
 	const resolvedTheme = useResolvedTheme();
 
-	usePageTitle('TextQL — Python + React');
+	usePageTitle(agentMode ? 'TextQL Agent Chat' : 'TextQL — Python + React');
 
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [draft, setDraft] = useState('');
@@ -172,10 +174,16 @@ export function ChatPage() {
 	const [chatAssets, setChatAssets] = useState<PreviewItem[]>([]);
 	const [prefsReady, setPrefsReady] = useState(false);
 	const [memberEmail, setMemberEmail] = useState<string | null>(null);
+	const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
+	const [configError, setConfigError] = useState('');
+	const [uploading, setUploading] = useState(false);
+	const uploadBusy = useRef(false);
+	const conversationVersion = useRef(0);
+	const creatingChat = useRef<Promise<string> | undefined>(undefined);
 	const connectors = useConnectors();
 
 	// Model and connectors are fixed once the chat exists server-side.
-	const configLocked = chatId !== undefined;
+	const configLocked = agentMode || chatId !== undefined;
 
 	const activeRequest = useRef<AbortController | undefined>(undefined);
 	/**
@@ -254,6 +262,18 @@ export function ChatPage() {
 		setSidebarOpen(!isMobileSidebar());
 	}, []);
 
+	const loadConfig = useCallback(async () => {
+		setConfigError('');
+		try {
+			const config = await getConfig();
+			if (agentMode && !config.agentId) throw new Error('The backend has no agent configured.');
+			setAppConfig(config);
+			if (config.email) setMemberEmail(config.email);
+		} catch (cause) {
+			if (agentMode) setConfigError(cause instanceof Error ? cause.message : 'Unable to load agent configuration.');
+		}
+	}, [agentMode]);
+
 	// Pick up where the last chat left off, and fetch the connector list up front
 	// so the composer's picker is populated the first time it opens.
 	useEffect(() => {
@@ -263,15 +283,9 @@ export function ChatPage() {
 			setSelectedConnectorIds(prefs.connectorIds);
 		}
 		void connectorsCache.load();
-		void getConfig()
-			.then((config) => {
-				if (config.email) setMemberEmail(config.email);
-			})
-			.catch(() => {
-				// Attribution falls back to "You".
-			});
+		void loadConfig();
 		setPrefsReady(true);
-	}, []);
+	}, [loadConfig]);
 
 	// A chat created with no connector isn't rejected — it fails on the first run
 	// with "configuring paradigm: missing connector". Default to the org's first
@@ -458,14 +472,35 @@ export function ChatPage() {
 		stickToBottom.current = distance < 80;
 	}
 
+	async function ensureChat(): Promise<string> {
+		if (loadedChatId.current) return loadedChatId.current;
+		if (creatingChat.current) return creatingChat.current;
+		const version = conversationVersion.current;
+		const creation = createChat({ model: selectedModel, connectorIds: selectedConnectorIds }).then((id) => {
+			if (version !== conversationVersion.current) throw new Error('The active conversation changed. Please try again.');
+			loadedChatId.current = id;
+			setChatId(id);
+			latestCellId.current = '';
+			navigate(`/chat/${id}`, { replace: true });
+			void loadChats();
+			return id;
+		});
+		creatingChat.current = creation;
+		try {
+			return await creation;
+		} finally {
+			if (creatingChat.current === creation) creatingChat.current = undefined;
+		}
+	}
+
 	async function send() {
 		const message = draft.trim();
-		if (!message || sending) return;
+		if (!message || sending || uploadBusy.current || (agentMode && !appConfig)) return;
 
 		// A chat with no connector is accepted, then fails on its first run with
 		// "configuring paradigm: missing connector". Catch it while the message is
 		// still in the box.
-		if (!chatId && selectedConnectorIds.length === 0) {
+		if (!agentMode && !chatId && selectedConnectorIds.length === 0) {
 			toast.error('Pick at least one connector before starting a chat.');
 			return;
 		}
@@ -485,15 +520,8 @@ export function ChatPage() {
 		publishMessages();
 
 		try {
-			let id = chatId;
-			if (!id) {
-				id = await createChat({ model: selectedModel, connectorIds: selectedConnectorIds });
-				loadedChatId.current = id;
-				setChatId(id);
-				latestCellId.current = '';
-				navigate(`/chat/${id}`, { replace: true });
-				void loadChats();
-			}
+			const id = await ensureChat();
+			if (request.signal.aborted) return;
 
 			await sendMessage(id, {
 				message,
@@ -529,6 +557,11 @@ export function ChatPage() {
 	}
 
 	const loadChat = useCallback(async (id: string) => {
+		conversationVersion.current += 1;
+		const version = conversationVersion.current;
+		creatingChat.current = undefined;
+		uploadBusy.current = false;
+		setUploading(false);
 		activeRequest.current?.abort();
 		activeRequest.current = undefined;
 		loadedChatId.current = id;
@@ -540,6 +573,7 @@ export function ChatPage() {
 
 		try {
 			const cells = await getHistory(id);
+			if (version !== conversationVersion.current) return;
 			messagesRef.current = messagesFromHistory(cells);
 			publishMessages();
 			setChatId(id);
@@ -549,16 +583,21 @@ export function ChatPage() {
 			stickToBottom.current = true;
 			setSending(false);
 		} catch (error) {
+			if (version !== conversationVersion.current) return;
 			setChatId(id);
 			messagesRef.current = [];
 			publishMessages();
 			setChatLoadError(error instanceof Error ? error.message : 'Unable to load this chat.');
 		} finally {
-			setOpeningChatId(undefined);
+			if (version === conversationVersion.current) setOpeningChatId(undefined);
 		}
 	}, [publishMessages]);
 
 	const resetToNewChat = useCallback(() => {
+		conversationVersion.current += 1;
+		creatingChat.current = undefined;
+		uploadBusy.current = false;
+		setUploading(false);
 		activeRequest.current?.abort();
 		activeRequest.current = undefined;
 		loadedChatId.current = undefined;
@@ -568,6 +607,7 @@ export function ChatPage() {
 		setChatId(undefined);
 		setChatLoadError(undefined);
 		setSending(false);
+		setOpeningChatId(undefined);
 		previewPanel.reset();
 	}, [publishMessages]);
 
@@ -586,11 +626,11 @@ export function ChatPage() {
 		// Best-effort: the new thread opens either way.
 		if (chatId) void closeChat(chatId).catch(() => { });
 		if (isMobileSidebar()) setSidebarOpen(false);
+		resetToNewChat();
 		if (routeId) {
 			navigate('/');
 			return;
 		}
-		resetToNewChat();
 	}
 
 	function openPanelDefaultTab() {
@@ -604,15 +644,34 @@ export function ChatPage() {
 		);
 	}
 
+	const uploadVersion = conversationVersion.current;
 	const composerProps = {
 		value: draft,
 		onValueChange: setDraft,
-		selectedConnectorIds,
+		selectedConnectorIds: agentMode ? [] : selectedConnectorIds,
 		onConnectorIdsChange: setSelectedConnectorIds,
 		selectedModel,
 		onModelChange: setSelectedModel,
-		sending,
+		sending: sending || uploading || (agentMode && !appConfig),
 		configLocked,
+		agentLabel: agentMode ? appConfig?.agentName ?? 'Agent configured by backend' : undefined,
+		attachments: agentMode ? (
+			<>
+				{configError ? <div role="alert" className="text-[12px] text-red-600">
+					{configError} <button type="button" className="underline" onClick={() => void loadConfig()}>Retry configuration</button>
+				</div> : !appConfig ? <p className="text-[12px] text-muted">Loading agent configuration…</p> : null}
+				{appConfig?.uploadsEnabled && <ChatFiles
+					chatId={chatId}
+					disabled={sending || Boolean(openingChatId)}
+					ensureChat={ensureChat}
+					onBusyChange={(busy) => {
+						if (conversationVersion.current !== uploadVersion) return;
+						uploadBusy.current = busy;
+						setUploading(busy);
+					}}
+				/>}
+			</>
+		) : undefined,
 		onSend: () => void send()
 	};
 

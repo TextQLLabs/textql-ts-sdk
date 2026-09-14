@@ -1,5 +1,5 @@
 import { ArrowUp, Boxes, Cable, Check, ChevronRight, Plus, X } from 'lucide-react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { CHAT_MODELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
 import { connectorIconSrc } from '../lib/connectorIcons';
@@ -23,6 +23,8 @@ type Props = {
 	onModelChange?: (model: string) => void;
 	onSend?: () => void;
 	className?: string;
+	attachments?: ReactNode;
+	agentLabel?: string;
 };
 
 const ROOT_ITEMS = [
@@ -47,6 +49,8 @@ export function Composer({
 	onConnectorIdsChange,
 	onModelChange,
 	onSend,
+	attachments,
+	agentLabel,
 	className = ''
 }: Props) {
 	const connectors = useConnectors();
@@ -196,6 +200,7 @@ export function Composer({
 				className
 			)}>
 			<div className="flex w-full flex-col gap-2 rounded-lg border border-[color-mix(in_srgb,var(--color-line)_95%,#cfcfd4)] bg-elevate px-3.5 pt-3 pb-2.5 shadow-[0_1px_2px_rgba(15,15,20,0.03),0_10px_28px_rgba(15,15,20,0.06)] focus-within:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus-within:shadow-[0_1px_2px_rgba(15,15,20,0.03),0_12px_32px_rgba(15,15,20,0.07),0_0_0_3px_color-mix(in_srgb,var(--color-accent)_12%,transparent)]">
+				{attachments}
 				<textarea
 					ref={textareaRef}
 					className="max-h-40 min-h-[22px] w-full resize-none overflow-y-hidden border-0 bg-transparent px-1 py-0 text-[14px] leading-[1.55] text-ink outline-0 placeholder:text-[#a1a1aa]"
@@ -397,8 +402,8 @@ export function Composer({
 					</div>
 
 					<div className="flex shrink-0 items-center gap-2">
-						<span className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]" aria-label={`Model: ${selectedModelLabel}`}>
-							{selectedModelLabel}
+						<span className="pointer-events-none inline-block max-w-40 overflow-hidden text-[12px] leading-[1.2] font-medium text-ellipsis whitespace-nowrap text-[#a1a1aa] select-none max-[560px]:max-w-[110px]" aria-label={agentLabel ? `Agent: ${agentLabel}` : `Model: ${selectedModelLabel}`}>
+							{agentLabel ?? selectedModelLabel}
 						</span>
 						<button
 							type="button"
