@@ -8,6 +8,12 @@ SQL and its results, the answer typing itself out.
 It is the same UI as [`../react-demo`](../react-demo) (same tokens, same cell
 components), wired to Python instead of the TypeScript SDK.
 
+For the full application with **React 19.2.0**, **Python 3.12.10 with pip**,
+**TypeScript SDK**, file/CSV uploads, and automatic agent attachment, use
+[`../agent-chat-demo`](../agent-chat-demo). That sibling consumes this frontend
+as a local package, so chat components and styling stay shared. This example's
+Python backend and default UI behavior are unchanged.
+
 ## How it streams
 
 The backend does not interpret cells. `watch_chat` gives it a `WatchChatEvent`

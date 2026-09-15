@@ -3,6 +3,10 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"exports": {
+		".": "./src/App.tsx",
+		"./app.css": "./src/app.css"
+	},
 	"engines": {
 		"node": "24.16.0"
 	},
@@ -17,15 +21,20 @@
 		"@xyflow/react": "^12.11.6",
 		"lucide-react": "^0.545.0",
 		"marked": "^18.0.11",
-		"react": "18.3.1",
-		"react-dom": "18.3.1",
 		"react-router-dom": "^7.18.2",
 		"sanitize-html": "^2.17.5",
 		"sonner": "^2.0.8",
 		"unicode-animations": "^1.0.3"
 	},
+	"peerDependencies": {
+		"react": "^18.3.1 || ^19.0.0",
+		"react-dom": "^18.3.1 || ^19.0.0"
+	},
 	"devDependencies": {
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
 		"@tailwindcss/vite": "^4.1.11",
+		"@types/node": "^24.0.0",
 		"@types/react": "18.3.31",
 		"@types/react-dom": "18.3.7",
 		"@types/sanitize-html": "^2.16.1",

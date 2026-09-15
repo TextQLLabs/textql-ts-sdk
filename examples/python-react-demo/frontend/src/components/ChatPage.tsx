@@ -1,4 +1,12 @@
-import { MessagesSquare, Moon, PanelLeft, PanelLeftClose, PanelRight, Plus, Sun } from 'lucide-react';
+import {
+	MessagesSquare,
+	Moon,
+	PanelLeft,
+	PanelLeftClose,
+	PanelRight,
+	Plus,
+	Sun
+} from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -10,10 +18,18 @@ import {
 	listChats,
 	sendMessage,
 	watchChat,
+	type AppConfig,
 	type ChatSummary,
+	type ChatFile,
 	type StreamEvent
 } from '../lib/api';
-import { getCellCase, getCellContent, settleCells, type CellLike } from '../lib/cells';
+import {
+	getCellCase,
+	getCellContent,
+	getCellPayload,
+	settleCells,
+	type CellLike
+} from '../lib/cells';
 import { collectCitations } from '../lib/citations';
 import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
@@ -33,6 +49,8 @@ import { usePageTitle } from '../lib/usePageTitle';
 import { isRecord } from '../lib/utils';
 import { Tooltip, toast } from '../primitives';
 import { Composer } from './Composer';
+import { UploadedFilePreview } from './UploadedFilePreview';
+import { ChatFiles, type ChatFilesHandle } from './ChatFiles';
 import { RETRY_BTN } from './pageStyles';
 import { PreviewPanel } from './PreviewPanel';
 import { ThreadsPage } from './ThreadsPage';
@@ -118,9 +136,17 @@ function isHiddenCell(cell: CellLike): boolean {
  */
 function runErrorMessage(raw: string): string {
 	if (raw.includes('missing connector')) {
-		return 'This chat was created without a connector. A chat\'s connectors are fixed when it is created, so start a new chat and pick one in the composer.';
+		return "This chat was created without a connector. A chat's connectors are fixed when it is created, so start a new chat and pick one in the composer.";
 	}
 	return raw || 'The chat run failed.';
+}
+
+function isUploadedFileCell(cell: CellLike): boolean {
+	return (
+		cell.generated !== true &&
+		Boolean(getCellPayload(cell).datasetSourceId) &&
+		['tabularFileCell', 'textCell', 'documentCell', 'imageCell'].includes(getCellCase(cell) ?? '')
+	);
 }
 
 /** Split replayed history into the alternating turns the conversation renders. */
@@ -131,6 +157,13 @@ function messagesFromHistory(cells: CellLike[]): Message[] {
 
 	for (const cell of cells) {
 		if (isHiddenCell(cell)) continue;
+		if (isUploadedFileCell(cell)) {
+			assistant = undefined;
+			const previous = messages[messages.length - 1];
+			if (previous?.role === 'you' && !previous.body && previous.cells) previous.cells.push(cell);
+			else messages.push({ id: nextId++, role: 'you', body: '', cells: [cell] });
+			continue;
+		}
 		if (isUserProse(cell)) {
 			assistant = undefined;
 			messages.push({ id: nextId++, role: 'you', body: getCellContent(cell) });
@@ -145,13 +178,13 @@ function messagesFromHistory(cells: CellLike[]): Message[] {
 	return messages;
 }
 
-export function ChatPage() {
+export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	const navigate = useNavigate();
 	const routeId = useParams().id;
 	const panel = usePreviewPanel();
 	const resolvedTheme = useResolvedTheme();
 
-	usePageTitle('TextQL — Python + React');
+	usePageTitle(agentMode ? 'TextQL Agent Chat' : 'TextQL — Python + React');
 
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [draft, setDraft] = useState('');
@@ -172,10 +205,17 @@ export function ChatPage() {
 	const [chatAssets, setChatAssets] = useState<PreviewItem[]>([]);
 	const [prefsReady, setPrefsReady] = useState(false);
 	const [memberEmail, setMemberEmail] = useState<string | null>(null);
+	const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
+	const [configError, setConfigError] = useState('');
+	const [uploading, setUploading] = useState(false);
+	const uploadBusy = useRef(false);
+	const chatFiles = useRef<ChatFilesHandle>(null);
+	const conversationVersion = useRef(0);
+	const creatingChat = useRef<Promise<string> | undefined>(undefined);
 	const connectors = useConnectors();
 
 	// Model and connectors are fixed once the chat exists server-side.
-	const configLocked = chatId !== undefined;
+	const configLocked = agentMode || chatId !== undefined;
 
 	const activeRequest = useRef<AbortController | undefined>(undefined);
 	/**
@@ -254,6 +294,21 @@ export function ChatPage() {
 		setSidebarOpen(!isMobileSidebar());
 	}, []);
 
+	const loadConfig = useCallback(async () => {
+		setConfigError('');
+		try {
+			const config = await getConfig();
+			if (agentMode && !config.agentId) throw new Error('The backend has no agent configured.');
+			setAppConfig(config);
+			if (config.email) setMemberEmail(config.email);
+		} catch (cause) {
+			if (agentMode)
+				setConfigError(
+					cause instanceof Error ? cause.message : 'Unable to load agent configuration.'
+				);
+		}
+	}, [agentMode]);
+
 	// Pick up where the last chat left off, and fetch the connector list up front
 	// so the composer's picker is populated the first time it opens.
 	useEffect(() => {
@@ -263,15 +318,9 @@ export function ChatPage() {
 			setSelectedConnectorIds(prefs.connectorIds);
 		}
 		void connectorsCache.load();
-		void getConfig()
-			.then((config) => {
-				if (config.email) setMemberEmail(config.email);
-			})
-			.catch(() => {
-				// Attribution falls back to "You".
-			});
+		void loadConfig();
 		setPrefsReady(true);
-	}, []);
+	}, [loadConfig]);
 
 	// A chat created with no connector isn't rejected — it fails on the first run
 	// with "configuring paradigm: missing connector". Default to the org's first
@@ -295,7 +344,10 @@ export function ChatPage() {
 			const items = collectPreviewItems(cells);
 			setChatAssets(items);
 			previewPanel.setInsights({ citations: collectCitations(cells), cells, catalog: items });
-			previewPanel.openNewItems(items);
+			previewPanel.syncFromCells(items);
+			previewPanel.openNewItems(
+				collectPreviewItems(cells.filter((cell) => !isUploadedFileCell(cell)))
+			);
 		}, 120);
 		return () => clearTimeout(handle);
 	}, [messages]);
@@ -307,6 +359,30 @@ export function ChatPage() {
 	}, [messages]);
 
 	const chatGroups = useMemo(() => groupByDay(chats, (chat) => chat.updatedAt), [chats]);
+
+	function reflectUploadedCells(cells: CellLike[]) {
+		for (const cell of cells) {
+			if (!cell.id || !isUploadedFileCell(cell)) continue;
+			const existing = messagesRef.current.find((message) =>
+				message.cells?.some((value) => value.id === cell.id)
+			);
+			if (existing) {
+				existing.cells = existing.cells!.map((value) => (value.id === cell.id ? cell : value));
+				continue;
+			}
+			const previous = messagesRef.current[messagesRef.current.length - 1];
+			if (previous?.role === 'you' && !previous.body && previous.cells)
+				previous.cells = [...previous.cells, cell];
+			else
+				messagesRef.current.push({
+					id: Math.max(Date.now(), ...messagesRef.current.map((message) => message.id + 1)),
+					role: 'you',
+					body: '',
+					cells: [cell]
+				});
+		}
+		publishMessages();
+	}
 
 	function upsertAssistantCell(assistant: Message, cell: CellLike) {
 		// Reassign the array so child props always see a new reference on every
@@ -348,6 +424,10 @@ export function ChatPage() {
 			case 'cell': {
 				const cell = event.cell as CellLike | undefined;
 				if (!isRecord(cell)) return;
+				if (isUploadedFileCell(cell)) {
+					reflectUploadedCells([cell]);
+					return;
+				}
 				// The user's own turn is echoed back; it's already on screen.
 				if (isUserProse(cell) || isHiddenCell(cell)) return;
 				upsertAssistantCell(mountAssistant(assistantId), cell);
@@ -458,14 +538,38 @@ export function ChatPage() {
 		stickToBottom.current = distance < 80;
 	}
 
+	async function ensureChat(): Promise<string> {
+		if (loadedChatId.current) return loadedChatId.current;
+		if (creatingChat.current) return creatingChat.current;
+		const version = conversationVersion.current;
+		const creation = createChat({ model: selectedModel, connectorIds: selectedConnectorIds }).then(
+			(id) => {
+				if (version !== conversationVersion.current)
+					throw new Error('The active conversation changed. Please try again.');
+				loadedChatId.current = id;
+				setChatId(id);
+				latestCellId.current = '';
+				navigate(`/chat/${id}`, { replace: true });
+				void loadChats();
+				return id;
+			}
+		);
+		creatingChat.current = creation;
+		try {
+			return await creation;
+		} finally {
+			if (creatingChat.current === creation) creatingChat.current = undefined;
+		}
+	}
+
 	async function send() {
 		const message = draft.trim();
-		if (!message || sending) return;
+		if (!message || sending || uploadBusy.current || (agentMode && !appConfig)) return;
 
 		// A chat with no connector is accepted, then fails on its first run with
 		// "configuring paradigm: missing connector". Catch it while the message is
 		// still in the box.
-		if (!chatId && selectedConnectorIds.length === 0) {
+		if (!agentMode && !chatId && selectedConnectorIds.length === 0) {
 			toast.error('Pick at least one connector before starting a chat.');
 			return;
 		}
@@ -485,15 +589,8 @@ export function ChatPage() {
 		publishMessages();
 
 		try {
-			let id = chatId;
-			if (!id) {
-				id = await createChat({ model: selectedModel, connectorIds: selectedConnectorIds });
-				loadedChatId.current = id;
-				setChatId(id);
-				latestCellId.current = '';
-				navigate(`/chat/${id}`, { replace: true });
-				void loadChats();
-			}
+			const id = await ensureChat();
+			if (request.signal.aborted) return;
 
 			await sendMessage(id, {
 				message,
@@ -528,37 +625,51 @@ export function ChatPage() {
 		navigate(`/chat/${id}`);
 	}
 
-	const loadChat = useCallback(async (id: string) => {
-		activeRequest.current?.abort();
-		activeRequest.current = undefined;
-		loadedChatId.current = id;
+	const loadChat = useCallback(
+		async (id: string) => {
+			conversationVersion.current += 1;
+			const version = conversationVersion.current;
+			creatingChat.current = undefined;
+			uploadBusy.current = false;
+			setUploading(false);
+			activeRequest.current?.abort();
+			activeRequest.current = undefined;
+			loadedChatId.current = id;
 
-		setOpeningChatId(id);
-		setChatLoadError(undefined);
-		previewPanel.reset();
-		if (isMobileSidebar()) setSidebarOpen(false);
+			setOpeningChatId(id);
+			setChatLoadError(undefined);
+			previewPanel.reset();
+			if (isMobileSidebar()) setSidebarOpen(false);
 
-		try {
-			const cells = await getHistory(id);
-			messagesRef.current = messagesFromHistory(cells);
-			publishMessages();
-			setChatId(id);
-			// History is everything the chat has said, so the next turn can resume
-			// from its last cell instead of replaying the lot.
-			latestCellId.current = String(cells[cells.length - 1]?.id ?? '');
-			stickToBottom.current = true;
-			setSending(false);
-		} catch (error) {
-			setChatId(id);
-			messagesRef.current = [];
-			publishMessages();
-			setChatLoadError(error instanceof Error ? error.message : 'Unable to load this chat.');
-		} finally {
-			setOpeningChatId(undefined);
-		}
-	}, [publishMessages]);
+			try {
+				const cells = await getHistory(id);
+				if (version !== conversationVersion.current) return;
+				messagesRef.current = messagesFromHistory(cells);
+				publishMessages();
+				setChatId(id);
+				// History is everything the chat has said, so the next turn can resume
+				// from its last cell instead of replaying the lot.
+				latestCellId.current = String(cells[cells.length - 1]?.id ?? '');
+				stickToBottom.current = true;
+				setSending(false);
+			} catch (error) {
+				if (version !== conversationVersion.current) return;
+				setChatId(id);
+				messagesRef.current = [];
+				publishMessages();
+				setChatLoadError(error instanceof Error ? error.message : 'Unable to load this chat.');
+			} finally {
+				if (version === conversationVersion.current) setOpeningChatId(undefined);
+			}
+		},
+		[publishMessages]
+	);
 
 	const resetToNewChat = useCallback(() => {
+		conversationVersion.current += 1;
+		creatingChat.current = undefined;
+		uploadBusy.current = false;
+		setUploading(false);
 		activeRequest.current?.abort();
 		activeRequest.current = undefined;
 		loadedChatId.current = undefined;
@@ -568,6 +679,7 @@ export function ChatPage() {
 		setChatId(undefined);
 		setChatLoadError(undefined);
 		setSending(false);
+		setOpeningChatId(undefined);
 		previewPanel.reset();
 	}, [publishMessages]);
 
@@ -584,13 +696,13 @@ export function ChatPage() {
 
 	function newThread() {
 		// Best-effort: the new thread opens either way.
-		if (chatId) void closeChat(chatId).catch(() => { });
+		if (chatId) void closeChat(chatId).catch(() => {});
 		if (isMobileSidebar()) setSidebarOpen(false);
+		resetToNewChat();
 		if (routeId) {
 			navigate('/');
 			return;
 		}
-		resetToNewChat();
 	}
 
 	function openPanelDefaultTab() {
@@ -604,15 +716,61 @@ export function ChatPage() {
 		);
 	}
 
+	const uploadVersion = conversationVersion.current;
 	const composerProps = {
 		value: draft,
 		onValueChange: setDraft,
-		selectedConnectorIds,
+		selectedConnectorIds: agentMode ? [] : selectedConnectorIds,
 		onConnectorIdsChange: setSelectedConnectorIds,
 		selectedModel,
 		onModelChange: setSelectedModel,
-		sending,
+		sending: sending || uploading || (agentMode && !appConfig),
 		configLocked,
+		agentLabel: agentMode ? (appConfig?.agentName ?? 'Agent configured by backend') : undefined,
+		agentId: agentMode ? appConfig?.agentId : undefined,
+		agentProfileImageUrl: agentMode ? appConfig?.agentProfileImageUrl : undefined,
+		onFilesDrop:
+			agentMode && appConfig?.uploadsEnabled
+				? (files: File[]) => {
+						void chatFiles.current?.attach(files);
+					}
+				: undefined,
+		onAttachFiles:
+			agentMode && appConfig?.uploadsEnabled ? () => chatFiles.current?.openPicker() : undefined,
+		filesUploading: uploading,
+		filesDisabled: sending || uploading || Boolean(openingChatId),
+		attachments: agentMode ? (
+			<>
+				{configError ? (
+					<div role="alert" className="text-[12px] text-red-600">
+						{configError}{' '}
+						<button type="button" className="underline" onClick={() => void loadConfig()}>
+							Retry configuration
+						</button>
+					</div>
+				) : !appConfig ? (
+					<p className="text-[12px] text-muted">Loading agent configuration…</p>
+				) : null}
+				{appConfig?.uploadsEnabled && (
+					<ChatFiles
+						ref={chatFiles}
+						chatId={chatId}
+						disabled={sending || Boolean(openingChatId)}
+						ensureChat={ensureChat}
+						onFilesChange={(id: string, files: ChatFile[]) => {
+							if (conversationVersion.current !== uploadVersion || loadedChatId.current !== id)
+								return;
+							reflectUploadedCells(files.map((file) => file.cell).filter(isRecord));
+						}}
+						onBusyChange={(busy) => {
+							if (conversationVersion.current !== uploadVersion) return;
+							uploadBusy.current = busy;
+							setUploading(busy);
+						}}
+					/>
+				)}
+			</>
+		) : undefined,
 		onSend: () => void send()
 	};
 
@@ -828,7 +986,7 @@ export function ChatPage() {
 						'[&_.preview-panel]:h-full [&_.preview-panel]:min-h-0 [&_.preview-panel]:w-[var(--preview-panel-width,420px)] [&_.preview-panel]:min-w-0 [&_.preview-panel]:flex-none',
 						// Narrow viewports stack the preview under the chat instead.
 						panel.open &&
-						'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
+							'max-[960px]:flex-col max-[960px]:[&_.preview-panel]:h-[min(45vh,420px)] max-[960px]:[&_.preview-panel]:w-full max-[960px]:[&_.preview-panel]:border-t max-[960px]:[&_.preview-panel]:border-l-0',
 						panel.resizing && 'cursor-col-resize'
 					)}
 					style={{ ['--preview-panel-width' as string]: `${panel.width}px` }}
@@ -914,18 +1072,12 @@ export function ChatPage() {
 									</button>
 								</div>
 							</section>
-						) : showNewChat ? (
-							<section
-								className="flex min-h-0 flex-col items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5"
-								aria-label="New chat"
-							>
-								<Composer {...composerProps} />
-							</section>
 						) : (
 							<>
 								<section
 									ref={conversationRef}
 									className="min-h-0 overflow-y-auto"
+									hidden={showNewChat}
 									aria-label="Chat messages"
 									aria-live="polite"
 									onScroll={onConversationScroll}
@@ -967,7 +1119,7 @@ export function ChatPage() {
 																/>
 															) : null}
 														</>
-													) : message.body ? (
+													) : message.body || message.cells?.length ? (
 														<>
 															<span
 																className="min-w-0 truncate text-[12px] font-medium text-text-3"
@@ -975,9 +1127,23 @@ export function ChatPage() {
 															>
 																{memberEmail ?? 'You'}
 															</span>
-															<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
-																<p className={MESSAGE_BODY_YOU}>{message.body}</p>
-															</div>
+															{message.cells && (
+																<ul
+																	aria-label="Attached files"
+																	className="m-0 flex list-none flex-wrap justify-end gap-2 p-0"
+																>
+																	{message.cells.map((cell) => (
+																		<li key={String(cell.id)} className="min-w-0">
+																			<UploadedFilePreview cell={cell} />
+																		</li>
+																	))}
+																</ul>
+															)}
+															{message.body && (
+																<div className="rounded-sm border border-[rgba(0,0,0,0.06)] bg-fill px-3.5 py-2.5 shadow-none">
+																	<p className={MESSAGE_BODY_YOU}>{message.body}</p>
+																</div>
+															)}
 														</>
 													) : null}
 												</article>
@@ -986,8 +1152,15 @@ export function ChatPage() {
 									</div>
 								</section>
 
-								<footer className="flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5">
-									<Composer {...composerProps} docked />
+								<footer
+									aria-label={showNewChat ? 'New chat' : undefined}
+									className={
+										showNewChat
+											? 'flex min-h-0 items-center justify-center px-6 pt-8 pb-10 max-[560px]:px-3.5'
+											: 'flex justify-center bg-[linear-gradient(180deg,transparent,var(--color-paper)_28%)] px-6 pt-2 pb-7 [&_.composer-shell]:mx-auto max-[560px]:px-3.5'
+									}
+								>
+									<Composer {...composerProps} docked={!showNewChat} />
 								</footer>
 							</>
 						)}
