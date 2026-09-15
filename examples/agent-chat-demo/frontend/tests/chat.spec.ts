@@ -10,6 +10,34 @@ test.beforeEach(async ({ request }) => {
 	await request.post('http://127.0.0.1:8790/test/reset');
 });
 
+for (const [model, label] of [
+	['MODEL_OPUS_4_8', 'Claude Opus 4.8'],
+	['MODEL_OPUS_5', 'Claude Opus 5'],
+	['MODEL_SONNET_5', 'Claude Sonnet 5'],
+	['MODEL_UNKNOWN', 'Agent default']
+]) {
+	test(`displays ${label} from agent config without sending a model override`, async ({ page }) => {
+		await page.route('**/v3/textql/config', async (route) => {
+			const response = await route.fetch();
+			await route.fulfill({ json: { ...(await response.json()), model } });
+		});
+		await page.goto('/');
+		await expect(page.getByLabel(`Model: ${label}`, { exact: true })).toBeVisible();
+		await expect(page.getByRole('combobox')).toHaveCount(0);
+		await page.getByRole('textbox', { name: 'Message', exact: true }).fill('Hello');
+		const created = page.waitForRequest((request) =>
+			request.method() === 'POST' && new URL(request.url()).pathname === '/v3/textql/chats'
+		);
+		const sent = page.waitForRequest((request) =>
+			request.method() === 'POST' && new URL(request.url()).pathname.endsWith('/send')
+		);
+		await page.getByRole('button', { name: 'Send message', exact: true }).click();
+		expect((await created).postDataJSON()).not.toHaveProperty('model');
+		expect((await sent).postDataJSON()).not.toHaveProperty('model');
+		await expect(page.getByLabel(`Model: ${label}`, { exact: true })).toBeVisible();
+	});
+}
+
 test('full chat app uploads files, sends, reloads backend state, and creates a second chat', async ({
 	page,
 	request
@@ -271,6 +299,7 @@ test('mobile layout keeps the upload control accessible', async ({ page }) => {
 	await expect(
 		page.getByRole('button', { name: 'Attach files or CSVs', exact: true })
 	).toBeVisible();
+	await expect(page.getByLabel('Model: Claude Opus 4.8', { exact: true })).toBeVisible();
 	await page.screenshot({ path: 'test-results/agent-chat-mobile.png', fullPage: true });
 });
 

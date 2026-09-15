@@ -542,7 +542,10 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		if (loadedChatId.current) return loadedChatId.current;
 		if (creatingChat.current) return creatingChat.current;
 		const version = conversationVersion.current;
-		const creation = createChat({ model: selectedModel, connectorIds: selectedConnectorIds }).then(
+		const creation = createChat({
+			model: agentMode ? undefined : selectedModel,
+			connectorIds: agentMode ? [] : selectedConnectorIds
+		}).then(
 			(id) => {
 				if (version !== conversationVersion.current)
 					throw new Error('The active conversation changed. Please try again.');
@@ -722,11 +725,13 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		onValueChange: setDraft,
 		selectedConnectorIds: agentMode ? [] : selectedConnectorIds,
 		onConnectorIdsChange: setSelectedConnectorIds,
-		selectedModel,
+		selectedModel: agentMode ? (appConfig?.model ?? '') : selectedModel,
 		onModelChange: setSelectedModel,
 		sending: sending || uploading || (agentMode && !appConfig),
 		configLocked,
-		agentLabel: agentMode ? (appConfig?.agentName ?? 'Agent configured by backend') : undefined,
+		agentMode,
+		agentLoading: agentMode && !appConfig && !configError,
+		agentLabel: agentMode ? (appConfig?.agentName ?? undefined) : undefined,
 		agentId: agentMode ? appConfig?.agentId : undefined,
 		agentProfileImageUrl: agentMode ? appConfig?.agentProfileImageUrl : undefined,
 		onFilesDrop:
@@ -748,8 +753,6 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 							Retry configuration
 						</button>
 					</div>
-				) : !appConfig ? (
-					<p className="text-[12px] text-muted">Loading agent configuration…</p>
 				) : null}
 				{appConfig?.uploadsEnabled && (
 					<ChatFiles

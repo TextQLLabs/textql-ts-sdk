@@ -35,6 +35,7 @@ createServer(async (req, res) => {
 			email: null,
 			agent_id: 'test-agent',
 			agent_name: 'Demo analyst (test fixture)',
+			model: 'MODEL_OPUS_4_8',
 			agent_profile_image_url: 'http://127.0.0.1:8790/test/thumbnail.svg',
 			uploads_enabled: true
 		});

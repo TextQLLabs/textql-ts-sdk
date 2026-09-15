@@ -63,7 +63,10 @@ Edit `.env` and set:
   or silently select one from the organization.
 
 The agent's backend configuration controls the chat's model, tools, and
-connectors. The UI does not offer conflicting model/connector overrides.
+connectors. The composer displays the agent's model from `/v3/textql/config`
+as a read-only label beside Send.
+Agents without a pinned model display the organization's default model, falling
+back to its system default. If settings cannot be read, the label is `Agent default`.
 
 ### 2. Start FastAPI
 

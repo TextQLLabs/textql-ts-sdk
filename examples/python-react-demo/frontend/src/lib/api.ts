@@ -65,7 +65,7 @@ export async function getHistory(chatId: string): Promise<CellLike[]> {
 }
 
 export async function createChat(options: {
-	model: string;
+	model?: string;
 	connectorIds: number[];
 }): Promise<string> {
 	const response = await fetch(`${BASE}/chats`, {
@@ -102,6 +102,7 @@ export type AppConfig = {
 	agentId: string | null;
 	agentName: string | null;
 	agentProfileImageUrl: string | null;
+	model: string | null;
 	uploadsEnabled: boolean;
 };
 
@@ -112,6 +113,7 @@ export async function getConfig(): Promise<AppConfig> {
 		agent_id?: string | null;
 		agent_name?: string | null;
 		agent_profile_image_url?: string | null;
+		model?: string | null;
 		uploads_enabled?: boolean;
 	};
 	const email =
@@ -121,6 +123,7 @@ export async function getConfig(): Promise<AppConfig> {
 		agentId: payload.agent_id ?? null,
 		agentName: payload.agent_name ?? null,
 		agentProfileImageUrl: payload.agent_profile_image_url ?? null,
+		model: payload.model ?? null,
 		uploadsEnabled: payload.uploads_enabled === true
 	};
 }

@@ -501,12 +501,28 @@ async def get_config():
     if not response.HasField("agent"):
         raise HTTPException(502, "TextQL did not return the configured agent.")
     agent = response.agent
+    model = agent.llm_model
+    if model == llm_model_pb2.MODEL_UNKNOWN:
+        try:
+            settings = await sdk.settings.get_async(body={})
+            org = settings.organization
+            for candidate in (org.default_llm_model, org.system_default_model):
+                if (
+                    isinstance(candidate, int)
+                    and candidate in llm_model_pb2.LlmModel.values()
+                    and candidate != llm_model_pb2.MODEL_UNKNOWN
+                    and not llm_model_pb2.LlmModel.Name(candidate).startswith("MODEL_DEFAULT")
+                ):
+                    model = candidate
+                    break
+        except Exception as err:
+            logger.warning("[get_config] Could not read the organization default model: %s", err)
     return ConfigResponse(
         agent_id=agent_id,
         agent_name=agent.name or None,
         agent_profile_image_url=agent.profile_image_url or None,
-        model=llm_model_pb2.LlmModel.Name(agent.llm_model)
-        if agent.llm_model in llm_model_pb2.LlmModel.values()
+        model=llm_model_pb2.LlmModel.Name(model)
+        if model in llm_model_pb2.LlmModel.values()
         else None,
         app_url=(
             os.getenv("TEXTQL_SERVER_URL") or "https://app.textql.com/rpc/public"

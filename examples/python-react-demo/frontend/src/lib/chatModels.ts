@@ -27,6 +27,12 @@ export type ChatModelId = (typeof CHAT_MODELS)[number]['id'];
 
 export const DEFAULT_CHAT_MODEL: ChatModelId = 'MODEL_SONNET_5';
 
+/** Display names only; the backend supplies the configured model ID. */
+export const CHAT_MODEL_LABELS: Readonly<Record<string, string>> = {
+	...Object.fromEntries(CHAT_MODELS.map(({ id, label }) => [id, label])),
+	MODEL_OPUS_5: 'Claude Opus 5'
+};
+
 export function isKnownChatModel(model: string): model is ChatModelId {
 	return CHAT_MODELS.some((entry) => entry.id === model);
 }
