@@ -1,5 +1,6 @@
 import { createServer } from 'node:http';
 
+let uploads = {};
 let chats = [];
 let files = {};
 let histories = {};
@@ -22,6 +23,7 @@ createServer(async (req, res) => {
 	}
 	if (path === '/health') return json({ status: 'test fixture' });
 	if (path === '/test/reset') {
+		uploads = {};
 		chats = [];
 		files = {};
 		histories = {};
@@ -29,7 +31,7 @@ createServer(async (req, res) => {
 		return json({ ok: true });
 	}
 	if (path === '/test/calls') return json(calls);
-	calls.push({ method: req.method, path });
+	calls.push({ method: req.method, path, ...(req.headers['content-type']?.includes('application/json') ? { body: JSON.parse(body) } : {}) });
 	if (path.endsWith('/config'))
 		return json({
 			email: null,
@@ -54,17 +56,27 @@ createServer(async (req, res) => {
 		}
 		return json({ chats, threads: chats, totalCount: chats.length, hasMore: false });
 	}
-	const match = path.match(/\/chats\/([^/]+)(?:\/(files|history|send))?$/);
+	if (path === '/v3/textql/files' && req.method === 'POST') {
+		const name = body.match(/filename="([^"]+)"/)?.[1];
+		if (!name) return json({ detail: 'Missing file' }, 400);
+		const id = `file-${Object.keys(uploads).length + 1}`;
+		const file = { id, name, status: 'uploaded' };
+		uploads[id] = file;
+		return json({ file });
+	}
+	const match = path.match(/\/chats\/([^/]+)(?:\/(files\/attach|files|history|send))?$/);
 	if (!match) return json({ detail: `Unhandled test route: ${path}` }, 404);
 	const [, id, action] = match;
 	if (req.method === 'DELETE') return json({ closed: true });
 	if (action === 'history') return json({ cells: histories[id] ?? [] });
-	if (action === 'files') {
+	if (action === 'files/attach') {
 		if (req.method === 'POST') {
-			const name = body.match(/filename="([^"]+)"/)?.[1];
-			if (!name) return json({ detail: 'Missing file' }, 400);
+			const datasetId = JSON.parse(body).dataset_id;
+			const name = uploads[datasetId]?.name;
+			if (!name) return json({ detail: 'Missing upload' }, 400);
 			files[id] ??= [];
-			const datasetId = `file-${files[id].length + 1}`;
+			const existing = files[id].find((file) => file.id === datasetId);
+			if (existing) return json({ file: existing });
 			const cell = {
 				id: `${id}-${datasetId}`,
 				complete: true,
@@ -97,11 +109,13 @@ createServer(async (req, res) => {
 			};
 			files[id].push({ id: datasetId, name, status: 'attached', cell_id: cell.id, cell });
 			histories[id] = [...(histories[id] ?? []), cell];
+			return json({ file: files[id].at(-1) });
 		}
-		return json({ files: files[id] ?? [] });
 	}
+	if (action === 'files') return json({ files: files[id] ?? [] });
 	if (action === 'send') {
 		const message = JSON.parse(body).message;
+		if (!message?.trim()) return json({ detail: 'A message is required' }, 400);
 		const user = { id: `${id}-user`, mdCell: { content: message }, complete: true };
 		const answer = {
 			id: `${id}-answer`,

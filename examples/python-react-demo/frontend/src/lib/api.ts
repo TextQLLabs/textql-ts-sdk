@@ -145,22 +145,29 @@ export async function listChatFiles(chatId: string, signal?: AbortSignal): Promi
 	return payload.files;
 }
 
-export async function uploadChatFile(
-	chatId: string,
-	file: File,
-	signal?: AbortSignal
-): Promise<ChatFile[]> {
+export type UploadedFile = { id: string; name: string; status: 'uploaded' };
+
+export async function uploadChatFile(file: File, signal?: AbortSignal): Promise<UploadedFile> {
 	const body = new FormData();
 	body.append('file', file);
-	const response = await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}/files`, {
+	const response = await fetch(`${BASE}/files`, { method: 'POST', body, signal });
+	const payload = (await readJson(response, 'Unable to upload this file.')) as { file: UploadedFile };
+	return payload.file;
+}
+
+export async function attachChatFile(
+	chatId: string,
+	datasetId: string,
+	signal?: AbortSignal
+): Promise<ChatFile> {
+	const response = await fetch(`${BASE}/chats/${encodeURIComponent(chatId)}/files/attach`, {
 		method: 'POST',
-		body,
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ dataset_id: datasetId }),
 		signal
 	});
-	const payload = (await readJson(response, 'Unable to upload this file.')) as {
-		files: ChatFile[];
-	};
-	return payload.files;
+	const payload = (await readJson(response, 'Unable to prepare this file.')) as { file: ChatFile };
+	return payload.file;
 }
 
 /**

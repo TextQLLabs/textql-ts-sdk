@@ -105,31 +105,30 @@ all `/v3` requests through FastAPI. `/health` on port 8787 reports Python SDK in
 
 ## Agent and upload behavior
 
-1. Start a new chat by sending a message or selecting **Attach files or CSVs**.
-   The backend creates an empty chat, calls `AttachAgentToChat`, and checks the
-   returned chat's agent before returning its ID. Attachment runs before any
-   file cells or messages, because TextQL rejects attaching an agent after a
-   chat already has messages.
-2. If agent attachment fails, the backend tries to delete the empty partial
-   chat and returns an error. If cleanup also fails, the error explicitly asks
-   you to inspect the TextQL chat list. No message is sent on either path.
-3. Drop files anywhere in the composer, or use the **+** button to attach files. Select one or more nonempty files with filename extensions, up to **20 MiB each**. Files upload
-   sequentially; the send button stays disabled until the uploads finish.
-   CSVs use tabular datasets; text, images, spreadsheets, and documents use
-   TextQL's corresponding dataset types. Actual format support is determined
-   by the TextQL deployment.
-4. For each file, the SDK registers a dataset upload, FastAPI PUTs its bytes
-   to signed storage, the SDK finalizes the upload, and `AttachDataset` associates
-   it with the chat. After attachment succeeds, the UI renders the returned file cell in the
-   conversation under **You**. The composer stays clear for the next message. Backend upload/processing errors are shown inline.
-5. Reopening or refreshing the chat reloads attachments from durable backend
-   cells. Successful files remain attached if a later file in a selection fails.
-   An interrupted request may have completed server-side: refresh files before
-   retrying to avoid duplicates.
+1. Select files with **+** or drag them into the composer. Nonempty files with
+   filename extensions are supported, up to **20 MiB each**. The backend registers
+   each upload, transfers its bytes to signed storage, and finalizes it. The file
+   appears as **Uploaded** in the composer. Uploading does not create a chat or
+   send a message.
+2. Type your message and press **Send**. For a new chat, the backend creates it
+   and attaches the configured agent first. The app then calls `AttachDataset`
+   for each uploaded file and waits for its preparation to finish before sending
+   your message. The composer displays **Preparing files for your message…**
+   during this wait. CSV parsing and sandbox startup can still take time here.
+3. Confirmed attachments move into the conversation. If preparation fails, the
+   message and remaining files stay in the composer; no message is sent. Files
+   already attached remain attached, so retrying prepares only the remaining
+   files. A repeated attachment request first checks chat history to recover a
+   previously completed attachment.
+4. Uploaded but unsent files are a local draft: refreshing or leaving the chat
+   discards that draft. Confirmed chat attachments reload from TextQL history.
+   The remove button removes a pending file from the draft, not from storage.
+5. Agent attachment failure prevents sending and triggers cleanup of the empty
+   chat. Existing chats belonging to another agent reject attachment and sending.
 
-Existing chats remain browsable. Sending or uploading into a chat owned by a
-different agent, or with no agent, returns an explicit error instead of changing
-that chat's configuration. Create a new chat to use the configured agent.
+The frontend uses `POST /v3/textql/files` to upload and
+`POST /v3/textql/chats/{chat_id}/files/attach` to prepare a file at Send time.
+The `/send` request follows only after every selected file is ready.
 
 ## Configuration
 
@@ -153,10 +152,9 @@ FastAPI. `frontend/dist` is the production frontend build; FastAPI is the requir
 
 ### Upload timing
 
-Uploads wait for storage transfer and TextQL processing/attachment before reporting success.
-FastAPI logs the duration of each upload stage and returns them in the upload
-response's `Server-Timing` header. The UI reuses the confirmed attachment list
-from each upload instead of fetching it again.
+Upload success waits only for storage transfer and upload finalization.
+Attachment preparation is a separate request when the user presses Send.
+FastAPI logs stage durations and includes them in `Server-Timing` response headers.
 
 ## Checks
 

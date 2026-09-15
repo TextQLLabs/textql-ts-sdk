@@ -196,7 +196,7 @@ async def attached_files(chats, chat_id):
             return list(files.values())
 
 
-async def upload_file(chats, datasets, http, chat_id, name, content, timings=None):
+async def upload_file(datasets, http, name, content, timings=None):
     if timings is None:
         timings = {}
     kind, content_type = classify_file(name)
@@ -264,22 +264,26 @@ async def upload_file(chats, datasets, http, chat_id, name, content, timings=Non
             502,
             "TextQL did not confirm the uploaded dataset. The file was not attached.",
         )
+    return {"id": registered.dataset_id, "name": name, "status": "uploaded"}
+
+
+async def attach_uploaded_file(chats, chat_id, dataset_id, timings):
     attached = await timed_upload_step(
         "attach",
         chats.attach_dataset(
             chat_pb2.AttachDatasetRequest(
-                chat_id=chat_id, dataset_id=registered.dataset_id
+                chat_id=chat_id, dataset_id=dataset_id
             )
         ),
         timings,
     )
-    if not attached.cell.id or attached.dataset.id != registered.dataset_id:
+    if not attached.cell.id or attached.dataset.id != dataset_id:
         raise HTTPException(
             502,
             "TextQL did not confirm file attachment. Reload the chat before retrying.",
         )
     result = file_from_cell(attached.cell, attached.dataset)
-    if not result or result["id"] != registered.dataset_id:
+    if not result or result["id"] != dataset_id:
         raise HTTPException(
             502,
             "TextQL returned an unexpected attachment cell. Reload the chat before retrying.",

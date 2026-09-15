@@ -39,7 +39,7 @@ from textql_sdk.models import (
     ConnectError,
 )
 
-from app.files import MAX_FILE_BYTES, attached_files, timed_upload_step, upload_file
+from app.files import MAX_FILE_BYTES, attached_files, attach_uploaded_file, timed_upload_step, upload_file
 
 logger = logging.getLogger(__name__)
 
@@ -834,10 +834,9 @@ async def list_files(chat_id: str):
     return {"files": await attached_files(_get_streaming().chats, chat_id)}
 
 
-@router.post("/chats/{chat_id}/files")
-async def attach_file(chat_id: str, request: Request, response: ApiResponse):
+@router.post("/files")
+async def upload_chat_file(request: Request, response: ApiResponse):
     timings = {}
-    await timed_upload_step("authorize", _require_agent(chat_id), timings)
     async with request.form(max_files=1, max_fields=0) as form:
         file = form.get("file")
         if file is None or not hasattr(file, "read") or len(form.multi_items()) != 1:
@@ -857,26 +856,38 @@ async def attach_file(chat_id: str, request: Request, response: ApiResponse):
         ):
             raise HTTPException(400, "A filename with an extension is required.")
         result = await upload_file(
-            _get_streaming().chats,
             request.app.state.datasets,
             _get_http(),
-            chat_id,
             name,
             content,
             timings,
         )
-    files = await timed_upload_step(
-        "confirm", attached_files(_get_streaming().chats, chat_id), timings
-    )
-    if not any(file["id"] == result["id"] for file in files):
-        raise HTTPException(
-            502,
-            "The attachment was not found in chat history. Reload the chat before retrying.",
-        )
     response.headers["Server-Timing"] = ", ".join(
         f"{stage};dur={duration:.1f}" for stage, duration in timings.items()
     )
-    return {"files": files}
+    return {"file": result}
+
+
+class AttachFileRequest(BaseModel):
+    dataset_id: str = Field(min_length=1)
+
+
+@router.post("/chats/{chat_id}/files/attach")
+async def attach_chat_file(chat_id: str, body: AttachFileRequest, response: ApiResponse):
+    timings = {}
+    await timed_upload_step("authorize", _require_agent(chat_id), timings)
+    chats = _get_streaming().chats
+    # An earlier request may have attached successfully even if its response
+    # was lost. Recover the confirmed cell before attempting another attach.
+    existing = await attached_files(chats, chat_id)
+    for file in existing:
+        if file["id"] == body.dataset_id:
+            return {"file": file}
+    result = await attach_uploaded_file(chats, chat_id, body.dataset_id, timings)
+    response.headers["Server-Timing"] = ", ".join(
+        f"{stage};dur={duration:.1f}" for stage, duration in timings.items()
+    )
+    return {"file": result}
 
 
 @router.post("/chats/{chat_id}/send")

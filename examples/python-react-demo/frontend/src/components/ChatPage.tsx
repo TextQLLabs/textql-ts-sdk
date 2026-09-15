@@ -11,6 +11,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import {
+	attachChatFile,
 	closeChat,
 	createChat,
 	getConfig,
@@ -21,6 +22,7 @@ import {
 	type AppConfig,
 	type ChatSummary,
 	type ChatFile,
+	type UploadedFile,
 	type StreamEvent
 } from '../lib/api';
 import {
@@ -208,6 +210,8 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	const [appConfig, setAppConfig] = useState<AppConfig | null>(null);
 	const [configError, setConfigError] = useState('');
 	const [uploading, setUploading] = useState(false);
+	const [pendingFiles, setPendingFiles] = useState<UploadedFile[]>([]);
+	const [preparingFiles, setPreparingFiles] = useState(false);
 	const uploadBusy = useRef(false);
 	const chatFiles = useRef<ChatFilesHandle>(null);
 	const conversationVersion = useRef(0);
@@ -515,6 +519,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 			if (request.signal.aborted) return;
 		} finally {
 			if (activeRequest.current === request) {
+				setPreparingFiles(false);
 				const assistant = messagesRef.current.find((message) => message.id === targetId);
 				if (assistant) assistant.streaming = false;
 				publishMessages();
@@ -566,7 +571,8 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	}
 
 	async function send() {
-		const message = draft.trim();
+		const submittedDraft = draft;
+		const message = submittedDraft.trim();
 		if (!message || sending || uploadBusy.current || (agentMode && !appConfig)) return;
 
 		// A chat with no connector is accepted, then fails on its first run with
@@ -583,18 +589,29 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 
 		setSending(true);
 		setChatLoadError(undefined);
-		setDraft('');
 		stickToBottom.current = true;
 
 		const userId = Date.now();
 		const assistantId = userId + 1;
-		messagesRef.current.push({ id: userId, role: 'you', body: message });
-		publishMessages();
 
 		try {
 			const id = await ensureChat();
 			if (request.signal.aborted) return;
 
+			if (agentMode && pendingFiles.length > 0) {
+				setPreparingFiles(true);
+				for (const file of pendingFiles) {
+					const attached = await attachChatFile(id, file.id, request.signal);
+					if (request.signal.aborted) return;
+					reflectUploadedCells([attached.cell]);
+					setPendingFiles((files) => files.filter((entry) => entry.id !== file.id));
+				}
+				setPreparingFiles(false);
+			}
+			if (request.signal.aborted) return;
+			setDraft((current) => current === submittedDraft ? '' : current);
+			messagesRef.current.push({ id: userId, role: 'you', body: message });
+			publishMessages();
 			await sendMessage(id, {
 				message,
 				latestCellId: latestCellId.current,
@@ -613,6 +630,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 			toast.error(assistant.body);
 		} finally {
 			if (activeRequest.current === request) {
+				setPreparingFiles(false);
 				const assistant = messagesRef.current.find((m) => m.id === assistantId);
 				if (assistant) assistant.streaming = false;
 				publishMessages();
@@ -635,6 +653,8 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 			creatingChat.current = undefined;
 			uploadBusy.current = false;
 			setUploading(false);
+			setPendingFiles([]);
+			setPreparingFiles(false);
 			activeRequest.current?.abort();
 			activeRequest.current = undefined;
 			loadedChatId.current = id;
@@ -669,10 +689,13 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	);
 
 	const resetToNewChat = useCallback(() => {
+		setDraft('');
 		conversationVersion.current += 1;
 		creatingChat.current = undefined;
 		uploadBusy.current = false;
 		setUploading(false);
+		setPendingFiles([]);
+		setPreparingFiles(false);
 		activeRequest.current?.abort();
 		activeRequest.current = undefined;
 		loadedChatId.current = undefined;
@@ -756,10 +779,17 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 				) : null}
 				{appConfig?.uploadsEnabled && (
 					<ChatFiles
+						key={uploadVersion}
 						ref={chatFiles}
 						chatId={chatId}
 						disabled={sending || Boolean(openingChatId)}
-						ensureChat={ensureChat}
+						pendingFiles={pendingFiles}
+						preparing={preparingFiles}
+						onUploaded={(file: UploadedFile) => {
+							if (conversationVersion.current === uploadVersion)
+								setPendingFiles((files) => [...files, file]);
+						}}
+						onRemove={(id: string) => setPendingFiles((files) => files.filter((file) => file.id !== id))}
 						onFilesChange={(id: string, files: ChatFile[]) => {
 							if (conversationVersion.current !== uploadVersion || loadedChatId.current !== id)
 								return;
