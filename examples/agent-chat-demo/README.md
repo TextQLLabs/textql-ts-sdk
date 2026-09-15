@@ -72,14 +72,20 @@ From `examples/agent-chat-demo`:
 ```sh
 cd backend
 python3.12 -m venv .venv
-.venv/bin/python --version
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8787 --reload
+source .venv/bin/activate
+python --version
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8787 --reload
 ```
 
 The version command should print `Python 3.12.10`. FastAPI loads `.env` and initializes the Python SDK clients. Missing credentials
 stop startup. The backend uses the SDK's generated Connect clients to preserve
 complete protobuf payloads, including streaming chat events.
+
+`requirements.txt` contains the runtime packages: FastAPI, Uvicorn (the web
+server), HTTPX (HTTP requests), python-dotenv (`.env` loading), the TextQL SDK,
+python-multipart (file uploads), and truststore (system TLS certificates).
+Backend tests use Python's built-in `unittest`.
 
 ### 3. Start React
 
@@ -91,8 +97,8 @@ nvm use
 npm run dev
 ```
 
-Open **http://localhost:5173**. The full interface loads from React; Vite proxies
-all `/v3` requests through FastAPI. `/health` on port 8787 reports Python SDK initialization. It does not probe the upstream API. FastAPI's route documentation is at **http://localhost:8787/docs**.
+Open **<http://localhost:5173>**. The full interface loads from React; Vite proxies
+all `/v3` requests through FastAPI. `/health` on port 8787 reports Python SDK initialization. It does not probe the upstream API. FastAPI's route documentation is at **<http://localhost:8787/docs>**.
 
 ## Agent and upload behavior
 
