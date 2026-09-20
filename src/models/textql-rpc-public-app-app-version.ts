@@ -24,6 +24,12 @@ import {
   TextqlRpcPublicDashboardDataSource$inboundSchema,
 } from "./textql-rpc-public-dashboard-data-source.js";
 
+/**
+ * Version history entry. Git-backed apps derive one per library commit (published_by/at
+ *
+ * @remarks
+ *  carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
+ */
 export type TextqlRpcPublicAppAppVersion = {
   id?: string | undefined;
   appId?: string | undefined;
@@ -133,6 +139,9 @@ export type TextqlRpcPublicAppAppVersion = {
    */
   publishedAt?: Date | undefined;
   publisher?: TextqlRpcIdentityMemberPreview | undefined;
+  /**
+   * Durable git handle when the version is backed by library history; version_number stays for FE compat.
+   */
   commitId?: string | null | undefined;
 };
 

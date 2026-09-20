@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacRejectAccessRequestRequest
 
-Access request management messages
-
 ## Example Usage
 
 ```typescript

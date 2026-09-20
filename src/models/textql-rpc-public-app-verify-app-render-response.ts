@@ -8,16 +8,16 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Version history entry. Git-backed apps derive one per library commit (published_by/at
- *
- * @remarks
- *  carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
- */
 export type TextqlRpcPublicAppVerifyAppRenderResponse = {
+  /**
+   * true only when rendering succeeded, produced a screenshot, and logged no browser errors/warnings
+   */
   ready?: boolean | undefined;
   screenshotUrl?: string | null | undefined;
   consoleErrors?: Array<string> | undefined;
+  /**
+   * renderer/infrastructure failure; browser diagnostics stay in console_errors
+   */
   renderError?: string | null | undefined;
 };
 

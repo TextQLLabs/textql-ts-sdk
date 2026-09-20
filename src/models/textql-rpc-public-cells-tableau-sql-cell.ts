@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
 } from "./textql-rpc-public-dataframe-data-frame-with-info.js";
 
-/**
- * Deprecated: use tool_summary on Cell instead.
- */
 export type TextqlRpcPublicCellsTableauSQLCell = {
   tableauDatasourceLuid?: string | undefined;
   query?: string | undefined;

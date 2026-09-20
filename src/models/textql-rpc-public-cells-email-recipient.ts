@@ -9,18 +9,21 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 /**
- * ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
+ * EmailRecipient is one resolved recipient of an EmailCell. The frontend
  *
  * @remarks
- *  shows that the tool ran (and a count); connector detail goes to the LLM, never
- *  to the browser, and never carries secrets.
+ *  renders these as chips; the backend uses the resolution to enforce the
+ *  internal-only policy at cell creation time.
  */
 export type TextqlRpcPublicCellsEmailRecipient = {
-  /**
-   * list | get
-   */
   address?: string | undefined;
+  /**
+   * "internal" or "external"
+   */
   class?: string | undefined;
+  /**
+   * populated when class == "internal"
+   */
   memberId?: string | null | undefined;
   displayName?: string | null | undefined;
 };

@@ -8,8 +8,18 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * FileChatUsage is one chat that retrieved a ontology file inside the
+ *
+ * @remarks
+ *  observation window. Only pulls attributed to a chat are listed — background
+ *  or sandbox reads carry no chat id and are excluded.
+ */
 export type TextqlRpcPublicPatchesFileChatUsage = {
   chatId?: string | undefined;
+  /**
+   * empty for untitled chats
+   */
   title?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -105,6 +115,9 @@ export type TextqlRpcPublicPatchesFileChatUsage = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastPulled?: Date | undefined;
+  /**
+   * the chat also ran the file (directly or via imports), not just pulled it
+   */
   used?: boolean | undefined;
 };
 

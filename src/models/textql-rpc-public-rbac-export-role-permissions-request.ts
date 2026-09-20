@@ -3,18 +3,30 @@
  */
 
 import * as z from "zod/v4-mini";
+import {
+  TextqlRpcPublicRbacRolePermissionsExportFormat,
+  TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema,
+} from "./textql-rpc-public-rbac-role-permissions-export-format.js";
 
-export type TextqlRpcPublicRbacExportRolePermissionsRequest = {};
+export type TextqlRpcPublicRbacExportRolePermissionsRequest = {
+  format?: TextqlRpcPublicRbacRolePermissionsExportFormat | undefined;
+};
 
 /** @internal */
-export type TextqlRpcPublicRbacExportRolePermissionsRequest$Outbound = {};
+export type TextqlRpcPublicRbacExportRolePermissionsRequest$Outbound = {
+  format?: string | undefined;
+};
 
 /** @internal */
 export const TextqlRpcPublicRbacExportRolePermissionsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacExportRolePermissionsRequest$Outbound,
     TextqlRpcPublicRbacExportRolePermissionsRequest
-  > = z.object({});
+  > = z.object({
+    format: z.optional(
+      TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema,
+    ),
+  });
 
 export function textqlRpcPublicRbacExportRolePermissionsRequestToJSON(
   textqlRpcPublicRbacExportRolePermissionsRequest:

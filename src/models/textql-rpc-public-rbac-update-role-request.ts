@@ -9,9 +9,17 @@ import {
 } from "./textql-rpc-public-chat-llm-model.js";
 
 export type TextqlRpcPublicRbacUpdateRoleRequest = {
-  roleId?: string | undefined;
+  /**
+   * Exact, case-sensitive role name, unique within the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id. For updates, name is the new name.
+   */
+  roleName?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
+  allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
+  defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
   /**
    * Wrapper message for `bool`.
    *
@@ -23,20 +31,36 @@ export type TextqlRpcPublicRbacUpdateRoleRequest = {
    *  has no plan to be removed.
    */
   allowModelChoice?: boolean | undefined;
+  /**
+   * Clears allowed_models back to "all models allowed". Needed because proto3
+   *
+   * @remarks
+   *  cannot distinguish an empty repeated field from an absent one.
+   */
   clearAllowedModelIds?: boolean | undefined;
-  allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
-  defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
+  /**
+   * Omitted preserves the existing value; empty resets to the default.
+   */
+  color?: string | null | undefined;
+  icon?: string | null | undefined;
+  /**
+   * Existing role ID. Prefer role_name; if both are supplied they must match.
+   */
+  roleId?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacUpdateRoleRequest$Outbound = {
-  roleId?: string | undefined;
+  roleName?: string | undefined;
   name?: string | undefined;
   description?: string | undefined;
-  allowModelChoice?: boolean | undefined;
-  clearAllowedModelIds?: boolean | undefined;
   allowedModels?: Array<string> | undefined;
   defaultModel?: string | undefined;
+  allowModelChoice?: boolean | undefined;
+  clearAllowedModelIds?: boolean | undefined;
+  color?: string | null | undefined;
+  icon?: string | null | undefined;
+  roleId?: string | undefined;
 };
 
 /** @internal */
@@ -44,15 +68,18 @@ export const TextqlRpcPublicRbacUpdateRoleRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacUpdateRoleRequest$Outbound,
   TextqlRpcPublicRbacUpdateRoleRequest
 > = z.object({
-  roleId: z.optional(z.string()),
+  roleName: z.optional(z.string()),
   name: z.optional(z.string()),
   description: z.optional(z.string()),
-  allowModelChoice: z.optional(z.boolean()),
-  clearAllowedModelIds: z.optional(z.boolean()),
   allowedModels: z.optional(
     z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
   ),
   defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+  allowModelChoice: z.optional(z.boolean()),
+  clearAllowedModelIds: z.optional(z.boolean()),
+  color: z.optional(z.nullable(z.string())),
+  icon: z.optional(z.nullable(z.string())),
+  roleId: z.optional(z.string()),
 });
 
 export function textqlRpcPublicRbacUpdateRoleRequestToJSON(

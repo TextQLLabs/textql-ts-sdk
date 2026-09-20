@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * QueryOneShot
+ * External API users
+ *
+ * @remarks
+ * External API users
  */
 export function chatsQueryOneShot(
   client: TextqlCore,

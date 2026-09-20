@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Object access management messages
- */
 export type TextqlRpcPublicRbacGetObjectAccessRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;

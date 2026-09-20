@@ -26,41 +26,77 @@ import {
 
 export type TextqlRpcPublicAppApp = {
   id?: string | undefined;
-  /**
-   * the COMPLETE tree; files omitted here are deleted
-   */
   orgId?: string | undefined;
   creatorId?: string | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
+  /**
+   * Agent-authored single-file HTML source (pre data-injection).
+   */
   code?: string | undefined;
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
+  /**
+   * built artifact: CSP + data snapshot injected
+   */
   htmlUrl?: string | null | undefined;
   screenshotUrl?: string | null | undefined;
+  /**
+   * browser console errors/warnings from the last render (diagnostic)
+   */
   consoleErrors?: Array<string> | undefined;
+  /**
+   * originating builder chat
+   */
   chatId?: string | null | undefined;
   /**
+   * publish is gone (head is live); no longer populated
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   publishedHtmlUrl?: string | null | undefined;
   /**
+   * publish is gone; always false
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   hasUnpublishedChanges?: boolean | undefined;
+  /**
+   * auto-refresh timeout; null = org default
+   */
   stalenessWindowSeconds?: number | null | undefined;
   computeFunctions?: Array<TextqlRpcPublicAppComputeFunction> | undefined;
   files?: Array<TextqlRpcPublicAppAppFile> | undefined;
   scheduleEnabled?: boolean | undefined;
+  /**
+   * UTC 5-field cron
+   */
   cronString?: string | null | undefined;
+  /**
+   * library_folders.id, null/empty = uncategorized
+   */
   folderId?: string | null | undefined;
+  /**
+   * per-caller pin state (enriched, not stored on the app)
+   */
   isFavorited?: boolean | undefined;
   capabilities?: Array<TextqlRpcPublicAppCapability> | undefined;
+  /**
+   * ordered append-only setup statements for the app's private DB
+   */
   appDbSetup?: Array<string> | undefined;
+  /**
+   * per-app kill switch for state/activity RPCs; ops-controlled for now (no product writer)
+   */
   memberFeaturesEnabled?: boolean | undefined;
   /**
+   * no longer populated; kept for wire compat
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   usesMemberFeatures?: boolean | undefined;
+  /**
+   * Per-caller callable subset of gated source/function names (cosmetic tab-hiding; server is the real gate). Enriched at read, not stored.
+   */
   viewerGrants?: Array<string> | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

@@ -70,10 +70,7 @@ export class Secrets extends ClientSDK {
   }
 
   /**
-   * ---- API Connectors (deprecated) ----
-   *
-   * @remarks
-   * ---- API Connectors (deprecated) ----
+   * TestApiAccessKey
    */
   async testApiAccessKey(
     request: operations.SecretServiceTestApiAccessKeyRequest,

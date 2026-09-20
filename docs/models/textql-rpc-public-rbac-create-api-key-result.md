@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacCreateApiKeyResult
 
+CreateApiKeyResponse minus its deprecated api_key_hash alias.
+
 ## Example Usage
 
 ```typescript
@@ -19,4 +21,4 @@ let value: TextqlRpcPublicRbacCreateApiKeyResult = {
 | Field                                                                           | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `apiKey`                                                                        | [models.TextqlRpcPublicRbacApiKey](../models/textql-rpc-public-rbac-api-key.md) | :heavy_minus_sign:                                                              | N/A                                                                             |
-| `apiKeySecret`                                                                  | *string*                                                                        | :heavy_minus_sign:                                                              | N/A                                                                             |
+| `apiKeySecret`                                                                  | *string*                                                                        | :heavy_minus_sign:                                                              | Only ever returned here; the server stores a hash and cannot reissue it.        |

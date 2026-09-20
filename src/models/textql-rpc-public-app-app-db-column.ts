@@ -9,18 +9,12 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicAppAppDBColumn = {
-  /**
-   * running | stopped | error
-   */
   name?: string | undefined;
   /**
-   * import/exec failure of the author module
+   * DuckDB type name, e.g. "VARCHAR", "BIGINT"
    */
   type?: string | undefined;
   nullable?: boolean | undefined;
-  /**
-   * tail of the server process log, redacted
-   */
   primaryKey?: boolean | undefined;
 };
 

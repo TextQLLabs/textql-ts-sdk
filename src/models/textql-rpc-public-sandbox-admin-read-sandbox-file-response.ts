@@ -13,22 +13,25 @@ export type TextqlRpcPublicSandboxAdminReadSandboxFileResponseSizeBytes =
   | number
   | string;
 
-/**
- * One CPU/memory measurement of a sandbox worker.
- */
 export type TextqlRpcPublicSandboxAdminReadSandboxFileResponse = {
-  available?: boolean | undefined;
   /**
-   * CPU in cores (e.g. 0.12 used of a 1.5 limit). Limit 0 = none configured.
+   * False when the sandbox is not running (no live filesystem).
    */
+  available?: boolean | undefined;
   name?: string | undefined;
   sizeBytes?: number | string | undefined;
-  /**
-   * Percent of the limit in [0, 100]; 0 when no limit is configured.
-   */
   mimeType?: string | undefined;
+  /**
+   * UTF-8 text content; empty for binary files (see binary_content).
+   */
   content?: string | undefined;
+  /**
+   * Raw bytes for binary files (e.g. images); empty for text files.
+   */
   binaryContent?: string | undefined;
+  /**
+   * True when the file exceeded the read cap and content/binary was clipped.
+   */
   truncated?: boolean | undefined;
   isBinary?: boolean | undefined;
 };

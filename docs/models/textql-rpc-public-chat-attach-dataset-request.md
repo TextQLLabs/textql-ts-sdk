@@ -13,7 +13,7 @@ let value: TextqlRpcPublicChatAttachDatasetRequest = {
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `chatId`           | *string*           | :heavy_check_mark: | N/A                |
-| `datasetId`        | *string*           | :heavy_check_mark: | N/A                |
+| Field               | Type                | Required            | Description         |
+| ------------------- | ------------------- | ------------------- | ------------------- |
+| `chatId`            | *string*            | :heavy_check_mark:  | N/A                 |
+| `datasetId`         | *string*            | :heavy_check_mark:  | uses latest version |

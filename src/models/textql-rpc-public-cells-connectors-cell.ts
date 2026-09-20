@@ -8,11 +8,18 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * ConnectorsCell is the agent-only "connectors" inspect tool. The frontend only
+ *
+ * @remarks
+ *  shows that the tool ran (and a count); connector detail goes to the LLM, never
+ *  to the browser, and never carries secrets.
+ */
 export type TextqlRpcPublicCellsConnectorsCell = {
-  action?: string | undefined;
   /**
-   * Set for single-dashboard lookup
+   * list | get
    */
+  action?: string | undefined;
   totalCount?: number | undefined;
 };
 

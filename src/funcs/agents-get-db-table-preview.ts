@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetAgentDBTablePreview
+ * A bounded row preview of one agent_db table (SELECT ... LIMIT n).
+ *
+ * @remarks
+ * A bounded row preview of one agent_db table (SELECT ... LIMIT n).
  */
 export function agentsGetDBTablePreview(
   client: TextqlCore,

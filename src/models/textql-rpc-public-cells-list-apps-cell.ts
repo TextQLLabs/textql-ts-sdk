@@ -15,20 +15,11 @@ import {
 export type TextqlRpcPublicCellsListAppsCell = {
   searchTerm?: string | undefined;
   /**
-   * "sql" | "python"
+   * Set for single-app lookup
    */
   appId?: string | undefined;
-  /**
-   * Produced dataframe name, if applicable
-   */
   totalCount?: number | undefined;
-  /**
-   * SQL only: connector ID; display name resolves client-side
-   */
   errorMessage?: string | null | undefined;
-  /**
-   * SQL only: referenced tables
-   */
   apps?: Array<TextqlRpcPublicCellsAppInfo> | undefined;
 };
 

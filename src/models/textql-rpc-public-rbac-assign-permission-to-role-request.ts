@@ -3,19 +3,35 @@
  */
 
 import * as z from "zod/v4-mini";
+import {
+  TextqlRpcPublicRbacPermissionSpec,
+  TextqlRpcPublicRbacPermissionSpec$Outbound,
+  TextqlRpcPublicRbacPermissionSpec$outboundSchema,
+} from "./textql-rpc-public-rbac-permission-spec.js";
 
-/**
- * Permission management requests/responses
- */
 export type TextqlRpcPublicRbacAssignPermissionToRoleRequest = {
+  /**
+   * Exact, case-sensitive role name, unique within the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id.
+   */
+  roleName?: string | undefined;
+  /**
+   * A single RBAC permission. Select a resource and one of its supported actions.
+   */
+  permission?: TextqlRpcPublicRbacPermissionSpec | undefined;
+  /**
+   * Existing role ID. Prefer role_name; if both are supplied they must match.
+   */
   roleId?: string | undefined;
-  permissionId?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacAssignPermissionToRoleRequest$Outbound = {
+  roleName?: string | undefined;
+  permission?: TextqlRpcPublicRbacPermissionSpec$Outbound | undefined;
   roleId?: string | undefined;
-  permissionId?: string | undefined;
 };
 
 /** @internal */
@@ -24,8 +40,9 @@ export const TextqlRpcPublicRbacAssignPermissionToRoleRequest$outboundSchema:
     TextqlRpcPublicRbacAssignPermissionToRoleRequest$Outbound,
     TextqlRpcPublicRbacAssignPermissionToRoleRequest
   > = z.object({
+    roleName: z.optional(z.string()),
+    permission: z.optional(TextqlRpcPublicRbacPermissionSpec$outboundSchema),
     roleId: z.optional(z.string()),
-    permissionId: z.optional(z.string()),
   });
 
 export function textqlRpcPublicRbacAssignPermissionToRoleRequestToJSON(

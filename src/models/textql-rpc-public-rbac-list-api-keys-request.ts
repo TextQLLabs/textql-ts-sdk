@@ -17,6 +17,13 @@ import {
 } from "./textql-rpc-public-rbac-api-key-sort-field.js";
 
 export type TextqlRpcPublicRbacListApiKeysRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of service_account_member_id; if both are supplied they must identify the same member.
+   */
+  serviceAccountEmail?: string | null | undefined;
   scope?: TextqlRpcPublicRbacApiKeyScope | undefined;
   serviceAccountMemberId?: string | null | undefined;
   includeRevoked?: boolean | null | undefined;
@@ -32,6 +39,7 @@ export type TextqlRpcPublicRbacListApiKeysRequest = {
 
 /** @internal */
 export type TextqlRpcPublicRbacListApiKeysRequest$Outbound = {
+  serviceAccountEmail?: string | null | undefined;
   scope?: string | undefined;
   serviceAccountMemberId?: string | null | undefined;
   includeRevoked?: boolean | null | undefined;
@@ -48,6 +56,7 @@ export const TextqlRpcPublicRbacListApiKeysRequest$outboundSchema:
     TextqlRpcPublicRbacListApiKeysRequest$Outbound,
     TextqlRpcPublicRbacListApiKeysRequest
   > = z.object({
+    serviceAccountEmail: z.optional(z.nullable(z.string())),
     scope: z.optional(TextqlRpcPublicRbacApiKeyScope$outboundSchema),
     serviceAccountMemberId: z.optional(z.nullable(z.string())),
     includeRevoked: z.optional(z.nullable(z.boolean())),

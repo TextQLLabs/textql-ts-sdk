@@ -11,6 +11,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Bytes = number | string;
 
+/**
+ * EmailAttachment is delivered-attachment metadata surfaced to the frontend
+ */
 export type TextqlRpcPublicCellsEmailAttachment = {
   filename?: string | undefined;
   bytes?: number | string | undefined;

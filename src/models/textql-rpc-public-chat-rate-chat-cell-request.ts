@@ -12,6 +12,9 @@ export type TextqlRpcPublicChatRateChatCellRequest = {
   chatId: string;
   cellId: string;
   rating: TextqlRpcPublicChatCellRating;
+  /**
+   * free-text "why" captured from the rating modal
+   */
   reason?: string | null | undefined;
 };
 

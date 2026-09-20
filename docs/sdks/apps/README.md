@@ -4,35 +4,37 @@
 
 ### Available Operations
 
-* [heartbeat](#heartbeat) - AppHeartbeat
+* [heartbeat](#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 * [createApp](#createapp) - CreateApp
 * [deleteApp](#deleteapp) - DeleteApp
 * [duplicate](#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
 * [get](#get) - GetApp
-* [getDBSchema](#getdbschema) - Replaces the calling member's entire ordering; capped server-side.
-* [getDBTablePreview](#getdbtablepreview) - View analytics: reads the engagement views recorded on app page load.
-* [getMemberState](#getmemberstate) - Per-member notification subscription to an app ("watch this app").
-* [getAppVersion](#getappversion) - Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
-* [getAppViewStats](#getappviewstats) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+* [getDBSchema](#getdbschema) - Read-only table/column list for the app's private DuckDB (app_db).
+* [getDBTablePreview](#getdbtablepreview) - A bounded row preview of one app_db table (SELECT ... LIMIT n).
+* [getMemberState](#getmemberstate) - Per-member app state: one JSON blob per (app, member) so apps remember  settings/progress. Member always resolved server-side from auth context;  per-member persistence, so viewers with read access can save their own state.
+* [getAppVersion](#getappversion) - GetAppVersion
+* [getAppViewStats](#getappviewstats) - View analytics: reads the engagement views recorded on app page load.
 * [getMembersWithApps](#getmemberswithapps) - GetMembersWithApps
-* [invokeComputeFunction](#invokecomputefunction) - InvokeAppComputeFunction
-* [listActivitySince](#listactivitysince) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
-* [listVersions](#listversions) - Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
+* [invokeComputeFunction](#invokecomputefunction) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+* [listActivitySince](#listactivitysince) - Cross-member live activity: rows from every member of the app after a seq,  each carrying member_id + display_name (resolved server-side; never email).
+* [listUploads](#listuploads) - Lists the invoking viewer's uploads for this app. May recover legacy Library pointers on first use.
+* [listVersions](#listversions) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 * [list](#list) - ListApps
-* [listMyMemberActivity](#listmymemberactivity) - Watcher management: app owners/editors and org admins list the app's  subscribers and add/remove members (Upsert/Delete with member_id).
-* [moveAppToFolder](#moveapptofolder) - MoveAppToFolder
-* [presenceHeartbeat](#presenceheartbeat) - Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
-* [recordMemberActivity](#recordmemberactivity) - RecordAppMemberActivity
-* [refresh](#refresh) - Moves an app into a library folder (or to root when folder_id is empty).
-* [restoreAppVersion](#restoreappversion) - Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+* [listMyMemberActivity](#listmymemberactivity) - ListMyAppMemberActivity
+* [moveAppToFolder](#moveapptofolder) - Moves an app into a library folder (or to root when folder_id is empty).
+* [presenceHeartbeat](#presenceheartbeat) - Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
+* [recordMemberActivity](#recordmemberactivity) - Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+* [refresh](#refresh) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+* [removeUpload](#removeupload) - Removes only this viewer's app association, never the dataset itself.
+* [restoreAppVersion](#restoreappversion) - RestoreAppVersion
 * [setMemberState](#setmemberstate) - SetAppMemberState
-* [setFavorite](#setfavorite) - Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+* [setFavorite](#setfavorite) - Favorite/unfavorite a library item (app or dashboard) for the calling member.  Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives  since the merged library page pins apps and dashboards through one client.
 * [update](#update) - UpdateApp
-* [verifyRender](#verifyrender) - Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+* [verifyRender](#verifyrender) - Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
 
 ## heartbeat
 
-AppHeartbeat
+Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
 
 ### Example Usage
 
@@ -399,7 +401,7 @@ run();
 
 ## getDBSchema
 
-Replaces the calling member's entire ordering; capped server-side.
+Read-only table/column list for the app's private DuckDB (app_db).
 
 ### Example Usage
 
@@ -472,7 +474,7 @@ run();
 
 ## getDBTablePreview
 
-View analytics: reads the engagement views recorded on app page load.
+A bounded row preview of one app_db table (SELECT ... LIMIT n).
 
 ### Example Usage
 
@@ -545,7 +547,9 @@ run();
 
 ## getMemberState
 
-Per-member notification subscription to an app ("watch this app").
+Per-member app state: one JSON blob per (app, member) so apps remember
+ settings/progress. Member always resolved server-side from auth context;
+ per-member persistence, so viewers with read access can save their own state.
 
 ### Example Usage
 
@@ -618,7 +622,7 @@ run();
 
 ## getAppVersion
 
-Overwrites the published tree's pinned _runtime/ana-1.js with the platform's current copy so host-driven affordances (comment hit-testing) work on older documents; never touches authored content or data. repinned=false for legacy pre-tree documents.
+GetAppVersion
 
 ### Example Usage
 
@@ -691,7 +695,7 @@ run();
 
 ## getAppViewStats
 
-Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+View analytics: reads the engagement views recorded on app page load.
 
 ### Example Usage
 
@@ -837,7 +841,7 @@ run();
 
 ## invokeComputeFunction
 
-InvokeAppComputeFunction
+Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
 
 ### Example Usage
 
@@ -910,9 +914,8 @@ run();
 
 ## listActivitySince
 
-Favorite/unfavorite a library item (app or dashboard) for the calling member.
- Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
- since the merged library page pins apps and dashboards through one client.
+Cross-member live activity: rows from every member of the app after a seq,
+ each carrying member_id + display_name (resolved server-side; never email).
 
 ### Example Usage
 
@@ -983,10 +986,82 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## listUploads
+
+Lists the invoking viewer's uploads for this app. May recover legacy Library pointers on first use.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="AppService_ListAppUploads" method="post" path="/textql.rpc.public.app.AppService/ListAppUploads" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.apps.listUploads({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsListUploads } from "@textql/sdk/funcs/apps-list-uploads.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await appsListUploads(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("appsListUploads failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.AppServiceListAppUploadsRequest](../../models/operations/app-service-list-app-uploads-request.md)                                                                  | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.AppServiceListAppUploadsResponse](../../models/operations/app-service-list-app-uploads-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## listVersions
 
-Renders the live artifact in the production sandbox and returns browser diagnostics.
- This is synchronous so callers can verify an app before sharing its URL.
+Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
 
 ### Example Usage
 
@@ -1132,8 +1207,7 @@ run();
 
 ## listMyMemberActivity
 
-Watcher management: app owners/editors and org admins list the app's
- subscribers and add/remove members (Upsert/Delete with member_id).
+ListMyAppMemberActivity
 
 ### Example Usage
 
@@ -1206,7 +1280,7 @@ run();
 
 ## moveAppToFolder
 
-MoveAppToFolder
+Moves an app into a library folder (or to root when folder_id is empty).
 
 ### Example Usage
 
@@ -1279,10 +1353,8 @@ run();
 
 ## presenceHeartbeat
 
-Ordering overlay for the sidebar Bookmarks section: one position list per
- member covering favorites and thread bookmarks ('<kind>:<id>' keys).
- Membership truth stays in library_favorite / chat bookmarks; this persists
- only the drag-and-drop order.
+Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
+ the app's stream. Presence never touches Postgres and never exposes emails.
 
 ### Example Usage
 
@@ -1355,7 +1427,8 @@ run();
 
 ## recordMemberActivity
 
-RecordAppMemberActivity
+Append-only per-member activity log. Listing is own rows only; no
+ cross-member reads in this release.
 
 ### Example Usage
 
@@ -1428,7 +1501,7 @@ run();
 
 ## refresh
 
-Moves an app into a library folder (or to root when folder_id is empty).
+Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
 
 ### Example Usage
 
@@ -1499,9 +1572,82 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## removeUpload
+
+Removes only this viewer's app association, never the dataset itself.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="AppService_RemoveAppUpload" method="post" path="/textql.rpc.public.app.AppService/RemoveAppUpload" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.apps.removeUpload({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { appsRemoveUpload } from "@textql/sdk/funcs/apps-remove-upload.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await appsRemoveUpload(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("appsRemoveUpload failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.AppServiceRemoveAppUploadRequest](../../models/operations/app-service-remove-app-upload-request.md)                                                                | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.AppServiceRemoveAppUploadResponse](../../models/operations/app-service-remove-app-upload-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## restoreAppVersion
 
-Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+RestoreAppVersion
 
 ### Example Usage
 
@@ -1647,7 +1793,9 @@ run();
 
 ## setFavorite
 
-Executes a declared compute function on a pooled sandbox worker; gated, org-scoped, rate-limited.
+Favorite/unfavorite a library item (app or dashboard) for the calling member.
+ Per-member, per-org; favorited=false hard-deletes the row. Covers both primitives
+ since the merged library page pins apps and dashboards through one client.
 
 ### Example Usage
 
@@ -1793,7 +1941,8 @@ run();
 
 ## verifyRender
 
-Re-fetches data sources, rebuilds the document with a fresh snapshot, re-uploads.
+Renders the live artifact in the production sandbox and returns browser diagnostics.
+ This is synchronous so callers can verify an app before sharing its URL.
 
 ### Example Usage
 

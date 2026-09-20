@@ -12,6 +12,6 @@ let value: TextqlRpcPublicChatGetChatRequest = {
 
 ## Fields
 
-| Field                                                             | Type                                                              | Required                                                          | Description                                                       |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `chatId`                                                          | *string*                                                          | :heavy_check_mark:                                                | whether to return only the user's chats or all of the org's chats |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `chatId`           | *string*           | :heavy_check_mark: | N/A                |

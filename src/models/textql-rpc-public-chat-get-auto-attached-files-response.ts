@@ -12,9 +12,6 @@ import {
   TextqlRpcPublicChatAutoAttachedLibraryFile$inboundSchema,
 } from "./textql-rpc-public-chat-auto-attached-library-file.js";
 
-/**
- * A library file injected via org auto-attach (not an explicit read_file/tql pull).
- */
 export type TextqlRpcPublicChatGetAutoAttachedFilesResponse = {
   files?: Array<TextqlRpcPublicChatAutoAttachedLibraryFile> | undefined;
 };

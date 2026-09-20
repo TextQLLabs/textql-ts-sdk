@@ -6,6 +6,9 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppMoveAppToFolderRequest = {
   appId?: string | undefined;
+  /**
+   * null/empty = move to root (uncategorized)
+   */
   folderId?: string | null | undefined;
 };
 

@@ -20,6 +20,14 @@ const value:
   };
 ```
 
+### `models.PowerbiDax`
+
+```typescript
+const value: models.PowerbiDax = {
+  powerbiDax: {},
+};
+```
+
 ### `models.TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery`
 
 ```typescript

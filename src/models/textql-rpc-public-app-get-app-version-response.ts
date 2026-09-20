@@ -13,6 +13,12 @@ import {
 } from "./textql-rpc-public-app-app-version.js";
 
 export type TextqlRpcPublicAppGetAppVersionResponse = {
+  /**
+   * Version history entry. Git-backed apps derive one per library commit (published_by/at
+   *
+   * @remarks
+   *  carry the commit author/time); legacy rows are pre-existing publish-era snapshots.
+   */
   version?: TextqlRpcPublicAppAppVersion | undefined;
 };
 

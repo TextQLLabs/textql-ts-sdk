@@ -15,6 +15,9 @@ export type TextqlRpcPublicConnectorClickHouseMetadata = {
   password?: string | undefined;
   database?: string | undefined;
   useSsl?: boolean | undefined;
+  /**
+   * "http" or "native"
+   */
   protocol?: string | undefined;
 };
 

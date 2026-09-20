@@ -27,13 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Ordering overlay for the sidebar Bookmarks section: one position list per  member covering favorites and thread bookmarks ('<kind>:<id>' keys).  Membership truth stays in library_favorite / chat bookmarks; this persists  only the drag-and-drop order.
+ * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges  the app's stream. Presence never touches Postgres and never exposes emails.
  *
  * @remarks
- * Ordering overlay for the sidebar Bookmarks section: one position list per
- *  member covering favorites and thread bookmarks ('<kind>:<id>' keys).
- *  Membership truth stays in library_favorite / chat bookmarks; this persists
- *  only the drag-and-drop order.
+ * Presence heartbeat: sets a short-TTL Valkey key for the member and nudges
+ *  the app's stream. Presence never touches Postgres and never exposes emails.
  */
 export function appsPresenceHeartbeat(
   client: TextqlCore,

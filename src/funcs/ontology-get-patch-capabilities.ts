@@ -27,14 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
- *
- * @remarks
- * PlanConfigMigration reports what the lazy config migration WOULD do to this
- *  org's objects, and writes nothing. Admin-only, internal: it exists so a
- *  release manager can warn the specific orgs a rollout will affect — notably
- *  the objects that will stop running because adoption binds a Runner who can
- *  no longer run them.
+ * GetPatchCapabilities
  */
 export function ontologyGetPatchCapabilities(
   client: TextqlCore,

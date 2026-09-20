@@ -8,7 +8,13 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * AppFile is one non-entry file of a multi-file app tree; code remains the entry index.html.
+ */
 export type TextqlRpcPublicAppAppFile = {
+  /**
+   * normalized relative path, forward slashes, no .. or leading /
+   */
   path?: string | undefined;
   content?: string | undefined;
 };

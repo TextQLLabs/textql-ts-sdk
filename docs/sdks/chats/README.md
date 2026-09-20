@@ -9,38 +9,38 @@
 * [attachAgent](#attachagent) - AttachAgentToChat
 * [attachApp](#attachapp) - AttachApp
 * [attachDashboard](#attachdashboard) - AttachDashboard
-* [attachDataset](#attachdataset) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
-* [bookmark](#bookmark) - BookmarkChat
+* [attachDataset](#attachdataset) - AttachDataset
+* [bookmark](#bookmark) - Bookmark management
 * [cancelStream](#cancelstream) - CancelStream
 * [checkPermissions](#checkpermissions) - CheckChatPermissions
 * [checkHealth](#checkhealth) - CheckHealth
 * [checkStreamlitHealth](#checkstreamlithealth) - CheckStreamlitHealth
 * [createChat](#createchat) - CreateChat
 * [delete](#delete) - DeleteChat
-* [dismissQuestions](#dismissquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+* [dismissQuestions](#dismissquestions) - DismissQuestions
 * [duplicateChat](#duplicatechat) - DuplicateChat
 * [getApiAnswer](#getapianswer) - GetAPIChatAnswer
-* [getArtifact](#getartifact) - GetArtifact
+* [getArtifact](#getartifact) - Full artifact data (lazy load when selected)
 * [getAutoAttachedFiles](#getautoattachedfiles) - GetAutoAttachedFiles
 * [get](#get) - GetChat
-* [getArtifactsSummary](#getartifactssummary) - GetChatArtifactsSummary
+* [getArtifactsSummary](#getartifactssummary) - Artifact summaries for drawer (lightweight, for listing)
 * [getChatExecutionTiming](#getchatexecutiontiming) - GetChatExecutionTiming
 * [getHistory](#gethistory) - GetChatHistory
 * [getAll](#getall) - GetChats
-* [getCompletionParameters](#getcompletionparameters) - List distinct chat creators the user can access
+* [getCompletionParameters](#getcompletionparameters) - GetCompletionParameters
 * [getCompletionParametersBatch](#getcompletionparametersbatch) - GetCompletionParametersBatch
 * [getLlmUsage](#getllmusage) - GetLlmUsage
-* [getMembersWithChats](#getmemberswithchats) - GetMembersWithChats
+* [getMembersWithChats](#getmemberswithchats) - List distinct chat creators the user can access
 * [getPlaybookChats](#getplaybookchats) - GetPlaybookChats
 * [pollEvents](#pollevents) - PollChatEvents
-* [queryOneShot](#queryoneshot) - QueryOneShot
-* [rateCell](#ratecell) - RateChatCell
+* [queryOneShot](#queryoneshot) - External API users
+* [rateCell](#ratecell) - RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 * [rejectContextPromptChange](#rejectcontextpromptchange) - RejectContextPromptChange
-* [rejectOntologyChange](#rejectontologychange) - Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
+* [rejectOntologyChange](#rejectontologychange) - RejectOntologyChange
 * [run](#run) - RunChat
 * [send](#send) - SendMessage
 * [submitContextPromptChange](#submitcontextpromptchange) - SubmitContextPromptChange
-* [submitQuestions](#submitquestions) - SubmitQuestions
+* [submitQuestions](#submitquestions) - Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
 * [unbookmark](#unbookmark) - UnbookmarkChat
 * [update](#update) - UpdateChat
 
@@ -439,7 +439,7 @@ run();
 
 ## attachDataset
 
-RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+AttachDataset
 
 ### Example Usage
 
@@ -518,7 +518,7 @@ run();
 
 ## bookmark
 
-BookmarkChat
+Bookmark management
 
 ### Example Usage
 
@@ -1055,9 +1055,7 @@ run();
 
 ## dismissQuestions
 
-Resolve a halted questions cell. Submit hands the answers to the agent and
- resumes it; Dismiss hands over only the answered count and does NOT resume
- (the user's next message becomes the dismissal reason).
+DismissQuestions
 
 ### Example Usage
 
@@ -1288,7 +1286,7 @@ run();
 
 ## getArtifact
 
-GetArtifact
+Full artifact data (lazy load when selected)
 
 ### Example Usage
 
@@ -1521,7 +1519,7 @@ run();
 
 ## getArtifactsSummary
 
-GetChatArtifactsSummary
+Artifact summaries for drawer (lightweight, for listing)
 
 ### Example Usage
 
@@ -1831,7 +1829,7 @@ run();
 
 ## getCompletionParameters
 
-List distinct chat creators the user can access
+GetCompletionParameters
 
 ### Example Usage
 
@@ -2064,7 +2062,7 @@ run();
 
 ## getMembersWithChats
 
-GetMembersWithChats
+List distinct chat creators the user can access
 
 ### Example Usage
 
@@ -2291,7 +2289,7 @@ run();
 
 ## queryOneShot
 
-QueryOneShot
+External API users
 
 ### Example Usage
 
@@ -2370,7 +2368,7 @@ run();
 
 ## rateCell
 
-RateChatCell
+RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
 
 ### Example Usage
 
@@ -2528,10 +2526,7 @@ run();
 
 ## rejectOntologyChange
 
-Resolve a halted ask_approval form cell. Submit runs the form's submission
- and continues the agent with the outcome; Reject discards it (passive, no
- run); Dismiss treats it as a change request (no run, next message says what
- to change). All three set the cell's outcome, like the other approve/deny cells.
+RejectOntologyChange
 
 ### Example Usage
 
@@ -2843,7 +2838,9 @@ run();
 
 ## submitQuestions
 
-SubmitQuestions
+Resolve a halted questions cell. Submit hands the answers to the agent and
+ resumes it; Dismiss hands over only the answered count and does NOT resume
+ (the user's next message becomes the dismissal reason).
 
 ### Example Usage
 

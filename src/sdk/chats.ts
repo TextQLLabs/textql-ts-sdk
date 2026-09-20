@@ -117,10 +117,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
-   *
-   * @remarks
-   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+   * AttachDataset
    */
   async attachDataset(
     request: operations.ChatServiceAttachDatasetRequest,
@@ -134,7 +131,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * BookmarkChat
+   * Bookmark management
+   *
+   * @remarks
+   * Bookmark management
    */
   async bookmark(
     request: operations.ChatServiceBookmarkChatRequest,
@@ -232,12 +232,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
-   *
-   * @remarks
-   * Resolve a halted questions cell. Submit hands the answers to the agent and
-   *  resumes it; Dismiss hands over only the answered count and does NOT resume
-   *  (the user's next message becomes the dismissal reason).
+   * DismissQuestions
    */
   async dismissQuestions(
     request: operations.ChatServiceDismissQuestionsRequest,
@@ -279,7 +274,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * GetArtifact
+   * Full artifact data (lazy load when selected)
+   *
+   * @remarks
+   * Full artifact data (lazy load when selected)
    */
   async getArtifact(
     request: operations.ChatServiceGetArtifactRequest,
@@ -321,7 +319,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * GetChatArtifactsSummary
+   * Artifact summaries for drawer (lightweight, for listing)
+   *
+   * @remarks
+   * Artifact summaries for drawer (lightweight, for listing)
    */
   async getArtifactsSummary(
     request: operations.ChatServiceGetChatArtifactsSummaryRequest,
@@ -377,10 +378,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * List distinct chat creators the user can access
-   *
-   * @remarks
-   * List distinct chat creators the user can access
+   * GetCompletionParameters
    */
   async getCompletionParameters(
     request: operations.ChatServiceGetCompletionParametersRequest,
@@ -422,7 +420,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * GetMembersWithChats
+   * List distinct chat creators the user can access
+   *
+   * @remarks
+   * List distinct chat creators the user can access
    */
   async getMembersWithChats(
     request: operations.ChatServiceGetMembersWithChatsRequest,
@@ -464,7 +465,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * QueryOneShot
+   * External API users
+   *
+   * @remarks
+   * External API users
    */
   async queryOneShot(
     request: operations.ChatServiceQueryOneShotRequest,
@@ -478,7 +482,10 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * RateChatCell
+   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
+   *
+   * @remarks
+   * RateChatCell appends a row to cell_rating for every click; thumbs-down also upserts a user_thumbs_down thread_warning.
    */
   async rateCell(
     request: operations.ChatServiceRateChatCellRequest,
@@ -506,13 +513,7 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * Resolve a halted ask_approval form cell. Submit runs the form's submission  and continues the agent with the outcome; Reject discards it (passive, no  run); Dismiss treats it as a change request (no run, next message says what  to change). All three set the cell's outcome, like the other approve/deny cells.
-   *
-   * @remarks
-   * Resolve a halted ask_approval form cell. Submit runs the form's submission
-   *  and continues the agent with the outcome; Reject discards it (passive, no
-   *  run); Dismiss treats it as a change request (no run, next message says what
-   *  to change). All three set the cell's outcome, like the other approve/deny cells.
+   * RejectOntologyChange
    */
   async rejectOntologyChange(
     request: operations.ChatServiceRejectOntologyChangeRequest,
@@ -568,7 +569,12 @@ export class Chats extends ClientSDK {
   }
 
   /**
-   * SubmitQuestions
+   * Resolve a halted questions cell. Submit hands the answers to the agent and  resumes it; Dismiss hands over only the answered count and does NOT resume  (the user's next message becomes the dismissal reason).
+   *
+   * @remarks
+   * Resolve a halted questions cell. Submit hands the answers to the agent and
+   *  resumes it; Dismiss hands over only the answered count and does NOT resume
+   *  (the user's next message becomes the dismissal reason).
    */
   async submitQuestions(
     request: operations.ChatServiceSubmitQuestionsRequest,

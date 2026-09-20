@@ -8,9 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * File-based artifacts (images, PDFs, CSVs, HTML, text files)
- */
 export type TextqlRpcPublicChatDashboardArtifactData = {
   dashboardId?: string | undefined;
 };

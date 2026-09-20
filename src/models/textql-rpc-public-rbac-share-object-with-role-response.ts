@@ -8,9 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * Which LLM models the caller may run.
- */
 export type TextqlRpcPublicRbacShareObjectWithRoleResponse = {
   success?: boolean | undefined;
 };

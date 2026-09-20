@@ -5,7 +5,7 @@
 ### Available Operations
 
 * [activateCustomTopic](#activatecustomtopic) - ActivateCustomTopic
-* [backfillCustomTopic](#backfillcustomtopic) - Custom topics
+* [backfillCustomTopic](#backfillcustomtopic) - BackfillCustomTopic
 * [backfillThreadWarnings](#backfillthreadwarnings) - BackfillThreadWarnings
 * [createCustomTopic](#createcustomtopic) - CreateCustomTopic
 * [deactivateCustomTopic](#deactivatecustomtopic) - DeactivateCustomTopic
@@ -30,7 +30,7 @@
 * [getObservabilityStats](#getobservabilitystats) - GetObservabilityStats
 * [getThreadWarnings](#getthreadwarnings) - GetThreadWarnings
 * [listCustomTopics](#listcustomtopics) - ListCustomTopics
-* [refineDraft](#refinedraft) - RefineTopicDraft
+* [refineDraft](#refinedraft) - Custom topics
 * [setTopicTagFeedback](#settopictagfeedback) - SetTopicTagFeedback
 * [updateCustomTopic](#updatecustomtopic) - UpdateCustomTopic
 
@@ -109,7 +109,7 @@ run();
 
 ## backfillCustomTopic
 
-Custom topics
+BackfillCustomTopic
 
 ### Example Usage
 
@@ -1970,7 +1970,7 @@ run();
 
 ## refineDraft
 
-RefineTopicDraft
+Custom topics
 
 ### Example Usage
 

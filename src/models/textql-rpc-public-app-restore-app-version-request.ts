@@ -7,6 +7,9 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicAppRestoreAppVersionRequest = {
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  /**
+   * Prefer this git commit SHA when set; else version_number selects a legacy db-backed row.
+   */
   commitId?: string | null | undefined;
 };
 

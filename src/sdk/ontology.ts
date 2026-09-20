@@ -278,13 +278,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
-   *
-   * @remarks
-   * Streams how many folders and files a subtree holds, so the UI can report the
-   *  size of the whole Ontology rather than only the directories it has lazily
-   *  listed. Counts rise monotonically across frames; the last frame sets
-   *  `final`. A cache hit emits a single `final` frame with `from_cache` set.
+   * FinalizeOntologyFileUpload
    */
   async finalizeFileUpload(
     request:
@@ -301,11 +295,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
-   *
-   * @remarks
-   * Deprecated: use SetOntologyOwners with the desired entry set. An empty
-   *  desired set removes every entry and opens the directory.
+   * GetCodeownerCoverage
    */
   async getCodeownerCoverage(
     request: operations.OntologyManagementServiceGetCodeownerCoverageRequest,
@@ -548,14 +538,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
-   *
-   * @remarks
-   * PlanConfigMigration reports what the lazy config migration WOULD do to this
-   *  org's objects, and writes nothing. Admin-only, internal: it exists so a
-   *  release manager can warn the specific orgs a rollout will affect — notably
-   *  the objects that will stop running because adoption binds a Runner who can
-   *  no longer run them.
+   * GetPatchCapabilities
    */
   async getPatchCapabilities(
     request: operations.OntologyManagementServiceGetPatchCapabilitiesRequest,
@@ -658,10 +641,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Deprecated: use SetOntologyOwners with the complete desired entry set.
-   *
-   * @remarks
-   * Deprecated: use SetOntologyOwners with the complete desired entry set.
+   * ListGoldenFiles
    */
   async listGoldenFiles(
     request: operations.OntologyManagementServiceListGoldenFilesRequest,
@@ -675,16 +655,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * PlanConfigAccessDerivation lists the config-managed objects of one type whose  access rows the OWNERS derivation would rewrite, and writes nothing. "Would  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose  level, expiry, duplicate or public flag would change. An object under a malformed  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those  rows on its next pass, so an operator cycles the flag on the orgs this names before  deploying it.
-   *
-   * @remarks
-   * PlanConfigAccessDerivation lists the config-managed objects of one type whose
-   *  access rows the OWNERS derivation would rewrite, and writes nothing. "Would
-   *  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose
-   *  level, expiry, duplicate or public flag would change. An object under a malformed
-   *  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those
-   *  rows on its next pass, so an operator cycles the flag on the orgs this names before
-   *  deploying it.
+   * ListOntologyEntries
    */
   async listEntries(
     request: operations.OntologyManagementServiceListOntologyEntriesRequest,
@@ -806,7 +777,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * ListSkills
+   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+   *
+   * @remarks
+   * Lists the skills under the ontology's flat skills/ root that the caller can
+   *  read (OWNERS-filtered). Returns display metadata only — never instruction
+   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+   *  omitted unless include_unlisted is set.
    */
   async listSkills(
     request: operations.OntologyManagementServiceListSkillsRequest,
@@ -820,13 +797,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
-   *
-   * @remarks
-   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
-   *  caller's org: if the Ontology repo's live HEAD differs from the last
-   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
-   *  equivalent of waiting for the periodic drift scan.
+   * PlanOntologyMerge
    */
   async planMerge(
     request: operations.OntologyManagementServicePlanOntologyMergeRequest,
@@ -873,13 +844,7 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
-   *
-   * @remarks
-   * Lists the skills under the ontology's flat skills/ root that the caller can
-   *  read (OWNERS-filtered). Returns display metadata only — never instruction
-   *  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
-   *  omitted unless include_unlisted is set.
+   * PushOntologyToRemote
    */
   async pushToRemote(
     request: operations.OntologyManagementServicePushOntologyToRemoteRequest,
@@ -1070,7 +1035,13 @@ export class Ontology extends ClientSDK {
   }
 
   /**
-   * TriggerConfigDriftReconcile
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+   *
+   * @remarks
+   * TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+   *  caller's org: if the Ontology repo's live HEAD differs from the last
+   *  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+   *  equivalent of waiting for the periodic drift scan.
    */
   async triggerConfigDriftReconcile(
     request:

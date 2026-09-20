@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Replaces the calling member's entire ordering; capped server-side.
+ * Read-only table/column list for the app's private DuckDB (app_db).
  *
  * @remarks
- * Replaces the calling member's entire ordering; capped server-side.
+ * Read-only table/column list for the app's private DuckDB (app_db).
  */
 export function appsGetDBSchema(
   client: TextqlCore,

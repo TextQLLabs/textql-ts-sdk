@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacShareObjectResponse
 
-WhoAmI messages
-
 ## Example Usage
 
 ```typescript

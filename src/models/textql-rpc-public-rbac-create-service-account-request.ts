@@ -5,17 +5,36 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacCreateServiceAccountRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of owner_member_id; if both are supplied they must identify the same member.
+   */
+  ownerMemberEmail?: string | null | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   ownerMemberId?: string | null | undefined;
+  /**
+   * Exact, case-sensitive role names in the caller's organization.
+   *
+   * @remarks
+   *  Merged with legacy role_ids and deduplicated; bounded by caller authority.
+   */
+  roleNames?: Array<string> | undefined;
+  /**
+   * Legacy role IDs. Prefer role_names.
+   */
   roleIds?: Array<string> | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacCreateServiceAccountRequest$Outbound = {
+  ownerMemberEmail?: string | null | undefined;
   name?: string | undefined;
   description?: string | null | undefined;
   ownerMemberId?: string | null | undefined;
+  roleNames?: Array<string> | undefined;
   roleIds?: Array<string> | undefined;
 };
 
@@ -25,9 +44,11 @@ export const TextqlRpcPublicRbacCreateServiceAccountRequest$outboundSchema:
     TextqlRpcPublicRbacCreateServiceAccountRequest$Outbound,
     TextqlRpcPublicRbacCreateServiceAccountRequest
   > = z.object({
+    ownerMemberEmail: z.optional(z.nullable(z.string())),
     name: z.optional(z.string()),
     description: z.optional(z.nullable(z.string())),
     ownerMemberId: z.optional(z.nullable(z.string())),
+    roleNames: z.optional(z.array(z.string())),
     roleIds: z.optional(z.array(z.string())),
   });
 

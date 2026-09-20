@@ -6,6 +6,9 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacUpdateObjectAccessRequest = {
   accessId?: string | undefined;
+  /**
+   * owner, editor, viewer
+   */
   accessType?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

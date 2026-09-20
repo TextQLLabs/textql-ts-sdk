@@ -12,12 +12,14 @@ import {
 export type TextqlRpcPublicPatchesUpdateApprovalRuleRequest = {
   id?: string | undefined;
   rule?: TextqlRpcPublicPatchesApprovalRuleInput | undefined;
+  expectedVersion?: number | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicPatchesUpdateApprovalRuleRequest$Outbound = {
   id?: string | undefined;
   rule?: TextqlRpcPublicPatchesApprovalRuleInput$Outbound | undefined;
+  expectedVersion?: number | null | undefined;
 };
 
 /** @internal */
@@ -28,6 +30,7 @@ export const TextqlRpcPublicPatchesUpdateApprovalRuleRequest$outboundSchema:
   > = z.object({
     id: z.optional(z.string()),
     rule: z.optional(TextqlRpcPublicPatchesApprovalRuleInput$outboundSchema),
+    expectedVersion: z.optional(z.nullable(z.int())),
   });
 
 export function textqlRpcPublicPatchesUpdateApprovalRuleRequestToJSON(

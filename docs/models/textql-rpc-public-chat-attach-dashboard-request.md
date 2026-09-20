@@ -13,7 +13,7 @@ let value: TextqlRpcPublicChatAttachDashboardRequest = {
 
 ## Fields
 
-| Field               | Type                | Required            | Description         |
-| ------------------- | ------------------- | ------------------- | ------------------- |
-| `chatId`            | *string*            | :heavy_check_mark:  | N/A                 |
-| `dashboardId`       | *string*            | :heavy_check_mark:  | uses latest version |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `chatId`           | *string*           | :heavy_check_mark: | N/A                |
+| `dashboardId`      | *string*           | :heavy_check_mark: | N/A                |

@@ -9,6 +9,9 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicConnectorTableauConnectorContext = {
+  /**
+   * dataset IDs for selected Tableau collections
+   */
   collectionIds?: Array<string> | undefined;
 };
 

@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * WhoAmI
+ * Describe what a key is allowed to do.
+ *
+ * @remarks
+ * Describe what a key is allowed to do.
  */
 export function rbacWhoAmI(
   client: TextqlCore,

@@ -15,6 +15,11 @@ import {
   TextqlRpcPublicSandboxQueryLibraryTQLTemplate$outboundSchema,
 } from "./textql-rpc-public-sandbox-query-library-tql-template.js";
 import {
+  TextqlRpcPublicSandboxQueryPowerBIDaxTemplate,
+  TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$Outbound,
+  TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$outboundSchema,
+} from "./textql-rpc-public-sandbox-query-power-bi-dax-template.js";
+import {
   TextqlRpcPublicSandboxQuerySandboxQueryParam,
   TextqlRpcPublicSandboxQuerySandboxQueryParam$Outbound,
   TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema,
@@ -25,12 +30,24 @@ import {
   TextqlRpcPublicSandboxQuerySqlQueryTemplate$outboundSchema,
 } from "./textql-rpc-public-sandbox-query-sql-query-template.js";
 
-export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3 =
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4 =
   | number
   | string;
 
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery = {
   sqlQuery: TextqlRpcPublicSandboxQuerySqlQueryTemplate;
+  sourceName?: string | undefined;
+  connectorId?: number | undefined;
+  parameters?: Array<TextqlRpcPublicSandboxQuerySandboxQueryParam> | undefined;
+  maxRows?: number | string | undefined;
+};
+
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3 =
+  | number
+  | string;
+
+export type PowerbiDax = {
+  powerbiDax: TextqlRpcPublicSandboxQueryPowerBIDaxTemplate;
   sourceName?: string | undefined;
   connectorId?: number | undefined;
   parameters?: Array<TextqlRpcPublicSandboxQuerySandboxQueryParam> | undefined;
@@ -64,27 +81,28 @@ export type AppDb = {
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest =
   | AppDb
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql
+  | PowerbiDax
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery;
 
 /** @internal */
-export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound =
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$Outbound =
   | number
   | string;
 
 /** @internal */
-export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema:
+export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$outboundSchema:
   z.ZodMiniType<
-    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound,
-    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$Outbound,
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4
   > = smartUnion([z.int(), z.string()]);
 
-export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3ToJSON(
-  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3:
-    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3,
+export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4ToJSON(
+  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4:
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4,
 ): string {
   return JSON.stringify(
-    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema
-      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3),
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$outboundSchema
+      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4),
   );
 }
 
@@ -123,6 +141,57 @@ export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQueryToJ
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$outboundSchema
       .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery),
   );
+}
+
+/** @internal */
+export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound =
+  | number
+  | string;
+
+/** @internal */
+export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema:
+  z.ZodMiniType<
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound,
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3
+  > = smartUnion([z.int(), z.string()]);
+
+export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3ToJSON(
+  textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3:
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3,
+): string {
+  return JSON.stringify(
+    TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outboundSchema
+      .parse(textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3),
+  );
+}
+
+/** @internal */
+export type PowerbiDax$Outbound = {
+  powerbiDax: TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$Outbound;
+  sourceName?: string | undefined;
+  connectorId?: number | undefined;
+  parameters?:
+    | Array<TextqlRpcPublicSandboxQuerySandboxQueryParam$Outbound>
+    | undefined;
+  maxRows?: number | string | undefined;
+};
+
+/** @internal */
+export const PowerbiDax$outboundSchema: z.ZodMiniType<
+  PowerbiDax$Outbound,
+  PowerbiDax
+> = z.object({
+  powerbiDax: TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$outboundSchema,
+  sourceName: z.optional(z.string()),
+  connectorId: z.optional(z.int()),
+  parameters: z.optional(
+    z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+  ),
+  maxRows: z.optional(smartUnion([z.int(), z.string()])),
+});
+
+export function powerbiDaxToJSON(powerbiDax: PowerbiDax): string {
+  return JSON.stringify(PowerbiDax$outboundSchema.parse(powerbiDax));
 }
 
 /** @internal */
@@ -237,6 +306,7 @@ export function appDbToJSON(appDb: AppDb): string {
 export type TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$Outbound =
   | AppDb$Outbound
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$Outbound
+  | PowerbiDax$Outbound
   | TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$Outbound;
 
 /** @internal */
@@ -249,6 +319,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$outboundSchem
     z.lazy(() =>
       TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$outboundSchema
     ),
+    z.lazy(() => PowerbiDax$outboundSchema),
     z.lazy(() =>
       TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$outboundSchema
     ),

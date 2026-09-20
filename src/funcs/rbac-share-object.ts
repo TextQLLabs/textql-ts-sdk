@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Get current member roles and permissions
+ * Object sharing and access control
  *
  * @remarks
- * Get current member roles and permissions
+ * Object sharing and access control
  */
 export function rbacShareObject(
   client: TextqlCore,

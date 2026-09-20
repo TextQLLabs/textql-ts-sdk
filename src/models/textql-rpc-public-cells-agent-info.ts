@@ -12,6 +12,9 @@ export type TextqlRpcPublicCellsAgentInfo = {
   id?: string | undefined;
   name?: string | undefined;
   avatarUrl?: string | undefined;
+  /**
+   * "human" or "bot"
+   */
   type?: string | undefined;
   email?: string | null | undefined;
 };

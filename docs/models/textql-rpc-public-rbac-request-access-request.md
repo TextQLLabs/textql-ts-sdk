@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacRequestAccessRequest
 
+Access request management messages
+
 ## Example Usage
 
 ```typescript
@@ -14,6 +16,6 @@ let value: TextqlRpcPublicRbacRequestAccessRequest = {};
 | --------------------- | --------------------- | --------------------- | --------------------- |
 | `objectType`          | *string*              | :heavy_minus_sign:    | N/A                   |
 | `objectId`            | *string*              | :heavy_minus_sign:    | N/A                   |
-| `requestedAccessType` | *string*              | :heavy_minus_sign:    | N/A                   |
+| `requestedAccessType` | *string*              | :heavy_minus_sign:    | owner, editor, viewer |
 | `justification`       | *string*              | :heavy_minus_sign:    | N/A                   |
 | `requestMessage`      | *string*              | :heavy_minus_sign:    | N/A                   |

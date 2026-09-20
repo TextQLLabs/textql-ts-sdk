@@ -14,6 +14,9 @@ export type TextqlRpcPublicChatDismissQuestionsRequest = {
    * UUID
    */
   cellId: string;
+  /**
+   * partial answers
+   */
   answers?: Array<TextqlRpcPublicCellsQuestionAnswer> | undefined;
 };
 

@@ -27,11 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+ * API Key management
  *
  * @remarks
- * SCIM group-mapping migration tooling: one-time role<->group conversion,
- *  internal only.
+ * API Key management
  */
 export function rbacCreateApiKey(
   client: TextqlCore,

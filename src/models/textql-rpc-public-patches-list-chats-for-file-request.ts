@@ -70,7 +70,7 @@ export type TextqlRpcPublicPatchesListChatsForFileRequest = {
    */
   observationPeriod?: string | undefined;
   /**
-   * default 7d
+   * default and cap applied server-side
    */
   limit?: number | null | undefined;
 };

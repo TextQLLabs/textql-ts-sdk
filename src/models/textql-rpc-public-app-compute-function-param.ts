@@ -10,6 +10,9 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicAppComputeFunctionParam = {
   name?: string | undefined;
+  /**
+   * string | number | boolean | object | array
+   */
   type?: string | undefined;
   description?: string | null | undefined;
 };

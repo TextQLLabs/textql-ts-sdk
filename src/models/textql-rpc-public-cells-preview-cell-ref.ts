@@ -8,6 +8,9 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * Preview cell reference for report history
+ */
 export type TextqlRpcPublicCellsPreviewCellRef = {
   target?: string | undefined;
   previewType?: string | undefined;

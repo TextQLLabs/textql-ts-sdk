@@ -5,11 +5,22 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacGetRolePermissionsRequest = {
+  /**
+   * Exact, case-sensitive role name, unique within the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id.
+   */
+  roleName?: string | undefined;
+  /**
+   * Existing role ID. Prefer role_name; if both are supplied they must match.
+   */
   roleId?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacGetRolePermissionsRequest$Outbound = {
+  roleName?: string | undefined;
   roleId?: string | undefined;
 };
 
@@ -19,6 +30,7 @@ export const TextqlRpcPublicRbacGetRolePermissionsRequest$outboundSchema:
     TextqlRpcPublicRbacGetRolePermissionsRequest$Outbound,
     TextqlRpcPublicRbacGetRolePermissionsRequest
   > = z.object({
+    roleName: z.optional(z.string()),
     roleId: z.optional(z.string()),
   });
 

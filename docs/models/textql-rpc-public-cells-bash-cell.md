@@ -1,7 +1,5 @@
 # TextqlRpcPublicCellsBashCell
 
-Preview cell reference for report history
-
 ## Example Usage
 
 ```typescript

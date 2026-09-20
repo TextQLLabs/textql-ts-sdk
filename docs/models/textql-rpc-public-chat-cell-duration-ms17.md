@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatCellDurationMs17
 
+cells_v5.duration_ms — wall-clock this cell took
+
 
 ## Supported Types
 

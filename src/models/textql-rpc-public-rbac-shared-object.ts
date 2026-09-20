@@ -13,6 +13,10 @@ export type TextqlRpcPublicRbacSharedObject = {
   objectId?: string | undefined;
   accessType?: string | undefined;
   grantedVia?: string | undefined;
+  /**
+   * Current name of the role receiving access.
+   */
+  roleName?: string | null | undefined;
   roleId?: string | null | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -120,6 +124,7 @@ export const TextqlRpcPublicRbacSharedObject$inboundSchema: z.ZodMiniType<
   objectId: types.optional(types.string()),
   accessType: types.optional(types.string()),
   grantedVia: types.optional(types.string()),
+  roleName: z.optional(z.nullable(types.string())),
   roleId: z.optional(z.nullable(types.string())),
   expiresAt: types.optional(types.date()),
   groupId: z.optional(z.nullable(types.string())),

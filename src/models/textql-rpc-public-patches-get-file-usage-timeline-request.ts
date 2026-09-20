@@ -6,7 +6,7 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicPatchesGetFileUsageTimelineRequest = {
   /**
-   * default 7d
+   * Restrict to files under this prefix; the whole ontology when unset.
    */
   pathPrefix?: string | null | undefined;
   /**

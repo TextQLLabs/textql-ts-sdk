@@ -13,28 +13,41 @@ export type TextqlRpcPublicConnectorSnowflakeMetadata = {
   password?: string | undefined;
   privateKey?: string | undefined;
   privateKeyPassphrase?: string | undefined;
-  /**
-   * default database to query
-   */
   role?: string | undefined;
   /**
-   * authSource (e.g. "admin"); defaults to database when empty
+   * Legacy single schema; used when schemas is empty.
    */
   schema?: string | undefined;
   locator?: string | undefined;
-  /**
-   * mongodb+srv connection (Atlas) — host is the cluster DNS name
-   */
   database?: string | undefined;
   warehouse?: string | undefined;
+  /**
+   * OAuth fields (used when auth_type = OAUTH)
+   */
   oauthAccessToken?: string | undefined;
   oauthRefreshToken?: string | undefined;
   oauthClientId?: string | undefined;
   oauthClientSecret?: string | undefined;
+  /**
+   * SSO per-member auth (used when auth_strategy = PER_MEMBER_OAUTH) pass IdP token directly to Snowflake External OAuth
+   */
   enableSsoAuth?: boolean | undefined;
+  /**
+   * IdP token exchange URL (RFC 8693)
+   */
   tokenExchangeEndpoint?: string | undefined;
+  /**
+   * target audience for exchanged token
+   */
   tokenExchangeAudience?: string | undefined;
+  /**
+   * scope for exchanged token
+   */
   tokenExchangeScope?: string | undefined;
+  /**
+   * Allowed discovery schemas; first is the query default.
+   */
+  schemas?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -57,6 +70,7 @@ export const TextqlRpcPublicConnectorSnowflakeMetadata$inboundSchema:
     tokenExchangeEndpoint: types.optional(types.string()),
     tokenExchangeAudience: types.optional(types.string()),
     tokenExchangeScope: types.optional(types.string()),
+    schemas: types.optional(z.array(types.string())),
   });
 /** @internal */
 export type TextqlRpcPublicConnectorSnowflakeMetadata$Outbound = {
@@ -77,6 +91,7 @@ export type TextqlRpcPublicConnectorSnowflakeMetadata$Outbound = {
   tokenExchangeEndpoint?: string | undefined;
   tokenExchangeAudience?: string | undefined;
   tokenExchangeScope?: string | undefined;
+  schemas?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -102,6 +117,7 @@ export const TextqlRpcPublicConnectorSnowflakeMetadata$outboundSchema:
     tokenExchangeEndpoint: z.optional(z.string()),
     tokenExchangeAudience: z.optional(z.string()),
     tokenExchangeScope: z.optional(z.string()),
+    schemas: z.optional(z.array(z.string())),
   });
 
 export function textqlRpcPublicConnectorSnowflakeMetadataToJSON(

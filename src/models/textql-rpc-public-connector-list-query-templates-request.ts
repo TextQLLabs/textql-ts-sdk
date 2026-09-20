@@ -6,16 +6,10 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicConnectorListQueryTemplatesRequest = {
   connectorId?: number | undefined;
-  /**
-   * Display name (e.g., "Explore Data")
-   */
   limit?: number | undefined;
-  /**
-   * Query text to send (plain text, no formatting)
-   */
   offset?: number | undefined;
   /**
-   * True if requires multiple connectors
+   * Optional lookback window in days; 0 or unset means all-time.
    */
   days?: number | undefined;
 };

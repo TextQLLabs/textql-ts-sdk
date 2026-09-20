@@ -13,11 +13,20 @@ import {
 } from "./textql-rpc-public-chat-artifact-type.js";
 
 /**
- * Bookmark management
+ * Lightweight summary for drawer item list (minimal data transfer)
  */
 export type TextqlRpcPublicChatArtifactSummary = {
+  /**
+   * cell_id or unique identifier
+   */
   id?: string | undefined;
+  /**
+   * Display name
+   */
   name?: string | undefined;
+  /**
+   * Artifact types for drawer items
+   */
   type?: TextqlRpcPublicChatArtifactType | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -113,6 +122,9 @@ export type TextqlRpcPublicChatArtifactSummary = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   createdAt?: Date | undefined;
+  /**
+   * Small preview if available
+   */
   thumbnailUrl?: string | null | undefined;
 };
 

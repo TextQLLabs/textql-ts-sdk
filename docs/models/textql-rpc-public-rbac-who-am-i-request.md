@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacWhoAmIRequest
 
+WhoAmI messages
+
 ## Example Usage
 
 ```typescript

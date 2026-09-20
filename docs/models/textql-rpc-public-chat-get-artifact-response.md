@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### `models.Dashboard`
+### `models.TextqlRpcPublicChatGetArtifactResponseDashboard`
 
 ```typescript
-const value: models.Dashboard = {
+const value: models.TextqlRpcPublicChatGetArtifactResponseDashboard = {
   dashboard: {},
 };
 ```

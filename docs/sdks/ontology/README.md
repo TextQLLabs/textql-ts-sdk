@@ -17,8 +17,8 @@
 * [deleteFile](#deletefile) - DeleteOntologyFile
 * [denyPatch](#denypatch) - DenyPatch
 * [exchangeGithubCode](#exchangegithubcode) - ExchangeOntologyGithubCode
-* [finalizeFileUpload](#finalizefileupload) - Streams how many folders and files a subtree holds, so the UI can report the  size of the whole Ontology rather than only the directories it has lazily  listed. Counts rise monotonically across frames; the last frame sets  `final`. A cache hit emits a single `final` frame with `from_cache` set.
-* [getCodeownerCoverage](#getcodeownercoverage) - Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
+* [finalizeFileUpload](#finalizefileupload) - FinalizeOntologyFileUpload
+* [getCodeownerCoverage](#getcodeownercoverage) - GetCodeownerCoverage
 * [getConfigExportCapabilities](#getconfigexportcapabilities) - GetConfigExportCapabilities
 * [getEffectiveOwners](#geteffectiveowners) - GetEffectiveOntologyOwners
 * [getFileUsage](#getfileusage) - GetFileUsage
@@ -34,15 +34,15 @@
 * [getUsageSummary](#getusagesummary) - GetOntologyUsageSummary
 * [getPatch](#getpatch) - GetPatch
 * [getPatchByNumber](#getpatchbynumber) - GetPatchByNumber
-* [getPatchCapabilities](#getpatchcapabilities) - PlanConfigMigration reports what the lazy config migration WOULD do to this  org's objects, and writes nothing. Admin-only, internal: it exists so a  release manager can warn the specific orgs a rollout will affect — notably  the objects that will stop running because adoption binds a Runner who can  no longer run them.
+* [getPatchCapabilities](#getpatchcapabilities) - GetPatchCapabilities
 * [getRawPatch](#getrawpatch) - GetRawPatch
 * [getSkill](#getskill) - GetSkill
 * [getUsageDetailsForFile](#getusagedetailsforfile) - GetUsageDetailsForFile
 * [listApprovalRules](#listapprovalrules) - ListApprovalRules
 * [listChatsForFile](#listchatsforfile) - ListChatsForFile
 * [listContextPatchAutoApproveRules](#listcontextpatchautoapproverules) - ListContextPatchAutoApproveRules
-* [listGoldenFiles](#listgoldenfiles) - Deprecated: use SetOntologyOwners with the complete desired entry set.
-* [listEntries](#listentries) - PlanConfigAccessDerivation lists the config-managed objects of one type whose  access rows the OWNERS derivation would rewrite, and writes nothing. "Would  rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose  level, expiry, duplicate or public flag would change. An object under a malformed  OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those  rows on its next pass, so an operator cycles the flag on the orgs this names before  deploying it.
+* [listGoldenFiles](#listgoldenfiles) - ListGoldenFiles
+* [listEntries](#listentries) - ListOntologyEntries
 * [listHistory](#listhistory) - ListOntologyHistory
 * [listImports](#listimports) - ListOntologyImports
 * [listSubmodules](#listsubmodules) - ListOntologySubmodules
@@ -50,11 +50,11 @@
 * [listPatchObjects](#listpatchobjects) - ListPatchObjects parses the config objects present at a patch's git ref and  returns each object's Library path, resolved display name, and granular type  (e.g. "playbook", "dashboard/streamlit", "dashboard/dash"). Parse-only: it  reuses the snapshot-at-ref + parse steps the preview path performs before  spawning — no sandbox spawn, no run_as authorization, no persistence. The  frontend uses the dashboard subtype to decide previewability (streamlit/dash).
 * [listPatchReviewers](#listpatchreviewers) - ListPatchReviewers
 * [listPatches](#listpatches) - ListPatches
-* [listSkills](#listskills) - ListSkills
-* [planMerge](#planmerge) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
+* [listSkills](#listskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [planMerge](#planmerge) - PlanOntologyMerge
 * [previewPullFromRemote](#previewpullfromremote) - PreviewOntologyPullFromRemote
 * [pullFromRemote](#pullfromremote) - PullOntologyFromRemote
-* [pushToRemote](#pushtoremote) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
+* [pushToRemote](#pushtoremote) - PushOntologyToRemote
 * [recover](#recover) - RecoverOntology
 * [removeRemote](#removeremote) - RemoveOntologyRemote
 * [removeSubmodule](#removesubmodule) - RemoveOntologySubmodule
@@ -67,7 +67,7 @@
 * [saveObjectAsConfig](#saveobjectasconfig) - SaveObjectAsConfig
 * [setFileGolden](#setfilegolden) - SetOntologyFileGolden
 * [setOwners](#setowners) - SetOntologyOwners
-* [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile
+* [triggerConfigDriftReconcile](#triggerconfigdriftreconcile) - TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the  caller's org: if the Ontology repo's live HEAD differs from the last  reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand  equivalent of waiting for the periodic drift scan.
 * [updateApprovalRule](#updateapprovalrule) - UpdateApprovalRule
 * [updateContextPatchAutoApproveRule](#updatecontextpatchautoapproverule) - UpdateContextPatchAutoApproveRule
 * [updateSyncConfig](#updatesyncconfig) - UpdateOntologySyncConfig
@@ -1026,10 +1026,7 @@ run();
 
 ## finalizeFileUpload
 
-Streams how many folders and files a subtree holds, so the UI can report the
- size of the whole Ontology rather than only the directories it has lazily
- listed. Counts rise monotonically across frames; the last frame sets
- `final`. A cache hit emits a single `final` frame with `from_cache` set.
+FinalizeOntologyFileUpload
 
 ### Example Usage
 
@@ -1102,8 +1099,7 @@ run();
 
 ## getCodeownerCoverage
 
-Deprecated: use SetOntologyOwners with the desired entry set. An empty
- desired set removes every entry and opens the directory.
+GetCodeownerCoverage
 
 ### Example Usage
 
@@ -2271,11 +2267,7 @@ run();
 
 ## getPatchCapabilities
 
-PlanConfigMigration reports what the lazy config migration WOULD do to this
- org's objects, and writes nothing. Admin-only, internal: it exists so a
- release manager can warn the specific orgs a rollout will affect — notably
- the objects that will stop running because adoption binds a Runner who can
- no longer run them.
+GetPatchCapabilities
 
 ### Example Usage
 
@@ -2786,7 +2778,7 @@ run();
 
 ## listGoldenFiles
 
-Deprecated: use SetOntologyOwners with the complete desired entry set.
+ListGoldenFiles
 
 ### Example Usage
 
@@ -2859,13 +2851,7 @@ run();
 
 ## listEntries
 
-PlanConfigAccessDerivation lists the config-managed objects of one type whose
- access rows the OWNERS derivation would rewrite, and writes nothing. "Would
- rewrite" is the engine's own diff: a row inserted or deleted, or a kept row whose
- level, expiry, duplicate or public flag would change. An object under a malformed
- OWNERS is a failure, not a drift. Admin-only, internal: the derivation rewrites those
- rows on its next pass, so an operator cycles the flag on the orgs this names before
- deploying it.
+ListOntologyEntries
 
 ### Example Usage
 
@@ -3454,7 +3440,10 @@ run();
 
 ## listSkills
 
-ListSkills
+Lists the skills under the ontology's flat skills/ root that the caller can
+ read (OWNERS-filtered). Returns display metadata only — never instruction
+ bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
+ omitted unless include_unlisted is set.
 
 ### Example Usage
 
@@ -3527,10 +3516,7 @@ run();
 
 ## planMerge
 
-TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
- caller's org: if the Ontology repo's live HEAD differs from the last
- reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
- equivalent of waiting for the periodic drift scan.
+PlanOntologyMerge
 
 ### Example Usage
 
@@ -3749,10 +3735,7 @@ run();
 
 ## pushToRemote
 
-Lists the skills under the ontology's flat skills/ root that the caller can
- read (OWNERS-filtered). Returns display metadata only — never instruction
- bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are
- omitted unless include_unlisted is set.
+PushOntologyToRemote
 
 ### Example Usage
 
@@ -4701,7 +4684,10 @@ run();
 
 ## triggerConfigDriftReconcile
 
-TriggerConfigDriftReconcile
+TriggerConfigDriftReconcile forces an immediate config-sync catch-up for the
+ caller's org: if the Ontology repo's live HEAD differs from the last
+ reconciled commit, it enqueues a reconcile (otherwise no-op). The on-demand
+ equivalent of waiting for the periodic drift scan.
 
 ### Example Usage
 

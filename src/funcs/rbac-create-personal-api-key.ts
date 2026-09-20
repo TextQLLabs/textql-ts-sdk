@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * CreatePersonalApiKey
+ * Create an API key owned by the calling member. Requires no permission.
+ *
+ * @remarks
+ * Create an API key owned by the calling member. Requires no permission.
  */
 export function rbacCreatePersonalApiKey(
   client: TextqlCore,

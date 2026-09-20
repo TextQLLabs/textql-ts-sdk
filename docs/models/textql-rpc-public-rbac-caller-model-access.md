@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacCallerModelAccess
 
+Which LLM models the caller may run.
+
 ## Example Usage
 
 ```typescript

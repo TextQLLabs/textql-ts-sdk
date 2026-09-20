@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacListPermissionsRequest
 
+Permission management requests/responses
+
 ## Example Usage
 
 ```typescript

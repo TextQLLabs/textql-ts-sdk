@@ -202,6 +202,7 @@ export type TextqlRpcPublicPatchesApprovalRule = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   updatedAt?: Date | undefined;
+  version?: number | undefined;
 };
 
 /** @internal */
@@ -216,6 +217,7 @@ export const TextqlRpcPublicPatchesApprovalRule$inboundSchema: z.ZodMiniType<
   enabled: types.optional(types.boolean()),
   createdAt: types.optional(types.date()),
   updatedAt: types.optional(types.date()),
+  version: types.optional(types.number()),
 });
 
 export function textqlRpcPublicPatchesApprovalRuleFromJSON(

@@ -28,16 +28,19 @@ import {
   TextqlRpcPublicRbacSharedObject$inboundSchema,
 } from "./textql-rpc-public-rbac-shared-object.js";
 
-/**
- * Get current member roles and permissions messages
- */
 export type TextqlRpcPublicRbacWhoAmIResponse = {
   memberId?: string | undefined;
   orgId?: string | undefined;
   email?: string | null | undefined;
+  /**
+   * The credential that authenticated the request.
+   */
   credential?: TextqlRpcPublicRbacCallerCredential | undefined;
   roles?: Array<TextqlRpcPublicRbacRole> | undefined;
   permissions?: Array<TextqlRpcPublicRbacPermission> | undefined;
+  /**
+   * Which LLM models the caller may run.
+   */
   modelAccess?: TextqlRpcPublicRbacCallerModelAccess | undefined;
   sharedAccess?: Array<TextqlRpcPublicRbacSharedObject> | undefined;
   sharedAccessTruncated?: boolean | undefined;

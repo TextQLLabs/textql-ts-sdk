@@ -13,6 +13,9 @@ import {
   TextqlRpcPublicParadigmParadigm$outboundSchema,
 } from "./textql-rpc-public-paradigm-paradigm.js";
 
+/**
+ * Simplified query request for external API users
+ */
 export type TextqlRpcPublicChatQueryOneShotRequest = {
   question: string;
   /**

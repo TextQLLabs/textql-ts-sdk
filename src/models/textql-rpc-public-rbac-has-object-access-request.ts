@@ -5,17 +5,33 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacHasObjectAccessRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of member_id; if both are supplied they must identify the same member.
+   */
+  memberEmail?: string | null | undefined;
+  /**
+   * Exact, case-sensitive role name in the caller's organization.
+   *
+   * @remarks
+   *  To target a role, supply role_name or role_id; if both are supplied they must match.
+   */
+  roleName?: string | null | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | null | undefined;
   /**
-   * owner, editor, viewer
+   * Legacy role ID. Prefer role_name.
    */
   roleId?: string | null | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacHasObjectAccessRequest$Outbound = {
+  memberEmail?: string | null | undefined;
+  roleName?: string | null | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | null | undefined;
@@ -28,6 +44,8 @@ export const TextqlRpcPublicRbacHasObjectAccessRequest$outboundSchema:
     TextqlRpcPublicRbacHasObjectAccessRequest$Outbound,
     TextqlRpcPublicRbacHasObjectAccessRequest
   > = z.object({
+    memberEmail: z.optional(z.nullable(z.string())),
+    roleName: z.optional(z.nullable(z.string())),
     objectType: z.optional(z.string()),
     objectId: z.optional(z.string()),
     memberId: z.optional(z.nullable(z.string())),

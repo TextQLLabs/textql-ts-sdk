@@ -12,8 +12,14 @@ import {
   TextqlRpcPublicRbacApiKey$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key.js";
 
+/**
+ * CreateApiKeyResponse minus its deprecated api_key_hash alias.
+ */
 export type TextqlRpcPublicRbacCreateApiKeyResult = {
   apiKey?: TextqlRpcPublicRbacApiKey | undefined;
+  /**
+   * Only ever returned here; the server stores a hash and cannot reissue it.
+   */
   apiKeySecret?: string | undefined;
 };
 

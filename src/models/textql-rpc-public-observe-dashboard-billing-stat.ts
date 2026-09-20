@@ -10,9 +10,6 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicObserveDashboardBillingStat = {
   dashboardId?: string | undefined;
-  /**
-   * proportionally distributed from member's feed ACU by post count
-   */
   dashboardName?: string | undefined;
   ownerId?: string | undefined;
   ownerName?: string | undefined;

@@ -7,7 +7,13 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicObserveSetTopicTagFeedbackRequest = {
   topicId?: string | undefined;
   chatId?: string | undefined;
+  /**
+   * false restores verdict='tagged'
+   */
   excluded?: boolean | undefined;
+  /**
+   * optional; fed to the judge as a negative example
+   */
   reason?: string | undefined;
 };
 

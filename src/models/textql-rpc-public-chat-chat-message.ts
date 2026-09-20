@@ -9,6 +9,9 @@ import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicChatChatMessage = {
+  /**
+   * "user" or "assistant"
+   */
   role?: string | undefined;
   content?: string | undefined;
   /**

@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * BookmarkChat
+ * Bookmark management
+ *
+ * @remarks
+ * Bookmark management
  */
 export function chatsBookmark(
   client: TextqlCore,

@@ -5,17 +5,44 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacCreatePersonalApiKeyRequest = {
+  /**
+   * Exact, case-sensitive role names in the caller's organization.
+   *
+   * @remarks
+   *  Merged with legacy assumed_roles IDs and deduplicated. The existing
+   *  member-role and calling API-key scope restrictions apply to both forms.
+   */
+  assumedRoleNames?: Array<string> | undefined;
   name?: string | null | undefined;
   expirySeconds?: number | null | undefined;
+  /**
+   * Bounded by the roles the caller holds.
+   *
+   * @remarks
+   *  Legacy role IDs. Prefer assumed_role_names.
+   */
   assumedRoles?: Array<string> | undefined;
+  /**
+   * Required when both role lists are empty, so omission cannot mint a wide key.
+   */
   inheritAllRoles?: boolean | null | undefined;
   clientId?: string | null | undefined;
+  /**
+   * Also reach the owner's own items; otherwise the key sees only what the
+   *
+   * @remarks
+   *  assumed roles can see.
+   */
   fullMemberAccess?: boolean | undefined;
+  /**
+   * Drop @textql.com superadmin elevation. No-op for non-superadmins.
+   */
   suppressSuperadmin?: boolean | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacCreatePersonalApiKeyRequest$Outbound = {
+  assumedRoleNames?: Array<string> | undefined;
   name?: string | null | undefined;
   expirySeconds?: number | null | undefined;
   assumedRoles?: Array<string> | undefined;
@@ -31,6 +58,7 @@ export const TextqlRpcPublicRbacCreatePersonalApiKeyRequest$outboundSchema:
     TextqlRpcPublicRbacCreatePersonalApiKeyRequest$Outbound,
     TextqlRpcPublicRbacCreatePersonalApiKeyRequest
   > = z.object({
+    assumedRoleNames: z.optional(z.array(z.string())),
     name: z.optional(z.nullable(z.string())),
     expirySeconds: z.optional(z.nullable(z.int())),
     assumedRoles: z.optional(z.array(z.string())),

@@ -8,6 +8,10 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
+  TextqlRpcPublicAuditLogAuditLogActionOption,
+  TextqlRpcPublicAuditLogAuditLogActionOption$inboundSchema,
+} from "./textql-rpc-public-audit-log-audit-log-action-option.js";
+import {
   TextqlRpcPublicAuditLogAuditLogEntry,
   TextqlRpcPublicAuditLogAuditLogEntry$inboundSchema,
 } from "./textql-rpc-public-audit-log-audit-log-entry.js";
@@ -15,6 +19,9 @@ import {
 export type TextqlRpcPublicAuditLogListAuditLogsResponse = {
   entries?: Array<TextqlRpcPublicAuditLogAuditLogEntry> | undefined;
   nextCursor?: string | null | undefined;
+  actionOptions?:
+    | Array<TextqlRpcPublicAuditLogAuditLogActionOption>
+    | undefined;
 };
 
 /** @internal */
@@ -25,6 +32,9 @@ export const TextqlRpcPublicAuditLogListAuditLogsResponse$inboundSchema:
         z.array(TextqlRpcPublicAuditLogAuditLogEntry$inboundSchema),
       ),
       nextCursor: z.optional(z.nullable(types.string())),
+      actionOptions: types.optional(
+        z.array(TextqlRpcPublicAuditLogAuditLogActionOption$inboundSchema),
+      ),
     });
 
 export function textqlRpcPublicAuditLogListAuditLogsResponseFromJSON(

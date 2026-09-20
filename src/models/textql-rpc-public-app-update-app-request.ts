@@ -32,6 +32,8 @@ export type TextqlRpcPublicAppUpdateAppRequest = {
   dataSources?: Array<TextqlRpcPublicDashboardDataSource> | undefined;
   replaceDataSources?: boolean | null | undefined;
   /**
+   * publish is gone (head is live); ignored by the server
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   publish?: boolean | null | undefined;

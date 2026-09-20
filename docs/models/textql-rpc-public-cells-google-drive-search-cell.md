@@ -1,7 +1,5 @@
 # TextqlRpcPublicCellsGoogleDriveSearchCell
 
-Simplified playbook info for display in cells
-
 ## Example Usage
 
 ```typescript

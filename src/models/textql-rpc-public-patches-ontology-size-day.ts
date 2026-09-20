@@ -15,7 +15,16 @@ import {
 
 export type TotalBytes = number | string;
 
+/**
+ * OntologySizeDay is the ontology's total content size as of the end of one UTC
+ *
+ * @remarks
+ *  day, sampled from git history (the last commit on or before that day).
+ */
 export type TextqlRpcPublicPatchesOntologySizeDay = {
+  /**
+   * copied from google.type.Date; not available in buf's google/protobuf/*
+   */
   date?: TextqlRpcPublicPatchesDate | undefined;
   totalBytes?: number | string | undefined;
   fileCount?: number | undefined;

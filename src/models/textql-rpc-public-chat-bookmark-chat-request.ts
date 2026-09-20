@@ -5,7 +5,7 @@
 import * as z from "zod/v4-mini";
 
 /**
- * Simplified query request for external API users
+ * Bookmark management
  */
 export type TextqlRpcPublicChatBookmarkChatRequest = {
   chatId: string;

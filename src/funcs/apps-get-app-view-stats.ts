@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+ * View analytics: reads the engagement views recorded on app page load.
  *
  * @remarks
- * Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
+ * View analytics: reads the engagement views recorded on app page load.
  */
 export function appsGetAppViewStats(
   client: TextqlCore,

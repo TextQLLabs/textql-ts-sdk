@@ -77,7 +77,10 @@ export class Agents extends ClientSDK {
   }
 
   /**
-   * GetAgentDBSchema
+   * Read-only table/column list for the agent's private DuckDB memory (agent_db).
+   *
+   * @remarks
+   * Read-only table/column list for the agent's private DuckDB memory (agent_db).
    */
   async getDBSchema(
     request: operations.AgentServiceGetAgentDBSchemaRequest,
@@ -91,7 +94,10 @@ export class Agents extends ClientSDK {
   }
 
   /**
-   * GetAgentDBTablePreview
+   * A bounded row preview of one agent_db table (SELECT ... LIMIT n).
+   *
+   * @remarks
+   * A bounded row preview of one agent_db table (SELECT ... LIMIT n).
    */
   async getDBTablePreview(
     request: operations.AgentServiceGetAgentDBTablePreviewRequest,

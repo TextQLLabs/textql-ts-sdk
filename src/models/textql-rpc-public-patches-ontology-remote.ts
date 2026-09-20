@@ -11,12 +11,6 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicPatchesOntologyRemote = {
   id?: string | undefined;
   remoteUrl?: string | undefined;
-  /**
-   * Effective permission for principals omitted from entries. Unrestricted
-   *
-   * @remarks
-   *  paths grant full access; restricted paths leave this unspecified.
-   */
   authType?: string | undefined;
   defaultBranch?: string | undefined;
   /**

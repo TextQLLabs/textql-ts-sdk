@@ -6,42 +6,45 @@
 
 * [approveAccessRequest](#approveaccessrequest) - ApproveAccessRequest
 * [assignPermissionToRole](#assignpermissiontorole) - AssignPermissionToRole
-* [assignRoleToMember](#assignroletomember) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
-* [createApiKey](#createapikey) - SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
-* [createPersonalApiKey](#createpersonalapikey) - CreatePersonalApiKey
+* [assignRoleToMember](#assignroletomember) - Member role assignment
+* [createApiKey](#createapikey) - API Key management
+* [createPersonalApiKey](#createpersonalapikey) - Create an API key owned by the calling member. Requires no permission.
 * [createRole](#createrole) - Role management
-* [createServiceAccount](#createserviceaccount) - CreateServiceAccount
-* [createServiceAccountApiKey](#createserviceaccountapikey) - CreateServiceAccountApiKey
+* [createImportUpload](#createimportupload) - CreateRolePermissionsUploadUrl
+* [createServiceAccount](#createserviceaccount) - Service account management
+* [createServiceAccountApiKey](#createserviceaccountapikey) - Create an API key owned by a service account. Requires organization:write.
 * [deleteRole](#deleterole) - DeleteRole
 * [deleteServiceAccount](#deleteserviceaccount) - DeleteServiceAccount
-* [exportRolePermissions](#exportrolepermissions) - ExportRolePermissions
+* [exportRoles](#exportroles) - ExportRolePermissions
 * [generateShareLink](#generatesharelink) - GenerateShareLink
-* [getCurrentMemberRolesAndPermissions](#getcurrentmemberrolesandpermissions) - GetCurrentMemberRolesAndPermissions
+* [getCurrentMemberRolesAndPermissions](#getcurrentmemberrolesandpermissions) - Get current member roles and permissions
 * [getEmbedUserApiKey](#getembeduserapikey) - GetEmbedUserApiKey
-* [getMemberRoles](#getmemberroles) - Member role assignment
+* [getMemberRoles](#getmemberroles) - GetMemberRoles
 * [getObjectAccess](#getobjectaccess) - GetObjectAccess
 * [getRole](#getrole) - GetRole
-* [getRolePermissions](#getrolepermissions) - Permission management
+* [getRolePermissions](#getrolepermissions) - GetRolePermissions
 * [hasObjectAccess](#hasobjectaccess) - HasObjectAccess
+* [importRoles](#importroles) - ImportRolePermissions
 * [listAccessRequests](#listaccessrequests) - ListAccessRequests
 * [listApiKeys](#listapikeys) - ListApiKeys
-* [listPermissions](#listpermissions) - ListPermissions
+* [listPermissions](#listpermissions) - Permission management
 * [listRoles](#listroles) - ListRoles
 * [listServiceAccounts](#listserviceaccounts) - ListServiceAccounts
+* [parseRoleImport](#parseroleimport) - Parse a CSV or XLSX file into an editable draft without creating roles.  Unknown names and values are preserved for correction; import validates them.
 * [rejectAccessRequest](#rejectaccessrequest) - RejectAccessRequest
 * [removePermissionFromRole](#removepermissionfromrole) - RemovePermissionFromRole
 * [removeRoleFromMember](#removerolefrommember) - RemoveRoleFromMember
-* [requestAccess](#requestaccess) - RequestAccess
+* [requestAccess](#requestaccess) - Access request management
 * [revokeApiKey](#revokeapikey) - RevokeApiKey
-* [revokeObjectAccess](#revokeobjectaccess) - Group management. Internal only.
-* [rotateApiKey](#rotateapikey) - Object sharing and access control
-* [setRolePermissions](#setrolepermissions) - SetRolePermissions
-* [shareObject](#shareobject) - Get current member roles and permissions
-* [shareObjectWithRole](#shareobjectwithrole) - Describe what a key is allowed to do.
+* [revokeObjectAccess](#revokeobjectaccess) - RevokeObjectAccess
+* [rotateApiKey](#rotateapikey) - RotateApiKey
+* [setRolePermissions](#setrolepermissions) - Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+* [shareObject](#shareobject) - Object sharing and access control
+* [shareObjectWithRole](#shareobjectwithrole) - ShareObjectWithRole
 * [updateObjectAccess](#updateobjectaccess) - UpdateObjectAccess
 * [updateObjectVisibility](#updateobjectvisibility) - UpdateObjectVisibility
 * [updateRole](#updaterole) - UpdateRole
-* [whoAmI](#whoami) - WhoAmI
+* [whoAmI](#whoami) - Describe what a key is allowed to do.
 
 ## approveAccessRequest
 
@@ -191,7 +194,7 @@ run();
 
 ## assignRoleToMember
 
-Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+Member role assignment
 
 ### Example Usage
 
@@ -264,8 +267,7 @@ run();
 
 ## createApiKey
 
-SCIM group-mapping migration tooling: one-time role<->group conversion,
- internal only.
+API Key management
 
 ### Example Usage
 
@@ -338,7 +340,7 @@ run();
 
 ## createPersonalApiKey
 
-CreatePersonalApiKey
+Create an API key owned by the calling member. Requires no permission.
 
 ### Example Usage
 
@@ -482,9 +484,82 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## createImportUpload
+
+CreateRolePermissionsUploadUrl
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="RBACService_CreateRolePermissionsUploadUrl" method="post" path="/textql.rpc.public.rbac.RBACService/CreateRolePermissionsUploadUrl" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.rbac.createImportUpload({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacCreateImportUpload } from "@textql/sdk/funcs/rbac-create-import-upload.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await rbacCreateImportUpload(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("rbacCreateImportUpload failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RBACServiceCreateRolePermissionsUploadUrlRequest](../../models/operations/rbac-service-create-role-permissions-upload-url-request.md)                              | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.RBACServiceCreateRolePermissionsUploadUrlResponse](../../models/operations/rbac-service-create-role-permissions-upload-url-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## createServiceAccount
 
-CreateServiceAccount
+Service account management
 
 ### Example Usage
 
@@ -557,7 +632,7 @@ run();
 
 ## createServiceAccountApiKey
 
-CreateServiceAccountApiKey
+Create an API key owned by a service account. Requires organization:write.
 
 ### Example Usage
 
@@ -774,7 +849,7 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## exportRolePermissions
+## exportRoles
 
 ExportRolePermissions
 
@@ -789,7 +864,7 @@ const textql = new Textql({
 });
 
 async function run() {
-  const result = await textql.rbac.exportRolePermissions({
+  const result = await textql.rbac.exportRoles({
     body: {},
   });
 
@@ -805,7 +880,7 @@ The standalone function version of this method:
 
 ```typescript
 import { TextqlCore } from "@textql/sdk/core.js";
-import { rbacExportRolePermissions } from "@textql/sdk/funcs/rbac-export-role-permissions.js";
+import { rbacExportRoles } from "@textql/sdk/funcs/rbac-export-roles.js";
 
 // Use `TextqlCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
@@ -814,14 +889,14 @@ const textql = new TextqlCore({
 });
 
 async function run() {
-  const res = await rbacExportRolePermissions(textql, {
+  const res = await rbacExportRoles(textql, {
     body: {},
   });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
   } else {
-    console.log("rbacExportRolePermissions failed:", res.error);
+    console.log("rbacExportRoles failed:", res.error);
   }
 }
 
@@ -922,7 +997,7 @@ run();
 
 ## getCurrentMemberRolesAndPermissions
 
-GetCurrentMemberRolesAndPermissions
+Get current member roles and permissions
 
 ### Example Usage
 
@@ -1068,7 +1143,7 @@ run();
 
 ## getMemberRoles
 
-Member role assignment
+GetMemberRoles
 
 ### Example Usage
 
@@ -1287,7 +1362,7 @@ run();
 
 ## getRolePermissions
 
-Permission management
+GetRolePermissions
 
 ### Example Usage
 
@@ -1424,6 +1499,79 @@ run();
 ### Response
 
 **Promise\<[operations.RBACServiceHasObjectAccessResponse](../../models/operations/rbac-service-has-object-access-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## importRoles
+
+ImportRolePermissions
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="RBACService_ImportRolePermissions" method="post" path="/textql.rpc.public.rbac.RBACService/ImportRolePermissions" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.rbac.importRoles({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacImportRoles } from "@textql/sdk/funcs/rbac-import-roles.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await rbacImportRoles(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("rbacImportRoles failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RBACServiceImportRolePermissionsRequest](../../models/operations/rbac-service-import-role-permissions-request.md)                                                  | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.RBACServiceImportRolePermissionsResponse](../../models/operations/rbac-service-import-role-permissions-response.md)\>**
 
 ### Errors
 
@@ -1579,7 +1727,7 @@ run();
 
 ## listPermissions
 
-ListPermissions
+Permission management
 
 ### Example Usage
 
@@ -1789,6 +1937,80 @@ run();
 ### Response
 
 **Promise\<[operations.RBACServiceListServiceAccountsResponse](../../models/operations/rbac-service-list-service-accounts-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## parseRoleImport
+
+Parse a CSV or XLSX file into an editable draft without creating roles.
+ Unknown names and values are preserved for correction; import validates them.
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="RBACService_ParseRolePermissionsImport" method="post" path="/textql.rpc.public.rbac.RBACService/ParseRolePermissionsImport" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.rbac.parseRoleImport({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { rbacParseRoleImport } from "@textql/sdk/funcs/rbac-parse-role-import.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await rbacParseRoleImport(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("rbacParseRoleImport failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.RBACServiceParseRolePermissionsImportRequest](../../models/operations/rbac-service-parse-role-permissions-import-request.md)                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.RBACServiceParseRolePermissionsImportResponse](../../models/operations/rbac-service-parse-role-permissions-import-response.md)\>**
 
 ### Errors
 
@@ -2017,7 +2239,7 @@ run();
 
 ## requestAccess
 
-RequestAccess
+Access request management
 
 ### Example Usage
 
@@ -2163,7 +2385,7 @@ run();
 
 ## revokeObjectAccess
 
-Group management. Internal only.
+RevokeObjectAccess
 
 ### Example Usage
 
@@ -2236,7 +2458,7 @@ run();
 
 ## rotateApiKey
 
-Object sharing and access control
+RotateApiKey
 
 ### Example Usage
 
@@ -2309,7 +2531,7 @@ run();
 
 ## setRolePermissions
 
-SetRolePermissions
+Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
 
 ### Example Usage
 
@@ -2382,7 +2604,7 @@ run();
 
 ## shareObject
 
-Get current member roles and permissions
+Object sharing and access control
 
 ### Example Usage
 
@@ -2459,7 +2681,7 @@ run();
 
 ## shareObjectWithRole
 
-Describe what a key is allowed to do.
+ShareObjectWithRole
 
 ### Example Usage
 
@@ -2759,7 +2981,7 @@ run();
 
 ## whoAmI
 
-WhoAmI
+Describe what a key is allowed to do.
 
 ### Example Usage
 

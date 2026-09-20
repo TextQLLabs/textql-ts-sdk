@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetAgentDBSchema
+ * Read-only table/column list for the agent's private DuckDB memory (agent_db).
+ *
+ * @remarks
+ * Read-only table/column list for the agent's private DuckDB memory (agent_db).
  */
 export function agentsGetDBSchema(
   client: TextqlCore,

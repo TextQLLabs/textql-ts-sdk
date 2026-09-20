@@ -14,6 +14,6 @@ let value: TextqlRpcPublicChatGetPlaybookChatsRequest = {
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `playbookId`       | *string*           | :heavy_check_mark: | N/A                |
+| `playbookId`       | *string*           | :heavy_check_mark: | UUID               |
 | `limit`            | *number*           | :heavy_minus_sign: | N/A                |
 | `skip`             | *number*           | :heavy_minus_sign: | N/A                |

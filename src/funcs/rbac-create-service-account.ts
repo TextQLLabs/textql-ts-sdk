@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * CreateServiceAccount
+ * Service account management
+ *
+ * @remarks
+ * Service account management
  */
 export function rbacCreateServiceAccount(
   client: TextqlCore,

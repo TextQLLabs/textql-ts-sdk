@@ -46,6 +46,9 @@ import {
 
 export type TextqlRpcPublicCellsPlaybookEditorCell = {
   action?: TextqlRpcPublicCellsPlaybookEditorAction | undefined;
+  /**
+   * results
+   */
   playbooks?: Array<TextqlRpcPublicCellsPlaybookInfo> | undefined;
   errorMessage?: string | null | undefined;
   totalCount?: number | undefined;
