@@ -27,15 +27,19 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * ExportRolePermissions
+ * Parse a CSV or XLSX file into an editable draft without creating roles.  Unknown names and values are preserved for correction; import validates them.
+ *
+ * @remarks
+ * Parse a CSV or XLSX file into an editable draft without creating roles.
+ *  Unknown names and values are preserved for correction; import validates them.
  */
-export function rbacExportRolePermissions(
+export function rbacParseRoleImport(
   client: TextqlCore,
-  request: operations.RBACServiceExportRolePermissionsRequest,
+  request: operations.RBACServiceParseRolePermissionsImportRequest,
   options?: RequestOptions,
 ): APIPromise<
   Result<
-    operations.RBACServiceExportRolePermissionsResponse,
+    operations.RBACServiceParseRolePermissionsImportResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -55,12 +59,12 @@ export function rbacExportRolePermissions(
 
 async function $do(
   client: TextqlCore,
-  request: operations.RBACServiceExportRolePermissionsRequest,
+  request: operations.RBACServiceParseRolePermissionsImportRequest,
   options?: RequestOptions,
 ): Promise<
   [
     Result<
-      operations.RBACServiceExportRolePermissionsResponse,
+      operations.RBACServiceParseRolePermissionsImportResponse,
       | TextqlError
       | ResponseValidationError
       | ConnectionError
@@ -77,7 +81,7 @@ async function $do(
     request,
     (value) =>
       z.parse(
-        operations.RBACServiceExportRolePermissionsRequest$outboundSchema,
+        operations.RBACServiceParseRolePermissionsImportRequest$outboundSchema,
         value,
       ),
     "Input validation failed",
@@ -89,7 +93,7 @@ async function $do(
   const body = encodeJSON("body", payload.body, { explode: true });
 
   const path = pathToFunc(
-    "/textql.rpc.public.rbac.RBACService/ExportRolePermissions",
+    "/textql.rpc.public.rbac.RBACService/ParseRolePermissionsImport",
   )();
 
   const headers = new Headers(compactMap({
@@ -114,7 +118,7 @@ async function $do(
   const context = {
     options: client._options,
     baseURL: options?.serverURL ?? client._baseURL ?? "",
-    operationID: "RBACService_ExportRolePermissions",
+    operationID: "RBACService_ParseRolePermissionsImport",
     oAuth2Scopes: null,
 
     resolvedSecurity: requestSecurity,
@@ -154,7 +158,7 @@ async function $do(
   const response = doResult.value;
 
   const [result] = await M.match<
-    operations.RBACServiceExportRolePermissionsResponse,
+    operations.RBACServiceParseRolePermissionsImportResponse,
     | TextqlError
     | ResponseValidationError
     | ConnectionError
@@ -166,13 +170,13 @@ async function $do(
   >(
     M.json(
       200,
-      operations.RBACServiceExportRolePermissionsResponse$inboundSchema,
+      operations.RBACServiceParseRolePermissionsImportResponse$inboundSchema,
     ),
     M.fail("4XX"),
     M.fail("5XX"),
     M.json(
       "default",
-      operations.RBACServiceExportRolePermissionsResponse$inboundSchema,
+      operations.RBACServiceParseRolePermissionsImportResponse$inboundSchema,
     ),
   )(response, req);
   if (!result.ok) {

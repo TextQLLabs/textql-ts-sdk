@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Get current member roles and permissions messages
+ */
 export type TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest = {};
 
 /** @internal */

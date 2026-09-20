@@ -5,11 +5,22 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacDeleteRoleRequest = {
+  /**
+   * Exact, case-sensitive role name, unique within the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id.
+   */
+  roleName?: string | undefined;
+  /**
+   * Existing role ID. Prefer role_name; if both are supplied they must match.
+   */
   roleId?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacDeleteRoleRequest$Outbound = {
+  roleName?: string | undefined;
   roleId?: string | undefined;
 };
 
@@ -18,6 +29,7 @@ export const TextqlRpcPublicRbacDeleteRoleRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacDeleteRoleRequest$Outbound,
   TextqlRpcPublicRbacDeleteRoleRequest
 > = z.object({
+  roleName: z.optional(z.string()),
   roleId: z.optional(z.string()),
 });
 

@@ -12,5 +12,5 @@ let value: TextqlRpcPublicConnectorQueryTemplateCteRef = {};
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `templateId`       | *string*           | :heavy_minus_sign: | 0 = all-time       |
+| `templateId`       | *string*           | :heavy_minus_sign: | N/A                |
 | `cteName`          | *string*           | :heavy_minus_sign: | N/A                |

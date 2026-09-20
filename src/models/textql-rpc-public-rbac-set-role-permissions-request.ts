@@ -3,18 +3,47 @@
  */
 
 import * as z from "zod/v4-mini";
+import {
+  TextqlRpcPublicRbacPermissionSpec,
+  TextqlRpcPublicRbacPermissionSpec$Outbound,
+  TextqlRpcPublicRbacPermissionSpec$outboundSchema,
+} from "./textql-rpc-public-rbac-permission-spec.js";
 
 export type TextqlRpcPublicRbacSetRolePermissionsRequest = {
+  /**
+   * Exact, case-sensitive role name, unique within the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id.
+   */
+  roleName?: string | undefined;
+  /**
+   * Permissions to add. Duplicates are ignored; a permission cannot be both
+   *
+   * @remarks
+   *  added and removed in the same request.
+   */
+  addPermissions?: Array<TextqlRpcPublicRbacPermissionSpec> | undefined;
+  /**
+   * Permissions to remove.
+   */
+  removePermissions?: Array<TextqlRpcPublicRbacPermissionSpec> | undefined;
+  /**
+   * Existing role ID. Prefer role_name; if both are supplied they must match.
+   */
   roleId?: string | undefined;
-  addPermissionIds?: Array<string> | undefined;
-  removePermissionIds?: Array<string> | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacSetRolePermissionsRequest$Outbound = {
+  roleName?: string | undefined;
+  addPermissions?:
+    | Array<TextqlRpcPublicRbacPermissionSpec$Outbound>
+    | undefined;
+  removePermissions?:
+    | Array<TextqlRpcPublicRbacPermissionSpec$Outbound>
+    | undefined;
   roleId?: string | undefined;
-  addPermissionIds?: Array<string> | undefined;
-  removePermissionIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -23,9 +52,14 @@ export const TextqlRpcPublicRbacSetRolePermissionsRequest$outboundSchema:
     TextqlRpcPublicRbacSetRolePermissionsRequest$Outbound,
     TextqlRpcPublicRbacSetRolePermissionsRequest
   > = z.object({
+    roleName: z.optional(z.string()),
+    addPermissions: z.optional(
+      z.array(TextqlRpcPublicRbacPermissionSpec$outboundSchema),
+    ),
+    removePermissions: z.optional(
+      z.array(TextqlRpcPublicRbacPermissionSpec$outboundSchema),
+    ),
     roleId: z.optional(z.string()),
-    addPermissionIds: z.optional(z.array(z.string())),
-    removePermissionIds: z.optional(z.array(z.string())),
   });
 
 export function textqlRpcPublicRbacSetRolePermissionsRequestToJSON(

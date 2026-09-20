@@ -10,7 +10,7 @@ let value: TextqlRpcPublicAppMoveAppToFolderRequest = {};
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `appId`            | *string*           | :heavy_minus_sign: | N/A                |
-| `folderId`         | *string*           | :heavy_minus_sign: | N/A                |
+| Field                                     | Type                                      | Required                                  | Description                               |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| `appId`                                   | *string*                                  | :heavy_minus_sign:                        | N/A                                       |
+| `folderId`                                | *string*                                  | :heavy_minus_sign:                        | null/empty = move to root (uncategorized) |

@@ -14,6 +14,9 @@ import {
 
 export type TextqlRpcPublicAppGetAppResponse = {
   app?: TextqlRpcPublicAppApp | undefined;
+  /**
+   * whether the caller may edit this app (HasAppWriteAccess)
+   */
   hasWritePermission?: boolean | undefined;
 };
 

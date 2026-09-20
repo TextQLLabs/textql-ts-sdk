@@ -19,8 +19,14 @@ export type TextqlRpcPublicConnectorOracleMetadata = {
   connectionType?: string | undefined;
   sid?: string | undefined;
   connectString?: string | undefined;
+  /**
+   * Oracle Wallet fields
+   */
   walletZip?: string | undefined;
   walletPassword?: string | undefined;
+  /**
+   * Optional - auto-detected from tnsnames.ora if not provided
+   */
   tnsAlias?: string | undefined;
 };
 

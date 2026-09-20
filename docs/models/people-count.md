@@ -1,5 +1,7 @@
 # PeopleCount
 
+Distinct owners of the tagged chats (same population as tag_count).
+
 
 ## Supported Types
 

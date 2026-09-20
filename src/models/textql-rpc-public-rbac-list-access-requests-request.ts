@@ -7,6 +7,9 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicRbacListAccessRequestsRequest = {
   objectType?: string | null | undefined;
   objectId?: string | null | undefined;
+  /**
+   * pending, approved, rejected
+   */
   status?: string | null | undefined;
 };
 

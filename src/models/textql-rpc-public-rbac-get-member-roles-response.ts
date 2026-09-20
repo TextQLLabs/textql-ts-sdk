@@ -13,12 +13,24 @@ import {
 } from "./textql-rpc-public-rbac-member-roles.js";
 
 export type TextqlRpcPublicRbacGetMemberRolesResponse = {
+  /**
+   * Roles keyed by lowercase email, for members whose email is available.
+   */
+  memberRolesByEmail?:
+    | { [k: string]: TextqlRpcPublicRbacMemberRoles }
+    | undefined;
+  /**
+   * Stable member-ID keys retained for compatibility.
+   */
   memberRoles?: { [k: string]: TextqlRpcPublicRbacMemberRoles } | undefined;
 };
 
 /** @internal */
 export const TextqlRpcPublicRbacGetMemberRolesResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicRbacGetMemberRolesResponse, unknown> = z.object({
+    memberRolesByEmail: types.optional(
+      z.record(z.string(), TextqlRpcPublicRbacMemberRoles$inboundSchema),
+    ),
     memberRoles: types.optional(
       z.record(z.string(), TextqlRpcPublicRbacMemberRoles$inboundSchema),
     ),

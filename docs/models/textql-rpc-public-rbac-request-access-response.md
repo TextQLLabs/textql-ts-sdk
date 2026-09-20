@@ -10,7 +10,7 @@ let value: TextqlRpcPublicRbacRequestAccessResponse = {};
 
 ## Fields
 
-| Field                 | Type                  | Required              | Description           |
-| --------------------- | --------------------- | --------------------- | --------------------- |
-| `success`             | *boolean*             | :heavy_minus_sign:    | N/A                   |
-| `requestId`           | *string*              | :heavy_minus_sign:    | owner, editor, viewer |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `success`          | *boolean*          | :heavy_minus_sign: | N/A                |
+| `requestId`        | *string*           | :heavy_minus_sign: | N/A                |

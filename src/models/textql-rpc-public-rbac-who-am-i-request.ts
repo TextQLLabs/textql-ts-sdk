@@ -4,6 +4,9 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * WhoAmI messages
+ */
 export type TextqlRpcPublicRbacWhoAmIRequest = {};
 
 /** @internal */

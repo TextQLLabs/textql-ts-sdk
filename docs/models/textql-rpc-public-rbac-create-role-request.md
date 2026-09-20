@@ -1,5 +1,7 @@
 # TextqlRpcPublicRbacCreateRoleRequest
 
+Role management requests/responses
+
 ## Example Usage
 
 ```typescript
@@ -14,3 +16,5 @@ let value: TextqlRpcPublicRbacCreateRoleRequest = {};
 | ------------------ | ------------------ | ------------------ | ------------------ |
 | `name`             | *string*           | :heavy_minus_sign: | N/A                |
 | `description`      | *string*           | :heavy_minus_sign: | N/A                |
+| `color`            | *string*           | :heavy_minus_sign: | N/A                |
+| `icon`             | *string*           | :heavy_minus_sign: | N/A                |

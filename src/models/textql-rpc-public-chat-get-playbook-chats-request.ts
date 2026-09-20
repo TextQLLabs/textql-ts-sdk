@@ -5,6 +5,9 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetPlaybookChatsRequest = {
+  /**
+   * UUID
+   */
   playbookId: string;
   limit?: number | null | undefined;
   skip?: number | null | undefined;

@@ -5,11 +5,19 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacGetMemberRolesRequest = {
+  /**
+   * Emails within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Merged with member_ids and deduplicated. Unknown emails are rejected.
+   */
+  memberEmails?: Array<string> | undefined;
   memberIds?: Array<string> | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacGetMemberRolesRequest$Outbound = {
+  memberEmails?: Array<string> | undefined;
   memberIds?: Array<string> | undefined;
 };
 
@@ -19,6 +27,7 @@ export const TextqlRpcPublicRbacGetMemberRolesRequest$outboundSchema:
     TextqlRpcPublicRbacGetMemberRolesRequest$Outbound,
     TextqlRpcPublicRbacGetMemberRolesRequest
   > = z.object({
+    memberEmails: z.optional(z.array(z.string())),
     memberIds: z.optional(z.array(z.string())),
   });
 

@@ -12,15 +12,12 @@ import {
   TextqlRpcPublicPatchesOntologySizeDay$inboundSchema,
 } from "./textql-rpc-public-patches-ontology-size-day.js";
 
-/**
- * copied from google.type.Date; not available in buf's google/protobuf/*
- */
 export type TextqlRpcPublicPatchesGetOntologySizeTimelineResponse = {
   /**
-   * Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+   * one entry per UTC day, oldest first; days before the repo's first commit
    *
    * @remarks
-   *  a year.
+   *  are omitted, and days without commits carry the previous day's tree
    */
   days?: Array<TextqlRpcPublicPatchesOntologySizeDay> | undefined;
 };

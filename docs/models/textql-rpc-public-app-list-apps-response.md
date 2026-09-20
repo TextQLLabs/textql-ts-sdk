@@ -1,5 +1,7 @@
 # TextqlRpcPublicAppListAppsResponse
 
+List responses omit code (heavyweight); fetch a single app for it.
+
 ## Example Usage
 
 ```typescript

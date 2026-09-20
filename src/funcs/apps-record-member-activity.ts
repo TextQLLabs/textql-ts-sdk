@@ -27,7 +27,11 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * RecordAppMemberActivity
+ * Append-only per-member activity log. Listing is own rows only; no  cross-member reads in this release.
+ *
+ * @remarks
+ * Append-only per-member activity log. Listing is own rows only; no
+ *  cross-member reads in this release.
  */
 export function appsRecordMemberActivity(
   client: TextqlCore,

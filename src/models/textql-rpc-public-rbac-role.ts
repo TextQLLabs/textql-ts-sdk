@@ -13,10 +13,13 @@ import {
 } from "./textql-rpc-public-chat-llm-model.js";
 
 export type TextqlRpcPublicRbacRole = {
-  id?: string | undefined;
-  orgId?: string | undefined;
+  /**
+   * Unique within this organization; use as role_name when reading or updating.
+   */
   name?: string | undefined;
   description?: string | undefined;
+  id?: string | undefined;
+  orgId?: string | undefined;
   isSystem?: boolean | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -210,6 +213,8 @@ export type TextqlRpcPublicRbacRole = {
   defaultModel?: TextqlRpcPublicChatLlmModel | undefined;
   allowModelChoice?: boolean | null | undefined;
   isScimManaged?: boolean | undefined;
+  color?: string | undefined;
+  icon?: string | undefined;
 };
 
 /** @internal */
@@ -217,10 +222,10 @@ export const TextqlRpcPublicRbacRole$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacRole,
   unknown
 > = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
   name: types.optional(types.string()),
   description: types.optional(types.string()),
+  id: types.optional(types.string()),
+  orgId: types.optional(types.string()),
   isSystem: types.optional(types.boolean()),
   createdAt: types.optional(types.date()),
   updatedAt: types.optional(types.date()),
@@ -230,6 +235,8 @@ export const TextqlRpcPublicRbacRole$inboundSchema: z.ZodMiniType<
   defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
   allowModelChoice: z.optional(z.nullable(types.boolean())),
   isScimManaged: types.optional(types.boolean()),
+  color: types.optional(types.string()),
+  icon: types.optional(types.string()),
 });
 
 export function textqlRpcPublicRbacRoleFromJSON(

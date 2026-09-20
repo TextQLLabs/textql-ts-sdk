@@ -47,7 +47,17 @@ export type TextqlRpcPublicObserveGetBillingStatsResponse = {
   totalAppAcu?: number | undefined;
   unattributedAppAcu?: number | undefined;
   totalAppCount?: number | undefined;
+  /**
+   * Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
+   *
+   * @remarks
+   *  the tenant's pricing tier / active override). Multiply any ACU figure by
+   *  (rate / 1000) to show dollars. 0 means unknown/unpriced (e.g. trial).
+   */
   acuRatePer1000Usd?: number | undefined;
+  /**
+   * Portion of unattributed_app_acu that's ana.ask LLM spend rather than compute.
+   */
   unattributedAppLlmAcu?: number | undefined;
 };
 

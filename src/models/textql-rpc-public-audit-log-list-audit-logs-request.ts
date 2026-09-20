@@ -106,6 +106,8 @@ export type TextqlRpcPublicAuditLogListAuditLogsRequest = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   after?: Date | undefined;
+  actions?: Array<string> | undefined;
+  includeActionOptions?: boolean | undefined;
 };
 
 /** @internal */
@@ -118,6 +120,8 @@ export type TextqlRpcPublicAuditLogListAuditLogsRequest$Outbound = {
   pageSize?: number | null | undefined;
   searchTerm?: string | null | undefined;
   after?: string | undefined;
+  actions?: Array<string> | undefined;
+  includeActionOptions?: boolean | undefined;
 };
 
 /** @internal */
@@ -134,6 +138,8 @@ export const TextqlRpcPublicAuditLogListAuditLogsRequest$outboundSchema:
     pageSize: z.optional(z.nullable(z.int())),
     searchTerm: z.optional(z.nullable(z.string())),
     after: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    actions: z.optional(z.array(z.string())),
+    includeActionOptions: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicAuditLogListAuditLogsRequestToJSON(

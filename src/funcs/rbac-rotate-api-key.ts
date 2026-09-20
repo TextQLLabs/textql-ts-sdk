@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Object sharing and access control
- *
- * @remarks
- * Object sharing and access control
+ * RotateApiKey
  */
 export function rbacRotateApiKey(
   client: TextqlCore,

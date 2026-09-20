@@ -6,7 +6,7 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicConnectorGetConnectorStatsRequest = {
   /**
-   * PowerBI report IDs
+   * 0 = all-time
    */
   days?: number | undefined;
 };

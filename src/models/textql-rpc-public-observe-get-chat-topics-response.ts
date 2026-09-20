@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-observe-chat-topic-list.js";
 
 export type TextqlRpcPublicObserveGetChatTopicsResponse = {
+  /**
+   * Keyed by chat id; chats with no tagged topics are absent.
+   */
   topicsByChat?:
     | { [k: string]: TextqlRpcPublicObserveChatTopicList }
     | undefined;

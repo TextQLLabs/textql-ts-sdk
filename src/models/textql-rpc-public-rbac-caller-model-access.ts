@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicChatLlmModel$inboundSchema,
 } from "./textql-rpc-public-chat-llm-model.js";
 
+/**
+ * Which LLM models the caller may run.
+ */
 export type TextqlRpcPublicRbacCallerModelAccess = {
   allowedModels?: Array<TextqlRpcPublicChatLlmModel> | undefined;
   defaultModel?: TextqlRpcPublicChatLlmModel | undefined;

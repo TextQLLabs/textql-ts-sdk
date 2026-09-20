@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * RequestAccess
+ * Access request management
+ *
+ * @remarks
+ * Access request management
  */
 export function rbacRequestAccess(
   client: TextqlCore,

@@ -18,13 +18,7 @@ import {
 
 export type TextqlRpcPublicCellsFormEditorCell = {
   action?: TextqlRpcPublicCellsFormEditorAction | undefined;
-  /**
-   * primary interface for ana to render sandbox assets client side
-   */
   formSnapshot?: TextqlRpcPublicCellsEditableForm | undefined;
-  /**
-   * primary interface for ana to render sandbox assets client side
-   */
   form?: TextqlRpcPublicCellsEditableForm | undefined;
   formId?: string | null | undefined;
 };

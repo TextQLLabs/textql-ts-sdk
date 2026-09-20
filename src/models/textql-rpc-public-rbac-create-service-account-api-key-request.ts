@@ -5,17 +5,46 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of service_account_member_id; if both are supplied they must identify the same member.
+   */
+  serviceAccountEmail?: string | undefined;
+  /**
+   * Exact, case-sensitive role names in the caller's organization.
+   *
+   * @remarks
+   *  Merged with legacy assumed_roles IDs and deduplicated. The existing
+   *  member-role and calling API-key scope restrictions apply to both forms.
+   */
+  assumedRoleNames?: Array<string> | undefined;
   serviceAccountMemberId?: string | undefined;
   name?: string | null | undefined;
   expirySeconds?: number | null | undefined;
+  /**
+   * Bounded by the service account's own roles; org admins get no bypass here.
+   *
+   * @remarks
+   *  Legacy role IDs. Prefer assumed_role_names.
+   */
   assumedRoles?: Array<string> | undefined;
+  /**
+   * Required when both role lists are empty, so omission cannot mint a wide key.
+   */
   inheritAllRoles?: boolean | null | undefined;
   clientId?: string | null | undefined;
+  /**
+   * Also reach the service account's own items.
+   */
   fullMemberAccess?: boolean | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest$Outbound = {
+  serviceAccountEmail?: string | undefined;
+  assumedRoleNames?: Array<string> | undefined;
   serviceAccountMemberId?: string | undefined;
   name?: string | null | undefined;
   expirySeconds?: number | null | undefined;
@@ -31,6 +60,8 @@ export const TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest$outboundSchema
     TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest$Outbound,
     TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest
   > = z.object({
+    serviceAccountEmail: z.optional(z.string()),
+    assumedRoleNames: z.optional(z.array(z.string())),
     serviceAccountMemberId: z.optional(z.string()),
     name: z.optional(z.nullable(z.string())),
     expirySeconds: z.optional(z.nullable(z.int())),

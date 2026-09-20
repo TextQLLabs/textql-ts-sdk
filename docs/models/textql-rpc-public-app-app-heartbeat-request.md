@@ -10,6 +10,6 @@ let value: TextqlRpcPublicAppAppHeartbeatRequest = {};
 
 ## Fields
 
-| Field                                                     | Type                                                      | Required                                                  | Description                                               |
-| --------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------- |
-| `appId`                                                   | *string*                                                  | :heavy_minus_sign:                                        | the resolved default after the change; unset when cleared |
+| Field              | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `appId`            | *string*           | :heavy_minus_sign: | N/A                |

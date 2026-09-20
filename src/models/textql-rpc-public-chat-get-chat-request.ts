@@ -5,9 +5,6 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatGetChatRequest = {
-  /**
-   * whether to return only the user's chats or all of the org's chats
-   */
   chatId: string;
 };
 

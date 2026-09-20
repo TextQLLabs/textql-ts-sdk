@@ -11,9 +11,6 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type InputTokens = number | string;
 
-/**
- * if true, runs actual execution tests (expensive)
- */
 export type CacheCreationInputTokens = number | string;
 
 export type CacheReadInputTokens = number | string;
@@ -22,9 +19,6 @@ export type OutputTokens = number | string;
 
 export type TextqlRpcPublicChatLlmUsage = {
   inputTokens?: number | string | undefined;
-  /**
-   * if true, runs actual execution tests (expensive)
-   */
   cacheCreationInputTokens?: number | string | undefined;
   cacheReadInputTokens?: number | string | undefined;
   outputTokens?: number | string | undefined;

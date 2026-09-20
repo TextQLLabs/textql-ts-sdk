@@ -14,7 +14,7 @@ import {
 } from "./textql-rpc-public-app-app-db-table.js";
 
 /**
- * Routing observability: warm | warm_fallback | tql | sql.
+ * durable Postgres change-log size; the .duckdb cache is derived from this
  */
 export type TextqlRpcPublicAppGetAppDBSchemaResponseChangeLogBytes =
   | number
@@ -23,7 +23,7 @@ export type TextqlRpcPublicAppGetAppDBSchemaResponseChangeLogBytes =
 export type TextqlRpcPublicAppGetAppDBSchemaResponse = {
   tables?: Array<TextqlRpcPublicAppAppDBTable> | undefined;
   /**
-   * Routing observability: warm | warm_fallback | tql | sql.
+   * durable Postgres change-log size; the .duckdb cache is derived from this
    */
   changeLogBytes?: number | string | undefined;
 };

@@ -8,22 +8,14 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * EmailCell is the agent's "send an email" output. It is an executable cell:
- *
- * @remarks
- *  the LLM emits the input (to/subject/body) and the framework executes the
- *  send, mutating the result fields. The cell renders as a transcript ("Email
- *  sent to maya@acme.com at 2:14pm") with the body visible after the fact.
- */
 export type TextqlRpcPublicCellsQuestionOption = {
-  /**
-   * Inputs (set by the LLM at cell creation time)
-   */
   name?: string | undefined;
+  /**
+   * short gray subtitle, max one line
+   */
   description?: string | null | undefined;
   /**
-   * markdown — rendered to HTML at send time
+   * longer hover tooltip
    */
   explanation?: string | null | undefined;
 };

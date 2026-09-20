@@ -18,9 +18,6 @@ import {
 } from "./textql-rpc-public-paradigm-paradigm-options.js";
 
 export type TextqlRpcPublicChatDuplicateChatRequest = {
-  /**
-   * "user" or "assistant"
-   */
   chatId: string;
   onlyIfDifferentOwner?: boolean | null | undefined;
   upToCellId?: string | null | undefined;

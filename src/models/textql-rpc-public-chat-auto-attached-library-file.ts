@@ -8,8 +8,14 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * A library file injected via org auto-attach (not an explicit read_file/tql pull).
+ */
 export type TextqlRpcPublicChatAutoAttachedLibraryFile = {
   path?: string | undefined;
+  /**
+   * number of turns in this chat that pulled this file
+   */
   pullCount?: number | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local

@@ -4,15 +4,22 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Role management requests/responses
+ */
 export type TextqlRpcPublicRbacCreateRoleRequest = {
   name?: string | undefined;
   description?: string | undefined;
+  color?: string | undefined;
+  icon?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacCreateRoleRequest$Outbound = {
   name?: string | undefined;
   description?: string | undefined;
+  color?: string | undefined;
+  icon?: string | undefined;
 };
 
 /** @internal */
@@ -22,6 +29,8 @@ export const TextqlRpcPublicRbacCreateRoleRequest$outboundSchema: z.ZodMiniType<
 > = z.object({
   name: z.optional(z.string()),
   description: z.optional(z.string()),
+  color: z.optional(z.string()),
+  icon: z.optional(z.string()),
 });
 
 export function textqlRpcPublicRbacCreateRoleRequestToJSON(

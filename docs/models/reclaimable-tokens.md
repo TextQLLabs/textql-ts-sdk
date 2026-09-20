@@ -1,5 +1,7 @@
 # ReclaimableTokens
 
+estimated tokens held by dead files (~size/4)
+
 
 ## Supported Types
 

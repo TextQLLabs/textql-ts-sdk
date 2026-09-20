@@ -1,6 +1,6 @@
 # TextqlRpcPublicChatGetArtifactRequest
 
-Request all artifact summaries for a chat (for drawer dropdown)
+Request full artifact data when item is selected
 
 ## Example Usage
 
@@ -15,7 +15,7 @@ let value: TextqlRpcPublicChatGetArtifactRequest = {
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `artifactId`       | *string*           | :heavy_check_mark: | N/A                |
-| `chatId`           | *string*           | :heavy_check_mark: | N/A                |
+| Field                                                           | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `artifactId`                                                    | *string*                                                        | :heavy_check_mark:                                              | Cell ID or composite "cellId:type:url" for multi-artifact cells |
+| `chatId`                                                        | *string*                                                        | :heavy_check_mark:                                              | N/A                                                             |

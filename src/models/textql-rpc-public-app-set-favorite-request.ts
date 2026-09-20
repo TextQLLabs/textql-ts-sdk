@@ -4,17 +4,14 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * A named Data App design system: the file tree is the source of truth, the
- *
- * @remarks
- *  token fields mirror theme.json ("" = brand/default). All fields server-owned.
- */
 export type TextqlRpcPublicAppSetFavoriteRequest = {
+  /**
+   * 'app' | 'dashboard'
+   */
   primitiveType?: string | undefined;
   primitiveId?: string | undefined;
   /**
-   * "" = brand/default accent
+   * true = pin, false = unpin (hard delete)
    */
   favorited?: boolean | undefined;
 };

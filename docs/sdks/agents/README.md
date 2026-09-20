@@ -8,8 +8,8 @@
 * [delete](#delete) - DeleteAgent
 * [duplicate](#duplicate) - DuplicateAgent
 * [getAgent](#getagent) - GetAgent
-* [getDBSchema](#getdbschema) - GetAgentDBSchema
-* [getDBTablePreview](#getdbtablepreview) - GetAgentDBTablePreview
+* [getDBSchema](#getdbschema) - Read-only table/column list for the agent's private DuckDB memory (agent_db).
+* [getDBTablePreview](#getdbtablepreview) - A bounded row preview of one agent_db table (SELECT ... LIMIT n).
 * [getRun](#getrun) - GetAgentRun
 * [listRuns](#listruns) - ListAgentRuns
 * [list](#list) - ListAgents
@@ -312,7 +312,7 @@ run();
 
 ## getDBSchema
 
-GetAgentDBSchema
+Read-only table/column list for the agent's private DuckDB memory (agent_db).
 
 ### Example Usage
 
@@ -385,7 +385,7 @@ run();
 
 ## getDBTablePreview
 
-GetAgentDBTablePreview
+A bounded row preview of one agent_db table (SELECT ... LIMIT n).
 
 ### Example Usage
 

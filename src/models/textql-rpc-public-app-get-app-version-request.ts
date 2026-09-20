@@ -5,11 +5,11 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicAppGetAppVersionRequest = {
-  /**
-   * False when the document predates tree publishing and has no runtime to overwrite.
-   */
   appId?: string | undefined;
   versionNumber?: number | undefined;
+  /**
+   * Prefer this git commit SHA when set; else version_number selects a legacy db-backed row.
+   */
   commitId?: string | null | undefined;
 };
 

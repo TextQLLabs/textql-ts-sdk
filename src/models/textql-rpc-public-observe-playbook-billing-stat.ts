@@ -13,13 +13,7 @@ export type TextqlRpcPublicObservePlaybookBillingStat = {
   playbookName?: string | undefined;
   ownerId?: string | undefined;
   ownerName?: string | undefined;
-  /**
-   * llm_tokens, compute_hours, cell_execution
-   */
   totalAcu?: number | undefined;
-  /**
-   * chat, feed, observability
-   */
   llmAcu?: number | undefined;
   computeAcu?: number | undefined;
   runCount?: number | undefined;

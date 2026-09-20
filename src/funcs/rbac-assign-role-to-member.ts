@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+ * Member role assignment
  *
  * @remarks
- * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+ * Member role assignment
  */
 export function rbacAssignRoleToMember(
   client: TextqlCore,

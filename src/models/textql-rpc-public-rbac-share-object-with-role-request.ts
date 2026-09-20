@@ -4,13 +4,23 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * The credential that authenticated the request.
- */
 export type TextqlRpcPublicRbacShareObjectWithRoleRequest = {
+  /**
+   * Exact, case-sensitive role name in the caller's organization.
+   *
+   * @remarks
+   *  Supply role_name or role_id; if both are supplied they must match.
+   */
+  roleName?: string | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
+  /**
+   * Legacy role ID. Prefer role_name.
+   */
   roleId?: string | undefined;
+  /**
+   * owner, editor, viewer
+   */
   accessType?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -111,6 +121,7 @@ export type TextqlRpcPublicRbacShareObjectWithRoleRequest = {
 
 /** @internal */
 export type TextqlRpcPublicRbacShareObjectWithRoleRequest$Outbound = {
+  roleName?: string | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
   roleId?: string | undefined;
@@ -125,6 +136,7 @@ export const TextqlRpcPublicRbacShareObjectWithRoleRequest$outboundSchema:
     TextqlRpcPublicRbacShareObjectWithRoleRequest$Outbound,
     TextqlRpcPublicRbacShareObjectWithRoleRequest
   > = z.object({
+    roleName: z.optional(z.string()),
     objectType: z.optional(z.string()),
     objectId: z.optional(z.string()),
     roleId: z.optional(z.string()),

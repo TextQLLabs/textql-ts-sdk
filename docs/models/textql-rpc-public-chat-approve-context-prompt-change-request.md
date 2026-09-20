@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatApproveContextPromptChangeRequest
 
+context prompt change management
+
 ## Example Usage
 
 ```typescript
@@ -15,5 +17,5 @@ let value: TextqlRpcPublicChatApproveContextPromptChangeRequest = {
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `cellId`           | *string*           | :heavy_check_mark: | N/A                |
+| `cellId`           | *string*           | :heavy_check_mark: | UUID               |
 | `editedContext`    | *string*           | :heavy_check_mark: | N/A                |

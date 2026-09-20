@@ -1,7 +1,5 @@
 # TextqlRpcPublicRbacCreateRoleResponse
 
-Role management requests/responses
-
 ## Example Usage
 
 ```typescript

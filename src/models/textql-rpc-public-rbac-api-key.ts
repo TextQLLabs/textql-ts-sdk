@@ -15,9 +15,6 @@ import {
 export type TextqlRpcPublicRbacApiKey = {
   id?: string | undefined;
   memberId?: string | undefined;
-  /**
-   * pending, approved, rejected
-   */
   clientId?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -114,6 +111,16 @@ export type TextqlRpcPublicRbacApiKey = {
    */
   createdAt?: Date | undefined;
   apiKeyShort?: string | null | undefined;
+  /**
+   * Current names of existing roles this key is scoped to. Renaming a role
+   *
+   * @remarks
+   *  updates its displayed name without changing the key's stored role scope.
+   */
+  assumedRoleNames?: Array<string> | undefined;
+  /**
+   * Stable role IDs retained for compatibility.
+   */
   assumedRoles?: Array<string> | undefined;
   name?: string | null | undefined;
   /**
@@ -307,6 +314,13 @@ export type TextqlRpcPublicRbacApiKey = {
   status?: TextqlRpcPublicRbacApiKeyStatus | undefined;
   ownerDisplayName?: string | null | undefined;
   ownerEmail?: string | null | undefined;
+  /**
+   * When true, requests authenticated with this key skip the
+   *
+   * @remarks
+   *  @textql.com-email superadmin elevation branch. Lets a textql admin
+   *  preview a role's experience without superadmin permission leakage.
+   */
   suppressSuperadmin?: boolean | undefined;
 };
 
@@ -320,6 +334,7 @@ export const TextqlRpcPublicRbacApiKey$inboundSchema: z.ZodMiniType<
   clientId: types.optional(types.string()),
   createdAt: types.optional(types.date()),
   apiKeyShort: z.optional(z.nullable(types.string())),
+  assumedRoleNames: types.optional(z.array(types.string())),
   assumedRoles: types.optional(z.array(types.string())),
   name: z.optional(z.nullable(types.string())),
   expiresAt: types.optional(types.date()),

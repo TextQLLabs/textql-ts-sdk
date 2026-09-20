@@ -13,6 +13,8 @@ export type TextqlRpcPublicCellsAppInfo = {
   name?: string | undefined;
   description?: string | null | undefined;
   /**
+   * publish is gone; no longer populated
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   status?: string | undefined;
@@ -394,6 +396,9 @@ export type TextqlRpcPublicCellsAppInfo = {
    */
   publishedAt?: Date | undefined;
   scheduleEnabled?: boolean | undefined;
+  /**
+   * UTC 5-field cron
+   */
   cronString?: string | null | undefined;
 };
 

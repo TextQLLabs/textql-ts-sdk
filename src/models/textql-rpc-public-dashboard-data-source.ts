@@ -54,7 +54,7 @@ import {
 export type TextqlRpcPublicDashboardDataSourceSqlQuery = {
   sqlQuery: TextqlRpcPublicDashboardSqlQuerySource;
   /**
-   * "sql_query", "file", "python_code", "ontology_sql", or "library_tql"
+   * "sql_query", "file", "python_code", "ontology_sql", "library_tql", or "powerbi_dax"
    */
   type?: string | undefined;
   name?: string | undefined;
@@ -75,7 +75,7 @@ export type TextqlRpcPublicDashboardDataSourceSqlQuery = {
 export type PythonCode = {
   pythonCode: TextqlRpcPublicDashboardPythonCodeSource;
   /**
-   * "sql_query", "file", "python_code", "ontology_sql", or "library_tql"
+   * "sql_query", "file", "python_code", "ontology_sql", "library_tql", or "powerbi_dax"
    */
   type?: string | undefined;
   name?: string | undefined;
@@ -96,7 +96,7 @@ export type PythonCode = {
 export type OntologySql = {
   ontologySql: TextqlRpcPublicDashboardOntologySqlSource;
   /**
-   * "sql_query", "file", "python_code", "ontology_sql", or "library_tql"
+   * "sql_query", "file", "python_code", "ontology_sql", "library_tql", or "powerbi_dax"
    */
   type?: string | undefined;
   name?: string | undefined;
@@ -124,7 +124,7 @@ export type TextqlRpcPublicDashboardDataSourceLibraryTql = {
    */
   libraryTql: TextqlRpcPublicDashboardLibraryTQLSource;
   /**
-   * "sql_query", "file", "python_code", "ontology_sql", or "library_tql"
+   * "sql_query", "file", "python_code", "ontology_sql", "library_tql", or "powerbi_dax"
    */
   type?: string | undefined;
   name?: string | undefined;
@@ -145,7 +145,7 @@ export type TextqlRpcPublicDashboardDataSourceLibraryTql = {
 export type TextqlRpcPublicDashboardDataSourceFile = {
   file: TextqlRpcPublicDashboardFileSource;
   /**
-   * "sql_query", "file", "python_code", "ontology_sql", or "library_tql"
+   * "sql_query", "file", "python_code", "ontology_sql", "library_tql", or "powerbi_dax"
    */
   type?: string | undefined;
   name?: string | undefined;

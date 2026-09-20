@@ -7,6 +7,9 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicAppInvokeAppComputeFunctionRequest = {
   appId?: string | undefined;
   functionName?: string | undefined;
+  /**
+   * JSON object, keys map to function kwargs
+   */
   paramsJson?: string | undefined;
 };
 

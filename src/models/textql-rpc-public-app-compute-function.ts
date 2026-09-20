@@ -20,21 +20,21 @@ import {
   TextqlRpcPublicDashboardGrant$outboundSchema,
 } from "./textql-rpc-public-dashboard-grant.js";
 
+/**
+ * ComputeFunction is a declared server-side function invocable from the app via the bridge.
+ *
+ * @remarks
+ *  Exactly one of code (python, runs on the app's worker), sql (plain SQL on the app's
+ *  private DB), tql (inline TQL source), or tql_path (a Context Library .tql) must be set.
+ *  TQL variants are real TQL (compiled at save time) executed against a connector; sql is
+ *  the app-state path (:name params bound server-side, reserved :_now / :_uuid).
+ */
 export type TextqlRpcPublicAppComputeFunction = {
   name?: string | undefined;
   description?: string | undefined;
   params?: Array<TextqlRpcPublicAppComputeFunctionParam> | undefined;
-  /**
-   * Filter by specific folder
-   */
   returns?: string | null | undefined;
-  /**
-   * Only show apps with no folder
-   */
   code?: string | undefined;
-  /**
-   * Only apps shared with the caller (not authored by them)
-   */
   tqlPath?: string | null | undefined;
   tql?: string | null | undefined;
   /**

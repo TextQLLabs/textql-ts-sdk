@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicRbacApiKeyStatus$inboundSchema,
 } from "./textql-rpc-public-rbac-api-key-status.js";
 
+/**
+ * The credential that authenticated the request.
+ */
 export type TextqlRpcPublicRbacCallerCredential = {
   authMethod?: string | undefined;
   apiKeyId?: string | null | undefined;
@@ -112,6 +115,10 @@ export type TextqlRpcPublicRbacCallerCredential = {
    */
   expiresAt?: Date | undefined;
   status?: TextqlRpcPublicRbacApiKeyStatus | undefined;
+  /**
+   * Current names of existing roles in the credential's scope.
+   */
+  assumedRoleNames?: Array<string> | undefined;
   assumedRoleIds?: Array<string> | undefined;
   clientId?: string | null | undefined;
   scopes?: Array<string> | undefined;
@@ -128,6 +135,7 @@ export const TextqlRpcPublicRbacCallerCredential$inboundSchema: z.ZodMiniType<
   apiKeyShort: z.optional(z.nullable(types.string())),
   expiresAt: types.optional(types.date()),
   status: types.optional(TextqlRpcPublicRbacApiKeyStatus$inboundSchema),
+  assumedRoleNames: types.optional(z.array(types.string())),
   assumedRoleIds: types.optional(z.array(types.string())),
   clientId: z.optional(z.nullable(types.string())),
   scopes: types.optional(z.array(types.string())),

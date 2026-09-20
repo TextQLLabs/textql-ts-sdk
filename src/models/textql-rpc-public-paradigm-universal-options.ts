@@ -36,6 +36,9 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
   feedCommentEnabled?: boolean | undefined;
   feedEngageEnabled?: boolean | undefined;
   streamlitEnabled?: boolean | undefined;
+  /**
+   * compaction enabled by default
+   */
   compactionDisabled?: boolean | undefined;
   gmailEnabled?: boolean | undefined;
   chatHistorySearchEnabled?: boolean | undefined;
@@ -45,12 +48,31 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
     | Array<TextqlRpcPowerbiSelectionPowerBISelection>
     | undefined;
   /**
+   * agent SMS/texting feature removed; no longer read
+   *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   smsMode?: boolean | undefined;
   apiAccessKeyIds?: Array<string> | undefined;
+  /**
+   * Feed participation for agent chats. Unset for non-agent chats (org flag
+   *
+   * @remarks
+   *  governs, unchanged). When false, feed-interaction tools + feed persona
+   *  prompt are dropped even in a feed-enabled org.
+   */
   feedEnabled?: boolean | null | undefined;
+  /**
+   * Suppresses file generation, default false = files enabled
+   */
   fileGenerationDisabled?: boolean | undefined;
+  /**
+   * Context-library file reads. Only the evaluation paradigm reads this today,
+   *
+   * @remarks
+   *  so that an eval can test the agent without context access; every other
+   *  paradigm gates read_file on the org's ContextV3 flag alone.
+   */
   readFileEnabled?: boolean | undefined;
 };
 

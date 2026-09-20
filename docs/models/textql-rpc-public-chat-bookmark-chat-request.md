@@ -1,6 +1,6 @@
 # TextqlRpcPublicChatBookmarkChatRequest
 
-Simplified query request for external API users
+Bookmark management
 
 ## Example Usage
 

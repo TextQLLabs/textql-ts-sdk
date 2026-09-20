@@ -8,23 +8,39 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
+/**
+ * FormCell is the v2 form editor cell. It only references a form_v5 row by id;
+ *
+ * @remarks
+ *  the frontend loads the full form via FormService (no chat-cell scanning). The
+ *  cached fields let the inline chat cell render without a round-trip.
+ */
 export type TextqlRpcPublicCellsFormCell = {
   /**
-   * input "inspect" | "render" | "execute"
+   * list | info | create | edit | view | update | test
    */
   action?: string | undefined;
   formId?: string | null | undefined;
   /**
-   * JSON-encoded map of param name → value
+   * cached for inline display (e.g. "connector")
    */
   formType?: string | null | undefined;
+  /**
+   * cached submission status (draft|submitting|submitted|rejected)
+   */
   status?: string | null | undefined;
   /**
-   * result
+   * cached test status (not_run|running|passed|failed)
    */
   testStatus?: string | null | undefined;
   name?: string | null | undefined;
+  /**
+   * ask_approval outcome once the user acts: submitted | submit_failed | rejected | changes_requested.
+   */
   approvalOutcome?: string | null | undefined;
+  /**
+   * this test's result message (shown by the test row)
+   */
   testMessage?: string | null | undefined;
 };
 

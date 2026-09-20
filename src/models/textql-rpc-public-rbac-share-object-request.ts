@@ -4,10 +4,23 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Object access management messages
+ */
 export type TextqlRpcPublicRbacShareObjectRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of member_id; if both are supplied they must identify the same member.
+   */
+  memberEmail?: string | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | undefined;
+  /**
+   * owner, editor, viewer
+   */
   accessType?: string | undefined;
   /**
    * A Timestamp represents a point in time independent of any time zone or local
@@ -108,6 +121,7 @@ export type TextqlRpcPublicRbacShareObjectRequest = {
 
 /** @internal */
 export type TextqlRpcPublicRbacShareObjectRequest$Outbound = {
+  memberEmail?: string | undefined;
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | undefined;
@@ -122,6 +136,7 @@ export const TextqlRpcPublicRbacShareObjectRequest$outboundSchema:
     TextqlRpcPublicRbacShareObjectRequest$Outbound,
     TextqlRpcPublicRbacShareObjectRequest
   > = z.object({
+    memberEmail: z.optional(z.string()),
     objectType: z.optional(z.string()),
     objectId: z.optional(z.string()),
     memberId: z.optional(z.string()),

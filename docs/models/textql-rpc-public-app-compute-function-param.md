@@ -10,8 +10,8 @@ let value: TextqlRpcPublicAppComputeFunctionParam = {};
 
 ## Fields
 
-| Field              | Type               | Required           | Description        |
-| ------------------ | ------------------ | ------------------ | ------------------ |
-| `name`             | *string*           | :heavy_minus_sign: | N/A                |
-| `type`             | *string*           | :heavy_minus_sign: | N/A                |
-| `description`      | *string*           | :heavy_minus_sign: | N/A                |
+| Field                                      | Type                                       | Required                                   | Description                                |
+| ------------------------------------------ | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
+| `name`                                     | *string*                                   | :heavy_minus_sign:                         | N/A                                        |
+| `type`                                     | *string*                                   | :heavy_minus_sign:                         | string \| number \| boolean \| object \| array |
+| `description`                              | *string*                                   | :heavy_minus_sign:                         | N/A                                        |

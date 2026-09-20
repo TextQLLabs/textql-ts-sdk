@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetChatArtifactsSummary
+ * Artifact summaries for drawer (lightweight, for listing)
+ *
+ * @remarks
+ * Artifact summaries for drawer (lightweight, for listing)
  */
 export function chatsGetArtifactsSummary(
   client: TextqlCore,

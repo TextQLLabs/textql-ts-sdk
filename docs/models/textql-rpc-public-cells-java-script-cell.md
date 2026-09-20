@@ -1,7 +1,5 @@
 # TextqlRpcPublicCellsJavaScriptCell
 
-Simplified report info for report history cell
-
 ## Example Usage
 
 ```typescript

@@ -13,15 +13,21 @@ export type TextqlRpcPublicConnectorConnectorStatEntryQueryCount =
   | number
   | string;
 
+/**
+ * milliseconds
+ */
 export type AvgQueryTimeMs = number | string;
 
 export type TextqlRpcPublicConnectorConnectorStatEntry = {
-  /**
-   * dataset IDs for selected Tableau collections
-   */
   connectorId?: number | undefined;
   queryCount?: number | string | undefined;
+  /**
+   * 0.0-1.0
+   */
   errorRate?: number | undefined;
+  /**
+   * milliseconds
+   */
   avgQueryTimeMs?: number | string | undefined;
   uniqueUsers?: number | undefined;
   /**

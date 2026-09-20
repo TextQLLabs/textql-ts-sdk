@@ -20,13 +20,21 @@ import {
   TextqlRpcPublicCellsQuestionsStatus$inboundSchema,
 } from "./textql-rpc-public-cells-questions-status.js";
 
+/**
+ * QuestionsCell is the agent's "ask the user structured questions" tool. It is a
+ *
+ * @remarks
+ *  haltable cell: the agent pauses until the user submits or dismisses inline.
+ *  On submit the answers go to the agent; on dismiss only the answered count does
+ *  and the agent waits for the user's next message (the dismissal reason).
+ */
 export type TextqlRpcPublicCellsQuestionsCell = {
   status?: TextqlRpcPublicCellsQuestionsStatus | undefined;
   questions?: Array<TextqlRpcPublicCellsQuestionSpec> | undefined;
-  answers?: Array<TextqlRpcPublicCellsQuestionAnswer> | undefined;
   /**
-   * formfield inputs: the value is never shown to the agent
+   * prefill (pending) / summary (answered); sensitive values blanked
    */
+  answers?: Array<TextqlRpcPublicCellsQuestionAnswer> | undefined;
   answeredCount?: number | undefined;
 };
 

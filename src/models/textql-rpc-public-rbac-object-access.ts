@@ -15,7 +15,15 @@ export type TextqlRpcPublicRbacObjectAccess = {
   objectId?: string | undefined;
   createdBy?: string | null | undefined;
   isPublic?: boolean | undefined;
+  /**
+   * Email of the member receiving access, when available.
+   */
+  memberEmail?: string | null | undefined;
   memberId?: string | null | undefined;
+  /**
+   * Current name of the role receiving access.
+   */
+  roleName?: string | null | undefined;
   roleId?: string | null | undefined;
   accessType?: string | undefined;
   grantedBy?: string | null | undefined;
@@ -314,7 +322,9 @@ export const TextqlRpcPublicRbacObjectAccess$inboundSchema: z.ZodMiniType<
   objectId: types.optional(types.string()),
   createdBy: z.optional(z.nullable(types.string())),
   isPublic: types.optional(types.boolean()),
+  memberEmail: z.optional(z.nullable(types.string())),
   memberId: z.optional(z.nullable(types.string())),
+  roleName: z.optional(z.nullable(types.string())),
   roleId: z.optional(z.nullable(types.string())),
   accessType: types.optional(types.string()),
   grantedBy: z.optional(z.nullable(types.string())),

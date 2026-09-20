@@ -23,14 +23,32 @@ import {
 export type TextqlRpcPublicConnectorExampleQuery = {
   id?: string | undefined;
   /**
-   * If set, only return queries with this feature type
+   * Display name (e.g., "Explore Data")
    */
   label?: string | undefined;
+  /**
+   * Query text to send (plain text, no formatting)
+   */
   message?: string | undefined;
+  /**
+   * True if requires multiple connectors
+   */
   isMultiSource?: boolean | undefined;
+  /**
+   * Specific connectors needed
+   */
   requiredConnectorIds?: Array<number> | undefined;
+  /**
+   * Category (e.g., "Users", "Sales", "Performance")
+   */
   category?: string | undefined;
+  /**
+   * Rich formatted message with styled feature words
+   */
   segments?: Array<TextqlRpcPublicConnectorMessageSegment> | undefined;
+  /**
+   * Features this query will use (for tool enabling)
+   */
   requiredFeatures?: Array<TextqlRpcPublicConnectorFeatureType> | undefined;
   sourceContext?: TextqlRpcPublicConnectorConnectorContext | undefined;
 };

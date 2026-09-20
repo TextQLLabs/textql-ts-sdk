@@ -14,13 +14,7 @@ import {
 
 export type TextqlRpcPublicObserveRefineTopicDraftResponse = {
   name?: string | undefined;
-  /**
-   * example questions users ask
-   */
   covers?: string | undefined;
-  /**
-   * "should NOT be tagged" phrases
-   */
   excludes?: string | undefined;
   vague?: boolean | undefined;
   qualityHint?: string | undefined;

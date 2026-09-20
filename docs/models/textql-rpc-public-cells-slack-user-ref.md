@@ -1,7 +1,5 @@
 # TextqlRpcPublicCellsSlackUserRef
 
-Reference types for context data
-
 ## Example Usage
 
 ```typescript

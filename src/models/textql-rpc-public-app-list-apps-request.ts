@@ -8,8 +8,17 @@ export type TextqlRpcPublicAppListAppsRequest = {
   searchTerm?: string | null | undefined;
   limit?: number | undefined;
   offset?: number | undefined;
+  /**
+   * Filter by specific folder
+   */
   folderId?: string | null | undefined;
+  /**
+   * Only show apps with no folder
+   */
   uncategorizedOnly?: boolean | null | undefined;
+  /**
+   * Only apps shared with the caller (not authored by them)
+   */
   sharedWithMe?: boolean | null | undefined;
 };
 

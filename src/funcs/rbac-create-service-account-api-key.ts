@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * CreateServiceAccountApiKey
+ * Create an API key owned by a service account. Requires organization:write.
+ *
+ * @remarks
+ * Create an API key owned by a service account. Requires organization:write.
  */
 export function rbacCreateServiceAccountApiKey(
   client: TextqlCore,

@@ -16,9 +16,6 @@ import {
 
 export type TextqlRpcPublicAppCapability = {
   type?: string | undefined;
-  /**
-   * whether the caller may edit this app (HasAppWriteAccess)
-   */
   name?: string | null | undefined;
   connectorId?: number | null | undefined;
   statement?: string | null | undefined;
@@ -26,7 +23,13 @@ export type TextqlRpcPublicAppCapability = {
   subject?: string | null | undefined;
   body?: string | null | undefined;
   parameters?: Array<TextqlRpcPublicAppCapabilityParam> | undefined;
+  /**
+   * ask only; empty = the org's base agent
+   */
   agentId?: string | null | undefined;
+  /**
+   * ask only: 'read' or 'write' lets the asked agent query (or modify) the app's private database; base agent only
+   */
   appDb?: string | null | undefined;
 };
 

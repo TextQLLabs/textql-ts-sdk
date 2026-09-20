@@ -1,5 +1,7 @@
 # TextqlRpcPublicChatQueryOneShotRequest
 
+Simplified query request for external API users
+
 ## Example Usage
 
 ```typescript

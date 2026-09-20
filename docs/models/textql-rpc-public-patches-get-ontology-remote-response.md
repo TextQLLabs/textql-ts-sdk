@@ -1,7 +1,5 @@
 # TextqlRpcPublicPatchesGetOntologyRemoteResponse
 
-Deprecated: use SetOntologyOwnersResponse.
-
 ## Example Usage
 
 ```typescript

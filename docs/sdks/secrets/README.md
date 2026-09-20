@@ -8,7 +8,7 @@
 * [getApiAccessKey](#getapiaccesskey) - GetApiAccessKey
 * [listApiAccessKeys](#listapiaccesskeys) - ListApiAccessKeys
 * [listApiProviders](#listapiproviders) - ListApiProviders
-* [testApiAccessKey](#testapiaccesskey) - ---- API Connectors (deprecated) ----
+* [testApiAccessKey](#testapiaccesskey) - TestApiAccessKey
 * [upsertApiAccessKey](#upsertapiaccesskey) - UpsertApiAccessKey
 
 ## deleteApiAccessKey
@@ -305,7 +305,7 @@ run();
 
 ## testApiAccessKey
 
----- API Connectors (deprecated) ----
+TestApiAccessKey
 
 ### Example Usage
 

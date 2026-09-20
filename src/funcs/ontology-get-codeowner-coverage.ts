@@ -27,11 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Deprecated: use SetOntologyOwners with the desired entry set. An empty  desired set removes every entry and opens the directory.
- *
- * @remarks
- * Deprecated: use SetOntologyOwners with the desired entry set. An empty
- *  desired set removes every entry and opens the directory.
+ * GetCodeownerCoverage
  */
 export function ontologyGetCodeownerCoverage(
   client: TextqlCore,

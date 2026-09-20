@@ -7,10 +7,14 @@ import * as z from "zod/v4-mini";
 export type TextqlRpcPublicObserveUpdateCustomTopicRequest = {
   topicId?: string | undefined;
   name?: string | undefined;
-  covers?: string | null | undefined;
   /**
-   * 'live' | 'backfill' | 'manual'
+   * When present, the definition is replaced. A changed definition wipes the
+   *
+   * @remarks
+   *  topic's verdict='tagged' rows (manual exclusions survive) — the caller is
+   *  expected to follow with BackfillCustomTopic to rebuild them.
    */
+  covers?: string | null | undefined;
   excludes?: string | null | undefined;
 };
 

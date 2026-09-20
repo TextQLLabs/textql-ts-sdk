@@ -27,7 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * GetArtifact
+ * Full artifact data (lazy load when selected)
+ *
+ * @remarks
+ * Full artifact data (lazy load when selected)
  */
 export function chatsGetArtifact(
   client: TextqlCore,

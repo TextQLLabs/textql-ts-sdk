@@ -27,10 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * View analytics: reads the engagement views recorded on app page load.
+ * A bounded row preview of one app_db table (SELECT ... LIMIT n).
  *
  * @remarks
- * View analytics: reads the engagement views recorded on app page load.
+ * A bounded row preview of one app_db table (SELECT ... LIMIT n).
  */
 export function appsGetDBTablePreview(
   client: TextqlCore,

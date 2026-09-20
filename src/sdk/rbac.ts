@@ -6,13 +6,14 @@ import { rbacApproveAccessRequest } from "../funcs/rbac-approve-access-request.j
 import { rbacAssignPermissionToRole } from "../funcs/rbac-assign-permission-to-role.js";
 import { rbacAssignRoleToMember } from "../funcs/rbac-assign-role-to-member.js";
 import { rbacCreateApiKey } from "../funcs/rbac-create-api-key.js";
+import { rbacCreateImportUpload } from "../funcs/rbac-create-import-upload.js";
 import { rbacCreatePersonalApiKey } from "../funcs/rbac-create-personal-api-key.js";
 import { rbacCreateRole } from "../funcs/rbac-create-role.js";
 import { rbacCreateServiceAccountApiKey } from "../funcs/rbac-create-service-account-api-key.js";
 import { rbacCreateServiceAccount } from "../funcs/rbac-create-service-account.js";
 import { rbacDeleteRole } from "../funcs/rbac-delete-role.js";
 import { rbacDeleteServiceAccount } from "../funcs/rbac-delete-service-account.js";
-import { rbacExportRolePermissions } from "../funcs/rbac-export-role-permissions.js";
+import { rbacExportRoles } from "../funcs/rbac-export-roles.js";
 import { rbacGenerateShareLink } from "../funcs/rbac-generate-share-link.js";
 import { rbacGetCurrentMemberRolesAndPermissions } from "../funcs/rbac-get-current-member-roles-and-permissions.js";
 import { rbacGetEmbedUserApiKey } from "../funcs/rbac-get-embed-user-api-key.js";
@@ -21,11 +22,13 @@ import { rbacGetObjectAccess } from "../funcs/rbac-get-object-access.js";
 import { rbacGetRolePermissions } from "../funcs/rbac-get-role-permissions.js";
 import { rbacGetRole } from "../funcs/rbac-get-role.js";
 import { rbacHasObjectAccess } from "../funcs/rbac-has-object-access.js";
+import { rbacImportRoles } from "../funcs/rbac-import-roles.js";
 import { rbacListAccessRequests } from "../funcs/rbac-list-access-requests.js";
 import { rbacListApiKeys } from "../funcs/rbac-list-api-keys.js";
 import { rbacListPermissions } from "../funcs/rbac-list-permissions.js";
 import { rbacListRoles } from "../funcs/rbac-list-roles.js";
 import { rbacListServiceAccounts } from "../funcs/rbac-list-service-accounts.js";
+import { rbacParseRoleImport } from "../funcs/rbac-parse-role-import.js";
 import { rbacRejectAccessRequest } from "../funcs/rbac-reject-access-request.js";
 import { rbacRemovePermissionFromRole } from "../funcs/rbac-remove-permission-from-role.js";
 import { rbacRemoveRoleFromMember } from "../funcs/rbac-remove-role-from-member.js";
@@ -74,10 +77,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   * Member role assignment
    *
    * @remarks
-   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   * Member role assignment
    */
   async assignRoleToMember(
     request: operations.RBACServiceAssignRoleToMemberRequest,
@@ -91,11 +94,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,  internal only.
+   * API Key management
    *
    * @remarks
-   * SCIM group-mapping migration tooling: one-time role<->group conversion,
-   *  internal only.
+   * API Key management
    */
   async createApiKey(
     request: operations.RBACServiceCreateApiKeyRequest,
@@ -109,7 +111,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * CreatePersonalApiKey
+   * Create an API key owned by the calling member. Requires no permission.
+   *
+   * @remarks
+   * Create an API key owned by the calling member. Requires no permission.
    */
   async createPersonalApiKey(
     request: operations.RBACServiceCreatePersonalApiKeyRequest,
@@ -140,7 +145,24 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * CreateServiceAccount
+   * CreateRolePermissionsUploadUrl
+   */
+  async createImportUpload(
+    request: operations.RBACServiceCreateRolePermissionsUploadUrlRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceCreateRolePermissionsUploadUrlResponse> {
+    return unwrapAsync(rbacCreateImportUpload(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Service account management
+   *
+   * @remarks
+   * Service account management
    */
   async createServiceAccount(
     request: operations.RBACServiceCreateServiceAccountRequest,
@@ -154,7 +176,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * CreateServiceAccountApiKey
+   * Create an API key owned by a service account. Requires organization:write.
+   *
+   * @remarks
+   * Create an API key owned by a service account. Requires organization:write.
    */
   async createServiceAccountApiKey(
     request: operations.RBACServiceCreateServiceAccountApiKeyRequest,
@@ -198,11 +223,11 @@ export class Rbac extends ClientSDK {
   /**
    * ExportRolePermissions
    */
-  async exportRolePermissions(
+  async exportRoles(
     request: operations.RBACServiceExportRolePermissionsRequest,
     options?: RequestOptions,
   ): Promise<operations.RBACServiceExportRolePermissionsResponse> {
-    return unwrapAsync(rbacExportRolePermissions(
+    return unwrapAsync(rbacExportRoles(
       this,
       request,
       options,
@@ -224,7 +249,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * GetCurrentMemberRolesAndPermissions
+   * Get current member roles and permissions
+   *
+   * @remarks
+   * Get current member roles and permissions
    */
   async getCurrentMemberRolesAndPermissions(
     request: operations.RBACServiceGetCurrentMemberRolesAndPermissionsRequest,
@@ -254,10 +282,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Member role assignment
-   *
-   * @remarks
-   * Member role assignment
+   * GetMemberRoles
    */
   async getMemberRoles(
     request: operations.RBACServiceGetMemberRolesRequest,
@@ -299,10 +324,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Permission management
-   *
-   * @remarks
-   * Permission management
+   * GetRolePermissions
    */
   async getRolePermissions(
     request: operations.RBACServiceGetRolePermissionsRequest,
@@ -323,6 +345,20 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceHasObjectAccessResponse> {
     return unwrapAsync(rbacHasObjectAccess(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * ImportRolePermissions
+   */
+  async importRoles(
+    request: operations.RBACServiceImportRolePermissionsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceImportRolePermissionsResponse> {
+    return unwrapAsync(rbacImportRoles(
       this,
       request,
       options,
@@ -358,7 +394,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * ListPermissions
+   * Permission management
+   *
+   * @remarks
+   * Permission management
    */
   async listPermissions(
     request: operations.RBACServiceListPermissionsRequest,
@@ -393,6 +432,24 @@ export class Rbac extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.RBACServiceListServiceAccountsResponse> {
     return unwrapAsync(rbacListServiceAccounts(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Parse a CSV or XLSX file into an editable draft without creating roles.  Unknown names and values are preserved for correction; import validates them.
+   *
+   * @remarks
+   * Parse a CSV or XLSX file into an editable draft without creating roles.
+   *  Unknown names and values are preserved for correction; import validates them.
+   */
+  async parseRoleImport(
+    request: operations.RBACServiceParseRolePermissionsImportRequest,
+    options?: RequestOptions,
+  ): Promise<operations.RBACServiceParseRolePermissionsImportResponse> {
+    return unwrapAsync(rbacParseRoleImport(
       this,
       request,
       options,
@@ -442,7 +499,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * RequestAccess
+   * Access request management
+   *
+   * @remarks
+   * Access request management
    */
   async requestAccess(
     request: operations.RBACServiceRequestAccessRequest,
@@ -470,10 +530,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Group management. Internal only.
-   *
-   * @remarks
-   * Group management. Internal only.
+   * RevokeObjectAccess
    */
   async revokeObjectAccess(
     request: operations.RBACServiceRevokeObjectAccessRequest,
@@ -487,10 +544,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Object sharing and access control
-   *
-   * @remarks
-   * Object sharing and access control
+   * RotateApiKey
    */
   async rotateApiKey(
     request: operations.RBACServiceRotateApiKeyRequest,
@@ -504,7 +558,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * SetRolePermissions
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
+   *
+   * @remarks
+   * Bulk add/remove permissions on a role in one call, producing a single audit entry for the whole edit.
    */
   async setRolePermissions(
     request: operations.RBACServiceSetRolePermissionsRequest,
@@ -518,10 +575,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Get current member roles and permissions
+   * Object sharing and access control
    *
    * @remarks
-   * Get current member roles and permissions
+   * Object sharing and access control
    */
   async shareObject(
     request: operations.RBACServiceShareObjectRequest,
@@ -535,10 +592,7 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * Describe what a key is allowed to do.
-   *
-   * @remarks
-   * Describe what a key is allowed to do.
+   * ShareObjectWithRole
    */
   async shareObjectWithRole(
     request: operations.RBACServiceShareObjectWithRoleRequest,
@@ -594,7 +648,10 @@ export class Rbac extends ClientSDK {
   }
 
   /**
-   * WhoAmI
+   * Describe what a key is allowed to do.
+   *
+   * @remarks
+   * Describe what a key is allowed to do.
    */
   async whoAmI(
     request: operations.RBACServiceWhoAmIRequest,

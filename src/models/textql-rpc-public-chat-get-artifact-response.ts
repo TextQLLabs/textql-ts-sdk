@@ -27,48 +27,33 @@ import {
 
 export type Streamlit = {
   streamlit: TextqlRpcPublicChatStreamlitArtifactData;
-  /**
-   * Flat list, sorted by created_at DESC
-   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type Form = {
   form: TextqlRpcPublicChatFormArtifactData;
-  /**
-   * Flat list, sorted by created_at DESC
-   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type TextqlRpcPublicChatGetArtifactResponseFile = {
   /**
-   * Request full artifact data when item is selected
+   * File-based artifacts (images, PDFs, CSVs, HTML, text files)
    */
   file: TextqlRpcPublicChatFileArtifactData;
-  /**
-   * Flat list, sorted by created_at DESC
-   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
-export type Dashboard = {
-  /**
-   * File-based artifacts (images, PDFs, CSVs, HTML, text files)
-   */
+export type TextqlRpcPublicChatGetArtifactResponseDashboard = {
   dashboard: TextqlRpcPublicChatDashboardArtifactData;
-  /**
-   * Flat list, sorted by created_at DESC
-   */
   id?: string | undefined;
   name?: string | undefined;
 };
 
 export type TextqlRpcPublicChatGetArtifactResponse =
-  | Dashboard
+  | TextqlRpcPublicChatGetArtifactResponseDashboard
   | TextqlRpcPublicChatGetArtifactResponseFile
   | Form
   | Streamlit;
@@ -135,27 +120,34 @@ export function textqlRpcPublicChatGetArtifactResponseFileFromJSON(
 }
 
 /** @internal */
-export const Dashboard$inboundSchema: z.ZodMiniType<Dashboard, unknown> = z
-  .object({
-    dashboard: TextqlRpcPublicChatDashboardArtifactData$inboundSchema,
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-  });
+export const TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema:
+  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponseDashboard, unknown> = z
+    .object({
+      dashboard: TextqlRpcPublicChatDashboardArtifactData$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+    });
 
-export function dashboardFromJSON(
+export function textqlRpcPublicChatGetArtifactResponseDashboardFromJSON(
   jsonString: string,
-): SafeParseResult<Dashboard, SDKValidationError> {
+): SafeParseResult<
+  TextqlRpcPublicChatGetArtifactResponseDashboard,
+  SDKValidationError
+> {
   return safeParse(
     jsonString,
-    (x) => Dashboard$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Dashboard' from JSON`,
+    (x) =>
+      TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema.parse(
+        JSON.parse(x),
+      ),
+    `Failed to parse 'TextqlRpcPublicChatGetArtifactResponseDashboard' from JSON`,
   );
 }
 
 /** @internal */
 export const TextqlRpcPublicChatGetArtifactResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponse, unknown> = smartUnion([
-    z.lazy(() => Dashboard$inboundSchema),
+    z.lazy(() => TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema),
     z.lazy(() => TextqlRpcPublicChatGetArtifactResponseFile$inboundSchema),
     z.lazy(() => Form$inboundSchema),
     z.lazy(() => Streamlit$inboundSchema),

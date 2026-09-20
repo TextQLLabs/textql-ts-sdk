@@ -50,6 +50,9 @@ export type TextqlRpcPublicCellsOntologyEditorCell = {
   operation?: TextqlRpcPublicCellsOntologyEditorOperation | undefined;
   status?: TextqlRpcPublicCellsOntologyEditorStatus | undefined;
   listFilter?: TextqlRpcPublicCellsOntologyEditorListFilter | undefined;
+  /**
+   * Number of items returned by list operation
+   */
   listCount?: number | null | undefined;
   listObjects?: Array<TextqlRpcPublicOntologyOntologyObject> | undefined;
   listAttributes?: Array<TextqlRpcPublicOntologyOntologyAttribute> | undefined;

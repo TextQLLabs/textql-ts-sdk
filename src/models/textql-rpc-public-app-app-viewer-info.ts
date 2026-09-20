@@ -8,16 +8,6 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
-/**
- * AppServer declares whether the app runs an optional persistent server: a
- *
- * @remarks
- *  long-lived python process in the app's dedicated worker. Its handlers serve
- *  webhook deliveries and server-handled compute functions, and module globals
- *  persist between requests (until the worker recycles). The server's source is
- *  not stored here — it lives in the app's file tree under `server/`, with
- *  `server/main.py` as the entry module (importing sibling `server/*.py` files).
- */
 export type TextqlRpcPublicAppAppViewerInfo = {
   memberId?: string | undefined;
   /**

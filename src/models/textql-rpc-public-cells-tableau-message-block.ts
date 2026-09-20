@@ -10,7 +10,13 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicCellsTableauMessageBlock = {
   content?: string | undefined;
+  /**
+   * optional, only present for blocks with images
+   */
   imageBase64?: string | undefined;
+  /**
+   * optional, only present for blocks with PDFs
+   */
   pdfBase64?: string | undefined;
 };
 

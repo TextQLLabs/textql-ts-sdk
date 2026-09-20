@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * Simplified query response for external API users
- */
 export type TextqlRpcPublicChatUnbookmarkChatRequest = {
   chatId: string;
 };

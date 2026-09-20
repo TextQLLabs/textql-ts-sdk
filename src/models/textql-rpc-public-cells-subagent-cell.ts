@@ -25,13 +25,7 @@ export type TextqlRpcPublicCellsSubagentCell = {
   objective?: string | undefined;
   subagentName?: string | undefined;
   agentId?: string | null | undefined;
-  /**
-   * choice / multichoice
-   */
   detached?: boolean | undefined;
-  /**
-   * adds a free-text "Other" option
-   */
   childChatId?: string | undefined;
   status?: TextqlRpcPublicCellsSubagentRunStatus | undefined;
   finalMessage?: string | undefined;

@@ -6,6 +6,9 @@ import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicChatAttachDatasetRequest = {
   chatId: string;
+  /**
+   * uses latest version
+   */
   datasetId: string;
 };
 

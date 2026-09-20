@@ -1,7 +1,5 @@
 # TextqlRpcPublicPatchesGetOntologyRemoteRequest
 
-Deprecated: use SetOntologyOwnersRequest.
-
 ## Example Usage
 
 ```typescript

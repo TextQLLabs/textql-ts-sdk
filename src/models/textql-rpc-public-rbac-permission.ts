@@ -7,9 +7,16 @@ import { safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
+import {
+  TextqlRpcPublicRbacPermissionSpec,
+  TextqlRpcPublicRbacPermissionSpec$inboundSchema,
+} from "./textql-rpc-public-rbac-permission-spec.js";
 
 export type TextqlRpcPublicRbacPermission = {
-  id?: string | undefined;
+  /**
+   * A single RBAC permission. Select a resource and one of its supported actions.
+   */
+  spec?: TextqlRpcPublicRbacPermissionSpec | undefined;
   resource?: string | undefined;
   action?: string | undefined;
   description?: string | undefined;
@@ -114,7 +121,7 @@ export const TextqlRpcPublicRbacPermission$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacPermission,
   unknown
 > = z.object({
-  id: types.optional(types.string()),
+  spec: types.optional(TextqlRpcPublicRbacPermissionSpec$inboundSchema),
   resource: types.optional(types.string()),
   action: types.optional(types.string()),
   description: types.optional(types.string()),

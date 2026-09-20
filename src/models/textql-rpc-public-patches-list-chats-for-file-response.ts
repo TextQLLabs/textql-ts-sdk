@@ -13,6 +13,9 @@ import {
 } from "./textql-rpc-public-patches-file-chat-usage.js";
 
 export type TextqlRpcPublicPatchesListChatsForFileResponse = {
+  /**
+   * most recent pull first
+   */
   chats?: Array<TextqlRpcPublicPatchesFileChatUsage> | undefined;
 };
 

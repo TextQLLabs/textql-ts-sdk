@@ -5,11 +5,19 @@
 import * as z from "zod/v4-mini";
 
 export type TextqlRpcPublicRbacGetEmbedUserApiKeyRequest = {
+  /**
+   * Email within the caller's organization; case-insensitive, with outer whitespace ignored.
+   *
+   * @remarks
+   *  Use instead of member_id; if both are supplied they must identify the same member.
+   */
+  memberEmail?: string | undefined;
   memberId?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacGetEmbedUserApiKeyRequest$Outbound = {
+  memberEmail?: string | undefined;
   memberId?: string | undefined;
 };
 
@@ -19,6 +27,7 @@ export const TextqlRpcPublicRbacGetEmbedUserApiKeyRequest$outboundSchema:
     TextqlRpcPublicRbacGetEmbedUserApiKeyRequest$Outbound,
     TextqlRpcPublicRbacGetEmbedUserApiKeyRequest
   > = z.object({
+    memberEmail: z.optional(z.string()),
     memberId: z.optional(z.string()),
   });
 

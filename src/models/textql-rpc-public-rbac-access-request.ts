@@ -14,9 +14,15 @@ export type TextqlRpcPublicRbacAccessRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;
   memberId?: string | undefined;
+  /**
+   * owner, editor, viewer
+   */
   requestedAccessType?: string | undefined;
   justification?: string | undefined;
   requestMessage?: string | null | undefined;
+  /**
+   * pending, approved, rejected
+   */
   status?: string | undefined;
   reviewedBy?: string | null | undefined;
   rejectionReason?: string | null | undefined;

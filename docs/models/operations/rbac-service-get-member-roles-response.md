@@ -7,6 +7,16 @@
 
 ```typescript
 const value: models.TextqlRpcPublicRbacGetMemberRolesResponse = {
+  memberRolesByEmail: {
+    "key": {
+      roles: [
+        {
+          createdAt: new Date("2023-01-15T01:30:15.01Z"),
+          updatedAt: new Date("2023-01-15T01:30:15.01Z"),
+        },
+      ],
+    },
+  },
   memberRoles: {
     "key": {
       roles: [

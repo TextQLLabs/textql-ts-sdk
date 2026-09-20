@@ -4,9 +4,6 @@
 
 import * as z from "zod/v4-mini";
 
-/**
- * context prompt change management
- */
 export type TextqlRpcPublicChatRejectContextPromptChangeRequest = {
   /**
    * UUID

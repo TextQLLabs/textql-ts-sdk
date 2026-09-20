@@ -361,6 +361,9 @@ export type TextqlRpcPublicPatchesFileUsage = {
    *  ) to obtain a formatter capable of generating timestamps in this format.
    */
   lastUsed?: Date | undefined;
+  /**
+   * chats that pulled this file AND where the agent declared it as a source
+   */
   chatsCited?: number | undefined;
 };
 

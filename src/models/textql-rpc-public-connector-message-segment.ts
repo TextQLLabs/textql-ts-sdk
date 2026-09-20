@@ -12,7 +12,13 @@ import {
   TextqlRpcPublicConnectorFeatureType$inboundSchema,
 } from "./textql-rpc-public-connector-feature-type.js";
 
+/**
+ * A segment of an example query message - either plain text or a styled feature word
+ */
 export type TextqlRpcPublicConnectorMessageSegment = {
+  /**
+   * The text content of this segment
+   */
   content?: string | undefined;
   /**
    * Feature types for nudge queries - identifies which feature a query promotes

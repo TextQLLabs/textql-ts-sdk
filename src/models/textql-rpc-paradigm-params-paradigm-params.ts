@@ -42,16 +42,26 @@ export type TextqlRpcParadigmParamsParadigmParams = {
   chatHistorySearchEnabled?: boolean | undefined;
   googleCalendarEnabled?: boolean | undefined;
   parallelToolsEnabled?: boolean | undefined;
-  emailOutputEnabled?: boolean | undefined;
-  questionsToolEnabled?: boolean | undefined;
-  powerbiSelections?:
-    | Array<TextqlRpcPowerbiSelectionPowerBISelection>
-    | undefined;
   /**
    * Per-chat/agent options: registers the EmailCell tool (default off, opt-in).
    *
    * @remarks
    *  Org tool_restrictions: allows the Email tool org-wide (default on).
+   */
+  emailOutputEnabled?: boolean | undefined;
+  /**
+   * Org-level toggle for the questions tool (the agent's "ask the user
+   *
+   * @remarks
+   *  structured questions" cell). Gated additionally by the form-editor master
+   *  switch; there is no per-member toggle. Default off.
+   */
+  questionsToolEnabled?: boolean | undefined;
+  powerbiSelections?:
+    | Array<TextqlRpcPowerbiSelectionPowerBISelection>
+    | undefined;
+  /**
+   * Tableau collection UUID
    */
   datasetId?: string | null | undefined;
 };

@@ -27,11 +27,10 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Renders the live artifact in the production sandbox and returns browser diagnostics.  This is synchronous so callers can verify an app before sharing its URL.
+ * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
  *
  * @remarks
- * Renders the live artifact in the production sandbox and returns browser diagnostics.
- *  This is synchronous so callers can verify an app before sharing its URL.
+ * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
  */
 export function appsListVersions(
   client: TextqlCore,

@@ -4,9 +4,15 @@
 
 import * as z from "zod/v4-mini";
 
+/**
+ * Access request management messages
+ */
 export type TextqlRpcPublicRbacRequestAccessRequest = {
   objectType?: string | undefined;
   objectId?: string | undefined;
+  /**
+   * owner, editor, viewer
+   */
   requestedAccessType?: string | undefined;
   justification?: string | undefined;
   requestMessage?: string | null | undefined;

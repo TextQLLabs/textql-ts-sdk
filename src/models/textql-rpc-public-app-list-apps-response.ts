@@ -12,6 +12,9 @@ import {
   TextqlRpcPublicAppApp$inboundSchema,
 } from "./textql-rpc-public-app-app.js";
 
+/**
+ * List responses omit code (heavyweight); fetch a single app for it.
+ */
 export type TextqlRpcPublicAppListAppsResponse = {
   apps?: Array<TextqlRpcPublicAppApp> | undefined;
   totalCount?: number | undefined;

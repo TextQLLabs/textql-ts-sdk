@@ -112,6 +112,9 @@ export type TextqlRpcPublicObserveAppBillingStat = {
   lastViewedAt?: Date | undefined;
   dailyViewCounts?: Array<number> | undefined;
   isPublished?: boolean | undefined;
+  /**
+   * ana.ask spend attributed to this app (cost_center "data_app"), separate from compute_acu.
+   */
   llmAcu?: number | undefined;
   totalAcu?: number | undefined;
 };

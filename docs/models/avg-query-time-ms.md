@@ -1,5 +1,7 @@
 # AvgQueryTimeMs
 
+milliseconds
+
 
 ## Supported Types
 

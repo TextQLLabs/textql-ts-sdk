@@ -27,10 +27,7 @@ import { APICall, APIPromise } from "../types/async.js";
 import { Result } from "../types/fp.js";
 
 /**
- * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
- *
- * @remarks
- * Version history: git-backed, one version per save (plus legacy publish-era snapshots); authors can list and restore.
+ * RestoreAppVersion
  */
 export function appsRestoreAppVersion(
   client: TextqlCore,
