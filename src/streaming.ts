@@ -3,7 +3,7 @@ import { type Client, createClient, type Interceptor, type Transport } from "@co
 import { createConnectTransport } from "@connectrpc/connect-web";
 
 import { serverURLFromEnv } from "./env-config.js";
-import { ServerList } from "./lib/config.js";
+import { SDK_METADATA, ServerList } from "./lib/config.js";
 import { ClientSDK } from "./lib/sdks.js";
 import { AgentService } from "./generated/connect/public/agent_pb.js";
 import { AppService } from "./generated/connect/public/apps_pb.js";
@@ -55,6 +55,7 @@ function createTransport(options: StreamingClientOptions): Transport {
   const { apiKey } = options;
   const auth: Interceptor = (next) => async (req) => {
     req.header.set("tql_api_key", typeof apiKey === "function" ? await apiKey() : apiKey);
+    req.header.set("X-TextQL-SDK", `typescript/${SDK_METADATA.sdkVersion}`);
     return next(req);
   };
   return createConnectTransport({

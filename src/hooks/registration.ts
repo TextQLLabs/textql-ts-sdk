@@ -1,6 +1,14 @@
-import { SDKOptions } from "../lib/config.js";
+import { SDK_METADATA, SDKOptions } from "../lib/config.js";
+import { RequestInput } from "../lib/http.js";
 import { serverURLFromEnv } from "../env-config.js";
-import { BeforeRequestContext, BeforeRequestHook, Hooks, SDKInitHook } from "./types.js";
+import {
+  BeforeCreateRequestContext,
+  BeforeCreateRequestHook,
+  BeforeRequestContext,
+  BeforeRequestHook,
+  Hooks,
+  SDKInitHook,
+} from "./types.js";
 
 /*
  * This file is only ever generated once on the first generation and then is free to be modified.
@@ -9,6 +17,17 @@ import { BeforeRequestContext, BeforeRequestHook, Hooks, SDKInitHook } from "./t
  */
 
 const RPC_PREFIX = "/rpc/public";
+
+class SDKOriginHook implements BeforeCreateRequestHook {
+  beforeCreateRequest(
+    _hookCtx: BeforeCreateRequestContext,
+    input: RequestInput,
+  ): RequestInput {
+    const headers = new Headers(input.options?.headers);
+    headers.set("X-TextQL-SDK", `typescript/${SDK_METADATA.sdkVersion}`);
+    return { ...input, options: { ...input.options, headers } };
+  }
+}
 
 class RPCPublicPrefixHook implements BeforeRequestHook {
   beforeRequest(_hookCtx: BeforeRequestContext, request: Request): Request {
@@ -41,5 +60,6 @@ export function initHooks(hooks: Hooks) {
   // with an instance of a hook that implements that specific Hook interface
   // Hooks are registered per SDK instance, and are valid for the lifetime of the SDK instance
   hooks.registerSDKInitHook(new ServerURLFromEnvHook());
+  hooks.registerBeforeCreateRequestHook(new SDKOriginHook());
   hooks.registerBeforeRequestHook(new RPCPublicPrefixHook());
 }
