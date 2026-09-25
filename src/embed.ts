@@ -28,7 +28,49 @@ export interface EmbedAppSummary {
   screenshotUrl: string | null;
 }
 
+/** Server-side diagnostics. Request headers, bodies and compute params are omitted. */
+export interface EmbedErrorLog {
+  method: string;
+  path: string;
+  status: number;
+  operation: string;
+  appId?: string | undefined;
+  functionName?: string | undefined;
+  errors: Array<{
+    name: string;
+    message: string;
+    code?: string | undefined;
+    status?: number | undefined;
+    stack?: string | undefined;
+  }>;
+}
+
+interface OperationContext {
+  operation: string;
+  appId?: string | undefined;
+  functionName?: string | undefined;
+}
+
+class OperationError extends Error {
+  constructor(readonly context: OperationContext, cause: unknown) {
+    super(`${context.operation} failed`, { cause });
+  }
+}
+
+async function operation<T>(context: OperationContext, run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (cause) {
+    throw new OperationError(context, cause);
+  }
+}
+
 export interface EmbedOptions {
+  /**
+   * Receives structured server-side failures. Defaults to console.error.
+   * Supply your logger here, or a no-op to silence logging. Never sent to the browser.
+   */
+  onError?: ((diagnostic: EmbedErrorLog) => void | Promise<void>) | undefined;
   /**
    * The app to serve. Defaults to `TEXTQL_APP_ID`. A function picks per request.
    * With a `basePath` placeholder and `appIds`, leave this unset.
@@ -85,8 +127,9 @@ export class EmbedError extends Error {
   constructor(
     readonly status: number,
     message: string,
+    cause?: unknown,
   ) {
-    super(message);
+    super(message, { cause });
     this.name = "EmbedError";
   }
 }
@@ -121,7 +164,7 @@ function envAppId(): string {
 function unwrap<T extends object>(response: T | ConnectError, fallback: string): T {
   if ("code" in response || "details" in response) {
     const message = (response as ConnectError).message;
-    throw new EmbedError(502, typeof message === "string" ? message : fallback);
+    throw new EmbedError(502, typeof message === "string" ? message : fallback, response);
   }
   return response as T;
 }
@@ -146,6 +189,7 @@ const LIST_CONCURRENCY = 4;
 const MISSING_APP_STATUSES = new Set([400, 403, 404]);
 
 function isMissingApp(cause: unknown): boolean {
+  if (cause instanceof OperationError) return isMissingApp(cause.cause);
   const status = cause instanceof EmbedError
     ? cause.status
     : (cause as { statusCode?: unknown })?.statusCode;
@@ -249,10 +293,10 @@ class Embed {
     pathParams: Record<string, string>,
   ): Promise<TextqlRpcPublicAppApp> {
     const appId = await this.appId(request, pathParams);
-    const result = unwrap(
+    const result = await operation({ operation: "apps.get", appId }, async () => unwrap(
       await this.sdk().apps.get({ body: { appId } }),
       "Unable to load the app.",
-    );
+    ));
     const app = result.app;
     if (!app) throw new EmbedError(404, "That app does not exist.");
     return app;
@@ -263,12 +307,12 @@ class Embed {
   }
 
   private async listPage(page: number) {
-    return unwrap(
+    return operation({ operation: "apps.list" }, async () => unwrap(
       await this.sdk().apps.list({
         body: { limit: LIST_PAGE_SIZE, offset: page * LIST_PAGE_SIZE },
       }),
       "Unable to list the apps.",
-    );
+    ));
   }
 
   /** Only resolved when `excludeOwn` is on; other key shapes are fine otherwise. */
@@ -297,10 +341,10 @@ class Embed {
     for (let index = 0; index < appIds.length; index += LIST_CONCURRENCY) {
       const batch = appIds.slice(index, index + LIST_CONCURRENCY).map(async (appId) => {
         try {
-          const result = unwrap(
+          const result = await operation({ operation: "apps.get", appId }, async () => unwrap(
             await this.sdk().apps.get({ body: { appId } }),
             "Unable to load the app.",
-          );
+          ));
           return result.app ?? null;
         } catch (cause) {
           if (isMissingApp(cause)) return null;
@@ -384,11 +428,13 @@ class Embed {
     if (!app.htmlUrl) throw new EmbedError(404, "That app has not been rendered yet.");
     const url = app.htmlUrl;
 
-    const upstream = await fetch(url);
-    if (!upstream.ok) {
-      throw new EmbedError(502, `The app document returned ${upstream.status}.`);
-    }
-    const html = await upstream.text();
+    const html = await operation({ operation: "document.fetch", appId: app.id }, async () => {
+      const upstream = await fetch(url);
+      if (!upstream.ok) {
+        throw new EmbedError(502, `The app document returned ${upstream.status}.`);
+      }
+      return upstream.text();
+    });
 
     const configTag =
       `<script>window.ANA_RUNTIME_CONFIG = {hostOrigin: ${JSON.stringify(hostOrigin)}};</script>`;
@@ -428,16 +474,19 @@ class Embed {
       throw new EmbedError(403, `${name} is not a compute function of this app.`);
     }
 
-    const result = unwrap(
+    const appId = app.id ?? (await this.appId(request, pathParams));
+    const result = await operation({
+      operation: "apps.invokeComputeFunction", appId, functionName: name,
+    }, async () => unwrap(
       await this.sdk().apps.invokeComputeFunction({
         body: {
-          appId: app.id ?? (await this.appId(request, pathParams)),
+          appId,
           functionName: name,
           paramsJson: JSON.stringify(params ?? {}),
         },
       }),
       `${name} failed.`,
-    );
+    ));
 
     const raw = result.resultJson ?? "null";
     try {
@@ -468,6 +517,7 @@ function upstreamMessage(cause: unknown): string | null {
 }
 
 function errorResponse(cause: unknown): Response {
+  if (cause instanceof OperationError) return errorResponse(cause.cause);
   if (cause instanceof EmbedError) return json({ error: cause.message }, cause.status);
   const status = (cause as { statusCode?: unknown })?.statusCode;
   if (typeof status === "number") {
@@ -477,6 +527,51 @@ function errorResponse(cause: unknown): Response {
     return json({ error: upstreamMessage(cause) ?? `TextQL returned ${status}.` }, status);
   }
   return json({ error: "The embed request failed." }, 500);
+}
+
+/** Select error fields instead of dumping SDK errors, which carry raw HTTP objects. */
+function errorLog(cause: unknown, request: Request, status: number): EmbedErrorLog {
+  const path = new URL(request.url).pathname;
+  const context = cause instanceof OperationError
+    ? cause.context
+    : { operation: path.split("/").filter(Boolean).pop() ?? "embed" };
+  const errors: EmbedErrorLog["errors"] = [];
+  const seen = new Set<unknown>();
+  let current = cause instanceof OperationError ? cause.cause : cause;
+  const redact = (value: string): string => {
+    const key = readEnv("TEXTQL_API_KEY");
+    const text = key ? value.split(key).join("[redacted]") : value;
+    // URLs can contain signed asset credentials, so omit their query strings.
+    return text.replace(/(https?:\/\/[^\s?]+)\?[^\s]+/g, "$1?[redacted]");
+  };
+  while (current != null && !seen.has(current) && errors.length < 8) {
+    seen.add(current);
+    const error = typeof current === "object" ? current as Record<string, unknown> : {};
+    const upstreamStatus = typeof error["statusCode"] === "number" ? error["statusCode"] : undefined;
+    let code = typeof error["code"] === "string" ? error["code"] : undefined;
+    if (typeof error["body"] === "string") {
+      try {
+        const body = JSON.parse(error["body"]) as { code?: unknown } | null;
+        if (typeof body?.code === "string") code = body.code;
+      } catch { /* Non-JSON upstream bodies are intentionally not logged. */ }
+    }
+    // Generated HTTP error messages include raw response bodies. Prefer the
+    // platform's message field; do not dump HTML, headers or the response object.
+    const message = upstreamStatus !== undefined
+      ? upstreamMessage(current) ?? `TextQL returned ${upstreamStatus}.`
+      : typeof error["message"] === "string" ? error["message"] : String(current);
+    errors.push({
+      name: typeof error["name"] === "string" ? error["name"] : "Error",
+      message: redact(message),
+      code,
+      status: upstreamStatus ?? (current instanceof EmbedError ? current.status : undefined),
+      stack: typeof error["stack"] === "string"
+        ? redact(error["stack"].split("\n").filter((line) => /^\s+at /.test(line)).join("\n"))
+        : undefined,
+    });
+    current = error["cause"];
+  }
+  return { method: request.method, path, status, ...context, errors };
 }
 
 const ROUTES = new Set(["app", "document", "compute"]);
@@ -507,7 +602,16 @@ export function createEmbedHandler(
       }
       return await run();
     } catch (cause) {
-      return errorResponse(cause);
+      const response = errorResponse(cause);
+      const diagnostic = errorLog(cause, request, response.status);
+      try {
+        if (options.onError) await options.onError(diagnostic);
+        else console.error("[textql/embed] Request failed", diagnostic);
+      } catch {
+        // A logging integration must not replace the original HTTP failure.
+        console.error("[textql/embed] onError callback failed", diagnostic);
+      }
+      return response;
     }
   };
 
