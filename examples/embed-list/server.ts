@@ -32,6 +32,9 @@ const EXCLUDE_OWN = process.env.TEXTQL_EXCLUDE_OWN === '1';
 const handler = createEmbedHandler({
 	appIds: APP_IDS,
 	basePath: `${API_BASE}/:appId`,
+	// Development demo: show failure details in the page and browser console.
+	// Remove this option before exposing the example to end users.
+	debug: true,
 	excludeOwn: EXCLUDE_OWN
 });
 
@@ -110,7 +113,13 @@ const PAGE = `<!doctype html>
 		if (apps) return apps;
 		const response = await fetch(API_BASE);
 		const body = await response.json();
-		if (!response.ok) throw new Error(body.error ?? \`The list returned \${response.status}.\`);
+		if (!response.ok) {
+			console.error('[textql/embed] Unable to list apps', {
+				method: 'GET', path: API_BASE, status: response.status,
+				error: body.error, diagnostics: body.diagnostics
+			});
+			throw new Error(body.error ?? \`The list returned \${response.status}.\`);
+		}
 		apps = body;
 		return apps;
 	}

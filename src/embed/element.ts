@@ -108,11 +108,19 @@ export class TextqlAppElement extends HTMLElement {
   }
 
   async #request(suffix: string, init?: RequestInit): Promise<Record<string, unknown>> {
-    const response = await fetch(this.#endpoint(suffix), init);
-    const payload = (await response.json()) as Record<string, unknown> | null;
+    const path = this.#endpoint(suffix);
+    const response = await fetch(path, init);
+    const payload = (await response.json().catch(() => null)) as Record<string, unknown> | null;
     if (!response.ok) {
       const error = payload?.["error"];
-      throw new Error(typeof error === "string" ? error : "The request failed.");
+      const message = typeof error === "string" ? error : `The request failed (HTTP ${response.status}).`;
+      const detail = {
+        message, method: init?.method ?? "GET", path, status: response.status,
+        diagnostics: payload?.["diagnostics"],
+      };
+      console.error("[textql-app] Request failed", detail);
+      this.dispatchEvent(new CustomEvent("app-error", { detail }));
+      throw new Error(message);
     }
     return payload ?? {};
   }

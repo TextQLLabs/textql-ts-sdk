@@ -68,9 +68,14 @@ async function operation<T>(context: OperationContext, run: () => Promise<T>): P
 export interface EmbedOptions {
   /**
    * Receives structured server-side failures. Defaults to console.error.
-   * Supply your logger here, or a no-op to silence logging. Never sent to the browser.
+   * Supply your logger here, or a no-op to silence logging.
    */
   onError?: ((diagnostic: EmbedErrorLog) => void | Promise<void>) | undefined;
+  /**
+   * Include failure diagnostics in browser responses. Off by default because
+   * error messages and stacks may contain application internals. For debugging only.
+   */
+  debug?: boolean | undefined;
   /**
    * The app to serve. Defaults to `TEXTQL_APP_ID`. A function picks per request.
    * With a `basePath` placeholder and `appIds`, leave this unset.
@@ -604,6 +609,15 @@ export function createEmbedHandler(
     } catch (cause) {
       const response = errorResponse(cause);
       const diagnostic = errorLog(cause, request, response.status);
+      // Construct before invoking user code so a logger cannot mutate the response.
+      const browserResponse = options.debug ? json({
+        error: `${diagnostic.operation} failed (HTTP ${response.status}): `
+          + diagnostic.errors.map((error) =>
+            `${error.code ? `[${error.code}] ` : ""}${error.message}`
+          ).join(" → "),
+        diagnostics: diagnostic,
+      }, response.status) : response;
+      if (options.debug) browserResponse.headers.set("cache-control", "no-store");
       try {
         if (options.onError) await options.onError(diagnostic);
         else console.error("[textql/embed] Request failed", diagnostic);
@@ -611,7 +625,7 @@ export function createEmbedHandler(
         // A logging integration must not replace the original HTTP failure.
         console.error("[textql/embed] onError callback failed", diagnostic);
       }
-      return response;
+      return browserResponse;
     }
   };
 

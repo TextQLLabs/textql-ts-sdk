@@ -20,7 +20,8 @@ const { error: envError } = config({ path: ENV_FILE, override: true });
 
 const PORT = Number(process.env.PORT ?? 4180);
 
-const embed = toNodeHandler(createEmbedHandler());
+// Development demo: show diagnostics in the browser. Disable for end users.
+const embed = toNodeHandler(createEmbedHandler({ debug: true }));
 
 const ELEMENT_JS = createRequire(import.meta.url).resolve('@textql/sdk/embed/element');
 

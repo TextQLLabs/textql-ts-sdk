@@ -23,11 +23,15 @@ import type { TextqlAppElement, TextqlAppMeta } from "./element.js";
 
 export type { TextqlAppMeta, TextqlAppElement };
 
-/** What `app-error` carries: the runtime's own report, already logged by the element. */
+/** Runtime or HTTP failure, already logged by the element. */
 export interface TextqlAppError {
   message?: unknown;
   stack?: unknown;
   level?: unknown;
+  method?: string;
+  path?: string;
+  status?: number;
+  diagnostics?: unknown;
 }
 
 export interface TextqlAppProps {
@@ -40,7 +44,7 @@ export interface TextqlAppProps {
   onMeta?: ((meta: TextqlAppMeta) => void) | undefined;
   /** The app's runtime finished its handshake. */
   onReady?: ((meta: TextqlAppMeta | null) => void) | undefined;
-  /** The app reported a runtime error. */
+  /** The app reported a runtime error or an embed HTTP request failed. */
   onError?: ((error: TextqlAppError) => void) | undefined;
 }
 
