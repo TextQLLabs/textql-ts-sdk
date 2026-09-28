@@ -37,6 +37,7 @@ import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
 import { loadLastChatConfig, saveLastChatConfig } from '../lib/chatConfigPrefs';
 import { DEFAULT_CHAT_MODEL } from '../lib/chatModels';
+import { DEFAULT_CHAT_METHODOLOGY, type ChatMethodology } from '../lib/chatMethodologies';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import {
@@ -192,6 +193,8 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	const [draft, setDraft] = useState('');
 	const [selectedConnectorIds, setSelectedConnectorIds] = useState<number[]>([]);
 	const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_CHAT_MODEL);
+	const [selectedMethodology, setSelectedMethodology] =
+		useState<ChatMethodology>(DEFAULT_CHAT_METHODOLOGY);
 	/** Desktop: collapsible panel. Mobile: drawer open state. */
 	const location = useLocation();
 	/** A full-panel section route: the shell stays, the chat pane is replaced. */
@@ -319,6 +322,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		const prefs = loadLastChatConfig();
 		if (prefs) {
 			setSelectedModel(prefs.model);
+			setSelectedMethodology(prefs.methodology);
 			setSelectedConnectorIds(prefs.connectorIds);
 		}
 		void connectorsCache.load();
@@ -337,8 +341,12 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 
 	useEffect(() => {
 		if (!prefsReady || configLocked) return;
-		saveLastChatConfig({ model: selectedModel, connectorIds: [...selectedConnectorIds] });
-	}, [prefsReady, configLocked, selectedModel, selectedConnectorIds]);
+		saveLastChatConfig({
+			model: selectedModel,
+			methodology: selectedMethodology,
+			connectorIds: [...selectedConnectorIds]
+		});
+	}, [prefsReady, configLocked, selectedModel, selectedMethodology, selectedConnectorIds]);
 
 	// Walking every cell in the chat feeds both the asset tabs and the panel's
 	// insight tabs, so it is debounced off the per-snapshot stream path.
@@ -549,19 +557,18 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		const version = conversationVersion.current;
 		const creation = createChat({
 			model: agentMode ? undefined : selectedModel,
+			methodology: agentMode ? undefined : selectedMethodology,
 			connectorIds: agentMode ? [] : selectedConnectorIds
-		}).then(
-			(id) => {
-				if (version !== conversationVersion.current)
-					throw new Error('The active conversation changed. Please try again.');
-				loadedChatId.current = id;
-				setChatId(id);
-				latestCellId.current = '';
-				navigate(`/chat/${id}`, { replace: true });
-				void loadChats();
-				return id;
-			}
-		);
+		}).then((id) => {
+			if (version !== conversationVersion.current)
+				throw new Error('The active conversation changed. Please try again.');
+			loadedChatId.current = id;
+			setChatId(id);
+			latestCellId.current = '';
+			navigate(`/chat/${id}`, { replace: true });
+			void loadChats();
+			return id;
+		});
 		creatingChat.current = creation;
 		try {
 			return await creation;
@@ -609,7 +616,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 				setPreparingFiles(false);
 			}
 			if (request.signal.aborted) return;
-			setDraft((current) => current === submittedDraft ? '' : current);
+			setDraft((current) => (current === submittedDraft ? '' : current));
 			messagesRef.current.push({ id: userId, role: 'you', body: message });
 			publishMessages();
 			await sendMessage(id, {
@@ -750,6 +757,8 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		onConnectorIdsChange: setSelectedConnectorIds,
 		selectedModel: agentMode ? (appConfig?.model ?? '') : selectedModel,
 		onModelChange: setSelectedModel,
+		selectedMethodology,
+		onMethodologyChange: setSelectedMethodology,
 		sending: sending || uploading || (agentMode && !appConfig),
 		configLocked,
 		agentMode,
@@ -789,7 +798,9 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 							if (conversationVersion.current === uploadVersion)
 								setPendingFiles((files) => [...files, file]);
 						}}
-						onRemove={(id: string) => setPendingFiles((files) => files.filter((file) => file.id !== id))}
+						onRemove={(id: string) =>
+							setPendingFiles((files) => files.filter((file) => file.id !== id))
+						}
 						onFilesChange={(id: string, files: ChatFile[]) => {
 							if (conversationVersion.current !== uploadVersion || loadedChatId.current !== id)
 								return;
