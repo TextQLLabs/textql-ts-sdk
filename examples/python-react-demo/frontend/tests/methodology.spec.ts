@@ -34,6 +34,10 @@ async function openMethodology(page: Page) {
 test('shows a definition for every methodology option', async ({ page }) => {
 	await page.goto('/');
 	await openMethodology(page);
+	await expect(page.getByRole('menuitemradio')).toHaveCount(5);
+	await expect(
+		page.getByRole('menuitemradio', { name: 'Server default', exact: true })
+	).toHaveCount(0);
 	for (const { label, description } of CHAT_METHODOLOGIES) {
 		const option = page.getByRole('menuitemradio', { name: label, exact: true });
 		await expect(option).toContainText(description);
@@ -65,18 +69,26 @@ for (const { id, label } of CHAT_METHODOLOGIES) {
 		await page.keyboard.press('Escape');
 		await page.keyboard.press('Escape');
 		const request = await createChat(page);
-		if (id === 'METHODOLOGY_UNKNOWN') {
-			expect(request).not.toHaveProperty('methodology');
-		} else {
-			expect(request.methodology).toBe(id);
-		}
+		expect(request.methodology).toBe(id);
 		await expect(page.getByRole('button', { name: 'Composer settings', exact: true })).toHaveCount(
 			0
 		);
 	});
 }
 
-for (const methodology of [undefined, null, 'INVALID_METHODOLOGY']) {
+test('uses Adaptive for a fresh chat', async ({ page }) => {
+	await page.goto('/');
+	await openMethodology(page);
+	await expect(page.getByRole('menuitemradio', { name: 'Adaptive', exact: true })).toHaveAttribute(
+		'aria-checked',
+		'true'
+	);
+	await page.keyboard.press('Escape');
+	await page.keyboard.press('Escape');
+	expect((await createChat(page)).methodology).toBe('METHODOLOGY_ADAPTIVE');
+});
+
+for (const methodology of [undefined, null, 'METHODOLOGY_UNKNOWN', 'INVALID_METHODOLOGY']) {
 	test(`preserves legacy preferences with methodology ${methodology}`, async ({ page }) => {
 		await page.addInitScript((methodology) => {
 			localStorage.setItem(
@@ -90,13 +102,13 @@ for (const methodology of [undefined, null, 'INVALID_METHODOLOGY']) {
 		}, methodology);
 		await page.goto('/');
 		const request = await createChat(page);
-		expect(request).not.toHaveProperty('methodology');
+		expect(request.methodology).toBe('METHODOLOGY_ADAPTIVE');
 		expect(request.model).toBe('MODEL_OPUS_4_8');
 		expect(request.connector_ids).toEqual([123]);
 	});
 }
 
-test('keeps methodology on the chat and can restore the server default', async ({ page }) => {
+test('keeps methodology on the chat and applies changes only to new chats', async ({ page }) => {
 	const created: unknown[] = [];
 	const sent: Record<string, unknown>[] = [];
 	page.on('request', (request) => {
@@ -108,7 +120,7 @@ test('keeps methodology on the chat and can restore the server default', async (
 	await page.goto('/');
 	await openMethodology(page);
 	await page.getByRole('menuitemradio', { name: 'Thorough', exact: true }).click();
-	await createChat(page);
+	expect((await createChat(page)).methodology).toBe('METHODOLOGY_THOROUGH');
 	await expect.poll(() => sent.length).toBe(1);
 	await page.getByRole('textbox', { name: 'Message', exact: true }).fill('Now explain the result.');
 	await page.getByRole('button', { name: 'Send message', exact: true }).click();
@@ -121,7 +133,7 @@ test('keeps methodology on the chat and can restore the server default', async (
 		'aria-checked',
 		'true'
 	);
-	await page.getByRole('menuitemradio', { name: 'Server default', exact: true }).click();
-	expect(await createChat(page)).not.toHaveProperty('methodology');
+	await page.getByRole('menuitemradio', { name: 'Adaptive', exact: true }).click();
+	expect((await createChat(page)).methodology).toBe('METHODOLOGY_ADAPTIVE');
 	expect(created).toHaveLength(2);
 });

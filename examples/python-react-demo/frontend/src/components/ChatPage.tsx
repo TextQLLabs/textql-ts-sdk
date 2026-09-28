@@ -37,7 +37,7 @@ import { groupByDay } from '../lib/dates';
 import { getHalt } from '../lib/halts';
 import { loadLastChatConfig, saveLastChatConfig } from '../lib/chatConfigPrefs';
 import { DEFAULT_CHAT_MODEL } from '../lib/chatModels';
-import type { ChatMethodology } from '../lib/chatMethodologies';
+import { DEFAULT_CHAT_METHODOLOGY, type ChatMethodology } from '../lib/chatMethodologies';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import {
@@ -194,7 +194,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 	const [selectedConnectorIds, setSelectedConnectorIds] = useState<number[]>([]);
 	const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_CHAT_MODEL);
 	const [selectedMethodology, setSelectedMethodology] =
-		useState<ChatMethodology>('METHODOLOGY_UNKNOWN');
+		useState<ChatMethodology>(DEFAULT_CHAT_METHODOLOGY);
 	/** Desktop: collapsible panel. Mobile: drawer open state. */
 	const location = useLocation();
 	/** A full-panel section route: the shell stays, the chat pane is replaced. */
@@ -557,10 +557,7 @@ export function ChatPage({ agentMode = false }: { agentMode?: boolean }) {
 		const version = conversationVersion.current;
 		const creation = createChat({
 			model: agentMode ? undefined : selectedModel,
-			methodology:
-				agentMode || selectedMethodology === 'METHODOLOGY_UNKNOWN'
-					? undefined
-					: selectedMethodology,
+			methodology: agentMode ? undefined : selectedMethodology,
 			connectorIds: agentMode ? [] : selectedConnectorIds
 		}).then((id) => {
 			if (version !== conversationVersion.current)

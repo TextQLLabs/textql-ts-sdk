@@ -24,7 +24,11 @@ import { AgentAvatar } from './AgentAvatar';
 import { UnicodeSpinner } from './UnicodeSpinner';
 
 import { CHAT_MODELS, CHAT_MODEL_LABELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
-import { CHAT_METHODOLOGIES, type ChatMethodology } from '../lib/chatMethodologies';
+import {
+	CHAT_METHODOLOGIES,
+	DEFAULT_CHAT_METHODOLOGY,
+	type ChatMethodology
+} from '../lib/chatMethodologies';
 import { connectorIconSrc } from '../lib/connectorIcons';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
@@ -79,7 +83,7 @@ export function Composer({
 	configLocked = false,
 	selectedConnectorIds = [],
 	selectedModel = DEFAULT_CHAT_MODEL as string,
-	selectedMethodology = 'METHODOLOGY_UNKNOWN',
+	selectedMethodology = DEFAULT_CHAT_METHODOLOGY,
 	onValueChange,
 	onConnectorIdsChange,
 	onModelChange,

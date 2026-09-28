@@ -52,9 +52,9 @@ there instead of from the top of the chat.
 Before starting a chat, open **Composer settings → Methodology** to choose
 Adaptive, Prescriptive, Thorough, Careful, or Ontology Building. The selection is
 remembered for new chats and is fixed once the chat is created, like its model
-and connectors. **Server default** leaves methodology unset, preserving the
-server's default behavior. The sibling agent demo continues to use its agent's
-configuration without sending a methodology override.
+and connectors. **Adaptive** is selected by default, including when loading old
+preferences with a missing or unknown methodology. The sibling agent demo
+continues to use its agent's configuration without sending a methodology override.
 
 The frontend sends the SDK enum name as the optional `methodology` field in
 `POST /v3/textql/chats`, and FastAPI forwards it to

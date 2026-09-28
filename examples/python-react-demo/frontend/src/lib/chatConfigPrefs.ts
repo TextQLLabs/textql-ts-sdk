@@ -1,7 +1,11 @@
 /** Last-used model + connectors, so a new chat opens the way the last one did. */
 
 import { isKnownChatModel } from './chatModels';
-import { isKnownChatMethodology, type ChatMethodology } from './chatMethodologies';
+import {
+	DEFAULT_CHAT_METHODOLOGY,
+	isKnownChatMethodology,
+	type ChatMethodology
+} from './chatMethodologies';
 import { isRecord, storageGet, storageSet } from './utils';
 
 const STORAGE_KEY = 'textql-python-demo:last-config';
@@ -31,7 +35,7 @@ export function loadLastChatConfig(): ChatConfigPrefs | null {
 			model: parsed.model,
 			methodology: isKnownChatMethodology(parsed.methodology)
 				? parsed.methodology
-				: 'METHODOLOGY_UNKNOWN',
+				: DEFAULT_CHAT_METHODOLOGY,
 			connectorIds: parsed.connectorIds.filter(isPositiveInt)
 		};
 	} catch {

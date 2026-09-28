@@ -1,10 +1,5 @@
 export const CHAT_METHODOLOGIES = [
 	{
-		id: 'METHODOLOGY_UNKNOWN',
-		label: 'Server default',
-		description: "Use the server's default methodology"
-	},
-	{
 		id: 'METHODOLOGY_ADAPTIVE',
 		label: 'Adaptive',
 		description: 'Balancing speed & thoroughness'
@@ -32,6 +27,8 @@ export const CHAT_METHODOLOGIES = [
 ] as const;
 
 export type ChatMethodology = (typeof CHAT_METHODOLOGIES)[number]['id'];
+
+export const DEFAULT_CHAT_METHODOLOGY: ChatMethodology = 'METHODOLOGY_ADAPTIVE';
 
 export function isKnownChatMethodology(value: unknown): value is ChatMethodology {
 	return CHAT_METHODOLOGIES.some((methodology) => methodology.id === value);
