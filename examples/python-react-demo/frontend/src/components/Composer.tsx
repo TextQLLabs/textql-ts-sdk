@@ -490,13 +490,13 @@ export function Composer({
 									<div
 										className={cx(
 											FLYOUT,
-											'absolute bottom-0 left-[calc(100%+4px)] w-[min(240px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
+											'absolute bottom-0 left-[calc(100%+4px)] w-[min(300px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
 											'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0'
 										)}
 										role="menu"
 										aria-label="Methodology"
 									>
-										<div className={FLYOUT_SECTION}>
+										<div className={cx(FLYOUT_SECTION, 'max-h-[40dvh] overflow-y-auto')}>
 											{CHAT_METHODOLOGIES.map((methodology) => (
 												<button
 													key={methodology.id}
@@ -508,6 +508,8 @@ export function Composer({
 															: 'bg-transparent hover:bg-fill'
 													)}
 													role="menuitemradio"
+													aria-label={methodology.label}
+													aria-description={methodology.description}
 													aria-checked={selectedMethodology === methodology.id}
 													onClick={() => {
 														onMethodologyChange?.(methodology.id);
@@ -515,7 +517,12 @@ export function Composer({
 														textareaRef.current?.focus();
 													}}
 												>
-													{methodology.label}
+													<span className="flex min-w-0 flex-col items-start gap-px">
+														<span className="font-medium">{methodology.label}</span>
+														<span className="text-[11px] leading-snug text-muted">
+															{methodology.description}
+														</span>
+													</span>
 													{selectedMethodology === methodology.id && (
 														<span className={CHECK_MARK} aria-hidden="true">
 															<Check size={14} strokeWidth={1.5} />

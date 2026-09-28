@@ -31,6 +31,16 @@ async function openMethodology(page: Page) {
 	await page.getByRole('menuitem', { name: /^Methodology/ }).click();
 }
 
+test('shows a definition for every methodology option', async ({ page }) => {
+	await page.goto('/');
+	await openMethodology(page);
+	for (const { label, description } of CHAT_METHODOLOGIES) {
+		const option = page.getByRole('menuitemradio', { name: label, exact: true });
+		await expect(option).toContainText(description);
+		await expect(option).toHaveAccessibleDescription(description);
+	}
+});
+
 async function createChat(page: Page) {
 	await page.getByRole('textbox', { name: 'Message', exact: true }).fill('Analyze the data.');
 	const created = page.waitForRequest(
