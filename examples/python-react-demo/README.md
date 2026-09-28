@@ -47,6 +47,30 @@ then holds the SSE stream open until `runComplete`. The next turn passes the
 previous one's `finalCellId` as `latest_cell_id`, so the server replays from
 there instead of from the top of the chat.
 
+## Methodology
+
+Before starting a chat, open **Composer settings → Methodology** to choose
+Adaptive, Prescriptive, Thorough, Careful, or Ontology Building. The selection is
+remembered for new chats and is fixed once the chat is created, like its model
+and connectors. **Server default** leaves methodology unset, preserving the
+server's default behavior. The sibling agent demo continues to use its agent's
+configuration without sending a methodology override.
+
+The frontend sends the SDK enum name as the optional `methodology` field in
+`POST /v3/textql/chats`, and FastAPI forwards it to
+`sdk.chats.create_chat_async(methodology=...)`:
+
+```json
+{
+  "model": "MODEL_OPUS_4_8",
+  "connector_ids": [123],
+  "methodology": "METHODOLOGY_THOROUGH"
+}
+```
+
+Omitting `methodology` or sending `null` keeps the existing default behavior.
+It is a chat-creation setting, not a per-message `/send` parameter.
+
 ## Citations
 
 A cited answer arrives as `mdCell.citations`: a list of claims, each with the
@@ -177,6 +201,24 @@ frontend/
   src/lib/citations.ts  mdCell.citations, coerced, numbered, sources resolved
   src/lib/timeline.ts   the run rebuilt from cells, for the Timeline tab
   src/components/       ChatPage, Composer, ToolSequence, CellDetail, …
+```
+
+## Tests
+
+Backend request tests run without credentials or a live server:
+
+```sh
+cd backend
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+Browser tests use mocked API responses to check methodology selection,
+persistence, and request payloads:
+
+```sh
+cd frontend
+npx playwright install chromium
+npm test
 ```
 
 ## Routes

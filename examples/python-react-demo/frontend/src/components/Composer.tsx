@@ -6,6 +6,7 @@ import {
 	ChevronRight,
 	LoaderCircle,
 	Plus,
+	SlidersHorizontal,
 	Upload,
 	X
 } from 'lucide-react';
@@ -23,13 +24,14 @@ import { AgentAvatar } from './AgentAvatar';
 import { UnicodeSpinner } from './UnicodeSpinner';
 
 import { CHAT_MODELS, CHAT_MODEL_LABELS, DEFAULT_CHAT_MODEL } from '../lib/chatModels';
+import { CHAT_METHODOLOGIES, type ChatMethodology } from '../lib/chatMethodologies';
 import { connectorIconSrc } from '../lib/connectorIcons';
 import { connectorsCache, useConnectors } from '../lib/connectorsCache';
 import { cx } from '../lib/cx';
 import { useDismissable } from '../lib/useDismissable';
 import { FLYOUT, FLYOUT_ROW, FLYOUT_SEARCH, FLYOUT_SECTION, FLYOUT_STATE } from './pageStyles';
 
-type Flyout = 'models' | 'connectors';
+type Flyout = 'models' | 'connectors' | 'methodology';
 
 type Props = {
 	value?: string;
@@ -39,9 +41,11 @@ type Props = {
 	configLocked?: boolean;
 	selectedConnectorIds?: number[];
 	selectedModel?: string;
+	selectedMethodology?: ChatMethodology;
 	onValueChange?: (value: string) => void;
 	onConnectorIdsChange?: (ids: number[]) => void;
 	onModelChange?: (model: string) => void;
+	onMethodologyChange?: (methodology: ChatMethodology) => void;
 	onSend?: () => void;
 	className?: string;
 	attachments?: ReactNode;
@@ -58,6 +62,7 @@ type Props = {
 
 const ROOT_ITEMS = [
 	{ id: 'models' as const, label: 'Models', Icon: Boxes },
+	{ id: 'methodology' as const, label: 'Methodology', Icon: SlidersHorizontal },
 	{ id: 'connectors' as const, label: 'Connectors', Icon: Cable }
 ];
 
@@ -74,9 +79,11 @@ export function Composer({
 	configLocked = false,
 	selectedConnectorIds = [],
 	selectedModel = DEFAULT_CHAT_MODEL as string,
+	selectedMethodology = 'METHODOLOGY_UNKNOWN',
 	onValueChange,
 	onConnectorIdsChange,
 	onModelChange,
+	onMethodologyChange,
 	onSend,
 	attachments,
 	agentLabel,
@@ -115,6 +122,9 @@ export function Composer({
 		agentLabel && selectedModel === 'MODEL_UNKNOWN'
 			? 'Agent default'
 			: (CHAT_MODEL_LABELS[selectedModel] ?? selectedModel);
+	const selectedMethodologyLabel = CHAT_METHODOLOGIES.find(
+		(methodology) => methodology.id === selectedMethodology
+	)?.label;
 
 	const selectedChips = selectedConnectorIds.map((id) => {
 		const match = connectors.connectors.find((connector) => connector.id === id);
@@ -321,7 +331,9 @@ export function Composer({
 					rows={1}
 					placeholder={
 						hasAgent
-							? agentLabel ? `Message ${agentLabel}` : 'Message'
+							? agentLabel
+								? `Message ${agentLabel}`
+								: 'Message'
 							: 'Plan, @ for context, / for commands'
 					}
 					aria-label="Message"
@@ -409,6 +421,10 @@ export function Composer({
 														<span className="max-w-[90px] overflow-hidden text-[10.5px] text-ellipsis whitespace-nowrap text-muted">
 															{selectedModelLabel}
 														</span>
+													) : item.id === 'methodology' ? (
+														<span className="max-w-[90px] overflow-hidden text-[10.5px] text-ellipsis whitespace-nowrap text-muted">
+															{selectedMethodologyLabel}
+														</span>
 													) : null}
 													<ChevronRight
 														className="shrink-0 text-[#a1a1aa]"
@@ -460,6 +476,47 @@ export function Composer({
 														</span>
 													</span>
 													{selectedModel === model.id && (
+														<span className={CHECK_MARK} aria-hidden="true">
+															<Check size={14} strokeWidth={1.5} />
+														</span>
+													)}
+												</button>
+											))}
+										</div>
+									</div>
+								)}
+
+								{flyout === 'methodology' && (
+									<div
+										className={cx(
+											FLYOUT,
+											'absolute bottom-0 left-[calc(100%+4px)] w-[min(240px,calc(100vw-32px))] animate-flyout-in motion-reduce:animate-none',
+											'max-[560px]:bottom-[calc(100%+4px)] max-[560px]:left-0'
+										)}
+										role="menu"
+										aria-label="Methodology"
+									>
+										<div className={FLYOUT_SECTION}>
+											{CHAT_METHODOLOGIES.map((methodology) => (
+												<button
+													key={methodology.id}
+													type="button"
+													className={cx(
+														FLYOUT_ROW,
+														selectedMethodology === methodology.id
+															? 'bg-fill'
+															: 'bg-transparent hover:bg-fill'
+													)}
+													role="menuitemradio"
+													aria-checked={selectedMethodology === methodology.id}
+													onClick={() => {
+														onMethodologyChange?.(methodology.id);
+														closeMenu();
+														textareaRef.current?.focus();
+													}}
+												>
+													{methodology.label}
+													{selectedMethodology === methodology.id && (
 														<span className={CHECK_MARK} aria-hidden="true">
 															<Check size={14} strokeWidth={1.5} />
 														</span>
