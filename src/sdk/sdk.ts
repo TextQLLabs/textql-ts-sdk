@@ -4,6 +4,7 @@
 
 import { ClientSDK } from "../lib/sdks.js";
 import { Agents } from "./agents.js";
+import { ApiOAuth } from "./api-o-auth.js";
 import { Apps } from "./apps.js";
 import { AuditLogs } from "./audit-logs.js";
 import { Chats } from "./chats.js";
@@ -31,6 +32,11 @@ export class Textql extends ClientSDK {
   private _agents?: Agents;
   get agents(): Agents {
     return (this._agents ??= new Agents(this._options));
+  }
+
+  private _apiOAuth?: ApiOAuth;
+  get apiOAuth(): ApiOAuth {
+    return (this._apiOAuth ??= new ApiOAuth(this._options));
   }
 
   private _apps?: Apps;

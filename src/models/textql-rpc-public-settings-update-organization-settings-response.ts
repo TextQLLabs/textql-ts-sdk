@@ -11,9 +11,14 @@ import {
   TextqlRpcAuthOrganization,
   TextqlRpcAuthOrganization$inboundSchema,
 } from "./textql-rpc-auth-organization.js";
+import {
+  TextqlRpcPublicSettingsOrganizationModelSettings,
+  TextqlRpcPublicSettingsOrganizationModelSettings$inboundSchema,
+} from "./textql-rpc-public-settings-organization-model-settings.js";
 
 export type TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse = {
   organization?: TextqlRpcAuthOrganization | undefined;
+  modelSettings?: TextqlRpcPublicSettingsOrganizationModelSettings | undefined;
 };
 
 /** @internal */
@@ -23,6 +28,9 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsResponse$inboundSc
     unknown
   > = z.object({
     organization: types.optional(TextqlRpcAuthOrganization$inboundSchema),
+    modelSettings: types.optional(
+      TextqlRpcPublicSettingsOrganizationModelSettings$inboundSchema,
+    ),
   });
 
 export function textqlRpcPublicSettingsUpdateOrganizationSettingsResponseFromJSON(

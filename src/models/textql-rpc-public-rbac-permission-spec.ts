@@ -83,6 +83,11 @@ import {
   TextqlRpcPublicRbacMemberPermissionAction$outboundSchema,
 } from "./textql-rpc-public-rbac-member-permission-action.js";
 import {
+  TextqlRpcPublicRbacMemoryPermissionAction,
+  TextqlRpcPublicRbacMemoryPermissionAction$inboundSchema,
+  TextqlRpcPublicRbacMemoryPermissionAction$outboundSchema,
+} from "./textql-rpc-public-rbac-memory-permission-action.js";
+import {
   TextqlRpcPublicRbacObservabilityPermissionAction,
   TextqlRpcPublicRbacObservabilityPermissionAction$inboundSchema,
   TextqlRpcPublicRbacObservabilityPermissionAction$outboundSchema,
@@ -191,6 +196,10 @@ export type Observability = {
   observability: TextqlRpcPublicRbacObservabilityPermissionAction;
 };
 
+export type Memory = {
+  memory: TextqlRpcPublicRbacMemoryPermissionAction;
+};
+
 export type Member = {
   member: TextqlRpcPublicRbacMemberPermissionAction;
 };
@@ -270,6 +279,7 @@ export type TextqlRpcPublicRbacPermissionSpec =
   | Group
   | Mcp
   | Member
+  | Memory
   | Observability
   | Ontology
   | Organization
@@ -646,6 +656,34 @@ export function observabilityFromJSON(
     jsonString,
     (x) => Observability$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'Observability' from JSON`,
+  );
+}
+
+/** @internal */
+export const Memory$inboundSchema: z.ZodMiniType<Memory, unknown> = z.object({
+  memory: TextqlRpcPublicRbacMemoryPermissionAction$inboundSchema,
+});
+/** @internal */
+export type Memory$Outbound = {
+  memory: string;
+};
+
+/** @internal */
+export const Memory$outboundSchema: z.ZodMiniType<Memory$Outbound, Memory> = z
+  .object({
+    memory: TextqlRpcPublicRbacMemoryPermissionAction$outboundSchema,
+  });
+
+export function memoryToJSON(memory: Memory): string {
+  return JSON.stringify(Memory$outboundSchema.parse(memory));
+}
+export function memoryFromJSON(
+  jsonString: string,
+): SafeParseResult<Memory, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Memory$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Memory' from JSON`,
   );
 }
 
@@ -1127,6 +1165,7 @@ export const TextqlRpcPublicRbacPermissionSpec$inboundSchema: z.ZodMiniType<
   z.lazy(() => Group$inboundSchema),
   z.lazy(() => Mcp$inboundSchema),
   z.lazy(() => Member$inboundSchema),
+  z.lazy(() => Memory$inboundSchema),
   z.lazy(() => Observability$inboundSchema),
   z.lazy(() => Ontology$inboundSchema),
   z.lazy(() => Organization$inboundSchema),
@@ -1157,6 +1196,7 @@ export type TextqlRpcPublicRbacPermissionSpec$Outbound =
   | Group$Outbound
   | Mcp$Outbound
   | Member$Outbound
+  | Memory$Outbound
   | Observability$Outbound
   | Ontology$Outbound
   | Organization$Outbound
@@ -1190,6 +1230,7 @@ export const TextqlRpcPublicRbacPermissionSpec$outboundSchema: z.ZodMiniType<
   z.lazy(() => Group$outboundSchema),
   z.lazy(() => Mcp$outboundSchema),
   z.lazy(() => Member$outboundSchema),
+  z.lazy(() => Memory$outboundSchema),
   z.lazy(() => Observability$outboundSchema),
   z.lazy(() => Ontology$outboundSchema),
   z.lazy(() => Organization$outboundSchema),

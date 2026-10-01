@@ -11,7 +11,7 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 export type TextqlRpcPublicObserveAgentBillingStat = {
   agentId?: string | undefined;
   /**
-   * proportionally distributed from member's feed ACU by post count
+   * proportionally distributed from feed ACU by the agent's chat LLM tokens and sandbox time
    */
   estimatedAcu?: number | undefined;
 };

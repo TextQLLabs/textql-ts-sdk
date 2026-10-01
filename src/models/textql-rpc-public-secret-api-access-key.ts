@@ -8,6 +8,10 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
+  TextqlRpcPublicSecretApiAuthType,
+  TextqlRpcPublicSecretApiAuthType$inboundSchema,
+} from "./textql-rpc-public-secret-api-auth-type.js";
+import {
   TextqlRpcPublicSecretBodyContentType,
   TextqlRpcPublicSecretBodyContentType$inboundSchema,
 } from "./textql-rpc-public-secret-body-content-type.js";
@@ -308,7 +312,9 @@ export type TextqlRpcPublicSecretApiAccessKey = {
   expiresAt?: Date | undefined;
   provider?: string | undefined;
   /**
-   * "token", "oauth_u2m", "oauth_per_member"
+   * Deprecated: use auth_type_enum. Populated for older clients.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   authType?: string | undefined;
   memberOauthAuthenticated?: boolean | undefined;
@@ -323,6 +329,15 @@ export type TextqlRpcPublicSecretApiAccessKey = {
   name?: string | undefined;
   authPrefix?: string | undefined;
   testMethod?: string | undefined;
+  /**
+   * Authentication mode for an API connector. Provider templates have a separate
+   *
+   * @remarks
+   *  auth_type describing how their credentials are entered (e.g. basic_auth).
+   *  OAUTH_U2M shares one OAuth account among members with connector access;
+   *  OAUTH_PER_MEMBER requires each member to connect their own account.
+   */
+  authTypeEnum?: TextqlRpcPublicSecretApiAuthType | undefined;
 };
 
 /** @internal */
@@ -358,6 +373,7 @@ export const TextqlRpcPublicSecretApiAccessKey$inboundSchema: z.ZodMiniType<
   name: types.optional(types.string()),
   authPrefix: types.optional(types.string()),
   testMethod: types.optional(types.string()),
+  authTypeEnum: types.optional(TextqlRpcPublicSecretApiAuthType$inboundSchema),
 });
 
 export function textqlRpcPublicSecretApiAccessKeyFromJSON(

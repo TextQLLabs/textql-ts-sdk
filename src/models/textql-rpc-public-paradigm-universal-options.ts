@@ -74,6 +74,8 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
    *  paradigm gates read_file on the org's ContextV3 flag alone.
    */
   readFileEnabled?: boolean | undefined;
+  ontologyActionsEnabled?: boolean | undefined;
+  ontologyActionsAutoApproveEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -113,6 +115,8 @@ export const TextqlRpcPublicParadigmUniversalOptions$inboundSchema:
     feedEnabled: z.optional(z.nullable(types.boolean())),
     fileGenerationDisabled: types.optional(types.boolean()),
     readFileEnabled: types.optional(types.boolean()),
+    ontologyActionsEnabled: types.optional(types.boolean()),
+    ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
   });
 /** @internal */
 export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
@@ -150,6 +154,8 @@ export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
   feedEnabled?: boolean | null | undefined;
   fileGenerationDisabled?: boolean | undefined;
   readFileEnabled?: boolean | undefined;
+  ontologyActionsEnabled?: boolean | undefined;
+  ontologyActionsAutoApproveEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -192,6 +198,8 @@ export const TextqlRpcPublicParadigmUniversalOptions$outboundSchema:
     feedEnabled: z.optional(z.nullable(z.boolean())),
     fileGenerationDisabled: z.optional(z.boolean()),
     readFileEnabled: z.optional(z.boolean()),
+    ontologyActionsEnabled: z.optional(z.boolean()),
+    ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcPublicParadigmUniversalOptionsToJSON(

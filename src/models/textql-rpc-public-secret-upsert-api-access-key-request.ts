@@ -9,6 +9,10 @@ import {
   TextqlRpcPublicSecretApiAccessRef$outboundSchema,
 } from "./textql-rpc-public-secret-api-access-ref.js";
 import {
+  TextqlRpcPublicSecretApiAuthType,
+  TextqlRpcPublicSecretApiAuthType$outboundSchema,
+} from "./textql-rpc-public-secret-api-auth-type.js";
+import {
   TextqlRpcPublicSecretBodyContentType,
   TextqlRpcPublicSecretBodyContentType$outboundSchema,
 } from "./textql-rpc-public-secret-body-content-type.js";
@@ -122,6 +126,11 @@ export type TextqlRpcPublicSecretUpsertApiAccessKeyRequest = {
   provider?: string | undefined;
   authValue?: string | undefined;
   authValueExtra?: string | undefined;
+  /**
+   * Deprecated: use auth_type_enum. Accepted when auth_type_enum is unspecified.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   authType?: string | undefined;
   httpBasicAuth?: TextqlRpcPublicSecretHttpBasicAuth | undefined;
   body?: { [k: string]: string } | undefined;
@@ -129,6 +138,15 @@ export type TextqlRpcPublicSecretUpsertApiAccessKeyRequest = {
   testUrl?: string | undefined;
   name?: string | undefined;
   testMethod?: string | undefined;
+  /**
+   * Authentication mode for an API connector. Provider templates have a separate
+   *
+   * @remarks
+   *  auth_type describing how their credentials are entered (e.g. basic_auth).
+   *  OAUTH_U2M shares one OAuth account among members with connector access;
+   *  OAUTH_PER_MEMBER requires each member to connect their own account.
+   */
+  authTypeEnum?: TextqlRpcPublicSecretApiAuthType | undefined;
 };
 
 /** @internal */
@@ -150,6 +168,7 @@ export type TextqlRpcPublicSecretUpsertApiAccessKeyRequest$Outbound = {
   testUrl?: string | undefined;
   name?: string | undefined;
   testMethod?: string | undefined;
+  authTypeEnum?: string | undefined;
 };
 
 /** @internal */
@@ -179,6 +198,7 @@ export const TextqlRpcPublicSecretUpsertApiAccessKeyRequest$outboundSchema:
     testUrl: z.optional(z.string()),
     name: z.optional(z.string()),
     testMethod: z.optional(z.string()),
+    authTypeEnum: z.optional(TextqlRpcPublicSecretApiAuthType$outboundSchema),
   });
 
 export function textqlRpcPublicSecretUpsertApiAccessKeyRequestToJSON(

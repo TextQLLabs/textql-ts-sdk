@@ -491,6 +491,377 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.agent.UploadAgentAvatarResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/ExchangeApiOAuthClientCredentials:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: ExchangeApiOAuthClientCredentials
+      operationId: ApiOAuthService_ExchangeApiOAuthClientCredentials
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: exchangeClientCredentials
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthClientCredentialsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthCodeResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/ExchangeApiOAuthCode:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: ExchangeApiOAuthCode
+      operationId: ApiOAuthService_ExchangeApiOAuthCode
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: exchangeCode
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthCodeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthCodeResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/ExchangeApiOAuthJwtBearer:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: ExchangeApiOAuthJwtBearer
+      operationId: ApiOAuthService_ExchangeApiOAuthJwtBearer
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: exchangeJwtBearer
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthJwtBearerRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.ExchangeApiOAuthCodeResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/GetApiOAuthConfig:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: GetApiOAuthConfig
+      operationId: ApiOAuthService_GetApiOAuthConfig
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: getConfig
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthConfigRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthConfigResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/GetApiOAuthStatus:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: GetApiOAuthStatus
+      operationId: ApiOAuthService_GetApiOAuthStatus
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: getStatus
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthStatusRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthStatusResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/GetApiOAuthURL:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: GetApiOAuthURL
+      operationId: ApiOAuthService_GetApiOAuthURL
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: getURL
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthURLRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.GetApiOAuthURLResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/InitiateDeviceAuthorization:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: InitiateDeviceAuthorization
+      operationId: ApiOAuthService_InitiateDeviceAuthorization
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: initiateDeviceAuthorization
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.InitiateDeviceAuthorizationRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.InitiateDeviceAuthorizationResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/PollDeviceCodeToken:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: PollDeviceCodeToken
+      operationId: ApiOAuthService_PollDeviceCodeToken
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: pollDeviceCodeToken
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.PollDeviceCodeTokenRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.PollDeviceCodeTokenResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/RevokeApiOAuthToken:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: RevokeApiOAuthToken
+      operationId: ApiOAuthService_RevokeApiOAuthToken
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: revokeToken
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.RevokeApiOAuthTokenRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.RevokeApiOAuthTokenResponse'
+  /textql.rpc.public.api_oauth.ApiOAuthService/UpsertApiOAuthConfig:
+    post:
+      tags:
+        - ApiOAuthService
+      summary: Shared OAuth app configuration. Requires connector write permission.
+      description: Shared OAuth app configuration. Requires connector write permission.
+      operationId: ApiOAuthService_UpsertApiOAuthConfig
+      x-speakeasy-group: apiOAuth
+      x-speakeasy-name-override: upsertConfig
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.api_oauth.UpsertApiOAuthConfigRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.api_oauth.UpsertApiOAuthConfigResponse'
   /textql.rpc.public.app.AppService/AppHeartbeat:
     post:
       tags:
@@ -14022,6 +14393,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.scim.RevokeScimTokenResponse'
+  /textql.rpc.public.secret.SecretService/CreateApiRevision:
+    post:
+      tags:
+        - SecretService
+      summary: API connector drafts let clients configure and test credentials before saving.
+      description: API connector drafts let clients configure and test credentials before saving.
+      operationId: SecretService_CreateApiRevision
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: createApiRevision
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.CreateApiRevisionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.CreateApiRevisionResponse'
   /textql.rpc.public.secret.SecretService/DeleteApiAccessKey:
     post:
       tags:
@@ -14059,6 +14468,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiAccessKeyResponse'
+  /textql.rpc.public.secret.SecretService/DeleteApiRevision:
+    post:
+      tags:
+        - SecretService
+      summary: DeleteApiRevision
+      operationId: SecretService_DeleteApiRevision
+      x-speakeasy-group: secrets
+      x-speakeasy-name-override: deleteApiRevision
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiRevisionRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.secret.DeleteApiRevisionResponse'
   /textql.rpc.public.secret.SecretService/GetApiAccessKey:
     post:
       tags:
@@ -16170,20 +16616,9 @@ components:
         paradigmParams:
           title: paradigm_params
           $ref: '#/components/schemas/textql.rpc.paradigm_params.ParadigmParams'
-        defaultLlmModel:
-          type: integer
-          title: default_llm_model
-          format: int32
-          nullable: true
         preferredProvider:
           type: string
           title: preferred_provider
-          nullable: true
-        systemDefaultModel:
-          type: integer
-          title: system_default_model
-          format: int32
-          description: Model MODEL_DEFAULT resolves to for this org; SYSTEM_DEFAULT_MODEL env var can override it.
           nullable: true
         toolRestrictions:
           title: tool_restrictions
@@ -16247,18 +16682,6 @@ components:
           type: boolean
           title: default_routing_enabled
           nullable: true
-        enabledModelIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: enabled_model_ids
-        restrictedModelIds:
-          type: array
-          items:
-            type: integer
-            format: int32
-          title: restricted_model_ids
         restrictedFamilies:
           type: array
           items:
@@ -16308,6 +16731,11 @@ components:
         sandboxStateRetentionDays:
           type: integer
           title: sandbox_state_retention_days
+          format: int32
+          nullable: true
+        pipelineLogRetentionDays:
+          type: integer
+          title: pipeline_log_retention_days
           format: int32
           nullable: true
         sandboxLeaseConfigEnabled:
@@ -16483,9 +16911,10 @@ components:
           type: boolean
           title: spend_transparency_enabled
           description: |-
-            Org-level opt-in: show dollar costs alongside ACU figures across the product.
-             Which figures a given viewer sees is enforced separately, per-RPC.
+            Deprecated: never populated. Dollar figures were removed from the product; usage is
+             reported in ACUs only. Retained only because proto/api is additive-only.
           nullable: true
+          deprecated: true
         sharingDisabled:
           type: boolean
           title: sharing_disabled
@@ -16651,8 +17080,7 @@ components:
           title: questions_tool_enabled
           description: |-
             Org-level toggle for the questions tool (the agent's "ask the user
-             structured questions" cell). Gated additionally by the form-editor master
-             switch; there is no per-member toggle. Default off.
+             structured questions" cell). There is no per-member toggle.
         powerbiSelections:
           type: array
           items:
@@ -16663,6 +17091,12 @@ components:
           title: dataset_id
           description: Tableau collection UUID
           nullable: true
+        ontologyActionsEnabled:
+          type: boolean
+          title: ontology_actions_enabled
+        ontologyActionsAutoApproveEnabled:
+          type: boolean
+          title: ontology_actions_auto_approve_enabled
       title: ParadigmParams
       additionalProperties: false
     textql.rpc.paradigm_params.ParadigmType:
@@ -17675,6 +18109,323 @@ components:
           title: profile_image_url
           description: Signed URL of the newly uploaded avatar.
       title: UploadAgentAvatarResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ApiOAuthConfig:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        clientId:
+          type: string
+          title: client_id
+        authUrl:
+          type: string
+          title: auth_url
+        tokenUrl:
+          type: string
+          title: token_url
+        scopes:
+          type: string
+          title: scopes
+        usePkce:
+          type: boolean
+          title: use_pkce
+        tokenAuthMethod:
+          type: string
+          title: token_auth_method
+        extraConfig:
+          type: object
+          title: extra_config
+          additionalProperties:
+            type: string
+            title: value
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+        authHeader:
+          type: string
+          title: auth_header
+        authPrefix:
+          type: string
+          title: auth_prefix
+        grantType:
+          type: string
+          title: grant_type
+          description: '"authorization_code" (default), "client_credentials", "jwt_bearer", or "device_code"'
+      title: ApiOAuthConfig
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ApiOAuthConfig.ExtraConfigEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: ExtraConfigEntry
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ExchangeApiOAuthClientCredentialsRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: ExchangeApiOAuthClientCredentialsRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ExchangeApiOAuthCodeRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        code:
+          type: string
+          title: code
+        state:
+          type: string
+          title: state
+        codeVerifier:
+          type: string
+          title: code_verifier
+        redirectUri:
+          type: string
+          title: redirect_uri
+          description: Must match the redirect_uri used in GetApiOAuthURL. Omit for the UI callback.
+      title: ExchangeApiOAuthCodeRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ExchangeApiOAuthCodeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+        displayName:
+          type: string
+          title: display_name
+      title: ExchangeApiOAuthCodeResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.ExchangeApiOAuthJwtBearerRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: ExchangeApiOAuthJwtBearerRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthConfigRequest:
+      type: object
+      properties:
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+      title: GetApiOAuthConfigRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthConfigResponse:
+      type: object
+      properties:
+        config:
+          title: config
+          $ref: '#/components/schemas/textql.rpc.public.api_oauth.ApiOAuthConfig'
+      title: GetApiOAuthConfigResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthStatusRequest:
+      type: object
+      properties:
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+      title: GetApiOAuthStatusRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthStatusResponse:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+          title: authenticated
+        tokenExpired:
+          type: boolean
+          title: token_expired
+        displayName:
+          type: string
+          title: display_name
+      title: GetApiOAuthStatusResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthURLRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        state:
+          type: string
+          title: state
+          description: Caller-generated CSRF state. Validate the returned state before exchanging.
+        redirectUri:
+          type: string
+          title: redirect_uri
+          description: |-
+            Callback registered with the provider. Requires HTTPS, except for loopback
+             HTTP callbacks. Omit to use the TextQL UI callback. Pass the same URI to
+             ExchangeApiOAuthCode.
+      title: GetApiOAuthURLRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.GetApiOAuthURLResponse:
+      type: object
+      properties:
+        oauthUrl:
+          type: string
+          title: oauth_url
+        codeVerifier:
+          type: string
+          title: code_verifier
+      title: GetApiOAuthURLResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.InitiateDeviceAuthorizationRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: InitiateDeviceAuthorizationRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.InitiateDeviceAuthorizationResponse:
+      type: object
+      properties:
+        deviceCode:
+          type: string
+          title: device_code
+        userCode:
+          type: string
+          title: user_code
+        verificationUri:
+          type: string
+          title: verification_uri
+        verificationUriComplete:
+          type: string
+          title: verification_uri_complete
+        expiresIn:
+          type: integer
+          title: expires_in
+          format: int32
+        interval:
+          type: integer
+          title: interval
+          format: int32
+      title: InitiateDeviceAuthorizationResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.PollDeviceCodeTokenRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        deviceCode:
+          type: string
+          title: device_code
+      title: PollDeviceCodeTokenRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.PollDeviceCodeTokenResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          title: status
+          description: '"pending", "slow_down", "success", "expired", "denied", "error"'
+        displayName:
+          type: string
+          title: display_name
+          description: only on "success"
+        errorDescription:
+          type: string
+          title: error_description
+      title: PollDeviceCodeTokenResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.RevokeApiOAuthTokenRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: RevokeApiOAuthTokenRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.RevokeApiOAuthTokenResponse:
+      type: object
+      title: RevokeApiOAuthTokenResponse
+      additionalProperties: false
+    textql.rpc.public.api_oauth.UpsertApiOAuthConfigRequest:
+      type: object
+      properties:
+        clientId:
+          type: string
+          title: client_id
+        clientSecret:
+          type: string
+          title: client_secret
+        authUrl:
+          type: string
+          title: auth_url
+        tokenUrl:
+          type: string
+          title: token_url
+        scopes:
+          type: string
+          title: scopes
+        usePkce:
+          type: boolean
+          title: use_pkce
+        tokenAuthMethod:
+          type: string
+          title: token_auth_method
+        extraConfig:
+          type: object
+          title: extra_config
+          additionalProperties:
+            type: string
+            title: value
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        authHeader:
+          type: string
+          title: auth_header
+        authPrefix:
+          type: string
+          title: auth_prefix
+        grantType:
+          type: string
+          title: grant_type
+          description: '"authorization_code" (default), "client_credentials", "jwt_bearer", or "device_code"'
+      title: UpsertApiOAuthConfigRequest
+      additionalProperties: false
+    textql.rpc.public.api_oauth.UpsertApiOAuthConfigRequest.ExtraConfigEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          type: string
+          title: value
+      title: ExtraConfigEntry
+      additionalProperties: false
+    textql.rpc.public.api_oauth.UpsertApiOAuthConfigResponse:
+      type: object
+      properties:
+        config:
+          title: config
+          $ref: '#/components/schemas/textql.rpc.public.api_oauth.ApiOAuthConfig'
+      title: UpsertApiOAuthConfigResponse
       additionalProperties: false
     textql.rpc.public.app.App:
       type: object
@@ -21565,6 +22316,11 @@ components:
           type: string
           title: error
           nullable: true
+        artifactId:
+          type: string
+          title: artifact_id
+          description: 'Set instead of url for artifact cells: the client resolves the file with the viewer''s own access, so shared history never carries a bearer link to a draft.'
+          nullable: true
       title: PreviewCell
       additionalProperties: false
       description: primary interface for ana to render sandbox assets client side
@@ -23162,7 +23918,7 @@ components:
           title: fast_mode
           description: |-
             fast_mode enables Anthropic's fast inference mode (speed: "fast").
-             Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
+             Supported on Opus 5.5, Opus 5, and Opus 4.8. Pricing is 2x standard rates.
           nullable: true
         agentId:
           type: string
@@ -23182,7 +23938,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol.
              Thinking tokens bill as output tokens.
           nullable: true
           deprecated: true
@@ -23448,14 +24204,14 @@ components:
           title: fast_mode
           description: |-
             fast_mode enables Anthropic's fast inference (speed: "fast") for this chat.
-             Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
+             Supported on Opus 5.5, Opus 5, and Opus 4.8. Pricing is 2x standard rates.
           nullable: true
         maxThinking:
           type: boolean
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol.
           nullable: true
           deprecated: true
         modelName:
@@ -24103,17 +24859,16 @@ components:
           type: number
           title: estimated_cost
           format: double
-          description: Estimated LLM-token cost (USD, list model prices). LLM only.
+          description: 'Deprecated: never populated. Dollar figures were removed; use the ACU fields.'
           nullable: true
+          deprecated: true
         estimatedComputeCost:
           type: number
           title: estimated_compute_cost
           format: double
-          description: |-
-            Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
-             ACUs → USD at the org's effective rate. Add to estimated_cost for the
-             thread's total cost. Requires the console rate (0/omitted if unavailable).
+          description: 'Deprecated: never populated. Dollar figures were removed; use estimated_compute_acus.'
           nullable: true
+          deprecated: true
         sandboxId:
           type: string
           title: sandbox_id
@@ -24128,9 +24883,8 @@ components:
           format: double
           description: |-
             Sandbox compute usage for this chat in ACUs (sandbox-seconds / 3600 × ACUs
-             per instance-hour). The metered unit behind estimated_compute_cost; shown
-             alongside the dollars. Independent of the console $ rate, so present whenever
-             the thread used a sandbox.
+             per instance-hour). Requires include_costs; present whenever the thread
+             used a sandbox.
           nullable: true
       title: GetLlmUsageResponse
       additionalProperties: false
@@ -24301,14 +25055,20 @@ components:
         - MODEL_SONNET_5
         - MODEL_OPUS_5
         - MODEL_FABLE_5_1
+        - MODEL_OPUS_5_5
+        - MODEL_SONNET_5_5
         - MODEL_GPT_5_6_SOL
         - MODEL_GEMINI_3_FLASH
         - MODEL_GEMINI_3_PRO
         - MODEL_GEMINI_3_1_PRO
         - MODEL_GEMINI_3_5_FLASH
+        - MODEL_GEMINI_3_8_FLASH
         - MODEL_GPT_5_6_TERRA
         - MODEL_GPT_5_6_LUNA
         - MODEL_GPT_6_ASTRA
+        - MODEL_GPT_6_SOL
+        - MODEL_GPT_6_LUNA
+        - MODEL_GPT_6_1_SOL
         - MODEL_DEEPSEEK_3_2
         - MODEL_GLM_5
         - MODEL_VLLM
@@ -30067,7 +30827,7 @@ components:
           type: number
           title: estimated_acu
           format: double
-          description: proportionally distributed from member's feed ACU by post count
+          description: proportionally distributed from feed ACU by the agent's chat LLM tokens and sandbox time
       title: AgentBillingStat
       additionalProperties: false
     textql.rpc.public.observe.AppBillingStat:
@@ -30713,10 +31473,8 @@ components:
           type: number
           title: acu_rate_per_1000_usd
           format: double
-          description: |-
-            Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
-             the tenant's pricing tier / active override). Multiply any ACU figure by
-             (rate / 1000) to show dollars. 0 means unknown/unpriced (e.g. trial).
+          description: 'Deprecated: never populated. Dollar figures were removed from the product.'
+          deprecated: true
         unattributedAppLlmAcu:
           type: number
           title: unattributed_app_llm_acu
@@ -32058,6 +32816,12 @@ components:
             Context-library file reads. Only the evaluation paradigm reads this today,
              so that an eval can test the agent without context access; every other
              paradigm gates read_file on the org's ContextV3 flag alone.
+        ontologyActionsEnabled:
+          type: boolean
+          title: ontology_actions_enabled
+        ontologyActionsAutoApproveEnabled:
+          type: boolean
+          title: ontology_actions_auto_approve_enabled
       title: UniversalOptions
       additionalProperties: false
     textql.rpc.public.patches.AddOntologySubmoduleRequest:
@@ -37414,13 +38178,16 @@ components:
         uploadUrl:
           type: string
           title: upload_url
-          description: PUT the file here, using content_type, then pass file_url to ParseRolePermissionsImport.
+          description: PUT the file here, using content_type, then pass file_key to ParseRolePermissionsImport.
         fileUrl:
           type: string
           title: file_url
         contentType:
           type: string
           title: content_type
+        fileKey:
+          type: string
+          title: file_key
       title: CreateRolePermissionsUploadUrlResponse
       additionalProperties: false
     textql.rpc.public.rbac.CreateRoleRequest:
@@ -38090,6 +38857,12 @@ components:
           title: roles
       title: MemberRoles
       additionalProperties: false
+    textql.rpc.public.rbac.MemoryPermissionAction:
+      type: string
+      title: MemoryPermissionAction
+      enum:
+        - MEMORY_ACTION_UNSPECIFIED
+        - MEMORY_ACTION_WRITE
     textql.rpc.public.rbac.ObjectAccess:
       type: object
       properties:
@@ -38186,6 +38959,9 @@ components:
           type: string
           title: file_url
           description: Presigned download URL for a CSV or XLSX file, up to 1 MiB and 100 roles.
+        fileKey:
+          type: string
+          title: file_key
       title: ParseRolePermissionsImportRequest
       additionalProperties: false
     textql.rpc.public.rbac.ParseRolePermissionsImportResponse:
@@ -38325,6 +39101,13 @@ components:
           title: member
           required:
             - member
+        - properties:
+            memory:
+              title: memory
+              $ref: '#/components/schemas/textql.rpc.public.rbac.MemoryPermissionAction'
+          title: memory
+          required:
+            - memory
         - properties:
             observability:
               title: observability
@@ -39388,9 +40171,8 @@ components:
           type: number
           title: acu_rate_per_1000_usd
           format: double
-          description: |-
-            Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
-             the tenant's pricing tier / active override). 0 means unknown/unpriced.
+          description: 'Deprecated: never populated. Dollar figures were removed from the product.'
+          deprecated: true
       title: ListSandboxSpendResponse
       additionalProperties: false
     textql.rpc.public.sandbox_admin.ListSandboxesRequest:
@@ -40670,7 +41452,8 @@ components:
         authType:
           type: string
           title: auth_type
-          description: '"token", "oauth_u2m", "oauth_per_member"'
+          description: 'Deprecated: use auth_type_enum. Populated for older clients.'
+          deprecated: true
         memberOauthAuthenticated:
           type: boolean
           title: member_oauth_authenticated
@@ -40712,6 +41495,12 @@ components:
         testMethod:
           type: string
           title: test_method
+        authTypeEnum:
+          title: auth_type_enum
+          description: |-
+            Authentication mode derived from auth_type. An empty stored auth_type maps
+             to TOKEN; an unrecognized value maps to UNSPECIFIED and remains in auth_type.
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAuthType'
       title: ApiAccessKey
       additionalProperties: false
     textql.rpc.public.secret.ApiAccessKey.BodyEntry:
@@ -40761,6 +41550,22 @@ components:
           format: int64
       title: ApiAccessRef
       additionalProperties: false
+    textql.rpc.public.secret.ApiAuthType:
+      type: string
+      title: ApiAuthType
+      enum:
+        - API_AUTH_TYPE_UNSPECIFIED
+        - API_AUTH_TYPE_TOKEN
+        - API_AUTH_TYPE_OAUTH_U2M
+        - API_AUTH_TYPE_OAUTH_PER_MEMBER
+        - API_AUTH_TYPE_ENV_VAR
+        - API_AUTH_TYPE_NONE
+        - API_AUTH_TYPE_OTHER
+      description: |-
+        Authentication mode for an API connector. Provider templates have a separate
+         auth_type describing how their credentials are entered (e.g. basic_auth).
+         OAUTH_U2M shares one OAuth account among members with connector access;
+         OAUTH_PER_MEMBER requires each member to connect their own account.
     textql.rpc.public.secret.ApiProvider:
       type: object
       properties:
@@ -40843,6 +41648,29 @@ components:
         - BODY_CONTENT_TYPE_NONE
         - BODY_CONTENT_TYPE_JSON
         - BODY_CONTENT_TYPE_FORM
+    textql.rpc.public.secret.CreateApiRevisionRequest:
+      type: object
+      properties:
+        apiAccessKeyId:
+          type: string
+          title: api_access_key_id
+          description: empty = new key draft
+          nullable: true
+      title: CreateApiRevisionRequest
+      additionalProperties: false
+    textql.rpc.public.secret.CreateApiRevisionResponse:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+        apiAccessKey:
+          title: api_access_key
+          description: pre-populated from DB if key ID was given
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessKey'
+      title: CreateApiRevisionResponse
+      additionalProperties: false
     textql.rpc.public.secret.DeleteApiAccessKeyRequest:
       type: object
       properties:
@@ -40854,6 +41682,18 @@ components:
     textql.rpc.public.secret.DeleteApiAccessKeyResponse:
       type: object
       title: DeleteApiAccessKeyResponse
+      additionalProperties: false
+    textql.rpc.public.secret.DeleteApiRevisionRequest:
+      type: object
+      properties:
+        ref:
+          title: ref
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAccessRef'
+      title: DeleteApiRevisionRequest
+      additionalProperties: false
+    textql.rpc.public.secret.DeleteApiRevisionResponse:
+      type: object
+      title: DeleteApiRevisionResponse
       additionalProperties: false
     textql.rpc.public.secret.EnvVarField:
       type: object
@@ -41001,6 +41841,8 @@ components:
         authType:
           type: string
           title: auth_type
+          description: 'Deprecated: use auth_type_enum. Accepted when auth_type_enum is unspecified.'
+          deprecated: true
         httpBasicAuth:
           title: http_basic_auth
           nullable: true
@@ -41023,6 +41865,12 @@ components:
         testMethod:
           type: string
           title: test_method
+        authTypeEnum:
+          title: auth_type_enum
+          description: |-
+            If unspecified, falls back to auth_type, then TOKEN when both are unset.
+             If both fields are provided, they must describe the same mode.
+          $ref: '#/components/schemas/textql.rpc.public.secret.ApiAuthType'
       title: UpsertApiAccessKeyRequest
       additionalProperties: false
     textql.rpc.public.secret.UpsertApiAccessKeyRequest.BodyEntry:
@@ -41140,6 +41988,9 @@ components:
         organization:
           title: organization
           $ref: '#/components/schemas/textql.rpc.auth.Organization'
+        modelSettings:
+          title: model_settings
+          $ref: '#/components/schemas/textql.rpc.public.settings.OrganizationModelSettings'
       title: GetOrganizationSettingsResponse
       additionalProperties: false
     textql.rpc.public.settings.InviteOrganizationMemberRequest:
@@ -41183,6 +42034,29 @@ components:
           title: members
       title: ListOrganizationMembersResponse
       additionalProperties: false
+    textql.rpc.public.settings.OrganizationModelSettings:
+      type: object
+      properties:
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+        enabledModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: enabled_models
+        restrictedModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: restricted_models
+        systemDefaultModel:
+          title: system_default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+      title: OrganizationModelSettings
+      additionalProperties: false
     textql.rpc.public.settings.UpdateOrganizationModelSettingsRequest:
       type: object
       properties:
@@ -41222,6 +42096,9 @@ components:
         organization:
           title: organization
           $ref: '#/components/schemas/textql.rpc.auth.Organization'
+        modelSettings:
+          title: model_settings
+          $ref: '#/components/schemas/textql.rpc.public.settings.OrganizationModelSettings'
       title: UpdateOrganizationModelSettingsResponse
       additionalProperties: false
     textql.rpc.public.settings.UpdateOrganizationSettingsRequest:
@@ -41335,6 +42212,8 @@ components:
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         spendTransparencyEnabled:
           title: spend_transparency_enabled
+          description: 'Deprecated: ignored. Dollar figures were removed from the product.'
+          deprecated: true
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         sharingDisabled:
           title: sharing_disabled
@@ -41354,6 +42233,9 @@ components:
         organization:
           title: organization
           $ref: '#/components/schemas/textql.rpc.auth.Organization'
+        modelSettings:
+          title: model_settings
+          $ref: '#/components/schemas/textql.rpc.public.settings.OrganizationModelSettings'
       title: UpdateOrganizationSettingsResponse
       additionalProperties: false
     textql.rpc.public.slack.CreateSlackUuidResponse:
@@ -42107,6 +42989,8 @@ tags:
   - name: OntologyManagementService
   - name: ChatService
   - name: AgentService
+  - name: SecretService
+  - name: ApiOAuthService
   - name: AuditLogService
   - name: MCPService
   - name: MetricsExportService
@@ -42119,7 +43003,6 @@ tags:
   - name: SandboxCapabilityService
   - name: SandboxExecService
   - name: ScimService
-  - name: SecretService
   - name: SettingsService
   - name: SlackService
   - name: TeamsService

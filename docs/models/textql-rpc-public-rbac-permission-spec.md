@@ -125,6 +125,14 @@ const value: models.Member = {
 };
 ```
 
+### `models.Memory`
+
+```typescript
+const value: models.Memory = {
+  memory: "MEMORY_ACTION_WRITE",
+};
+```
+
 ### `models.Observability`
 
 ```typescript

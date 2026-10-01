@@ -21,6 +21,10 @@ export type TextqlRpcPublicCellsPreviewCell = {
   url?: string | null | undefined;
   content?: string | null | undefined;
   error?: string | null | undefined;
+  /**
+   * Set instead of url for artifact cells: the client resolves the file with the viewer's own access, so shared history never carries a bearer link to a draft.
+   */
+  artifactId?: string | null | undefined;
 };
 
 /** @internal */
@@ -34,6 +38,7 @@ export const TextqlRpcPublicCellsPreviewCell$inboundSchema: z.ZodMiniType<
   url: z.optional(z.nullable(types.string())),
   content: z.optional(z.nullable(types.string())),
   error: z.optional(z.nullable(types.string())),
+  artifactId: z.optional(z.nullable(types.string())),
 });
 
 export function textqlRpcPublicCellsPreviewCellFromJSON(
