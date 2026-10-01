@@ -28,10 +28,9 @@ export type TextqlRpcPublicSandboxAdminListSandboxSpendResponse = {
    */
   totalAcus?: number | undefined;
   /**
-   * Effective ACU->USD rate for this org, in USD per 1000 ACUs (resolved from
+   * Deprecated: never populated. Dollar figures were removed from the product.
    *
-   * @remarks
-   *  the tenant's pricing tier / active override). 0 means unknown/unpriced.
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   acuRatePer1000Usd?: number | undefined;
 };

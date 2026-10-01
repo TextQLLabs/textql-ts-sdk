@@ -3,7 +3,11 @@
  */
 
 import * as z from "zod/v4-mini";
+import { safeParse } from "../lib/schemas.js";
+import { Result as SafeParseResult } from "../types/fp.js";
+import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
+import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type Revision = number | string;
 
@@ -12,6 +16,9 @@ export type TextqlRpcPublicSecretApiAccessRef = {
   revision?: number | string | undefined;
 };
 
+/** @internal */
+export const Revision$inboundSchema: z.ZodMiniType<Revision, unknown> =
+  smartUnion([types.number(), types.string()]);
 /** @internal */
 export type Revision$Outbound = number | string;
 
@@ -24,7 +31,24 @@ export const Revision$outboundSchema: z.ZodMiniType<
 export function revisionToJSON(revision: Revision): string {
   return JSON.stringify(Revision$outboundSchema.parse(revision));
 }
+export function revisionFromJSON(
+  jsonString: string,
+): SafeParseResult<Revision, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Revision$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Revision' from JSON`,
+  );
+}
 
+/** @internal */
+export const TextqlRpcPublicSecretApiAccessRef$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicSecretApiAccessRef,
+  unknown
+> = z.object({
+  apiAccessKeyId: types.optional(types.string()),
+  revision: types.optional(smartUnion([types.number(), types.string()])),
+});
 /** @internal */
 export type TextqlRpcPublicSecretApiAccessRef$Outbound = {
   apiAccessKeyId?: string | undefined;
@@ -47,5 +71,14 @@ export function textqlRpcPublicSecretApiAccessRefToJSON(
     TextqlRpcPublicSecretApiAccessRef$outboundSchema.parse(
       textqlRpcPublicSecretApiAccessRef,
     ),
+  );
+}
+export function textqlRpcPublicSecretApiAccessRefFromJSON(
+  jsonString: string,
+): SafeParseResult<TextqlRpcPublicSecretApiAccessRef, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TextqlRpcPublicSecretApiAccessRef$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicSecretApiAccessRef' from JSON`,
   );
 }

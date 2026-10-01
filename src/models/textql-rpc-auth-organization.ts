@@ -240,12 +240,7 @@ export type TextqlRpcAuthOrganization = {
   logoUrl?: string | null | undefined;
   brandName?: string | null | undefined;
   paradigmParams?: TextqlRpcParadigmParamsParadigmParams | undefined;
-  defaultLlmModel?: number | null | undefined;
   preferredProvider?: string | null | undefined;
-  /**
-   * Model MODEL_DEFAULT resolves to for this org; SYSTEM_DEFAULT_MODEL env var can override it.
-   */
-  systemDefaultModel?: number | null | undefined;
   toolRestrictions?: TextqlRpcParadigmParamsParadigmParams | undefined;
   consoleAccess?: boolean | null | undefined;
   defaultConnectorIds?: Array<number> | undefined;
@@ -261,8 +256,6 @@ export type TextqlRpcAuthOrganization = {
   contextV3Enabled?: boolean | null | undefined;
   bashEnabled?: boolean | null | undefined;
   defaultRoutingEnabled?: boolean | null | undefined;
-  enabledModelIds?: Array<number> | undefined;
-  restrictedModelIds?: Array<number> | undefined;
   restrictedFamilies?: Array<string> | undefined;
   discoverable?: boolean | null | undefined;
   observabilityEnabled?: boolean | null | undefined;
@@ -278,6 +271,7 @@ export type TextqlRpcAuthOrganization = {
   maxThinkingEnabled?: boolean | null | undefined;
   configurableThinkingEnabled?: boolean | null | undefined;
   sandboxStateRetentionDays?: number | null | undefined;
+  pipelineLogRetentionDays?: number | null | undefined;
   sandboxLeaseConfigEnabled?: boolean | null | undefined;
   voiceInputEnabled?: boolean | null | undefined;
   deleteInactiveThreadsEnabled?: boolean | null | undefined;
@@ -382,10 +376,12 @@ export type TextqlRpcAuthOrganization = {
   configAutofixEnabled?: boolean | null | undefined;
   helmChartVersion?: string | null | undefined;
   /**
-   * Org-level opt-in: show dollar costs alongside ACU figures across the product.
+   * Deprecated: never populated. Dollar figures were removed from the product; usage is
    *
    * @remarks
-   *  Which figures a given viewer sees is enforced separately, per-RPC.
+   *  reported in ACUs only. Retained only because proto/api is additive-only.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   spendTransparencyEnabled?: boolean | null | undefined;
   sharingDisabled?: boolean | null | undefined;
@@ -429,9 +425,7 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   paradigmParams: types.optional(
     TextqlRpcParadigmParamsParadigmParams$inboundSchema,
   ),
-  defaultLlmModel: z.optional(z.nullable(types.number())),
   preferredProvider: z.optional(z.nullable(types.string())),
-  systemDefaultModel: z.optional(z.nullable(types.number())),
   toolRestrictions: types.optional(
     TextqlRpcParadigmParamsParadigmParams$inboundSchema,
   ),
@@ -449,8 +443,6 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   contextV3Enabled: z.optional(z.nullable(types.boolean())),
   bashEnabled: z.optional(z.nullable(types.boolean())),
   defaultRoutingEnabled: z.optional(z.nullable(types.boolean())),
-  enabledModelIds: types.optional(z.array(types.number())),
-  restrictedModelIds: types.optional(z.array(types.number())),
   restrictedFamilies: types.optional(z.array(types.string())),
   discoverable: z.optional(z.nullable(types.boolean())),
   observabilityEnabled: z.optional(z.nullable(types.boolean())),
@@ -463,6 +455,7 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   maxThinkingEnabled: z.optional(z.nullable(types.boolean())),
   configurableThinkingEnabled: z.optional(z.nullable(types.boolean())),
   sandboxStateRetentionDays: z.optional(z.nullable(types.number())),
+  pipelineLogRetentionDays: z.optional(z.nullable(types.number())),
   sandboxLeaseConfigEnabled: z.optional(z.nullable(types.boolean())),
   voiceInputEnabled: z.optional(z.nullable(types.boolean())),
   deleteInactiveThreadsEnabled: z.optional(z.nullable(types.boolean())),

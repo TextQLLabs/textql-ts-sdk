@@ -10,11 +10,12 @@ import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
 export type TextqlRpcPublicRbacCreateRolePermissionsUploadUrlResponse = {
   /**
-   * PUT the file here, using content_type, then pass file_url to ParseRolePermissionsImport.
+   * PUT the file here, using content_type, then pass file_key to ParseRolePermissionsImport.
    */
   uploadUrl?: string | undefined;
   fileUrl?: string | undefined;
   contentType?: string | undefined;
+  fileKey?: string | undefined;
 };
 
 /** @internal */
@@ -26,6 +27,7 @@ export const TextqlRpcPublicRbacCreateRolePermissionsUploadUrlResponse$inboundSc
     uploadUrl: types.optional(types.string()),
     fileUrl: types.optional(types.string()),
     contentType: types.optional(types.string()),
+    fileKey: types.optional(types.string()),
   });
 
 export function textqlRpcPublicRbacCreateRolePermissionsUploadUrlResponseFromJSON(

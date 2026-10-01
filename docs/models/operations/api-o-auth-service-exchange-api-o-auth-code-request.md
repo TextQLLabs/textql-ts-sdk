@@ -1,0 +1,19 @@
+# ApiOAuthServiceExchangeApiOAuthCodeRequest
+
+## Example Usage
+
+```typescript
+import { ApiOAuthServiceExchangeApiOAuthCodeRequest } from "@textql/sdk/models/operations";
+
+let value: ApiOAuthServiceExchangeApiOAuthCodeRequest = {
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                     | Type                                                                                                                                      | Required                                                                                                                                  | Description                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                  | *1*                                                                                                                                       | :heavy_check_mark:                                                                                                                        | N/A                                                                                                                                       |
+| `connectTimeoutMs`                                                                                                                        | *number*                                                                                                                                  | :heavy_minus_sign:                                                                                                                        | N/A                                                                                                                                       |
+| `body`                                                                                                                                    | [models.TextqlRpcPublicApiOauthExchangeApiOAuthCodeRequest](../../models/textql-rpc-public-api-oauth-exchange-api-o-auth-code-request.md) | :heavy_check_mark:                                                                                                                        | N/A                                                                                                                                       |

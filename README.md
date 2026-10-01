@@ -159,6 +159,19 @@ run();
 * [update](docs/sdks/agents/README.md#update) - UpdateAgent
 * [uploadAgentAvatar](docs/sdks/agents/README.md#uploadagentavatar) - UploadAgentAvatar
 
+### [ApiOAuth](docs/sdks/apioauth/README.md)
+
+* [exchangeClientCredentials](docs/sdks/apioauth/README.md#exchangeclientcredentials) - ExchangeApiOAuthClientCredentials
+* [exchangeCode](docs/sdks/apioauth/README.md#exchangecode) - ExchangeApiOAuthCode
+* [exchangeJwtBearer](docs/sdks/apioauth/README.md#exchangejwtbearer) - ExchangeApiOAuthJwtBearer
+* [getConfig](docs/sdks/apioauth/README.md#getconfig) - GetApiOAuthConfig
+* [getStatus](docs/sdks/apioauth/README.md#getstatus) - GetApiOAuthStatus
+* [getURL](docs/sdks/apioauth/README.md#geturl) - GetApiOAuthURL
+* [initiateDeviceAuthorization](docs/sdks/apioauth/README.md#initiatedeviceauthorization) - InitiateDeviceAuthorization
+* [pollDeviceCodeToken](docs/sdks/apioauth/README.md#polldevicecodetoken) - PollDeviceCodeToken
+* [revokeToken](docs/sdks/apioauth/README.md#revoketoken) - RevokeApiOAuthToken
+* [upsertConfig](docs/sdks/apioauth/README.md#upsertconfig) - Shared OAuth app configuration. Requires connector write permission.
+
 ### [Apps](docs/sdks/apps/README.md)
 
 * [heartbeat](docs/sdks/apps/README.md#heartbeat) - Keeps the viewed app's compute worker alive; first view spawns and pre-warms it (dashboard viewer-TTL parity).
@@ -574,7 +587,9 @@ run();
 
 ### [Secrets](docs/sdks/secrets/README.md)
 
+* [createApiRevision](docs/sdks/secrets/README.md#createapirevision) - API connector drafts let clients configure and test credentials before saving.
 * [deleteApiAccessKey](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
+* [deleteApiRevision](docs/sdks/secrets/README.md#deleteapirevision) - DeleteApiRevision
 * [getApiAccessKey](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 * [listApiAccessKeys](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
 * [listApiProviders](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders
@@ -660,6 +675,16 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`agentsTriggerAgent`](docs/sdks/agents/README.md#triggeragent) - TriggerAgent
 - [`agentsUpdate`](docs/sdks/agents/README.md#update) - UpdateAgent
 - [`agentsUploadAgentAvatar`](docs/sdks/agents/README.md#uploadagentavatar) - UploadAgentAvatar
+- [`apiOAuthExchangeClientCredentials`](docs/sdks/apioauth/README.md#exchangeclientcredentials) - ExchangeApiOAuthClientCredentials
+- [`apiOAuthExchangeCode`](docs/sdks/apioauth/README.md#exchangecode) - ExchangeApiOAuthCode
+- [`apiOAuthExchangeJwtBearer`](docs/sdks/apioauth/README.md#exchangejwtbearer) - ExchangeApiOAuthJwtBearer
+- [`apiOAuthGetConfig`](docs/sdks/apioauth/README.md#getconfig) - GetApiOAuthConfig
+- [`apiOAuthGetStatus`](docs/sdks/apioauth/README.md#getstatus) - GetApiOAuthStatus
+- [`apiOAuthGetURL`](docs/sdks/apioauth/README.md#geturl) - GetApiOAuthURL
+- [`apiOAuthInitiateDeviceAuthorization`](docs/sdks/apioauth/README.md#initiatedeviceauthorization) - InitiateDeviceAuthorization
+- [`apiOAuthPollDeviceCodeToken`](docs/sdks/apioauth/README.md#polldevicecodetoken) - PollDeviceCodeToken
+- [`apiOAuthRevokeToken`](docs/sdks/apioauth/README.md#revoketoken) - RevokeApiOAuthToken
+- [`apiOAuthUpsertConfig`](docs/sdks/apioauth/README.md#upsertconfig) - Shared OAuth app configuration. Requires connector write permission.
 - [`appsCreateApp`](docs/sdks/apps/README.md#createapp) - CreateApp
 - [`appsDeleteApp`](docs/sdks/apps/README.md#deleteapp) - DeleteApp
 - [`appsDuplicate`](docs/sdks/apps/README.md#duplicate) - Duplicates an app the caller can view into a new app they own,  named "Copy of <name>". Copies code/files/data sources/compute functions/  schedule; never carries over the source's data snapshot.
@@ -1022,7 +1047,9 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`scimListScimOAuthClients`](docs/sdks/scim/README.md#listscimoauthclients) - ListScimOAuthClients
 - [`scimRevokeOAuthClient`](docs/sdks/scim/README.md#revokeoauthclient) - RevokeScimOAuthClient
 - [`scimRevokeScimToken`](docs/sdks/scim/README.md#revokescimtoken) - RevokeScimToken
+- [`secretsCreateApiRevision`](docs/sdks/secrets/README.md#createapirevision) - API connector drafts let clients configure and test credentials before saving.
 - [`secretsDeleteApiAccessKey`](docs/sdks/secrets/README.md#deleteapiaccesskey) - DeleteApiAccessKey
+- [`secretsDeleteApiRevision`](docs/sdks/secrets/README.md#deleteapirevision) - DeleteApiRevision
 - [`secretsGetApiAccessKey`](docs/sdks/secrets/README.md#getapiaccesskey) - GetApiAccessKey
 - [`secretsListApiAccessKeys`](docs/sdks/secrets/README.md#listapiaccesskeys) - ListApiAccessKeys
 - [`secretsListApiProviders`](docs/sdks/secrets/README.md#listapiproviders) - ListApiProviders

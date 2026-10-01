@@ -53,8 +53,7 @@ export type TextqlRpcParadigmParamsParadigmParams = {
    * Org-level toggle for the questions tool (the agent's "ask the user
    *
    * @remarks
-   *  structured questions" cell). Gated additionally by the form-editor master
-   *  switch; there is no per-member toggle. Default off.
+   *  structured questions" cell). There is no per-member toggle.
    */
   questionsToolEnabled?: boolean | undefined;
   powerbiSelections?:
@@ -64,6 +63,8 @@ export type TextqlRpcParadigmParamsParadigmParams = {
    * Tableau collection UUID
    */
   datasetId?: string | null | undefined;
+  ontologyActionsEnabled?: boolean | undefined;
+  ontologyActionsAutoApproveEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -101,6 +102,8 @@ export const TextqlRpcParadigmParamsParadigmParams$inboundSchema: z.ZodMiniType<
     z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
   ),
   datasetId: z.optional(z.nullable(types.string())),
+  ontologyActionsEnabled: types.optional(types.boolean()),
+  ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
 });
 /** @internal */
 export type TextqlRpcParadigmParamsParadigmParams$Outbound = {
@@ -134,6 +137,8 @@ export type TextqlRpcParadigmParamsParadigmParams$Outbound = {
     | Array<TextqlRpcPowerbiSelectionPowerBISelection$Outbound>
     | undefined;
   datasetId?: string | null | undefined;
+  ontologyActionsEnabled?: boolean | undefined;
+  ontologyActionsAutoApproveEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -172,6 +177,8 @@ export const TextqlRpcParadigmParamsParadigmParams$outboundSchema:
       z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
     ),
     datasetId: z.optional(z.nullable(z.string())),
+    ontologyActionsEnabled: z.optional(z.boolean()),
+    ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcParadigmParamsParadigmParamsToJSON(

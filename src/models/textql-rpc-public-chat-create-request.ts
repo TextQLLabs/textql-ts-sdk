@@ -51,14 +51,14 @@ export type TextqlRpcPublicChatCreateRequest = {
    * fast_mode enables Anthropic's fast inference (speed: "fast") for this chat.
    *
    * @remarks
-   *  Supported on Opus 5 and Opus 4.8. Pricing is 2x standard rates.
+   *  Supported on Opus 5.5, Opus 5, and Opus 4.8. Pricing is 2x standard rates.
    */
   fastMode?: boolean | null | undefined;
   /**
    * max_thinking runs extended thinking at max effort with visible reasoning.
    *
    * @remarks
-   *  Supported on Sonnet 5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, and GPT 5.6 Sol/Terra/Luna.
+   *  Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol.
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */

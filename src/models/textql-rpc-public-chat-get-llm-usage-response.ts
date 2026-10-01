@@ -19,15 +19,15 @@ export type TextqlRpcPublicChatGetLlmUsageResponse = {
    */
   contextWindowUsed?: number | undefined;
   /**
-   * Estimated LLM-token cost (USD, list model prices). LLM only.
+   * Deprecated: never populated. Dollar figures were removed; use the ACU fields.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   estimatedCost?: number | null | undefined;
   /**
-   * Estimated sandbox/compute cost for this chat (USD): chat sandbox-seconds →
+   * Deprecated: never populated. Dollar figures were removed; use estimated_compute_acus.
    *
-   * @remarks
-   *  ACUs → USD at the org's effective rate. Add to estimated_cost for the
-   *  thread's total cost. Requires the console rate (0/omitted if unavailable).
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   estimatedComputeCost?: number | null | undefined;
   /**
@@ -42,9 +42,8 @@ export type TextqlRpcPublicChatGetLlmUsageResponse = {
    * Sandbox compute usage for this chat in ACUs (sandbox-seconds / 3600 × ACUs
    *
    * @remarks
-   *  per instance-hour). The metered unit behind estimated_compute_cost; shown
-   *  alongside the dollars. Independent of the console $ rate, so present whenever
-   *  the thread used a sandbox.
+   *  per instance-hour). Requires include_costs; present whenever the thread
+   *  used a sandbox.
    */
   estimatedComputeAcus?: number | null | undefined;
 };

@@ -9,11 +9,13 @@ export type TextqlRpcPublicRbacParseRolePermissionsImportRequest = {
    * Presigned download URL for a CSV or XLSX file, up to 1 MiB and 100 roles.
    */
   fileUrl?: string | undefined;
+  fileKey?: string | undefined;
 };
 
 /** @internal */
 export type TextqlRpcPublicRbacParseRolePermissionsImportRequest$Outbound = {
   fileUrl?: string | undefined;
+  fileKey?: string | undefined;
 };
 
 /** @internal */
@@ -23,6 +25,7 @@ export const TextqlRpcPublicRbacParseRolePermissionsImportRequest$outboundSchema
     TextqlRpcPublicRbacParseRolePermissionsImportRequest
   > = z.object({
     fileUrl: z.optional(z.string()),
+    fileKey: z.optional(z.string()),
   });
 
 export function textqlRpcPublicRbacParseRolePermissionsImportRequestToJSON(
