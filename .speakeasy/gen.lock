@@ -3,17 +3,17 @@ id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
   docChecksum: f6a1ceea9eb505e3d0d9efe8fecefd52
   docVersion: 1.0.0
-  speakeasyVersion: 1.800.0
+  speakeasyVersion: 1.800.1
   generationVersion: 2.943.0
-  releaseVersion: 1.4.46
-  configChecksum: c0a33e6f8a6415d60d64353d933beec5
+  releaseVersion: 1.4.47
+  configChecksum: c6f98d5189a99bd82708c6cc42a1f164
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 8367c242-b7b8-45de-9cb6-db0b01ce393a
-  pristine_commit_hash: c0e4fd70540fca28e0bb1c813f9b8df6e45920d6
-  pristine_tree_hash: 0de263a8348fa8f4e6a998f1fd558c3dd89cc710
+  generation_id: 8ff7bf9b-c27d-46fc-916e-e81b05be6816
+  pristine_commit_hash: f6f67e5eac2fd8b2240d2ccc9936d9c8cd15042f
+  pristine_tree_hash: cefcc7617d6bbe5b387cf7ebef280a8c73289edd
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -10448,12 +10448,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:62a2e38a4a09d55d1baa42f7774ba16b68c8cac6
-    pristine_git_object: 903ebb408e37355136ef12836ee878c6cb9485e5
+    last_write_checksum: sha1:658635f86216932344368af2eda560a790ae5631
+    pristine_git_object: dfcf9c5267c61aecfe8c85dda11f2dcfa5923898
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:349ba65dc8d3d8da6e2991b02b7d234ee8167c72
-    pristine_git_object: c86e45ffcf22665898ed08d71af93fc2eaf9366a
+    last_write_checksum: sha1:9f550514430594409727935cf86f95f66ed3e8b9
+    pristine_git_object: f0923ae97ed00cc6851563144f91f6084536e54f
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -12196,8 +12196,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:d1a3721d235a7a66995020334f4f19ef46b48f05
-    pristine_git_object: ac2c9a5e9b186057cb1e3328c7fd4cd07f523ece
+    last_write_checksum: sha1:44e6401e901ac41d2984dce22b4b5cd8c76300ca
+    pristine_git_object: 2dbbc6fbc8fab27e58162324033ce292d5475dd8
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
