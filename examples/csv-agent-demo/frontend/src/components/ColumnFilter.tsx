@@ -34,7 +34,7 @@ export function Popover({ anchor, align = 'left', width, onClose, children }: Po
 	return createPortal(
 		<div
 			ref={ref}
-			className={cx(FLYOUT, 'fixed z-50 animate-select-in')}
+			className={cx(FLYOUT, 'fixed z-[110] animate-select-in')}
 			style={{ top, left, width }}
 		>
 			{children}
@@ -54,19 +54,27 @@ const NULL_VIEWS: View[] = [
 	{ value: 'filled', label: 'Not empty' }
 ];
 
-/** A segmented control where pressing the active segment clears it. */
-function Toggle<T extends string>({
+/** The grid's segmented control. With `clearable`, pressing the active segment clears it. */
+export function Toggle<T extends string>({
 	views,
 	value,
-	onChange
+	onChange,
+	clearable = true,
+	className
 }: {
 	views: View[];
 	value: T | null;
 	onChange: (value: T | null) => void;
+	clearable?: boolean;
+	className?: string;
 }) {
 	return (
-		<ViewSwitcher views={views} value={value ?? ''} onValueChange={(v) => onChange(v === value ? null : (v as T))}>
-			<span className={TRACK} role="group">
+		<ViewSwitcher
+			views={views}
+			value={value ?? ''}
+			onValueChange={(v) => onChange(clearable && v === value ? null : (v as T))}
+		>
+			<span className={cx(TRACK, className)} role="group">
 				{views.map((view) => (
 					<ViewSwitcherItem key={view.value} view={view} className="h-6 flex-1 justify-center" />
 				))}
@@ -74,7 +82,9 @@ function Toggle<T extends string>({
 		</ViewSwitcher>
 	);
 }
-const FIELD =
+
+/** The grid's text field: search, filter bounds, parameter pickers. */
+export const FIELD =
 	'h-7 w-full min-w-0 rounded-[7px] border-0 bg-fill px-2 font-mono text-[12px] text-ink outline-0 placeholder:text-muted focus:shadow-[inset_0_0_0_1px_var(--color-accent)]';
 
 type Props = {

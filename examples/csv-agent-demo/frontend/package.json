@@ -3,7 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "engines": { "node": "24.16.0" },
+  "engines": {
+    "node": "24.16.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
@@ -16,7 +18,8 @@
     "python-react-demo-frontend": "file:../../python-react-demo/frontend",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "react-router-dom": "^7.18.2"
+    "react-router-dom": "^7.18.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",

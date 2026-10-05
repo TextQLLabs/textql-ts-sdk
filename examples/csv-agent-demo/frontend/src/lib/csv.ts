@@ -1,4 +1,5 @@
 import Papa from 'papaparse';
+import { read, utils } from 'xlsx';
 
 export type ColumnType = 'number' | 'date' | 'boolean' | 'text';
 
@@ -181,6 +182,22 @@ function toSheet(data: string[][], truncated: boolean): Sheet {
 		return cells;
 	});
 	return buildSheet(columns, rows, truncated);
+}
+
+/** The first sheet of an Excel or ODS workbook, as displayed text. */
+export function parseWorkbook(bytes: ArrayBuffer): Sheet {
+	const book = read(bytes, { type: 'array', cellDates: true, dense: true });
+	const first = book.Sheets[book.SheetNames[0]!];
+	if (!first) throw new Error('The workbook has no sheets.');
+	const data = utils.sheet_to_json<string[]>(first, {
+		header: 1,
+		raw: false,
+		defval: '',
+		blankrows: false,
+		dateNF: 'yyyy-mm-dd'
+	});
+	const truncated = data.length > ROW_LIMIT + 1;
+	return toSheet(data.slice(0, ROW_LIMIT + 1), truncated);
 }
 
 export function parseCsv(text: string): Sheet {

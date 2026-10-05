@@ -4,13 +4,26 @@ import { pumpSse, readJson, type StreamEvent } from '@ui/lib/api';
 import type { CellLike } from '@ui/lib/cells';
 import { toEmbeddablePreviewUrl } from '@ui/lib/previewUrl';
 
+import type { ForecastParams } from './forecast';
+
 export type Run = { id: string; title: string; updated_at: string | null; is_running: boolean };
 
 export type RunDetail = {
 	file_name: string;
-	instruction: string;
+	/** Each forecast prompt's cell, with the parameters it sent. */
+	prompts: { cell_id: string; parameters: ForecastParams }[];
 	dataset_id: string | null;
 	cells: CellLike[];
+};
+
+/** One forecast request: rules over the file's columns, plus the raw parameters. */
+export type ForecastBody = {
+	rules: string[];
+	measure: string;
+	scenario: string;
+	forecast_from: string;
+	forecast_to: string;
+	parameters: ForecastParams;
 };
 
 export async function listRuns(): Promise<Run[]> {
@@ -25,23 +38,42 @@ export async function getRun(chatId: string, signal?: AbortSignal): Promise<RunD
 	return (await readJson(response, 'Unable to load this run.')) as RunDetail;
 }
 
-/** Create the run's chat, attach the upload, and stream the analysis until it completes. */
-export async function startRun(
-	body: { dataset_id: string; file_name: string; instruction: string },
+async function postStream(
+	url: string,
+	body: unknown,
 	onEvent: (event: StreamEvent) => void,
 	signal?: AbortSignal
 ): Promise<void> {
-	const response = await fetch('/v3/csv/runs', {
+	const response = await fetch(url, {
 		method: 'POST',
 		headers: { 'content-type': 'application/json' },
 		body: JSON.stringify(body),
 		signal
 	});
 	if (!response.ok || !response.body) {
-		await readJson(response, 'Unable to start the analysis.');
+		await readJson(response, 'Unable to start the forecast.');
 		throw new Error('The server returned no stream.');
 	}
 	await pumpSse(response.body, onEvent, signal);
+}
+
+/** Create the run's chat, attach the upload, and stream the first forecast. */
+export function startRun(
+	body: ForecastBody & { dataset_id: string; file_name: string },
+	onEvent: (event: StreamEvent) => void,
+	signal?: AbortSignal
+): Promise<void> {
+	return postStream('/v3/csv/runs', body, onEvent, signal);
+}
+
+/** Re-forecast in the same chat with new parameters, streaming only the new turn. */
+export function updateRun(
+	chatId: string,
+	body: ForecastBody & { latest_cell_id: string },
+	onEvent: (event: StreamEvent) => void,
+	signal?: AbortSignal
+): Promise<void> {
+	return postStream(`/v3/csv/runs/${encodeURIComponent(chatId)}/messages`, body, onEvent, signal);
 }
 
 async function fetchText(url: string, fallback: string, signal?: AbortSignal): Promise<string> {
@@ -112,20 +144,6 @@ export async function uploadFile(
 		signal
 	);
 	return upload.dataset_id;
-}
-
-/** A signed URL for an upload's original bytes, which the browser reads directly. */
-export async function datasetFileUrl(datasetId: string, signal?: AbortSignal): Promise<string> {
-	const response = await fetch(`/v3/csv/datasets/${encodeURIComponent(datasetId)}/file`, { signal });
-	return ((await readJson(response, 'Unable to load the uploaded file.')) as { url: string }).url;
-}
-
-export type DatasetValues = { columns: string[]; rows: string[][]; truncated: boolean };
-
-/** An uploaded spreadsheet's rows, parsed by TextQL. */
-export async function fetchDatasetValues(datasetId: string, signal?: AbortSignal): Promise<DatasetValues> {
-	const response = await fetch(`/v3/csv/datasets/${encodeURIComponent(datasetId)}/values`, { signal });
-	return (await readJson(response, 'Unable to read the uploaded file.')) as DatasetValues;
 }
 
 /** A file the agent produced; its storage host is reached through the preview proxy. */
