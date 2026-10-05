@@ -9,8 +9,8 @@ import { groupByDay } from '@ui/lib/dates';
 import { themePref, useResolvedTheme } from '@ui/lib/themePref';
 
 import { listRuns, type Run } from '../lib/api';
+import type { ForecastParams } from '../lib/forecast';
 import { run, useRun } from '../lib/run';
-import { NewRun } from './NewRun';
 import { RunView } from './RunView';
 
 const ACTIVE_RING = 'shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--color-line)_70%,transparent)]';
@@ -33,6 +33,7 @@ export function Workspace() {
 	}, []);
 
 	useEffect(loadRuns, [loadRuns]);
+	useEffect(() => run.loadData(), []);
 
 	useEffect(() => {
 		if (id) void run.open(id);
@@ -46,10 +47,9 @@ export function Workspace() {
 	}, [state.phase, loadRuns]);
 
 	const groups = useMemo(() => groupByDay(runs ?? [], (r) => r.updated_at), [runs]);
-	const pendingUpload = !id && state.phase !== 'idle';
 
-	function start(file: File, instruction: string) {
-		void run.start(file, instruction, (chatId) => navigate(`/run/${chatId}`, { replace: false }));
+	function apply(params: ForecastParams) {
+		void run.apply(params, (chatId) => navigate(`/run/${chatId}`));
 	}
 
 	return (
@@ -62,7 +62,7 @@ export function Workspace() {
 					<span className="inline-flex size-6 items-center justify-center rounded-xs bg-ink text-paper">
 						<Table2 size={13} strokeWidth={2} />
 					</span>
-					<span className="font-pixel text-[15px] tracking-[0.01em] text-ink">CSV Agent</span>
+					<span className="font-pixel text-[15px] tracking-[0.01em] text-ink">Forecast Agent</span>
 				</div>
 				<button
 					type="button"
@@ -73,7 +73,7 @@ export function Workspace() {
 					}}
 				>
 					<Plus size={15} strokeWidth={2} />
-					New analysis
+					New session
 				</button>
 
 				<div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-0.5">
@@ -133,7 +133,7 @@ export function Workspace() {
 			</aside>
 
 			<main className="min-h-0 min-w-0">
-				{id || pendingUpload ? <RunView state={state} /> : <NewRun onStart={start} />}
+				<RunView state={state} fileName={__DATA_NAME__} onApply={apply} />
 			</main>
 		</div>
 	);

@@ -35,6 +35,7 @@ import {
 	filterRows,
 	formatStat,
 	isNull,
+	ROW_LIMIT,
 	sortedRows,
 	summarize,
 	toCsv,
@@ -413,7 +414,7 @@ export const Spreadsheet = memo(function Spreadsheet({ sheet, name, badge }: Pro
 							className="rounded-sm bg-fill px-2 py-1 text-[11px] text-text-3"
 							title="Large files load their first rows; the agent still sees the whole file."
 						>
-							First {sheet.rows.length.toLocaleString()} rows
+							From the first {ROW_LIMIT.toLocaleString()} rows
 						</span>
 					)}
 					<span className="px-1 font-mono text-[11px] text-muted tabular-nums">

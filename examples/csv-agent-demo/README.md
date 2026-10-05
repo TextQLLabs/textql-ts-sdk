@@ -1,11 +1,16 @@
-# CSV agent: React 19 + FastAPI + Python SDK
+# Forecast agent: React 19 + FastAPI + Python SDK
 
-A narrow sibling of [`agent-chat-demo`](../agent-chat-demo). The user uploads one file
-(`.csv`, `.tsv`, `.xlsx`, `.xls`, `.xlsm`, `.ods`, or `.parquet`, as the TextQL app accepts).
-The agent parses and cleans it, saves the tables it derives as new CSVs, and draws three
-charts. Every CSV, the input and each output, opens in a spreadsheet viewer with sorting,
-per-column filters, search, column resizing and hiding, cell inspection, and download of
-the filtered view.
+A narrow sibling of [`agent-chat-demo`](../agent-chat-demo). The workspace opens a CSV from
+your machine (`DATA_FILE` in `frontend/vite.config.ts`, default
+`~/Downloads/financial_transactions_90mb.csv`) in a spreadsheet viewer with sorting, per-column
+filters, search, and download of the filtered view.
+
+**Edit parameters** sets the forecast: type (revenue or expenses), fiscal years, scenario, the
+actual and forecast periods, and which transactions to include. Applying them narrows the grid
+to the selected rows at once and asks the agent for a forecast. The first forecast uploads the
+file and opens a chat; each later one is a follow-up turn in that chat, so the agent compares it
+with the last. The forecast CSV and chart appear as output tabs. The parameter-to-column mapping
+is `COLUMNS` in `frontend/src/lib/forecast.ts`.
 
 ## Architecture
 
@@ -22,22 +27,18 @@ streaming, preview proxy) and adds `csv_agent/runs.py`:
 | Route | Purpose |
 | --- | --- |
 | `GET /v3/csv/runs` | The API key's CSV runs with the agent, recognised by the analysis prompt |
-| `GET /v3/csv/runs/{id}` | A run's file name, instructions, input dataset, and cells |
-| `POST /v3/csv/runs` | Create the agent chat, attach the upload, send the prompt, and stream the run as SSE |
+| `GET /v3/csv/runs/{id}` | A session's file name, each forecast's parameters, and its cells |
+| `POST /v3/csv/runs` | Create the agent chat, attach the upload, send the first forecast prompt, and stream it |
+| `POST /v3/csv/runs/{id}/messages` | Re-forecast in the same chat with new parameters, streaming only the new turn |
 | `POST /v3/csv/uploads` | Register an upload and return its signed storage URL |
 | `POST /v3/csv/uploads/{id}/complete` | Finalize the upload once the browser has PUT the bytes |
-| `GET /v3/csv/datasets/{id}/file` | A signed URL for an upload's original bytes (`ExportDataset`), for CSV/TSV input |
-| `GET /v3/csv/datasets/{id}/values` | An upload's rows parsed by TextQL (`GetDatasetValues`), for spreadsheet input |
 
 Uploads follow the TextQL app's pattern: `CreateUploadPresignUrl`, a PUT from the browser
 straight to the signed URL, then `ProcessUploadPresignUrl`. The file never passes through
 FastAPI, so the server sets no size limit; the UI caps uploads at 100 MB (`frontend/src/lib/files.ts`).
 TextQL copies a table into the agent's sandbox up to 500 MB.
 
-The grid loads at most the first 200,000 rows; the agent still works on the whole file. CSV/TSV
-input streams from its own bytes. Spreadsheet input is read with `GetDatasetValues`, as the app
-previews attachments; its DataFrame cannot mark a missing number, so empty numeric cells in
-Excel/ODS/Parquet input currently show filled values.
+The grid loads at most the first 200,000 rows; the agent works on the whole file.
 
 ## Run it
 
@@ -66,5 +67,5 @@ npm run dev               # http://localhost:5175
 | `TEXTQL_SERVER_URL` | Your deployment, e.g. `https://app.textql.com` |
 | `TEXTQL_AGENT_ID` | The agent attached to every run; its instructions must accept CSV input |
 
-The backend reads only this file, not `agent-chat-demo/.env`. The analysis prompt lives in
+The backend reads only this file, not `agent-chat-demo/.env`. The forecast prompt lives in
 `backend/csv_agent/runs.py`.

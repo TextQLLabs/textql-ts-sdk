@@ -1,8 +1,7 @@
 """Routes the CSV workspace needs beyond the agent-chat-demo API."""
 
+import json
 from collections.abc import AsyncGenerator
-from datetime import time as datetime_time
-from datetime import timezone
 
 from urllib.parse import parse_qs, urlsplit
 
@@ -24,29 +23,63 @@ router = APIRouter(prefix="/v3/csv", tags=["CSV agent"])
 # Runs are recognised by their prompt after the fetch, so over-read.
 _SCAN_LIMIT = 100
 
-_PROMPT_HEAD = 'The attached file "'
-_PROMPT_BODY = """" is a data file to analyze.
-1. Parse and profile it: column types, missing values, duplicates, and data-quality issues.
-2. Clean it and save the cleaned table as a CSV file. Save any useful derived tables (aggregations, breakdowns, summaries) as CSV files too, each with a descriptive file name.
-3. Create exactly three charts that best explain the data.
-4. Finish with a short summary of what you found and what each output file contains."""
-_INSTRUCTION_MARKER = "\n\nAdditional instructions: "
+_PROMPT_HEAD = 'Forecast from the attached file "'
+_UPDATE_HEAD = "Update the forecast with new parameters."
+_PARAMS_MARKER = "\n\nParameters (JSON):\n"
 
 
-def build_prompt(file_name: str, instruction: str) -> str:
-    prompt = _PROMPT_HEAD + file_name.replace('"', "'") + _PROMPT_BODY
-    if instruction.strip():
-        prompt += _INSTRUCTION_MARKER + instruction.strip()
-    return prompt
+class ForecastRequest(BaseModel):
+    """What the browser sends per forecast: rules over the file's columns, plus the
+    raw parameters so a reopened run can restore its form."""
+
+    rules: list[str] = Field(min_length=1)
+    measure: str = Field(min_length=1)
+    scenario: str = Field(min_length=1)
+    forecast_from: str = Field(pattern=r"^\d{4}-\d{2}$")
+    forecast_to: str = Field(pattern=r"^\d{4}-\d{2}$")
+    parameters: dict
 
 
-def parse_prompt(text: str) -> tuple[str, str] | None:
-    """(file name, instruction) from a run's prompt, or None for any other chat."""
+def _forecast_task(body: ForecastRequest) -> str:
+    rules = "\n".join(f"- {rule}" for rule in body.rules)
+    return f"""Scope the rows with these rules:
+{rules}
+
+Then:
+1. Total {body.measure} by month over the scoped rows (the actual period).
+2. Forecast each month from {body.forecast_from} to {body.forecast_to} under the "{body.scenario}" scenario, with an 80% interval.
+3. Save one CSV file named "Forecast {body.forecast_from} to {body.forecast_to}.csv" with columns month, kind (actual or forecast), value, lower, upper.
+4. Draw one chart of the actuals and the forecast with its interval.
+5. In two or three sentences, say what drives the forecast and how it changed from any earlier forecast in this chat.
+Do not ask questions; use these parameters as given.{_PARAMS_MARKER}{json.dumps(body.parameters)}"""
+
+
+def build_prompt(file_name: str, body: ForecastRequest) -> str:
+    return (
+        f"{_PROMPT_HEAD}{file_name.replace(chr(34), chr(39))}\", which holds financial "
+        f"transactions.\n\n{_forecast_task(body)}"
+    )
+
+
+def build_update_prompt(body: ForecastRequest) -> str:
+    return f"{_UPDATE_HEAD}\n\n{_forecast_task(body)}"
+
+
+def parse_file_name(text: str) -> str | None:
+    """The file name from a run's first prompt, or None for any other chat."""
     if not text.startswith(_PROMPT_HEAD):
         return None
-    file_name = text[len(_PROMPT_HEAD) :].split('"', 1)[0]
-    _, _, instruction = text.partition(_INSTRUCTION_MARKER)
-    return (file_name, instruction.strip()) if file_name else None
+    return text[len(_PROMPT_HEAD) :].split('"', 1)[0] or None
+
+
+def parse_parameters(text: str) -> dict | None:
+    if not (text.startswith(_PROMPT_HEAD) or text.startswith(_UPDATE_HEAD)):
+        return None
+    _, marker, raw = text.partition(_PARAMS_MARKER)
+    try:
+        return json.loads(raw) if marker else None
+    except ValueError:
+        return None
 
 
 @router.get("/runs")
@@ -64,13 +97,13 @@ async def list_runs(limit: int = Query(30, ge=1, le=100)):
     agent_id = textql_router._agent_id()
     runs = []
     for chat in resp.chats:
-        parsed = parse_prompt((chat.preview or "").strip())
-        if not parsed or chat.agent_id != agent_id:
+        file_name = parse_file_name((chat.preview or "").strip())
+        if not file_name or chat.agent_id != agent_id:
             continue
         runs.append(
             {
                 "id": chat.id,
-                "title": (chat.summary or "").strip() or parsed[0],
+                "title": (chat.summary or "").strip() or file_name,
                 "updated_at": textql_router._proto_ts(chat.updated_at)
                 or textql_router._proto_ts(chat.timestamp),
                 "is_running": bool(chat.is_running),
@@ -81,10 +114,11 @@ async def list_runs(limit: int = Query(30, ge=1, le=100)):
 
 @router.get("/runs/{chat_id}")
 async def get_run(chat_id: str):
-    """A run's prompt fields, input dataset, and cells, from one history read."""
+    """A run's file name, its prompts' parameters, input dataset, and cells, from one history read."""
     chats = textql_router._get_streaming().chats
     cells: list[dict] = []
-    parsed: tuple[str, str] | None = None
+    file_name: str | None = None
+    prompts: list[dict] = []
     dataset: dict | None = None
     skip = 0
     while True:
@@ -95,25 +129,27 @@ async def get_run(chat_id: str):
             cells.append(MessageToDict(cell))
             dataset = dataset or file_from_cell(cell)
             kind = cell.WhichOneof("value")
-            if parsed is None and kind in ("md_cell", "ans_cell"):
-                parsed = parse_prompt(getattr(cell, kind).content)
+            if kind in ("md_cell", "ans_cell"):
+                content = getattr(cell, kind).content
+                file_name = file_name or parse_file_name(content)
+                if (parameters := parse_parameters(content)) is not None:
+                    prompts.append({"cell_id": cell.id, "parameters": parameters})
         skip += len(page.cells)
         if not page.has_more or not page.cells:
             break
-    if parsed is None:
+    if file_name is None:
         raise HTTPException(404, "This chat is not a CSV run.")
     return {
-        "file_name": parsed[0],
-        "instruction": parsed[1],
+        "file_name": file_name,
+        "prompts": prompts,
         "dataset_id": dataset["id"] if dataset else None,
         "cells": cells,
     }
 
 
-class StartRunRequest(BaseModel):
+class StartRunRequest(ForecastRequest):
     dataset_id: str = Field(min_length=1)
     file_name: str = Field(min_length=1)
-    instruction: str = ""
 
 
 async def _run_events(body: StartRunRequest) -> AsyncGenerator[str, None]:
@@ -127,7 +163,7 @@ async def _run_events(body: StartRunRequest) -> AsyncGenerator[str, None]:
         await attach_uploaded_file(chats, chat_id, body.dataset_id, {})
         await chats.send_message(
             chat_pb2.SendRequest(
-                chat_id=chat_id, message=build_prompt(body.file_name, body.instruction)
+                chat_id=chat_id, message=build_prompt(body.file_name, body)
             )
         )
     except Exception:  # noqa: BLE001 - Headers are sent; failures go out as SSE.
@@ -159,69 +195,24 @@ async def start_run(body: StartRunRequest):
     )
 
 
-# Rows per GetDatasetValues page, and the most the grid will load.
-_VALUES_PAGE = 5000
-_MAX_ROWS = 200_000
+class UpdateRunRequest(ForecastRequest):
+    latest_cell_id: str = ""
 
 
-def _cell_text(value) -> str:
-    """One DataFrame value as the text the grid shows."""
-    if isinstance(value, float):
-        if value != value:  # NaN is the DataFrame's missing value.
-            return ""
-        return str(int(value)) if value.is_integer() else repr(value)
-    if isinstance(value, bool):
-        return "true" if value else "false"
-    if isinstance(value, bytes):
-        return value.decode("utf-8", errors="replace")
-    if hasattr(value, "ToDatetime"):
-        moment = value.ToDatetime(tzinfo=timezone.utc)
-        # Date-only cells arrive as midnight UTC; show them as dates.
-        return moment.date().isoformat() if moment.time() == datetime_time() else moment.isoformat()
-    return str(value)
-
-
-def _frame_rows(df) -> list[list[str]]:
-    """A columnar DataFrame (record batches of typed columns) as rows of text."""
-    rows: list[list[str]] = []
-    for record in df.records:
-        columns = sorted(record.columns, key=lambda c: c.column_index)
-        values = []
-        for column in columns:
-            kind = column.WhichOneof("values")
-            values.append([_cell_text(v) for v in getattr(column, kind).values] if kind else [])
-        rows.extend(list(row) for row in zip(*values, strict=False))
-    return rows
-
-
-@router.get("/datasets/{dataset_id}/values")
-async def dataset_values(dataset_id: str, request: Request):
-    """An uploaded spreadsheet's rows, parsed by TextQL (Excel, ODS, Parquet).
-
-    The same GetDatasetValues read the TextQL app uses to preview attachments.
-    Its DataFrame cannot mark a missing number, so empty numeric cells come
-    back filled; CSV and TSV inputs use their original bytes instead.
-    """
-    datasets = request.app.state.datasets
-    columns: list[str] = []
-    rows: list[list[str]] = []
-    total = 0
-    page = 0
-    while True:
-        resp = await datasets.get_dataset_values(
-            dataset_pb2.GetDatasetValuesRequest(
-                dataset_id=dataset_id, limit=_VALUES_PAGE, page=page
-            )
-        )
-        if not columns:
-            columns = [f.column_name for f in sorted(resp.df.schema, key=lambda f: f.column_index)]
-            total = resp.num_rows
-        batch = _frame_rows(resp.df)
-        rows.extend(batch)
-        page += 1
-        if not batch or len(rows) >= min(total, _MAX_ROWS):
-            break
-    return {"columns": columns, "rows": rows[:_MAX_ROWS], "truncated": total > _MAX_ROWS}
+@router.post("/runs/{chat_id}/messages")
+async def update_run(chat_id: str, body: UpdateRunRequest):
+    """Re-forecast in the same chat with new parameters, streaming only the new turn."""
+    await textql_router._require_agent(chat_id)
+    await textql_router._get_streaming().chats.send_message(
+        chat_pb2.SendRequest(chat_id=chat_id, message=build_update_prompt(body))
+    )
+    return StreamingResponse(
+        textql_router._watch_stream(
+            chat_id, latest_cell_id=body.latest_cell_id, stop_on_run_complete=True
+        ),
+        media_type="text/event-stream",
+        headers=textql_router._SSE_HEADERS,
+    )
 
 
 def _signed_url(url: str) -> str:
@@ -278,14 +269,3 @@ async def complete_upload(dataset_id: str, body: CompleteUploadRequest, request:
     if processed.dataset.id != dataset_id:
         raise HTTPException(502, "TextQL did not confirm the uploaded file.")
     return {"id": dataset_id}
-
-
-@router.get("/datasets/{dataset_id}/file")
-async def dataset_file(dataset_id: str, request: Request):
-    """A signed URL for an upload's original bytes; the browser reads it directly."""
-    exported = await request.app.state.datasets.export_dataset(
-        dataset_pb2.ExportDatasetRequest(dataset_id=dataset_id)
-    )
-    if not exported.presigned_url:
-        raise HTTPException(502, "TextQL did not return an export URL.")
-    return {"url": _signed_url(exported.presigned_url)}
