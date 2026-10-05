@@ -34,11 +34,16 @@ TEXTQL_EXCLUDE_OWN=1    # optional; hides apps your key's member authored
 ```
 
 ```sh
-npm run build          # from the repo root; examples link to esm/
+npm install            # from the repo root; installs the SDK build tools
 cd examples/embed-list
 npm install
 npm run dev
 ```
+
+`npm run dev` and `npm start` rebuild the linked SDK before starting. After
+pulling SDK changes, restart the example so it loads the new compiled code.
+The demo enables browser diagnostics with `debug: true`; disable that option
+before exposing it to end users. Errors also appear in the server terminal.
 
 Open `http://localhost:4181`. The ids are read once, at startup — a new app in
 `TEXTQL_APP_IDS` needs a restart, but a change to an app itself only needs a

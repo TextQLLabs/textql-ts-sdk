@@ -394,6 +394,29 @@ With the element self-hosted and `rehostDocument` on, the host page needs
 writes its shadow-DOM stylesheet as an inline `<style>`. Add the asset origin to
 `img-src` for the poster.
 
+## Debugging failed requests
+
+Failures are logged on the server with the operation, app/function, HTTP status,
+and underlying error messages and causes. To see these details in the browser
+while debugging, explicitly enable `debug`:
+
+```ts
+createEmbedHandler({ appIds: APP_IDS, basePath: '/api/textql/:appId', debug: true });
+```
+
+Failed responses then include a descriptive `error` string and a structured
+`diagnostics` object. The element displays the message, logs the details in
+DevTools, and emits `app-error` for failed metadata and compute HTTP requests.
+The `embed-app` and `embed-list` development examples enable this option; remove
+it before exposing them to end users. Messages and stacks can contain application
+internals even though raw HTTP objects, headers and compute parameters are omitted.
+With `debug` off (the default), unexpected failures retain the generic browser
+message; server logs still contain details. `onError` can route those logs to
+your own logger.
+
+The examples also print the actual Node version and executable at startup, which
+may differ from `node --version` in another terminal.
+
 ## What the bridge leaves out
 
 The full host inside TextQL also carries per-member state, activity logging,

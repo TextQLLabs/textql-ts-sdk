@@ -4,7 +4,9 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
+		"predev": "npm --prefix ../.. run build",
 		"dev": "tsx watch server.ts",
+		"prestart": "npm --prefix ../.. run build",
 		"start": "tsx server.ts"
 	},
 	"dependencies": {

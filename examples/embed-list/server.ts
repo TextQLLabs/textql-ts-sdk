@@ -209,6 +209,7 @@ const server = createServer((req, res) => {
 
 server.listen(PORT, () => {
 	console.log(`Embed list demo on http://localhost:${PORT}`);
+	console.log(`Node ${process.version} (${process.execPath})`);
 	console.log(envError ? `No env file at ${ENV_FILE}` : `Env from ${ENV_FILE}`);
 	console.log(`  ${API_BASE} → ${APP_IDS.length} app(s)`);
 	if (!process.env['TEXTQL_API_KEY']) console.warn('TEXTQL_API_KEY is not set — requests will 503.');

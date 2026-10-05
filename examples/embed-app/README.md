@@ -34,11 +34,16 @@ TEXTQL_SERVER_URL=...   # on-prem only; the plain host, the SDK appends /rpc/pub
 Then:
 
 ```sh
-npm run build          # from the repo root; examples link to esm/
+npm install            # from the repo root; installs the SDK build tools
 cd examples/embed-app
 npm install
 npm run dev
 ```
+
+`npm run dev` and `npm start` rebuild the linked SDK before starting. After
+pulling SDK changes, restart the example so it loads the new compiled code.
+The demo enables browser diagnostics with `debug: true`; disable that option
+before exposing it to end users. Errors also appear in the server terminal.
 
 Open `http://localhost:4180`. The server prints which env file it read on
 startup.

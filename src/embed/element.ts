@@ -110,7 +110,10 @@ export class TextqlAppElement extends HTMLElement {
   async #request(suffix: string, init?: RequestInit): Promise<Record<string, unknown>> {
     const path = this.#endpoint(suffix);
     const response = await fetch(path, init);
-    const payload = (await response.json().catch(() => null)) as Record<string, unknown> | null;
+    const payload = (await response.json().catch(() => {
+      if (response.ok) throw new Error(`Expected JSON from ${path} (HTTP ${response.status}).`);
+      return null;
+    })) as Record<string, unknown> | null;
     if (!response.ok) {
       const error = payload?.["error"];
       const message = typeof error === "string" ? error : `The request failed (HTTP ${response.status}).`;

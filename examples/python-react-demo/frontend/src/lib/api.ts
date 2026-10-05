@@ -35,7 +35,7 @@ export type StreamEvent = Record<string, unknown> & {
 	cursor?: string;
 };
 
-async function readJson(response: Response, fallback: string): Promise<unknown> {
+export async function readJson(response: Response, fallback: string): Promise<unknown> {
 	const payload: unknown = await response.json().catch(() => undefined);
 	if (response.ok) return payload;
 	const detail =
@@ -276,7 +276,7 @@ export async function watchChat(
 }
 
 /** Read an SSE body: frames are blank-line separated, payloads on `data:`. */
-async function pumpSse(
+export async function pumpSse(
 	body: ReadableStream<Uint8Array>,
 	onEvent: (event: StreamEvent) => void,
 	signal?: AbortSignal
