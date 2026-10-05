@@ -1,8 +1,7 @@
 # Forecast agent: React 19 + FastAPI + Python SDK
 
-A narrow sibling of [`agent-chat-demo`](../agent-chat-demo). The workspace opens a CSV from
-your machine (`DATA_FILE` in `frontend/vite.config.ts`, default
-`~/Downloads/financial_transactions_90mb.csv`) in a spreadsheet viewer with sorting, per-column
+A narrow sibling of [`agent-chat-demo`](../agent-chat-demo). The workspace opens a CSV, TSV, or Excel/ODS
+file from your machine (`DATA_FILE_PATH` in `.env`) in a spreadsheet viewer with sorting, per-column
 filters, search, and download of the filtered view.
 
 **Edit parameters** sets the forecast: type (revenue or expenses), fiscal years, scenario, the
@@ -44,7 +43,7 @@ The grid loads at most the first 200,000 rows; the agent works on the whole file
 
 ```sh
 cd examples/csv-agent-demo
-cp -n .env.example .env   # set TEXTQL_API_KEY and TEXTQL_AGENT_ID
+cp -n .env.example .env   # set TEXTQL_API_KEY, TEXTQL_AGENT_ID, and DATA_FILE_PATH
 
 cd backend
 uv venv --python 3.12.10 .venv
@@ -59,13 +58,14 @@ npm run dev               # http://localhost:5175
 
 ## Configuration
 
-`.env` holds the only three settings:
+`.env` holds four settings:
 
 | Variable | Purpose |
 | --- | --- |
 | `TEXTQL_API_KEY` | Server-only TextQL credential |
 | `TEXTQL_SERVER_URL` | Your deployment, e.g. `https://app.textql.com` |
-| `TEXTQL_AGENT_ID` | The agent attached to every run; its instructions must accept CSV input |
+| `TEXTQL_AGENT_ID` | The agent attached to every run; its instructions must accept the file's format |
+| `DATA_FILE_PATH` | The local file the workspace opens, e.g. `~/Downloads/financial_transactions_1mb.xlsx`. The Vite dev server reads it from disk; it never reaches the backend or the browser's env |
 
 The backend reads only this file, not `agent-chat-demo/.env`. The forecast prompt lives in
 `backend/csv_agent/runs.py`.
