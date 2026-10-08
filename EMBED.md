@@ -57,7 +57,7 @@ export const { GET, POST } = createEmbedHandler({
 | `appId` | `TEXTQL_APP_ID` | A function `(request, params) => string` picks per request — from a session, tenant header, or a `basePath` placeholder. |
 | `appIds` | none | The apps this handler serves. Turns on the list route, and is the allowlist a `basePath` placeholder is checked against. |
 | `excludeOwn` | `false` | Drop apps the key's own member authored from the list route — see below. |
-| `memberId` | parsed from `TEXTQL_API_KEY` | The key's member, for `excludeOwn`. |
+| `memberId` | from the `client`'s OAuth access token, else parsed from `TEXTQL_API_KEY` | The key's member, for `excludeOwn`. |
 | `client` | built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL` | Pass your own `Textql` instance. |
 | `basePath` | `/api/textql` | Where the handler is mounted. Must match the element's `api-base`. A `:name` segment captures that part of the path. |
 | `authorize` | none | Return `false` or throw to reject. |
@@ -194,8 +194,9 @@ createEmbedHandler({
 #### What "own" means
 
 The member the **API key** belongs to — never your end user. Keys are
-`base64("<member_id>:<token>")`, so the member is read off the key itself. Pass
-`memberId` explicitly for a key that is not in that shape, such as an embed JWT:
+`base64("<member_id>:<token>")`, so the member is read off the key itself. A
+`client` built by `fromTokens` (see [OAUTH.md](OAUTH.md)) supplies the member from
+its access token instead. Pass `memberId` explicitly for a key that is not in that shape, such as an embed JWT:
 
 ```ts
 createEmbedHandler({ appIds: APP_IDS, basePath: "/api/textql/:appId", excludeOwn: true, memberId });

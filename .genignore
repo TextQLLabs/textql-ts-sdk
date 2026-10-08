@@ -4,8 +4,10 @@
 src/embed.ts
 src/embed/
 src/streaming.ts
+src/oauth.ts
 src/env-config.ts
 EMBED.md
 STREAMING.md
+OAUTH.md
 FUNCTIONS.md
 examples/
