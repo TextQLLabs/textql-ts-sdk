@@ -2618,9 +2618,7 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.shareObject({
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
 
   console.log(result);
@@ -2645,9 +2643,7 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacShareObject(textql, {
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2695,9 +2691,7 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.shareObjectWithRole({
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
 
   console.log(result);
@@ -2722,9 +2716,7 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacShareObjectWithRole(textql, {
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;
@@ -2772,9 +2764,7 @@ const textql = new Textql({
 
 async function run() {
   const result = await textql.rbac.updateObjectAccess({
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
 
   console.log(result);
@@ -2799,9 +2789,7 @@ const textql = new TextqlCore({
 
 async function run() {
   const res = await rbacUpdateObjectAccess(textql, {
-    body: {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
+    body: {},
   });
   if (res.ok) {
     const { value: result } = res;

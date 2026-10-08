@@ -295,7 +295,6 @@ run();
 * [listVersions](docs/sdks/dashboards/README.md#listversions) - Version history
 * [list](docs/sdks/dashboards/README.md#list) - ListDashboards
 * [moveToFolder](docs/sdks/dashboards/README.md#movetofolder) - MoveDashboardToFolder
-* [previewConfig](docs/sdks/dashboards/README.md#previewconfig) - Config-managed dashboards: render a `.dashboard` straight from a patch ref before  it merges (ADR-0022). Runs as the file's run_as, gated on the previewer being  authorized for it; persists nothing.
 * [publish](docs/sdks/dashboards/README.md#publish) - Publishing workflow
 * [regenerateScreenshot](docs/sdks/dashboards/README.md#regeneratescreenshot) - Screenshot management
 * [restoreDashboardVersion](docs/sdks/dashboards/README.md#restoredashboardversion) - RestoreDashboardVersion
@@ -794,7 +793,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dashboardsListFolders`](docs/sdks/dashboards/README.md#listfolders) - ListDashboardFolders
 - [`dashboardsListVersions`](docs/sdks/dashboards/README.md#listversions) - Version history
 - [`dashboardsMoveToFolder`](docs/sdks/dashboards/README.md#movetofolder) - MoveDashboardToFolder
-- [`dashboardsPreviewConfig`](docs/sdks/dashboards/README.md#previewconfig) - Config-managed dashboards: render a `.dashboard` straight from a patch ref before  it merges (ADR-0022). Runs as the file's run_as, gated on the previewer being  authorized for it; persists nothing.
 - [`dashboardsPublish`](docs/sdks/dashboards/README.md#publish) - Publishing workflow
 - [`dashboardsRegenerateScreenshot`](docs/sdks/dashboards/README.md#regeneratescreenshot) - Screenshot management
 - [`dashboardsRestoreDashboardVersion`](docs/sdks/dashboards/README.md#restoredashboardversion) - RestoreDashboardVersion

@@ -21,11 +21,6 @@ const value: models.TextqlRpcPublicRbacWhoAmIResponse = {
       createdAt: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],
-  sharedAccess: [
-    {
-      expiresAt: new Date("2023-01-15T01:30:15.01Z"),
-    },
-  ],
 };
 ```
 

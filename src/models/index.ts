@@ -4,6 +4,7 @@
 
 export * from "./connect-error-details-any.js";
 export * from "./connect-error.js";
+export * from "./connect-protocol-version.js";
 export * from "./google-protobuf-empty.js";
 export * from "./google-protobuf-value.js";
 export * from "./security.js";
@@ -525,8 +526,6 @@ export * from "./textql-rpc-public-dashboard-list-dashboards-response.js";
 export * from "./textql-rpc-public-dashboard-move-dashboard-to-folder-request.js";
 export * from "./textql-rpc-public-dashboard-move-dashboard-to-folder-response.js";
 export * from "./textql-rpc-public-dashboard-ontology-sql-source.js";
-export * from "./textql-rpc-public-dashboard-preview-config-dashboard-request.js";
-export * from "./textql-rpc-public-dashboard-preview-config-dashboard-response.js";
 export * from "./textql-rpc-public-dashboard-publish-dashboard-request.js";
 export * from "./textql-rpc-public-dashboard-publish-dashboard-response.js";
 export * from "./textql-rpc-public-dashboard-python-code-source.js";

@@ -18,6 +18,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelFable51: "MODEL_FABLE_5_1",
   ModelOpus55: "MODEL_OPUS_5_5",
   ModelSonnet55: "MODEL_SONNET_5_5",
+  ModelHaiku55: "MODEL_HAIKU_5_5",
   ModelGpt56Sol: "MODEL_GPT_5_6_SOL",
   ModelGemini3Flash: "MODEL_GEMINI_3_FLASH",
   ModelGemini3Pro: "MODEL_GEMINI_3_PRO",

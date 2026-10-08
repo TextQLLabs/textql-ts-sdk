@@ -134,7 +134,6 @@ export * from "./dashboard-service-list-dashboard-folders.js";
 export * from "./dashboard-service-list-dashboard-versions.js";
 export * from "./dashboard-service-list-dashboards.js";
 export * from "./dashboard-service-move-dashboard-to-folder.js";
-export * from "./dashboard-service-preview-config-dashboard.js";
 export * from "./dashboard-service-publish-dashboard.js";
 export * from "./dashboard-service-regenerate-screenshot.js";
 export * from "./dashboard-service-restore-dashboard-version.js";
