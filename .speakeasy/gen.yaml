@@ -34,7 +34,7 @@ generation:
     generateNewTests: true
     skipResponseBodyAssertions: false
 typescript:
-  version: 1.4.49
+  version: 1.4.50
   acceptHeaderEnum: false
   additionalDependencies:
     dependencies:
@@ -104,6 +104,7 @@ typescript:
   modelPropertyCasing: camel
   moduleFormat: esm
   multipartArrayFormat: standard
+  numericEnumMemberNames: legacy
   outputModelSuffix: output
   packageName: '@textql/sdk'
   preApplyUnionDiscriminators: true

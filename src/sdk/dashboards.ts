@@ -17,7 +17,6 @@ import { dashboardsListFolders } from "../funcs/dashboards-list-folders.js";
 import { dashboardsListVersions } from "../funcs/dashboards-list-versions.js";
 import { dashboardsList } from "../funcs/dashboards-list.js";
 import { dashboardsMoveToFolder } from "../funcs/dashboards-move-to-folder.js";
-import { dashboardsPreviewConfig } from "../funcs/dashboards-preview-config.js";
 import { dashboardsPublish } from "../funcs/dashboards-publish.js";
 import { dashboardsRegenerateScreenshot } from "../funcs/dashboards-regenerate-screenshot.js";
 import { dashboardsRestoreDashboardVersion } from "../funcs/dashboards-restore-dashboard-version.js";
@@ -250,25 +249,6 @@ export class Dashboards extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.DashboardServiceMoveDashboardToFolderResponse> {
     return unwrapAsync(dashboardsMoveToFolder(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * Config-managed dashboards: render a `.dashboard` straight from a patch ref before  it merges (ADR-0022). Runs as the file's run_as, gated on the previewer being  authorized for it; persists nothing.
-   *
-   * @remarks
-   * Config-managed dashboards: render a `.dashboard` straight from a patch ref before
-   *  it merges (ADR-0022). Runs as the file's run_as, gated on the previewer being
-   *  authorized for it; persists nothing.
-   */
-  async previewConfig(
-    request: operations.DashboardServicePreviewConfigDashboardRequest,
-    options?: RequestOptions,
-  ): Promise<operations.DashboardServicePreviewConfigDashboardResponse> {
-    return unwrapAsync(dashboardsPreviewConfig(
       this,
       request,
       options,

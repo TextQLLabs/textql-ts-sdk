@@ -11,7 +11,10 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type ObservabilityServiceGetChatSourceStatsRequest = {
-  connectProtocolVersion?: 1 | undefined;
+  /**
+   * Define the version of the Connect protocol
+   */
+  connectProtocolVersion?: "1" | undefined;
   connectTimeoutMs?: number | undefined;
   body: models.TextqlRpcPublicObserveGetChatSourceStatsRequest;
 };
@@ -22,7 +25,7 @@ export type ObservabilityServiceGetChatSourceStatsResponse =
 
 /** @internal */
 export type ObservabilityServiceGetChatSourceStatsRequest$Outbound = {
-  "Connect-Protocol-Version": 1;
+  "Connect-Protocol-Version": "1";
   "Connect-Timeout-Ms"?: number | undefined;
   body: models.TextqlRpcPublicObserveGetChatSourceStatsRequest$Outbound;
 };
@@ -34,7 +37,7 @@ export const ObservabilityServiceGetChatSourceStatsRequest$outboundSchema:
     ObservabilityServiceGetChatSourceStatsRequest
   > = z.pipe(
     z.object({
-      connectProtocolVersion: z._default(z.literal(1), 1 as const),
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
       connectTimeoutMs: z.optional(z.number()),
       body:
         models.TextqlRpcPublicObserveGetChatSourceStatsRequest$outboundSchema,

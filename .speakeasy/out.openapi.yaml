@@ -4946,47 +4946,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.dashboard.MoveDashboardToFolderResponse'
-  /textql.rpc.public.dashboard.DashboardService/PreviewConfigDashboard:
-    post:
-      tags:
-        - DashboardService
-      summary: 'Config-managed dashboards: render a `.dashboard` straight from a patch ref before  it merges (ADR-0022). Runs as the file''s run_as, gated on the previewer being  authorized for it; persists nothing.'
-      description: |-
-        Config-managed dashboards: render a `.dashboard` straight from a patch ref before
-         it merges (ADR-0022). Runs as the file's run_as, gated on the previewer being
-         authorized for it; persists nothing.
-      operationId: DashboardService_PreviewConfigDashboard
-      x-speakeasy-group: dashboards
-      x-speakeasy-name-override: previewConfig
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.dashboard.PreviewConfigDashboardRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.dashboard.PreviewConfigDashboardResponse'
   /textql.rpc.public.dashboard.DashboardService/PublishDashboard:
     post:
       tags:
@@ -16033,13 +15992,13 @@ paths:
 components:
   schemas:
     connect-protocol-version:
-      type: number
+      type: string
       title: Connect-Protocol-Version
       enum:
-        - 1
+        - "1"
       description: Define the version of the Connect protocol
-      const: 1
-      default: 1
+      const: "1"
+      default: "1"
     connect-timeout-header:
       type: number
       title: Connect-Timeout-Ms
@@ -25057,6 +25016,7 @@ components:
         - MODEL_FABLE_5_1
         - MODEL_OPUS_5_5
         - MODEL_SONNET_5_5
+        - MODEL_HAIKU_5_5
         - MODEL_GPT_5_6_SOL
         - MODEL_GEMINI_3_FLASH
         - MODEL_GEMINI_3_PRO
@@ -29163,35 +29123,6 @@ components:
           title: ontology_id
           format: int32
       title: OntologySqlSource
-      additionalProperties: false
-    textql.rpc.public.dashboard.PreviewConfigDashboardRequest:
-      type: object
-      properties:
-        patchRef:
-          type: string
-          title: patch_ref
-          description: git ref of the patch to preview from
-        dashboardPath:
-          type: string
-          title: dashboard_path
-          description: Library path of the .dashboard file
-      title: PreviewConfigDashboardRequest
-      additionalProperties: false
-      description: |-
-        PreviewConfigDashboard renders a config-managed dashboard from a patch ref before
-         merge (ADR-0022). The previewing member + org come from auth context.
-    textql.rpc.public.dashboard.PreviewConfigDashboardResponse:
-      type: object
-      properties:
-        url:
-          type: string
-          title: url
-          description: serving URL for the ephemeral preview
-        embedUrl:
-          type: string
-          title: embed_url
-          description: embeddable URL for the preview
-      title: PreviewConfigDashboardResponse
       additionalProperties: false
     textql.rpc.public.dashboard.PublishDashboardRequest:
       type: object
@@ -38910,10 +38841,6 @@ components:
           type: string
           title: granted_by
           nullable: true
-        expiresAt:
-          title: expires_at
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
         createdAt:
           title: created_at
           $ref: '#/components/schemas/google.protobuf.Timestamp'
@@ -39616,10 +39543,6 @@ components:
           type: string
           title: access_type
           description: owner, editor, viewer
-        expiresAt:
-          title: expires_at
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
         isPublic:
           type: boolean
           title: is_public
@@ -39657,10 +39580,6 @@ components:
           type: string
           title: access_type
           description: owner, editor, viewer
-        expiresAt:
-          title: expires_at
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
         isPublic:
           type: boolean
           title: is_public
@@ -39698,10 +39617,6 @@ components:
           type: string
           title: role_id
           nullable: true
-        expiresAt:
-          title: expires_at
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
         groupId:
           type: string
           title: group_id
@@ -39718,10 +39633,6 @@ components:
           type: string
           title: access_type
           description: owner, editor, viewer
-        expiresAt:
-          title: expires_at
-          nullable: true
-          $ref: '#/components/schemas/google.protobuf.Timestamp'
       title: UpdateObjectAccessRequest
       additionalProperties: false
     textql.rpc.public.rbac.UpdateObjectAccessResponse:

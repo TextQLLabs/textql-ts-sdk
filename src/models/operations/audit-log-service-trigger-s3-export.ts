@@ -11,7 +11,10 @@ import { SDKValidationError } from "../errors/sdk-validation-error.js";
 import * as models from "../index.js";
 
 export type AuditLogServiceTriggerS3ExportRequest = {
-  connectProtocolVersion?: 1 | undefined;
+  /**
+   * Define the version of the Connect protocol
+   */
+  connectProtocolVersion?: "1" | undefined;
   connectTimeoutMs?: number | undefined;
   body: models.TextqlRpcPublicAuditLogTriggerS3ExportRequest;
 };
@@ -22,7 +25,7 @@ export type AuditLogServiceTriggerS3ExportResponse =
 
 /** @internal */
 export type AuditLogServiceTriggerS3ExportRequest$Outbound = {
-  "Connect-Protocol-Version": 1;
+  "Connect-Protocol-Version": "1";
   "Connect-Timeout-Ms"?: number | undefined;
   body: models.TextqlRpcPublicAuditLogTriggerS3ExportRequest$Outbound;
 };
@@ -34,7 +37,7 @@ export const AuditLogServiceTriggerS3ExportRequest$outboundSchema:
     AuditLogServiceTriggerS3ExportRequest
   > = z.pipe(
     z.object({
-      connectProtocolVersion: z._default(z.literal(1), 1 as const),
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
       connectTimeoutMs: z.optional(z.number()),
       body: models.TextqlRpcPublicAuditLogTriggerS3ExportRequest$outboundSchema,
     }),
