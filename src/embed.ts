@@ -6,6 +6,7 @@
  */
 import { stringFromBase64 } from "./lib/base64.js";
 import { readEnv } from "./env-config.js";
+import { tokenManagerOf } from "./oauth.js";
 import { Textql } from "./sdk/sdk.js";
 import type { ConnectError } from "./models/connect-error.js";
 import type { TextqlRpcPublicAppApp } from "./models/textql-rpc-public-app-app.js";
@@ -101,8 +102,9 @@ export interface EmbedOptions {
    */
   excludeOwn?: boolean | undefined;
   /**
-   * The key's member, for `excludeOwn`. Parsed from `TEXTQL_API_KEY` when
-   * omitted; set it for a key that is not `base64("<member_id>:<token>")`.
+   * The key's member, for `excludeOwn`. When omitted, read from the access token
+   * of a `client` built by `fromTokens`, else parsed from `TEXTQL_API_KEY`; set
+   * it for a key that is not `base64("<member_id>:<token>")`.
    */
   memberId?: string | undefined;
   /** Defaults to a client built from `TEXTQL_API_KEY` / `TEXTQL_SERVER_URL`. */
@@ -325,7 +327,9 @@ class Embed {
     const configured = this.options.memberId?.trim();
     if (configured) return configured;
 
-    const memberId = memberIdFromApiKey(readEnv("TEXTQL_API_KEY"));
+    const client = this.options.client;
+    const memberId = (client instanceof Textql ? tokenManagerOf(client)?.memberId() : null)
+      ?? memberIdFromApiKey(readEnv("TEXTQL_API_KEY"));
     if (!memberId) {
       throw new EmbedError(
         500,
