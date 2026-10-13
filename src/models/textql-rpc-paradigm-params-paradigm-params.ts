@@ -65,6 +65,7 @@ export type TextqlRpcParadigmParamsParadigmParams = {
   datasetId?: string | null | undefined;
   ontologyActionsEnabled?: boolean | undefined;
   ontologyActionsAutoApproveEnabled?: boolean | undefined;
+  decideEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -104,6 +105,7 @@ export const TextqlRpcParadigmParamsParadigmParams$inboundSchema: z.ZodMiniType<
   datasetId: z.optional(z.nullable(types.string())),
   ontologyActionsEnabled: types.optional(types.boolean()),
   ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
+  decideEnabled: types.optional(types.boolean()),
 });
 /** @internal */
 export type TextqlRpcParadigmParamsParadigmParams$Outbound = {
@@ -139,6 +141,7 @@ export type TextqlRpcParadigmParamsParadigmParams$Outbound = {
   datasetId?: string | null | undefined;
   ontologyActionsEnabled?: boolean | undefined;
   ontologyActionsAutoApproveEnabled?: boolean | undefined;
+  decideEnabled?: boolean | undefined;
 };
 
 /** @internal */
@@ -179,6 +182,7 @@ export const TextqlRpcParadigmParamsParadigmParams$outboundSchema:
     datasetId: z.optional(z.nullable(z.string())),
     ontologyActionsEnabled: z.optional(z.boolean()),
     ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
+    decideEnabled: z.optional(z.boolean()),
   });
 
 export function textqlRpcParadigmParamsParadigmParamsToJSON(

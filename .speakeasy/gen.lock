@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 2eb50ca0a629490c1a659bfb0a9b79ca
+  docChecksum: 923356b47da92bdab7faf97f9681962d
   docVersion: 1.0.0
   speakeasyVersion: 1.802.0
   generationVersion: 2.948.4
-  releaseVersion: 1.4.55
-  configChecksum: b657a68961fadcc47d29268daeb94520
+  releaseVersion: 1.4.56
+  configChecksum: 159cba1488667aba3a46cc5b749805ad
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: d9d9969c-e0a2-44e0-a234-ed859caa8216
-  pristine_commit_hash: 1c714d5ad2073f85eac965b864abad62674daecc
-  pristine_tree_hash: 7eb6b6fd57d9898d04e8ae91d1850e96e88bb751
+  generation_id: ef17c8a4-ddaa-47dc-9cb0-07cb94aac6e9
+  pristine_commit_hash: 38d5ccdf06462253e114754c53d310eeb0880444
+  pristine_tree_hash: d8122671b2f407db37c8b2b2370884909500d084
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -4412,8 +4412,8 @@ trackedFiles:
     pristine_git_object: 2341ce3b37ec8b157429f60997dde219994e9216
   docs/models/textql-rpc-paradigm-params-paradigm-params.md:
     id: 5b942db90bfc
-    last_write_checksum: sha1:6618ec255eac8ae6bb95fafa67d0fe0312d4ad47
-    pristine_git_object: cbbdaaca5016cb16cd8262b09614301267a84948
+    last_write_checksum: sha1:0f1a11b18fd72aec9adf03d64802e2a4925cf7cd
+    pristine_git_object: e3ed241e6e0a3b738b704952efff8943bfb77f36
   docs/models/textql-rpc-paradigm-params-paradigm-type.md:
     id: b1f8a4148daa
     last_write_checksum: sha1:bc32ef1e2aadd2ec58fceb11724694288a459991
@@ -10436,12 +10436,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:15465dc38b33036e8d1f357f54517ebd7abdcee1
-    pristine_git_object: 5ba9562d52f3ed0b60076e7c114ba9c03632c469
+    last_write_checksum: sha1:55266d8405153d27886ee9a97b83746fb20fcdab
+    pristine_git_object: 18fc3a002f53a6e0c331058505592995ef56c856
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:734ccfdd39fc8a46393ea164bb59e4ab904c117b
-    pristine_git_object: 299ee35ed884c9f6d9fd39e376a0891af156e0a8
+    last_write_checksum: sha1:542e29ed6ddb3fa9d6329c6e5f37d5168a8b9412
+    pristine_git_object: 266bf30c1d4ee15d6bfb34d4daac60e6111f1eac
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -12180,8 +12180,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:b3759a5434600ad34b1964d024db3d3a92278aaa
-    pristine_git_object: fb9d155bc4758edd8b73c436c5888fc1b7531a80
+    last_write_checksum: sha1:173a1af42e43d63a8db743690622bce62dec6486
+    pristine_git_object: 0c421b4d43ea4863b44396a8452940dda1466c27
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -14020,8 +14020,8 @@ trackedFiles:
     pristine_git_object: 46d67828cba27395185d7be5a7f7d1f5df13c036
   src/models/textql-rpc-paradigm-params-paradigm-params.ts:
     id: d9059b66d6f0
-    last_write_checksum: sha1:6580bd94acb7a9e7881c6c6ff63f7fd330a5bc3f
-    pristine_git_object: 6586035a9144de34b364461e682829a5f5f3ad16
+    last_write_checksum: sha1:5aa1d85316ff5b60d8ea46f6bf116ed30ed65cf5
+    pristine_git_object: 9e2594fd03ad57f0051691109d41dfd210d764da
   src/models/textql-rpc-paradigm-params-paradigm-type.ts:
     id: b57d11cd85bc
     last_write_checksum: sha1:fff5a7812a3720704eb69e59fbbe8b9ee18c34b6
@@ -25770,3 +25770,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.settings.get()`:  `response.organization.paradigmParams.decideEnabled` **Added**\n* `textql.settings.listMembers()`:  `response.members[].paradigmParams.decideEnabled` **Added**\n* `textql.settings.updateModels()`:  `response.organization.paradigmParams.decideEnabled` **Added**\n* `textql.settings.update()`: \n  *  `request.body.paradigmParams.decideEnabled` **Added**\n  *  `response.organization.paradigmParams.decideEnabled` **Added**\n"

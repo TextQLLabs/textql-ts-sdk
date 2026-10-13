@@ -17056,6 +17056,9 @@ components:
         ontologyActionsAutoApproveEnabled:
           type: boolean
           title: ontology_actions_auto_approve_enabled
+        decideEnabled:
+          type: boolean
+          title: decide_enabled
       title: ParadigmParams
       additionalProperties: false
     textql.rpc.paradigm_params.ParadigmType:
