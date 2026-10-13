@@ -4,7 +4,8 @@ The TextQL API exposes several **server-streaming** RPCs that have no HTTP/JSON
 shape in the OpenAPI spec, so they are not part of the generated SDK surface.
 This package bridges them with [Connect-RPC](https://connectrpc.com) via
 `@textql/sdk/streaming` — a hand-written module that talks the Connect protocol
-directly to the same gateway, authenticated with the same API key.
+directly to the same gateway, authenticated with the same API key, or with the
+OAuth tokens of a client built by `fromTokens` (see [OAUTH.md](OAUTH.md)).
 
 > Streaming is bridge-only: the REST `/v2` stream endpoint has been removed, so
 > this module is the sole streaming surface of the SDK. Prefer `watchChat` for

@@ -9,6 +9,9 @@ This directory contains example scripts demonstrating how to use the @textql/sdk
   with file/CSV uploads and an agent automatically attached to every new chat.
 - [`python-react-demo`](./python-react-demo): the original React application with
   a FastAPI backend using the Python SDK.
+- [`python-oauth-demo`](./python-oauth-demo): `python-react-demo` with its own
+  user accounts, where each user connects their TextQL account over OAuth and
+  chats as themselves instead of through an org-wide API key.
 - [`react-demo`](./react-demo): the React application with a TypeScript backend.
 
 ## Prerequisites

@@ -1,10 +1,11 @@
 import type { DescService } from "@bufbuild/protobuf";
-import { type Client, createClient, type Interceptor, type Transport } from "@connectrpc/connect";
+import { type Client, Code, ConnectError, createClient, type Interceptor, type Transport } from "@connectrpc/connect";
 import { createConnectTransport } from "@connectrpc/connect-web";
 
 import { serverURLFromEnv } from "./env-config.js";
 import { ServerList } from "./lib/config.js";
 import { ClientSDK } from "./lib/sdks.js";
+import { type TokenManager, tokenManagerOf } from "./oauth.js";
 import { AgentService } from "./generated/connect/public/agent_pb.js";
 import { AppService } from "./generated/connect/public/apps_pb.js";
 import { ChatService } from "./generated/connect/public/chat_pb.js";
@@ -12,7 +13,9 @@ import { DashboardService } from "./generated/connect/public/dashboard_pb.js";
 import { PlaybookService } from "./generated/connect/public/playbook_pb.js";
 
 export interface StreamingClientOptions {
-  apiKey: string | (() => Promise<string>);
+  apiKey?: string | (() => Promise<string>) | undefined;
+  /** OAuth tokens, sent as `Authorization: Bearer`. Takes precedence over `apiKey`. */
+  tokens?: TokenManager | undefined;
   serverURL?: string | undefined;
   fetch?: typeof globalThis.fetch;
 }
@@ -33,6 +36,7 @@ function optionsFromSource(source: StreamingClientSource): StreamingClientOption
   if (source instanceof ClientSDK) {
     return {
       apiKey: source._options.apiKey ?? "",
+      tokens: tokenManagerOf(source) ?? undefined,
       serverURL: source._baseURL?.toString(),
     };
   }
@@ -51,12 +55,36 @@ function redirectSafeFetch(inner?: typeof globalThis.fetch): typeof globalThis.f
     base(input, init?.redirect === "error" ? { ...init, redirect: "manual" } : init);
 }
 
-function createTransport(options: StreamingClientOptions): Transport {
-  const { apiKey } = options;
-  const auth: Interceptor = (next) => async (req) => {
-    req.header.set("tql_api_key", typeof apiKey === "function" ? await apiKey() : apiKey);
+function apiKeyInterceptor(apiKey: StreamingClientOptions["apiKey"]): Interceptor {
+  return (next) => async (req) => {
+    req.header.set("tql_api_key", typeof apiKey === "function" ? await apiKey() : apiKey ?? "");
     return next(req);
   };
+}
+
+// A unary call is replayed once after refreshing. A stream's request iterable
+// cannot be replayed, so its unauthenticated error surfaces and the refreshed
+// token is used on the next call.
+function tokenInterceptor(tokens: TokenManager): Interceptor {
+  return (next) => async (req) => {
+    const token = await tokens.accessToken();
+    req.header.set("authorization", `Bearer ${token}`);
+    try {
+      return await next(req);
+    } catch (err) {
+      if (!(err instanceof ConnectError) || err.code !== Code.Unauthenticated || !tokens.canRefresh) {
+        throw err;
+      }
+      const fresh = await tokens.accessToken(token);
+      if (req.stream) throw err;
+      req.header.set("authorization", `Bearer ${fresh}`);
+      return next(req);
+    }
+  };
+}
+
+function createTransport(options: StreamingClientOptions): Transport {
+  const auth = options.tokens ? tokenInterceptor(options.tokens) : apiKeyInterceptor(options.apiKey);
   return createConnectTransport({
     baseUrl: rpcBaseUrl(options.serverURL ?? serverURLFromEnv() ?? ServerList[0]),
     interceptors: [auth],
