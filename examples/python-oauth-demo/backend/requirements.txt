@@ -1,0 +1,8 @@
+# The OAuth helpers (textql_sdk.oauth) are not on PyPI yet: install from the PR branch.
+textql-sdk @ git+https://github.com/TextQLLabs/textql-python-v3@rod/sdk-oauth-tokens
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-dotenv>=1.0
+httpx>=0.27
+sqlalchemy>=2.0
+truststore>=0.9

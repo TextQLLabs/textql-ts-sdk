@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="kdb+">
+  <rect width="64" height="64" rx="14" fill="#0F1626"/>
+  <text x="31" y="33" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
+        font-size="20" font-weight="700" letter-spacing="-1" text-anchor="middle" dominant-baseline="central">
+    <tspan fill="#FFFFFF">kdb</tspan><tspan fill="#27C4AE">+</tspan>
+  </text>
+</svg>
