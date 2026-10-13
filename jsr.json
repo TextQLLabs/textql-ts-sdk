@@ -2,7 +2,7 @@
 
 {
   "name": "@textql/sdk",
-  "version": "1.4.55",
+  "version": "1.4.56",
   "exports": {
     ".": "./src/index.ts",    
     "./models/errors": "./src/models/errors/index.ts",    
