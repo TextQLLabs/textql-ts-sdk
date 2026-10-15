@@ -217,6 +217,10 @@ import {
   TextqlRpcPublicCellsTableauCell$inboundSchema,
 } from "./textql-rpc-public-cells-tableau-cell.js";
 import {
+  TextqlRpcPublicCellsTableauMetadataCell,
+  TextqlRpcPublicCellsTableauMetadataCell$inboundSchema,
+} from "./textql-rpc-public-cells-tableau-metadata-cell.js";
+import {
   TextqlRpcPublicCellsTableauSearchFieldsCell,
   TextqlRpcPublicCellsTableauSearchFieldsCell$inboundSchema,
 } from "./textql-rpc-public-cells-tableau-search-fields-cell.js";
@@ -252,7 +256,7 @@ import {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs59 = number | string;
+export type TextqlRpcPublicChatCellDurationMs60 = number | string;
 
 export type WsCell = {
   wsCell: TextqlRpcPublicCellsWebSearchCell;
@@ -376,7 +380,7 @@ export type WsCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs58 = number | string;
+export type TextqlRpcPublicChatCellDurationMs59 = number | string;
 
 export type UseSkillCell = {
   /**
@@ -508,7 +512,7 @@ export type UseSkillCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs57 = number | string;
+export type TextqlRpcPublicChatCellDurationMs58 = number | string;
 
 export type ThinkingCell = {
   thinkingCell: TextqlRpcPublicCellsThinkingCell;
@@ -632,7 +636,7 @@ export type ThinkingCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs56 = number | string;
+export type TextqlRpcPublicChatCellDurationMs57 = number | string;
 
 export type TextCell = {
   textCell: TextqlRpcPublicCellsTextCell;
@@ -756,7 +760,7 @@ export type TextCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs55 = number | string;
+export type TextqlRpcPublicChatCellDurationMs56 = number | string;
 
 export type TabularFileCell = {
   tabularFileCell: TextqlRpcPublicCellsTabularFileCell;
@@ -880,7 +884,7 @@ export type TabularFileCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs54 = number | string;
+export type TextqlRpcPublicChatCellDurationMs55 = number | string;
 
 export type TableauSqlCell = {
   tableauSqlCell: TextqlRpcPublicCellsTableauSQLCell;
@@ -1004,10 +1008,134 @@ export type TableauSqlCell = {
 /**
  * cells_v5.duration_ms — wall-clock this cell took
  */
-export type TextqlRpcPublicChatCellDurationMs53 = number | string;
+export type TextqlRpcPublicChatCellDurationMs54 = number | string;
 
 export type TableauSearchFieldsCell = {
   tableauSearchFieldsCell: TextqlRpcPublicCellsTableauSearchFieldsCell;
+  /**
+   * UUID
+   */
+  id?: string | undefined;
+  /**
+   * A Timestamp represents a point in time independent of any time zone or local
+   *
+   * @remarks
+   *  calendar, encoded as a count of seconds and fractions of seconds at
+   *  nanosecond resolution. The count is relative to an epoch at UTC midnight on
+   *  January 1, 1970, in the proleptic Gregorian calendar which extends the
+   *  Gregorian calendar backwards to year one.
+   *
+   *  All minutes are 60 seconds long. Leap seconds are "smeared" so that no leap
+   *  second table is needed for interpretation, using a [24-hour linear
+   *  smear](https://developers.google.com/time/smear).
+   *
+   *  The range is from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
+   *  restricting to that range, we ensure that we can convert to and from [RFC
+   *  3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
+   *
+   *  # Examples
+   *
+   *  Example 1: Compute Timestamp from POSIX `time()`.
+   *
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds(time(NULL));
+   *      timestamp.set_nanos(0);
+   *
+   *  Example 2: Compute Timestamp from POSIX `gettimeofday()`.
+   *
+   *      struct timeval tv;
+   *      gettimeofday(&tv, NULL);
+   *
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds(tv.tv_sec);
+   *      timestamp.set_nanos(tv.tv_usec * 1000);
+   *
+   *  Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
+   *
+   *      FILETIME ft;
+   *      GetSystemTimeAsFileTime(&ft);
+   *      UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+   *
+   *      // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
+   *      // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.
+   *      Timestamp timestamp;
+   *      timestamp.set_seconds((INT64) ((ticks / 10000000) - 11644473600LL));
+   *      timestamp.set_nanos((INT32) ((ticks % 10000000) * 100));
+   *
+   *  Example 4: Compute Timestamp from Java `System.currentTimeMillis()`.
+   *
+   *      long millis = System.currentTimeMillis();
+   *
+   *      Timestamp timestamp = Timestamp.newBuilder().setSeconds(millis / 1000)
+   *          .setNanos((int) ((millis % 1000) * 1000000)).build();
+   *
+   *  Example 5: Compute Timestamp from Java `Instant.now()`.
+   *
+   *      Instant now = Instant.now();
+   *
+   *      Timestamp timestamp =
+   *          Timestamp.newBuilder().setSeconds(now.getEpochSecond())
+   *              .setNanos(now.getNano()).build();
+   *
+   *  Example 6: Compute Timestamp from current time in Python.
+   *
+   *      timestamp = Timestamp()
+   *      timestamp.GetCurrentTime()
+   *
+   *  # JSON Mapping
+   *
+   *  In JSON format, the Timestamp type is encoded as a string in the
+   *  [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. That is, the
+   *  format is "{year}-{month}-{day}T{hour}:{min}:{sec}[.{frac_sec}]Z"
+   *  where {year} is always expressed using four digits while {month}, {day},
+   *  {hour}, {min}, and {sec} are zero-padded to two digits each. The fractional
+   *  seconds, which can go up to 9 digits (i.e. up to 1 nanosecond resolution),
+   *  are optional. The "Z" suffix indicates the timezone ("UTC"); the timezone
+   *  is required. A ProtoJSON serializer should always use UTC (as indicated by
+   *  "Z") when printing the Timestamp type and a ProtoJSON parser should be
+   *  able to accept both UTC and other timezones (as indicated by an offset).
+   *
+   *  For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
+   *  01:30 UTC on January 15, 2017.
+   *
+   *  In JavaScript, one can convert a Date object to this format using the
+   *  standard
+   *  [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString)
+   *  method. In Python, a standard `datetime.datetime` object can be converted
+   *  to this format using
+   *  [`strftime`](https://docs.python.org/2/library/time.html#time.strftime) with
+   *  the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in Java, one can use
+   *  the Joda Time's [`ISODateTimeFormat.dateTime()`](
+   *  http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()
+   *  ) to obtain a formatter capable of generating timestamps in this format.
+   */
+  timestamp?: Date | undefined;
+  complete?: boolean | undefined;
+  /**
+   * whether it was created by a human or robot
+   */
+  generated?: boolean | undefined;
+  lifecycle?: TextqlRpcPublicChatCellLifecycle | undefined;
+  toolCallId?: string | null | undefined;
+  execError?: string | null | undefined;
+  senderMemberId?: string | null | undefined;
+  /**
+   * LLM-generated summary of what this tool call does
+   */
+  toolSummary?: string | null | undefined;
+  /**
+   * cells_v5.duration_ms — wall-clock this cell took
+   */
+  durationMs?: number | string | null | undefined;
+};
+
+/**
+ * cells_v5.duration_ms — wall-clock this cell took
+ */
+export type TextqlRpcPublicChatCellDurationMs53 = number | string;
+
+export type TableauMetadataCell = {
+  tableauMetadataCell: TextqlRpcPublicCellsTableauMetadataCell;
   /**
    * UUID
    */
@@ -7666,6 +7794,7 @@ export type TextqlRpcPublicChatCell =
   | SubagentCell
   | SummaryCell
   | TableauCell
+  | TableauMetadataCell
   | TableauSearchFieldsCell
   | TableauSqlCell
   | TabularFileCell
@@ -7675,19 +7804,19 @@ export type TextqlRpcPublicChatCell =
   | WsCell;
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs59$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs59,
+export const TextqlRpcPublicChatCellDurationMs60$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs60,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs59FromJSON(
+export function textqlRpcPublicChatCellDurationMs60FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs59, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs60, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs59$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs59' from JSON`,
+      TextqlRpcPublicChatCellDurationMs60$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs60' from JSON`,
   );
 }
 
@@ -7719,19 +7848,19 @@ export function wsCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs58$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs58,
+export const TextqlRpcPublicChatCellDurationMs59$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs59,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs58FromJSON(
+export function textqlRpcPublicChatCellDurationMs59FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs58, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs59, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs58$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs58' from JSON`,
+      TextqlRpcPublicChatCellDurationMs59$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs59' from JSON`,
   );
 }
 
@@ -7764,19 +7893,19 @@ export function useSkillCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs57$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs57,
+export const TextqlRpcPublicChatCellDurationMs58$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs58,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs57FromJSON(
+export function textqlRpcPublicChatCellDurationMs58FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs57, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs58, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs57$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs57' from JSON`,
+      TextqlRpcPublicChatCellDurationMs58$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs58' from JSON`,
   );
 }
 
@@ -7809,19 +7938,19 @@ export function thinkingCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs56$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs56,
+export const TextqlRpcPublicChatCellDurationMs57$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs57,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs56FromJSON(
+export function textqlRpcPublicChatCellDurationMs57FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs56, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs57, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs56$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs56' from JSON`,
+      TextqlRpcPublicChatCellDurationMs57$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs57' from JSON`,
   );
 }
 
@@ -7854,19 +7983,19 @@ export function textCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs55$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs55,
+export const TextqlRpcPublicChatCellDurationMs56$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs56,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs55FromJSON(
+export function textqlRpcPublicChatCellDurationMs56FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs55, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs56, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs55$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs55' from JSON`,
+      TextqlRpcPublicChatCellDurationMs56$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs56' from JSON`,
   );
 }
 
@@ -7901,19 +8030,19 @@ export function tabularFileCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs54$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs54,
+export const TextqlRpcPublicChatCellDurationMs55$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs55,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs54FromJSON(
+export function textqlRpcPublicChatCellDurationMs55FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs54, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs55, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs54$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs54' from JSON`,
+      TextqlRpcPublicChatCellDurationMs55$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs55' from JSON`,
   );
 }
 
@@ -7948,19 +8077,19 @@ export function tableauSqlCellFromJSON(
 }
 
 /** @internal */
-export const TextqlRpcPublicChatCellDurationMs53$inboundSchema: z.ZodMiniType<
-  TextqlRpcPublicChatCellDurationMs53,
+export const TextqlRpcPublicChatCellDurationMs54$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs54,
   unknown
 > = smartUnion([types.number(), types.string()]);
 
-export function textqlRpcPublicChatCellDurationMs53FromJSON(
+export function textqlRpcPublicChatCellDurationMs54FromJSON(
   jsonString: string,
-): SafeParseResult<TextqlRpcPublicChatCellDurationMs53, SDKValidationError> {
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs54, SDKValidationError> {
   return safeParse(
     jsonString,
     (x) =>
-      TextqlRpcPublicChatCellDurationMs53$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TextqlRpcPublicChatCellDurationMs53' from JSON`,
+      TextqlRpcPublicChatCellDurationMs54$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs54' from JSON`,
   );
 }
 
@@ -7992,6 +8121,53 @@ export function tableauSearchFieldsCellFromJSON(
     jsonString,
     (x) => TableauSearchFieldsCell$inboundSchema.parse(JSON.parse(x)),
     `Failed to parse 'TableauSearchFieldsCell' from JSON`,
+  );
+}
+
+/** @internal */
+export const TextqlRpcPublicChatCellDurationMs53$inboundSchema: z.ZodMiniType<
+  TextqlRpcPublicChatCellDurationMs53,
+  unknown
+> = smartUnion([types.number(), types.string()]);
+
+export function textqlRpcPublicChatCellDurationMs53FromJSON(
+  jsonString: string,
+): SafeParseResult<TextqlRpcPublicChatCellDurationMs53, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) =>
+      TextqlRpcPublicChatCellDurationMs53$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TextqlRpcPublicChatCellDurationMs53' from JSON`,
+  );
+}
+
+/** @internal */
+export const TableauMetadataCell$inboundSchema: z.ZodMiniType<
+  TableauMetadataCell,
+  unknown
+> = z.object({
+  tableauMetadataCell: TextqlRpcPublicCellsTableauMetadataCell$inboundSchema,
+  id: types.optional(types.string()),
+  timestamp: types.optional(types.date()),
+  complete: types.optional(types.boolean()),
+  generated: types.optional(types.boolean()),
+  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+  toolCallId: z.optional(z.nullable(types.string())),
+  execError: z.optional(z.nullable(types.string())),
+  senderMemberId: z.optional(z.nullable(types.string())),
+  toolSummary: z.optional(z.nullable(types.string())),
+  durationMs: z.optional(
+    z.nullable(smartUnion([types.number(), types.string()])),
+  ),
+});
+
+export function tableauMetadataCellFromJSON(
+  jsonString: string,
+): SafeParseResult<TableauMetadataCell, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TableauMetadataCell$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TableauMetadataCell' from JSON`,
   );
 }
 
@@ -10457,6 +10633,7 @@ export const TextqlRpcPublicChatCell$inboundSchema: z.ZodMiniType<
   z.lazy(() => SubagentCell$inboundSchema),
   z.lazy(() => SummaryCell$inboundSchema),
   z.lazy(() => TableauCell$inboundSchema),
+  z.lazy(() => TableauMetadataCell$inboundSchema),
   z.lazy(() => TableauSearchFieldsCell$inboundSchema),
   z.lazy(() => TableauSqlCell$inboundSchema),
   z.lazy(() => TabularFileCell$inboundSchema),

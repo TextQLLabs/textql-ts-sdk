@@ -5,7 +5,9 @@
 ### Available Operations
 
 * [create](#create) - CreateConnector
+* [createConnectorGroup](#createconnectorgroup) - CreateConnectorGroup
 * [delete](#delete) - DeleteConnector
+* [deleteConnectorGroup](#deleteconnectorgroup) - DeleteConnectorGroup
 * [duplicateConnector](#duplicateconnector) - DuplicateConnector
 * [executeQuery](#executequery) - ExecuteQuery
 * [get](#get) - GetConnector
@@ -17,10 +19,15 @@
 * [getConnectors](#getconnectors) - GetConnectors
 * [getExampleQueries](#getexamplequeries) - GetExampleQueries
 * [getTablePreview](#gettablepreview) - GetTablePreview
+* [listConnectorGroups](#listconnectorgroups) - ListConnectorGroups
 * [listTables](#listtables) - ListConnectorTables
 * [listQueryTemplates](#listquerytemplates) - ListQueryTemplates
+* [shareConnectorGroup](#shareconnectorgroup) - ShareConnectorGroup
 * [test](#test) - TestConnector
 * [update](#update) - UpdateConnector
+* [updateConnectorGroup](#updateconnectorgroup) - UpdateConnectorGroup
+* [updateConnectorGroupMembers](#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
+* [updateConnectorGroupSettings](#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 
 ## create
 
@@ -95,6 +102,79 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## createConnectorGroup
+
+CreateConnectorGroup
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_CreateConnectorGroup" method="post" path="/textql.rpc.public.connector.ConnectorService/CreateConnectorGroup" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.createConnectorGroup({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsCreateConnectorGroup } from "@textql/sdk/funcs/connectors-create-connector-group.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsCreateConnectorGroup(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsCreateConnectorGroup failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceCreateConnectorGroupRequest](../../models/operations/connector-service-create-connector-group-request.md)                                          | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceCreateConnectorGroupResponse](../../models/operations/connector-service-create-connector-group-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## delete
 
 DeleteConnector
@@ -161,6 +241,79 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceDeleteConnectorResponse](../../models/operations/connector-service-delete-connector-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## deleteConnectorGroup
+
+DeleteConnectorGroup
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_DeleteConnectorGroup" method="post" path="/textql.rpc.public.connector.ConnectorService/DeleteConnectorGroup" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.deleteConnectorGroup({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsDeleteConnectorGroup } from "@textql/sdk/funcs/connectors-delete-connector-group.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsDeleteConnectorGroup(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsDeleteConnectorGroup failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceDeleteConnectorGroupRequest](../../models/operations/connector-service-delete-connector-group-request.md)                                          | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceDeleteConnectorGroupResponse](../../models/operations/connector-service-delete-connector-group-response.md)\>**
 
 ### Errors
 
@@ -971,6 +1124,79 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## listConnectorGroups
+
+ListConnectorGroups
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_ListConnectorGroups" method="post" path="/textql.rpc.public.connector.ConnectorService/ListConnectorGroups" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.listConnectorGroups({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsListConnectorGroups } from "@textql/sdk/funcs/connectors-list-connector-groups.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsListConnectorGroups(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsListConnectorGroups failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceListConnectorGroupsRequest](../../models/operations/connector-service-list-connector-groups-request.md)                                            | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceListConnectorGroupsResponse](../../models/operations/connector-service-list-connector-groups-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## listTables
 
 ListConnectorTables
@@ -1117,6 +1343,79 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## shareConnectorGroup
+
+ShareConnectorGroup
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_ShareConnectorGroup" method="post" path="/textql.rpc.public.connector.ConnectorService/ShareConnectorGroup" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.shareConnectorGroup({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsShareConnectorGroup } from "@textql/sdk/funcs/connectors-share-connector-group.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsShareConnectorGroup(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsShareConnectorGroup failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceShareConnectorGroupRequest](../../models/operations/connector-service-share-connector-group-request.md)                                            | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceShareConnectorGroupResponse](../../models/operations/connector-service-share-connector-group-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## test
 
 TestConnector
@@ -1256,6 +1555,225 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceUpdateConnectorResponse](../../models/operations/connector-service-update-connector-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateConnectorGroup
+
+UpdateConnectorGroup
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_UpdateConnectorGroup" method="post" path="/textql.rpc.public.connector.ConnectorService/UpdateConnectorGroup" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.updateConnectorGroup({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsUpdateConnectorGroup } from "@textql/sdk/funcs/connectors-update-connector-group.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsUpdateConnectorGroup(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsUpdateConnectorGroup failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceUpdateConnectorGroupRequest](../../models/operations/connector-service-update-connector-group-request.md)                                          | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceUpdateConnectorGroupResponse](../../models/operations/connector-service-update-connector-group-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateConnectorGroupMembers
+
+UpdateConnectorGroupMembers
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_UpdateConnectorGroupMembers" method="post" path="/textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupMembers" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.updateConnectorGroupMembers({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsUpdateConnectorGroupMembers } from "@textql/sdk/funcs/connectors-update-connector-group-members.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsUpdateConnectorGroupMembers(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsUpdateConnectorGroupMembers failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceUpdateConnectorGroupMembersRequest](../../models/operations/connector-service-update-connector-group-members-request.md)                           | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceUpdateConnectorGroupMembersResponse](../../models/operations/connector-service-update-connector-group-members-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateConnectorGroupSettings
+
+UpdateConnectorGroupSettings
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_UpdateConnectorGroupSettings" method="post" path="/textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupSettings" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.updateConnectorGroupSettings({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsUpdateConnectorGroupSettings } from "@textql/sdk/funcs/connectors-update-connector-group-settings.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsUpdateConnectorGroupSettings(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsUpdateConnectorGroupSettings failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceUpdateConnectorGroupSettingsRequest](../../models/operations/connector-service-update-connector-group-settings-request.md)                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceUpdateConnectorGroupSettingsResponse](../../models/operations/connector-service-update-connector-group-settings-response.md)\>**
 
 ### Errors
 

@@ -5,10 +5,12 @@
 ### Available Operations
 
 * [create](#create) - CreateSandbox
+* [diffOntologyChanges](#diffontologychanges) - DiffOntologyChanges
 * [exec](#exec) - Exec
 * [executeCode](#executecode) - ExecuteCode
 * [getToolAvailability](#gettoolavailability) - GetToolAvailability
 * [loadConnectorData](#loadconnectordata) - LoadConnectorData
+* [proposeOntologyChanges](#proposeontologychanges) - ProposeOntologyChanges
 * [executeBash](#executebash) - Runs in the caller's own worker; no connector/source scoping.
 * [executeQuery](#executequery) - ExecuteQuery
 
@@ -78,6 +80,79 @@ run();
 ### Response
 
 **Promise\<[operations.SandboxExecServiceCreateSandboxResponse](../../models/operations/sandbox-exec-service-create-sandbox-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## diffOntologyChanges
+
+DiffOntologyChanges
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="SandboxExecService_DiffOntologyChanges" method="post" path="/textql.rpc.public.sandbox_exec.SandboxExecService/DiffOntologyChanges" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.sandbox.diffOntologyChanges({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxDiffOntologyChanges } from "@textql/sdk/funcs/sandbox-diff-ontology-changes.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await sandboxDiffOntologyChanges(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("sandboxDiffOntologyChanges failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.SandboxExecServiceDiffOntologyChangesRequest](../../models/operations/sandbox-exec-service-diff-ontology-changes-request.md)                                       | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.SandboxExecServiceDiffOntologyChangesResponse](../../models/operations/sandbox-exec-service-diff-ontology-changes-response.md)\>**
 
 ### Errors
 
@@ -370,6 +445,79 @@ run();
 ### Response
 
 **Promise\<[operations.SandboxExecServiceLoadConnectorDataResponse](../../models/operations/sandbox-exec-service-load-connector-data-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## proposeOntologyChanges
+
+ProposeOntologyChanges
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="SandboxExecService_ProposeOntologyChanges" method="post" path="/textql.rpc.public.sandbox_exec.SandboxExecService/ProposeOntologyChanges" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.sandbox.proposeOntologyChanges({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { sandboxProposeOntologyChanges } from "@textql/sdk/funcs/sandbox-propose-ontology-changes.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await sandboxProposeOntologyChanges(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("sandboxProposeOntologyChanges failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.SandboxExecServiceProposeOntologyChangesRequest](../../models/operations/sandbox-exec-service-propose-ontology-changes-request.md)                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.SandboxExecServiceProposeOntologyChangesResponse](../../models/operations/sandbox-exec-service-propose-ontology-changes-response.md)\>**
 
 ### Errors
 

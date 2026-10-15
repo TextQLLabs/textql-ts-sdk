@@ -1,0 +1,19 @@
+# SandboxExecServiceProposeOntologyChangesRequest
+
+## Example Usage
+
+```typescript
+import { SandboxExecServiceProposeOntologyChangesRequest } from "@textql/sdk/models/operations";
+
+let value: SandboxExecServiceProposeOntologyChangesRequest = {
+  body: {},
+};
+```
+
+## Fields
+
+| Field                                                                                                                                                            | Type                                                                                                                                                             | Required                                                                                                                                                         | Description                                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `connectProtocolVersion`                                                                                                                                         | *"1"*                                                                                                                                                            | :heavy_check_mark:                                                                                                                                               | Define the version of the Connect protocol                                                                                                                       |
+| `connectTimeoutMs`                                                                                                                                               | *number*                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                               | N/A                                                                                                                                                              |
+| `body`                                                                                                                                                           | [models.TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest](../../models/textql-rpc-public-sandbox-exec-sandbox-propose-ontology-changes-request.md) | :heavy_check_mark:                                                                                                                                               | N/A                                                                                                                                                              |

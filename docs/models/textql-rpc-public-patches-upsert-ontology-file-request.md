@@ -15,3 +15,4 @@ let value: TextqlRpcPublicPatchesUpsertOntologyFileRequest = {};
 | `path`             | *string*           | :heavy_minus_sign: | N/A                |
 | `content`          | *string*           | :heavy_minus_sign: | N/A                |
 | `commitMessage`    | *string*           | :heavy_minus_sign: | N/A                |
+| `baseContentHash`  | *string*           | :heavy_minus_sign: | N/A                |

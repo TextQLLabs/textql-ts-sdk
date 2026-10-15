@@ -3794,6 +3794,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.CreateConnectorResponse'
+  /textql.rpc.public.connector.ConnectorService/CreateConnectorGroup:
+    post:
+      tags:
+        - ConnectorService
+      summary: CreateConnectorGroup
+      operationId: ConnectorService_CreateConnectorGroup
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: createConnectorGroup
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.CreateConnectorGroupRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.CreateConnectorGroupResponse'
   /textql.rpc.public.connector.ConnectorService/DeleteConnector:
     post:
       tags:
@@ -3831,6 +3868,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.DeleteConnectorResponse'
+  /textql.rpc.public.connector.ConnectorService/DeleteConnectorGroup:
+    post:
+      tags:
+        - ConnectorService
+      summary: DeleteConnectorGroup
+      operationId: ConnectorService_DeleteConnectorGroup
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: deleteConnectorGroup
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.DeleteConnectorGroupRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.DeleteConnectorGroupResponse'
   /textql.rpc.public.connector.ConnectorService/DuplicateConnector:
     post:
       tags:
@@ -4238,6 +4312,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.GetTablePreviewResponse'
+  /textql.rpc.public.connector.ConnectorService/ListConnectorGroups:
+    post:
+      tags:
+        - ConnectorService
+      summary: ListConnectorGroups
+      operationId: ConnectorService_ListConnectorGroups
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: listConnectorGroups
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.ListConnectorGroupsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.ListConnectorGroupsResponse'
   /textql.rpc.public.connector.ConnectorService/ListConnectorTables:
     post:
       tags:
@@ -4312,6 +4423,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.ListQueryTemplatesResponse'
+  /textql.rpc.public.connector.ConnectorService/ShareConnectorGroup:
+    post:
+      tags:
+        - ConnectorService
+      summary: ShareConnectorGroup
+      operationId: ConnectorService_ShareConnectorGroup
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: shareConnectorGroup
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.ShareConnectorGroupRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.ShareConnectorGroupResponse'
   /textql.rpc.public.connector.ConnectorService/TestConnector:
     post:
       tags:
@@ -4386,6 +4534,117 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorResponse'
+  /textql.rpc.public.connector.ConnectorService/UpdateConnectorGroup:
+    post:
+      tags:
+        - ConnectorService
+      summary: UpdateConnectorGroup
+      operationId: ConnectorService_UpdateConnectorGroup
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: updateConnectorGroup
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupResponse'
+  /textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupMembers:
+    post:
+      tags:
+        - ConnectorService
+      summary: UpdateConnectorGroupMembers
+      operationId: ConnectorService_UpdateConnectorGroupMembers
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: updateConnectorGroupMembers
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupMembersRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupMembersResponse'
+  /textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupSettings:
+    post:
+      tags:
+        - ConnectorService
+      summary: UpdateConnectorGroupSettings
+      operationId: ConnectorService_UpdateConnectorGroupSettings
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: updateConnectorGroupSettings
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupSettingsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupSettingsResponse'
   /textql.rpc.public.dashboard.DashboardService/CheckDashboardHealth:
     post:
       tags:
@@ -5772,6 +6031,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.dataset.UpdateDatasetResponse'
+  /textql.rpc.public.harness.HarnessService/ListHarnesses:
+    post:
+      tags:
+        - HarnessService
+      summary: ListHarnesses
+      operationId: HarnessService_ListHarnesses
+      x-speakeasy-group: harnesses
+      x-speakeasy-name-override: list
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.harness.ListHarnessesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.harness.ListHarnessesResponse'
   /textql.rpc.public.mcp.MCPService/ClearOAuthToken:
     post:
       tags:
@@ -13907,6 +14203,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.CreateSandboxResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/DiffOntologyChanges:
+    post:
+      tags:
+        - SandboxExecService
+      summary: DiffOntologyChanges
+      operationId: SandboxExecService_DiffOntologyChanges
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: diffOntologyChanges
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxDiffOntologyChangesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxDiffOntologyChangesResponse'
   /textql.rpc.public.sandbox_exec.SandboxExecService/Exec:
     post:
       tags:
@@ -14055,6 +14388,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxLoadConnectorDataResponse'
+  /textql.rpc.public.sandbox_exec.SandboxExecService/ProposeOntologyChanges:
+    post:
+      tags:
+        - SandboxExecService
+      summary: ProposeOntologyChanges
+      operationId: SandboxExecService_ProposeOntologyChanges
+      x-speakeasy-group: sandbox
+      x-speakeasy-name-override: proposeOntologyChanges
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxProposeOntologyChangesRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.sandbox_exec.SandboxProposeOntologyChangesResponse'
   /textql.rpc.public.sandbox_query.SandboxQueryService/ExecuteBash:
     post:
       tags:
@@ -22834,6 +23204,30 @@ components:
           description: optional, only present for blocks with PDFs
       title: TableauMessageBlock
       additionalProperties: false
+    textql.rpc.public.cells.TableauMetadataCell:
+      type: object
+      properties:
+        operation:
+          type: string
+          title: operation
+        searchTerm:
+          type: string
+          title: search_term
+        entityType:
+          type: string
+          title: entity_type
+        entity:
+          type: string
+          title: entity
+        offset:
+          type: integer
+          title: offset
+          format: int32
+        resultText:
+          type: string
+          title: result_text
+      title: TableauMetadataCell
+      additionalProperties: false
     textql.rpc.public.cells.TableauSQLCell:
       type: object
       properties:
@@ -23683,6 +24077,13 @@ components:
               required:
                 - tableauCell
             - properties:
+                tableauMetadataCell:
+                  title: tableau_metadata_cell
+                  $ref: '#/components/schemas/textql.rpc.public.cells.TableauMetadataCell'
+              title: tableau_metadata_cell
+              required:
+                - tableauMetadataCell
+            - properties:
                 tableauSearchFieldsCell:
                   title: tableau_search_fields_cell
                   $ref: '#/components/schemas/textql.rpc.public.cells.TableauSearchFieldsCell'
@@ -23904,6 +24305,14 @@ components:
              Thinking tokens bill as output tokens.
           nullable: true
           deprecated: true
+        harness:
+          type: string
+          title: harness
+          nullable: true
+        harnessEndpointId:
+          type: string
+          title: harness_endpoint_id
+          nullable: true
       title: Chat
       additionalProperties: false
     textql.rpc.public.chat.ChatExecutionTiming:
@@ -24179,6 +24588,14 @@ components:
         modelName:
           type: string
           title: model_name
+          nullable: true
+        harness:
+          type: string
+          title: harness
+          nullable: true
+        harnessEndpointId:
+          type: string
+          title: harness_endpoint_id
           nullable: true
       title: CreateRequest
       required:
@@ -26549,6 +26966,56 @@ components:
           format: int64
       title: ConnectorDashboardStats
       additionalProperties: false
+    textql.rpc.public.connector.ConnectorGroup:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        name:
+          type: string
+          title: name
+        description:
+          type: string
+          title: description
+        connectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: connector_ids
+        createdByMemberId:
+          type: string
+          title: created_by_member_id
+        canManage:
+          type: boolean
+          title: can_manage
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ConnectorGroup
+      additionalProperties: false
+    textql.rpc.public.connector.ConnectorGroupConnectorResult:
+      type: object
+      properties:
+        connectorId:
+          type: integer
+          title: connector_id
+          format: int32
+        connectorName:
+          type: string
+          title: connector_name
+        success:
+          type: boolean
+          title: success
+        error:
+          type: string
+          title: error
+      title: ConnectorGroupConnectorResult
+      additionalProperties: false
     textql.rpc.public.connector.ConnectorStatEntry:
       type: object
       properties:
@@ -26647,6 +27114,31 @@ components:
         - KDB
         - MONGODB
         - ANA_BILLING
+    textql.rpc.public.connector.CreateConnectorGroupRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          title: name
+        description:
+          type: string
+          title: description
+        connectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: connector_ids
+      title: CreateConnectorGroupRequest
+      additionalProperties: false
+    textql.rpc.public.connector.CreateConnectorGroupResponse:
+      type: object
+      properties:
+        group:
+          title: group
+          $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroup'
+      title: CreateConnectorGroupResponse
+      additionalProperties: false
     textql.rpc.public.connector.CreateConnectorRequest:
       type: object
       properties:
@@ -26791,6 +27283,18 @@ components:
           type: string
           title: token
       title: PersonalAccessToken
+      additionalProperties: false
+    textql.rpc.public.connector.DeleteConnectorGroupRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+      title: DeleteConnectorGroupRequest
+      additionalProperties: false
+    textql.rpc.public.connector.DeleteConnectorGroupResponse:
+      type: object
+      title: DeleteConnectorGroupResponse
       additionalProperties: false
     textql.rpc.public.connector.DeleteConnectorRequest:
       type: object
@@ -27360,6 +27864,26 @@ components:
       description: |-
         KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
          protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
+    textql.rpc.public.connector.ListConnectorGroupsRequest:
+      type: object
+      title: ListConnectorGroupsRequest
+      additionalProperties: false
+    textql.rpc.public.connector.ListConnectorGroupsResponse:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroup'
+          title: groups
+        addableConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: addable_connector_ids
+      title: ListConnectorGroupsResponse
+      additionalProperties: false
     textql.rpc.public.connector.ListConnectorTablesRequest:
       type: object
       properties:
@@ -27934,6 +28458,29 @@ components:
           title: client_secret
       title: SQLServerMetadata
       additionalProperties: false
+    textql.rpc.public.connector.ShareConnectorGroupRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        grants:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorAccessGrant'
+          title: grants
+      title: ShareConnectorGroupRequest
+      additionalProperties: false
+    textql.rpc.public.connector.ShareConnectorGroupResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroupConnectorResult'
+          title: results
+      title: ShareConnectorGroupResponse
+      additionalProperties: false
     textql.rpc.public.connector.SnowflakeMetadata:
       type: object
       properties:
@@ -28163,6 +28710,79 @@ components:
           type: boolean
           title: skip_tls_verify
       title: TrinoMetadata
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupMembersRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        addConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: add_connector_ids
+        removeConnectorIds:
+          type: array
+          items:
+            type: integer
+            format: int32
+          title: remove_connector_ids
+      title: UpdateConnectorGroupMembersRequest
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupMembersResponse:
+      type: object
+      properties:
+        group:
+          title: group
+          $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroup'
+      title: UpdateConnectorGroupMembersResponse
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        name:
+          type: string
+          title: name
+          nullable: true
+        description:
+          type: string
+          title: description
+          nullable: true
+      title: UpdateConnectorGroupRequest
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupResponse:
+      type: object
+      properties:
+        group:
+          title: group
+          $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroup'
+      title: UpdateConnectorGroupResponse
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupSettingsRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        config:
+          title: config
+          $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorConfig'
+      title: UpdateConnectorGroupSettingsRequest
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupSettingsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroupConnectorResult'
+          title: results
+      title: UpdateConnectorGroupSettingsResponse
       additionalProperties: false
     textql.rpc.public.connector.UpdateConnectorRequest:
       type: object
@@ -30301,6 +30921,149 @@ components:
           title: dataset
           $ref: '#/components/schemas/textql.rpc.public.dataset.Dataset'
       title: UpdateDatasetResponse
+      additionalProperties: false
+    textql.rpc.public.harness.HarnessEndpoint:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        name:
+          type: string
+          title: name
+        url:
+          type: string
+          title: url
+        hasAuthHeader:
+          type: boolean
+          title: has_auth_header
+        createdBy:
+          type: string
+          title: created_by
+          nullable: true
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        updatedAt:
+          title: updated_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastTestedAt:
+          title: last_tested_at
+          nullable: true
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+        lastTestOk:
+          type: boolean
+          title: last_test_ok
+          nullable: true
+        lastTestError:
+          type: string
+          title: last_test_error
+          nullable: true
+      title: HarnessEndpoint
+      additionalProperties: false
+    textql.rpc.public.harness.HarnessInfo:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        kind:
+          type: string
+          title: kind
+        displayName:
+          type: string
+          title: display_name
+        vendor:
+          type: string
+          title: vendor
+        modelFamily:
+          type: string
+          title: model_family
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+          title: models
+        enabled:
+          type: boolean
+          title: enabled
+        defaultModel:
+          title: default_model
+          nullable: true
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+        orgDefault:
+          type: boolean
+          title: org_default
+        endpointId:
+          type: string
+          title: endpoint_id
+          nullable: true
+      title: HarnessInfo
+      additionalProperties: false
+    textql.rpc.public.harness.HarnessViewer:
+      type: object
+      properties:
+        available:
+          type: array
+          items:
+            type: string
+          title: available
+        canSwitch:
+          type: boolean
+          title: can_switch
+        defaultHarness:
+          type: string
+          title: default_harness
+        defaultSource:
+          type: string
+          title: default_source
+        personalDefault:
+          type: string
+          title: personal_default
+          nullable: true
+        personalModels:
+          type: object
+          title: personal_models
+          additionalProperties:
+            title: value
+            $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+      title: HarnessViewer
+      additionalProperties: false
+    textql.rpc.public.harness.HarnessViewer.PersonalModelsEntry:
+      type: object
+      properties:
+        key:
+          type: string
+          title: key
+        value:
+          title: value
+          $ref: '#/components/schemas/textql.rpc.public.chat.LlmModel'
+      title: PersonalModelsEntry
+      additionalProperties: false
+    textql.rpc.public.harness.ListHarnessesRequest:
+      type: object
+      title: ListHarnessesRequest
+      additionalProperties: false
+    textql.rpc.public.harness.ListHarnessesResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          title: enabled
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.harness.HarnessEndpoint'
+          title: endpoints
+        harnesses:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.harness.HarnessInfo'
+          title: harnesses
+        viewer:
+          title: viewer
+          $ref: '#/components/schemas/textql.rpc.public.harness.HarnessViewer'
+      title: ListHarnessesResponse
       additionalProperties: false
     textql.rpc.public.mcp.ClearOAuthTokenRequest:
       type: object
@@ -32756,6 +33519,22 @@ components:
         ontologyActionsAutoApproveEnabled:
           type: boolean
           title: ontology_actions_auto_approve_enabled
+        feedExplorerSelected:
+          type: boolean
+          title: feed_explorer_selected
+          nullable: true
+        feedPostSelected:
+          type: boolean
+          title: feed_post_selected
+          nullable: true
+        feedCommentSelected:
+          type: boolean
+          title: feed_comment_selected
+          nullable: true
+        feedEngageSelected:
+          type: boolean
+          title: feed_engage_selected
+          nullable: true
       title: UniversalOptions
       additionalProperties: false
     textql.rpc.public.patches.AddOntologySubmoduleRequest:
@@ -32918,6 +33697,11 @@ components:
           type: boolean
           title: match_all
           description: true = always attach regardless of other conditions
+        oauthClientIds:
+          type: array
+          items:
+            type: string
+          title: oauth_client_ids
       title: AutoAttachEntry
       additionalProperties: false
     textql.rpc.public.patches.CodeownerEntry:
@@ -33587,6 +34371,9 @@ components:
         file:
           title: file
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyFile'
+        contentHash:
+          type: string
+          title: content_hash
       title: GetOntologyFileResponse
       additionalProperties: false
     textql.rpc.public.patches.GetOntologyGithubOAuthURLRequest:
@@ -35507,6 +36294,10 @@ components:
           type: string
           title: commit_message
           nullable: true
+        baseContentHash:
+          type: string
+          title: base_content_hash
+          nullable: true
       title: UpsertOntologyFileRequest
       additionalProperties: false
     textql.rpc.public.patches.UpsertOntologyFileResponse:
@@ -35515,6 +36306,9 @@ components:
         file:
           title: file
           $ref: '#/components/schemas/textql.rpc.public.patches.OntologyFile'
+        contentHash:
+          type: string
+          title: content_hash
       title: UpsertOntologyFileResponse
       additionalProperties: false
     textql.rpc.public.patches.UsageOrderBy:
@@ -40786,6 +41580,31 @@ components:
           format: int32
       title: SandboxDataFrameOutput
       additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxDiffOntologyChangesRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          minLength: 1
+      title: SandboxDiffOntologyChangesRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxDiffOntologyChangesResponse:
+      type: object
+      properties:
+        hasChanges:
+          type: boolean
+          title: has_changes
+        diffs:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.patches.PatchDiff'
+          title: diffs
+        rawDiff:
+          type: string
+          title: raw_diff
+      title: SandboxDiffOntologyChangesResponse
+      additionalProperties: false
     textql.rpc.public.sandbox_exec.SandboxExecRequest:
       type: object
       properties:
@@ -40949,6 +41768,73 @@ components:
           type: string
           title: preview
       title: SandboxLoadConnectorDataResponse
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxProposeOntologyChangesRequest:
+      type: object
+      properties:
+        sandboxId:
+          type: string
+          title: sandbox_id
+          minLength: 1
+        title:
+          type: string
+          title: title
+        description:
+          type: string
+          title: description
+        draft:
+          type: boolean
+          title: draft
+        patchNumber:
+          type: integer
+          title: patch_number
+          minimum: 0
+          format: int32
+      title: SandboxProposeOntologyChangesRequest
+      additionalProperties: false
+    textql.rpc.public.sandbox_exec.SandboxProposeOntologyChangesResponse:
+      type: object
+      properties:
+        patchId:
+          type: string
+          title: patch_id
+        patchNumber:
+          type: integer
+          title: patch_number
+          format: int32
+        status:
+          title: status
+          $ref: '#/components/schemas/textql.rpc.public.patches.PatchStatus'
+        outcome:
+          type: string
+          title: outcome
+        autoApproved:
+          type: boolean
+          title: auto_approved
+        gitRef:
+          type: string
+          title: git_ref
+        remotePrUrl:
+          type: string
+          title: remote_pr_url
+        reason:
+          type: string
+          title: reason
+        hasConflicts:
+          type: boolean
+          title: has_conflicts
+        conflicts:
+          type: string
+          title: conflicts
+        diffs:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.patches.PatchDiff'
+          title: diffs
+        rawDiff:
+          type: string
+          title: raw_diff
+      title: SandboxProposeOntologyChangesResponse
       additionalProperties: false
     textql.rpc.public.sandbox_exec.ToolAvailability:
       type: object
@@ -42906,6 +43792,7 @@ tags:
   - name: SecretService
   - name: ApiOAuthService
   - name: AuditLogService
+  - name: HarnessService
   - name: MCPService
   - name: MetricsExportService
   - name: ObservabilityService

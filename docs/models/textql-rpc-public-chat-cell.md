@@ -359,7 +359,7 @@ const value: models.OntologyEditorCell = {
       },
     ],
     createdObject: {
-      backingTable: {},
+      backingQuery: "<value>",
       accessTime: new Date("2023-01-15T01:30:15.01Z"),
     },
     createdAttributes: [
@@ -620,6 +620,15 @@ const value: models.SummaryCell = {
 ```typescript
 const value: models.TableauCell = {
   tableauCell: {},
+  timestamp: new Date("2023-01-15T01:30:15.01Z"),
+};
+```
+
+### `models.TableauMetadataCell`
+
+```typescript
+const value: models.TableauMetadataCell = {
+  tableauMetadataCell: {},
   timestamp: new Date("2023-01-15T01:30:15.01Z"),
 };
 ```

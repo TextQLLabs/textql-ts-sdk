@@ -64,6 +64,8 @@ export type TextqlRpcPublicChatCreateRequest = {
    */
   maxThinking?: boolean | null | undefined;
   modelName?: string | null | undefined;
+  harness?: string | null | undefined;
+  harnessEndpointId?: string | null | undefined;
 };
 
 /** @internal */
@@ -79,6 +81,8 @@ export type TextqlRpcPublicChatCreateRequest$Outbound = {
   fastMode?: boolean | null | undefined;
   maxThinking?: boolean | null | undefined;
   modelName?: string | null | undefined;
+  harness?: string | null | undefined;
+  harnessEndpointId?: string | null | undefined;
 };
 
 /** @internal */
@@ -97,6 +101,8 @@ export const TextqlRpcPublicChatCreateRequest$outboundSchema: z.ZodMiniType<
   fastMode: z.optional(z.nullable(z.boolean())),
   maxThinking: z.optional(z.nullable(z.boolean())),
   modelName: z.optional(z.nullable(z.string())),
+  harness: z.optional(z.nullable(z.string())),
+  harnessEndpointId: z.optional(z.nullable(z.string())),
 });
 
 export function textqlRpcPublicChatCreateRequestToJSON(
