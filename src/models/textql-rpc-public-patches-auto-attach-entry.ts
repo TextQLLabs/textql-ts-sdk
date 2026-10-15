@@ -32,6 +32,7 @@ export type TextqlRpcPublicPatchesAutoAttachEntry = {
    * true = always attach regardless of other conditions
    */
   matchAll?: boolean | undefined;
+  oauthClientIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -47,6 +48,7 @@ export const TextqlRpcPublicPatchesAutoAttachEntry$inboundSchema: z.ZodMiniType<
   matchNoConnector: types.optional(types.boolean()),
   matchNoApiConnector: types.optional(types.boolean()),
   matchAll: types.optional(types.boolean()),
+  oauthClientIds: types.optional(z.array(types.string())),
 });
 /** @internal */
 export type TextqlRpcPublicPatchesAutoAttachEntry$Outbound = {
@@ -58,6 +60,7 @@ export type TextqlRpcPublicPatchesAutoAttachEntry$Outbound = {
   matchNoConnector?: boolean | undefined;
   matchNoApiConnector?: boolean | undefined;
   matchAll?: boolean | undefined;
+  oauthClientIds?: Array<string> | undefined;
 };
 
 /** @internal */
@@ -74,6 +77,7 @@ export const TextqlRpcPublicPatchesAutoAttachEntry$outboundSchema:
     matchNoConnector: z.optional(z.boolean()),
     matchNoApiConnector: z.optional(z.boolean()),
     matchAll: z.optional(z.boolean()),
+    oauthClientIds: z.optional(z.array(z.string())),
   });
 
 export function textqlRpcPublicPatchesAutoAttachEntryToJSON(

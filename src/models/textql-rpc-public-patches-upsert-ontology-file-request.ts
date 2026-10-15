@@ -8,6 +8,7 @@ export type TextqlRpcPublicPatchesUpsertOntologyFileRequest = {
   path?: string | undefined;
   content?: string | undefined;
   commitMessage?: string | null | undefined;
+  baseContentHash?: string | null | undefined;
 };
 
 /** @internal */
@@ -15,6 +16,7 @@ export type TextqlRpcPublicPatchesUpsertOntologyFileRequest$Outbound = {
   path?: string | undefined;
   content?: string | undefined;
   commitMessage?: string | null | undefined;
+  baseContentHash?: string | null | undefined;
 };
 
 /** @internal */
@@ -26,6 +28,7 @@ export const TextqlRpcPublicPatchesUpsertOntologyFileRequest$outboundSchema:
     path: z.optional(z.string()),
     content: z.optional(z.string()),
     commitMessage: z.optional(z.nullable(z.string())),
+    baseContentHash: z.optional(z.nullable(z.string())),
   });
 
 export function textqlRpcPublicPatchesUpsertOntologyFileRequestToJSON(

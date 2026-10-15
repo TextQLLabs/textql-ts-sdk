@@ -24,7 +24,7 @@ let value: OntologyEditorCell = {
       },
     ],
     createdObject: {
-      backingTable: {},
+      backingQuery: "<value>",
       accessTime: new Date("2023-01-15T01:30:15.01Z"),
     },
     createdAttributes: [

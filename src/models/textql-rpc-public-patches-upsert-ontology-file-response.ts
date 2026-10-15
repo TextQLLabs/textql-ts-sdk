@@ -14,6 +14,7 @@ import {
 
 export type TextqlRpcPublicPatchesUpsertOntologyFileResponse = {
   file?: TextqlRpcPublicPatchesOntologyFile | undefined;
+  contentHash?: string | undefined;
 };
 
 /** @internal */
@@ -21,6 +22,7 @@ export const TextqlRpcPublicPatchesUpsertOntologyFileResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicPatchesUpsertOntologyFileResponse, unknown> = z
     .object({
       file: types.optional(TextqlRpcPublicPatchesOntologyFile$inboundSchema),
+      contentHash: types.optional(types.string()),
     });
 
 export function textqlRpcPublicPatchesUpsertOntologyFileResponseFromJSON(

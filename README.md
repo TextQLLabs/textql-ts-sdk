@@ -261,7 +261,9 @@ run();
 ### [Connectors](docs/sdks/connectors/README.md)
 
 * [create](docs/sdks/connectors/README.md#create) - CreateConnector
+* [createConnectorGroup](docs/sdks/connectors/README.md#createconnectorgroup) - CreateConnectorGroup
 * [delete](docs/sdks/connectors/README.md#delete) - DeleteConnector
+* [deleteConnectorGroup](docs/sdks/connectors/README.md#deleteconnectorgroup) - DeleteConnectorGroup
 * [duplicateConnector](docs/sdks/connectors/README.md#duplicateconnector) - DuplicateConnector
 * [executeQuery](docs/sdks/connectors/README.md#executequery) - ExecuteQuery
 * [get](docs/sdks/connectors/README.md#get) - GetConnector
@@ -273,10 +275,15 @@ run();
 * [getConnectors](docs/sdks/connectors/README.md#getconnectors) - GetConnectors
 * [getExampleQueries](docs/sdks/connectors/README.md#getexamplequeries) - GetExampleQueries
 * [getTablePreview](docs/sdks/connectors/README.md#gettablepreview) - GetTablePreview
+* [listConnectorGroups](docs/sdks/connectors/README.md#listconnectorgroups) - ListConnectorGroups
 * [listTables](docs/sdks/connectors/README.md#listtables) - ListConnectorTables
 * [listQueryTemplates](docs/sdks/connectors/README.md#listquerytemplates) - ListQueryTemplates
+* [shareConnectorGroup](docs/sdks/connectors/README.md#shareconnectorgroup) - ShareConnectorGroup
 * [test](docs/sdks/connectors/README.md#test) - TestConnector
 * [update](docs/sdks/connectors/README.md#update) - UpdateConnector
+* [updateConnectorGroup](docs/sdks/connectors/README.md#updateconnectorgroup) - UpdateConnectorGroup
+* [updateConnectorGroupMembers](docs/sdks/connectors/README.md#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
+* [updateConnectorGroupSettings](docs/sdks/connectors/README.md#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 
 ### [Dashboards](docs/sdks/dashboards/README.md)
 
@@ -320,6 +327,10 @@ run();
 * [getFolders](docs/sdks/datasets/README.md#getfolders) - for AR: CreateFolderACL, UpdateFolderACL, DeleteFolderACL
 * [processUploadPresignUrl](docs/sdks/datasets/README.md#processuploadpresignurl) - ProcessUploadPresignUrl
 * [updateDataset](docs/sdks/datasets/README.md#updatedataset) - Update dataset metadata
+
+### [Harnesses](docs/sdks/harnesses/README.md)
+
+* [list](docs/sdks/harnesses/README.md#list) - ListHarnesses
 
 ### [Mcp](docs/sdks/mcp/README.md)
 
@@ -546,10 +557,12 @@ run();
 ### [Sandbox](docs/sdks/sandbox/README.md)
 
 * [create](docs/sdks/sandbox/README.md#create) - CreateSandbox
+* [diffOntologyChanges](docs/sdks/sandbox/README.md#diffontologychanges) - DiffOntologyChanges
 * [exec](docs/sdks/sandbox/README.md#exec) - Exec
 * [executeCode](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
 * [getToolAvailability](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
 * [loadConnectorData](docs/sdks/sandbox/README.md#loadconnectordata) - LoadConnectorData
+* [proposeOntologyChanges](docs/sdks/sandbox/README.md#proposeontologychanges) - ProposeOntologyChanges
 * [executeBash](docs/sdks/sandbox/README.md#executebash) - Runs in the caller's own worker; no connector/source scoping.
 * [executeQuery](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 
@@ -762,7 +775,9 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsUnbookmark`](docs/sdks/chats/README.md#unbookmark) - UnbookmarkChat
 - [`chatsUpdate`](docs/sdks/chats/README.md#update) - UpdateChat
 - [`connectorsCreate`](docs/sdks/connectors/README.md#create) - CreateConnector
+- [`connectorsCreateConnectorGroup`](docs/sdks/connectors/README.md#createconnectorgroup) - CreateConnectorGroup
 - [`connectorsDelete`](docs/sdks/connectors/README.md#delete) - DeleteConnector
+- [`connectorsDeleteConnectorGroup`](docs/sdks/connectors/README.md#deleteconnectorgroup) - DeleteConnectorGroup
 - [`connectorsDuplicateConnector`](docs/sdks/connectors/README.md#duplicateconnector) - DuplicateConnector
 - [`connectorsExecuteQuery`](docs/sdks/connectors/README.md#executequery) - ExecuteQuery
 - [`connectorsGet`](docs/sdks/connectors/README.md#get) - GetConnector
@@ -774,10 +789,15 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`connectorsGetExampleQueries`](docs/sdks/connectors/README.md#getexamplequeries) - GetExampleQueries
 - [`connectorsGetTablePreview`](docs/sdks/connectors/README.md#gettablepreview) - GetTablePreview
 - [`connectorsGetUsage`](docs/sdks/connectors/README.md#getusage) - GetConnectorUsage
+- [`connectorsListConnectorGroups`](docs/sdks/connectors/README.md#listconnectorgroups) - ListConnectorGroups
 - [`connectorsListQueryTemplates`](docs/sdks/connectors/README.md#listquerytemplates) - ListQueryTemplates
 - [`connectorsListTables`](docs/sdks/connectors/README.md#listtables) - ListConnectorTables
+- [`connectorsShareConnectorGroup`](docs/sdks/connectors/README.md#shareconnectorgroup) - ShareConnectorGroup
 - [`connectorsTest`](docs/sdks/connectors/README.md#test) - TestConnector
 - [`connectorsUpdate`](docs/sdks/connectors/README.md#update) - UpdateConnector
+- [`connectorsUpdateConnectorGroup`](docs/sdks/connectors/README.md#updateconnectorgroup) - UpdateConnectorGroup
+- [`connectorsUpdateConnectorGroupMembers`](docs/sdks/connectors/README.md#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
+- [`connectorsUpdateConnectorGroupSettings`](docs/sdks/connectors/README.md#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 - [`dashboardsCheckHealth`](docs/sdks/dashboards/README.md#checkhealth) - CheckDashboardHealth
 - [`dashboardsCreateDashboard`](docs/sdks/dashboards/README.md#createdashboard) - CRUD operations
 - [`dashboardsCreateFolder`](docs/sdks/dashboards/README.md#createfolder) - Folder management
@@ -815,6 +835,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`datasetsGetStats`](docs/sdks/datasets/README.md#getstats) - GetDatasetStats
 - [`datasetsProcessUploadPresignUrl`](docs/sdks/datasets/README.md#processuploadpresignurl) - ProcessUploadPresignUrl
 - [`datasetsUpdateDataset`](docs/sdks/datasets/README.md#updatedataset) - Update dataset metadata
+- [`harnessesList`](docs/sdks/harnesses/README.md#list) - ListHarnesses
 - [`mcpClearOAuthToken`](docs/sdks/mcp/README.md#clearoauthtoken) - ClearOAuthToken
 - [`mcpDelete`](docs/sdks/mcp/README.md#delete) - DeleteMCPServer
 - [`mcpGetServers`](docs/sdks/mcp/README.md#getservers) - GetMCPServers
@@ -1033,12 +1054,14 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`sandboxCapabilitiesStartAsk`](docs/sdks/sandboxcapabilities/README.md#startask) - StartAsk
 - [`sandboxCapabilitiesStateOp`](docs/sdks/sandboxcapabilities/README.md#stateop) - StateOp
 - [`sandboxCreate`](docs/sdks/sandbox/README.md#create) - CreateSandbox
+- [`sandboxDiffOntologyChanges`](docs/sdks/sandbox/README.md#diffontologychanges) - DiffOntologyChanges
 - [`sandboxExec`](docs/sdks/sandbox/README.md#exec) - Exec
 - [`sandboxExecuteBash`](docs/sdks/sandbox/README.md#executebash) - Runs in the caller's own worker; no connector/source scoping.
 - [`sandboxExecuteCode`](docs/sdks/sandbox/README.md#executecode) - ExecuteCode
 - [`sandboxExecuteQuery`](docs/sdks/sandbox/README.md#executequery) - ExecuteQuery
 - [`sandboxGetToolAvailability`](docs/sdks/sandbox/README.md#gettoolavailability) - GetToolAvailability
 - [`sandboxLoadConnectorData`](docs/sdks/sandbox/README.md#loadconnectordata) - LoadConnectorData
+- [`sandboxProposeOntologyChanges`](docs/sdks/sandbox/README.md#proposeontologychanges) - ProposeOntologyChanges
 - [`scimCreateOAuthClient`](docs/sdks/scim/README.md#createoauthclient) - CreateScimOAuthClient
 - [`scimCreateScimToken`](docs/sdks/scim/README.md#createscimtoken) - CreateScimToken
 - [`scimList`](docs/sdks/scim/README.md#list) - ListScimTokens

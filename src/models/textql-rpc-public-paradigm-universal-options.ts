@@ -76,6 +76,10 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
   readFileEnabled?: boolean | undefined;
   ontologyActionsEnabled?: boolean | undefined;
   ontologyActionsAutoApproveEnabled?: boolean | undefined;
+  feedExplorerSelected?: boolean | null | undefined;
+  feedPostSelected?: boolean | null | undefined;
+  feedCommentSelected?: boolean | null | undefined;
+  feedEngageSelected?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -117,6 +121,10 @@ export const TextqlRpcPublicParadigmUniversalOptions$inboundSchema:
     readFileEnabled: types.optional(types.boolean()),
     ontologyActionsEnabled: types.optional(types.boolean()),
     ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
+    feedExplorerSelected: z.optional(z.nullable(types.boolean())),
+    feedPostSelected: z.optional(z.nullable(types.boolean())),
+    feedCommentSelected: z.optional(z.nullable(types.boolean())),
+    feedEngageSelected: z.optional(z.nullable(types.boolean())),
   });
 /** @internal */
 export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
@@ -156,6 +164,10 @@ export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
   readFileEnabled?: boolean | undefined;
   ontologyActionsEnabled?: boolean | undefined;
   ontologyActionsAutoApproveEnabled?: boolean | undefined;
+  feedExplorerSelected?: boolean | null | undefined;
+  feedPostSelected?: boolean | null | undefined;
+  feedCommentSelected?: boolean | null | undefined;
+  feedEngageSelected?: boolean | null | undefined;
 };
 
 /** @internal */
@@ -200,6 +212,10 @@ export const TextqlRpcPublicParadigmUniversalOptions$outboundSchema:
     readFileEnabled: z.optional(z.boolean()),
     ontologyActionsEnabled: z.optional(z.boolean()),
     ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
+    feedExplorerSelected: z.optional(z.nullable(z.boolean())),
+    feedPostSelected: z.optional(z.nullable(z.boolean())),
+    feedCommentSelected: z.optional(z.nullable(z.boolean())),
+    feedEngageSelected: z.optional(z.nullable(z.boolean())),
   });
 
 export function textqlRpcPublicParadigmUniversalOptionsToJSON(

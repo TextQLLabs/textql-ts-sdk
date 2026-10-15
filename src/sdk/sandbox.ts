@@ -3,12 +3,14 @@
  */
 
 import { sandboxCreate } from "../funcs/sandbox-create.js";
+import { sandboxDiffOntologyChanges } from "../funcs/sandbox-diff-ontology-changes.js";
 import { sandboxExec } from "../funcs/sandbox-exec.js";
 import { sandboxExecuteBash } from "../funcs/sandbox-execute-bash.js";
 import { sandboxExecuteCode } from "../funcs/sandbox-execute-code.js";
 import { sandboxExecuteQuery } from "../funcs/sandbox-execute-query.js";
 import { sandboxGetToolAvailability } from "../funcs/sandbox-get-tool-availability.js";
 import { sandboxLoadConnectorData } from "../funcs/sandbox-load-connector-data.js";
+import { sandboxProposeOntologyChanges } from "../funcs/sandbox-propose-ontology-changes.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -22,6 +24,20 @@ export class Sandbox extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SandboxExecServiceCreateSandboxResponse> {
     return unwrapAsync(sandboxCreate(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * DiffOntologyChanges
+   */
+  async diffOntologyChanges(
+    request: operations.SandboxExecServiceDiffOntologyChangesRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SandboxExecServiceDiffOntologyChangesResponse> {
+    return unwrapAsync(sandboxDiffOntologyChanges(
       this,
       request,
       options,
@@ -78,6 +94,20 @@ export class Sandbox extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.SandboxExecServiceLoadConnectorDataResponse> {
     return unwrapAsync(sandboxLoadConnectorData(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * ProposeOntologyChanges
+   */
+  async proposeOntologyChanges(
+    request: operations.SandboxExecServiceProposeOntologyChangesRequest,
+    options?: RequestOptions,
+  ): Promise<operations.SandboxExecServiceProposeOntologyChangesResponse> {
+    return unwrapAsync(sandboxProposeOntologyChanges(
       this,
       request,
       options,

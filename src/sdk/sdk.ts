@@ -11,6 +11,7 @@ import { Chats } from "./chats.js";
 import { Connectors } from "./connectors.js";
 import { Dashboards } from "./dashboards.js";
 import { Datasets } from "./datasets.js";
+import { Harnesses } from "./harnesses.js";
 import { Mcp } from "./mcp.js";
 import { MetricsExports } from "./metrics-exports.js";
 import { Observability } from "./observability.js";
@@ -67,6 +68,11 @@ export class Textql extends ClientSDK {
   private _datasets?: Datasets;
   get datasets(): Datasets {
     return (this._datasets ??= new Datasets(this._options));
+  }
+
+  private _harnesses?: Harnesses;
+  get harnesses(): Harnesses {
+    return (this._harnesses ??= new Harnesses(this._options));
   }
 
   private _mcp?: Mcp;

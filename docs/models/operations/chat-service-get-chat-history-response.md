@@ -9,7 +9,7 @@
 const value: models.TextqlRpcPublicChatHistoryResponse = {
   cells: [
     {
-      subagentCell: {},
+      summaryCell: {},
       timestamp: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],
