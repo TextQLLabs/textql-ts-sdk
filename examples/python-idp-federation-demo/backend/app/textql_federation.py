@@ -1,11 +1,12 @@
-"""Acting as each user on TextQL by exchanging their IdP ID token.
+"""Acting as each user on TextQL by exchanging their IdP access token.
 
-    exchange_token(id_token, org_id=...)  -> a TextQL access token for the member
-                                             that IdP identity signed in as
+    exchange_token(access_token, org_id=..., subject_token_type=ACCESS_TOKEN_TYPE)
+        -> a TextQL access token for the member that IdP identity signed in as
 
-There is no TextQL login and no TextQL refresh token. The access token lasts
-no longer than the ID token it came from, so when it runs out the user's
-TokenManager calls `renew`: refresh the ID token with the IdP if needed, then
+TextQL accepts only access tokens: ID tokens get copied into browsers and logs.
+There is no TextQL login and no TextQL refresh token. The TextQL token lasts no
+longer than the IdP access token it came from, so when it runs out the user's
+TokenManager calls `renew`: refresh the IdP access token if needed, then
 exchange again.
 
 Every /v3/textql request goes through `bind_textql`, which loads the user's
@@ -30,7 +31,7 @@ from sqlalchemy.dialects.sqlite import insert
 
 from textql_sdk import Textql
 from textql_sdk._connect.public.connector_connect import ConnectorServiceClient
-from textql_sdk.oauth import OAuthRefreshError, OAuthTokens, TokenAuth, TokenManager, exchange_token
+from textql_sdk.oauth import ACCESS_TOKEN_TYPE, OAuthRefreshError, OAuthTokens, TokenAuth, TokenManager, exchange_token
 from textql_sdk.streaming import create_connect_client, create_streaming_client
 
 from app import idp_login
@@ -39,9 +40,9 @@ from app.idp_login import IdpError, require_user
 
 logger = logging.getLogger(__name__)
 
-# Refresh the ID token before exchanging when less than this is left, so the
-# TextQL token it buys is worth having.
-ID_TOKEN_MIN_REMAINING = 300
+# Refresh the IdP access token before exchanging when less than this is left,
+# so the TextQL token it buys is worth having.
+SUBJECT_TOKEN_MIN_REMAINING = 300
 
 
 def server_url() -> str:
@@ -60,7 +61,7 @@ _exchange_http = httpx.Client(verify=_ssl_ctx, timeout=30)
 
 
 class SignedOut(HTTPException):
-    """The IdP will not issue this user a new ID token; they must sign in again."""
+    """The IdP will not issue this user a new access token; they must sign in again."""
 
     def __init__(self) -> None:
         super().__init__(401, "not_signed_in")
@@ -77,8 +78,8 @@ def _transient(status_code: int) -> bool:
     return status_code == 429 or status_code >= 500
 
 
-def _id_token(user_id: int) -> str:
-    """A current ID token for the user, refreshed with the IdP if needed.
+def _subject_token(user_id: int) -> str:
+    """A current IdP access token for the user, refreshed with the IdP if needed.
 
     Runs in its own short transaction under SQLite's write lock: the refresh may
     rotate the IdP refresh token, so concurrent renewals (even from another
@@ -87,8 +88,8 @@ def _id_token(user_id: int) -> str:
     """
     with engine.begin() as conn:  # BEGIN IMMEDIATE, see db.py
         row = conn.execute(select(idp_tokens).where(idp_tokens.c.user_id == user_id)).first()
-        if row is not None and row.id_token_expires_at - time.time() > ID_TOKEN_MIN_REMAINING:
-            return row.id_token
+        if row is not None and row.access_token_expires_at - time.time() > SUBJECT_TOKEN_MIN_REMAINING:
+            return row.access_token
         if row is not None and row.refresh_token:
             try:
                 return idp_login.refresh_idp(conn, user_id, row.refresh_token)
@@ -105,15 +106,21 @@ def _id_token(user_id: int) -> str:
 
 
 def _renew(user_id: int) -> OAuthTokens:
-    """Exchange a current ID token for a new TextQL access token and store it.
+    """Exchange a current IdP access token for a new TextQL access token and store it.
 
     Every renewal goes through here: the first exchange after sign-in, the
     TokenManager's renewal before expiry, and its retry after a 401. The
     exchange holds no database lock; running it twice is harmless.
     """
-    id_token = _id_token(user_id)
+    subject_token = _subject_token(user_id)
     try:
-        tokens = exchange_token(id_token, org_id=org_id(), server_url=server_url(), http_client=_exchange_http)
+        tokens = exchange_token(
+            subject_token,
+            org_id=org_id(),
+            subject_token_type=ACCESS_TOKEN_TYPE,
+            server_url=server_url(),
+            http_client=_exchange_http,
+        )
     except OAuthRefreshError as e:
         if _transient(e.status_code):
             raise ExchangeFailed(503, e.error, e.description) from e
@@ -235,7 +242,7 @@ def me(request: Request):
                 users.c.email,
                 users.c.name,
                 idp_tokens.c.refresh_token,
-                idp_tokens.c.id_token_expires_at,
+                idp_tokens.c.access_token_expires_at,
                 textql_tokens.c.expires_at,
                 textql_tokens.c.updated_at,
             )
@@ -248,7 +255,7 @@ def me(request: Request):
         "idp": {
             "name": idp_login.IDP_NAME,
             "issuer": idp_login.issuer(),
-            "id_token_expires_at": row.id_token_expires_at,
+            "access_token_expires_at": row.access_token_expires_at,
             "can_refresh": row.refresh_token is not None,
         },
         "textql": {
@@ -263,7 +270,7 @@ def me(request: Request):
 
 @router.post("/textql/exchange")
 async def textql_exchange(request: Request):
-    """Exchange the user's IdP ID token now; the gate calls this after sign-in."""
+    """Exchange the user's IdP access token now; the gate calls this after sign-in."""
     user_id = await run_in_threadpool(require_user, request)
     await run_in_threadpool(_renew, user_id)
     _drop_clients(user_id)

@@ -6,7 +6,7 @@ identity provider sign-in they already did:
 
     app/db.py                the SQLite file and its tables
     app/idp_login.py         signing in with the IdP, and the session cookie
-    app/textql_federation.py exchanging each user's IdP ID token for TextQL access
+    app/textql_federation.py exchanging each user's IdP access token for TextQL access
 """
 
 import logging

@@ -2,7 +2,7 @@
 
 Registered in main.py via app.include_router(router) behind textql_federation.bind_textql,
 which binds the signed-in user's TextQL clients (built from the token their IdP
-ID token was exchanged for) for the request. Only the preview-proxy HTTP client is shared, injected by the
+access token was exchanged for) for the request. Only the preview-proxy HTTP client is shared, injected by the
 lifespan in main.py.
 """
 

@@ -25,8 +25,8 @@ On the frontend, `frontend/src/components/AuthGate.tsx` shows "Sign in with
 
 ```
 1. Sign in with the IdP   GET  /v3/auth/login             state + PKCE verifier + nonce -> 302 to the IdP
-   back from the IdP      GET  /callback?code=&state=     code -> ID token -> users + idp_tokens rows, sid cookie
-2. Exchange               POST /v3/auth/textql/exchange   exchange_token(id_token, org_id=...) -> textql_tokens row
+   back from the IdP      GET  /callback?code=&state=     code -> ID + access token -> users + idp_tokens rows, sid cookie
+2. Exchange               POST /v3/auth/textql/exchange   exchange_token(access_token, ...) -> textql_tokens row
 3. Chat                   /v3/textql/*                    bind_textql: this user's client
 ```
 
@@ -36,19 +36,24 @@ The exchange is one form post to TextQL's `/oauth/token`, which
 ```
 grant_type=urn:ietf:params:oauth:grant-type:token-exchange
 org_id=<TextQL org id>
-subject_token=<the user's ID token>
-subject_token_type=urn:ietf:params:oauth:token-type:id_token
+subject_token=<the user's IdP access token>
+subject_token_type=urn:ietf:params:oauth:token-type:access_token
 ```
 
+TextQL accepts only access tokens, not ID tokens: ID tokens carry the app's
+client ID as their audience and get copied into browsers and logs. The ID token
+here only identifies the user at sign-in.
+
 TextQL verifies the token against the IdP's keys, checks that the org trusts its
-issuer and audience, finds the member that identity signed in as, and
-returns an access token with `api:read api:write`. There is no TextQL refresh
-token, and the access token expires no later than the ID token.
+issuer and audience and that it wasn't issued to TextQL's own client, finds the
+member that identity signed in as, and returns an access token with
+`api:read api:write`. There is no TextQL refresh token, and the TextQL token
+expires no later than the IdP access token.
 
 So each user's `TokenManager` gets a `renew` callback instead of a refresh
 token. When the TextQL token is under a minute from expiry, or a call comes back
-401, `renew` takes a fresh ID token (refreshing it with the IdP's refresh token
-when under five minutes are left) and exchanges again.
+401, `renew` takes a fresh IdP access token (refreshing it with the IdP's refresh
+token when under five minutes are left) and exchanges again.
 
 Only the IdP refresh needs a lock: it can rotate the refresh token, which is
 single use. It runs alone in a short SQLite write transaction
@@ -67,30 +72,39 @@ Every renewal path ends the same way:
 
 ## Setup
 
-**1. The IdP: an app for this tool.** An OIDC web app at the same IdP and issuer
-TextQL signs in with. In Okta: Applications > Create App Integration > OIDC,
+**1. The IdP: an authorization server and an app for this tool.** The access
+tokens must come from an authorization server whose tokens third parties can
+verify. In Okta that's a custom authorization server, such as the built-in
+`https://<you>.okta.com/oauth2/default`, not the org server
+`https://<you>.okta.com`, whose access tokens are only for Okta's own APIs. Its
+access policy must allow this app.
+
+Then an OIDC web app. In Okta: Applications > Create App Integration > OIDC,
 Web Application:
 
 - **Grant types:** Authorization Code and Refresh Token
 - **Sign-in redirect URI:** `http://localhost:5175/callback`
 - **Assignments:** the users who will test it
 
-Use a different app from the one TextQL signs in with. TextQL never accepts its
-own client ID as an exchange audience, and this app's ID tokens carry this
-app's client ID as their audience.
+Use a different app from the one TextQL signs in with. TextQL refuses tokens
+issued to its own client (Okta's `cid` claim) as "issued to TextQL".
 
 **2. TextQL: trust it.** Under **Settings > Security > Authentication**, on the org's OIDC
-provider (same issuer as `IDP_ISSUER`, character for character; in Okta, the org
-server `https://<you>.okta.com` and `…/oauth2/default` are different issuers).
-It must be a provider added there, not one set by `OIDC_*` environment
-variables: those can't turn on token exchange.
+provider. Its issuer URL must be the step 1 authorization server, the same as
+`IDP_ISSUER` character for character: TextQL picks whom to trust by the token's
+`iss`, so a provider on the org server won't match a `/oauth2/default` token. It
+must be a provider added there, not one set by `OIDC_*` environment variables:
+those can't turn on token exchange.
 
 - turn on **Allow token exchange**
-- add the step 1 app's client ID as an accepted audience
+- add the authorization server's audience as an accepted audience: `api://default`
+  on Okta's default server (its `aud` claim, not a client ID)
 
-**3. Each test user signs in to TextQL through that provider once.** That links their IdP
-identity to their TextQL member; until then the exchange fails with "no user has
-signed in with this identity". `@textql.com` accounts can't use token exchange.
+**3. Each test user signs in to TextQL through that provider.** That links their
+IdP identity to their TextQL member, and the exchange also needs an active SSO
+sign-in. Until then it fails with "no user has signed in with this identity" or
+"user has no active SSO sign-in". Changing the provider's issuer means signing
+in again. `@textql.com` accounts can't use token exchange.
 
 **4. Configure:**
 
@@ -130,17 +144,18 @@ audience) are only in the server log.
 
 | You see | Fix |
 |---|---|
-| `this organization does not accept tokens from that issuer` | Token exchange is off, or the provider's issuer differs from `IDP_ISSUER` |
-| `subject_token could not be verified` | The token isn't signed by the provider's issuer, or has expired; check `IDP_ISSUER` |
-| `subject_token audience is not accepted` | Add this app's client ID as an audience, as the bare ID |
+| `subject_token_type must be an access_token` | Send the IdP access token, not the ID token |
+| `subject_token could not be verified` | Token exchange is off, the provider's issuer differs from `IDP_ISSUER` (org server vs `/oauth2/default`), or the token expired |
+| `subject_token audience is not accepted` | Add the authorization server's audience (`api://default` on Okta's default server) |
 | `subject_token was issued to TextQL, not to your integration` | `IDP_CLIENT_ID` is TextQL's own app; use a separate one |
-| `no user has signed in with this identity` | Sign in to TextQL through that provider once as that user |
+| `no user has signed in with this identity` | Sign in to TextQL through that provider as that user |
+| `user has no active SSO sign-in` | Sign in to TextQL through that provider again |
 | `user is not a member of this organization` | Invite them, or check `TEXTQL_ORG_ID` |
 | `this user cannot sign in by token exchange` | `@textql.com` accounts are excluded; test with another user |
 
 ## Things to change before using this for real
 
-- **Encrypt the IdP `refresh_token` at rest.** It mints new ID tokens, and so new TextQL access.
+- **Encrypt the IdP `refresh_token` and `access_token` at rest.** The refresh token mints new access tokens, and so new TextQL access.
 - **Serve over HTTPS** and add `secure=True` to the cookies in `idp_login.py`.
 - **Verify the ID token** if it reaches you any other way than straight from the IdP's
   token endpoint. This app reads its claims without checking the signature
