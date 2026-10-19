@@ -112,7 +112,7 @@ function Exchange({ me, onDone, onSignOut }: { me: Me; onDone: () => void; onSig
 
 	return (
 		<Shell
-			title={busy ? 'Connecting to TextQL…' : `TextQL turned down your ${me.idp.name} token`}
+			title={busy ? 'Connecting to TextQL…' : "Couldn't connect to TextQL"}
 			lead={`Signed in as ${me.email ?? me.name ?? 'you'}. This app exchanges your ${me.idp.name} ID token with ${host} for access as your TextQL member.`}
 		>
 			{error && (

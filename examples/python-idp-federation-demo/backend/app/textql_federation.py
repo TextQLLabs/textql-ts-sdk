@@ -18,14 +18,14 @@ import ssl
 import threading
 import time
 from contextvars import ContextVar
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Optional
 
 import httpx
 import truststore
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
-from sqlalchemy import Connection, Row, delete, select
+from sqlalchemy import delete, select
 from sqlalchemy.dialects.sqlite import insert
 
 from textql_sdk import Textql
@@ -59,45 +59,86 @@ _ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 _exchange_http = httpx.Client(verify=_ssl_ctx, timeout=30)
 
 
-class SignedOut(Exception):
+class SignedOut(HTTPException):
     """The IdP will not issue this user a new ID token; they must sign in again."""
 
+    def __init__(self) -> None:
+        super().__init__(401, "not_signed_in")
 
-def _id_token(conn: Connection, user_id: int) -> str:
-    row = conn.execute(select(idp_tokens).where(idp_tokens.c.user_id == user_id)).first()
-    if row is None:
-        raise SignedOut()
-    if row.id_token_expires_at - time.time() > ID_TOKEN_MIN_REMAINING:
-        return row.id_token
-    if not row.refresh_token:
-        raise SignedOut()
+
+class ExchangeFailed(HTTPException):
+    """409: TextQL refused the exchange; 503: TextQL or the IdP is unavailable."""
+
+    def __init__(self, status: int, error: str, description: Optional[str] = None) -> None:
+        super().__init__(status, {"error": error, "description": description})
+
+
+def _transient(status_code: int) -> bool:
+    return status_code == 429 or status_code >= 500
+
+
+def _id_token(user_id: int) -> str:
+    """A current ID token for the user, refreshed with the IdP if needed.
+
+    Runs in its own short transaction under SQLite's write lock: the refresh may
+    rotate the IdP refresh token, so concurrent renewals (even from another
+    process) re-read the row and never spend the same one twice. The rotated
+    token is committed before anything else can fail.
+    """
+    with engine.begin() as conn:  # BEGIN IMMEDIATE, see db.py
+        row = conn.execute(select(idp_tokens).where(idp_tokens.c.user_id == user_id)).first()
+        if row is not None and row.id_token_expires_at - time.time() > ID_TOKEN_MIN_REMAINING:
+            return row.id_token
+        if row is not None and row.refresh_token:
+            try:
+                return idp_login.refresh_idp(conn, user_id, row.refresh_token)
+            except IdpError as e:
+                if e.error != "invalid_grant":
+                    # The IdP is down or erroring; keep the refresh token for a retry.
+                    raise ExchangeFailed(503, "idp_unavailable", e.description or e.error) from e
+                logger.info("IdP refused the refresh for user %s (%s); signing them out", user_id, e)
+            except httpx.HTTPError as e:
+                raise ExchangeFailed(503, "idp_unavailable", str(e)) from e
+        idp_login.end_sessions(conn, user_id)
+    _drop_clients(user_id)
+    raise SignedOut()
+
+
+def _renew(user_id: int) -> OAuthTokens:
+    """Exchange a current ID token for a new TextQL access token and store it.
+
+    Every renewal goes through here: the first exchange after sign-in, the
+    TokenManager's renewal before expiry, and its retry after a 401. The
+    exchange holds no database lock; running it twice is harmless.
+    """
+    id_token = _id_token(user_id)
     try:
-        return idp_login.refresh_idp(conn, user_id, row.refresh_token)
-    except IdpError as e:
-        logger.info("IdP refresh for user %s failed (%s); asking them to sign in again", user_id, e)
-        raise SignedOut() from e
+        tokens = exchange_token(id_token, org_id=org_id(), server_url=server_url(), http_client=_exchange_http)
+    except OAuthRefreshError as e:
+        if _transient(e.status_code):
+            raise ExchangeFailed(503, e.error, e.description) from e
+        # A real refusal (not a member, audience not accepted, ...): forget the
+        # TextQL token so the UI goes back to the exchange screen and shows why.
+        logger.info("TextQL refused the exchange for user %s: %s", user_id, e)
+        with engine.begin() as conn:
+            conn.execute(delete(textql_tokens).where(textql_tokens.c.user_id == user_id))
+        _drop_clients(user_id)
+        raise ExchangeFailed(409, e.error, e.description) from e
+    except httpx.HTTPError as e:
+        raise ExchangeFailed(503, "textql_unavailable", str(e)) from e
 
-
-def _exchange(conn: Connection, user_id: int) -> OAuthTokens:
-    return exchange_token(
-        _id_token(conn, user_id),
-        org_id=org_id(),
-        server_url=server_url(),
-        http_client=_exchange_http,
-    )
-
-
-def _save_tokens(conn: Connection, user_id: int, t: OAuthTokens) -> None:
     values = {
-        "access_token": t.access_token,
-        "expires_at": t.expires_at or time.time() + 3600,
+        "access_token": tokens.access_token,
+        "expires_at": tokens.expires_at or time.time() + 3600,
         "updated_at": time.time(),
     }
-    conn.execute(
-        insert(textql_tokens)
-        .values(user_id=user_id, **values)
-        .on_conflict_do_update(index_elements=[textql_tokens.c.user_id], set_=values)
-    )
+    with engine.begin() as conn:
+        conn.execute(
+            insert(textql_tokens)
+            .values(user_id=user_id, **values)
+            .on_conflict_do_update(index_elements=[textql_tokens.c.user_id], set_=values)
+        )
+    return tokens
 
 
 # --- Per-user TextQL clients ---------------------------------------------------
@@ -109,9 +150,6 @@ class UserClients:
     streaming: Any
     connectors: Any
     http: httpx.AsyncClient
-    # The connection holding the write lock while this user's renewal runs, so
-    # renew and on_tokens write inside that transaction instead of waiting on it.
-    locked_conn: dict = field(default_factory=lambda: {"conn": None})
 
 
 _clients: dict[int, UserClients] = {}
@@ -119,24 +157,8 @@ _clients_lock = threading.Lock()
 _current: ContextVar[Optional[UserClients]] = ContextVar("textql_user_clients", default=None)
 
 
-def _build_clients(user_id: int, row: Row) -> UserClients:
-    locked_conn: dict = {"conn": None}
-
-    def in_tx(fn):
-        conn = locked_conn["conn"]
-        if conn is not None:
-            return fn(conn)
-        # A renewal after a 401 mid-request, outside the request-start lock.
-        with engine.begin() as conn:
-            return fn(conn)
-
-    manager = TokenManager(
-        row.access_token,
-        expires_at=row.expires_at,
-        renew=lambda: in_tx(lambda conn: _exchange(conn, user_id)),
-        on_tokens=lambda t: in_tx(lambda conn: _save_tokens(conn, user_id, t)),
-        server_url=server_url(),
-    )
+def _build_clients(user_id: int, access_token: str, expires_at: float) -> UserClients:
+    manager = TokenManager(access_token, expires_at=expires_at, renew=lambda: _renew(user_id))
     http = httpx.AsyncClient(
         auth=TokenAuth(manager),
         follow_redirects=True,
@@ -150,54 +172,27 @@ def _build_clients(user_id: int, row: Row) -> UserClients:
         streaming=create_streaming_client(sdk, tokens=manager),
         connectors=create_connect_client(ConnectorServiceClient, sdk, tokens=manager),
         http=http,
-        locked_conn=locked_conn,
     )
-
-
-class ExchangeRefused(HTTPException):
-    def __init__(self, e: Optional[OAuthRefreshError] = None) -> None:
-        detail = {"error": e.error, "description": e.description} if e else {"error": "textql_not_connected"}
-        super().__init__(409, detail)
 
 
 def _clients_for(user_id: int) -> UserClients:
     """This user's clients with an access token good for at least a minute.
 
-    Renewal may spend the user's IdP refresh token, so the check-and-renew runs
-    under SQLite's write lock (`BEGIN IMMEDIATE`): concurrent requests, even from
-    another process, never renew the same user at once.
+    Renewal, if due, runs in the TokenManager (one at a time per user in this
+    process) and raises SignedOut or ExchangeFailed for the UI to act on.
     """
-    refused: Optional[OAuthRefreshError] = None
-    signed_out = False
-    with engine.begin() as conn:  # BEGIN IMMEDIATE, see db.py
+    with engine.begin() as conn:
         row = conn.execute(select(textql_tokens).where(textql_tokens.c.user_id == user_id)).first()
-        if row is not None:
-            with _clients_lock:
-                clients = _clients.get(user_id)
-                if clients is None or clients.manager.tokens.access_token != row.access_token:
-                    clients = _build_clients(user_id, row)
-                    _clients[user_id] = clients
-
-            clients.locked_conn["conn"] = conn
-            try:
-                clients.manager.access_token()
-                return clients
-            except OAuthRefreshError as e:
-                if e.error != "invalid_grant":
-                    raise
-                logger.info("TextQL refused the exchange for user %s: %s", user_id, e)
-                refused = e
-                conn.execute(delete(textql_tokens).where(textql_tokens.c.user_id == user_id))
-            except SignedOut:
-                signed_out = True
-                conn.execute(delete(textql_tokens).where(textql_tokens.c.user_id == user_id))
-                idp_login.end_sessions(conn, user_id)
-            finally:
-                clients.locked_conn["conn"] = None
-    _drop_clients(user_id)
-    if signed_out:
-        raise HTTPException(401, "not_signed_in")
-    raise ExchangeRefused(refused)
+    if row is None:
+        raise ExchangeFailed(409, "textql_not_connected")
+    with _clients_lock:
+        clients = _clients.get(user_id)
+        # Another process may have renewed since these were built.
+        if clients is None or clients.manager.tokens.access_token != row.access_token:
+            clients = _build_clients(user_id, row.access_token, row.expires_at)
+            _clients[user_id] = clients
+    clients.manager.access_token()
+    return clients
 
 
 def _drop_clients(user_id: int) -> None:
@@ -266,28 +261,10 @@ def me(request: Request):
     }
 
 
-def _exchange_now(user_id: int) -> None:
-    refused: Optional[OAuthRefreshError] = None
-    signed_out = False
-    with engine.begin() as conn:
-        try:
-            _save_tokens(conn, user_id, _exchange(conn, user_id))
-        except OAuthRefreshError as e:
-            refused = e
-        except SignedOut:
-            signed_out = True
-            idp_login.end_sessions(conn, user_id)
-    _drop_clients(user_id)
-    if signed_out:
-        raise HTTPException(401, "not_signed_in")
-    if refused is not None:
-        logger.info("TextQL refused the exchange for user %s: %s", user_id, refused)
-        raise ExchangeRefused(refused)
-
-
 @router.post("/textql/exchange")
 async def textql_exchange(request: Request):
     """Exchange the user's IdP ID token now; the gate calls this after sign-in."""
     user_id = await run_in_threadpool(require_user, request)
-    await run_in_threadpool(_exchange_now, user_id)
+    await run_in_threadpool(_renew, user_id)
+    _drop_clients(user_id)
     return {"ok": True}
