@@ -4,6 +4,7 @@
  */
 
 import type { CellLike } from './cells';
+import type { ChatMethodology } from './chatMethodologies';
 import { isRecord } from './utils';
 
 const BASE = '/v3/textql';
@@ -66,6 +67,7 @@ export async function getHistory(chatId: string): Promise<CellLike[]> {
 
 export async function createChat(options: {
 	model?: string;
+	methodology?: ChatMethodology;
 	connectorIds: number[];
 }): Promise<string> {
 	const response = await fetch(`${BASE}/chats`, {
@@ -73,6 +75,7 @@ export async function createChat(options: {
 		headers: { 'content-type': 'application/json' },
 		body: JSON.stringify({
 			model: options.model,
+			methodology: options.methodology,
 			connector_ids: options.connectorIds,
 			sql_enabled: true,
 			python_enabled: true
@@ -151,7 +154,9 @@ export async function uploadChatFile(file: File, signal?: AbortSignal): Promise<
 	const body = new FormData();
 	body.append('file', file);
 	const response = await fetch(`${BASE}/files`, { method: 'POST', body, signal });
-	const payload = (await readJson(response, 'Unable to upload this file.')) as { file: UploadedFile };
+	const payload = (await readJson(response, 'Unable to upload this file.')) as {
+		file: UploadedFile;
+	};
 	return payload.file;
 }
 

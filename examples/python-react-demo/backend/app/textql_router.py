@@ -37,6 +37,7 @@ from textql_sdk._connect.public.chat_pb2 import (
 from textql_sdk._connect.public.connector_pb2 import ConnectorType, GetConnectorsRequest
 from textql_sdk.models import (
     ConnectError,
+    TextqlRPCPublicChatMethodology,
     TextqlRPCPublicParadigmParadigm,
     TextqlRPCPublicParadigmUniversalOptions,
     Universal,
@@ -173,7 +174,11 @@ class ConfigResponse(BaseModel):
 
 
 class CreateChatRequest(BaseModel):
-    model: str = Field("MODEL_OPUS_4_8", description="TextQL model identifier")
+    model: str = Field(default="MODEL_OPUS_4_8", description="TextQL model identifier")
+    methodology: Optional[TextqlRPCPublicChatMethodology] = Field(
+        default=None,
+        description="TextQL methodology enum name; omit to use the server default",
+    )
     connector_ids: list[int] = Field(
         default_factory=_default_connector_ids,
         description="Connector IDs to enable",
@@ -717,7 +722,9 @@ async def create_chat(body: CreateChatRequest = CreateChatRequest()):
         logger.info("[create_chat] defaulted connector_ids=%s", body.connector_ids)
     paradigm = _build_paradigm(body)
     result = _unwrap(
-        await sdk.chats.create_chat_async(model=body.model, paradigm=paradigm), "create_chat"
+        await sdk.chats.create_chat_async(
+            model=body.model, paradigm=paradigm, methodology=body.methodology
+        ), "create_chat"
     )
     if result.chat is None or not result.chat.id:
         logger.error("[create_chat] server returned chat with no ID")
