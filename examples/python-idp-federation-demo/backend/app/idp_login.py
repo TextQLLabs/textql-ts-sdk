@@ -30,7 +30,7 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy import Connection, delete, select
 from sqlalchemy.dialects.sqlite import insert
 
-from app.db import engine, idp_tokens, pending_logins, sessions, users
+from app.db import engine, idp_tokens, pending_logins, sessions, textql_tokens, users
 
 SESSION_COOKIE = "sid"
 STATE_COOKIE = "idp_state"
@@ -84,7 +84,10 @@ def id_token_claims(id_token: str) -> dict[str, Any]:
 
 def _token_request(data: dict[str, str]) -> dict[str, Any]:
     response = _http.post(_discovery()["token_endpoint"], data=data, auth=_client())
-    body = response.json() if response.headers.get("content-type", "").startswith("application/json") else {}
+    try:
+        body = response.json()
+    except ValueError:  # an HTML error page from a proxy or an outage
+        body = {}
     if response.status_code != 200 or "id_token" not in body:
         raise IdpError(body.get("error", f"http_{response.status_code}"), body.get("error_description"))
     return body
@@ -114,8 +117,10 @@ def refresh_idp(conn: Connection, user_id: int, refresh_token: str) -> str:
 
 
 def end_sessions(conn: Connection, user_id: int) -> None:
+    """Sign the user out everywhere and forget every token held for them."""
     conn.execute(delete(sessions).where(sessions.c.user_id == user_id))
     conn.execute(delete(idp_tokens).where(idp_tokens.c.user_id == user_id))
+    conn.execute(delete(textql_tokens).where(textql_tokens.c.user_id == user_id))
 
 
 def require_user(request: Request) -> int:
@@ -181,7 +186,7 @@ def _finish_login(code: str, state: str) -> int:
         "code_verifier": pending.code_verifier,
     })
     claims = id_token_claims(body["id_token"])
-    if not hmac.compare_digest(str(claims.get("nonce", "")), pending.nonce):
+    if not hmac.compare_digest(str(claims.get("nonce", "")).encode(), pending.nonce.encode()):
         raise IdpError("nonce_mismatch")
 
     with engine.begin() as conn:
@@ -203,7 +208,7 @@ async def idp_callback(request: Request):
     if params.get("error"):
         return RedirectResponse(f"/?{urlencode({'login_error': params.get('error_description') or params['error']})}")
     code, state = params.get("code"), params.get("state") or ""
-    if not code or not hmac.compare_digest(request.cookies.get(STATE_COOKIE, ""), state):
+    if not code or not hmac.compare_digest(request.cookies.get(STATE_COOKIE, "").encode(), state.encode()):
         return RedirectResponse("/?login_error=state_mismatch")
     try:
         user_id = await run_in_threadpool(_finish_login, code, state)

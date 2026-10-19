@@ -46,12 +46,24 @@ returns an access token with `api:read api:write`. There is no TextQL refresh
 token, and the access token expires no later than the ID token.
 
 So each user's `TokenManager` gets a `renew` callback instead of a refresh
-token. When the TextQL token is under a minute from expiry, `renew` takes a
-fresh ID token (refreshing it with the IdP's refresh token when under five minutes
-are left) and exchanges again. This runs under SQLite's write lock
-(`BEGIN IMMEDIATE`), so two requests never spend the same IdP refresh token.
-If the IdP won't refresh, the user is signed out; if TextQL refuses the exchange,
-the UI shows why and offers to retry.
+token. When the TextQL token is under a minute from expiry, or a call comes back
+401, `renew` takes a fresh ID token (refreshing it with the IdP's refresh token
+when under five minutes are left) and exchanges again.
+
+Only the IdP refresh needs a lock: it can rotate the refresh token, which is
+single use. It runs alone in a short SQLite write transaction
+(`BEGIN IMMEDIATE`) that re-reads the row and commits the rotated token before
+TextQL is called, so two requests never spend the same one and a failed
+exchange can't lose it. The exchange itself holds no lock; doing it twice just
+mints two valid tokens.
+
+Every renewal path ends the same way:
+
+| What happened | Result |
+|---|---|
+| IdP refuses the refresh (`invalid_grant`) | Signed out everywhere; sign in again |
+| TextQL refuses the exchange | 409 with TextQL's reason; the UI shows it and offers to retry |
+| IdP or TextQL down, erroring or rate limiting | 503; stored tokens are kept for the next try |
 
 ## Setup
 
@@ -111,13 +123,17 @@ client secret never leave the backend's origin.
 
 ## When the exchange is refused
 
-The UI shows TextQL's `error_description` and the reason code. TextQL also
-writes every failed exchange to the org's audit log.
+The UI shows TextQL's `error_description` and the reason code. Once a token's
+signature checks out against a trusted provider, TextQL also writes the refusal
+to the org's audit log; earlier refusals (untrusted issuer, bad signature,
+audience) are only in the server log.
 
 | You see | Fix |
 |---|---|
 | `this organization does not accept tokens from that issuer` | Token exchange is off, or the provider's issuer differs from `IDP_ISSUER` |
-| `subject_token audience is not accepted` | Add this app's client ID as an audience (and don't reuse TextQL's own) |
+| `subject_token could not be verified` | The token isn't signed by the provider's issuer, or has expired; check `IDP_ISSUER` |
+| `subject_token audience is not accepted` | Add this app's client ID as an audience, as the bare ID |
+| `subject_token was issued to TextQL, not to your integration` | `IDP_CLIENT_ID` is TextQL's own app; use a separate one |
 | `no user has signed in with this identity` | Sign in to TextQL through that provider once as that user |
 | `user is not a member of this organization` | Invite them, or check `TEXTQL_ORG_ID` |
 | `this user cannot sign in by token exchange` | `@textql.com` accounts are excluded; test with another user |
@@ -130,6 +146,6 @@ writes every failed exchange to the org's audit log.
   token endpoint. This app reads its claims without checking the signature
   because it did; TextQL checks the signature on every exchange.
 - **Multiple backend processes** are fine on one SQLite file (`BEGIN IMMEDIATE` is a
-  file lock). On Postgres, use `SELECT ... FOR UPDATE` on the user's token row instead.
+  file lock). On Postgres, use `SELECT ... FOR UPDATE` on the user's `idp_tokens` row instead.
 - **Sign-out** only ends this app's session. Add the IdP's `end_session_endpoint` to
   sign out there too; a TextQL token already issued keeps working until it expires.
