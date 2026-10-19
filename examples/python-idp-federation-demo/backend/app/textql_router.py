@@ -2,7 +2,7 @@
 
 Registered in main.py via app.include_router(router) behind textql_federation.bind_textql,
 which binds the signed-in user's TextQL clients (built from the token their IdP
-ID token was exchanged for) for the request. Only the preview-proxy HTTP client is shared, injected by the
+access token was exchanged for) for the request. Only the preview-proxy HTTP client is shared, injected by the
 lifespan in main.py.
 """
 
@@ -230,6 +230,7 @@ def _build_paradigm(req: CreateChatRequest) -> TextqlRPCPublicParadigmParadigm:
             universal=TextqlRPCPublicParadigmUniversalOptions(
                 sql_enabled=req.sql_enabled,
                 python_enabled=req.python_enabled,
+                web_search_enabled=True,
                 connector_ids=req.connector_ids,
             )
         ),

@@ -6,7 +6,7 @@ import { Button } from '../primitives';
 
 /**
  * Two steps in front of the chat: sign in with the identity provider, then the
- * backend exchanges its ID token for a TextQL access token. There is no TextQL sign-in or
+ * backend exchanges its access token for a TextQL access token. There is no TextQL sign-in or
  * approval screen; once the exchange succeeds the chat UI renders unchanged and
  * every /v3/textql call runs as the user's TextQL member.
  */
@@ -14,7 +14,7 @@ import { Button } from '../primitives';
 type Me = {
 	email: string | null;
 	name: string | null;
-	idp: { name: string; issuer: string; id_token_expires_at: number | null; can_refresh: boolean };
+	idp: { name: string; issuer: string; access_token_expires_at: number | null; can_refresh: boolean };
 	textql: {
 		server_url: string;
 		org_id: string;
@@ -113,7 +113,7 @@ function Exchange({ me, onDone, onSignOut }: { me: Me; onDone: () => void; onSig
 	return (
 		<Shell
 			title={busy ? 'Connecting to TextQL…' : "Couldn't connect to TextQL"}
-			lead={`Signed in as ${me.email ?? me.name ?? 'you'}. This app exchanges your ${me.idp.name} ID token with ${host} for access as your TextQL member.`}
+			lead={`Signed in as ${me.email ?? me.name ?? 'you'}. This app exchanges your ${me.idp.name} access token with ${host} for access as your TextQL member.`}
 		>
 			{error && (
 				<ErrorNote>

@@ -6,8 +6,10 @@
     POST /v3/auth/logout  drop the session
 
 Nothing here is specific to one IdP: endpoints come from the issuer's discovery
-document. There are no passwords: the IdP's `sub` is the user, and the ID token
-it returns is what textql_federation.py exchanges for TextQL access.
+document. There are no passwords: the IdP's `sub` is the user. The access token
+it returns is what textql_federation.py exchanges for TextQL access, so
+IDP_ISSUER must be an authorization server whose access tokens third parties can
+verify (in Okta, a custom one such as `/oauth2/default`, not the org server).
 """
 
 import base64
@@ -37,7 +39,7 @@ STATE_COOKIE = "idp_state"
 # Register exactly this on the IdP app. Vite proxies it to the backend.
 REDIRECT_URI = os.environ.get("IDP_REDIRECT_URI", "http://localhost:5175/callback")
 IDP_NAME = os.environ.get("IDP_NAME") or "SSO"
-# offline_access gets a refresh token, so a new ID token (and with it a new
+# offline_access gets a refresh token, so a new access token (and with it a new
 # TextQL token) needs no trip back through the browser.
 SCOPES = os.environ.get("IDP_SCOPES", "openid profile email offline_access")
 PENDING_LOGIN_TTL = 600
@@ -88,18 +90,20 @@ def _token_request(data: dict[str, str]) -> dict[str, Any]:
         body = response.json()
     except ValueError:  # an HTML error page from a proxy or an outage
         body = {}
-    if response.status_code != 200 or "id_token" not in body:
+    if response.status_code != 200 or "id_token" not in body or "access_token" not in body:
         raise IdpError(body.get("error", f"http_{response.status_code}"), body.get("error_description"))
     return body
 
 
 def save_idp_tokens(conn: Connection, user_id: int, body: dict[str, Any], keep_refresh: Optional[str] = None) -> str:
-    """Store what the IdP's token endpoint returned and hand back the ID token."""
+    """Store what the IdP's token endpoint returned and hand back the access token."""
     values = {
         "id_token": body["id_token"],
         # Most IdPs return a new refresh token only when rotation is on.
         "refresh_token": body.get("refresh_token") or keep_refresh,
         "id_token_expires_at": float(id_token_claims(body["id_token"])["exp"]),
+        "access_token": body["access_token"],
+        "access_token_expires_at": time.time() + float(body.get("expires_in", 3600)),
         "updated_at": time.time(),
     }
     conn.execute(
@@ -107,11 +111,11 @@ def save_idp_tokens(conn: Connection, user_id: int, body: dict[str, Any], keep_r
         .values(user_id=user_id, **values)
         .on_conflict_do_update(index_elements=[idp_tokens.c.user_id], set_=values)
     )
-    return body["id_token"]
+    return body["access_token"]
 
 
 def refresh_idp(conn: Connection, user_id: int, refresh_token: str) -> str:
-    """A new ID token from the IdP for this user, saved inside `conn`."""
+    """A new access token from the IdP for this user, saved inside `conn`."""
     body = _token_request({"grant_type": "refresh_token", "refresh_token": refresh_token, "scope": SCOPES})
     return save_idp_tokens(conn, user_id, body, keep_refresh=refresh_token)
 

@@ -22,16 +22,19 @@ CREATE TABLE pending_logins (
     created_at    REAL NOT NULL
 );
 
--- Each user's latest IdP tokens. The ID token is what gets exchanged.
+-- Each user's latest IdP tokens. The access token is what gets exchanged; the
+-- ID token only identifies the user at sign-in.
 CREATE TABLE idp_tokens (
-    user_id             INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
-    id_token            TEXT NOT NULL,
-    refresh_token       TEXT,  -- only with offline_access; encrypt it at rest in a real app
-    id_token_expires_at REAL NOT NULL,  -- unix seconds
-    updated_at          REAL NOT NULL
+    user_id                 INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    id_token                TEXT NOT NULL,
+    refresh_token           TEXT,  -- only with offline_access; encrypt it at rest in a real app
+    id_token_expires_at     REAL NOT NULL,  -- unix seconds
+    access_token            TEXT NOT NULL,
+    access_token_expires_at REAL NOT NULL,  -- unix seconds
+    updated_at              REAL NOT NULL
 );
 
--- The TextQL access token the ID token was exchanged for. There is no TextQL
+-- The TextQL access token the IdP access token was exchanged for. There is no TextQL
 -- refresh token: it is exchanged again when it runs out.
 CREATE TABLE textql_tokens (
     user_id      INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,

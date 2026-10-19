@@ -66,6 +66,8 @@ idp_tokens = Table(
     Column("id_token", Text, nullable=False),
     Column("refresh_token", Text),
     Column("id_token_expires_at", Float, nullable=False),
+    Column("access_token", Text, nullable=False),
+    Column("access_token_expires_at", Float, nullable=False),
     Column("updated_at", Float, nullable=False),
 )
 
