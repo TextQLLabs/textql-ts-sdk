@@ -1,5 +1,4 @@
-# exchange_token (textql_sdk.oauth) is not on PyPI yet: install from main.
-textql-sdk @ git+https://github.com/TextQLLabs/textql-python-v3@main
+textql-sdk>=1.1.31
 fastapi>=0.115
 uvicorn[standard]>=0.30
 python-dotenv>=1.0

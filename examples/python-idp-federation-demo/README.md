@@ -112,8 +112,7 @@ in again. `@textql.com` accounts can't use token exchange.
 cp .env.example .env    # IDP_*, TEXTQL_SERVER_URL, TEXTQL_ORG_ID
 ```
 
-**5. Backend** (Python 3.11). `exchange_token` is not on PyPI yet, so
-`requirements.txt` installs the SDK from `main`:
+**5. Backend** (Python 3.11):
 
 ```sh
 cd backend
