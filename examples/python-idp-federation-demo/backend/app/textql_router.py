@@ -230,6 +230,7 @@ def _build_paradigm(req: CreateChatRequest) -> TextqlRPCPublicParadigmParadigm:
             universal=TextqlRPCPublicParadigmUniversalOptions(
                 sql_enabled=req.sql_enabled,
                 python_enabled=req.python_enabled,
+                web_search_enabled=True,
                 connector_ids=req.connector_ids,
             )
         ),
