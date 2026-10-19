@@ -46,7 +46,7 @@ logger = logging.getLogger(__name__)
 
 SCOPES = ["api:read", "api:write"]
 # Register exactly this on the OAuth application. Vite proxies it to the backend.
-REDIRECT_URI = "http://localhost:5173/callback"
+REDIRECT_URI = os.environ.get("TEXTQL_REDIRECT_URI", "http://localhost:5173/callback")
 
 
 def server_url() -> str:
