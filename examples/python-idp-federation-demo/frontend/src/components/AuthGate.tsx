@@ -1,6 +1,7 @@
 import { LogOut } from 'lucide-react';
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
+import { describeExchangeError, type ExchangeError } from '../lib/exchangeErrors';
 import { usePageTitle } from '../lib/usePageTitle';
 import { Button } from '../primitives';
 
@@ -23,8 +24,6 @@ type Me = {
 		last_exchanged_at: number | null;
 	};
 };
-
-type ExchangeError = { error: string; description?: string | null };
 
 class AuthError extends Error {
 	constructor(
@@ -84,6 +83,7 @@ function Exchange({ me, onDone, onSignOut }: { me: Me; onDone: () => void; onSig
 	const [busy, setBusy] = useState(true);
 	const started = useRef(false);
 	const host = new URL(me.textql.server_url).host;
+	const message = error ? describeExchangeError(error, { host, idpName: me.idp.name }) : null;
 
 	const run = useCallback(async () => {
 		setBusy(true);
@@ -115,10 +115,18 @@ function Exchange({ me, onDone, onSignOut }: { me: Me; onDone: () => void; onSig
 			title={busy ? 'Connecting to TextQL…' : "Couldn't connect to TextQL"}
 			lead={`Signed in as ${me.email ?? me.name ?? 'you'}. This app exchanges your ${me.idp.name} access token with ${host} for access as your TextQL member.`}
 		>
-			{error && (
-				<ErrorNote>
-					{error.description ?? error.error} <span className="text-muted">({error.error})</span>
-				</ErrorNote>
+			{error && message && (
+				<div className="mt-0 mb-3 rounded-md border border-danger/25 bg-danger/5 px-3 py-2.5">
+					<p className="m-0 text-[12.5px] font-semibold text-danger">{message.title}</p>
+					<p className="mt-1 mb-0 text-[12px] leading-[1.5] text-text-2">{message.hint}</p>
+					{(message.detail || message.code) && (
+						<p className="mt-1.5 mb-0 font-mono text-[10.5px] leading-[1.4] text-muted">
+							{message.detail}
+							{message.detail && message.code ? ' · ' : ''}
+							{message.code}
+						</p>
+					)}
+				</div>
 			)}
 			<div className="flex flex-col gap-2">
 				<Button className="py-2" disabled={busy} onClick={run}>
