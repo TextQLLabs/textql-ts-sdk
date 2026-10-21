@@ -10,6 +10,11 @@ import { Textql } from "./sdk/sdk.js";
 
 const REFRESH_MARGIN_MS = 60_000;
 
+export const TOKEN_EXCHANGE_GRANT = "urn:ietf:params:oauth:grant-type:token-exchange";
+export const ID_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:id_token";
+export const ACCESS_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:access_token";
+export const JWT_TOKEN_TYPE = "urn:ietf:params:oauth:token-type:jwt";
+
 export interface OAuthTokens {
   accessToken: string;
   refreshToken?: string | undefined;
@@ -33,6 +38,12 @@ export interface TokenManagerOptions {
   onTokens?: ((tokens: OAuthTokens) => void | Promise<void>) | undefined;
   /** Used to derive `tokenURL`. Defaults to `TEXTQL_SERVER_URL`, then the SDK default. */
   serverURL?: string | undefined;
+  /**
+   * Replaces the refresh-token grant: called for new tokens instead, e.g. to
+   * run {@link exchangeToken} again. Use this when the server issues no
+   * refresh token (IdP federation) or when renewal is not a plain refresh.
+   */
+  renew?: (() => OAuthTokens | Promise<OAuthTokens>) | undefined;
   /** Defaults to `<server origin>/oauth/token`. */
   tokenURL?: string | undefined;
   fetch?: typeof globalThis.fetch | undefined;
@@ -133,6 +144,40 @@ export async function authorizationURL(options: AuthorizationURLOptions): Promis
   };
 }
 
+export interface ExchangeTokenOptions {
+  /** The token from the org's identity provider, e.g. its OIDC access token. */
+  subjectToken: string;
+  /** The TextQL org that trusts that identity provider for token exchange. */
+  orgId: string;
+  /** Defaults to `ID_TOKEN_TYPE`; TextQL accepts `ACCESS_TOKEN_TYPE` too. */
+  subjectTokenType?: string | undefined;
+  scopes?: string[] | undefined;
+  serverURL?: string | undefined;
+  tokenURL?: string | undefined;
+  fetch?: typeof globalThis.fetch | undefined;
+}
+
+/**
+ * Exchange a token from the org's identity provider for a TextQL access token
+ * for the member it identifies (RFC 8693).
+ *
+ * The org must trust the token's issuer and audience for token exchange, and
+ * the member must have signed in to TextQL through that provider once. No
+ * refresh token is issued, and the access token never outlives `subjectToken`:
+ * exchange a fresh one instead, or pass a `renew` callback to
+ * {@link TokenManager}.
+ */
+export function exchangeToken(options: ExchangeTokenOptions): Promise<OAuthTokens> {
+  const form = new URLSearchParams({
+    grant_type: TOKEN_EXCHANGE_GRANT,
+    org_id: options.orgId,
+    subject_token: options.subjectToken,
+    subject_token_type: options.subjectTokenType ?? ID_TOKEN_TYPE,
+  });
+  if (options.scopes?.length) form.set("scope", options.scopes.join(" "));
+  return postToken(options.tokenURL ?? defaultTokenURL(options.serverURL), form, options.fetch);
+}
+
 export interface ExchangeCodeOptions {
   code: string;
   clientId: string;
@@ -171,13 +216,15 @@ export class TokenManager {
   readonly #clientId: string | undefined;
   readonly #clientSecret: string | undefined;
   readonly #onTokens: TokenManagerOptions["onTokens"];
+  readonly #renew: TokenManagerOptions["renew"];
   readonly #tokenURL: string;
   readonly #fetch: typeof globalThis.fetch | undefined;
 
   constructor(options: TokenManagerOptions) {
-    if (options.refreshToken && !options.clientId) {
+    if (options.refreshToken && !options.clientId && !options.renew) {
       throw new Error("clientId is required to refresh tokens");
     }
+    this.#renew = options.renew;
     this.#tokens = {
       accessToken: options.accessToken,
       refreshToken: options.refreshToken,
@@ -196,7 +243,7 @@ export class TokenManager {
   }
 
   get canRefresh(): boolean {
-    return !!this.#tokens.refreshToken;
+    return this.#renew != null || !!this.#tokens.refreshToken;
   }
 
   /**
@@ -206,7 +253,7 @@ export class TokenManager {
   async accessToken(stale?: string): Promise<string> {
     if (!this.#usable(stale) && this.canRefresh) {
       if (!this.#refreshing) {
-        this.#refreshing = this.#refresh().finally(() => {
+        this.#refreshing = this.#renewTokens().finally(() => {
           this.#refreshing = null;
         });
       }
@@ -234,7 +281,12 @@ export class TokenManager {
     return expiresAt == null || Date.now() < expiresAt - REFRESH_MARGIN_MS;
   }
 
-  async #refresh(): Promise<void> {
+  async #renewTokens(): Promise<void> {
+    if (this.#renew) {
+      this.#tokens = await this.#renew();
+      await this.#onTokens?.(this.#tokens);
+      return;
+    }
     const refreshToken = this.#tokens.refreshToken!;
     const form = new URLSearchParams({
       grant_type: "refresh_token",
@@ -317,6 +369,7 @@ export function fromTokens(options: FromTokensOptions): Textql {
     expiresIn,
     expiresAt,
     onTokens,
+    renew,
     tokenURL,
     fetch: tokenFetch,
     ...sdkOptions
@@ -330,6 +383,7 @@ export function fromTokens(options: FromTokensOptions): Textql {
     expiresIn,
     expiresAt,
     onTokens,
+    renew,
     tokenURL,
     fetch: tokenFetch,
     serverURL: sdkOptions.serverURL,

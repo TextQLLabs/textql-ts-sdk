@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { createHash } from 'node:crypto';
 import {
-  OAuthRefreshError, TokenManager, authorizationURL, exchangeCode, fromTokens, tokenManagerOf,
+  ACCESS_TOKEN_TYPE, OAuthRefreshError, TokenManager, authorizationURL, exchangeCode, exchangeToken, fromTokens, tokenManagerOf,
 } from '../esm/oauth.js';
 
 const SERVER = 'https://textql-sdk-tests.invalid';
@@ -134,6 +134,83 @@ test('memberId reads the member_id claim of a JWT access token', () => {
 
 test('a refresh token requires a client id', () => {
   assert.throws(() => new TokenManager({ accessToken: 'a', refreshToken: 'r' }));
+});
+
+test('renew lets a manager run without a refresh token', async () => {
+  const manager = new TokenManager({ accessToken: 'access-1' });
+  assert.equal(manager.canRefresh, false);
+
+  const renewed = new TokenManager({
+    accessToken: 'access-1',
+    expiresAt: Date.now(),
+    renew: () => Promise.resolve({ accessToken: 'access-2', expiresAt: Date.now() + 3_600_000 }),
+  });
+  assert.equal(renewed.canRefresh, true);
+  assert.equal(await renewed.accessToken(), 'access-2');
+
+  let calls = 0;
+  const counted = new TokenManager({
+    accessToken: 'access-1',
+    expiresAt: Date.now(),
+    renew: () => {
+      calls += 1;
+      return { accessToken: `access-${calls + 1}`, expiresAt: Date.now() + 3_600_000 };
+    },
+  });
+  const tokens = await Promise.all([counted.accessToken(), counted.accessToken(), counted.accessToken()]);
+  assert.deepEqual(tokens, ['access-2', 'access-2', 'access-2']);
+  assert.equal(calls, 1);
+});
+
+test('exchangeToken posts the RFC 8693 token exchange grant', async () => {
+  let captured;
+  const tokens = await exchangeToken({
+    subjectToken: 'idp-access-token',
+    orgId: 'org-1',
+    subjectTokenType: ACCESS_TOKEN_TYPE,
+    scopes: ['api:read', 'api:write'],
+    serverURL: 'https://tenant.example.com',
+    fetch: async (input, init) => {
+      captured = { url: String(input), form: Object.fromEntries(new URLSearchParams(String(init.body))) };
+      return Response.json({ access_token: 'textql-access', expires_in: 3600 });
+    },
+  });
+
+  assert.deepEqual(captured, {
+    url: 'https://tenant.example.com/oauth/token',
+    form: {
+      grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
+      org_id: 'org-1',
+      subject_token: 'idp-access-token',
+      subject_token_type: 'urn:ietf:params:oauth:token-type:access_token',
+      scope: 'api:read api:write',
+    },
+  });
+  assert.equal(tokens.accessToken, 'textql-access');
+  assert.equal(tokens.refreshToken, undefined);
+});
+
+test('exchangeToken defaults to the id_token subject type and server from env', async () => {
+  const previous = process.env.TEXTQL_SERVER_URL;
+  process.env.TEXTQL_SERVER_URL = 'https://env.textql.invalid/rpc/public';
+  let captured;
+  try {
+    await exchangeToken({
+      subjectToken: 'idp-id-token',
+      orgId: 'org-1',
+      fetch: async (input, init) => {
+        captured = { url: String(input), form: Object.fromEntries(new URLSearchParams(String(init.body))) };
+        return Response.json({ access_token: 'textql-access' });
+      },
+    });
+  } finally {
+    if (previous === undefined) delete process.env.TEXTQL_SERVER_URL;
+    else process.env.TEXTQL_SERVER_URL = previous;
+  }
+
+  assert.equal(captured.url, 'https://env.textql.invalid/oauth/token');
+  assert.equal(captured.form.subject_token_type, 'urn:ietf:params:oauth:token-type:id_token');
+  assert.equal(captured.form.scope, undefined);
 });
 
 test('authorizationURL uses S256 PKCE', async () => {
