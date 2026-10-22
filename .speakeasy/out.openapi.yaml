@@ -3831,6 +3831,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.CreateConnectorGroupResponse'
+  /textql.rpc.public.connector.ConnectorService/CreateTeradataDriverUploadUrl:
+    post:
+      tags:
+        - ConnectorService
+      summary: CreateTeradataDriverUploadUrl
+      operationId: ConnectorService_CreateTeradataDriverUploadUrl
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: createTeradataDriverUploadUrl
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.CreateTeradataDriverUploadUrlRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.CreateTeradataDriverUploadUrlResponse'
   /textql.rpc.public.connector.ConnectorService/DeleteConnector:
     post:
       tags:
@@ -3979,6 +4016,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.ExecuteQueryResponse'
+  /textql.rpc.public.connector.ConnectorService/FinalizeTeradataDriverUpload:
+    post:
+      tags:
+        - ConnectorService
+      summary: FinalizeTeradataDriverUpload
+      operationId: ConnectorService_FinalizeTeradataDriverUpload
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: finalizeTeradataDriverUpload
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.FinalizeTeradataDriverUploadRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.FinalizeTeradataDriverUploadResponse'
   /textql.rpc.public.connector.ConnectorService/GetConnector:
     post:
       tags:
@@ -4312,6 +4386,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.GetTablePreviewResponse'
+  /textql.rpc.public.connector.ConnectorService/ListConnectorGroupGrants:
+    post:
+      tags:
+        - ConnectorService
+      summary: ListConnectorGroupGrants
+      operationId: ConnectorService_ListConnectorGroupGrants
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: listConnectorGroupGrants
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.ListConnectorGroupGrantsRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.ListConnectorGroupGrantsResponse'
   /textql.rpc.public.connector.ConnectorService/ListConnectorGroups:
     post:
       tags:
@@ -4423,6 +4534,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.ListQueryTemplatesResponse'
+  /textql.rpc.public.connector.ConnectorService/RevokeConnectorGroupGrant:
+    post:
+      tags:
+        - ConnectorService
+      summary: RevokeConnectorGroupGrant
+      operationId: ConnectorService_RevokeConnectorGroupGrant
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: revokeConnectorGroupGrant
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.RevokeConnectorGroupGrantRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.RevokeConnectorGroupGrantResponse'
   /textql.rpc.public.connector.ConnectorService/ShareConnectorGroup:
     post:
       tags:
@@ -4571,6 +4719,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupResponse'
+  /textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupGrant:
+    post:
+      tags:
+        - ConnectorService
+      summary: UpdateConnectorGroupGrant
+      operationId: ConnectorService_UpdateConnectorGroupGrant
+      x-speakeasy-group: connectors
+      x-speakeasy-name-override: updateConnectorGroupGrant
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupGrantRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.connector.UpdateConnectorGroupGrantResponse'
   /textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupMembers:
     post:
       tags:
@@ -16536,9 +16721,9 @@ components:
          the null value for the `Value` type union.
 
          A field of type `NullValue` with any value other than `0` is considered
-         invalid. Most ProtoJSON serializers will emit a Value with a `null_value` set
-         as a JSON `null` regardless of the integer value, and so will round trip to
-         a `0` value.
+         invalid. Most ProtoJSON serializers will emit a `Value` with a `null_value`
+         set as a JSON `null` regardless of the integer value, and so will round trip
+         to a `0` value.
     google.protobuf.Struct:
       type: object
       additionalProperties:
@@ -17075,6 +17260,10 @@ components:
           type: boolean
           title: voice_input_enabled
           nullable: true
+        harnessesEnabled:
+          type: boolean
+          title: harnesses_enabled
+          nullable: true
         deleteInactiveThreadsEnabled:
           type: boolean
           title: delete_inactive_threads_enabled
@@ -17213,10 +17402,8 @@ components:
           type: boolean
           title: config_objects_playbooks_enabled
           description: |-
-            Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
-             object type — config management is one-way, so a per-type switch that cannot
-             un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
-             because proto/api is additive-only.
+            Deprecated: never populated. config_objects_enabled (field 80) is the one switch for
+             every object type. Retained only because proto/api is additive-only.
           nullable: true
           deprecated: true
         configObjectsDashboardsEnabled:
@@ -26507,6 +26694,13 @@ components:
               required:
                 - tableauMetadata
             - properties:
+                teradataMetadata:
+                  title: teradata_metadata
+                  $ref: '#/components/schemas/textql.rpc.public.connector.TeradataMetadata'
+              title: teradata_metadata
+              required:
+                - teradataMetadata
+            - properties:
                 trinoMetadata:
                   title: trino_metadata
                   $ref: '#/components/schemas/textql.rpc.public.connector.TrinoMetadata'
@@ -26857,6 +27051,13 @@ components:
               required:
                 - tableau
             - properties:
+                teradata:
+                  title: teradata
+                  $ref: '#/components/schemas/textql.rpc.public.connector.TeradataMetadata'
+              title: teradata
+              required:
+                - teradata
+            - properties:
                 trino:
                   title: trino
                   $ref: '#/components/schemas/textql.rpc.public.connector.TrinoMetadata'
@@ -27016,6 +27217,35 @@ components:
           title: error
       title: ConnectorGroupConnectorResult
       additionalProperties: false
+    textql.rpc.public.connector.ConnectorGroupGrant:
+      type: object
+      properties:
+        id:
+          type: string
+          title: id
+        memberId:
+          type: string
+          title: member_id
+        roleId:
+          type: string
+          title: role_id
+        groupId:
+          type: string
+          title: group_id
+        accessType:
+          type: string
+          title: access_type
+        memberEmail:
+          type: string
+          title: member_email
+        roleName:
+          type: string
+          title: role_name
+        createdAt:
+          title: created_at
+          $ref: '#/components/schemas/google.protobuf.Timestamp'
+      title: ConnectorGroupGrant
+      additionalProperties: false
     textql.rpc.public.connector.ConnectorStatEntry:
       type: object
       properties:
@@ -27114,6 +27344,7 @@ components:
         - KDB
         - MONGODB
         - ANA_BILLING
+        - TERADATA
     textql.rpc.public.connector.CreateConnectorGroupRequest:
       type: object
       properties:
@@ -27172,6 +27403,21 @@ components:
           title: connector_type
           $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorType'
       title: CreateConnectorResponse
+      additionalProperties: false
+    textql.rpc.public.connector.CreateTeradataDriverUploadUrlRequest:
+      type: object
+      title: CreateTeradataDriverUploadUrlRequest
+      additionalProperties: false
+    textql.rpc.public.connector.CreateTeradataDriverUploadUrlResponse:
+      type: object
+      properties:
+        uploadId:
+          type: string
+          title: upload_id
+        presignUrl:
+          type: string
+          title: presign_url
+      title: CreateTeradataDriverUploadUrlResponse
       additionalProperties: false
     textql.rpc.public.connector.DailyDuration:
       type: object
@@ -27485,6 +27731,25 @@ components:
         - FEATURE_TYPE_DATA_APP
         - FEATURE_TYPE_AGENT
       description: Feature types for nudge queries - identifies which feature a query promotes
+    textql.rpc.public.connector.FinalizeTeradataDriverUploadRequest:
+      type: object
+      properties:
+        uploadId:
+          type: string
+          title: upload_id
+      title: FinalizeTeradataDriverUploadRequest
+      additionalProperties: false
+    textql.rpc.public.connector.FinalizeTeradataDriverUploadResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          title: success
+        error:
+          type: string
+          title: error
+      title: FinalizeTeradataDriverUploadResponse
+      additionalProperties: false
     textql.rpc.public.connector.FireboltMetadata:
       type: object
       properties:
@@ -27679,6 +27944,14 @@ components:
           items:
             $ref: '#/components/schemas/textql.rpc.public.connector.Connector'
           title: connectors
+        unavailableConnectorTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorType'
+          title: unavailable_connector_types
+        teradataUploadRequired:
+          type: boolean
+          title: teradata_upload_required
       title: GetConnectorsResponse
       additionalProperties: false
     textql.rpc.public.connector.GetExampleQueriesRequest:
@@ -27864,6 +28137,26 @@ components:
       description: |-
         KdbMetadata configures a kdb+ (kx/q) connector. kdb+ speaks its own binary IPC
          protocol (not SQL), so queries are qSQL strings; see pkg/connectors/kdbipc.
+    textql.rpc.public.connector.ListConnectorGroupGrantsRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+      title: ListConnectorGroupGrantsRequest
+      required:
+        - groupId
+      additionalProperties: false
+    textql.rpc.public.connector.ListConnectorGroupGrantsResponse:
+      type: object
+      properties:
+        grants:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.connector.ConnectorGroupGrant'
+          title: grants
+      title: ListConnectorGroupGrantsResponse
+      additionalProperties: false
     textql.rpc.public.connector.ListConnectorGroupsRequest:
       type: object
       title: ListConnectorGroupsRequest
@@ -28366,6 +28659,24 @@ components:
           title: aws_secret_access_key
       title: RedshiftMetadata
       additionalProperties: false
+    textql.rpc.public.connector.RevokeConnectorGroupGrantRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        grantId:
+          type: string
+          title: grant_id
+      title: RevokeConnectorGroupGrantRequest
+      required:
+        - groupId
+        - grantId
+      additionalProperties: false
+    textql.rpc.public.connector.RevokeConnectorGroupGrantResponse:
+      type: object
+      title: RevokeConnectorGroupGrantResponse
+      additionalProperties: false
     textql.rpc.public.connector.SAPHanaMetadata:
       type: object
       properties:
@@ -28622,6 +28933,32 @@ components:
           nullable: true
       title: TableauMetadata
       additionalProperties: false
+    textql.rpc.public.connector.TeradataMetadata:
+      type: object
+      properties:
+        host:
+          type: string
+          title: host
+        port:
+          type: integer
+          title: port
+          format: int32
+        user:
+          type: string
+          title: user
+        password:
+          type: string
+          title: password
+        logmech:
+          type: string
+          title: logmech
+        databases:
+          type: array
+          items:
+            type: string
+          title: databases
+      title: TeradataMetadata
+      additionalProperties: false
     textql.rpc.public.connector.TestConnectorRequest:
       type: object
       properties:
@@ -28710,6 +29047,28 @@ components:
           type: boolean
           title: skip_tls_verify
       title: TrinoMetadata
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupGrantRequest:
+      type: object
+      properties:
+        groupId:
+          type: string
+          title: group_id
+        grantId:
+          type: string
+          title: grant_id
+        accessType:
+          type: string
+          title: access_type
+      title: UpdateConnectorGroupGrantRequest
+      required:
+        - groupId
+        - grantId
+        - accessType
+      additionalProperties: false
+    textql.rpc.public.connector.UpdateConnectorGroupGrantResponse:
+      type: object
+      title: UpdateConnectorGroupGrantResponse
       additionalProperties: false
     textql.rpc.public.connector.UpdateConnectorGroupMembersRequest:
       type: object
@@ -29082,7 +29441,7 @@ components:
         configSource:
           title: config_source
           description: |-
-            Config-management metadata (ADR-0014/0021). Present ⇒ the dashboard is defined
+            Config-management metadata. Present ⇒ the dashboard is defined
              by a `.dashboard` Library file: it is read-only in the UI (mutating RPCs are
              rejected) and changed only by editing its file. Clients detect config-management
              by presence, the same way they do for playbooks.
@@ -42986,6 +43345,9 @@ components:
           title: clear_default_connector_ids
         voiceInputEnabled:
           title: voice_input_enabled
+          $ref: '#/components/schemas/google.protobuf.BoolValue'
+        harnessesEnabled:
+          title: harnesses_enabled
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         defaultDashboardOutput:
           title: default_dashboard_output

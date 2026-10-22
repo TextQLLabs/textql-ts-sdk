@@ -144,6 +144,11 @@ import {
   TextqlRpcPublicConnectorTableauMetadata$outboundSchema,
 } from "./textql-rpc-public-connector-tableau-metadata.js";
 import {
+  TextqlRpcPublicConnectorTeradataMetadata,
+  TextqlRpcPublicConnectorTeradataMetadata$Outbound,
+  TextqlRpcPublicConnectorTeradataMetadata$outboundSchema,
+} from "./textql-rpc-public-connector-teradata-metadata.js";
+import {
   TextqlRpcPublicConnectorTrinoMetadata,
   TextqlRpcPublicConnectorTrinoMetadata$Outbound,
   TextqlRpcPublicConnectorTrinoMetadata$outboundSchema,
@@ -151,6 +156,13 @@ import {
 
 export type Trino = {
   trino: TextqlRpcPublicConnectorTrinoMetadata;
+  connectorType?: TextqlRpcPublicConnectorConnectorType | undefined;
+  name?: string | undefined;
+  authStrategy?: string | undefined;
+};
+
+export type Teradata = {
+  teradata: TextqlRpcPublicConnectorTeradataMetadata;
   connectorType?: TextqlRpcPublicConnectorConnectorType | undefined;
   name?: string | undefined;
   authStrategy?: string | undefined;
@@ -379,6 +391,7 @@ export type TextqlRpcPublicConnectorConnectorConfig =
   | SqlServer
   | Supabase
   | TextqlRpcPublicConnectorConnectorConfigTableau
+  | Teradata
   | Trino;
 
 /** @internal */
@@ -402,6 +415,31 @@ export const Trino$outboundSchema: z.ZodMiniType<Trino$Outbound, Trino> = z
 
 export function trinoToJSON(trino: Trino): string {
   return JSON.stringify(Trino$outboundSchema.parse(trino));
+}
+
+/** @internal */
+export type Teradata$Outbound = {
+  teradata: TextqlRpcPublicConnectorTeradataMetadata$Outbound;
+  connectorType?: string | undefined;
+  name?: string | undefined;
+  authStrategy?: string | undefined;
+};
+
+/** @internal */
+export const Teradata$outboundSchema: z.ZodMiniType<
+  Teradata$Outbound,
+  Teradata
+> = z.object({
+  teradata: TextqlRpcPublicConnectorTeradataMetadata$outboundSchema,
+  connectorType: z.optional(
+    TextqlRpcPublicConnectorConnectorType$outboundSchema,
+  ),
+  name: z.optional(z.string()),
+  authStrategy: z.optional(z.string()),
+});
+
+export function teradataToJSON(teradata: Teradata): string {
+  return JSON.stringify(Teradata$outboundSchema.parse(teradata));
 }
 
 /** @internal */
@@ -1101,6 +1139,7 @@ export type TextqlRpcPublicConnectorConnectorConfig$Outbound =
   | SqlServer$Outbound
   | Supabase$Outbound
   | TextqlRpcPublicConnectorConnectorConfigTableau$Outbound
+  | Teradata$Outbound
   | Trino$Outbound;
 
 /** @internal */
@@ -1136,6 +1175,7 @@ export const TextqlRpcPublicConnectorConnectorConfig$outboundSchema:
     z.lazy(() => SqlServer$outboundSchema),
     z.lazy(() => Supabase$outboundSchema),
     z.lazy(() => TextqlRpcPublicConnectorConnectorConfigTableau$outboundSchema),
+    z.lazy(() => Teradata$outboundSchema),
     z.lazy(() => Trino$outboundSchema),
   ]);
 

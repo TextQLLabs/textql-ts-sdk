@@ -219,6 +219,14 @@ const value: models.TextqlRpcPublicConnectorConnectorConfigTableau = {
 };
 ```
 
+### `models.Teradata`
+
+```typescript
+const value: models.Teradata = {
+  teradata: {},
+};
+```
+
 ### `models.Trino`
 
 ```typescript

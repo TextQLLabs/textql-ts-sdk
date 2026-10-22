@@ -262,10 +262,12 @@ run();
 
 * [create](docs/sdks/connectors/README.md#create) - CreateConnector
 * [createConnectorGroup](docs/sdks/connectors/README.md#createconnectorgroup) - CreateConnectorGroup
+* [createTeradataDriverUploadUrl](docs/sdks/connectors/README.md#createteradatadriveruploadurl) - CreateTeradataDriverUploadUrl
 * [delete](docs/sdks/connectors/README.md#delete) - DeleteConnector
 * [deleteConnectorGroup](docs/sdks/connectors/README.md#deleteconnectorgroup) - DeleteConnectorGroup
 * [duplicateConnector](docs/sdks/connectors/README.md#duplicateconnector) - DuplicateConnector
 * [executeQuery](docs/sdks/connectors/README.md#executequery) - ExecuteQuery
+* [finalizeTeradataDriverUpload](docs/sdks/connectors/README.md#finalizeteradatadriverupload) - FinalizeTeradataDriverUpload
 * [get](docs/sdks/connectors/README.md#get) - GetConnector
 * [getConnectorCellDurations](docs/sdks/connectors/README.md#getconnectorcelldurations) - GetConnectorCellDurations
 * [getChats](docs/sdks/connectors/README.md#getchats) - GetConnectorChats
@@ -275,13 +277,16 @@ run();
 * [getConnectors](docs/sdks/connectors/README.md#getconnectors) - GetConnectors
 * [getExampleQueries](docs/sdks/connectors/README.md#getexamplequeries) - GetExampleQueries
 * [getTablePreview](docs/sdks/connectors/README.md#gettablepreview) - GetTablePreview
+* [listConnectorGroupGrants](docs/sdks/connectors/README.md#listconnectorgroupgrants) - ListConnectorGroupGrants
 * [listConnectorGroups](docs/sdks/connectors/README.md#listconnectorgroups) - ListConnectorGroups
 * [listTables](docs/sdks/connectors/README.md#listtables) - ListConnectorTables
 * [listQueryTemplates](docs/sdks/connectors/README.md#listquerytemplates) - ListQueryTemplates
+* [revokeConnectorGroupGrant](docs/sdks/connectors/README.md#revokeconnectorgroupgrant) - RevokeConnectorGroupGrant
 * [shareConnectorGroup](docs/sdks/connectors/README.md#shareconnectorgroup) - ShareConnectorGroup
 * [test](docs/sdks/connectors/README.md#test) - TestConnector
 * [update](docs/sdks/connectors/README.md#update) - UpdateConnector
 * [updateConnectorGroup](docs/sdks/connectors/README.md#updateconnectorgroup) - UpdateConnectorGroup
+* [updateConnectorGroupGrant](docs/sdks/connectors/README.md#updateconnectorgroupgrant) - UpdateConnectorGroupGrant
 * [updateConnectorGroupMembers](docs/sdks/connectors/README.md#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
 * [updateConnectorGroupSettings](docs/sdks/connectors/README.md#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 
@@ -776,10 +781,12 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`chatsUpdate`](docs/sdks/chats/README.md#update) - UpdateChat
 - [`connectorsCreate`](docs/sdks/connectors/README.md#create) - CreateConnector
 - [`connectorsCreateConnectorGroup`](docs/sdks/connectors/README.md#createconnectorgroup) - CreateConnectorGroup
+- [`connectorsCreateTeradataDriverUploadUrl`](docs/sdks/connectors/README.md#createteradatadriveruploadurl) - CreateTeradataDriverUploadUrl
 - [`connectorsDelete`](docs/sdks/connectors/README.md#delete) - DeleteConnector
 - [`connectorsDeleteConnectorGroup`](docs/sdks/connectors/README.md#deleteconnectorgroup) - DeleteConnectorGroup
 - [`connectorsDuplicateConnector`](docs/sdks/connectors/README.md#duplicateconnector) - DuplicateConnector
 - [`connectorsExecuteQuery`](docs/sdks/connectors/README.md#executequery) - ExecuteQuery
+- [`connectorsFinalizeTeradataDriverUpload`](docs/sdks/connectors/README.md#finalizeteradatadriverupload) - FinalizeTeradataDriverUpload
 - [`connectorsGet`](docs/sdks/connectors/README.md#get) - GetConnector
 - [`connectorsGetChats`](docs/sdks/connectors/README.md#getchats) - GetConnectorChats
 - [`connectorsGetConnectorCellDurations`](docs/sdks/connectors/README.md#getconnectorcelldurations) - GetConnectorCellDurations
@@ -789,13 +796,16 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`connectorsGetExampleQueries`](docs/sdks/connectors/README.md#getexamplequeries) - GetExampleQueries
 - [`connectorsGetTablePreview`](docs/sdks/connectors/README.md#gettablepreview) - GetTablePreview
 - [`connectorsGetUsage`](docs/sdks/connectors/README.md#getusage) - GetConnectorUsage
+- [`connectorsListConnectorGroupGrants`](docs/sdks/connectors/README.md#listconnectorgroupgrants) - ListConnectorGroupGrants
 - [`connectorsListConnectorGroups`](docs/sdks/connectors/README.md#listconnectorgroups) - ListConnectorGroups
 - [`connectorsListQueryTemplates`](docs/sdks/connectors/README.md#listquerytemplates) - ListQueryTemplates
 - [`connectorsListTables`](docs/sdks/connectors/README.md#listtables) - ListConnectorTables
+- [`connectorsRevokeConnectorGroupGrant`](docs/sdks/connectors/README.md#revokeconnectorgroupgrant) - RevokeConnectorGroupGrant
 - [`connectorsShareConnectorGroup`](docs/sdks/connectors/README.md#shareconnectorgroup) - ShareConnectorGroup
 - [`connectorsTest`](docs/sdks/connectors/README.md#test) - TestConnector
 - [`connectorsUpdate`](docs/sdks/connectors/README.md#update) - UpdateConnector
 - [`connectorsUpdateConnectorGroup`](docs/sdks/connectors/README.md#updateconnectorgroup) - UpdateConnectorGroup
+- [`connectorsUpdateConnectorGroupGrant`](docs/sdks/connectors/README.md#updateconnectorgroupgrant) - UpdateConnectorGroupGrant
 - [`connectorsUpdateConnectorGroupMembers`](docs/sdks/connectors/README.md#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
 - [`connectorsUpdateConnectorGroupSettings`](docs/sdks/connectors/README.md#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 - [`dashboardsCheckHealth`](docs/sdks/dashboards/README.md#checkhealth) - CheckDashboardHealth

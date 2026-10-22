@@ -8,7 +8,7 @@ import { TextqlRpcPublicConnectorGetConnectorsResponse } from "@textql/sdk/model
 let value: TextqlRpcPublicConnectorGetConnectorsResponse = {
   connectors: [
     {
-      exasolMetadata: {},
+      fireboltMetadata: {},
       createdAt: new Date("2023-01-15T01:30:15.01Z"),
     },
   ],
@@ -17,6 +17,8 @@ let value: TextqlRpcPublicConnectorGetConnectorsResponse = {
 
 ## Fields
 
-| Field                                        | Type                                         | Required                                     | Description                                  |
-| -------------------------------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
-| `connectors`                                 | *models.TextqlRpcPublicConnectorConnector*[] | :heavy_minus_sign:                           | N/A                                          |
+| Field                                                                                                     | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `connectors`                                                                                              | *models.TextqlRpcPublicConnectorConnector*[]                                                              | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `unavailableConnectorTypes`                                                                               | [models.TextqlRpcPublicConnectorConnectorType](../models/textql-rpc-public-connector-connector-type.md)[] | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |
+| `teradataUploadRequired`                                                                                  | *boolean*                                                                                                 | :heavy_minus_sign:                                                                                        | N/A                                                                                                       |

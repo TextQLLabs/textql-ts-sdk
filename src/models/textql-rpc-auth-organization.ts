@@ -274,6 +274,7 @@ export type TextqlRpcAuthOrganization = {
   pipelineLogRetentionDays?: number | null | undefined;
   sandboxLeaseConfigEnabled?: boolean | null | undefined;
   voiceInputEnabled?: boolean | null | undefined;
+  harnessesEnabled?: boolean | null | undefined;
   deleteInactiveThreadsEnabled?: boolean | null | undefined;
   threadRetentionDays?: number | null | undefined;
   threadHardDeleteGraceDays?: number | null | undefined;
@@ -351,12 +352,10 @@ export type TextqlRpcAuthOrganization = {
    */
   configObjectsEnabled?: boolean | null | undefined;
   /**
-   * Deprecated: never populated. config_objects_enabled (field 80) is the umbrella for every
+   * Deprecated: never populated. config_objects_enabled (field 80) is the one switch for
    *
    * @remarks
-   *  object type — config management is one-way, so a per-type switch that cannot
-   *  un-migrate an object is either inert or actively harmful (ADR-0040). Retained only
-   *  because proto/api is additive-only.
+   *  every object type. Retained only because proto/api is additive-only.
    *
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
@@ -458,6 +457,7 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   pipelineLogRetentionDays: z.optional(z.nullable(types.number())),
   sandboxLeaseConfigEnabled: z.optional(z.nullable(types.boolean())),
   voiceInputEnabled: z.optional(z.nullable(types.boolean())),
+  harnessesEnabled: z.optional(z.nullable(types.boolean())),
   deleteInactiveThreadsEnabled: z.optional(z.nullable(types.boolean())),
   threadRetentionDays: z.optional(z.nullable(types.number())),
   threadHardDeleteGraceDays: z.optional(z.nullable(types.number())),

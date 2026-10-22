@@ -196,6 +196,17 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest = {
    *  Not recommended for use in new APIs, but still useful for legacy APIs and
    *  has no plan to be removed.
    */
+  harnessesEnabled?: boolean | undefined;
+  /**
+   * Wrapper message for `bool`.
+   *
+   * @remarks
+   *
+   *  The JSON representation for `BoolValue` is JSON `true` and `false`.
+   *
+   *  Not recommended for use in new APIs, but still useful for legacy APIs and
+   *  has no plan to be removed.
+   */
   defaultDashboardOutput?: boolean | undefined;
   defaultMethodology?: TextqlRpcPublicChatMethodology | undefined;
   /**
@@ -305,6 +316,7 @@ export type TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound =
     configurableThinkingEnabled?: boolean | undefined;
     clearDefaultConnectorIds?: boolean | undefined;
     voiceInputEnabled?: boolean | undefined;
+    harnessesEnabled?: boolean | undefined;
     defaultDashboardOutput?: boolean | undefined;
     defaultMethodology?: string | undefined;
     tracesEnabled?: boolean | undefined;
@@ -357,6 +369,7 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
     configurableThinkingEnabled: z.optional(z.boolean()),
     clearDefaultConnectorIds: z.optional(z.boolean()),
     voiceInputEnabled: z.optional(z.boolean()),
+    harnessesEnabled: z.optional(z.boolean()),
     defaultDashboardOutput: z.optional(z.boolean()),
     defaultMethodology: z.optional(
       TextqlRpcPublicChatMethodology$outboundSchema,

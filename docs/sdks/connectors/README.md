@@ -6,10 +6,12 @@
 
 * [create](#create) - CreateConnector
 * [createConnectorGroup](#createconnectorgroup) - CreateConnectorGroup
+* [createTeradataDriverUploadUrl](#createteradatadriveruploadurl) - CreateTeradataDriverUploadUrl
 * [delete](#delete) - DeleteConnector
 * [deleteConnectorGroup](#deleteconnectorgroup) - DeleteConnectorGroup
 * [duplicateConnector](#duplicateconnector) - DuplicateConnector
 * [executeQuery](#executequery) - ExecuteQuery
+* [finalizeTeradataDriverUpload](#finalizeteradatadriverupload) - FinalizeTeradataDriverUpload
 * [get](#get) - GetConnector
 * [getConnectorCellDurations](#getconnectorcelldurations) - GetConnectorCellDurations
 * [getChats](#getchats) - GetConnectorChats
@@ -19,13 +21,16 @@
 * [getConnectors](#getconnectors) - GetConnectors
 * [getExampleQueries](#getexamplequeries) - GetExampleQueries
 * [getTablePreview](#gettablepreview) - GetTablePreview
+* [listConnectorGroupGrants](#listconnectorgroupgrants) - ListConnectorGroupGrants
 * [listConnectorGroups](#listconnectorgroups) - ListConnectorGroups
 * [listTables](#listtables) - ListConnectorTables
 * [listQueryTemplates](#listquerytemplates) - ListQueryTemplates
+* [revokeConnectorGroupGrant](#revokeconnectorgroupgrant) - RevokeConnectorGroupGrant
 * [shareConnectorGroup](#shareconnectorgroup) - ShareConnectorGroup
 * [test](#test) - TestConnector
 * [update](#update) - UpdateConnector
 * [updateConnectorGroup](#updateconnectorgroup) - UpdateConnectorGroup
+* [updateConnectorGroupGrant](#updateconnectorgroupgrant) - UpdateConnectorGroupGrant
 * [updateConnectorGroupMembers](#updateconnectorgroupmembers) - UpdateConnectorGroupMembers
 * [updateConnectorGroupSettings](#updateconnectorgroupsettings) - UpdateConnectorGroupSettings
 
@@ -168,6 +173,79 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceCreateConnectorGroupResponse](../../models/operations/connector-service-create-connector-group-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## createTeradataDriverUploadUrl
+
+CreateTeradataDriverUploadUrl
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_CreateTeradataDriverUploadUrl" method="post" path="/textql.rpc.public.connector.ConnectorService/CreateTeradataDriverUploadUrl" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.createTeradataDriverUploadUrl({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsCreateTeradataDriverUploadUrl } from "@textql/sdk/funcs/connectors-create-teradata-driver-upload-url.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsCreateTeradataDriverUploadUrl(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsCreateTeradataDriverUploadUrl failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceCreateTeradataDriverUploadUrlRequest](../../models/operations/connector-service-create-teradata-driver-upload-url-request.md)                      | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceCreateTeradataDriverUploadUrlResponse](../../models/operations/connector-service-create-teradata-driver-upload-url-response.md)\>**
 
 ### Errors
 
@@ -460,6 +538,79 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceExecuteQueryResponse](../../models/operations/connector-service-execute-query-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## finalizeTeradataDriverUpload
+
+FinalizeTeradataDriverUpload
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_FinalizeTeradataDriverUpload" method="post" path="/textql.rpc.public.connector.ConnectorService/FinalizeTeradataDriverUpload" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.finalizeTeradataDriverUpload({
+    body: {},
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsFinalizeTeradataDriverUpload } from "@textql/sdk/funcs/connectors-finalize-teradata-driver-upload.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsFinalizeTeradataDriverUpload(textql, {
+    body: {},
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsFinalizeTeradataDriverUpload failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceFinalizeTeradataDriverUploadRequest](../../models/operations/connector-service-finalize-teradata-driver-upload-request.md)                         | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceFinalizeTeradataDriverUploadResponse](../../models/operations/connector-service-finalize-teradata-driver-upload-response.md)\>**
 
 ### Errors
 
@@ -1124,6 +1275,83 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
+## listConnectorGroupGrants
+
+ListConnectorGroupGrants
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_ListConnectorGroupGrants" method="post" path="/textql.rpc.public.connector.ConnectorService/ListConnectorGroupGrants" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.listConnectorGroupGrants({
+    body: {
+      groupId: "<id>",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsListConnectorGroupGrants } from "@textql/sdk/funcs/connectors-list-connector-group-grants.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsListConnectorGroupGrants(textql, {
+    body: {
+      groupId: "<id>",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsListConnectorGroupGrants failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceListConnectorGroupGrantsRequest](../../models/operations/connector-service-list-connector-group-grants-request.md)                                 | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceListConnectorGroupGrantsResponse](../../models/operations/connector-service-list-connector-group-grants-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
 ## listConnectorGroups
 
 ListConnectorGroups
@@ -1336,6 +1564,85 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceListQueryTemplatesResponse](../../models/operations/connector-service-list-query-templates-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## revokeConnectorGroupGrant
+
+RevokeConnectorGroupGrant
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_RevokeConnectorGroupGrant" method="post" path="/textql.rpc.public.connector.ConnectorService/RevokeConnectorGroupGrant" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.revokeConnectorGroupGrant({
+    body: {
+      groupId: "<id>",
+      grantId: "<id>",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsRevokeConnectorGroupGrant } from "@textql/sdk/funcs/connectors-revoke-connector-group-grant.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsRevokeConnectorGroupGrant(textql, {
+    body: {
+      groupId: "<id>",
+      grantId: "<id>",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsRevokeConnectorGroupGrant failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceRevokeConnectorGroupGrantRequest](../../models/operations/connector-service-revoke-connector-group-grant-request.md)                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceRevokeConnectorGroupGrantResponse](../../models/operations/connector-service-revoke-connector-group-grant-response.md)\>**
 
 ### Errors
 
@@ -1628,6 +1935,87 @@ run();
 ### Response
 
 **Promise\<[operations.ConnectorServiceUpdateConnectorGroupResponse](../../models/operations/connector-service-update-connector-group-response.md)\>**
+
+### Errors
+
+| Error Type                | Status Code               | Content Type              |
+| ------------------------- | ------------------------- | ------------------------- |
+| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
+
+## updateConnectorGroupGrant
+
+UpdateConnectorGroupGrant
+
+### Example Usage
+
+<!-- UsageSnippet language="typescript" operationID="ConnectorService_UpdateConnectorGroupGrant" method="post" path="/textql.rpc.public.connector.ConnectorService/UpdateConnectorGroupGrant" -->
+```typescript
+import { Textql } from "@textql/sdk";
+
+const textql = new Textql({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const result = await textql.connectors.updateConnectorGroupGrant({
+    body: {
+      groupId: "<id>",
+      grantId: "<id>",
+      accessType: "<value>",
+    },
+  });
+
+  console.log(result);
+}
+
+run();
+```
+
+### Standalone function
+
+The standalone function version of this method:
+
+```typescript
+import { TextqlCore } from "@textql/sdk/core.js";
+import { connectorsUpdateConnectorGroupGrant } from "@textql/sdk/funcs/connectors-update-connector-group-grant.js";
+
+// Use `TextqlCore` for best tree-shaking performance.
+// You can create one instance of it to use across an application.
+const textql = new TextqlCore({
+  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
+});
+
+async function run() {
+  const res = await connectorsUpdateConnectorGroupGrant(textql, {
+    body: {
+      groupId: "<id>",
+      grantId: "<id>",
+      accessType: "<value>",
+    },
+  });
+  if (res.ok) {
+    const { value: result } = res;
+    console.log(result);
+  } else {
+    console.log("connectorsUpdateConnectorGroupGrant failed:", res.error);
+  }
+}
+
+run();
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `request`                                                                                                                                                                      | [operations.ConnectorServiceUpdateConnectorGroupGrantRequest](../../models/operations/connector-service-update-connector-group-grant-request.md)                               | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
+| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
+| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
+| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
+
+### Response
+
+**Promise\<[operations.ConnectorServiceUpdateConnectorGroupGrantResponse](../../models/operations/connector-service-update-connector-group-grant-response.md)\>**
 
 ### Errors
 
