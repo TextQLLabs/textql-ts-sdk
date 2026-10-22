@@ -38,6 +38,7 @@ export const TextqlRpcPublicConnectorConnectorType = {
   Kdb: "KDB",
   Mongodb: "MONGODB",
   AnaBilling: "ANA_BILLING",
+  Teradata: "TERADATA",
 } as const;
 export type TextqlRpcPublicConnectorConnectorType = OpenEnum<
   typeof TextqlRpcPublicConnectorConnectorType

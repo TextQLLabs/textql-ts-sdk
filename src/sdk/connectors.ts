@@ -3,11 +3,13 @@
  */
 
 import { connectorsCreateConnectorGroup } from "../funcs/connectors-create-connector-group.js";
+import { connectorsCreateTeradataDriverUploadUrl } from "../funcs/connectors-create-teradata-driver-upload-url.js";
 import { connectorsCreate } from "../funcs/connectors-create.js";
 import { connectorsDeleteConnectorGroup } from "../funcs/connectors-delete-connector-group.js";
 import { connectorsDelete } from "../funcs/connectors-delete.js";
 import { connectorsDuplicateConnector } from "../funcs/connectors-duplicate-connector.js";
 import { connectorsExecuteQuery } from "../funcs/connectors-execute-query.js";
+import { connectorsFinalizeTeradataDriverUpload } from "../funcs/connectors-finalize-teradata-driver-upload.js";
 import { connectorsGetChats } from "../funcs/connectors-get-chats.js";
 import { connectorsGetConnectorCellDurations } from "../funcs/connectors-get-connector-cell-durations.js";
 import { connectorsGetConnectorStats } from "../funcs/connectors-get-connector-stats.js";
@@ -17,11 +19,14 @@ import { connectorsGetExampleQueries } from "../funcs/connectors-get-example-que
 import { connectorsGetTablePreview } from "../funcs/connectors-get-table-preview.js";
 import { connectorsGetUsage } from "../funcs/connectors-get-usage.js";
 import { connectorsGet } from "../funcs/connectors-get.js";
+import { connectorsListConnectorGroupGrants } from "../funcs/connectors-list-connector-group-grants.js";
 import { connectorsListConnectorGroups } from "../funcs/connectors-list-connector-groups.js";
 import { connectorsListQueryTemplates } from "../funcs/connectors-list-query-templates.js";
 import { connectorsListTables } from "../funcs/connectors-list-tables.js";
+import { connectorsRevokeConnectorGroupGrant } from "../funcs/connectors-revoke-connector-group-grant.js";
 import { connectorsShareConnectorGroup } from "../funcs/connectors-share-connector-group.js";
 import { connectorsTest } from "../funcs/connectors-test.js";
+import { connectorsUpdateConnectorGroupGrant } from "../funcs/connectors-update-connector-group-grant.js";
 import { connectorsUpdateConnectorGroupMembers } from "../funcs/connectors-update-connector-group-members.js";
 import { connectorsUpdateConnectorGroupSettings } from "../funcs/connectors-update-connector-group-settings.js";
 import { connectorsUpdateConnectorGroup } from "../funcs/connectors-update-connector-group.js";
@@ -53,6 +58,20 @@ export class Connectors extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ConnectorServiceCreateConnectorGroupResponse> {
     return unwrapAsync(connectorsCreateConnectorGroup(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * CreateTeradataDriverUploadUrl
+   */
+  async createTeradataDriverUploadUrl(
+    request: operations.ConnectorServiceCreateTeradataDriverUploadUrlRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ConnectorServiceCreateTeradataDriverUploadUrlResponse> {
+    return unwrapAsync(connectorsCreateTeradataDriverUploadUrl(
       this,
       request,
       options,
@@ -109,6 +128,20 @@ export class Connectors extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ConnectorServiceExecuteQueryResponse> {
     return unwrapAsync(connectorsExecuteQuery(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * FinalizeTeradataDriverUpload
+   */
+  async finalizeTeradataDriverUpload(
+    request: operations.ConnectorServiceFinalizeTeradataDriverUploadRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ConnectorServiceFinalizeTeradataDriverUploadResponse> {
+    return unwrapAsync(connectorsFinalizeTeradataDriverUpload(
       this,
       request,
       options,
@@ -242,6 +275,20 @@ export class Connectors extends ClientSDK {
   }
 
   /**
+   * ListConnectorGroupGrants
+   */
+  async listConnectorGroupGrants(
+    request: operations.ConnectorServiceListConnectorGroupGrantsRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ConnectorServiceListConnectorGroupGrantsResponse> {
+    return unwrapAsync(connectorsListConnectorGroupGrants(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
    * ListConnectorGroups
    */
   async listConnectorGroups(
@@ -277,6 +324,20 @@ export class Connectors extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ConnectorServiceListQueryTemplatesResponse> {
     return unwrapAsync(connectorsListQueryTemplates(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * RevokeConnectorGroupGrant
+   */
+  async revokeConnectorGroupGrant(
+    request: operations.ConnectorServiceRevokeConnectorGroupGrantRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ConnectorServiceRevokeConnectorGroupGrantResponse> {
+    return unwrapAsync(connectorsRevokeConnectorGroupGrant(
       this,
       request,
       options,
@@ -333,6 +394,20 @@ export class Connectors extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.ConnectorServiceUpdateConnectorGroupResponse> {
     return unwrapAsync(connectorsUpdateConnectorGroup(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * UpdateConnectorGroupGrant
+   */
+  async updateConnectorGroupGrant(
+    request: operations.ConnectorServiceUpdateConnectorGroupGrantRequest,
+    options?: RequestOptions,
+  ): Promise<operations.ConnectorServiceUpdateConnectorGroupGrantResponse> {
+    return unwrapAsync(connectorsUpdateConnectorGroupGrant(
       this,
       request,
       options,

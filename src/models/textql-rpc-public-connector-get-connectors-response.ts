@@ -8,12 +8,20 @@ import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
+  TextqlRpcPublicConnectorConnectorType,
+  TextqlRpcPublicConnectorConnectorType$inboundSchema,
+} from "./textql-rpc-public-connector-connector-type.js";
+import {
   TextqlRpcPublicConnectorConnector,
   TextqlRpcPublicConnectorConnector$inboundSchema,
 } from "./textql-rpc-public-connector-connector.js";
 
 export type TextqlRpcPublicConnectorGetConnectorsResponse = {
   connectors?: Array<TextqlRpcPublicConnectorConnector> | undefined;
+  unavailableConnectorTypes?:
+    | Array<TextqlRpcPublicConnectorConnectorType>
+    | undefined;
+  teradataUploadRequired?: boolean | undefined;
 };
 
 /** @internal */
@@ -23,6 +31,10 @@ export const TextqlRpcPublicConnectorGetConnectorsResponse$inboundSchema:
       connectors: types.optional(
         z.array(TextqlRpcPublicConnectorConnector$inboundSchema),
       ),
+      unavailableConnectorTypes: types.optional(
+        z.array(TextqlRpcPublicConnectorConnectorType$inboundSchema),
+      ),
+      teradataUploadRequired: types.optional(types.boolean()),
     });
 
 export function textqlRpcPublicConnectorGetConnectorsResponseFromJSON(
