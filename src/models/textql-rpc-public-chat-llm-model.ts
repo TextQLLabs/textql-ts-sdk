@@ -31,6 +31,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelGpt6Sol: "MODEL_GPT_6_SOL",
   ModelGpt6Luna: "MODEL_GPT_6_LUNA",
   ModelGpt61Sol: "MODEL_GPT_6_1_SOL",
+  ModelGpt61Terra: "MODEL_GPT_6_1_TERRA",
   ModelDeepseek32: "MODEL_DEEPSEEK_3_2",
   ModelGlm5: "MODEL_GLM_5",
   ModelVllm: "MODEL_VLLM",

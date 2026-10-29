@@ -438,6 +438,7 @@ run();
 * [listSkills](docs/sdks/ontology/README.md#listskills) - Lists the skills under the ontology's flat skills/ root that the caller can  read (OWNERS-filtered). Returns display metadata only — never instruction  bodies — feeding the chat composer's `/` autocomplete. Unlisted skills are  omitted unless include_unlisted is set.
 * [planMerge](docs/sdks/ontology/README.md#planmerge) - PlanOntologyMerge
 * [previewPullFromRemote](docs/sdks/ontology/README.md#previewpullfromremote) - PreviewOntologyPullFromRemote
+* [proposeChange](docs/sdks/ontology/README.md#proposechange) - ProposeOntologyChange
 * [pullFromRemote](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 * [pushToRemote](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
 * [recover](docs/sdks/ontology/README.md#recover) - RecoverOntology
@@ -936,6 +937,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`ontologyListSyncRuns`](docs/sdks/ontology/README.md#listsyncruns) - ListOntologySyncRuns
 - [`ontologyPlanMerge`](docs/sdks/ontology/README.md#planmerge) - PlanOntologyMerge
 - [`ontologyPreviewPullFromRemote`](docs/sdks/ontology/README.md#previewpullfromremote) - PreviewOntologyPullFromRemote
+- [`ontologyProposeChange`](docs/sdks/ontology/README.md#proposechange) - ProposeOntologyChange
 - [`ontologyPullFromRemote`](docs/sdks/ontology/README.md#pullfromremote) - PullOntologyFromRemote
 - [`ontologyPushToRemote`](docs/sdks/ontology/README.md#pushtoremote) - PushOntologyToRemote
 - [`ontologyRecover`](docs/sdks/ontology/README.md#recover) - RecoverOntology

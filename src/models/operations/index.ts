@@ -259,6 +259,7 @@ export * from "./ontology-management-service-list-patches.js";
 export * from "./ontology-management-service-list-skills.js";
 export * from "./ontology-management-service-plan-ontology-merge.js";
 export * from "./ontology-management-service-preview-ontology-pull-from-remote.js";
+export * from "./ontology-management-service-propose-ontology-change.js";
 export * from "./ontology-management-service-pull-ontology-from-remote.js";
 export * from "./ontology-management-service-push-ontology-to-remote.js";
 export * from "./ontology-management-service-recover-ontology.js";
