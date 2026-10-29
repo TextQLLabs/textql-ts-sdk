@@ -9596,6 +9596,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.patches.PreviewOntologyPullFromRemoteResponse'
+  /textql.rpc.public.patches.OntologyManagementService/ProposeOntologyChange:
+    post:
+      tags:
+        - OntologyManagementService
+      summary: ProposeOntologyChange
+      operationId: OntologyManagementService_ProposeOntologyChange
+      x-speakeasy-group: ontology
+      x-speakeasy-name-override: proposeChange
+      parameters:
+        - name: Connect-Protocol-Version
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/connect-protocol-version'
+        - name: Connect-Timeout-Ms
+          in: header
+          schema:
+            $ref: '#/components/schemas/connect-timeout-header'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/textql.rpc.public.patches.ProposeOntologyChangeRequest'
+        required: true
+      responses:
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connect.error'
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/textql.rpc.public.patches.ProposeOntologyChangeResponse'
   /textql.rpc.public.patches.OntologyManagementService/PullOntologyFromRemote:
     post:
       tags:
@@ -24488,7 +24525,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
              Thinking tokens bill as output tokens.
           nullable: true
           deprecated: true
@@ -24769,7 +24806,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
           nullable: true
           deprecated: true
         modelName:
@@ -25636,6 +25673,7 @@ components:
         - MODEL_GPT_6_SOL
         - MODEL_GPT_6_LUNA
         - MODEL_GPT_6_1_SOL
+        - MODEL_GPT_6_1_TERRA
         - MODEL_DEEPSEEK_3_2
         - MODEL_GLM_5
         - MODEL_VLLM
@@ -36244,6 +36282,50 @@ components:
             type: string
           title: unrelated_histories_conflict_paths
       title: PreviewOntologyPullFromRemoteResponse
+      additionalProperties: false
+    textql.rpc.public.patches.ProposeOntologyChangeRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          title: title
+        description:
+          type: string
+          title: description
+          nullable: true
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/textql.rpc.public.patches.ProposedOntologyFile'
+          title: files
+      title: ProposeOntologyChangeRequest
+      required:
+        - title
+      additionalProperties: false
+    textql.rpc.public.patches.ProposeOntologyChangeResponse:
+      type: object
+      properties:
+        patch:
+          title: patch
+          $ref: '#/components/schemas/textql.rpc.public.patches.Patch'
+      title: ProposeOntologyChangeResponse
+      additionalProperties: false
+    textql.rpc.public.patches.ProposedOntologyFile:
+      type: object
+      properties:
+        path:
+          type: string
+          title: path
+        content:
+          type: string
+          title: content
+        baseContentHash:
+          type: string
+          title: base_content_hash
+          nullable: true
+      title: ProposedOntologyFile
+      required:
+        - path
       additionalProperties: false
     textql.rpc.public.patches.PullOntologyFromRemoteRequest:
       type: object

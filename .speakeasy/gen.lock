@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: 7c624e6a558f88615b9e81896d3e466b
+  docChecksum: b3786bc5db4f6330624427e41043eac7
   docVersion: 1.0.0
-  speakeasyVersion: 1.803.2
-  generationVersion: 2.950.13
-  releaseVersion: 1.4.64
-  configChecksum: d707f46d6915e76ae4372d8358f47835
+  speakeasyVersion: 1.805.0
+  generationVersion: 2.954.8
+  releaseVersion: 1.4.65
+  configChecksum: 03c9140e47b6c228aff46b0c709dc708
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: bf61e9e9-a8dd-4b05-afc3-0e1adab11b9a
-  pristine_commit_hash: c917d8119bd653bb152fc6773d26ada535825ab2
-  pristine_tree_hash: 5deb93221ecf7fbf56775c7b35fcb10f70938df5
+  generation_id: c8d6d312-31f6-4359-ab23-5a687eada04a
+  pristine_commit_hash: 945032394cee51b94b3da9feb71a97cbdae6522f
+  pristine_tree_hash: 0f194af6890f895fb7a4242ebab55d066d7f190f
 features:
   typescript:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.4
     constsAndDefaults: 0.1.14
-    core: 3.31.7
+    core: 3.31.8
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     devContainers: 2.90.1
@@ -2746,6 +2746,14 @@ trackedFiles:
     id: 2a80b93a1c5a
     last_write_checksum: sha1:d70226fcdbbf912bc864821eb25165678e01b13d
     pristine_git_object: 41e812030c33ea67606313cc436c56e0105ec70e
+  docs/models/operations/ontology-management-service-propose-ontology-change-request.md:
+    id: 627e003fe087
+    last_write_checksum: sha1:6719bf66cebef0467712b0b561ba67479eb61fad
+    pristine_git_object: ab6621e28241db3320a2969cbbdb8d78dfb72119
+  docs/models/operations/ontology-management-service-propose-ontology-change-response.md:
+    id: dcc1d6d786c5
+    last_write_checksum: sha1:ff1f5c67aa352ed1b8c3908b939c0d5ec9e2c11c
+    pristine_git_object: 93296b385f963722b888d7060a98034fbacdba77
   docs/models/operations/ontology-management-service-pull-ontology-from-remote-request.md:
     id: d11f990bb327
     last_write_checksum: sha1:d61dbd5fcd84cb59cb0b3c9a9ff394f698019348
@@ -6024,8 +6032,8 @@ trackedFiles:
     pristine_git_object: 5172a480364cf0b5514b50e8ab9f5bbfbe15b5a3
   docs/models/textql-rpc-public-chat-chat.md:
     id: 42b2d9b3025b
-    last_write_checksum: sha1:9c32fb2397e2445eb56d45b47a1d75bf397f4979
-    pristine_git_object: dcde6fe492a423cea88ad8e81bc683c6e128769d
+    last_write_checksum: sha1:18651c7086badcae3f50329965bf29e85f196b71
+    pristine_git_object: 22b07b8734f53a9d95c75ecae26d5a97d2a5b0b6
   docs/models/textql-rpc-public-chat-check-chat-permissions-request.md:
     id: 83ab4a2e3f45
     last_write_checksum: sha1:0e01d2ba2fae4b3fb69011c751cce529d929335b
@@ -6052,8 +6060,8 @@ trackedFiles:
     pristine_git_object: 323aeaede46edbd161360f0fc4b09261af2e2a2c
   docs/models/textql-rpc-public-chat-create-request.md:
     id: d2eac1bd95fb
-    last_write_checksum: sha1:03b7d8e7927e2d1493ab1bbdd1c8f9f13574760e
-    pristine_git_object: 53542b6d60b987b796790873594a8c909a74dacd
+    last_write_checksum: sha1:9d2e222b08ab403fc99d10e598779d65448cd3cc
+    pristine_git_object: 5909788d523aaae1d4597dc3027baeacea9b3736
   docs/models/textql-rpc-public-chat-create-response.md:
     id: 85236d08cf9d
     last_write_checksum: sha1:f1845966bd46112136568ea457904c134901a916
@@ -6236,8 +6244,8 @@ trackedFiles:
     pristine_git_object: 13a90b78da7ac380f97499dad92208f17947d807
   docs/models/textql-rpc-public-chat-llm-model.md:
     id: 9dd108ea1365
-    last_write_checksum: sha1:6ffe5c60fe6e6cc2a10da4fbbb1cc4765df0662b
-    pristine_git_object: e0ea7a7a0e67f67d360db58cb201ae7364e51d3a
+    last_write_checksum: sha1:cb4af9cfd7b64a57af0b0e917057996451933149
+    pristine_git_object: c7db537743411b75215987703864826392b28719
   docs/models/textql-rpc-public-chat-llm-usage.md:
     id: 7c7ed4490ce9
     last_write_checksum: sha1:71044bffdbbc1b528af37ef3a8ce55d65639b6d0
@@ -8542,6 +8550,18 @@ trackedFiles:
     id: bc273a19fa0d
     last_write_checksum: sha1:1b776f903c94e7d4aa6c71d1a70b8773051c138c
     pristine_git_object: b110b26a3cc7b6a58245738aee3ab72cb13dc754
+  docs/models/textql-rpc-public-patches-propose-ontology-change-request.md:
+    id: a2b79eb89037
+    last_write_checksum: sha1:08d8a7eb57d6776d7b807bfb5694f62d019944d6
+    pristine_git_object: f07f3cd0ac4f100e6f577d4ca0e1e0a204362c35
+  docs/models/textql-rpc-public-patches-propose-ontology-change-response.md:
+    id: 24484f5085d8
+    last_write_checksum: sha1:f451539a78fd1639509d58d7f1f75a532d09c5eb
+    pristine_git_object: e34239e41729f391d19f8d5e2feff1f81a62db63
+  docs/models/textql-rpc-public-patches-proposed-ontology-file.md:
+    id: cd758d5029ba
+    last_write_checksum: sha1:7a3e019da1ff5b02ec2ddc5187c9fce6554603f4
+    pristine_git_object: d757efb636768e0445c95337bb62154cafb1a7da
   docs/models/textql-rpc-public-patches-pull-ontology-from-remote-request.md:
     id: 28fad34116fc
     last_write_checksum: sha1:289b0001d389b293c33872db4708aac6411d8666
@@ -10676,8 +10696,8 @@ trackedFiles:
     pristine_git_object: 42cd7ac4609a34b2616e8912d4d782d28216912c
   docs/sdks/ontology/README.md:
     id: 0dbbd337a8ee
-    last_write_checksum: sha1:c7c258d416b5ccb9c6da8b79fbb79bc2189bc428
-    pristine_git_object: c5c0e29303da609039e742f937c3c7845bce43a0
+    last_write_checksum: sha1:a4afc66990d0ae9c7dc962ab8fbe6ce3fa548799
+    pristine_git_object: bf81c0b85f534585a9df38d33d9a04a8b19ff9e5
   docs/sdks/playbooks/README.md:
     id: e8797c3b29dd
     last_write_checksum: sha1:cc7f4cd4065a42d8e183efa05fce725b7c7bccc6
@@ -10728,12 +10748,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:a00292babc15017c8e54d31785a41c342a3ccfa4
-    pristine_git_object: 9c18b363714db82ba16b592a32053c6699b0f9b5
+    last_write_checksum: sha1:3bd645a5ca7bd49e2f983d469aa77ba528ced8c0
+    pristine_git_object: 089d79220f9152d992d89bde9c8f825d0398105d
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:772a930077363615599a1ab1204e4d4048228296
-    pristine_git_object: 6f67e44c4360a3358706150f27efbbf0a74a5ec0
+    last_write_checksum: sha1:52263132d31f03a07112c5b295b71bfe2402de98
+    pristine_git_object: 01d01cb0ca725eca38c9db4dc5cc24e2f1694768
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11766,6 +11786,10 @@ trackedFiles:
     id: 41bb55d9b382
     last_write_checksum: sha1:80d8143105070d964abcf4346715b8a06ab1af05
     pristine_git_object: cbcf58fd33ff624d34ed7d5f26fc6a771393c4b9
+  src/funcs/ontology-propose-change.ts:
+    id: 17f9fa49b6d5
+    last_write_checksum: sha1:6daf577414087c3bb62d217021d0daecd0533180
+    pristine_git_object: f18693b493571cc75a7207f76c0e25566086d556
   src/funcs/ontology-pull-from-remote.ts:
     id: 51530214c48b
     last_write_checksum: sha1:57e99b75adf206adff0e04c7ddf32d30d200df44
@@ -12532,8 +12556,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:a8f0fd74653ca65e8af2b854bae7abfa099f4d62
-    pristine_git_object: 03764fbd4c2f6cc74d3524b970727314d66fdb1e
+    last_write_checksum: sha1:841d17132d14c6dc0c2cab75293e4c50595cb339
+    pristine_git_object: eebf854396df45b08a2d473b562985edd10ac4ee
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -12628,8 +12652,8 @@ trackedFiles:
     pristine_git_object: c245708ebadfb181e7694330adadcd258e0915d7
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:d50f0ae02a141f031b9b4b23ec3e6abae085085e
-    pristine_git_object: 002fec56a6274049a8a9b16aa6dc3befd6e7f225
+    last_write_checksum: sha1:b567d7c48e32c2944ccaf2fcfe1fb8966fd7da37
+    pristine_git_object: 2df51825f0dce5ac50d0d30ef9ce1fd45459e5e8
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:454c8dafd4fa5ad88444cbea0d22e6b704e6936a
@@ -13300,8 +13324,8 @@ trackedFiles:
     pristine_git_object: 6bd7ac938f650359df829c05ee5f7d1ac7dc0ccf
   src/models/operations/index.ts:
     id: 0d9ffaf774d2
-    last_write_checksum: sha1:ebe10eee4ab5f3ccdcc14db07bcd89b05363fce9
-    pristine_git_object: d1f19f302699778610fb120d293e47b95aeb0a2d
+    last_write_checksum: sha1:08c15d53236707d974a06373faf99dd068d0e2f7
+    pristine_git_object: 78649bd9fadaa6b368fcc94b6f1b0ab1d39afd37
   src/models/operations/mcp-service-clear-o-auth-token.ts:
     id: 22f21a173140
     last_write_checksum: sha1:08a6a219780060debcbcf8473b85f25d2509f32f
@@ -13662,6 +13686,10 @@ trackedFiles:
     id: 9ccc0db32a40
     last_write_checksum: sha1:d2bfde2d7f06f06077face405142f7e612355570
     pristine_git_object: f8465b5b507b880515d1a17dd293be9c14e44fb0
+  src/models/operations/ontology-management-service-propose-ontology-change.ts:
+    id: e461afe3d5d0
+    last_write_checksum: sha1:9b58d7d58ff93aa363ac89caf3851ebb9b5630d6
+    pristine_git_object: a82ca64ef7526dd29ba3a5d191724896433cc4fd
   src/models/operations/ontology-management-service-pull-ontology-from-remote.ts:
     id: fb92da7069d7
     last_write_checksum: sha1:e23dbb29adf33b1760f02bdaa4ab1bf45871c259
@@ -15592,8 +15620,8 @@ trackedFiles:
     pristine_git_object: a5958df718d6e84c222501e6b4d38a2a76bf832c
   src/models/textql-rpc-public-chat-chat.ts:
     id: 3cc8b24fd546
-    last_write_checksum: sha1:825e0b9f200dc7b756d192626374711fc924865f
-    pristine_git_object: a273fd3db8b7751165d3cef8734155f0c8c5a555
+    last_write_checksum: sha1:26f792582dbdd8b5d0e052c1e6ca5704c34cbeed
+    pristine_git_object: 0f426dda72d0ae9ca51078dc682f8cb12a11d64d
   src/models/textql-rpc-public-chat-check-chat-permissions-request.ts:
     id: 371805816a0c
     last_write_checksum: sha1:28ddda61908ebc0776cbaef69bc5e6afd8ca1537
@@ -15620,8 +15648,8 @@ trackedFiles:
     pristine_git_object: 38166d0b8df3ead5ef0e38741d3d02d1130ca163
   src/models/textql-rpc-public-chat-create-request.ts:
     id: ad4a54ec0033
-    last_write_checksum: sha1:bf72711da9106c9f5e94f04e8f690efd88756fb4
-    pristine_git_object: ae42bb60068874eac03392bebd5b782b62232e62
+    last_write_checksum: sha1:5b0df7b1619341febf51d8bbab686184866e61ef
+    pristine_git_object: ec1a3c675bd5d248d600619e476732b34396c10f
   src/models/textql-rpc-public-chat-create-response.ts:
     id: f659caec0487
     last_write_checksum: sha1:2d4722dc0ffe0f67b617e2571bca7affaf4e9bfe
@@ -15780,8 +15808,8 @@ trackedFiles:
     pristine_git_object: 0fe4734e1012a2d6faea6b527100bc8168070921
   src/models/textql-rpc-public-chat-llm-model.ts:
     id: "827961421801"
-    last_write_checksum: sha1:d1bfbf8ed5abaa3e336bc747defaad297f249d70
-    pristine_git_object: 21e89c2139cd68623c5568172855d40001f46a05
+    last_write_checksum: sha1:a906ecc01e463bc33fa07f9f78bfdb5414b2e88f
+    pristine_git_object: f037d637c7c87a0bea695186c0dada9afcf13d3b
   src/models/textql-rpc-public-chat-llm-usage.ts:
     id: 405da8c0e283
     last_write_checksum: sha1:ff328a54e264048310ff1d1c41d12a95faf0529f
@@ -17974,6 +18002,18 @@ trackedFiles:
     id: e3fc83842dc8
     last_write_checksum: sha1:38d407501e674c9a890a95a0d3585520f0d26dda
     pristine_git_object: f6e940ea170af496712176dfd541847b8e9ce5cb
+  src/models/textql-rpc-public-patches-propose-ontology-change-request.ts:
+    id: ff001c99d06f
+    last_write_checksum: sha1:dffee35ced47493ae619234db379b63fc5f5b560
+    pristine_git_object: 7a81fce72c0b2625cbd0ed17bdb0b89e96838c9b
+  src/models/textql-rpc-public-patches-propose-ontology-change-response.ts:
+    id: c5cf0b416ff9
+    last_write_checksum: sha1:82a51fe85b3c5c8416c960e5aa04ef932004246d
+    pristine_git_object: 66fa505cd5c302e8b20cfe43c4691ee93df68376
+  src/models/textql-rpc-public-patches-proposed-ontology-file.ts:
+    id: d3d552e45af8
+    last_write_checksum: sha1:437380f6d17797de0d6cff8eab5c124895a78878
+    pristine_git_object: 1bb14fc6d22668058e8a6329406793b73c30c5f2
   src/models/textql-rpc-public-patches-pull-ontology-from-remote-request.ts:
     id: 447bc59b4c97
     last_write_checksum: sha1:76ab68d36a2cb3ac2a89519f324f643463da210a
@@ -19916,8 +19956,8 @@ trackedFiles:
     pristine_git_object: 9a45312a06e15499cc66d18814690051bd49e0d0
   src/sdk/ontology.ts:
     id: 6d410ab7f699
-    last_write_checksum: sha1:bf4aff6a31e4e91e881bc4e93534425493446d18
-    pristine_git_object: 8185e92590fcb2e887019d34f9843838aee260a5
+    last_write_checksum: sha1:3e9a97a302871f2e3974841843233d12706616fb
+    pristine_git_object: 1327dff6393486f0ad02bc1d3aeb6d3ec763dfc0
   src/sdk/playbooks.ts:
     id: a26be27b2b08
     last_write_checksum: sha1:c4ca33ed79950f90be17033c82eb5ee73d93f7e2
@@ -26517,4 +26557,17 @@ examples:
           application/json: {}
         default:
           application/json: {"code": "not_found"}
+  OntologyManagementService_ProposeOntologyChange:
+    speakeasy-default-ontology-management-service-propose-ontology-change:
+      parameters:
+        header:
+          Connect-Protocol-Version: "1"
+      requestBody:
+        application/json: {"title": "<value>"}
+      responses:
+        "200":
+          application/json: {"patch": {"createdAt": "2023-01-15T01:30:15.01Z", "updatedAt": "2023-01-15T01:30:15.01Z"}}
+        default:
+          application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.ontology.proposeChange()`: **Added**\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.harnesses.list()`:  `response.harnesses[].models[].enum(modelGpt61Terra)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.rbac.createRole()`:  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getMemberRoles()`:  `response.memberRolesByEmail.Map<textql.rpc.public.rbac.MemberRoles>.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getRole()`:  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.importRoles()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.listRoles()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.updateRole()`: \n  *  `request.body.allowedModels[].enum(modelGpt61Terra)` **Added**\n  *  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.whoAmI()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.settings.get()`:  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n* `textql.settings.updateModels()`: \n  *  `request.body.defaultModel.enum(modelGpt61Terra)` **Added**\n  *  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n* `textql.settings.update()`: \n  *  `request.body.enabledModels[].enum(modelGpt61Terra)` **Added**\n  *  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n"

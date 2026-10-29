@@ -51,6 +51,7 @@ import { ontologyListSubmodules } from "../funcs/ontology-list-submodules.js";
 import { ontologyListSyncRuns } from "../funcs/ontology-list-sync-runs.js";
 import { ontologyPlanMerge } from "../funcs/ontology-plan-merge.js";
 import { ontologyPreviewPullFromRemote } from "../funcs/ontology-preview-pull-from-remote.js";
+import { ontologyProposeChange } from "../funcs/ontology-propose-change.js";
 import { ontologyPullFromRemote } from "../funcs/ontology-pull-from-remote.js";
 import { ontologyPushToRemote } from "../funcs/ontology-push-to-remote.js";
 import { ontologyRecover } from "../funcs/ontology-recover.js";
@@ -821,6 +822,22 @@ export class Ontology extends ClientSDK {
     operations.OntologyManagementServicePreviewOntologyPullFromRemoteResponse
   > {
     return unwrapAsync(ontologyPreviewPullFromRemote(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * ProposeOntologyChange
+   */
+  async proposeChange(
+    request: operations.OntologyManagementServiceProposeOntologyChangeRequest,
+    options?: RequestOptions,
+  ): Promise<
+    operations.OntologyManagementServiceProposeOntologyChangeResponse
+  > {
+    return unwrapAsync(ontologyProposeChange(
       this,
       request,
       options,
