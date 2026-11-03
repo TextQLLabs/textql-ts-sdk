@@ -3,17 +3,17 @@ id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
   docChecksum: b3786bc5db4f6330624427e41043eac7
   docVersion: 1.0.0
-  speakeasyVersion: 1.805.0
-  generationVersion: 2.954.8
-  releaseVersion: 1.4.65
-  configChecksum: 03c9140e47b6c228aff46b0c709dc708
+  speakeasyVersion: 1.806.0
+  generationVersion: 2.956.1
+  releaseVersion: 1.4.66
+  configChecksum: d62f4a99ab074310c389baa55a431975
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: c8d6d312-31f6-4359-ab23-5a687eada04a
-  pristine_commit_hash: 945032394cee51b94b3da9feb71a97cbdae6522f
-  pristine_tree_hash: 0f194af6890f895fb7a4242ebab55d066d7f190f
+  generation_id: 7a58911f-7d41-4810-b826-2f0f56d1e272
+  pristine_commit_hash: 0cfeb6389f27d2172aab300c1dd3c17db4125396
+  pristine_tree_hash: a452543eb02f173ec037c5dc271b00cb3be2d7fb
 features:
   typescript:
     additionalDependencies: 0.1.0
@@ -10748,12 +10748,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:3bd645a5ca7bd49e2f983d469aa77ba528ced8c0
-    pristine_git_object: 089d79220f9152d992d89bde9c8f825d0398105d
+    last_write_checksum: sha1:baef83462f6de00d0a7b1dc04b33ea6eea26bcd4
+    pristine_git_object: 8775bba3d31cfd846b6e7546e8eabc22b87a5296
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:52263132d31f03a07112c5b295b71bfe2402de98
-    pristine_git_object: 01d01cb0ca725eca38c9db4dc5cc24e2f1694768
+    last_write_checksum: sha1:cd3091e3e805aac1bea02487687aecb93e32a5ff
+    pristine_git_object: daeb6030eb749dc1569d56c23303e349660eca47
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -12556,8 +12556,8 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:841d17132d14c6dc0c2cab75293e4c50595cb339
-    pristine_git_object: eebf854396df45b08a2d473b562985edd10ac4ee
+    last_write_checksum: sha1:570ab3484e57d2cb8dabab30f0cf3aca16d2075e
+    pristine_git_object: cc779620fe721d564b766c09772312f07cb1507e
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
@@ -26570,4 +26570,3 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
-releaseNotes: "## Typescript SDK Changes:\n* `textql.ontology.proposeChange()`: **Added**\n* `textql.agents.create()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.duplicate()`:  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.getAgent()`:  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.list()`:  `response.agents[].llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.agents.update()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachAgent()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachApp()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachDashboard()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.attachDataset()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.checkHealth()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.checkStreamlitHealth()`:  `response.cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.createChat()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.duplicateChat()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.get()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getHistory()`:  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getAll()`:  `response.chats[].model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.getPlaybookChats()`:  `response.chats[].model.enum(modelGpt61Terra)` **Added**\n* `textql.chats.pollEvents()`:  `response.events[].union(cell).cell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.queryOneShot()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.run()`: \n  *  `request.body.model.enum(modelGpt61Terra)` **Added**\n  *  `response.cells[].union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.chats.update()`:  `response.chat.model.enum(modelGpt61Terra)` **Added**\n* `textql.harnesses.list()`:  `response.harnesses[].models[].enum(modelGpt61Terra)` **Added**\n* `textql.observability.getCheckRecordFix()`:  `response.fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.observability.getThreadWarnings()`:  `response.warningsByChat.Map<textql.rpc.public.observe.ThreadWarningList>.warnings[].fixPatchCell.union(feed_create_cell).feedCreateCell.agent.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.createPlaybook()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.duplicate()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.fetch()`:  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.get()`:  `response.playbooks[].llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.playbooks.update()`: \n  *  `request.body.llmModel.enum(modelGpt61Terra)` **Added**\n  *  `response.playbook.llmModel.enum(modelGpt61Terra)` **Added**\n* `textql.rbac.createRole()`:  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getMemberRoles()`:  `response.memberRolesByEmail.Map<textql.rpc.public.rbac.MemberRoles>.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.getRole()`:  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.importRoles()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.listRoles()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.updateRole()`: \n  *  `request.body.allowedModels[].enum(modelGpt61Terra)` **Added**\n  *  `response.role.allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.rbac.whoAmI()`:  `response.roles[].allowedModels[].enum(modelGpt61Terra)` **Added**\n* `textql.settings.get()`:  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n* `textql.settings.updateModels()`: \n  *  `request.body.defaultModel.enum(modelGpt61Terra)` **Added**\n  *  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n* `textql.settings.update()`: \n  *  `request.body.enabledModels[].enum(modelGpt61Terra)` **Added**\n  *  `response.modelSettings.defaultModel.enum(modelGpt61Terra)` **Added**\n"
