@@ -130,46 +130,7 @@ export const TextqlRpcPublicPowerbiPowerBIDataset$inboundSchema: z.ZodMiniType<
   createdDate: types.optional(types.date()),
   tableNames: types.optional(z.array(types.string())),
 });
-/** @internal */
-export type TextqlRpcPublicPowerbiPowerBIDataset$Outbound = {
-  id?: string | undefined;
-  name?: string | undefined;
-  addRowsApiEnabled?: boolean | undefined;
-  configuredBy?: string | undefined;
-  isRefreshable?: boolean | undefined;
-  isEffectiveIdentityRequired?: boolean | undefined;
-  isEffectiveIdentityRolesRequired?: boolean | undefined;
-  isOnPremGatewayRequired?: boolean | undefined;
-  createdDate?: string | undefined;
-  tableNames?: Array<string> | undefined;
-};
 
-/** @internal */
-export const TextqlRpcPublicPowerbiPowerBIDataset$outboundSchema: z.ZodMiniType<
-  TextqlRpcPublicPowerbiPowerBIDataset$Outbound,
-  TextqlRpcPublicPowerbiPowerBIDataset
-> = z.object({
-  id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  addRowsApiEnabled: z.optional(z.boolean()),
-  configuredBy: z.optional(z.string()),
-  isRefreshable: z.optional(z.boolean()),
-  isEffectiveIdentityRequired: z.optional(z.boolean()),
-  isEffectiveIdentityRolesRequired: z.optional(z.boolean()),
-  isOnPremGatewayRequired: z.optional(z.boolean()),
-  createdDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  tableNames: z.optional(z.array(z.string())),
-});
-
-export function textqlRpcPublicPowerbiPowerBIDatasetToJSON(
-  textqlRpcPublicPowerbiPowerBIDataset: TextqlRpcPublicPowerbiPowerBIDataset,
-): string {
-  return JSON.stringify(
-    TextqlRpcPublicPowerbiPowerBIDataset$outboundSchema.parse(
-      textqlRpcPublicPowerbiPowerBIDataset,
-    ),
-  );
-}
 export function textqlRpcPublicPowerbiPowerBIDatasetFromJSON(
   jsonString: string,
 ): SafeParseResult<TextqlRpcPublicPowerbiPowerBIDataset, SDKValidationError> {

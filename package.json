@@ -1,6 +1,6 @@
 {
   "name": "@textql/sdk",
-  "version": "1.4.67",
+  "version": "1.4.68",
   "author": "TextQL Labs",
   "bugs": {
     "url": "https://github.com/TextQLLabs/textql-ts-sdk/issues"
@@ -87,6 +87,6 @@
     "@bufbuild/protobuf": "^2.2.0",
     "@connectrpc/connect": "^2.0.0",
     "@connectrpc/connect-web": "^2.0.0",
-    "zod": "^3.25.65 || ^4.0.0"
+    "zod": "^3.25.65 || ^4.6.6"
   }
 }

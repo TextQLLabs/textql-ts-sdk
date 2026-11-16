@@ -319,7 +319,6 @@ run();
 ### [Datasets](docs/sdks/datasets/README.md)
 
 * [createFolder](docs/sdks/datasets/README.md#createfolder) - CreateFolder
-* [createPowerBIDataset](docs/sdks/datasets/README.md#createpowerbidataset) - CreatePowerBIDataset
 * [createTableauDataset](docs/sdks/datasets/README.md#createtableaudataset) - Create Tableau dataset from views/datasources
 * [createUploadPresignUrl](docs/sdks/datasets/README.md#createuploadpresignurl) - uploads
 * [delete](docs/sdks/datasets/README.md#delete) - Delete a dataset (soft delete)
@@ -512,9 +511,7 @@ run();
 * [list](docs/sdks/powerbi/README.md#list) - ListPowerBIDatasets
 * [listReports](docs/sdks/powerbi/README.md#listreports) - ListPowerBIReports
 * [listWorkspaces](docs/sdks/powerbi/README.md#listworkspaces) - ListPowerBIWorkspaces
-* [syncPowerBIItems](docs/sdks/powerbi/README.md#syncpowerbiitems) - SyncPowerBIItems
 * [testConnection](docs/sdks/powerbi/README.md#testconnection) - TestPowerBIConnection
-* [unsyncItems](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
 
 ### [Rbac](docs/sdks/rbac/README.md)
 
@@ -833,7 +830,6 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`dashboardsUpdateDashboardFolder`](docs/sdks/dashboards/README.md#updatedashboardfolder) - UpdateDashboardFolder
 - [`dashboardsUpdateDashboardSchedule`](docs/sdks/dashboards/README.md#updatedashboardschedule) - Scheduling
 - [`datasetsCreateFolder`](docs/sdks/datasets/README.md#createfolder) - CreateFolder
-- [`datasetsCreatePowerBIDataset`](docs/sdks/datasets/README.md#createpowerbidataset) - CreatePowerBIDataset
 - [`datasetsCreateTableauDataset`](docs/sdks/datasets/README.md#createtableaudataset) - Create Tableau dataset from views/datasources
 - [`datasetsCreateUploadPresignUrl`](docs/sdks/datasets/README.md#createuploadpresignurl) - uploads
 - [`datasetsDelete`](docs/sdks/datasets/README.md#delete) - Delete a dataset (soft delete)
@@ -1005,9 +1001,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`powerbiList`](docs/sdks/powerbi/README.md#list) - ListPowerBIDatasets
 - [`powerbiListReports`](docs/sdks/powerbi/README.md#listreports) - ListPowerBIReports
 - [`powerbiListWorkspaces`](docs/sdks/powerbi/README.md#listworkspaces) - ListPowerBIWorkspaces
-- [`powerbiSyncPowerBIItems`](docs/sdks/powerbi/README.md#syncpowerbiitems) - SyncPowerBIItems
 - [`powerbiTestConnection`](docs/sdks/powerbi/README.md#testconnection) - TestPowerBIConnection
-- [`powerbiUnsyncItems`](docs/sdks/powerbi/README.md#unsyncitems) - UnsyncPowerBIItems
 - [`rbacApproveAccessRequest`](docs/sdks/rbac/README.md#approveaccessrequest) - ApproveAccessRequest
 - [`rbacAssignPermissionToRole`](docs/sdks/rbac/README.md#assignpermissiontorole) - AssignPermissionToRole
 - [`rbacAssignRoleToMember`](docs/sdks/rbac/README.md#assignroletomember) - Member role assignment
@@ -1356,7 +1350,7 @@ import { Textql } from "@textql/sdk";
 const sdk = new Textql({ debugLogger: console });
 ```
 
-You can also enable a default debug logger by setting an environment variable `TEXTQL_DEBUG` to true.
+You can also enable a default debug logger by setting an environment variable `TEXTQL_DEBUG` to `true`, `1`, `yes` or `on` (case-insensitive). Any other value leaves it off.
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->

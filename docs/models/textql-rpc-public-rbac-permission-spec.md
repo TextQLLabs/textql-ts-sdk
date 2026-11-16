@@ -57,7 +57,7 @@ const value: models.Connector = {
 
 ```typescript
 const value: models.Context = {
-  context: "CONTEXT_ACTION_READ_PRIVATE",
+  context: "CONTEXT_ACTION_WRITE",
 };
 ```
 
