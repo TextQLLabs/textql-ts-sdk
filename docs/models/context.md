@@ -6,7 +6,7 @@
 import { Context } from "@textql/sdk/models";
 
 let value: Context = {
-  context: "CONTEXT_ACTION_READ_PRIVATE",
+  context: "CONTEXT_ACTION_WRITE",
 };
 ```
 

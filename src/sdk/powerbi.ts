@@ -9,9 +9,7 @@ import { powerbiGetSyncedItems } from "../funcs/powerbi-get-synced-items.js";
 import { powerbiListReports } from "../funcs/powerbi-list-reports.js";
 import { powerbiListWorkspaces } from "../funcs/powerbi-list-workspaces.js";
 import { powerbiList } from "../funcs/powerbi-list.js";
-import { powerbiSyncPowerBIItems } from "../funcs/powerbi-sync-power-bi-items.js";
 import { powerbiTestConnection } from "../funcs/powerbi-test-connection.js";
-import { powerbiUnsyncItems } from "../funcs/powerbi-unsync-items.js";
 import { ClientSDK, RequestOptions } from "../lib/sdks.js";
 import * as operations from "../models/operations/index.js";
 import { unwrapAsync } from "../types/fp.js";
@@ -116,20 +114,6 @@ export class Powerbi extends ClientSDK {
   }
 
   /**
-   * SyncPowerBIItems
-   */
-  async syncPowerBIItems(
-    request: operations.PowerBIServiceSyncPowerBIItemsRequest,
-    options?: RequestOptions,
-  ): Promise<operations.PowerBIServiceSyncPowerBIItemsResponse> {
-    return unwrapAsync(powerbiSyncPowerBIItems(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
    * TestPowerBIConnection
    */
   async testConnection(
@@ -137,20 +121,6 @@ export class Powerbi extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.PowerBIServiceTestPowerBIConnectionResponse> {
     return unwrapAsync(powerbiTestConnection(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * UnsyncPowerBIItems
-   */
-  async unsyncItems(
-    request: operations.PowerBIServiceUnsyncPowerBIItemsRequest,
-    options?: RequestOptions,
-  ): Promise<operations.PowerBIServiceUnsyncPowerBIItemsResponse> {
-    return unwrapAsync(powerbiUnsyncItems(
       this,
       request,
       options,

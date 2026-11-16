@@ -3,7 +3,6 @@
  */
 
 import { datasetsCreateFolder } from "../funcs/datasets-create-folder.js";
-import { datasetsCreatePowerBIDataset } from "../funcs/datasets-create-power-bi-dataset.js";
 import { datasetsCreateTableauDataset } from "../funcs/datasets-create-tableau-dataset.js";
 import { datasetsCreateUploadPresignUrl } from "../funcs/datasets-create-upload-presign-url.js";
 import { datasetsDelete } from "../funcs/datasets-delete.js";
@@ -29,20 +28,6 @@ export class Datasets extends ClientSDK {
     options?: RequestOptions,
   ): Promise<operations.DatasetServiceCreateFolderResponse> {
     return unwrapAsync(datasetsCreateFolder(
-      this,
-      request,
-      options,
-    ));
-  }
-
-  /**
-   * CreatePowerBIDataset
-   */
-  async createPowerBIDataset(
-    request: operations.DatasetServiceCreatePowerBIDatasetRequest,
-    options?: RequestOptions,
-  ): Promise<operations.DatasetServiceCreatePowerBIDatasetResponse> {
-    return unwrapAsync(datasetsCreatePowerBIDataset(
       this,
       request,
       options,

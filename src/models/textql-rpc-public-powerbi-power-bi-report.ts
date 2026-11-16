@@ -124,40 +124,7 @@ export const TextqlRpcPublicPowerbiPowerBIReport$inboundSchema: z.ZodMiniType<
   createdBy: types.optional(types.string()),
   createdDate: types.optional(types.date()),
 });
-/** @internal */
-export type TextqlRpcPublicPowerbiPowerBIReport$Outbound = {
-  id?: string | undefined;
-  name?: string | undefined;
-  webUrl?: string | undefined;
-  embedUrl?: string | undefined;
-  datasetId?: string | undefined;
-  createdBy?: string | undefined;
-  createdDate?: string | undefined;
-};
 
-/** @internal */
-export const TextqlRpcPublicPowerbiPowerBIReport$outboundSchema: z.ZodMiniType<
-  TextqlRpcPublicPowerbiPowerBIReport$Outbound,
-  TextqlRpcPublicPowerbiPowerBIReport
-> = z.object({
-  id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  webUrl: z.optional(z.string()),
-  embedUrl: z.optional(z.string()),
-  datasetId: z.optional(z.string()),
-  createdBy: z.optional(z.string()),
-  createdDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-});
-
-export function textqlRpcPublicPowerbiPowerBIReportToJSON(
-  textqlRpcPublicPowerbiPowerBIReport: TextqlRpcPublicPowerbiPowerBIReport,
-): string {
-  return JSON.stringify(
-    TextqlRpcPublicPowerbiPowerBIReport$outboundSchema.parse(
-      textqlRpcPublicPowerbiPowerBIReport,
-    ),
-  );
-}
 export function textqlRpcPublicPowerbiPowerBIReportFromJSON(
   jsonString: string,
 ): SafeParseResult<TextqlRpcPublicPowerbiPowerBIReport, SDKValidationError> {

@@ -11,9 +11,7 @@
 * [list](#list) - ListPowerBIDatasets
 * [listReports](#listreports) - ListPowerBIReports
 * [listWorkspaces](#listworkspaces) - ListPowerBIWorkspaces
-* [syncPowerBIItems](#syncpowerbiitems) - SyncPowerBIItems
 * [testConnection](#testconnection) - TestPowerBIConnection
-* [unsyncItems](#unsyncitems) - UnsyncPowerBIItems
 
 ## exportReportImage
 
@@ -526,101 +524,6 @@ run();
 | ------------------------- | ------------------------- | ------------------------- |
 | errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
 
-## syncPowerBIItems
-
-SyncPowerBIItems
-
-### Example Usage
-
-<!-- UsageSnippet language="typescript" operationID="PowerBIService_SyncPowerBIItems" method="post" path="/textql.rpc.public.powerbi.PowerBIService/SyncPowerBIItems" -->
-```typescript
-import { Textql } from "@textql/sdk";
-
-const textql = new Textql({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const result = await textql.powerbi.syncPowerBIItems({
-    body: {
-      reports: [
-        {
-          createdDate: new Date("2023-01-15T01:30:15.01Z"),
-        },
-      ],
-      datasets: [
-        {
-          createdDate: new Date("2023-01-15T01:30:15.01Z"),
-        },
-      ],
-    },
-  });
-
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { TextqlCore } from "@textql/sdk/core.js";
-import { powerbiSyncPowerBIItems } from "@textql/sdk/funcs/powerbi-sync-power-bi-items.js";
-
-// Use `TextqlCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const textql = new TextqlCore({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const res = await powerbiSyncPowerBIItems(textql, {
-    body: {
-      reports: [
-        {
-          createdDate: new Date("2023-01-15T01:30:15.01Z"),
-        },
-      ],
-      datasets: [
-        {
-          createdDate: new Date("2023-01-15T01:30:15.01Z"),
-        },
-      ],
-    },
-  });
-  if (res.ok) {
-    const { value: result } = res;
-    console.log(result);
-  } else {
-    console.log("powerbiSyncPowerBIItems failed:", res.error);
-  }
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.PowerBIServiceSyncPowerBIItemsRequest](../../models/operations/power-bi-service-sync-power-bi-items-request.md)                                                    | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[operations.PowerBIServiceSyncPowerBIItemsResponse](../../models/operations/power-bi-service-sync-power-bi-items-response.md)\>**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
-
 ## testConnection
 
 TestPowerBIConnection
@@ -687,79 +590,6 @@ run();
 ### Response
 
 **Promise\<[operations.PowerBIServiceTestPowerBIConnectionResponse](../../models/operations/power-bi-service-test-power-bi-connection-response.md)\>**
-
-### Errors
-
-| Error Type                | Status Code               | Content Type              |
-| ------------------------- | ------------------------- | ------------------------- |
-| errors.TextqlDefaultError | 4XX, 5XX                  | \*/\*                     |
-
-## unsyncItems
-
-UnsyncPowerBIItems
-
-### Example Usage
-
-<!-- UsageSnippet language="typescript" operationID="PowerBIService_UnsyncPowerBIItems" method="post" path="/textql.rpc.public.powerbi.PowerBIService/UnsyncPowerBIItems" -->
-```typescript
-import { Textql } from "@textql/sdk";
-
-const textql = new Textql({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const result = await textql.powerbi.unsyncItems({
-    body: {},
-  });
-
-  console.log(result);
-}
-
-run();
-```
-
-### Standalone function
-
-The standalone function version of this method:
-
-```typescript
-import { TextqlCore } from "@textql/sdk/core.js";
-import { powerbiUnsyncItems } from "@textql/sdk/funcs/powerbi-unsync-items.js";
-
-// Use `TextqlCore` for best tree-shaking performance.
-// You can create one instance of it to use across an application.
-const textql = new TextqlCore({
-  apiKey: process.env["TEXTQL_API_KEY"] ?? "",
-});
-
-async function run() {
-  const res = await powerbiUnsyncItems(textql, {
-    body: {},
-  });
-  if (res.ok) {
-    const { value: result } = res;
-    console.log(result);
-  } else {
-    console.log("powerbiUnsyncItems failed:", res.error);
-  }
-}
-
-run();
-```
-
-### Parameters
-
-| Parameter                                                                                                                                                                      | Type                                                                                                                                                                           | Required                                                                                                                                                                       | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `request`                                                                                                                                                                      | [operations.PowerBIServiceUnsyncPowerBIItemsRequest](../../models/operations/power-bi-service-unsync-power-bi-items-request.md)                                                | :heavy_check_mark:                                                                                                                                                             | The request object to use for the request.                                                                                                                                     |
-| `options`                                                                                                                                                                      | RequestOptions                                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                             | Used to set various options for making HTTP requests.                                                                                                                          |
-| `options.fetchOptions`                                                                                                                                                         | [RequestInit](https://developer.mozilla.org/en-US/docs/Web/API/Request/Request#options)                                                                                        | :heavy_minus_sign:                                                                                                                                                             | Options that are passed to the underlying HTTP request. This can be used to inject extra headers for examples. All `Request` options, except `method` and `body`, are allowed. |
-| `options.retries`                                                                                                                                                              | [RetryConfig](../../lib/utils/retryconfig.md)                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                             | Enables retrying HTTP requests under certain failure conditions.                                                                                                               |
-
-### Response
-
-**Promise\<[operations.PowerBIServiceUnsyncPowerBIItemsResponse](../../models/operations/power-bi-service-unsync-power-bi-items-response.md)\>**
 
 ### Errors
 

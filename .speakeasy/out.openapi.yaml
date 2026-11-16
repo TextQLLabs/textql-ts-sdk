@@ -5727,43 +5727,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.dataset.CreateFolderResponse'
-  /textql.rpc.public.dataset.DatasetService/CreatePowerBIDataset:
-    post:
-      tags:
-        - DatasetService
-      summary: CreatePowerBIDataset
-      operationId: DatasetService_CreatePowerBIDataset
-      x-speakeasy-group: datasets
-      x-speakeasy-name-override: createPowerBIDataset
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.dataset.CreatePowerBIDatasetRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.dataset.CreatePowerBIDatasetResponse'
   /textql.rpc.public.dataset.DatasetService/CreateTableauDataset:
     post:
       tags:
@@ -12139,43 +12102,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.powerbi.ListPowerBIWorkspacesResponse'
-  /textql.rpc.public.powerbi.PowerBIService/SyncPowerBIItems:
-    post:
-      tags:
-        - PowerBIService
-      summary: SyncPowerBIItems
-      operationId: PowerBIService_SyncPowerBIItems
-      x-speakeasy-group: powerbi
-      x-speakeasy-name-override: syncPowerBIItems
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.powerbi.SyncPowerBIItemsRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.powerbi.SyncPowerBIItemsResponse'
   /textql.rpc.public.powerbi.PowerBIService/TestPowerBIConnection:
     post:
       tags:
@@ -12213,43 +12139,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/textql.rpc.public.powerbi.TestPowerBIConnectionResponse'
-  /textql.rpc.public.powerbi.PowerBIService/UnsyncPowerBIItems:
-    post:
-      tags:
-        - PowerBIService
-      summary: UnsyncPowerBIItems
-      operationId: PowerBIService_UnsyncPowerBIItems
-      x-speakeasy-group: powerbi
-      x-speakeasy-name-override: unsyncItems
-      parameters:
-        - name: Connect-Protocol-Version
-          in: header
-          required: true
-          schema:
-            $ref: '#/components/schemas/connect-protocol-version'
-        - name: Connect-Timeout-Ms
-          in: header
-          schema:
-            $ref: '#/components/schemas/connect-timeout-header'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/textql.rpc.public.powerbi.UnsyncPowerBIItemsRequest'
-        required: true
-      responses:
-        default:
-          description: Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/connect.error'
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/textql.rpc.public.powerbi.UnsyncPowerBIItemsResponse'
   /textql.rpc.public.rbac.RBACService/ApproveAccessRequest:
     post:
       tags:
@@ -17139,9 +17028,6 @@ components:
           type: string
           title: warning
           nullable: true
-        publicPreview:
-          type: boolean
-          title: public_preview
         chatV5Cutover:
           type: boolean
           title: chat_v5_cutover
@@ -17423,7 +17309,11 @@ components:
         issuesEnabled:
           type: boolean
           title: issues_enabled
+          description: |-
+            Deprecated: never populated. Every org with observability_enabled gets the new Observability
+             experience. Retained only because proto/api is additive-only.
           nullable: true
+          deprecated: true
         configObjectsEnabled:
           type: boolean
           title: config_objects_enabled
@@ -30695,47 +30585,6 @@ components:
           description: path to new folder
       title: CreateFolderResponse
       additionalProperties: false
-    textql.rpc.public.dataset.CreatePowerBIDatasetRequest:
-      type: object
-      properties:
-        connectorId:
-          type: integer
-          title: connector_id
-          format: int32
-        name:
-          type: string
-          title: name
-        folderPath:
-          type: array
-          items:
-            type: string
-          title: folder_path
-        workspaceId:
-          type: string
-          title: workspace_id
-        workspaceName:
-          type: string
-          title: workspace_name
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.powerbi.PowerBIReport'
-          title: reports
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.powerbi.PowerBIDataset'
-          title: datasets
-      title: CreatePowerBIDatasetRequest
-      additionalProperties: false
-    textql.rpc.public.dataset.CreatePowerBIDatasetResponse:
-      type: object
-      properties:
-        dataset:
-          title: dataset
-          $ref: '#/components/schemas/textql.rpc.public.dataset.Dataset'
-      title: CreatePowerBIDatasetResponse
-      additionalProperties: false
     textql.rpc.public.dataset.CreateTableauDatasetRequest:
       type: object
       properties:
@@ -38681,53 +38530,6 @@ components:
           title: is_on_premium
       title: PowerBIWorkspace
       additionalProperties: false
-    textql.rpc.public.powerbi.SyncPowerBIItemsRequest:
-      type: object
-      properties:
-        connectorId:
-          type: integer
-          title: connector_id
-          format: int32
-        workspaceId:
-          type: string
-          title: workspace_id
-        workspaceName:
-          type: string
-          title: workspace_name
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.powerbi.PowerBIReport'
-          title: reports
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/textql.rpc.public.powerbi.PowerBIDataset'
-          title: datasets
-      title: SyncPowerBIItemsRequest
-      additionalProperties: false
-    textql.rpc.public.powerbi.SyncPowerBIItemsResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          title: success
-        error:
-          type: string
-          title: error
-          nullable: true
-        syncedReportIds:
-          type: array
-          items:
-            type: string
-          title: synced_report_ids
-        syncedDatasetIds:
-          type: array
-          items:
-            type: string
-          title: synced_dataset_ids
-      title: SyncPowerBIItemsResponse
-      additionalProperties: false
     textql.rpc.public.powerbi.SyncedPowerBIDataset:
       type: object
       properties:
@@ -38794,37 +38596,6 @@ components:
           type: string
           title: error
       title: TestPowerBIConnectionResponse
-      additionalProperties: false
-    textql.rpc.public.powerbi.UnsyncPowerBIItemsRequest:
-      type: object
-      properties:
-        connectorId:
-          type: integer
-          title: connector_id
-          format: int32
-        reportIds:
-          type: array
-          items:
-            type: string
-          title: report_ids
-        datasetIds:
-          type: array
-          items:
-            type: string
-          title: dataset_ids
-      title: UnsyncPowerBIItemsRequest
-      additionalProperties: false
-    textql.rpc.public.powerbi.UnsyncPowerBIItemsResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          title: success
-        error:
-          type: string
-          title: error
-          nullable: true
-      title: UnsyncPowerBIItemsResponse
       additionalProperties: false
     textql.rpc.public.rbac.AccessRequest:
       type: object
@@ -39163,6 +38934,7 @@ components:
         - CONTEXT_ACTION_READ_PRIVATE
         - CONTEXT_ACTION_WRITE
         - CONTEXT_ACTION_WRITE_PRIVATE
+        - CONTEXT_ACTION_VIEW
     textql.rpc.public.rbac.ContextPolicyPermissionAction:
       type: string
       title: ContextPolicyPermissionAction
@@ -43452,7 +43224,8 @@ components:
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         issuesEnabled:
           title: issues_enabled
-          description: Gates the issues feature at the organization level.
+          description: 'Deprecated: ignored. Every org with observability_enabled gets the new Observability experience.'
+          deprecated: true
           $ref: '#/components/schemas/google.protobuf.BoolValue'
         spendTransparencyEnabled:
           title: spend_transparency_enabled

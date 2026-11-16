@@ -232,7 +232,6 @@ export type TextqlRpcAuthOrganization = {
   orgMeta?: string | null | undefined;
   injectWholeOntologyDisableSearch?: boolean | null | undefined;
   warning?: string | null | undefined;
-  publicPreview?: boolean | undefined;
   chatV5Cutover?: boolean | undefined;
   defaultParadigmMode?: TextqlRpcParadigmParamsParadigmType | undefined;
   secretsEnabled?: boolean | undefined;
@@ -339,6 +338,14 @@ export type TextqlRpcAuthOrganization = {
    * Internal gate for the data apps feature (apps resource + html generative dashboards).
    */
   dataAppsEnabled?: boolean | null | undefined;
+  /**
+   * Deprecated: never populated. Every org with observability_enabled gets the new Observability
+   *
+   * @remarks
+   *  experience. Retained only because proto/api is additive-only.
+   *
+   * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+   */
   issuesEnabled?: boolean | null | undefined;
   /**
    * config_objects feature_flags row: the umbrella half of the config-management predicate
@@ -412,7 +419,6 @@ export const TextqlRpcAuthOrganization$inboundSchema: z.ZodMiniType<
   orgMeta: z.optional(z.nullable(types.string())),
   injectWholeOntologyDisableSearch: z.optional(z.nullable(types.boolean())),
   warning: z.optional(z.nullable(types.string())),
-  publicPreview: types.optional(types.boolean()),
   chatV5Cutover: types.optional(types.boolean()),
   defaultParadigmMode: types.optional(
     TextqlRpcParadigmParamsParadigmType$inboundSchema,

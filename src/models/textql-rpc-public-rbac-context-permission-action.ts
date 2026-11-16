@@ -12,6 +12,7 @@ export const TextqlRpcPublicRbacContextPermissionAction = {
   ContextActionReadPrivate: "CONTEXT_ACTION_READ_PRIVATE",
   ContextActionWrite: "CONTEXT_ACTION_WRITE",
   ContextActionWritePrivate: "CONTEXT_ACTION_WRITE_PRIVATE",
+  ContextActionView: "CONTEXT_ACTION_VIEW",
 } as const;
 export type TextqlRpcPublicRbacContextPermissionAction = OpenEnum<
   typeof TextqlRpcPublicRbacContextPermissionAction

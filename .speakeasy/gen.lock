@@ -1,25 +1,25 @@
 lockVersion: 2.0.0
 id: 06ee3665-d504-45b5-8df4-e78853bbb2b0
 management:
-  docChecksum: b3786bc5db4f6330624427e41043eac7
+  docChecksum: 1984304a2b6c85f9207dbfcc9cebcac4
   docVersion: 1.0.0
-  speakeasyVersion: 1.806.0
-  generationVersion: 2.956.1
-  releaseVersion: 1.4.67
-  configChecksum: a6390ba9599ebd1bd989680a051a35cf
+  speakeasyVersion: 1.809.0
+  generationVersion: 2.961.1
+  releaseVersion: 1.4.68
+  configChecksum: da73300fb2f95fcac116f8a99c696c33
   repoURL: https://github.com/TextQLLabs/textql-ts-sdk.git
   installationURL: https://github.com/TextQLLabs/textql-ts-sdk
   published: true
 persistentEdits:
-  generation_id: 85dd2666-22f0-47ca-af05-afb7facd252f
-  pristine_commit_hash: 3ac6567293c6d20fd52232125cb8e7969adeff1c
-  pristine_tree_hash: f527c23586540a60495fdc267010f954f6ac78b8
+  generation_id: 96cd95f8-54ca-4be9-a93f-fc13d72c303f
+  pristine_commit_hash: 4ef2f9f5827924b2b323e5fe110e260b7c54db4b
+  pristine_tree_hash: 92e699936d6d0a37340efd68c888c90e562c36ec
 features:
   typescript:
     additionalDependencies: 0.1.0
     additionalProperties: 0.1.4
     constsAndDefaults: 0.1.14
-    core: 3.31.8
+    core: 3.31.11
     defaultEnabledRetries: 0.1.0
     deprecations: 2.81.1
     devContainers: 2.90.1
@@ -260,8 +260,8 @@ trackedFiles:
     pristine_git_object: 3de3d78397729c9ac8e382b7458c050398aa74a4
   docs/models/context.md:
     id: e8f2f9e54b8e
-    last_write_checksum: sha1:2b39b0deee5c7e5005a17973f0bbe5ea664b7d17
-    pristine_git_object: 3816d8c0b80a8f84429dd05c0bbe6d098281f12b
+    last_write_checksum: sha1:0fa9ac41a2028f9442c124b88be85e93827f3752
+    pristine_git_object: 7b63ddca89dda1fc891dd0a9a0ad116faad83e6c
   docs/models/count.md:
     id: f9bfe807ab12
     last_write_checksum: sha1:e8e02f6e52f387af91c0cfd973cce8eaa59cd286
@@ -1914,14 +1914,6 @@ trackedFiles:
     id: e6d26c8e7f29
     last_write_checksum: sha1:eacf17e6061734e9594df1cab9be6cd1f980e156
     pristine_git_object: 7a4151220858a637d1c757507ca5f2bda44c2f04
-  docs/models/operations/dataset-service-create-power-bi-dataset-request.md:
-    id: 79af04c172b5
-    last_write_checksum: sha1:e762a85b512ef5a9ed998664410fabd112f0eccf
-    pristine_git_object: 95498a9fa7ae4088906a56d4abf90faf9aa86c35
-  docs/models/operations/dataset-service-create-power-bi-dataset-response.md:
-    id: b2894977d955
-    last_write_checksum: sha1:af3d12976c85f1e137f0818e3413666cfb7042e3
-    pristine_git_object: 5eb7c14b29693e50c804f2e7bcc77c025537714b
   docs/models/operations/dataset-service-create-tableau-dataset-request.md:
     id: 2d2c78fc25f9
     last_write_checksum: sha1:91db786720d762ea069bc8afe2a8da49b67624e2
@@ -3290,14 +3282,6 @@ trackedFiles:
     id: b1dacc41885e
     last_write_checksum: sha1:5bbc6fb96cd2232c84de8d489b354fa832a027a8
     pristine_git_object: 1433b598350bc28aae120f6ca8784ae4be554666
-  docs/models/operations/power-bi-service-sync-power-bi-items-request.md:
-    id: 5e4ba75b0560
-    last_write_checksum: sha1:049d2f86dd54f2a12695f65f2a787011f1aea275
-    pristine_git_object: f81fe1f29cdf333ba4361c8821b9fe92e6d27f02
-  docs/models/operations/power-bi-service-sync-power-bi-items-response.md:
-    id: 264397cdd099
-    last_write_checksum: sha1:8f52892053bd71ff1a792167962e61e09aa4bf55
-    pristine_git_object: 6616205904e48264fbe9ae835cb3946f0fdd5558
   docs/models/operations/power-bi-service-test-power-bi-connection-request.md:
     id: 7eef3541c1b3
     last_write_checksum: sha1:16578ff46eae8ce33c6d8800e1945ddafa05184d
@@ -3306,14 +3290,6 @@ trackedFiles:
     id: a71d4ababb9d
     last_write_checksum: sha1:9cb6473f03ea9a4d74137d406dc7b909b148ebce
     pristine_git_object: 803071999feaee507607459320427d994d8bb7c4
-  docs/models/operations/power-bi-service-unsync-power-bi-items-request.md:
-    id: 326202c3e2ef
-    last_write_checksum: sha1:35d301c893b24ea5cab1dded17601e9ce8e389f9
-    pristine_git_object: caee8f1412222676241abda887d9d9fd5fa3c11f
-  docs/models/operations/power-bi-service-unsync-power-bi-items-response.md:
-    id: 66e853e822cc
-    last_write_checksum: sha1:685deb44d11ad43df2a536024938ac49bfbe942a
-    pristine_git_object: da0d507505d30c011e68024f5f53276930449d36
   docs/models/operations/rbac-service-approve-access-request-request.md:
     id: 63e2b2913754
     last_write_checksum: sha1:089e9430a1df1035b01e705b9f7ece7e5a83e912
@@ -4540,8 +4516,8 @@ trackedFiles:
     pristine_git_object: b7805de54b21788e6f5e0205e5ce095fbb4ce3fc
   docs/models/textql-rpc-auth-organization.md:
     id: 21918368741d
-    last_write_checksum: sha1:00cc54684c64338e351ac35549da0cac0445df45
-    pristine_git_object: 12c3fa7dce9e21ac41ee70fa6b5e50b921601221
+    last_write_checksum: sha1:b01c704398948d8c2749e581298f2bd153740f64
+    pristine_git_object: feb3480b0b2a7e372e558fd5982d2eed218e4cca
   docs/models/textql-rpc-auth-theme.md:
     id: cf13fc927ee9
     last_write_checksum: sha1:306cdfbed1d2254a7d86091cca1eed6f629faba3
@@ -7302,14 +7278,6 @@ trackedFiles:
     id: 8d85cefbbefb
     last_write_checksum: sha1:a47c7b713f88690acd5f1e41c0e3c12cb9c49730
     pristine_git_object: bc6f57a40aebdfc1a9c3c770e1d0d0fb6542cbbb
-  docs/models/textql-rpc-public-dataset-create-power-bi-dataset-request.md:
-    id: 5307593496ac
-    last_write_checksum: sha1:12dc9d303df17de43a5aecb22f46a55e61d677a9
-    pristine_git_object: ce6c09340219e797e304ca27dc0a4d7e92b21813
-  docs/models/textql-rpc-public-dataset-create-power-bi-dataset-response.md:
-    id: 0dbfa8c6922e
-    last_write_checksum: sha1:ded26744eef0a85d7c8a8c39ab60170ab44e5136
-    pristine_git_object: 154d081c44fc4ab08aaf718f6d35dcecc793c48d
   docs/models/textql-rpc-public-dataset-create-tableau-dataset-request.md:
     id: a1eba0cfa740
     last_write_checksum: sha1:1b31c628dfa2a39024674a33897466d33a6aaa17
@@ -9186,14 +9154,6 @@ trackedFiles:
     id: dc07543823eb
     last_write_checksum: sha1:7fe5ac25bc69a16af846b200bbe591bbdef0e224
     pristine_git_object: 6ed3de356c76841289014407095854dc8220f1e8
-  docs/models/textql-rpc-public-powerbi-sync-power-bi-items-request.md:
-    id: eb786e4685c0
-    last_write_checksum: sha1:2c7766c9de0a5cf9111e1e4ca5c3391636cdc3b3
-    pristine_git_object: b8f66ff74c66a65967c81f6e1525074cdb1fa375
-  docs/models/textql-rpc-public-powerbi-sync-power-bi-items-response.md:
-    id: c8b59556a0b0
-    last_write_checksum: sha1:8dc7095801347ccf7326524f5a192472cc165c91
-    pristine_git_object: 8db0fa1c82ce6e672c81ba595dbdc47fc9cb3261
   docs/models/textql-rpc-public-powerbi-synced-power-bi-dataset.md:
     id: 72ff985116bc
     last_write_checksum: sha1:5c7810127d74bb2267c8e8460ede4efe1fc54a2c
@@ -9210,14 +9170,6 @@ trackedFiles:
     id: 840b62b68fd7
     last_write_checksum: sha1:c9a86fa0204d605fb0a2f9ba38adc0af8ed4c7ce
     pristine_git_object: b80ae50d409480024e47615e17e3079407e50bec
-  docs/models/textql-rpc-public-powerbi-unsync-power-bi-items-request.md:
-    id: e3e219504880
-    last_write_checksum: sha1:375710d153b72f8c16805a2acea7ca0d8e24d7fa
-    pristine_git_object: 82db36de058dbfa73e4bd7b27d0f650996c5ae98
-  docs/models/textql-rpc-public-powerbi-unsync-power-bi-items-response.md:
-    id: 8f886a8afd4d
-    last_write_checksum: sha1:3ea5bf23827b6cc42ae8bb00aba8a5443b5c2574
-    pristine_git_object: 056639b3464de6501739a70994267b7093d161e7
   docs/models/textql-rpc-public-rbac-access-request.md:
     id: cdddcc00ec81
     last_write_checksum: sha1:6dc85de05de0ad831c7624fa27414de12b4ce699
@@ -9296,8 +9248,8 @@ trackedFiles:
     pristine_git_object: fb7a53b5b5f7e48a0a87d0c2b575b849d6fddc26
   docs/models/textql-rpc-public-rbac-context-permission-action.md:
     id: 08ad6797a9a7
-    last_write_checksum: sha1:25fa456d107fe3f8f72baa32e7458565f5884f9f
-    pristine_git_object: 84d3c5ce494deecce3e258d19308b4fe83b0fe66
+    last_write_checksum: sha1:7b2d35140f77fd945137d8904f29b7afaf13fa42
+    pristine_git_object: b8328d2f6a7951ec494f985fc240721fcb472e9d
   docs/models/textql-rpc-public-rbac-context-policy-permission-action.md:
     id: ce758a347aad
     last_write_checksum: sha1:a154bf33b3b2e12096d717ef6eacf3b55ca3f357
@@ -9552,8 +9504,8 @@ trackedFiles:
     pristine_git_object: e0505ded449612c8d74053728618dd0665b2f723
   docs/models/textql-rpc-public-rbac-permission-spec.md:
     id: 24523ceba982
-    last_write_checksum: sha1:f2f7a5d7f607882409a6ee1c14aeb726a9221fdb
-    pristine_git_object: 37b1af4e827f1caffc5f697e239d328849e12f43
+    last_write_checksum: sha1:4a5301170fec89cbadf3c52de59f3f3c2387c434
+    pristine_git_object: ddf2f7ae90d6196b2ce2e620e1dfa8b49ec9dc67
   docs/models/textql-rpc-public-rbac-permission.md:
     id: 5e7628381549
     last_write_checksum: sha1:ad70cfef60b8f47bc0645727d44ad487de2cbce4
@@ -10676,8 +10628,8 @@ trackedFiles:
     pristine_git_object: 50b82aa76800a3c8772431d21ab983ba88a961d0
   docs/sdks/datasets/README.md:
     id: deb5d90f4faf
-    last_write_checksum: sha1:02d22562739ca62e4769518decf3b0dae8c8100c
-    pristine_git_object: d5c3f5448195db00a6dbcaca319ead8c46d239e1
+    last_write_checksum: sha1:13ccc124458608f728cf9a3b6deb1d70291e966e
+    pristine_git_object: 6d987db3219deabb828f6c7f5f302ef81dfed59e
   docs/sdks/harnesses/README.md:
     id: 8358634e3595
     last_write_checksum: sha1:9bc311700c0baf873f77e68344f2d9dae06a0722
@@ -10704,8 +10656,8 @@ trackedFiles:
     pristine_git_object: 81a06e0ac1f6d39d7dac1b0319cb0fccd9642c35
   docs/sdks/powerbi/README.md:
     id: 85c2e5ee2a94
-    last_write_checksum: sha1:27db17eba84cdfdb20938be49eaaf4f8aafec700
-    pristine_git_object: de2ce500467143b93ecc11092901cd6f8c8620ff
+    last_write_checksum: sha1:ec955c51b060c685159c8a5e61b7ac50f1646e10
+    pristine_git_object: 64819e568b6f5881cc544bc823fe3244f06ea5ef
   docs/sdks/rbac/README.md:
     id: e80ec65410f2
     last_write_checksum: sha1:c382a2097b4d71c49f43f38b084f1740f783ea9e
@@ -10748,12 +10700,12 @@ trackedFiles:
     pristine_git_object: 60f0d3bf4a5a05af015e1e000bfc33c0b70f4c28
   jsr.json:
     id: 7f6ab7767282
-    last_write_checksum: sha1:645e953630cc45ac2b279d3f6139a1f512af7208
-    pristine_git_object: f6e5f4d28177b655de83274cf4ef785c51ce1853
+    last_write_checksum: sha1:4dd8ed449241583a902c5561cdfb2f760a58158d
+    pristine_git_object: 7a876c6b1e897be8efbf329dcebfed2c8fffda77
   package.json:
     id: 7030d0b2f71b
-    last_write_checksum: sha1:0387f4bca5cfdeab8b18d324d7809790f35a1b19
-    pristine_git_object: e24eea8a814fdf64734772fb63b0454388c346b8
+    last_write_checksum: sha1:a212b6ecf01f697567421c9d5aa66b57d1dfcaaa
+    pristine_git_object: d7a57c3441c18cf8234eca11fb82b5a44e6122dc
   src/core.ts:
     id: f431fdbcd144
     last_write_checksum: sha1:90c7a7ba520b46595bc2152d7525764c3f724e20
@@ -11370,10 +11322,6 @@ trackedFiles:
     id: 4dcb75efac9b
     last_write_checksum: sha1:4172a9c7015d3c22496de2b48490e7eb977ba040
     pristine_git_object: e123e4f5ba79e8902e43ea733279cc0aa8f7cddb
-  src/funcs/datasets-create-power-bi-dataset.ts:
-    id: 1b368be6dc12
-    last_write_checksum: sha1:6949889c81bf2f8f264fa89a221c57216cca83b7
-    pristine_git_object: 40f1359bd1138b90425f7af95422cef7e27051d4
   src/funcs/datasets-create-tableau-dataset.ts:
     id: 060485af7275
     last_write_checksum: sha1:53baa2957f1de297a11feb9f4ec34bb44b7149db
@@ -12058,18 +12006,10 @@ trackedFiles:
     id: 21d2ce9f0969
     last_write_checksum: sha1:34913a3b24055393e519f203316b791c20bca1e8
     pristine_git_object: a4d92547fa57e56f65c99a71db7a37141eb741da
-  src/funcs/powerbi-sync-power-bi-items.ts:
-    id: 5151c6dd0944
-    last_write_checksum: sha1:3ea2ccf069c97494c61e5566b5b4765e578d16ad
-    pristine_git_object: a55ad8ab102f97e5e2436dd57b5338ec5c5ad203
   src/funcs/powerbi-test-connection.ts:
     id: 7c038b1803ec
     last_write_checksum: sha1:13694b47acb47c3531a28760af556af287b40fce
     pristine_git_object: 78f20537dce314af86a0a956c0ca6ec0323a328a
-  src/funcs/powerbi-unsync-items.ts:
-    id: e881bc452992
-    last_write_checksum: sha1:9ca701eebe1dba4f55c5703a06db9df65bcbd873
-    pristine_git_object: ce947b9d15ea0d8557c2c0fbd2dbfe8a97ffb709
   src/funcs/rbac-approve-access-request.ts:
     id: b4c2cb2623fb
     last_write_checksum: sha1:786c48ca8607064cbdf33a2b44ae735a776170b9
@@ -12556,16 +12496,16 @@ trackedFiles:
     pristine_git_object: 44be0eae8246521b230e8e711a88eff738fc015d
   src/lib/config.ts:
     id: 320761608fb3
-    last_write_checksum: sha1:7fec5ead6928eda052df642db9071d44146e1f70
-    pristine_git_object: a5939e06515e7c38a6c3e21961891b14116b05ea
+    last_write_checksum: sha1:23af814edd985c7dc4c62db68959ffeabf6c11f8
+    pristine_git_object: aa98fe77a2f05d31cd42e9dbb8f73857e0d7b992
   src/lib/encodings.ts:
     id: 3bd8ead98afd
     last_write_checksum: sha1:4481b2a380f8a16856ef92c66fb370299f56d135
     pristine_git_object: e2bcb0da4968c2f30c226b94267ddf37ed9e627d
   src/lib/env.ts:
     id: c52972a3b198
-    last_write_checksum: sha1:272ba8696e417680f75bacaac4e858c280a2f8d2
-    pristine_git_object: 7a1a14e67feafaedbc6541db786deb9bc745cb0c
+    last_write_checksum: sha1:5c77e9de2f3d900e9067fb70035eb8324ab7f185
+    pristine_git_object: 14b2184df160ff959f1a1589f7f5132433bbb177
   src/lib/files.ts:
     id: e5efa54fcb95
     last_write_checksum: sha1:795c14026405d547bfc47012f7ad9666e530fa7f
@@ -12652,8 +12592,8 @@ trackedFiles:
     pristine_git_object: c245708ebadfb181e7694330adadcd258e0915d7
   src/models/index.ts:
     id: f93644b0f37e
-    last_write_checksum: sha1:b567d7c48e32c2944ccaf2fcfe1fb8966fd7da37
-    pristine_git_object: 2df51825f0dce5ac50d0d30ef9ce1fd45459e5e8
+    last_write_checksum: sha1:06730efc149b500c3c53b63ef137d1618fe25b26
+    pristine_git_object: a6e54209090745b8277b7aa2e5d744528f6696f3
   src/models/operations/agent-service-create-agent.ts:
     id: 3a465be4f67a
     last_write_checksum: sha1:454c8dafd4fa5ad88444cbea0d22e6b704e6936a
@@ -13266,10 +13206,6 @@ trackedFiles:
     id: 3eaaa1a2b4e3
     last_write_checksum: sha1:1a2b5cf42cb3e50d942e5ef470fe3dcc136b7bb8
     pristine_git_object: 2b439b539253c61923999283044509ba597017d9
-  src/models/operations/dataset-service-create-power-bi-dataset.ts:
-    id: 16761367d7e6
-    last_write_checksum: sha1:c88b37a271e977ba28b36538b25d933a897dc3b1
-    pristine_git_object: 939c328ba6b6a1d11f06aad6aba7e8921f83c9e3
   src/models/operations/dataset-service-create-tableau-dataset.ts:
     id: d94b7be97350
     last_write_checksum: sha1:034877abb51af25227902c419e84740147fdab78
@@ -13324,8 +13260,8 @@ trackedFiles:
     pristine_git_object: 6bd7ac938f650359df829c05ee5f7d1ac7dc0ccf
   src/models/operations/index.ts:
     id: 0d9ffaf774d2
-    last_write_checksum: sha1:08c15d53236707d974a06373faf99dd068d0e2f7
-    pristine_git_object: 78649bd9fadaa6b368fcc94b6f1b0ab1d39afd37
+    last_write_checksum: sha1:a5e0372ce2252ae0a6b70b3b396306f4b812442b
+    pristine_git_object: 2d02506caa3d003c69af26b9cf4b8f69dc281e97
   src/models/operations/mcp-service-clear-o-auth-token.ts:
     id: 22f21a173140
     last_write_checksum: sha1:08a6a219780060debcbcf8473b85f25d2509f32f
@@ -13958,18 +13894,10 @@ trackedFiles:
     id: e64e7c3c49d2
     last_write_checksum: sha1:ce749f97e042c979493e88da2bac22a465711a4c
     pristine_git_object: 0fcdf240290b65efab72998b612453518df0979c
-  src/models/operations/power-bi-service-sync-power-bi-items.ts:
-    id: 7b07341bc733
-    last_write_checksum: sha1:3a19d86a92c21662f07055063f63f8350b704d50
-    pristine_git_object: 13bac191b2970d7d399b54ea9cf97ba11e39c763
   src/models/operations/power-bi-service-test-power-bi-connection.ts:
     id: f9715013b41a
     last_write_checksum: sha1:ac5ad958bd0d68861e5ca0df81f5d85a0282c602
     pristine_git_object: 47e36f292fc8b3303752d342d3778ef142d1bedd
-  src/models/operations/power-bi-service-unsync-power-bi-items.ts:
-    id: 4002eda4fcbe
-    last_write_checksum: sha1:9facb1fe30f5a9b84dceee4fd837a0575b2be08f
-    pristine_git_object: cf1642167028cb215f0e1a054aa901155b8846f8
   src/models/operations/rbac-service-approve-access-request.ts:
     id: be13b5b9493c
     last_write_checksum: sha1:24f4125c20dff2fa63726dcaa859ce88b19cf536
@@ -14448,8 +14376,8 @@ trackedFiles:
     pristine_git_object: 928b7ff5045819c1e1bb1ddc213af3c9e255b9d1
   src/models/textql-rpc-auth-organization.ts:
     id: 139235689f0f
-    last_write_checksum: sha1:d6d2684c841bd72970e434a5f4378077c1bdd764
-    pristine_git_object: bef6210f820f23ed647c56560e2414551139dbf0
+    last_write_checksum: sha1:450d9fff3f6aacbf4ef89b07441b2a27456eaf42
+    pristine_git_object: a0df54063cf1d525809a7fa974598dff55e605fc
   src/models/textql-rpc-auth-theme.ts:
     id: 58f1281a43aa
     last_write_checksum: sha1:7d380b1598efb4ec739c70f4252e04dfdf4d5a89
@@ -16774,14 +16702,6 @@ trackedFiles:
     id: 2a63fa2a9d3f
     last_write_checksum: sha1:d538e47477df25d3dd7da8b09808a5843aff2ee4
     pristine_git_object: e746b75ea961e6e1f80bc4b8bc39b2be9128c55a
-  src/models/textql-rpc-public-dataset-create-power-bi-dataset-request.ts:
-    id: a12d2347919d
-    last_write_checksum: sha1:f1c6467df98589a7237cf7920b34f22b7f6ee8f1
-    pristine_git_object: 0ae6849ea42dff39fb35e1f98e62a014be2de381
-  src/models/textql-rpc-public-dataset-create-power-bi-dataset-response.ts:
-    id: 287176f4c5f8
-    last_write_checksum: sha1:daef45c84c3f425065b7c5981c42cbce203cbaec
-    pristine_git_object: ea4e8cbf51dc202a97b0e20ef8c42659f402078b
   src/models/textql-rpc-public-dataset-create-tableau-dataset-request.ts:
     id: 48ab7e62d740
     last_write_checksum: sha1:ab54013c0ffb45214cca41b8592aa45f57a265b8
@@ -18620,12 +18540,12 @@ trackedFiles:
     pristine_git_object: 79b3c4ffacf030508d0587f6666a576d15015e71
   src/models/textql-rpc-public-powerbi-power-bi-dataset.ts:
     id: ba4bdd160c6a
-    last_write_checksum: sha1:092385d5feaa075d0a12e7744c1ae39036ab20f0
-    pristine_git_object: c9109a3deb74eba0b34cba0a18cab791c338a89b
+    last_write_checksum: sha1:110355bb6d2f4812f6fc6f91bf2ea5e0a34747a1
+    pristine_git_object: 8b7f84cf101e9442ed744f5c8a0121a1e38c9c53
   src/models/textql-rpc-public-powerbi-power-bi-report.ts:
     id: ed0be654d2c2
-    last_write_checksum: sha1:22e8d33f6d8397d17d29ad2617d69d7bd9d61615
-    pristine_git_object: 6431ff8896e9d935965377c7f4156c96414634e4
+    last_write_checksum: sha1:92dff9f0f9413abebfdee3b64c431a922291047f
+    pristine_git_object: 3e6c3fc621bdcf1538fac9277cbd940eae123b61
   src/models/textql-rpc-public-powerbi-power-bi-table-preview.ts:
     id: c04b2b3a5502
     last_write_checksum: sha1:68a356e34f0ac220a4f425ac6a2461a2d8d06c04
@@ -18634,14 +18554,6 @@ trackedFiles:
     id: 35b379c460c4
     last_write_checksum: sha1:4af76e965777af298e019b0641a2ba2321327d43
     pristine_git_object: 4fcd9fd2cb7b27dcdf3d5489de2632538fa9c30e
-  src/models/textql-rpc-public-powerbi-sync-power-bi-items-request.ts:
-    id: fb0d33a8c832
-    last_write_checksum: sha1:e404de248b5f4659f6f48efb0f62fc47136e9cf8
-    pristine_git_object: 7d8b4418bc3849e4921ae94562916747b674df4f
-  src/models/textql-rpc-public-powerbi-sync-power-bi-items-response.ts:
-    id: ea089493cfd4
-    last_write_checksum: sha1:06f1ac59f77f37c837cc4825565d62f4ec4c576b
-    pristine_git_object: 7a046e58a6a9910db6945ed339937044636e743a
   src/models/textql-rpc-public-powerbi-synced-power-bi-dataset.ts:
     id: f0bba2d23ad9
     last_write_checksum: sha1:3b3dc4614b3ee654358c8c0c92a5a1ea86df5ffc
@@ -18658,14 +18570,6 @@ trackedFiles:
     id: fb5b37db516b
     last_write_checksum: sha1:58533e5f76d47a99b362851d1caefc9d170c42f2
     pristine_git_object: 4941d9375a38d39873f40ab164bd537e58d81204
-  src/models/textql-rpc-public-powerbi-unsync-power-bi-items-request.ts:
-    id: 3360cc7169f6
-    last_write_checksum: sha1:4d828e56c076328567c11b420712d73f48ed618d
-    pristine_git_object: c62f253f1dcc14b1bd0ba2e0335c73cbdb2aca1c
-  src/models/textql-rpc-public-powerbi-unsync-power-bi-items-response.ts:
-    id: 673af59f3ea3
-    last_write_checksum: sha1:80dd6c29e1698fa63e86b524e8fd083c6ee4f4da
-    pristine_git_object: 34ca65c2cc47f3a2cc1f2b103387e5a9198b9ac5
   src/models/textql-rpc-public-rbac-access-request.ts:
     id: a5892ef6cead
     last_write_checksum: sha1:04eef652d10cc3412c112b4c3af25c78e181036f
@@ -18744,8 +18648,8 @@ trackedFiles:
     pristine_git_object: 17b165801656f99b45ebc8904520d4ea02117956
   src/models/textql-rpc-public-rbac-context-permission-action.ts:
     id: d98a001d881e
-    last_write_checksum: sha1:a72c4e4bc4ee106c91ac77a567e6be25ce69f05f
-    pristine_git_object: 84cc20d2b894f7361272c9e7887781aaa5011856
+    last_write_checksum: sha1:4b4361a2b66957ba513d36d6b94f6a6f69f7ae74
+    pristine_git_object: 0bd2be37380996dcb39f804d7d5c86c10f84b601
   src/models/textql-rpc-public-rbac-context-policy-permission-action.ts:
     id: 0e48b64d7736
     last_write_checksum: sha1:4ae7a9f6b805500731d8594432dbed544fb6d24b
@@ -19932,8 +19836,8 @@ trackedFiles:
     pristine_git_object: fa6c07bd905130a703a4089e77991a20a3cc9c7b
   src/sdk/datasets.ts:
     id: 2f1e89a21914
-    last_write_checksum: sha1:3792b0c0149435e1cc15f12d027084e129af252e
-    pristine_git_object: 0cab1786846157cdf75c6dc0991aeff46051c86f
+    last_write_checksum: sha1:c80e3964ddafac6ba316d232ebe829b545e885aa
+    pristine_git_object: eb9ed4749d59c2e7c379bafd1e1d29d051aa3272
   src/sdk/harnesses.ts:
     id: f6702d8efc5d
     last_write_checksum: sha1:844c87b1374316948d0730c8e8758fc8b80fbafa
@@ -19964,8 +19868,8 @@ trackedFiles:
     pristine_git_object: 121038685bf119ee03f9e48e1e75e99ad973541c
   src/sdk/powerbi.ts:
     id: 0bdb6ab6be1e
-    last_write_checksum: sha1:6a29d476475dee071e3e5be8f4861942becd05a0
-    pristine_git_object: 6f5861101ae4f5a3386c40f9361d5ea52b6510c7
+    last_write_checksum: sha1:a4640c2abee4a37051ae7215f021283976a47fad
+    pristine_git_object: 5b6e0133c73ec40df34a440b67eb1720a7640b16
   src/sdk/rbac.ts:
     id: 9959512deb06
     last_write_checksum: sha1:2944d1c863b728895ccd3822109e40ff87fb8a45
@@ -26570,3 +26474,4 @@ examples:
         default:
           application/json: {"code": "not_found"}
 examplesVersion: 1.0.2
+releaseNotes: "## Typescript SDK Changes:\n* `textql.settings.get()`:  `response.organization` **Changed** (Breaking ⚠️)\n* `textql.settings.update()`:  `response.organization` **Changed** (Breaking ⚠️)\n* `textql.settings.updateModels()`:  `response.organization` **Changed** (Breaking ⚠️)\n* `textql.rbac.listPermissions()`:  `response.permissions[].spec.union(context).context.enum(contextActionView)` **Added**\n* `textql.rbac.getCurrentMemberRolesAndPermissions()`:  `response.permissions[].spec.union(context).context.enum(contextActionView)` **Added**\n* `textql.rbac.getRolePermissions()`:  `response.permissions[].spec.union(context).context.enum(contextActionView)` **Added**\n* `textql.datasets.createPowerBiDataset()`: **Removed** (Breaking ⚠️)\n* `textql.rbac.removePermissionFromRole()`: \n  *  `request.body.permission.union(context).context.enum(contextActionView)` **Added**\n* `textql.rbac.setRolePermissions()`: \n  *  `request.body.addPermissions[].union(context).context.enum(contextActionView)` **Added**\n* `textql.rbac.whoAmI()`:  `response.permissions[].spec.union(context).context.enum(contextActionView)` **Added**\n* `textql.rbac.assignPermissionToRole()`: \n  *  `request.body.permission.union(context).context.enum(contextActionView)` **Added**\n* `textql.powerbi.unsyncItems()`: **Removed** (Breaking ⚠️)\n* `textql.powerbi.syncPowerBiItems()`: **Removed** (Breaking ⚠️)\n"
