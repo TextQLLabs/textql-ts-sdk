@@ -77,6 +77,7 @@ export class TextqlAppElement extends HTMLElement {
   #frame: HTMLIFrameElement | null = null;
   #meta: TextqlAppMeta | null = null;
   #poster: HTMLElement | null = null;
+  #ready = false;
   /** Bumped on every (re)load so a slow response can't overwrite a newer one. */
   #generation = 0;
 
@@ -131,8 +132,23 @@ export class TextqlAppElement extends HTMLElement {
   /** Also the retry path: recovery is a refetch, never an iframe reload. */
   async load(): Promise<void> {
     const generation = ++this.#generation;
-    this.#frame = null;
-    this.#body.replaceChildren(this.#overlay([this.#spinner()]));
+    this.#meta = null;
+    this.#ready = false;
+    this.#poster = this.#overlay([this.#spinner()]);
+
+    const frame = document.createElement("iframe");
+    frame.src = this.#endpoint("/document");
+    frame.title = "Data app";
+    frame.setAttribute("sandbox", "allow-scripts");
+    let documentLoaded = false;
+    frame.addEventListener("load", () => {
+      if (this.#frame !== frame) return;
+      documentLoaded = true;
+      this.#dismissPoster();
+      this.#postHello(frame);
+    });
+    this.#frame = frame;
+    this.#body.replaceChildren(frame, this.#poster);
 
     let meta: TextqlAppMeta;
     try {
@@ -146,7 +162,10 @@ export class TextqlAppElement extends HTMLElement {
           : [],
       };
     } catch (cause) {
-      if (generation === this.#generation) this.#showError(String((cause as Error)?.message ?? cause));
+      if (generation === this.#generation) {
+        this.#frame = null;
+        this.#showError(String((cause as Error)?.message ?? cause));
+      }
       return;
     }
     if (generation !== this.#generation) return;
@@ -155,24 +174,18 @@ export class TextqlAppElement extends HTMLElement {
     // Off the fetch, not the handshake, so host chrome can title itself even if
     // the bridge never connects.
     this.dispatchEvent(new CustomEvent<TextqlAppMeta>("app-meta", { detail: meta }));
+    if (generation !== this.#generation) return;
 
-    const frame = document.createElement("iframe");
-    frame.src = this.#endpoint("/document");
     frame.title = meta.name;
-    // allow-scripts only: app HTML is untrusted, and the opaque origin it
-    // produces is what makes `event.source` identity meaningful below.
-    frame.setAttribute("sandbox", "allow-scripts");
-    // `ready` is the real handshake, but dismiss on `load` too so a document
-    // whose handshake never lands still shows itself. Both greet; the runtime
-    // settles the first hello and ignores the rest.
-    frame.addEventListener("load", () => {
-      this.#dismissPoster();
-      this.#postHello(frame);
-    });
-    this.#frame = frame;
-
-    this.#poster = this.#posterOverlay(meta);
-    this.#body.replaceChildren(frame, this.#poster);
+    if (this.#poster) {
+      const poster = this.#posterOverlay(meta);
+      this.#poster.replaceWith(poster);
+      this.#poster = poster;
+    }
+    if (documentLoaded || this.#ready) this.#postHello(frame);
+    if (this.#ready) {
+      this.dispatchEvent(new CustomEvent<TextqlAppMeta>("app-ready", { detail: meta }));
+    }
   }
 
   // ─── bridge ───────────────────────────────────────────────────────────────
@@ -188,9 +201,12 @@ export class TextqlAppElement extends HTMLElement {
 
     switch (message.type) {
       case "ready":
+        this.#ready = true;
         this.#dismissPoster();
         this.#postHello(frame);
-        this.dispatchEvent(new CustomEvent<TextqlAppMeta | null>("app-ready", { detail: this.#meta }));
+        if (this.#meta) {
+          this.dispatchEvent(new CustomEvent<TextqlAppMeta>("app-ready", { detail: this.#meta }));
+        }
         return;
       case "compute.run":
         void this.#relayCompute(frame, message);
@@ -227,7 +243,8 @@ export class TextqlAppElement extends HTMLElement {
   }
 
   #postHello(frame: HTMLIFrameElement): void {
-    const functions = this.#meta?.functions ?? [];
+    if (!this.#meta) return;
+    const functions = this.#meta.functions;
     this.#post(frame, {
       type: "hello",
       // Declared off settles the runtime's queued calls at once; omitted leaves

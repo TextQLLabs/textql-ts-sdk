@@ -240,6 +240,22 @@ curl -o .claude/skills/textql-embed/SKILL.md \
   https://raw.githubusercontent.com/TextQLLabs/textql-ts-sdk/main/examples/embed-app/SKILL.md
 ```
 
+## Loading and compute performance
+
+The element starts its metadata and document requests together. It waits for
+metadata before completing the runtime handshake, so compute functions remain
+available even when the document loads first. Metadata updates do not reload
+the iframe.
+
+Each compute call makes one upstream invocation, without fetching the app
+again. The embed still checks `authorize` and resolves the allowed app on every
+request; TextQL validates app access, source access, and the declared compute
+function when it executes the invocation.
+
+The proxy still adds a network hop. Rehosted HTML is downloaded and rewritten
+before being sent to the browser, and startup metadata reads still include
+source files because the public SDK does not expose the in-app lean-read option.
+
 ## Sizing
 
 The element has no intrinsic size, like an iframe. Data Apps also lay out

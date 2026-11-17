@@ -476,14 +476,9 @@ class Embed {
       throw new EmbedError(400, "Expected a JSON body of { name, params }.");
     }
 
-    // The iframe can post any name it likes; without this the route is a
-    // generic runner for anything the org's key can reach.
-    const app = await this.fetchApp(request, pathParams);
-    if (!toMeta(app).functions.includes(name)) {
-      throw new EmbedError(403, `${name} is not a compute function of this app.`);
-    }
-
-    const appId = app.id ?? (await this.appId(request, pathParams));
+    // InvokeAppComputeFunction checks live app/source access and resolves the
+    // function against this app's declarations before executing it.
+    const appId = await this.appId(request, pathParams);
     const result = await operation({
       operation: "apps.invokeComputeFunction", appId, functionName: name,
     }, async () => unwrap(
