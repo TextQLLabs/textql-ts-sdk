@@ -1,6 +1,6 @@
 {
   "name": "@textql/sdk",
-  "version": "1.4.75",
+  "version": "1.4.76",
   "author": "TextQL Labs",
   "bugs": {
     "url": "https://github.com/TextQLLabs/textql-ts-sdk/issues"
