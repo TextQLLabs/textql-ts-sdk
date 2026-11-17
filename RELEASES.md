@@ -783,3 +783,11 @@ Based on:
 - Speakeasy CLI 1.810.0 (2.961.1) https://github.com/speakeasy-api/speakeasy
 ### Generated
 - [typescript v1.4.75] .
+
+## 2026-11-17 23:30:23
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.810.0 (2.961.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.4.76] .
