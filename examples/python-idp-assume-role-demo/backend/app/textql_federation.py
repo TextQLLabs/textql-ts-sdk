@@ -294,8 +294,10 @@ def _revoke(key: Row[Any]) -> None:
     try:
         sdk = Textql(api_key=key.api_key, server_url=server_url(), client=_textql_http)
         sdk.rbac.revoke_api_key(api_key_id=key.api_key_id)
-    except (TextqlDefaultError, httpx.HTTPError) as e:
-        logger.warning("could not revoke TextQL key %s: %s", key.api_key_id, e)
+    except TextqlDefaultError as e:
+        logger.warning("could not revoke TextQL key %s: HTTP %s", key.api_key_id, e.status_code)
+    except httpx.HTTPError as e:
+        logger.warning("could not revoke TextQL key %s: %s", key.api_key_id, type(e).__name__)
 
 
 # --- Per-user TextQL clients ---------------------------------------------------
