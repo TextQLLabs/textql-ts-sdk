@@ -12,6 +12,7 @@
     "./lib/http": "./src/lib/http.ts",
     "./lib/retries": "./src/lib/retries.ts",
     "./lib/sdks": "./src/lib/sdks.ts",
+    "./oauth": "./src/oauth.ts",
     "./types": "./src/types/index.ts"
   },
   "publish": {

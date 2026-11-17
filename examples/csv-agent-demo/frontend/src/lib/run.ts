@@ -70,11 +70,13 @@ class RunStore extends Store<RunState> {
 	/** Load the local file the dev server serves (see DATA_FILE in vite.config.ts). */
 	loadData() {
 		if (this.state.data || this.state.dataError) return;
-		const sheet = /\.(csv|tsv|txt)$/i.test(__DATA_NAME__)
-			? parseCsvSource(__DATA_URL__)
-			: fetch(__DATA_URL__)
-					.then((response) => response.arrayBuffer())
-					.then(parseWorkbook);
+		const sheet = fetch(__DATA_URL__).then(async (response) => {
+			if (!response.ok) throw new Error(await response.text());
+			const blob = await response.blob();
+			return /\.(csv|tsv|txt)$/i.test(__DATA_NAME__)
+				? parseCsvSource(new File([blob], __DATA_NAME__))
+				: parseWorkbook(await blob.arrayBuffer());
+		});
 		sheet
 			.then((data) => this.set({ data }))
 			.catch((err: unknown) => this.set({ dataError: message(err) }));
