@@ -1,0 +1,128 @@
+import type { CitationView } from './citations';
+
+/**
+ * Puts a numbered marker back at the end of the sentence each citation was
+ * written against. The API hands us the anchor as plain text, but by the time
+ * we see it the prose is HTML, so the anchor may be split across text nodes by
+ * inline markup (`**42%**`, `` `orders` ``) — hence the two passes: an exact
+ * text-node hit first, then an alphanumeric-only match within a block, which
+ * survives both the markup and any punctuation the model dropped.
+ */
+
+const MARKER_CLASS = 'citation-marker';
+const BLOCK_SELECTOR = 'p, li, td, th, tr, h1, h2, h3, h4, h5, h6, blockquote, dd, dt';
+
+function inExcludedAncestor(node: Node, stopAt: Node): boolean {
+	let parent = node.parentElement;
+	while (parent && parent !== stopAt) {
+		if (parent.tagName === 'PRE' || parent.tagName === 'A' || parent.classList.contains(MARKER_CLASS)) {
+			return true;
+		}
+		parent = parent.parentElement;
+	}
+	return false;
+}
+
+function firstTextNodeContaining(root: HTMLElement, search: string): Text | null {
+	const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+		acceptNode(node) {
+			if (!node.nodeValue?.includes(search)) return NodeFilter.FILTER_REJECT;
+			return inExcludedAncestor(node, root) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+		}
+	});
+	return walker.nextNode() as Text | null;
+}
+
+type CharPosition = { node: Text; offset: number };
+
+/** A block's letters and digits only, each mapped back to where it came from. */
+function buildAlnumMap(block: HTMLElement): { compact: string; map: CharPosition[] } {
+	const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, {
+		acceptNode(node) {
+			return inExcludedAncestor(node, block) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+		}
+	});
+	let compact = '';
+	const map: CharPosition[] = [];
+	for (let node = walker.nextNode() as Text | null; node; node = walker.nextNode() as Text | null) {
+		const text = node.nodeValue ?? '';
+		for (let i = 0; i < text.length; i++) {
+			const char = text[i]!.toLowerCase();
+			if ((char >= 'a' && char <= 'z') || (char >= '0' && char <= '9')) {
+				compact += char;
+				map.push({ node, offset: i });
+			}
+		}
+	}
+	return { compact, map };
+}
+
+function placeMarker(root: HTMLElement, anchor: string, marker: HTMLElement): boolean {
+	const search = anchor.replace(/`/g, '').replace(/\*+/g, '');
+	if (!search.trim()) return false;
+
+	const node = firstTextNodeContaining(root, search);
+	if (node?.nodeValue) {
+		// A marker inside <code> would be styled as code; hang it off the end.
+		const code = node.parentElement?.closest('code');
+		if (code && code !== root && root.contains(code)) {
+			code.after(marker);
+			return true;
+		}
+		const text = node.nodeValue;
+		const end = text.indexOf(search) + search.length;
+		const fragment = document.createDocumentFragment();
+		fragment.appendChild(document.createTextNode(text.slice(0, end)));
+		fragment.appendChild(marker);
+		const rest = text.slice(end);
+		if (rest) fragment.appendChild(document.createTextNode(rest));
+		node.parentNode?.replaceChild(fragment, node);
+		return true;
+	}
+
+	const needle = search.toLowerCase().replace(/[^a-z0-9]/g, '');
+	if (!needle) return false;
+	// Smallest matching block wins: a match in a <td> is more precise than the
+	// same match in the paragraph that contains the table.
+	let best: CharPosition | null = null;
+	let bestLength = Infinity;
+	for (const block of root.querySelectorAll<HTMLElement>(BLOCK_SELECTOR)) {
+		if (block.closest('pre')) continue;
+		const { compact, map } = buildAlnumMap(block);
+		const at = compact.indexOf(needle);
+		if (at >= 0 && compact.length < bestLength) {
+			bestLength = compact.length;
+			best = map[at + needle.length - 1] ?? null;
+		}
+	}
+	if (!best) return false;
+	const after = best.node.splitText(best.offset + 1);
+	after.parentNode?.insertBefore(marker, after);
+	return true;
+}
+
+/**
+ * Idempotent: re-running on unchanged citations is a no-op, so the effect can
+ * fire on every stream event. React replacing the div's innerHTML wipes the
+ * markers but not the signature, which is why marker presence is checked too.
+ */
+export function decorateCitations(
+	root: HTMLElement,
+	citations: CitationView[],
+	buildMarker: (citation: CitationView) => HTMLElement
+): void {
+	const signature = citations.map((citation) => citation.anchor).join(' ');
+	if (root.dataset.citationSig === signature && root.querySelector(`.${MARKER_CLASS}`)) return;
+
+	root.querySelectorAll(`.${MARKER_CLASS}`).forEach((element) => element.remove());
+	// Rejoin the text nodes the last pass split, or the anchor search misses.
+	root.normalize();
+	root.dataset.citationSig = signature;
+
+	// Back to front: an earlier marker would shift the offsets of later ones.
+	for (let i = citations.length - 1; i >= 0; i--) {
+		const citation = citations[i]!;
+		if (!citation.anchor) continue;
+		placeMarker(root, citation.anchor, buildMarker(citation));
+	}
+}
