@@ -17,6 +17,8 @@ This directory contains example scripts demonstrating how to use the @textql/sdk
   scopes each user to a fixed set of roles, the way Assume Roles does in the
   TextQL app.
 - [`react-demo`](./react-demo): the React application with a TypeScript backend.
+- [`agent-registration`](./agent-registration): a governed agent registration flow that
+  validates governance metadata, then creates the agent or opens a review ticket.
 
 ## Prerequisites
 
