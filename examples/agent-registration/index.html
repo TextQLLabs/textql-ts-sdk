@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#f7f7f8" />
+	<link rel="icon" href="data:," />
+	<title>Agent registration</title>
+	<script>
+		// Apply the saved theme before first paint. Mirrors src/lib/theme.ts.
+		try {
+			var t = localStorage.getItem("agent-registration.theme");
+			var dark = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+			document.documentElement.dataset.theme = dark ? "dark" : "light";
+		} catch (e) {}
+	</script>
+</head>
+
+<body>
+	<div id="app" style="display: contents"></div>
+	<script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
