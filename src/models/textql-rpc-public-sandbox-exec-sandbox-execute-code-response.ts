@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -36,7 +36,9 @@ export const TextqlRpcPublicSandboxExecSandboxExecuteCodeResponseExecutionTimeMs
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxExecuteCodeResponseExecutionTimeMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxExecSandboxExecuteCodeResponseExecutionTimeMsFromJSON(
   jsonString: string,
@@ -56,19 +58,23 @@ export function textqlRpcPublicSandboxExecSandboxExecuteCodeResponseExecutionTim
 /** @internal */
 export const TextqlRpcPublicSandboxExecSandboxExecuteCodeResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxExecSandboxExecuteCodeResponse, unknown> =
-    z.object({
-      output: types.optional(z.array(types.string())),
-      error: z.optional(z.nullable(types.string())),
-      files: types.optional(
-        z.array(TextqlRpcPublicSandboxExecSandboxFileOutput$inboundSchema),
-      ),
-      dataframes: types.optional(
-        z.array(TextqlRpcPublicSandboxExecSandboxDataFrameOutput$inboundSchema),
-      ),
-      executionTimeMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        output: types.optional(z.array(types.string())),
+        error: z.optional(z.nullable(types.string())),
+        files: types.optional(
+          z.array(TextqlRpcPublicSandboxExecSandboxFileOutput$inboundSchema),
+        ),
+        dataframes: types.optional(
+          z.array(
+            TextqlRpcPublicSandboxExecSandboxDataFrameOutput$inboundSchema,
+          ),
+        ),
+        executionTimeMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicSandboxExecSandboxExecuteCodeResponseFromJSON(
   jsonString: string,

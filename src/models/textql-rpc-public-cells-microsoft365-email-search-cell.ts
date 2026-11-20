@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicCellsMicrosoft365EmailSearchCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsMicrosoft365EmailSearchCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsMicrosoft365EmailSearchCell, unknown> = z
-    .object({
-      emailCount: types.optional(types.number()),
-      emailSummary: z.optional(z.nullable(types.string())),
-      syntheticToolUseId: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsMicrosoft365EmailSearchCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        emailCount: types.optional(types.number()),
+        emailSummary: z.optional(z.nullable(types.string())),
+        syntheticToolUseId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsMicrosoft365EmailSearchCellFromJSON(
   jsonString: string,

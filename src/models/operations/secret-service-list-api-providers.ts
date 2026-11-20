@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type SecretServiceListApiProvidersRequest$Outbound = {
 export const SecretServiceListApiProvidersRequest$outboundSchema: z.ZodMiniType<
   SecretServiceListApiProvidersRequest$Outbound,
   SecretServiceListApiProvidersRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicSecretListApiProvidersRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicSecretListApiProvidersRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function secretServiceListApiProvidersRequestToJSON(
@@ -62,10 +64,12 @@ export function secretServiceListApiProvidersRequestToJSON(
 export const SecretServiceListApiProvidersResponse$inboundSchema: z.ZodMiniType<
   SecretServiceListApiProvidersResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicSecretListApiProvidersResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicSecretListApiProvidersResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function secretServiceListApiProvidersResponseFromJSON(
   jsonString: string,

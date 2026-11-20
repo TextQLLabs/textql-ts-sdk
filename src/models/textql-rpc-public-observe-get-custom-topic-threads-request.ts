@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetCustomTopicThreadsRequest = {
   topicId?: string | undefined;
@@ -32,13 +33,15 @@ export const TextqlRpcPublicObserveGetCustomTopicThreadsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetCustomTopicThreadsRequest$Outbound,
     TextqlRpcPublicObserveGetCustomTopicThreadsRequest
-  > = z.object({
-    topicId: z.optional(z.string()),
-    verdict: z.optional(z.string()),
-    pageToken: z.optional(z.string()),
-    pageSize: z.optional(z.int()),
-    memberId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      topicId: z.optional(z.string()),
+      verdict: z.optional(z.string()),
+      pageToken: z.optional(z.string()),
+      pageSize: z.optional(z.int()),
+      memberId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicObserveGetCustomTopicThreadsRequestToJSON(
   textqlRpcPublicObserveGetCustomTopicThreadsRequest:

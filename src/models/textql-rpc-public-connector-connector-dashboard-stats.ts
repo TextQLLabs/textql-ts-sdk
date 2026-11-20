@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -36,7 +36,9 @@ export type TextqlRpcPublicConnectorConnectorDashboardStats = {
 export const DashboardsThisWeek$inboundSchema: z.ZodMiniType<
   DashboardsThisWeek,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function dashboardsThisWeekFromJSON(
   jsonString: string,
@@ -52,7 +54,9 @@ export function dashboardsThisWeekFromJSON(
 export const DashboardsLastWeek$inboundSchema: z.ZodMiniType<
   DashboardsLastWeek,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function dashboardsLastWeekFromJSON(
   jsonString: string,
@@ -69,7 +73,9 @@ export const TextqlRpcPublicConnectorConnectorDashboardStatsActiveUsers$inboundS
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorDashboardStatsActiveUsers,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicConnectorConnectorDashboardStatsActiveUsersFromJSON(
   jsonString: string,
@@ -91,7 +97,9 @@ export const TextqlRpcPublicConnectorConnectorDashboardStatsActiveUsersLastWeek$
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorDashboardStatsActiveUsersLastWeek,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicConnectorConnectorDashboardStatsActiveUsersLastWeekFromJSON(
   jsonString: string,
@@ -112,7 +120,9 @@ export function textqlRpcPublicConnectorConnectorDashboardStatsActiveUsersLastWe
 export const TotalDashboards$inboundSchema: z.ZodMiniType<
   TotalDashboards,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function totalDashboardsFromJSON(
   jsonString: string,
@@ -126,23 +136,27 @@ export function totalDashboardsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorDashboardStats$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorDashboardStats, unknown> = z
-    .object({
-      dashboardsThisWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      dashboardsLastWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      activeUsers: types.optional(smartUnion([types.number(), types.string()])),
-      activeUsersLastWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      avgQueriesPerDashboard: types.optional(types.number()),
-      totalDashboards: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorDashboardStats, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dashboardsThisWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        dashboardsLastWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        activeUsers: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        activeUsersLastWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        avgQueriesPerDashboard: types.optional(types.number()),
+        totalDashboards: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorDashboardStatsFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,12 +18,14 @@ export type TextqlRpcPublicAppGetMembersWithAppsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAppGetMembersWithAppsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAppGetMembersWithAppsResponse, unknown> = z
-    .object({
-      members: types.optional(
-        z.array(TextqlRpcIdentityMemberPreview$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicAppGetMembersWithAppsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        members: types.optional(
+          z.array(TextqlRpcIdentityMemberPreview$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicAppGetMembersWithAppsResponseFromJSON(
   jsonString: string,

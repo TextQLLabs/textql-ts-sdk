@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,18 +28,20 @@ export type TextqlRpcPublicCellsFeedCommentCell = {
 export const TextqlRpcPublicCellsFeedCommentCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedCommentCell,
   unknown
-> = z.object({
-  postId: types.optional(types.string()),
-  content: types.optional(types.string()),
-  commentId: types.optional(types.string()),
-  commentUrl: types.optional(types.string()),
-  timestamp: types.optional(types.string()),
-  error: types.optional(types.string()),
-  postTitle: types.optional(types.string()),
-  postAuthor: types.optional(types.string()),
-  postUpvoteCount: types.optional(types.number()),
-  postDownvoteCount: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    postId: types.optional(types.string()),
+    content: types.optional(types.string()),
+    commentId: types.optional(types.string()),
+    commentUrl: types.optional(types.string()),
+    timestamp: types.optional(types.string()),
+    error: types.optional(types.string()),
+    postTitle: types.optional(types.string()),
+    postAuthor: types.optional(types.string()),
+    postUpvoteCount: types.optional(types.number()),
+    postDownvoteCount: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicCellsFeedCommentCellFromJSON(
   jsonString: string,

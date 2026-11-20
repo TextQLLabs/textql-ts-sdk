@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDashboardSpawnDashboardRequest = {
   dashboardId?: string | undefined;
@@ -38,13 +39,15 @@ export const TextqlRpcPublicDashboardSpawnDashboardRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardSpawnDashboardRequest$Outbound,
     TextqlRpcPublicDashboardSpawnDashboardRequest
-  > = z.object({
-    dashboardId: z.optional(z.string()),
-    forceRestart: z.optional(z.boolean()),
-    refreshDataOnly: z.optional(z.boolean()),
-    refreshSourceNames: z.optional(z.array(z.string())),
-    refreshCodeOnly: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dashboardId: z.optional(z.string()),
+      forceRestart: z.optional(z.boolean()),
+      refreshDataOnly: z.optional(z.boolean()),
+      refreshSourceNames: z.optional(z.array(z.string())),
+      refreshCodeOnly: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicDashboardSpawnDashboardRequestToJSON(
   textqlRpcPublicDashboardSpawnDashboardRequest:

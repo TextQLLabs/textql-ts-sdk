@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -114,7 +114,9 @@ export type TextqlRpcPublicAppRecordAppMemberActivityResponse = {
 /** @internal */
 export const TextqlRpcPublicAppRecordAppMemberActivityResponseSeq$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicAppRecordAppMemberActivityResponseSeq, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicAppRecordAppMemberActivityResponseSeqFromJSON(
   jsonString: string,
@@ -134,11 +136,13 @@ export function textqlRpcPublicAppRecordAppMemberActivityResponseSeqFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicAppRecordAppMemberActivityResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAppRecordAppMemberActivityResponse, unknown> = z
-    .object({
-      seq: types.optional(smartUnion([types.number(), types.string()])),
-      createdAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicAppRecordAppMemberActivityResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        seq: types.optional(smartUnion([types.number(), types.string()])),
+        createdAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicAppRecordAppMemberActivityResponseFromJSON(
   jsonString: string,

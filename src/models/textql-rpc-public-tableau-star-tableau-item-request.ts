@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicTableauTableauItemType,
   TextqlRpcPublicTableauTableauItemType$outboundSchema,
@@ -31,12 +32,16 @@ export const TextqlRpcPublicTableauStarTableauItemRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTableauStarTableauItemRequest$Outbound,
     TextqlRpcPublicTableauStarTableauItemRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    itemType: z.optional(TextqlRpcPublicTableauTableauItemType$outboundSchema),
-    itemId: z.optional(z.string()),
-    itemName: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      itemType: z.optional(
+        TextqlRpcPublicTableauTableauItemType$outboundSchema,
+      ),
+      itemId: z.optional(z.string()),
+      itemName: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicTableauStarTableauItemRequestToJSON(
   textqlRpcPublicTableauStarTableauItemRequest:

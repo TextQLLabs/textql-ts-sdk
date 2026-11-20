@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -18,8 +19,12 @@ export type TextqlRpcPublicRbacPackagesPermissionAction = OpenEnum<
 /** @internal */
 export const TextqlRpcPublicRbacPackagesPermissionAction$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicRbacPackagesPermissionAction, unknown> =
-    openEnums.inboundSchema(TextqlRpcPublicRbacPackagesPermissionAction);
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.inboundSchema(TextqlRpcPublicRbacPackagesPermissionAction)
+    );
 /** @internal */
 export const TextqlRpcPublicRbacPackagesPermissionAction$outboundSchema:
-  z.ZodMiniType<string, TextqlRpcPublicRbacPackagesPermissionAction> = openEnums
-    .outboundSchema(TextqlRpcPublicRbacPackagesPermissionAction);
+  z.ZodMiniType<string, TextqlRpcPublicRbacPackagesPermissionAction> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.outboundSchema(TextqlRpcPublicRbacPackagesPermissionAction)
+    );

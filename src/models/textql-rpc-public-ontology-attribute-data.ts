@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,10 +27,12 @@ export type Linked = {
 export type TextqlRpcPublicOntologyAttributeData = Linked | Unlinked;
 
 /** @internal */
-export const Unlinked$inboundSchema: z.ZodMiniType<Unlinked, unknown> = z
-  .object({
-    unlinked: TextqlRpcPublicOntologyUnlinkedAttributeData$inboundSchema,
-  });
+export const Unlinked$inboundSchema: z.ZodMiniType<Unlinked, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      unlinked: TextqlRpcPublicOntologyUnlinkedAttributeData$inboundSchema,
+    })
+  );
 
 export function unlinkedFromJSON(
   jsonString: string,
@@ -43,9 +45,12 @@ export function unlinkedFromJSON(
 }
 
 /** @internal */
-export const Linked$inboundSchema: z.ZodMiniType<Linked, unknown> = z.object({
-  linked: TextqlRpcPublicOntologyLinkedAttributeData$inboundSchema,
-});
+export const Linked$inboundSchema: z.ZodMiniType<Linked, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      linked: TextqlRpcPublicOntologyLinkedAttributeData$inboundSchema,
+    })
+  );
 
 export function linkedFromJSON(
   jsonString: string,
@@ -61,10 +66,12 @@ export function linkedFromJSON(
 export const TextqlRpcPublicOntologyAttributeData$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicOntologyAttributeData,
   unknown
-> = smartUnion([
-  z.lazy(() => Linked$inboundSchema),
-  z.lazy(() => Unlinked$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Linked$inboundSchema),
+    z.lazy(() => Unlinked$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicOntologyAttributeDataFromJSON(
   jsonString: string,

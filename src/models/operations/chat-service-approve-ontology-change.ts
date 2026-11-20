@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,21 @@ export const ChatServiceApproveOntologyChangeRequest$outboundSchema:
   z.ZodMiniType<
     ChatServiceApproveOntologyChangeRequest$Outbound,
     ChatServiceApproveOntologyChangeRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicChatApproveOntologyChangeRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models.TextqlRpcPublicChatApproveOntologyChangeRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function chatServiceApproveOntologyChangeRequestToJSON(
@@ -63,12 +65,13 @@ export function chatServiceApproveOntologyChangeRequestToJSON(
 
 /** @internal */
 export const ChatServiceApproveOntologyChangeResponse$inboundSchema:
-  z.ZodMiniType<ChatServiceApproveOntologyChangeResponse, unknown> = smartUnion(
-    [
-      models.TextqlRpcPublicChatApproveOntologyChangeResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ],
-  );
+  z.ZodMiniType<ChatServiceApproveOntologyChangeResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicChatApproveOntologyChangeResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function chatServiceApproveOntologyChangeResponseFromJSON(
   jsonString: string,

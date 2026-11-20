@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -14,9 +14,12 @@ export type TextqlRpcPublicDataframeTimestampValues = {
 
 /** @internal */
 export const TextqlRpcPublicDataframeTimestampValues$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDataframeTimestampValues, unknown> = z.object({
-    values: types.optional(z.array(types.date())),
-  });
+  z.ZodMiniType<TextqlRpcPublicDataframeTimestampValues, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        values: types.optional(z.array(types.date())),
+      })
+    );
 
 export function textqlRpcPublicDataframeTimestampValuesFromJSON(
   jsonString: string,

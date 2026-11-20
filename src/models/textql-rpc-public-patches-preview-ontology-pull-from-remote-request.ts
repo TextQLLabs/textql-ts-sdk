@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequest = {};
 
@@ -15,7 +16,7 @@ export const TextqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequest$outbound
   z.ZodMiniType<
     TextqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequest$Outbound,
     TextqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequestToJSON(
   textqlRpcPublicPatchesPreviewOntologyPullFromRemoteRequest:

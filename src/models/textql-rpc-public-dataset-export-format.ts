@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicDatasetExportFormat = {
@@ -18,4 +19,6 @@ export type TextqlRpcPublicDatasetExportFormat = ClosedEnum<
 /** @internal */
 export const TextqlRpcPublicDatasetExportFormat$outboundSchema: z.ZodMiniEnum<
   typeof TextqlRpcPublicDatasetExportFormat
-> = z.enum(TextqlRpcPublicDatasetExportFormat);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(TextqlRpcPublicDatasetExportFormat)
+);

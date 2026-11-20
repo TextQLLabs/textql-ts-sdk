@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -294,19 +294,24 @@ export type TextqlRpcPublicRbacPermissionSpec =
   | Usage;
 
 /** @internal */
-export const Usage$inboundSchema: z.ZodMiniType<Usage, unknown> = z.object({
-  usage: TextqlRpcPublicRbacUsagePermissionAction$inboundSchema,
-});
+export const Usage$inboundSchema: z.ZodMiniType<Usage, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      usage: TextqlRpcPublicRbacUsagePermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Usage$Outbound = {
   usage: string;
 };
 
 /** @internal */
-export const Usage$outboundSchema: z.ZodMiniType<Usage$Outbound, Usage> = z
-  .object({
-    usage: TextqlRpcPublicRbacUsagePermissionAction$outboundSchema,
-  });
+export const Usage$outboundSchema: z.ZodMiniType<Usage$Outbound, Usage> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      usage: TextqlRpcPublicRbacUsagePermissionAction$outboundSchema,
+    })
+  );
 
 export function usageToJSON(usage: Usage): string {
   return JSON.stringify(Usage$outboundSchema.parse(usage));
@@ -322,19 +327,24 @@ export function usageFromJSON(
 }
 
 /** @internal */
-export const Secret$inboundSchema: z.ZodMiniType<Secret, unknown> = z.object({
-  secret: TextqlRpcPublicRbacSecretPermissionAction$inboundSchema,
-});
+export const Secret$inboundSchema: z.ZodMiniType<Secret, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      secret: TextqlRpcPublicRbacSecretPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Secret$Outbound = {
   secret: string;
 };
 
 /** @internal */
-export const Secret$outboundSchema: z.ZodMiniType<Secret$Outbound, Secret> = z
-  .object({
-    secret: TextqlRpcPublicRbacSecretPermissionAction$outboundSchema,
-  });
+export const Secret$outboundSchema: z.ZodMiniType<Secret$Outbound, Secret> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      secret: TextqlRpcPublicRbacSecretPermissionAction$outboundSchema,
+    })
+  );
 
 export function secretToJSON(secret: Secret): string {
   return JSON.stringify(Secret$outboundSchema.parse(secret));
@@ -350,20 +360,24 @@ export function secretFromJSON(
 }
 
 /** @internal */
-export const Scim$inboundSchema: z.ZodMiniType<Scim, unknown> = z.object({
-  scim: TextqlRpcPublicRbacScimPermissionAction$inboundSchema,
-});
+export const Scim$inboundSchema: z.ZodMiniType<Scim, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      scim: TextqlRpcPublicRbacScimPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Scim$Outbound = {
   scim: string;
 };
 
 /** @internal */
-export const Scim$outboundSchema: z.ZodMiniType<Scim$Outbound, Scim> = z.object(
-  {
-    scim: TextqlRpcPublicRbacScimPermissionAction$outboundSchema,
-  },
-);
+export const Scim$outboundSchema: z.ZodMiniType<Scim$Outbound, Scim> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      scim: TextqlRpcPublicRbacScimPermissionAction$outboundSchema,
+    })
+  );
 
 export function scimToJSON(scim: Scim): string {
   return JSON.stringify(Scim$outboundSchema.parse(scim));
@@ -379,9 +393,12 @@ export function scimFromJSON(
 }
 
 /** @internal */
-export const Sandbox$inboundSchema: z.ZodMiniType<Sandbox, unknown> = z.object({
-  sandbox: TextqlRpcPublicRbacSandboxPermissionAction$inboundSchema,
-});
+export const Sandbox$inboundSchema: z.ZodMiniType<Sandbox, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sandbox: TextqlRpcPublicRbacSandboxPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Sandbox$Outbound = {
   sandbox: string;
@@ -389,9 +406,11 @@ export type Sandbox$Outbound = {
 
 /** @internal */
 export const Sandbox$outboundSchema: z.ZodMiniType<Sandbox$Outbound, Sandbox> =
-  z.object({
-    sandbox: TextqlRpcPublicRbacSandboxPermissionAction$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sandbox: TextqlRpcPublicRbacSandboxPermissionAction$outboundSchema,
+    })
+  );
 
 export function sandboxToJSON(sandbox: Sandbox): string {
   return JSON.stringify(Sandbox$outboundSchema.parse(sandbox));
@@ -410,10 +429,12 @@ export function sandboxFromJSON(
 export const RolePermission$inboundSchema: z.ZodMiniType<
   RolePermission,
   unknown
-> = z.object({
-  rolePermission:
-    TextqlRpcPublicRbacRolePermissionPermissionAction$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    rolePermission:
+      TextqlRpcPublicRbacRolePermissionPermissionAction$inboundSchema,
+  })
+);
 /** @internal */
 export type RolePermission$Outbound = {
   rolePermission: string;
@@ -423,10 +444,12 @@ export type RolePermission$Outbound = {
 export const RolePermission$outboundSchema: z.ZodMiniType<
   RolePermission$Outbound,
   RolePermission
-> = z.object({
-  rolePermission:
-    TextqlRpcPublicRbacRolePermissionPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    rolePermission:
+      TextqlRpcPublicRbacRolePermissionPermissionAction$outboundSchema,
+  })
+);
 
 export function rolePermissionToJSON(rolePermission: RolePermission): string {
   return JSON.stringify(RolePermission$outboundSchema.parse(rolePermission));
@@ -442,20 +465,24 @@ export function rolePermissionFromJSON(
 }
 
 /** @internal */
-export const Role$inboundSchema: z.ZodMiniType<Role, unknown> = z.object({
-  role: TextqlRpcPublicRbacRolePermissionAction$inboundSchema,
-});
+export const Role$inboundSchema: z.ZodMiniType<Role, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      role: TextqlRpcPublicRbacRolePermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Role$Outbound = {
   role: string;
 };
 
 /** @internal */
-export const Role$outboundSchema: z.ZodMiniType<Role$Outbound, Role> = z.object(
-  {
-    role: TextqlRpcPublicRbacRolePermissionAction$outboundSchema,
-  },
-);
+export const Role$outboundSchema: z.ZodMiniType<Role$Outbound, Role> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      role: TextqlRpcPublicRbacRolePermissionAction$outboundSchema,
+    })
+  );
 
 export function roleToJSON(role: Role): string {
   return JSON.stringify(Role$outboundSchema.parse(role));
@@ -471,10 +498,12 @@ export function roleFromJSON(
 }
 
 /** @internal */
-export const Playbook$inboundSchema: z.ZodMiniType<Playbook, unknown> = z
-  .object({
-    playbook: TextqlRpcPublicRbacPlaybookPermissionAction$inboundSchema,
-  });
+export const Playbook$inboundSchema: z.ZodMiniType<Playbook, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbook: TextqlRpcPublicRbacPlaybookPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Playbook$Outbound = {
   playbook: string;
@@ -484,9 +513,11 @@ export type Playbook$Outbound = {
 export const Playbook$outboundSchema: z.ZodMiniType<
   Playbook$Outbound,
   Playbook
-> = z.object({
-  playbook: TextqlRpcPublicRbacPlaybookPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    playbook: TextqlRpcPublicRbacPlaybookPermissionAction$outboundSchema,
+  })
+);
 
 export function playbookToJSON(playbook: Playbook): string {
   return JSON.stringify(Playbook$outboundSchema.parse(playbook));
@@ -502,10 +533,12 @@ export function playbookFromJSON(
 }
 
 /** @internal */
-export const Pipeline$inboundSchema: z.ZodMiniType<Pipeline, unknown> = z
-  .object({
-    pipeline: TextqlRpcPublicRbacPipelinePermissionAction$inboundSchema,
-  });
+export const Pipeline$inboundSchema: z.ZodMiniType<Pipeline, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pipeline: TextqlRpcPublicRbacPipelinePermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Pipeline$Outbound = {
   pipeline: string;
@@ -515,9 +548,11 @@ export type Pipeline$Outbound = {
 export const Pipeline$outboundSchema: z.ZodMiniType<
   Pipeline$Outbound,
   Pipeline
-> = z.object({
-  pipeline: TextqlRpcPublicRbacPipelinePermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    pipeline: TextqlRpcPublicRbacPipelinePermissionAction$outboundSchema,
+  })
+);
 
 export function pipelineToJSON(pipeline: Pipeline): string {
   return JSON.stringify(Pipeline$outboundSchema.parse(pipeline));
@@ -533,10 +568,12 @@ export function pipelineFromJSON(
 }
 
 /** @internal */
-export const Packages$inboundSchema: z.ZodMiniType<Packages, unknown> = z
-  .object({
-    packages: TextqlRpcPublicRbacPackagesPermissionAction$inboundSchema,
-  });
+export const Packages$inboundSchema: z.ZodMiniType<Packages, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      packages: TextqlRpcPublicRbacPackagesPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Packages$Outbound = {
   packages: string;
@@ -546,9 +583,11 @@ export type Packages$Outbound = {
 export const Packages$outboundSchema: z.ZodMiniType<
   Packages$Outbound,
   Packages
-> = z.object({
-  packages: TextqlRpcPublicRbacPackagesPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    packages: TextqlRpcPublicRbacPackagesPermissionAction$outboundSchema,
+  })
+);
 
 export function packagesToJSON(packages: Packages): string {
   return JSON.stringify(Packages$outboundSchema.parse(packages));
@@ -565,9 +604,12 @@ export function packagesFromJSON(
 
 /** @internal */
 export const Organization$inboundSchema: z.ZodMiniType<Organization, unknown> =
-  z.object({
-    organization: TextqlRpcPublicRbacOrganizationPermissionAction$inboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      organization:
+        TextqlRpcPublicRbacOrganizationPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Organization$Outbound = {
   organization: string;
@@ -577,9 +619,12 @@ export type Organization$Outbound = {
 export const Organization$outboundSchema: z.ZodMiniType<
   Organization$Outbound,
   Organization
-> = z.object({
-  organization: TextqlRpcPublicRbacOrganizationPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    organization:
+      TextqlRpcPublicRbacOrganizationPermissionAction$outboundSchema,
+  })
+);
 
 export function organizationToJSON(organization: Organization): string {
   return JSON.stringify(Organization$outboundSchema.parse(organization));
@@ -595,10 +640,12 @@ export function organizationFromJSON(
 }
 
 /** @internal */
-export const Ontology$inboundSchema: z.ZodMiniType<Ontology, unknown> = z
-  .object({
-    ontology: TextqlRpcPublicRbacOntologyPermissionAction$inboundSchema,
-  });
+export const Ontology$inboundSchema: z.ZodMiniType<Ontology, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ontology: TextqlRpcPublicRbacOntologyPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Ontology$Outbound = {
   ontology: string;
@@ -608,9 +655,11 @@ export type Ontology$Outbound = {
 export const Ontology$outboundSchema: z.ZodMiniType<
   Ontology$Outbound,
   Ontology
-> = z.object({
-  ontology: TextqlRpcPublicRbacOntologyPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontology: TextqlRpcPublicRbacOntologyPermissionAction$outboundSchema,
+  })
+);
 
 export function ontologyToJSON(ontology: Ontology): string {
   return JSON.stringify(Ontology$outboundSchema.parse(ontology));
@@ -629,9 +678,12 @@ export function ontologyFromJSON(
 export const Observability$inboundSchema: z.ZodMiniType<
   Observability,
   unknown
-> = z.object({
-  observability: TextqlRpcPublicRbacObservabilityPermissionAction$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    observability:
+      TextqlRpcPublicRbacObservabilityPermissionAction$inboundSchema,
+  })
+);
 /** @internal */
 export type Observability$Outbound = {
   observability: string;
@@ -641,10 +693,12 @@ export type Observability$Outbound = {
 export const Observability$outboundSchema: z.ZodMiniType<
   Observability$Outbound,
   Observability
-> = z.object({
-  observability:
-    TextqlRpcPublicRbacObservabilityPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    observability:
+      TextqlRpcPublicRbacObservabilityPermissionAction$outboundSchema,
+  })
+);
 
 export function observabilityToJSON(observability: Observability): string {
   return JSON.stringify(Observability$outboundSchema.parse(observability));
@@ -660,19 +714,24 @@ export function observabilityFromJSON(
 }
 
 /** @internal */
-export const Memory$inboundSchema: z.ZodMiniType<Memory, unknown> = z.object({
-  memory: TextqlRpcPublicRbacMemoryPermissionAction$inboundSchema,
-});
+export const Memory$inboundSchema: z.ZodMiniType<Memory, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memory: TextqlRpcPublicRbacMemoryPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Memory$Outbound = {
   memory: string;
 };
 
 /** @internal */
-export const Memory$outboundSchema: z.ZodMiniType<Memory$Outbound, Memory> = z
-  .object({
-    memory: TextqlRpcPublicRbacMemoryPermissionAction$outboundSchema,
-  });
+export const Memory$outboundSchema: z.ZodMiniType<Memory$Outbound, Memory> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memory: TextqlRpcPublicRbacMemoryPermissionAction$outboundSchema,
+    })
+  );
 
 export function memoryToJSON(memory: Memory): string {
   return JSON.stringify(Memory$outboundSchema.parse(memory));
@@ -688,19 +747,24 @@ export function memoryFromJSON(
 }
 
 /** @internal */
-export const Member$inboundSchema: z.ZodMiniType<Member, unknown> = z.object({
-  member: TextqlRpcPublicRbacMemberPermissionAction$inboundSchema,
-});
+export const Member$inboundSchema: z.ZodMiniType<Member, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      member: TextqlRpcPublicRbacMemberPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Member$Outbound = {
   member: string;
 };
 
 /** @internal */
-export const Member$outboundSchema: z.ZodMiniType<Member$Outbound, Member> = z
-  .object({
-    member: TextqlRpcPublicRbacMemberPermissionAction$outboundSchema,
-  });
+export const Member$outboundSchema: z.ZodMiniType<Member$Outbound, Member> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      member: TextqlRpcPublicRbacMemberPermissionAction$outboundSchema,
+    })
+  );
 
 export function memberToJSON(member: Member): string {
   return JSON.stringify(Member$outboundSchema.parse(member));
@@ -716,18 +780,24 @@ export function memberFromJSON(
 }
 
 /** @internal */
-export const Mcp$inboundSchema: z.ZodMiniType<Mcp, unknown> = z.object({
-  mcp: TextqlRpcPublicRbacMcpPermissionAction$inboundSchema,
-});
+export const Mcp$inboundSchema: z.ZodMiniType<Mcp, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mcp: TextqlRpcPublicRbacMcpPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Mcp$Outbound = {
   mcp: string;
 };
 
 /** @internal */
-export const Mcp$outboundSchema: z.ZodMiniType<Mcp$Outbound, Mcp> = z.object({
-  mcp: TextqlRpcPublicRbacMcpPermissionAction$outboundSchema,
-});
+export const Mcp$outboundSchema: z.ZodMiniType<Mcp$Outbound, Mcp> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mcp: TextqlRpcPublicRbacMcpPermissionAction$outboundSchema,
+    })
+  );
 
 export function mcpToJSON(mcp: Mcp): string {
   return JSON.stringify(Mcp$outboundSchema.parse(mcp));
@@ -743,19 +813,24 @@ export function mcpFromJSON(
 }
 
 /** @internal */
-export const Group$inboundSchema: z.ZodMiniType<Group, unknown> = z.object({
-  group: TextqlRpcPublicRbacGroupPermissionAction$inboundSchema,
-});
+export const Group$inboundSchema: z.ZodMiniType<Group, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      group: TextqlRpcPublicRbacGroupPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Group$Outbound = {
   group: string;
 };
 
 /** @internal */
-export const Group$outboundSchema: z.ZodMiniType<Group$Outbound, Group> = z
-  .object({
-    group: TextqlRpcPublicRbacGroupPermissionAction$outboundSchema,
-  });
+export const Group$outboundSchema: z.ZodMiniType<Group$Outbound, Group> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      group: TextqlRpcPublicRbacGroupPermissionAction$outboundSchema,
+    })
+  );
 
 export function groupToJSON(group: Group): string {
   return JSON.stringify(Group$outboundSchema.parse(group));
@@ -771,20 +846,24 @@ export function groupFromJSON(
 }
 
 /** @internal */
-export const Feed$inboundSchema: z.ZodMiniType<Feed, unknown> = z.object({
-  feed: TextqlRpcPublicRbacFeedPermissionAction$inboundSchema,
-});
+export const Feed$inboundSchema: z.ZodMiniType<Feed, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      feed: TextqlRpcPublicRbacFeedPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Feed$Outbound = {
   feed: string;
 };
 
 /** @internal */
-export const Feed$outboundSchema: z.ZodMiniType<Feed$Outbound, Feed> = z.object(
-  {
-    feed: TextqlRpcPublicRbacFeedPermissionAction$outboundSchema,
-  },
-);
+export const Feed$outboundSchema: z.ZodMiniType<Feed$Outbound, Feed> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      feed: TextqlRpcPublicRbacFeedPermissionAction$outboundSchema,
+    })
+  );
 
 export function feedToJSON(feed: Feed): string {
   return JSON.stringify(Feed$outboundSchema.parse(feed));
@@ -801,9 +880,12 @@ export function feedFromJSON(
 
 /** @internal */
 export const DesignSystem$inboundSchema: z.ZodMiniType<DesignSystem, unknown> =
-  z.object({
-    designSystem: TextqlRpcPublicRbacDesignSystemPermissionAction$inboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      designSystem:
+        TextqlRpcPublicRbacDesignSystemPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type DesignSystem$Outbound = {
   designSystem: string;
@@ -813,9 +895,12 @@ export type DesignSystem$Outbound = {
 export const DesignSystem$outboundSchema: z.ZodMiniType<
   DesignSystem$Outbound,
   DesignSystem
-> = z.object({
-  designSystem: TextqlRpcPublicRbacDesignSystemPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    designSystem:
+      TextqlRpcPublicRbacDesignSystemPermissionAction$outboundSchema,
+  })
+);
 
 export function designSystemToJSON(designSystem: DesignSystem): string {
   return JSON.stringify(DesignSystem$outboundSchema.parse(designSystem));
@@ -831,9 +916,12 @@ export function designSystemFromJSON(
 }
 
 /** @internal */
-export const Dataset$inboundSchema: z.ZodMiniType<Dataset, unknown> = z.object({
-  dataset: TextqlRpcPublicRbacDatasetPermissionAction$inboundSchema,
-});
+export const Dataset$inboundSchema: z.ZodMiniType<Dataset, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dataset: TextqlRpcPublicRbacDatasetPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Dataset$Outbound = {
   dataset: string;
@@ -841,9 +929,11 @@ export type Dataset$Outbound = {
 
 /** @internal */
 export const Dataset$outboundSchema: z.ZodMiniType<Dataset$Outbound, Dataset> =
-  z.object({
-    dataset: TextqlRpcPublicRbacDatasetPermissionAction$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dataset: TextqlRpcPublicRbacDatasetPermissionAction$outboundSchema,
+    })
+  );
 
 export function datasetToJSON(dataset: Dataset): string {
   return JSON.stringify(Dataset$outboundSchema.parse(dataset));
@@ -860,11 +950,12 @@ export function datasetFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicRbacPermissionSpecDashboard$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacPermissionSpecDashboard, unknown> = z.object(
-    {
-      dashboard: TextqlRpcPublicRbacDashboardPermissionAction$inboundSchema,
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicRbacPermissionSpecDashboard, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dashboard: TextqlRpcPublicRbacDashboardPermissionAction$inboundSchema,
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicRbacPermissionSpecDashboard$Outbound = {
   dashboard: string;
@@ -875,9 +966,11 @@ export const TextqlRpcPublicRbacPermissionSpecDashboard$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacPermissionSpecDashboard$Outbound,
     TextqlRpcPublicRbacPermissionSpecDashboard
-  > = z.object({
-    dashboard: TextqlRpcPublicRbacDashboardPermissionAction$outboundSchema,
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dashboard: TextqlRpcPublicRbacDashboardPermissionAction$outboundSchema,
+    })
+  );
 
 export function textqlRpcPublicRbacPermissionSpecDashboardToJSON(
   textqlRpcPublicRbacPermissionSpecDashboard:
@@ -909,9 +1002,12 @@ export function textqlRpcPublicRbacPermissionSpecDashboardFromJSON(
 export const ContextPolicy$inboundSchema: z.ZodMiniType<
   ContextPolicy,
   unknown
-> = z.object({
-  contextPolicy: TextqlRpcPublicRbacContextPolicyPermissionAction$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    contextPolicy:
+      TextqlRpcPublicRbacContextPolicyPermissionAction$inboundSchema,
+  })
+);
 /** @internal */
 export type ContextPolicy$Outbound = {
   contextPolicy: string;
@@ -921,10 +1017,12 @@ export type ContextPolicy$Outbound = {
 export const ContextPolicy$outboundSchema: z.ZodMiniType<
   ContextPolicy$Outbound,
   ContextPolicy
-> = z.object({
-  contextPolicy:
-    TextqlRpcPublicRbacContextPolicyPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    contextPolicy:
+      TextqlRpcPublicRbacContextPolicyPermissionAction$outboundSchema,
+  })
+);
 
 export function contextPolicyToJSON(contextPolicy: ContextPolicy): string {
   return JSON.stringify(ContextPolicy$outboundSchema.parse(contextPolicy));
@@ -940,9 +1038,12 @@ export function contextPolicyFromJSON(
 }
 
 /** @internal */
-export const Context$inboundSchema: z.ZodMiniType<Context, unknown> = z.object({
-  context: TextqlRpcPublicRbacContextPermissionAction$inboundSchema,
-});
+export const Context$inboundSchema: z.ZodMiniType<Context, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      context: TextqlRpcPublicRbacContextPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Context$Outbound = {
   context: string;
@@ -950,9 +1051,11 @@ export type Context$Outbound = {
 
 /** @internal */
 export const Context$outboundSchema: z.ZodMiniType<Context$Outbound, Context> =
-  z.object({
-    context: TextqlRpcPublicRbacContextPermissionAction$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      context: TextqlRpcPublicRbacContextPermissionAction$outboundSchema,
+    })
+  );
 
 export function contextToJSON(context: Context): string {
   return JSON.stringify(Context$outboundSchema.parse(context));
@@ -968,10 +1071,12 @@ export function contextFromJSON(
 }
 
 /** @internal */
-export const Connector$inboundSchema: z.ZodMiniType<Connector, unknown> = z
-  .object({
-    connector: TextqlRpcPublicRbacConnectorPermissionAction$inboundSchema,
-  });
+export const Connector$inboundSchema: z.ZodMiniType<Connector, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connector: TextqlRpcPublicRbacConnectorPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Connector$Outbound = {
   connector: string;
@@ -981,9 +1086,11 @@ export type Connector$Outbound = {
 export const Connector$outboundSchema: z.ZodMiniType<
   Connector$Outbound,
   Connector
-> = z.object({
-  connector: TextqlRpcPublicRbacConnectorPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    connector: TextqlRpcPublicRbacConnectorPermissionAction$outboundSchema,
+  })
+);
 
 export function connectorToJSON(connector: Connector): string {
   return JSON.stringify(Connector$outboundSchema.parse(connector));
@@ -999,20 +1106,24 @@ export function connectorFromJSON(
 }
 
 /** @internal */
-export const Chat$inboundSchema: z.ZodMiniType<Chat, unknown> = z.object({
-  chat: TextqlRpcPublicRbacChatPermissionAction$inboundSchema,
-});
+export const Chat$inboundSchema: z.ZodMiniType<Chat, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chat: TextqlRpcPublicRbacChatPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Chat$Outbound = {
   chat: string;
 };
 
 /** @internal */
-export const Chat$outboundSchema: z.ZodMiniType<Chat$Outbound, Chat> = z.object(
-  {
-    chat: TextqlRpcPublicRbacChatPermissionAction$outboundSchema,
-  },
-);
+export const Chat$outboundSchema: z.ZodMiniType<Chat$Outbound, Chat> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chat: TextqlRpcPublicRbacChatPermissionAction$outboundSchema,
+    })
+  );
 
 export function chatToJSON(chat: Chat): string {
   return JSON.stringify(Chat$outboundSchema.parse(chat));
@@ -1028,9 +1139,12 @@ export function chatFromJSON(
 }
 
 /** @internal */
-export const Billing$inboundSchema: z.ZodMiniType<Billing, unknown> = z.object({
-  billing: TextqlRpcPublicRbacBillingPermissionAction$inboundSchema,
-});
+export const Billing$inboundSchema: z.ZodMiniType<Billing, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      billing: TextqlRpcPublicRbacBillingPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Billing$Outbound = {
   billing: string;
@@ -1038,9 +1152,11 @@ export type Billing$Outbound = {
 
 /** @internal */
 export const Billing$outboundSchema: z.ZodMiniType<Billing$Outbound, Billing> =
-  z.object({
-    billing: TextqlRpcPublicRbacBillingPermissionAction$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      billing: TextqlRpcPublicRbacBillingPermissionAction$outboundSchema,
+    })
+  );
 
 export function billingToJSON(billing: Billing): string {
   return JSON.stringify(Billing$outboundSchema.parse(billing));
@@ -1056,10 +1172,12 @@ export function billingFromJSON(
 }
 
 /** @internal */
-export const AuditLog$inboundSchema: z.ZodMiniType<AuditLog, unknown> = z
-  .object({
-    auditLog: TextqlRpcPublicRbacAuditLogPermissionAction$inboundSchema,
-  });
+export const AuditLog$inboundSchema: z.ZodMiniType<AuditLog, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      auditLog: TextqlRpcPublicRbacAuditLogPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type AuditLog$Outbound = {
   auditLog: string;
@@ -1069,9 +1187,11 @@ export type AuditLog$Outbound = {
 export const AuditLog$outboundSchema: z.ZodMiniType<
   AuditLog$Outbound,
   AuditLog
-> = z.object({
-  auditLog: TextqlRpcPublicRbacAuditLogPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    auditLog: TextqlRpcPublicRbacAuditLogPermissionAction$outboundSchema,
+  })
+);
 
 export function auditLogToJSON(auditLog: AuditLog): string {
   return JSON.stringify(AuditLog$outboundSchema.parse(auditLog));
@@ -1088,9 +1208,12 @@ export function auditLogFromJSON(
 
 /** @internal */
 export const ApiAccessKey$inboundSchema: z.ZodMiniType<ApiAccessKey, unknown> =
-  z.object({
-    apiAccessKey: TextqlRpcPublicRbacApiAccessKeyPermissionAction$inboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      apiAccessKey:
+        TextqlRpcPublicRbacApiAccessKeyPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type ApiAccessKey$Outbound = {
   apiAccessKey: string;
@@ -1100,9 +1223,12 @@ export type ApiAccessKey$Outbound = {
 export const ApiAccessKey$outboundSchema: z.ZodMiniType<
   ApiAccessKey$Outbound,
   ApiAccessKey
-> = z.object({
-  apiAccessKey: TextqlRpcPublicRbacApiAccessKeyPermissionAction$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    apiAccessKey:
+      TextqlRpcPublicRbacApiAccessKeyPermissionAction$outboundSchema,
+  })
+);
 
 export function apiAccessKeyToJSON(apiAccessKey: ApiAccessKey): string {
   return JSON.stringify(ApiAccessKey$outboundSchema.parse(apiAccessKey));
@@ -1118,19 +1244,24 @@ export function apiAccessKeyFromJSON(
 }
 
 /** @internal */
-export const Agent$inboundSchema: z.ZodMiniType<Agent, unknown> = z.object({
-  agent: TextqlRpcPublicRbacAgentPermissionAction$inboundSchema,
-});
+export const Agent$inboundSchema: z.ZodMiniType<Agent, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agent: TextqlRpcPublicRbacAgentPermissionAction$inboundSchema,
+    })
+  );
 /** @internal */
 export type Agent$Outbound = {
   agent: string;
 };
 
 /** @internal */
-export const Agent$outboundSchema: z.ZodMiniType<Agent$Outbound, Agent> = z
-  .object({
-    agent: TextqlRpcPublicRbacAgentPermissionAction$outboundSchema,
-  });
+export const Agent$outboundSchema: z.ZodMiniType<Agent$Outbound, Agent> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agent: TextqlRpcPublicRbacAgentPermissionAction$outboundSchema,
+    })
+  );
 
 export function agentToJSON(agent: Agent): string {
   return JSON.stringify(Agent$outboundSchema.parse(agent));
@@ -1149,36 +1280,38 @@ export function agentFromJSON(
 export const TextqlRpcPublicRbacPermissionSpec$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacPermissionSpec,
   unknown
-> = smartUnion([
-  z.lazy(() => Agent$inboundSchema),
-  z.lazy(() => ApiAccessKey$inboundSchema),
-  z.lazy(() => AuditLog$inboundSchema),
-  z.lazy(() => Billing$inboundSchema),
-  z.lazy(() => Chat$inboundSchema),
-  z.lazy(() => Connector$inboundSchema),
-  z.lazy(() => Context$inboundSchema),
-  z.lazy(() => ContextPolicy$inboundSchema),
-  z.lazy(() => TextqlRpcPublicRbacPermissionSpecDashboard$inboundSchema),
-  z.lazy(() => Dataset$inboundSchema),
-  z.lazy(() => DesignSystem$inboundSchema),
-  z.lazy(() => Feed$inboundSchema),
-  z.lazy(() => Group$inboundSchema),
-  z.lazy(() => Mcp$inboundSchema),
-  z.lazy(() => Member$inboundSchema),
-  z.lazy(() => Memory$inboundSchema),
-  z.lazy(() => Observability$inboundSchema),
-  z.lazy(() => Ontology$inboundSchema),
-  z.lazy(() => Organization$inboundSchema),
-  z.lazy(() => Packages$inboundSchema),
-  z.lazy(() => Pipeline$inboundSchema),
-  z.lazy(() => Playbook$inboundSchema),
-  z.lazy(() => Role$inboundSchema),
-  z.lazy(() => RolePermission$inboundSchema),
-  z.lazy(() => Sandbox$inboundSchema),
-  z.lazy(() => Scim$inboundSchema),
-  z.lazy(() => Secret$inboundSchema),
-  z.lazy(() => Usage$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Agent$inboundSchema),
+    z.lazy(() => ApiAccessKey$inboundSchema),
+    z.lazy(() => AuditLog$inboundSchema),
+    z.lazy(() => Billing$inboundSchema),
+    z.lazy(() => Chat$inboundSchema),
+    z.lazy(() => Connector$inboundSchema),
+    z.lazy(() => Context$inboundSchema),
+    z.lazy(() => ContextPolicy$inboundSchema),
+    z.lazy(() => TextqlRpcPublicRbacPermissionSpecDashboard$inboundSchema),
+    z.lazy(() => Dataset$inboundSchema),
+    z.lazy(() => DesignSystem$inboundSchema),
+    z.lazy(() => Feed$inboundSchema),
+    z.lazy(() => Group$inboundSchema),
+    z.lazy(() => Mcp$inboundSchema),
+    z.lazy(() => Member$inboundSchema),
+    z.lazy(() => Memory$inboundSchema),
+    z.lazy(() => Observability$inboundSchema),
+    z.lazy(() => Ontology$inboundSchema),
+    z.lazy(() => Organization$inboundSchema),
+    z.lazy(() => Packages$inboundSchema),
+    z.lazy(() => Pipeline$inboundSchema),
+    z.lazy(() => Playbook$inboundSchema),
+    z.lazy(() => Role$inboundSchema),
+    z.lazy(() => RolePermission$inboundSchema),
+    z.lazy(() => Sandbox$inboundSchema),
+    z.lazy(() => Scim$inboundSchema),
+    z.lazy(() => Secret$inboundSchema),
+    z.lazy(() => Usage$inboundSchema),
+  ])
+);
 /** @internal */
 export type TextqlRpcPublicRbacPermissionSpec$Outbound =
   | Agent$Outbound
@@ -1214,36 +1347,38 @@ export type TextqlRpcPublicRbacPermissionSpec$Outbound =
 export const TextqlRpcPublicRbacPermissionSpec$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacPermissionSpec$Outbound,
   TextqlRpcPublicRbacPermissionSpec
-> = smartUnion([
-  z.lazy(() => Agent$outboundSchema),
-  z.lazy(() => ApiAccessKey$outboundSchema),
-  z.lazy(() => AuditLog$outboundSchema),
-  z.lazy(() => Billing$outboundSchema),
-  z.lazy(() => Chat$outboundSchema),
-  z.lazy(() => Connector$outboundSchema),
-  z.lazy(() => Context$outboundSchema),
-  z.lazy(() => ContextPolicy$outboundSchema),
-  z.lazy(() => TextqlRpcPublicRbacPermissionSpecDashboard$outboundSchema),
-  z.lazy(() => Dataset$outboundSchema),
-  z.lazy(() => DesignSystem$outboundSchema),
-  z.lazy(() => Feed$outboundSchema),
-  z.lazy(() => Group$outboundSchema),
-  z.lazy(() => Mcp$outboundSchema),
-  z.lazy(() => Member$outboundSchema),
-  z.lazy(() => Memory$outboundSchema),
-  z.lazy(() => Observability$outboundSchema),
-  z.lazy(() => Ontology$outboundSchema),
-  z.lazy(() => Organization$outboundSchema),
-  z.lazy(() => Packages$outboundSchema),
-  z.lazy(() => Pipeline$outboundSchema),
-  z.lazy(() => Playbook$outboundSchema),
-  z.lazy(() => Role$outboundSchema),
-  z.lazy(() => RolePermission$outboundSchema),
-  z.lazy(() => Sandbox$outboundSchema),
-  z.lazy(() => Scim$outboundSchema),
-  z.lazy(() => Secret$outboundSchema),
-  z.lazy(() => Usage$outboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Agent$outboundSchema),
+    z.lazy(() => ApiAccessKey$outboundSchema),
+    z.lazy(() => AuditLog$outboundSchema),
+    z.lazy(() => Billing$outboundSchema),
+    z.lazy(() => Chat$outboundSchema),
+    z.lazy(() => Connector$outboundSchema),
+    z.lazy(() => Context$outboundSchema),
+    z.lazy(() => ContextPolicy$outboundSchema),
+    z.lazy(() => TextqlRpcPublicRbacPermissionSpecDashboard$outboundSchema),
+    z.lazy(() => Dataset$outboundSchema),
+    z.lazy(() => DesignSystem$outboundSchema),
+    z.lazy(() => Feed$outboundSchema),
+    z.lazy(() => Group$outboundSchema),
+    z.lazy(() => Mcp$outboundSchema),
+    z.lazy(() => Member$outboundSchema),
+    z.lazy(() => Memory$outboundSchema),
+    z.lazy(() => Observability$outboundSchema),
+    z.lazy(() => Ontology$outboundSchema),
+    z.lazy(() => Organization$outboundSchema),
+    z.lazy(() => Packages$outboundSchema),
+    z.lazy(() => Pipeline$outboundSchema),
+    z.lazy(() => Playbook$outboundSchema),
+    z.lazy(() => Role$outboundSchema),
+    z.lazy(() => RolePermission$outboundSchema),
+    z.lazy(() => Sandbox$outboundSchema),
+    z.lazy(() => Scim$outboundSchema),
+    z.lazy(() => Secret$outboundSchema),
+    z.lazy(() => Usage$outboundSchema),
+  ])
+);
 
 export function textqlRpcPublicRbacPermissionSpecToJSON(
   textqlRpcPublicRbacPermissionSpec: TextqlRpcPublicRbacPermissionSpec,

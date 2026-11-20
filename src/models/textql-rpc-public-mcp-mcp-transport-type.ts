@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -19,9 +20,13 @@ export type TextqlRpcPublicMCPMCPTransportType = OpenEnum<
 export const TextqlRpcPublicMCPMCPTransportType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicMCPMCPTransportType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicMCPMCPTransportType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicMCPMCPTransportType)
+);
 /** @internal */
 export const TextqlRpcPublicMCPMCPTransportType$outboundSchema: z.ZodMiniType<
   string,
   TextqlRpcPublicMCPMCPTransportType
-> = openEnums.outboundSchema(TextqlRpcPublicMCPMCPTransportType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.outboundSchema(TextqlRpcPublicMCPMCPTransportType)
+);

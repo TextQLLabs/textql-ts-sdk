@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -30,13 +30,15 @@ export type TextqlRpcPublicCellsQuestionInput = {
 export const TextqlRpcPublicCellsQuestionInput$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsQuestionInput,
   unknown
-> = z.object({
-  kind: types.optional(TextqlRpcPublicCellsQuestionInputKind$inboundSchema),
-  label: types.optional(types.string()),
-  explanation: z.optional(z.nullable(types.string())),
-  sensitive: types.optional(types.boolean()),
-  formPathLabel: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    kind: types.optional(TextqlRpcPublicCellsQuestionInputKind$inboundSchema),
+    label: types.optional(types.string()),
+    explanation: z.optional(z.nullable(types.string())),
+    sensitive: types.optional(types.boolean()),
+    formPathLabel: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsQuestionInputFromJSON(
   jsonString: string,

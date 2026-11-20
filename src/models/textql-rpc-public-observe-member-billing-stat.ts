@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -42,24 +42,27 @@ export type TextqlRpcPublicObserveMemberBillingStat = {
 
 /** @internal */
 export const TextqlRpcPublicObserveMemberBillingStat$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveMemberBillingStat, unknown> = z.object({
-    memberId: types.optional(types.string()),
-    memberName: types.optional(types.string()),
-    email: types.optional(types.string()),
-    totalAcu: types.optional(types.number()),
-    acuByCategory: types.optional(z.record(z.string(), types.number())),
-    acuBySource: types.optional(z.record(z.string(), types.number())),
-    profileImageUrl: types.optional(types.string()),
-    threadCount: types.optional(types.number()),
-    playbookCount: types.optional(types.number()),
-    dashboardCount: types.optional(types.number()),
-    agentCount: types.optional(types.number()),
-    isFormerMember: types.optional(types.boolean()),
-    positiveSignalCount: types.optional(types.number()),
-    negativeSignalCount: types.optional(types.number()),
-    flaggedThreadCount: types.optional(types.number()),
-    analyzedThreadCount: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveMemberBillingStat, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        memberId: types.optional(types.string()),
+        memberName: types.optional(types.string()),
+        email: types.optional(types.string()),
+        totalAcu: types.optional(types.number()),
+        acuByCategory: types.optional(z.record(z.string(), types.number())),
+        acuBySource: types.optional(z.record(z.string(), types.number())),
+        profileImageUrl: types.optional(types.string()),
+        threadCount: types.optional(types.number()),
+        playbookCount: types.optional(types.number()),
+        dashboardCount: types.optional(types.number()),
+        agentCount: types.optional(types.number()),
+        isFormerMember: types.optional(types.boolean()),
+        positiveSignalCount: types.optional(types.number()),
+        negativeSignalCount: types.optional(types.number()),
+        flaggedThreadCount: types.optional(types.number()),
+        analyzedThreadCount: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveMemberBillingStatFromJSON(
   jsonString: string,

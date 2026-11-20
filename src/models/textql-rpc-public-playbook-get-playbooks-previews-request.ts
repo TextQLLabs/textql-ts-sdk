@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPlaybookPlaybookStatus,
   TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema,
@@ -24,12 +25,14 @@ export const TextqlRpcPublicPlaybookGetPlaybooksPreviewsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetPlaybooksPreviewsRequest$Outbound,
     TextqlRpcPublicPlaybookGetPlaybooksPreviewsRequest
-  > = z.object({
-    onlySubscribed: z.optional(z.boolean()),
-    statusFilter: z.optional(
-      TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      onlySubscribed: z.optional(z.boolean()),
+      statusFilter: z.optional(
+        TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicPlaybookGetPlaybooksPreviewsRequestToJSON(
   textqlRpcPublicPlaybookGetPlaybooksPreviewsRequest:

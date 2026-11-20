@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicPatchesUsageOrderBy = {
@@ -19,4 +20,6 @@ export type TextqlRpcPublicPatchesUsageOrderBy = ClosedEnum<
 /** @internal */
 export const TextqlRpcPublicPatchesUsageOrderBy$outboundSchema: z.ZodMiniEnum<
   typeof TextqlRpcPublicPatchesUsageOrderBy
-> = z.enum(TextqlRpcPublicPatchesUsageOrderBy);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(TextqlRpcPublicPatchesUsageOrderBy)
+);

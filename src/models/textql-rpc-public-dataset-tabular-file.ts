@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -29,7 +29,9 @@ export type TextqlRpcPublicDatasetTabularFile = {
 
 /** @internal */
 export const RowCount$inboundSchema: z.ZodMiniType<RowCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function rowCountFromJSON(
   jsonString: string,
@@ -43,7 +45,9 @@ export function rowCountFromJSON(
 
 /** @internal */
 export const ColumnCount$inboundSchema: z.ZodMiniType<ColumnCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function columnCountFromJSON(
   jsonString: string,
@@ -59,14 +63,16 @@ export function columnCountFromJSON(
 export const TextqlRpcPublicDatasetTabularFile$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDatasetTabularFile,
   unknown
-> = z.object({
-  category: types.optional(
-    TextqlRpcPublicDatasetTabularFileCategory$inboundSchema,
-  ),
-  rowCount: types.optional(smartUnion([types.number(), types.string()])),
-  columnCount: types.optional(smartUnion([types.number(), types.string()])),
-  sheetCount: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    category: types.optional(
+      TextqlRpcPublicDatasetTabularFileCategory$inboundSchema,
+    ),
+    rowCount: types.optional(smartUnion([types.number(), types.string()])),
+    columnCount: types.optional(smartUnion([types.number(), types.string()])),
+    sheetCount: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicDatasetTabularFileFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDashboardRestoreDashboardVersionRequest = {
   dashboardId?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicDashboardRestoreDashboardVersionRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicDashboardRestoreDashboardVersionRequest$Outbound,
     TextqlRpcPublicDashboardRestoreDashboardVersionRequest
-  > = z.object({
-    dashboardId: z.optional(z.string()),
-    versionNumber: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dashboardId: z.optional(z.string()),
+      versionNumber: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicDashboardRestoreDashboardVersionRequestToJSON(
   textqlRpcPublicDashboardRestoreDashboardVersionRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Delete a Slack workspace installation
@@ -21,9 +22,11 @@ export const TextqlRpcPublicSlackDeleteInstallationRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSlackDeleteInstallationRequest$Outbound,
     TextqlRpcPublicSlackDeleteInstallationRequest
-  > = z.object({
-    teamId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      teamId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSlackDeleteInstallationRequestToJSON(
   textqlRpcPublicSlackDeleteInstallationRequest:

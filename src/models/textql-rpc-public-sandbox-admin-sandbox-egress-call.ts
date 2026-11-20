@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -153,7 +153,9 @@ export const TextqlRpcPublicSandboxAdminSandboxEgressCallDurationMs$inboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxEgressCallDurationMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxEgressCallDurationMsFromJSON(
   jsonString: string,
@@ -175,7 +177,9 @@ export const TextqlRpcPublicSandboxAdminSandboxEgressCallRequestBytes$inboundSch
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxEgressCallRequestBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxEgressCallRequestBytesFromJSON(
   jsonString: string,
@@ -197,7 +201,9 @@ export const TextqlRpcPublicSandboxAdminSandboxEgressCallResponseBytes$inboundSc
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxEgressCallResponseBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxEgressCallResponseBytesFromJSON(
   jsonString: string,
@@ -216,25 +222,29 @@ export function textqlRpcPublicSandboxAdminSandboxEgressCallResponseBytesFromJSO
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxEgressCall$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxEgressCall, unknown> = z
-    .object({
-      id: types.optional(types.string()),
-      method: types.optional(types.string()),
-      scheme: types.optional(types.string()),
-      host: types.optional(types.string()),
-      path: types.optional(types.string()),
-      statusCode: types.optional(types.number()),
-      outcome: types.optional(types.string()),
-      durationMs: types.optional(smartUnion([types.number(), types.string()])),
-      requestBytes: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      responseBytes: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      cellId: types.optional(types.string()),
-      occurredAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxEgressCall, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        method: types.optional(types.string()),
+        scheme: types.optional(types.string()),
+        host: types.optional(types.string()),
+        path: types.optional(types.string()),
+        statusCode: types.optional(types.number()),
+        outcome: types.optional(types.string()),
+        durationMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        requestBytes: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        responseBytes: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        cellId: types.optional(types.string()),
+        occurredAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxEgressCallFromJSON(
   jsonString: string,

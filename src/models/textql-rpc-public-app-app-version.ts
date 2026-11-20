@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -149,28 +149,30 @@ export type TextqlRpcPublicAppAppVersion = {
 export const TextqlRpcPublicAppAppVersion$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppAppVersion,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  appId: types.optional(types.string()),
-  versionNumber: types.optional(types.number()),
-  code: types.optional(types.string()),
-  dataSources: types.optional(
-    z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
-  ),
-  computeFunctions: types.optional(
-    z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
-  ),
-  files: types.optional(z.array(TextqlRpcPublicAppAppFile$inboundSchema)),
-  name: types.optional(types.string()),
-  description: z.optional(z.nullable(types.string())),
-  publishedHtmlUrl: z.optional(z.nullable(types.string())),
-  stalenessWindowSeconds: z.optional(z.nullable(types.number())),
-  publishedBy: types.optional(types.string()),
-  label: z.optional(z.nullable(types.string())),
-  publishedAt: types.optional(types.date()),
-  publisher: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-  commitId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    appId: types.optional(types.string()),
+    versionNumber: types.optional(types.number()),
+    code: types.optional(types.string()),
+    dataSources: types.optional(
+      z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
+    ),
+    computeFunctions: types.optional(
+      z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
+    ),
+    files: types.optional(z.array(TextqlRpcPublicAppAppFile$inboundSchema)),
+    name: types.optional(types.string()),
+    description: z.optional(z.nullable(types.string())),
+    publishedHtmlUrl: z.optional(z.nullable(types.string())),
+    stalenessWindowSeconds: z.optional(z.nullable(types.number())),
+    publishedBy: types.optional(types.string()),
+    label: z.optional(z.nullable(types.string())),
+    publishedAt: types.optional(types.date()),
+    publisher: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+    commitId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicAppAppVersionFromJSON(
   jsonString: string,

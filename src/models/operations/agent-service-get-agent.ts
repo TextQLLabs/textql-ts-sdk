@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type AgentServiceGetAgentRequest$Outbound = {
 export const AgentServiceGetAgentRequest$outboundSchema: z.ZodMiniType<
   AgentServiceGetAgentRequest$Outbound,
   AgentServiceGetAgentRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicAgentGetAgentRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicAgentGetAgentRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function agentServiceGetAgentRequestToJSON(
@@ -62,10 +64,12 @@ export function agentServiceGetAgentRequestToJSON(
 export const AgentServiceGetAgentResponse$inboundSchema: z.ZodMiniType<
   AgentServiceGetAgentResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicAgentGetAgentResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicAgentGetAgentResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function agentServiceGetAgentResponseFromJSON(
   jsonString: string,

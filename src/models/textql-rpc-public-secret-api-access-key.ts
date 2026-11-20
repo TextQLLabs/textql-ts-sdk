@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -344,37 +344,41 @@ export type TextqlRpcPublicSecretApiAccessKey = {
 export const TextqlRpcPublicSecretApiAccessKey$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretApiAccessKey,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  memberId: types.optional(types.string()),
-  hosts: types.optional(z.array(types.string())),
-  headers: types.optional(z.record(z.string(), types.string())),
-  queryParams: types.optional(z.record(z.string(), types.string())),
-  description: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  expiresAt: types.optional(types.date()),
-  provider: types.optional(types.string()),
-  authType: types.optional(types.string()),
-  memberOauthAuthenticated: types.optional(types.boolean()),
-  memberOauthDisplayName: types.optional(types.string()),
-  httpBasicAuth: types.optional(
-    TextqlRpcPublicSecretHttpBasicAuth$inboundSchema,
-  ),
-  body: types.optional(z.record(z.string(), types.string())),
-  contentType: types.optional(
-    TextqlRpcPublicSecretBodyContentType$inboundSchema,
-  ),
-  canWrite: types.optional(types.boolean()),
-  accessType: z.optional(z.nullable(types.string())),
-  isPublic: types.optional(types.boolean()),
-  testUrl: types.optional(types.string()),
-  name: types.optional(types.string()),
-  authPrefix: types.optional(types.string()),
-  testMethod: types.optional(types.string()),
-  authTypeEnum: types.optional(TextqlRpcPublicSecretApiAuthType$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    memberId: types.optional(types.string()),
+    hosts: types.optional(z.array(types.string())),
+    headers: types.optional(z.record(z.string(), types.string())),
+    queryParams: types.optional(z.record(z.string(), types.string())),
+    description: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    expiresAt: types.optional(types.date()),
+    provider: types.optional(types.string()),
+    authType: types.optional(types.string()),
+    memberOauthAuthenticated: types.optional(types.boolean()),
+    memberOauthDisplayName: types.optional(types.string()),
+    httpBasicAuth: types.optional(
+      TextqlRpcPublicSecretHttpBasicAuth$inboundSchema,
+    ),
+    body: types.optional(z.record(z.string(), types.string())),
+    contentType: types.optional(
+      TextqlRpcPublicSecretBodyContentType$inboundSchema,
+    ),
+    canWrite: types.optional(types.boolean()),
+    accessType: z.optional(z.nullable(types.string())),
+    isPublic: types.optional(types.boolean()),
+    testUrl: types.optional(types.string()),
+    name: types.optional(types.string()),
+    authPrefix: types.optional(types.string()),
+    testMethod: types.optional(types.string()),
+    authTypeEnum: types.optional(
+      TextqlRpcPublicSecretApiAuthType$inboundSchema,
+    ),
+  })
+);
 
 export function textqlRpcPublicSecretApiAccessKeyFromJSON(
   jsonString: string,

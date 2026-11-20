@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicDatasetDatasetType,
   TextqlRpcPublicDatasetDatasetType$outboundSchema,
@@ -36,13 +37,15 @@ export const TextqlRpcPublicDatasetCreateUploadPresignUrlRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDatasetCreateUploadPresignUrlRequest$Outbound,
     TextqlRpcPublicDatasetCreateUploadPresignUrlRequest
-  > = z.object({
-    type: z.optional(TextqlRpcPublicDatasetDatasetType$outboundSchema),
-    fileName: z.optional(z.string()),
-    folderPath: z.optional(z.array(z.string())),
-    ephemeral: z.optional(z.boolean()),
-    expiresInDays: z.optional(z.nullable(z.int())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      type: z.optional(TextqlRpcPublicDatasetDatasetType$outboundSchema),
+      fileName: z.optional(z.string()),
+      folderPath: z.optional(z.array(z.string())),
+      ephemeral: z.optional(z.boolean()),
+      expiresInDays: z.optional(z.nullable(z.int())),
+    })
+  );
 
 export function textqlRpcPublicDatasetCreateUploadPresignUrlRequestToJSON(
   textqlRpcPublicDatasetCreateUploadPresignUrlRequest:

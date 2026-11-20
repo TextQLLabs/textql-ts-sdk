@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Request all artifact summaries for a chat (for drawer dropdown)
@@ -21,9 +22,11 @@ export const TextqlRpcPublicChatGetChatArtifactsSummaryRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatGetChatArtifactsSummaryRequest$Outbound,
     TextqlRpcPublicChatGetChatArtifactsSummaryRequest
-  > = z.object({
-    chatId: z.string(),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatId: z.string(),
+    })
+  );
 
 export function textqlRpcPublicChatGetChatArtifactsSummaryRequestToJSON(
   textqlRpcPublicChatGetChatArtifactsSummaryRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,16 +21,19 @@ export type TextqlRpcPublicConnectorDremioMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorDremioMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorDremioMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    token: types.optional(types.string()),
-    projectId: types.optional(types.string()),
-    spaces: types.optional(z.array(types.string())),
-    sslMode: types.optional(types.boolean()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorDremioMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        token: types.optional(types.string()),
+        projectId: types.optional(types.string()),
+        spaces: types.optional(z.array(types.string())),
+        sslMode: types.optional(types.boolean()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorDremioMetadata$Outbound = {
   host?: string | undefined;
@@ -48,16 +51,18 @@ export const TextqlRpcPublicConnectorDremioMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorDremioMetadata$Outbound,
     TextqlRpcPublicConnectorDremioMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    token: z.optional(z.string()),
-    projectId: z.optional(z.string()),
-    spaces: z.optional(z.array(z.string())),
-    sslMode: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      token: z.optional(z.string()),
+      projectId: z.optional(z.string()),
+      spaces: z.optional(z.array(z.string())),
+      sslMode: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicConnectorDremioMetadataToJSON(
   textqlRpcPublicConnectorDremioMetadata:

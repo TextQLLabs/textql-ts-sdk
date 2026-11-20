@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -38,14 +38,18 @@ export type TextqlRpcPublicSandboxAdminListSandboxSpendResponse = {
 /** @internal */
 export const TextqlRpcPublicSandboxAdminListSandboxSpendResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxAdminListSandboxSpendResponse, unknown> =
-    z.object({
-      intervals: types.optional(
-        z.array(TextqlRpcPublicSandboxAdminSandboxSpendInterval$inboundSchema),
-      ),
-      acusPerHour: types.optional(types.number()),
-      totalAcus: types.optional(types.number()),
-      acuRatePer1000Usd: types.optional(types.number()),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        intervals: types.optional(
+          z.array(
+            TextqlRpcPublicSandboxAdminSandboxSpendInterval$inboundSchema,
+          ),
+        ),
+        acusPerHour: types.optional(types.number()),
+        totalAcus: types.optional(types.number()),
+        acuRatePer1000Usd: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminListSandboxSpendResponseFromJSON(
   jsonString: string,

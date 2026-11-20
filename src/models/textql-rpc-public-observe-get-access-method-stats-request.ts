@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetAccessMethodStatsRequest = {
   days?: number | undefined;
@@ -208,11 +209,15 @@ export const TextqlRpcPublicObserveGetAccessMethodStatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetAccessMethodStatsRequest$Outbound,
     TextqlRpcPublicObserveGetAccessMethodStatsRequest
-  > = z.object({
-    days: z.optional(z.int()),
-    startDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      days: z.optional(z.int()),
+      startDate: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    })
+  );
 
 export function textqlRpcPublicObserveGetAccessMethodStatsRequestToJSON(
   textqlRpcPublicObserveGetAccessMethodStatsRequest:

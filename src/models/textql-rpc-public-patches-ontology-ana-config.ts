@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -119,17 +119,20 @@ export type TextqlRpcPublicPatchesOntologyAnaConfig = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesOntologyAnaConfig$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesOntologyAnaConfig, unknown> = z.object({
-    path: types.optional(types.string()),
-    autoAttach: types.optional(
-      z.array(TextqlRpcPublicPatchesAutoAttachEntry$inboundSchema),
-    ),
-    canWrite: types.optional(types.boolean()),
-    updatedAt: types.optional(types.date()),
-    codeowners: types.optional(
-      z.array(TextqlRpcPublicPatchesCodeownerEntry$inboundSchema),
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesOntologyAnaConfig, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        path: types.optional(types.string()),
+        autoAttach: types.optional(
+          z.array(TextqlRpcPublicPatchesAutoAttachEntry$inboundSchema),
+        ),
+        canWrite: types.optional(types.boolean()),
+        updatedAt: types.optional(types.date()),
+        codeowners: types.optional(
+          z.array(TextqlRpcPublicPatchesCodeownerEntry$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicPatchesOntologyAnaConfigFromJSON(
   jsonString: string,

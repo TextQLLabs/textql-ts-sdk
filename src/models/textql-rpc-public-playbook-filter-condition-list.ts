@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPlaybookFilterCondition,
   TextqlRpcPublicPlaybookFilterCondition$Outbound,
@@ -23,11 +24,13 @@ export const TextqlRpcPublicPlaybookFilterConditionList$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookFilterConditionList$Outbound,
     TextqlRpcPublicPlaybookFilterConditionList
-  > = z.object({
-    items: z.optional(
-      z.array(TextqlRpcPublicPlaybookFilterCondition$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      items: z.optional(
+        z.array(TextqlRpcPublicPlaybookFilterCondition$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicPlaybookFilterConditionListToJSON(
   textqlRpcPublicPlaybookFilterConditionList:

@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,20 +35,22 @@ export const RBACServiceCreateServiceAccountApiKeyRequest$outboundSchema:
   z.ZodMiniType<
     RBACServiceCreateServiceAccountApiKeyRequest$Outbound,
     RBACServiceCreateServiceAccountApiKeyRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicRbacCreateServiceAccountApiKeyRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function rbacServiceCreateServiceAccountApiKeyRequestToJSON(
@@ -65,10 +67,12 @@ export function rbacServiceCreateServiceAccountApiKeyRequestToJSON(
 /** @internal */
 export const RBACServiceCreateServiceAccountApiKeyResponse$inboundSchema:
   z.ZodMiniType<RBACServiceCreateServiceAccountApiKeyResponse, unknown> =
-    smartUnion([
-      models.TextqlRpcPublicRbacCreateApiKeyResult$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicRbacCreateApiKeyResult$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function rbacServiceCreateServiceAccountApiKeyResponseFromJSON(
   jsonString: string,

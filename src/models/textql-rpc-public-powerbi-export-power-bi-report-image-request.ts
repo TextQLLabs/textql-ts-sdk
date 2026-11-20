@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPowerbiExportPowerBIReportImageRequest = {
   connectorId?: number | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPowerbiExportPowerBIReportImageRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPowerbiExportPowerBIReportImageRequest$Outbound,
     TextqlRpcPublicPowerbiExportPowerBIReportImageRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    workspaceId: z.optional(z.string()),
-    reportId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      workspaceId: z.optional(z.string()),
+      reportId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPowerbiExportPowerBIReportImageRequestToJSON(
   textqlRpcPublicPowerbiExportPowerBIReportImageRequest:

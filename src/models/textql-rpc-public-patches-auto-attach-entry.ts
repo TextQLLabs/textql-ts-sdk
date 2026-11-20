@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -39,17 +39,19 @@ export type TextqlRpcPublicPatchesAutoAttachEntry = {
 export const TextqlRpcPublicPatchesAutoAttachEntry$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesAutoAttachEntry,
   unknown
-> = z.object({
-  path: types.optional(types.string()),
-  connectorId: types.optional(types.number()),
-  apiConnectorIds: types.optional(z.array(types.string())),
-  roleIds: types.optional(z.array(types.string())),
-  connectorIds: types.optional(z.array(types.number())),
-  matchNoConnector: types.optional(types.boolean()),
-  matchNoApiConnector: types.optional(types.boolean()),
-  matchAll: types.optional(types.boolean()),
-  oauthClientIds: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    path: types.optional(types.string()),
+    connectorId: types.optional(types.number()),
+    apiConnectorIds: types.optional(z.array(types.string())),
+    roleIds: types.optional(z.array(types.string())),
+    connectorIds: types.optional(z.array(types.number())),
+    matchNoConnector: types.optional(types.boolean()),
+    matchNoApiConnector: types.optional(types.boolean()),
+    matchAll: types.optional(types.boolean()),
+    oauthClientIds: types.optional(z.array(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicPatchesAutoAttachEntry$Outbound = {
   path?: string | undefined;
@@ -68,17 +70,19 @@ export const TextqlRpcPublicPatchesAutoAttachEntry$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesAutoAttachEntry$Outbound,
     TextqlRpcPublicPatchesAutoAttachEntry
-  > = z.object({
-    path: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    apiConnectorIds: z.optional(z.array(z.string())),
-    roleIds: z.optional(z.array(z.string())),
-    connectorIds: z.optional(z.array(z.int())),
-    matchNoConnector: z.optional(z.boolean()),
-    matchNoApiConnector: z.optional(z.boolean()),
-    matchAll: z.optional(z.boolean()),
-    oauthClientIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      apiConnectorIds: z.optional(z.array(z.string())),
+      roleIds: z.optional(z.array(z.string())),
+      connectorIds: z.optional(z.array(z.int())),
+      matchNoConnector: z.optional(z.boolean()),
+      matchNoApiConnector: z.optional(z.boolean()),
+      matchAll: z.optional(z.boolean()),
+      oauthClientIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesAutoAttachEntryToJSON(
   textqlRpcPublicPatchesAutoAttachEntry: TextqlRpcPublicPatchesAutoAttachEntry,

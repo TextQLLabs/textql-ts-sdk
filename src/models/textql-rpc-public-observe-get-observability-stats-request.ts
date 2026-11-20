@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetObservabilityStatsRequest = {
   /**
@@ -29,10 +30,12 @@ export const TextqlRpcPublicObserveGetObservabilityStatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetObservabilityStatsRequest$Outbound,
     TextqlRpcPublicObserveGetObservabilityStatsRequest
-  > = z.object({
-    days: z.optional(z.int()),
-    timezone: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      days: z.optional(z.int()),
+      timezone: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicObserveGetObservabilityStatsRequestToJSON(
   textqlRpcPublicObserveGetObservabilityStatsRequest:

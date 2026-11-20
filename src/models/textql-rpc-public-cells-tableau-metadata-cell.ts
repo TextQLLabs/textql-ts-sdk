@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,14 +19,17 @@ export type TextqlRpcPublicCellsTableauMetadataCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsTableauMetadataCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsTableauMetadataCell, unknown> = z.object({
-    operation: types.optional(types.string()),
-    searchTerm: types.optional(types.string()),
-    entityType: types.optional(types.string()),
-    entity: types.optional(types.string()),
-    offset: types.optional(types.number()),
-    resultText: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsTableauMetadataCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        operation: types.optional(types.string()),
+        searchTerm: types.optional(types.string()),
+        entityType: types.optional(types.string()),
+        entity: types.optional(types.string()),
+        offset: types.optional(types.number()),
+        resultText: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicCellsTableauMetadataCellFromJSON(
   jsonString: string,

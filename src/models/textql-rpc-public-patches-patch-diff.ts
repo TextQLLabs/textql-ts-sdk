@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -38,7 +38,9 @@ export type TextqlRpcPublicPatchesPatchDiff = {
 
 /** @internal */
 export const Additions$inboundSchema: z.ZodMiniType<Additions, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function additionsFromJSON(
   jsonString: string,
@@ -52,7 +54,9 @@ export function additionsFromJSON(
 
 /** @internal */
 export const Deletions$inboundSchema: z.ZodMiniType<Deletions, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function deletionsFromJSON(
   jsonString: string,
@@ -68,21 +72,25 @@ export function deletionsFromJSON(
 export const TextqlRpcPublicPatchesPatchDiff$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesPatchDiff,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  oldPath: types.optional(types.string()),
-  newPath: types.optional(types.string()),
-  hunks: types.optional(z.array(TextqlRpcPublicPatchesPatchHunk$inboundSchema)),
-  additions: types.optional(smartUnion([types.number(), types.string()])),
-  deletions: types.optional(smartUnion([types.number(), types.string()])),
-  isBinary: types.optional(types.boolean()),
-  isNew: types.optional(types.boolean()),
-  isCopy: types.optional(types.boolean()),
-  isRename: types.optional(types.boolean()),
-  isDelete: types.optional(types.boolean()),
-  oldContent: z.optional(z.nullable(types.string())),
-  newContent: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    oldPath: types.optional(types.string()),
+    newPath: types.optional(types.string()),
+    hunks: types.optional(
+      z.array(TextqlRpcPublicPatchesPatchHunk$inboundSchema),
+    ),
+    additions: types.optional(smartUnion([types.number(), types.string()])),
+    deletions: types.optional(smartUnion([types.number(), types.string()])),
+    isBinary: types.optional(types.boolean()),
+    isNew: types.optional(types.boolean()),
+    isCopy: types.optional(types.boolean()),
+    isRename: types.optional(types.boolean()),
+    isDelete: types.optional(types.boolean()),
+    oldContent: z.optional(z.nullable(types.string())),
+    newContent: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicPatchesPatchDiffFromJSON(
   jsonString: string,

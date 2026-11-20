@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicCommonSortDirection,
   TextqlRpcPublicCommonSortDirection$outboundSchema,
@@ -55,19 +56,21 @@ export const TextqlRpcPublicRbacListApiKeysRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacListApiKeysRequest$Outbound,
     TextqlRpcPublicRbacListApiKeysRequest
-  > = z.object({
-    serviceAccountEmail: z.optional(z.nullable(z.string())),
-    scope: z.optional(TextqlRpcPublicRbacApiKeyScope$outboundSchema),
-    serviceAccountMemberId: z.optional(z.nullable(z.string())),
-    includeRevoked: z.optional(z.nullable(z.boolean())),
-    searchTerm: z.optional(z.nullable(z.string())),
-    sortBy: z.optional(TextqlRpcPublicRbacApiKeySortField$outboundSchema),
-    sortDirection: z.optional(
-      TextqlRpcPublicCommonSortDirection$outboundSchema,
-    ),
-    pageSize: z.optional(z.nullable(z.int())),
-    pageToken: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      serviceAccountEmail: z.optional(z.nullable(z.string())),
+      scope: z.optional(TextqlRpcPublicRbacApiKeyScope$outboundSchema),
+      serviceAccountMemberId: z.optional(z.nullable(z.string())),
+      includeRevoked: z.optional(z.nullable(z.boolean())),
+      searchTerm: z.optional(z.nullable(z.string())),
+      sortBy: z.optional(TextqlRpcPublicRbacApiKeySortField$outboundSchema),
+      sortDirection: z.optional(
+        TextqlRpcPublicCommonSortDirection$outboundSchema,
+      ),
+      pageSize: z.optional(z.nullable(z.int())),
+      pageToken: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacListApiKeysRequestToJSON(
   textqlRpcPublicRbacListApiKeysRequest: TextqlRpcPublicRbacListApiKeysRequest,

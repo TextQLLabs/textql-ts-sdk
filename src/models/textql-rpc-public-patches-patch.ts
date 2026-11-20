@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -257,36 +257,40 @@ export type TextqlRpcPublicPatchesPatch = {
 export const TextqlRpcPublicPatchesPatch$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesPatch,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  number: types.optional(types.number()),
-  authorId: types.optional(types.string()),
-  title: types.optional(types.string()),
-  description: types.optional(types.string()),
-  chatId: z.optional(z.nullable(types.string())),
-  aiGenerated: types.optional(types.boolean()),
-  diffs: types.optional(z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema)),
-  status: types.optional(TextqlRpcPublicPatchesPatchStatus$inboundSchema),
-  gitRef: types.optional(types.string()),
-  revision: types.optional(types.number()),
-  headAtMerge: z.optional(z.nullable(types.string())),
-  reviewerId: z.optional(z.nullable(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  authorEmail: z.optional(z.nullable(types.string())),
-  authorName: z.optional(z.nullable(types.string())),
-  approvalCount: types.optional(types.number()),
-  requiredApprovals: types.optional(types.number()),
-  capabilities: types.optional(
-    TextqlRpcPublicPatchesPatchCapabilities$inboundSchema,
-  ),
-  codeOwnerStatus: types.optional(
-    z.array(TextqlRpcPublicPatchesPatchCodeownerStatus$inboundSchema),
-  ),
-  requestedReviewerMemberIds: types.optional(z.array(types.string())),
-  remotePrUrl: z.optional(z.nullable(types.string())),
-  remotePrNumber: z.optional(z.nullable(types.number())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    number: types.optional(types.number()),
+    authorId: types.optional(types.string()),
+    title: types.optional(types.string()),
+    description: types.optional(types.string()),
+    chatId: z.optional(z.nullable(types.string())),
+    aiGenerated: types.optional(types.boolean()),
+    diffs: types.optional(
+      z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema),
+    ),
+    status: types.optional(TextqlRpcPublicPatchesPatchStatus$inboundSchema),
+    gitRef: types.optional(types.string()),
+    revision: types.optional(types.number()),
+    headAtMerge: z.optional(z.nullable(types.string())),
+    reviewerId: z.optional(z.nullable(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    authorEmail: z.optional(z.nullable(types.string())),
+    authorName: z.optional(z.nullable(types.string())),
+    approvalCount: types.optional(types.number()),
+    requiredApprovals: types.optional(types.number()),
+    capabilities: types.optional(
+      TextqlRpcPublicPatchesPatchCapabilities$inboundSchema,
+    ),
+    codeOwnerStatus: types.optional(
+      z.array(TextqlRpcPublicPatchesPatchCodeownerStatus$inboundSchema),
+    ),
+    requestedReviewerMemberIds: types.optional(z.array(types.string())),
+    remotePrUrl: z.optional(z.nullable(types.string())),
+    remotePrNumber: z.optional(z.nullable(types.number())),
+  })
+);
 
 export function textqlRpcPublicPatchesPatchFromJSON(
   jsonString: string,

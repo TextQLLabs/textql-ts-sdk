@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetChatSourceStatsRequest = {
   days?: number | undefined;
@@ -210,12 +211,16 @@ export const TextqlRpcPublicObserveGetChatSourceStatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetChatSourceStatsRequest$Outbound,
     TextqlRpcPublicObserveGetChatSourceStatsRequest
-  > = z.object({
-    days: z.optional(z.int()),
-    memberId: z.optional(z.nullable(z.string())),
-    startDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      days: z.optional(z.int()),
+      memberId: z.optional(z.nullable(z.string())),
+      startDate: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    })
+  );
 
 export function textqlRpcPublicObserveGetChatSourceStatsRequestToJSON(
   textqlRpcPublicObserveGetChatSourceStatsRequest:

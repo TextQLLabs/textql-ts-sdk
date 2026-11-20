@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicChatSubmitContextPromptChangeRequest = {
   /**
@@ -23,10 +24,12 @@ export const TextqlRpcPublicChatSubmitContextPromptChangeRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatSubmitContextPromptChangeRequest$Outbound,
     TextqlRpcPublicChatSubmitContextPromptChangeRequest
-  > = z.object({
-    cellId: z.string(),
-    editedContext: z.string(),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      cellId: z.string(),
+      editedContext: z.string(),
+    })
+  );
 
 export function textqlRpcPublicChatSubmitContextPromptChangeRequestToJSON(
   textqlRpcPublicChatSubmitContextPromptChangeRequest:

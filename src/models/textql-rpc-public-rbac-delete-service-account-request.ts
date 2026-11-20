@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacDeleteServiceAccountRequest = {
   /**
@@ -26,10 +27,12 @@ export const TextqlRpcPublicRbacDeleteServiceAccountRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacDeleteServiceAccountRequest$Outbound,
     TextqlRpcPublicRbacDeleteServiceAccountRequest
-  > = z.object({
-    memberEmail: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberEmail: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicRbacDeleteServiceAccountRequestToJSON(
   textqlRpcPublicRbacDeleteServiceAccountRequest:

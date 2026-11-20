@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 import {
@@ -20,10 +20,12 @@ export type Universal = {
 export type TextqlRpcPublicParadigmParadigmOptions = Universal;
 
 /** @internal */
-export const Universal$inboundSchema: z.ZodMiniType<Universal, unknown> = z
-  .object({
-    universal: TextqlRpcPublicParadigmUniversalOptions$inboundSchema,
-  });
+export const Universal$inboundSchema: z.ZodMiniType<Universal, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      universal: TextqlRpcPublicParadigmUniversalOptions$inboundSchema,
+    })
+  );
 /** @internal */
 export type Universal$Outbound = {
   universal: TextqlRpcPublicParadigmUniversalOptions$Outbound;
@@ -33,9 +35,11 @@ export type Universal$Outbound = {
 export const Universal$outboundSchema: z.ZodMiniType<
   Universal$Outbound,
   Universal
-> = z.object({
-  universal: TextqlRpcPublicParadigmUniversalOptions$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    universal: TextqlRpcPublicParadigmUniversalOptions$outboundSchema,
+  })
+);
 
 export function universalToJSON(universal: Universal): string {
   return JSON.stringify(Universal$outboundSchema.parse(universal));
@@ -52,9 +56,8 @@ export function universalFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicParadigmParadigmOptions$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicParadigmParadigmOptions, unknown> = z.lazy(() =>
-    Universal$inboundSchema
-  );
+  z.ZodMiniType<TextqlRpcPublicParadigmParadigmOptions, unknown> =
+    /* @__PURE__ */ lazySchema$(() => z.lazy(() => Universal$inboundSchema));
 /** @internal */
 export type TextqlRpcPublicParadigmParadigmOptions$Outbound =
   Universal$Outbound;
@@ -64,7 +67,7 @@ export const TextqlRpcPublicParadigmParadigmOptions$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicParadigmParadigmOptions$Outbound,
     TextqlRpcPublicParadigmParadigmOptions
-  > = z.lazy(() => Universal$outboundSchema);
+  > = /* @__PURE__ */ lazySchema$(() => z.lazy(() => Universal$outboundSchema));
 
 export function textqlRpcPublicParadigmParadigmOptionsToJSON(
   textqlRpcPublicParadigmParadigmOptions:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Per-member activity log
@@ -35,13 +36,15 @@ export const TextqlRpcPublicAppRecordAppMemberActivityRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppRecordAppMemberActivityRequest$Outbound,
     TextqlRpcPublicAppRecordAppMemberActivityRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-    type: z.optional(z.string()),
-    scope: z.optional(z.nullable(z.string())),
-    payloadJson: z.optional(z.nullable(z.string())),
-    idemKey: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+      type: z.optional(z.string()),
+      scope: z.optional(z.nullable(z.string())),
+      payloadJson: z.optional(z.nullable(z.string())),
+      idemKey: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicAppRecordAppMemberActivityRequestToJSON(
   textqlRpcPublicAppRecordAppMemberActivityRequest:

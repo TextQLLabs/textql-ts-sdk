@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -128,18 +128,20 @@ export type TextqlRpcPublicRbacCallerCredential = {
 export const TextqlRpcPublicRbacCallerCredential$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacCallerCredential,
   unknown
-> = z.object({
-  authMethod: types.optional(types.string()),
-  apiKeyId: z.optional(z.nullable(types.string())),
-  apiKeyName: z.optional(z.nullable(types.string())),
-  apiKeyShort: z.optional(z.nullable(types.string())),
-  expiresAt: types.optional(types.date()),
-  status: types.optional(TextqlRpcPublicRbacApiKeyStatus$inboundSchema),
-  assumedRoleNames: types.optional(z.array(types.string())),
-  assumedRoleIds: types.optional(z.array(types.string())),
-  clientId: z.optional(z.nullable(types.string())),
-  scopes: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    authMethod: types.optional(types.string()),
+    apiKeyId: z.optional(z.nullable(types.string())),
+    apiKeyName: z.optional(z.nullable(types.string())),
+    apiKeyShort: z.optional(z.nullable(types.string())),
+    expiresAt: types.optional(types.date()),
+    status: types.optional(TextqlRpcPublicRbacApiKeyStatus$inboundSchema),
+    assumedRoleNames: types.optional(z.array(types.string())),
+    assumedRoleIds: types.optional(z.array(types.string())),
+    clientId: z.optional(z.nullable(types.string())),
+    scopes: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicRbacCallerCredentialFromJSON(
   jsonString: string,

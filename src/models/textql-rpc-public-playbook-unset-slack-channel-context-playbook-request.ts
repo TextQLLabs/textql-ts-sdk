@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Unsets the context playbook for a Slack channel by channel ID only.
@@ -22,9 +23,11 @@ export const TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest$outb
   z.ZodMiniType<
     TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest$Outbound,
     TextqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest
-  > = z.object({
-    slackChannelId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      slackChannelId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequestToJSON(
   textqlRpcPublicPlaybookUnsetSlackChannelContextPlaybookRequest:

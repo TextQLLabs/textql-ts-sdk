@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -480,43 +480,45 @@ export type TextqlRpcPublicAppApp = {
 export const TextqlRpcPublicAppApp$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppApp,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  creatorId: types.optional(types.string()),
-  name: types.optional(types.string()),
-  description: z.optional(z.nullable(types.string())),
-  code: types.optional(types.string()),
-  dataSources: types.optional(
-    z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
-  ),
-  htmlUrl: z.optional(z.nullable(types.string())),
-  screenshotUrl: z.optional(z.nullable(types.string())),
-  consoleErrors: types.optional(z.array(types.string())),
-  chatId: z.optional(z.nullable(types.string())),
-  publishedHtmlUrl: z.optional(z.nullable(types.string())),
-  hasUnpublishedChanges: types.optional(types.boolean()),
-  stalenessWindowSeconds: z.optional(z.nullable(types.number())),
-  computeFunctions: types.optional(
-    z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
-  ),
-  files: types.optional(z.array(TextqlRpcPublicAppAppFile$inboundSchema)),
-  scheduleEnabled: types.optional(types.boolean()),
-  cronString: z.optional(z.nullable(types.string())),
-  folderId: z.optional(z.nullable(types.string())),
-  isFavorited: types.optional(types.boolean()),
-  capabilities: types.optional(
-    z.array(TextqlRpcPublicAppCapability$inboundSchema),
-  ),
-  appDbSetup: types.optional(z.array(types.string())),
-  memberFeaturesEnabled: types.optional(types.boolean()),
-  usesMemberFeatures: types.optional(types.boolean()),
-  viewerGrants: types.optional(z.array(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  refreshedAt: types.optional(types.date()),
-  publishedAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    creatorId: types.optional(types.string()),
+    name: types.optional(types.string()),
+    description: z.optional(z.nullable(types.string())),
+    code: types.optional(types.string()),
+    dataSources: types.optional(
+      z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
+    ),
+    htmlUrl: z.optional(z.nullable(types.string())),
+    screenshotUrl: z.optional(z.nullable(types.string())),
+    consoleErrors: types.optional(z.array(types.string())),
+    chatId: z.optional(z.nullable(types.string())),
+    publishedHtmlUrl: z.optional(z.nullable(types.string())),
+    hasUnpublishedChanges: types.optional(types.boolean()),
+    stalenessWindowSeconds: z.optional(z.nullable(types.number())),
+    computeFunctions: types.optional(
+      z.array(TextqlRpcPublicAppComputeFunction$inboundSchema),
+    ),
+    files: types.optional(z.array(TextqlRpcPublicAppAppFile$inboundSchema)),
+    scheduleEnabled: types.optional(types.boolean()),
+    cronString: z.optional(z.nullable(types.string())),
+    folderId: z.optional(z.nullable(types.string())),
+    isFavorited: types.optional(types.boolean()),
+    capabilities: types.optional(
+      z.array(TextqlRpcPublicAppCapability$inboundSchema),
+    ),
+    appDbSetup: types.optional(z.array(types.string())),
+    memberFeaturesEnabled: types.optional(types.boolean()),
+    usesMemberFeatures: types.optional(types.boolean()),
+    viewerGrants: types.optional(z.array(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    refreshedAt: types.optional(types.date()),
+    publishedAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicAppAppFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -112,10 +112,13 @@ export type TextqlRpcPublicDataframeDataFrameColumn =
   | Uint64;
 
 /** @internal */
-export const Uint64$inboundSchema: z.ZodMiniType<Uint64, unknown> = z.object({
-  uint64: TextqlRpcPublicDataframeUint64Values$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Uint64$inboundSchema: z.ZodMiniType<Uint64, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      uint64: TextqlRpcPublicDataframeUint64Values$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function uint64FromJSON(
   jsonString: string,
@@ -128,10 +131,13 @@ export function uint64FromJSON(
 }
 
 /** @internal */
-export const Uint32$inboundSchema: z.ZodMiniType<Uint32, unknown> = z.object({
-  uint32: TextqlRpcPublicDataframeUint32Values$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Uint32$inboundSchema: z.ZodMiniType<Uint32, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      uint32: TextqlRpcPublicDataframeUint32Values$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function uint32FromJSON(
   jsonString: string,
@@ -144,11 +150,13 @@ export function uint32FromJSON(
 }
 
 /** @internal */
-export const Timestamps$inboundSchema: z.ZodMiniType<Timestamps, unknown> = z
-  .object({
-    timestamps: TextqlRpcPublicDataframeTimestampValues$inboundSchema,
-    columnIndex: types.optional(types.number()),
-  });
+export const Timestamps$inboundSchema: z.ZodMiniType<Timestamps, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      timestamps: TextqlRpcPublicDataframeTimestampValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function timestampsFromJSON(
   jsonString: string,
@@ -161,10 +169,13 @@ export function timestampsFromJSON(
 }
 
 /** @internal */
-export const Strings$inboundSchema: z.ZodMiniType<Strings, unknown> = z.object({
-  strings: TextqlRpcPublicDataframeStringValues$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Strings$inboundSchema: z.ZodMiniType<Strings, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      strings: TextqlRpcPublicDataframeStringValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function stringsFromJSON(
   jsonString: string,
@@ -177,10 +188,13 @@ export function stringsFromJSON(
 }
 
 /** @internal */
-export const Int64$inboundSchema: z.ZodMiniType<Int64, unknown> = z.object({
-  int64: TextqlRpcPublicDataframeInt64Values$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Int64$inboundSchema: z.ZodMiniType<Int64, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      int64: TextqlRpcPublicDataframeInt64Values$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function int64FromJSON(
   jsonString: string,
@@ -193,10 +207,13 @@ export function int64FromJSON(
 }
 
 /** @internal */
-export const Int32$inboundSchema: z.ZodMiniType<Int32, unknown> = z.object({
-  int32: TextqlRpcPublicDataframeInt32Values$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Int32$inboundSchema: z.ZodMiniType<Int32, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      int32: TextqlRpcPublicDataframeInt32Values$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function int32FromJSON(
   jsonString: string,
@@ -209,10 +226,13 @@ export function int32FromJSON(
 }
 
 /** @internal */
-export const Floats$inboundSchema: z.ZodMiniType<Floats, unknown> = z.object({
-  floats: TextqlRpcPublicDataframeFloatValues$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Floats$inboundSchema: z.ZodMiniType<Floats, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      floats: TextqlRpcPublicDataframeFloatValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function floatsFromJSON(
   jsonString: string,
@@ -225,10 +245,13 @@ export function floatsFromJSON(
 }
 
 /** @internal */
-export const Doubles$inboundSchema: z.ZodMiniType<Doubles, unknown> = z.object({
-  doubles: TextqlRpcPublicDataframeDoubleValues$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Doubles$inboundSchema: z.ZodMiniType<Doubles, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      doubles: TextqlRpcPublicDataframeDoubleValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function doublesFromJSON(
   jsonString: string,
@@ -242,11 +265,13 @@ export function doublesFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumnBytes, unknown> = z
-    .object({
-      bytes: TextqlRpcPublicDataframeByteValues$inboundSchema,
-      columnIndex: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumnBytes, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        bytes: TextqlRpcPublicDataframeByteValues$inboundSchema,
+        columnIndex: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicDataframeDataFrameColumnBytesFromJSON(
   jsonString: string,
@@ -265,10 +290,13 @@ export function textqlRpcPublicDataframeDataFrameColumnBytesFromJSON(
 }
 
 /** @internal */
-export const Bools$inboundSchema: z.ZodMiniType<Bools, unknown> = z.object({
-  bools: TextqlRpcPublicDataframeBoolValues$inboundSchema,
-  columnIndex: types.optional(types.number()),
-});
+export const Bools$inboundSchema: z.ZodMiniType<Bools, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      bools: TextqlRpcPublicDataframeBoolValues$inboundSchema,
+      columnIndex: types.optional(types.number()),
+    })
+  );
 
 export function boolsFromJSON(
   jsonString: string,
@@ -282,18 +310,23 @@ export function boolsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicDataframeDataFrameColumn$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumn, unknown> = smartUnion([
-    z.lazy(() => Bools$inboundSchema),
-    z.lazy(() => TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema),
-    z.lazy(() => Doubles$inboundSchema),
-    z.lazy(() => Floats$inboundSchema),
-    z.lazy(() => Int32$inboundSchema),
-    z.lazy(() => Int64$inboundSchema),
-    z.lazy(() => Strings$inboundSchema),
-    z.lazy(() => Timestamps$inboundSchema),
-    z.lazy(() => Uint32$inboundSchema),
-    z.lazy(() => Uint64$inboundSchema),
-  ]);
+  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameColumn, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        z.lazy(() => Bools$inboundSchema),
+        z.lazy(() =>
+          TextqlRpcPublicDataframeDataFrameColumnBytes$inboundSchema
+        ),
+        z.lazy(() => Doubles$inboundSchema),
+        z.lazy(() => Floats$inboundSchema),
+        z.lazy(() => Int32$inboundSchema),
+        z.lazy(() => Int64$inboundSchema),
+        z.lazy(() => Strings$inboundSchema),
+        z.lazy(() => Timestamps$inboundSchema),
+        z.lazy(() => Uint32$inboundSchema),
+        z.lazy(() => Uint64$inboundSchema),
+      ])
+    );
 
 export function textqlRpcPublicDataframeDataFrameColumnFromJSON(
   jsonString: string,

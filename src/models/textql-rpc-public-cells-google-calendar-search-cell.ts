@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicCellsGoogleCalendarSearchCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsGoogleCalendarSearchCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsGoogleCalendarSearchCell, unknown> = z
-    .object({
-      eventCount: types.optional(types.number()),
-      eventSummary: z.optional(z.nullable(types.string())),
-      syntheticToolUseId: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsGoogleCalendarSearchCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        eventCount: types.optional(types.number()),
+        eventSummary: z.optional(z.nullable(types.string())),
+        syntheticToolUseId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsGoogleCalendarSearchCellFromJSON(
   jsonString: string,

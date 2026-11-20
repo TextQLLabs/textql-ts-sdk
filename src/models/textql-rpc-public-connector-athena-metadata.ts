@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,16 +25,19 @@ export type TextqlRpcPublicConnectorAthenaMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorAthenaMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorAthenaMetadata, unknown> = z.object({
-    region: types.optional(types.string()),
-    database: types.optional(types.string()),
-    workgroup: types.optional(types.string()),
-    s3OutputLocation: types.optional(types.string()),
-    athenaAuth: types.optional(
-      TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$inboundSchema,
-    ),
-    catalog: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorAthenaMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        region: types.optional(types.string()),
+        database: types.optional(types.string()),
+        workgroup: types.optional(types.string()),
+        s3OutputLocation: types.optional(types.string()),
+        athenaAuth: types.optional(
+          TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$inboundSchema,
+        ),
+        catalog: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorAthenaMetadata$Outbound = {
   region?: string | undefined;
@@ -52,16 +55,18 @@ export const TextqlRpcPublicConnectorAthenaMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorAthenaMetadata$Outbound,
     TextqlRpcPublicConnectorAthenaMetadata
-  > = z.object({
-    region: z.optional(z.string()),
-    database: z.optional(z.string()),
-    workgroup: z.optional(z.string()),
-    s3OutputLocation: z.optional(z.string()),
-    athenaAuth: z.optional(
-      TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$outboundSchema,
-    ),
-    catalog: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      region: z.optional(z.string()),
+      database: z.optional(z.string()),
+      workgroup: z.optional(z.string()),
+      s3OutputLocation: z.optional(z.string()),
+      athenaAuth: z.optional(
+        TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$outboundSchema,
+      ),
+      catalog: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorAthenaMetadataToJSON(
   textqlRpcPublicConnectorAthenaMetadata:

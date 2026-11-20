@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicCellsReportCell,
   TextqlRpcPublicCellsReportCell$Outbound,
@@ -29,12 +30,14 @@ export const TextqlRpcPublicPlaybookPreviewSlackReportRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookPreviewSlackReportRequest$Outbound,
     TextqlRpcPublicPlaybookPreviewSlackReportRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-    cell: z.optional(TextqlRpcPublicCellsReportCell$outboundSchema),
-    chatId: z.optional(z.string()),
-    slackChannelId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+      cell: z.optional(TextqlRpcPublicCellsReportCell$outboundSchema),
+      chatId: z.optional(z.string()),
+      slackChannelId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookPreviewSlackReportRequestToJSON(
   textqlRpcPublicPlaybookPreviewSlackReportRequest:

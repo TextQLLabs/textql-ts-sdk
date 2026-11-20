@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -215,7 +215,9 @@ export const TextqlRpcPublicConnectorConnectorCellDurationDurationMs$inboundSche
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorCellDurationDurationMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicConnectorConnectorCellDurationDurationMsFromJSON(
   jsonString: string,
@@ -234,17 +236,21 @@ export function textqlRpcPublicConnectorConnectorCellDurationDurationMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorCellDuration$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorCellDuration, unknown> = z
-    .object({
-      cellId: types.optional(types.string()),
-      chatId: types.optional(types.string()),
-      durationMs: types.optional(smartUnion([types.number(), types.string()])),
-      hasDuration: types.optional(types.boolean()),
-      startedAt: types.optional(types.date()),
-      createdAt: types.optional(types.date()),
-      executionError: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorCellDuration, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        cellId: types.optional(types.string()),
+        chatId: types.optional(types.string()),
+        durationMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        hasDuration: types.optional(types.boolean()),
+        startedAt: types.optional(types.date()),
+        createdAt: types.optional(types.date()),
+        executionError: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorCellDurationFromJSON(
   jsonString: string,

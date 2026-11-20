@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,12 +17,15 @@ export type TextqlRpcPublicConnectorBigQueryMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorBigQueryMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorBigQueryMetadata, unknown> = z.object({
-    projectId: types.optional(types.string()),
-    datasetId: types.optional(types.string()),
-    serviceAccountKey: types.optional(types.string()),
-    regionQualifier: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorBigQueryMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        projectId: types.optional(types.string()),
+        datasetId: types.optional(types.string()),
+        serviceAccountKey: types.optional(types.string()),
+        regionQualifier: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorBigQueryMetadata$Outbound = {
   projectId?: string | undefined;
@@ -36,12 +39,14 @@ export const TextqlRpcPublicConnectorBigQueryMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorBigQueryMetadata$Outbound,
     TextqlRpcPublicConnectorBigQueryMetadata
-  > = z.object({
-    projectId: z.optional(z.string()),
-    datasetId: z.optional(z.string()),
-    serviceAccountKey: z.optional(z.string()),
-    regionQualifier: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      projectId: z.optional(z.string()),
+      datasetId: z.optional(z.string()),
+      serviceAccountKey: z.optional(z.string()),
+      regionQualifier: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorBigQueryMetadataToJSON(
   textqlRpcPublicConnectorBigQueryMetadata:

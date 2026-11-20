@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -130,7 +130,9 @@ export type TextqlRpcPublicConnectorConnectorStatEntry = {
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorStatEntryQueryCount$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorConnectorStatEntryQueryCount, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicConnectorConnectorStatEntryQueryCountFromJSON(
   jsonString: string,
@@ -152,7 +154,9 @@ export function textqlRpcPublicConnectorConnectorStatEntryQueryCountFromJSON(
 export const AvgQueryTimeMs$inboundSchema: z.ZodMiniType<
   AvgQueryTimeMs,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function avgQueryTimeMsFromJSON(
   jsonString: string,
@@ -166,19 +170,22 @@ export function avgQueryTimeMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorStatEntry$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorStatEntry, unknown> = z.object(
-    {
-      connectorId: types.optional(types.number()),
-      queryCount: types.optional(smartUnion([types.number(), types.string()])),
-      errorRate: types.optional(types.number()),
-      avgQueryTimeMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      uniqueUsers: types.optional(types.number()),
-      lastQueriedAt: types.optional(types.date()),
-      tableCount: types.optional(types.number()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorStatEntry, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        connectorId: types.optional(types.number()),
+        queryCount: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        errorRate: types.optional(types.number()),
+        avgQueryTimeMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        uniqueUsers: types.optional(types.number()),
+        lastQueriedAt: types.optional(types.date()),
+        tableCount: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorStatEntryFromJSON(
   jsonString: string,

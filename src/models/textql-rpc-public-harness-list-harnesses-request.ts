@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicHarnessListHarnessesRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicHarnessListHarnessesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicHarnessListHarnessesRequest$Outbound,
     TextqlRpcPublicHarnessListHarnessesRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicHarnessListHarnessesRequestToJSON(
   textqlRpcPublicHarnessListHarnessesRequest:

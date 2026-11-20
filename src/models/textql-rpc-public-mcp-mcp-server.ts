@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -425,18 +425,22 @@ export type HttpConfig = {
 export type TextqlRpcPublicMCPMCPServer = HttpConfig | SseConfig;
 
 /** @internal */
-export const SseConfig$inboundSchema: z.ZodMiniType<SseConfig, unknown> = z
-  .object({
-    sseConfig: TextqlRpcPublicMcpSseConfig$inboundSchema,
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-    transport: types.optional(TextqlRpcPublicMCPMCPTransportType$inboundSchema),
-    memberId: types.optional(types.string()),
-    organizationId: types.optional(types.string()),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    enabled: types.optional(types.boolean()),
-  });
+export const SseConfig$inboundSchema: z.ZodMiniType<SseConfig, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sseConfig: TextqlRpcPublicMcpSseConfig$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      transport: types.optional(
+        TextqlRpcPublicMCPMCPTransportType$inboundSchema,
+      ),
+      memberId: types.optional(types.string()),
+      organizationId: types.optional(types.string()),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      enabled: types.optional(types.boolean()),
+    })
+  );
 /** @internal */
 export type SseConfig$Outbound = {
   sseConfig: TextqlRpcPublicMcpSseConfig$Outbound;
@@ -454,17 +458,19 @@ export type SseConfig$Outbound = {
 export const SseConfig$outboundSchema: z.ZodMiniType<
   SseConfig$Outbound,
   SseConfig
-> = z.object({
-  sseConfig: TextqlRpcPublicMcpSseConfig$outboundSchema,
-  id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  transport: z.optional(TextqlRpcPublicMCPMCPTransportType$outboundSchema),
-  memberId: z.optional(z.string()),
-  organizationId: z.optional(z.string()),
-  createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  enabled: z.optional(z.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    sseConfig: TextqlRpcPublicMcpSseConfig$outboundSchema,
+    id: z.optional(z.string()),
+    name: z.optional(z.string()),
+    transport: z.optional(TextqlRpcPublicMCPMCPTransportType$outboundSchema),
+    memberId: z.optional(z.string()),
+    organizationId: z.optional(z.string()),
+    createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    enabled: z.optional(z.boolean()),
+  })
+);
 
 export function sseConfigToJSON(sseConfig: SseConfig): string {
   return JSON.stringify(SseConfig$outboundSchema.parse(sseConfig));
@@ -480,18 +486,22 @@ export function sseConfigFromJSON(
 }
 
 /** @internal */
-export const HttpConfig$inboundSchema: z.ZodMiniType<HttpConfig, unknown> = z
-  .object({
-    httpConfig: TextqlRpcPublicMcpHttpConfig$inboundSchema,
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-    transport: types.optional(TextqlRpcPublicMCPMCPTransportType$inboundSchema),
-    memberId: types.optional(types.string()),
-    organizationId: types.optional(types.string()),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    enabled: types.optional(types.boolean()),
-  });
+export const HttpConfig$inboundSchema: z.ZodMiniType<HttpConfig, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      httpConfig: TextqlRpcPublicMcpHttpConfig$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      transport: types.optional(
+        TextqlRpcPublicMCPMCPTransportType$inboundSchema,
+      ),
+      memberId: types.optional(types.string()),
+      organizationId: types.optional(types.string()),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      enabled: types.optional(types.boolean()),
+    })
+  );
 /** @internal */
 export type HttpConfig$Outbound = {
   httpConfig: TextqlRpcPublicMcpHttpConfig$Outbound;
@@ -509,17 +519,19 @@ export type HttpConfig$Outbound = {
 export const HttpConfig$outboundSchema: z.ZodMiniType<
   HttpConfig$Outbound,
   HttpConfig
-> = z.object({
-  httpConfig: TextqlRpcPublicMcpHttpConfig$outboundSchema,
-  id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  transport: z.optional(TextqlRpcPublicMCPMCPTransportType$outboundSchema),
-  memberId: z.optional(z.string()),
-  organizationId: z.optional(z.string()),
-  createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  enabled: z.optional(z.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    httpConfig: TextqlRpcPublicMcpHttpConfig$outboundSchema,
+    id: z.optional(z.string()),
+    name: z.optional(z.string()),
+    transport: z.optional(TextqlRpcPublicMCPMCPTransportType$outboundSchema),
+    memberId: z.optional(z.string()),
+    organizationId: z.optional(z.string()),
+    createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    enabled: z.optional(z.boolean()),
+  })
+);
 
 export function httpConfigToJSON(httpConfig: HttpConfig): string {
   return JSON.stringify(HttpConfig$outboundSchema.parse(httpConfig));
@@ -538,10 +550,12 @@ export function httpConfigFromJSON(
 export const TextqlRpcPublicMCPMCPServer$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicMCPMCPServer,
   unknown
-> = smartUnion([
-  z.lazy(() => HttpConfig$inboundSchema),
-  z.lazy(() => SseConfig$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => HttpConfig$inboundSchema),
+    z.lazy(() => SseConfig$inboundSchema),
+  ])
+);
 /** @internal */
 export type TextqlRpcPublicMCPMCPServer$Outbound =
   | HttpConfig$Outbound
@@ -551,10 +565,12 @@ export type TextqlRpcPublicMCPMCPServer$Outbound =
 export const TextqlRpcPublicMCPMCPServer$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicMCPMCPServer$Outbound,
   TextqlRpcPublicMCPMCPServer
-> = smartUnion([
-  z.lazy(() => HttpConfig$outboundSchema),
-  z.lazy(() => SseConfig$outboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => HttpConfig$outboundSchema),
+    z.lazy(() => SseConfig$outboundSchema),
+  ])
+);
 
 export function textqlRpcPublicMCPMCPServerToJSON(
   textqlRpcPublicMCPMCPServer: TextqlRpcPublicMCPMCPServer,

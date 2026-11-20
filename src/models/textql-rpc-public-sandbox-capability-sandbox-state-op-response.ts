@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,13 +21,15 @@ export const TextqlRpcPublicSandboxCapabilitySandboxStateOpResponse$inboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxStateOpResponse,
     unknown
-  > = z.object({
-    value: types.optional(types.string()),
-    found: types.optional(types.boolean()),
-    keys: types.optional(z.array(types.string())),
-    error: types.optional(types.string()),
-    refreshedToken: z.optional(z.nullable(types.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      value: types.optional(types.string()),
+      found: types.optional(types.boolean()),
+      keys: types.optional(z.array(types.string())),
+      error: types.optional(types.string()),
+      refreshedToken: z.optional(z.nullable(types.string())),
+    })
+  );
 
 export function textqlRpcPublicSandboxCapabilitySandboxStateOpResponseFromJSON(
   jsonString: string,

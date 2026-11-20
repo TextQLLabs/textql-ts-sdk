@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -39,7 +39,9 @@ export type TextqlRpcPublicCellsSubagentCell = {
 /** @internal */
 export const TextqlRpcPublicCellsSubagentCellExecutionTimeMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicCellsSubagentCellExecutionTimeMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsSubagentCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -59,7 +61,9 @@ export function textqlRpcPublicCellsSubagentCellExecutionTimeMsFromJSON(
 
 /** @internal */
 export const TokensUsed$inboundSchema: z.ZodMiniType<TokensUsed, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function tokensUsedFromJSON(
   jsonString: string,
@@ -75,26 +79,28 @@ export function tokensUsedFromJSON(
 export const TextqlRpcPublicCellsSubagentCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsSubagentCell,
   unknown
-> = z.object({
-  objective: types.optional(types.string()),
-  subagentName: types.optional(types.string()),
-  agentId: z.optional(z.nullable(types.string())),
-  detached: types.optional(types.boolean()),
-  childChatId: types.optional(types.string()),
-  status: types.optional(TextqlRpcPublicCellsSubagentRunStatus$inboundSchema),
-  finalMessage: types.optional(types.string()),
-  artifacts: types.optional(
-    z.array(TextqlRpcPublicCellsFileReference$inboundSchema),
-  ),
-  depth: types.optional(types.number()),
-  errorMessage: z.optional(z.nullable(types.string())),
-  executionTimeMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-  tokensUsed: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    objective: types.optional(types.string()),
+    subagentName: types.optional(types.string()),
+    agentId: z.optional(z.nullable(types.string())),
+    detached: types.optional(types.boolean()),
+    childChatId: types.optional(types.string()),
+    status: types.optional(TextqlRpcPublicCellsSubagentRunStatus$inboundSchema),
+    finalMessage: types.optional(types.string()),
+    artifacts: types.optional(
+      z.array(TextqlRpcPublicCellsFileReference$inboundSchema),
+    ),
+    depth: types.optional(types.number()),
+    errorMessage: z.optional(z.nullable(types.string())),
+    executionTimeMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+    tokensUsed: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsSubagentCellFromJSON(
   jsonString: string,

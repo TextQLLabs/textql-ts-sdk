@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,9 +16,11 @@ export type TextqlRpcPublicDataframeInt32Values = {
 export const TextqlRpcPublicDataframeInt32Values$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDataframeInt32Values,
   unknown
-> = z.object({
-  values: types.optional(z.array(types.number())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    values: types.optional(z.array(types.number())),
+  })
+);
 
 export function textqlRpcPublicDataframeInt32ValuesFromJSON(
   jsonString: string,

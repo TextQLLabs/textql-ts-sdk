@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAgentUploadAgentAvatarRequest = {
   agentId?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicAgentUploadAgentAvatarRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentUploadAgentAvatarRequest$Outbound,
     TextqlRpcPublicAgentUploadAgentAvatarRequest
-  > = z.object({
-    agentId: z.optional(z.string()),
-    imageData: z.optional(z.string()),
-    fileName: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agentId: z.optional(z.string()),
+      imageData: z.optional(z.string()),
+      fileName: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicAgentUploadAgentAvatarRequestToJSON(
   textqlRpcPublicAgentUploadAgentAvatarRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -24,4 +25,6 @@ export type TextqlRpcPublicMCPMCPError = OpenEnum<
 export const TextqlRpcPublicMCPMCPError$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicMCPMCPError,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicMCPMCPError);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicMCPMCPError)
+);

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,13 +25,15 @@ export type TextqlRpcPublicReportsImageTextBlock = {
 export const TextqlRpcPublicReportsImageTextBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsImageTextBlock,
   unknown
-> = z.object({
-  imageUrl: types.optional(types.string()),
-  imageAlt: z.optional(z.nullable(types.string())),
-  variant: types.optional(TextqlRpcPublicReportsImageVariant$inboundSchema),
-  heading: z.optional(z.nullable(types.string())),
-  content: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: types.optional(types.string()),
+    imageAlt: z.optional(z.nullable(types.string())),
+    variant: types.optional(TextqlRpcPublicReportsImageVariant$inboundSchema),
+    heading: z.optional(z.nullable(types.string())),
+    content: z.optional(z.nullable(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsImageTextBlock$Outbound = {
   imageUrl?: string | undefined;
@@ -45,13 +47,15 @@ export type TextqlRpcPublicReportsImageTextBlock$Outbound = {
 export const TextqlRpcPublicReportsImageTextBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsImageTextBlock$Outbound,
   TextqlRpcPublicReportsImageTextBlock
-> = z.object({
-  imageUrl: z.optional(z.string()),
-  imageAlt: z.optional(z.nullable(z.string())),
-  variant: z.optional(TextqlRpcPublicReportsImageVariant$outboundSchema),
-  heading: z.optional(z.nullable(z.string())),
-  content: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: z.optional(z.string()),
+    imageAlt: z.optional(z.nullable(z.string())),
+    variant: z.optional(TextqlRpcPublicReportsImageVariant$outboundSchema),
+    heading: z.optional(z.nullable(z.string())),
+    content: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicReportsImageTextBlockToJSON(
   textqlRpcPublicReportsImageTextBlock: TextqlRpcPublicReportsImageTextBlock,

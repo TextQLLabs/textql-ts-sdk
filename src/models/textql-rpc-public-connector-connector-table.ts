@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,16 +27,21 @@ export type TextqlRpcPublicConnectorConnectorTable = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorTable$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorTable, unknown> = z.object({
-    tableDatabase: types.optional(types.string()),
-    tableSchema: types.optional(types.string()),
-    tableName: types.optional(types.string()),
-    preview: types.optional(TextqlRpcPublicConnectorQueryResult$inboundSchema),
-    primaryKeys: types.optional(
-      z.array(TextqlRpcPublicConnectorPrimaryKeyMetadata$inboundSchema),
-    ),
-    tableType: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorTable, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tableDatabase: types.optional(types.string()),
+        tableSchema: types.optional(types.string()),
+        tableName: types.optional(types.string()),
+        preview: types.optional(
+          TextqlRpcPublicConnectorQueryResult$inboundSchema,
+        ),
+        primaryKeys: types.optional(
+          z.array(TextqlRpcPublicConnectorPrimaryKeyMetadata$inboundSchema),
+        ),
+        tableType: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorTableFromJSON(
   jsonString: string,

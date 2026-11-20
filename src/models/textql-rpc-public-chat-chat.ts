@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -301,38 +301,40 @@ export type TextqlRpcPublicChatChat = {
 export const TextqlRpcPublicChatChat$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatChat,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  paradigm: types.optional(TextqlRpcPublicParadigmParadigm$inboundSchema),
-  model: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  timestamp: types.optional(types.date()),
-  orgId: types.optional(types.string()),
-  memberId: types.optional(types.string()),
-  summary: z.optional(z.nullable(types.string())),
-  playbookId: z.optional(z.nullable(types.string())),
-  research: z.optional(z.nullable(types.boolean())),
-  creatorEmail: z.optional(z.nullable(types.string())),
-  apiKeyClientId: z.optional(z.nullable(types.string())),
-  updatedAt: types.optional(types.date()),
-  isBookmarked: z.optional(z.nullable(types.boolean())),
-  preferredProvider: z.optional(z.nullable(types.string())),
-  templateDataId: z.optional(z.nullable(types.string())),
-  batchRunId: z.optional(z.nullable(types.string())),
-  preview: z.optional(z.nullable(types.string())),
-  dashboardMode: z.optional(z.nullable(types.boolean())),
-  source: types.optional(TextqlRpcPublicChatChatSource$inboundSchema),
-  methodology: types.optional(TextqlRpcPublicChatMethodology$inboundSchema),
-  isRunning: z.optional(z.nullable(types.boolean())),
-  isUnread: z.optional(z.nullable(types.boolean())),
-  vllmModelId: z.optional(z.nullable(types.string())),
-  fastMode: z.optional(z.nullable(types.boolean())),
-  agentId: z.optional(z.nullable(types.string())),
-  agentName: z.optional(z.nullable(types.string())),
-  agentProfileImageUrl: z.optional(z.nullable(types.string())),
-  maxThinking: z.optional(z.nullable(types.boolean())),
-  harness: z.optional(z.nullable(types.string())),
-  harnessEndpointId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    paradigm: types.optional(TextqlRpcPublicParadigmParadigm$inboundSchema),
+    model: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    timestamp: types.optional(types.date()),
+    orgId: types.optional(types.string()),
+    memberId: types.optional(types.string()),
+    summary: z.optional(z.nullable(types.string())),
+    playbookId: z.optional(z.nullable(types.string())),
+    research: z.optional(z.nullable(types.boolean())),
+    creatorEmail: z.optional(z.nullable(types.string())),
+    apiKeyClientId: z.optional(z.nullable(types.string())),
+    updatedAt: types.optional(types.date()),
+    isBookmarked: z.optional(z.nullable(types.boolean())),
+    preferredProvider: z.optional(z.nullable(types.string())),
+    templateDataId: z.optional(z.nullable(types.string())),
+    batchRunId: z.optional(z.nullable(types.string())),
+    preview: z.optional(z.nullable(types.string())),
+    dashboardMode: z.optional(z.nullable(types.boolean())),
+    source: types.optional(TextqlRpcPublicChatChatSource$inboundSchema),
+    methodology: types.optional(TextqlRpcPublicChatMethodology$inboundSchema),
+    isRunning: z.optional(z.nullable(types.boolean())),
+    isUnread: z.optional(z.nullable(types.boolean())),
+    vllmModelId: z.optional(z.nullable(types.string())),
+    fastMode: z.optional(z.nullable(types.boolean())),
+    agentId: z.optional(z.nullable(types.string())),
+    agentName: z.optional(z.nullable(types.string())),
+    agentProfileImageUrl: z.optional(z.nullable(types.string())),
+    maxThinking: z.optional(z.nullable(types.boolean())),
+    harness: z.optional(z.nullable(types.string())),
+    harnessEndpointId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicChatChatFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -18,7 +18,9 @@ export type TextqlRpcPublicDataframeUint64Values = {
 /** @internal */
 export const TextqlRpcPublicDataframeUint64ValuesValue$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDataframeUint64ValuesValue, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicDataframeUint64ValuesValueFromJSON(
   jsonString: string,
@@ -40,9 +42,13 @@ export function textqlRpcPublicDataframeUint64ValuesValueFromJSON(
 export const TextqlRpcPublicDataframeUint64Values$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDataframeUint64Values,
   unknown
-> = z.object({
-  values: types.optional(z.array(smartUnion([types.number(), types.string()]))),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    values: types.optional(
+      z.array(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function textqlRpcPublicDataframeUint64ValuesFromJSON(
   jsonString: string,

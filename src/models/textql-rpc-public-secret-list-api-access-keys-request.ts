@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSecretListApiAccessKeysRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicSecretListApiAccessKeysRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSecretListApiAccessKeysRequest$Outbound,
     TextqlRpcPublicSecretListApiAccessKeysRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicSecretListApiAccessKeysRequestToJSON(
   textqlRpcPublicSecretListApiAccessKeysRequest:

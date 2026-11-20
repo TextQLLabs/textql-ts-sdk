@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicConnectorConnectorContext,
   TextqlRpcPublicConnectorConnectorContext$Outbound,
@@ -36,14 +37,16 @@ export const TextqlRpcPublicConnectorGetExampleQueriesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorGetExampleQueriesRequest$Outbound,
     TextqlRpcPublicConnectorGetExampleQueriesRequest
-  > = z.object({
-    connectorContexts: z.optional(
-      z.array(TextqlRpcPublicConnectorConnectorContext$outboundSchema),
-    ),
-    featureFilter: z.optional(
-      TextqlRpcPublicConnectorFeatureType$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorContexts: z.optional(
+        z.array(TextqlRpcPublicConnectorConnectorContext$outboundSchema),
+      ),
+      featureFilter: z.optional(
+        TextqlRpcPublicConnectorFeatureType$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicConnectorGetExampleQueriesRequestToJSON(
   textqlRpcPublicConnectorGetExampleQueriesRequest:

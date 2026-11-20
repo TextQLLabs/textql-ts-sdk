@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,11 +22,13 @@ export type TextqlRpcPublicPatchesSaveObjectAsConfigResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesSaveObjectAsConfigResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesSaveObjectAsConfigResponse, unknown> = z
-    .object({
-      patch: types.optional(TextqlRpcPublicPatchesPatch$inboundSchema),
-      filePath: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesSaveObjectAsConfigResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        patch: types.optional(TextqlRpcPublicPatchesPatch$inboundSchema),
+        filePath: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicPatchesSaveObjectAsConfigResponseFromJSON(
   jsonString: string,

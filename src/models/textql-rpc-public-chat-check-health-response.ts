@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,29 +26,38 @@ export type TextqlRpcPublicChatCheckHealthResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatCheckHealthResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatCheckHealthResponse, unknown> = z.object({
-    llmStatus: types.optional(TextqlRpcPublicChatHealthStatus$inboundSchema),
-    webStatus: types.optional(TextqlRpcPublicChatHealthStatus$inboundSchema),
-    ontologyStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-    valkeyStatus: types.optional(TextqlRpcPublicChatHealthStatus$inboundSchema),
-    tableauStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-    sandboxStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-    llmExecutionStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-    sandboxExecutionStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-    consoleStatus: types.optional(
-      TextqlRpcPublicChatHealthStatus$inboundSchema,
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatCheckHealthResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        llmStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        webStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        ontologyStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        valkeyStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        tableauStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        sandboxStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        llmExecutionStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        sandboxExecutionStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+        consoleStatus: types.optional(
+          TextqlRpcPublicChatHealthStatus$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicChatCheckHealthResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -311,25 +311,27 @@ export type TextqlRpcPublicPatchesOntologyRemote = {
 export const TextqlRpcPublicPatchesOntologyRemote$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesOntologyRemote,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  remoteUrl: types.optional(types.string()),
-  authType: types.optional(types.string()),
-  defaultBranch: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  syncEnabled: types.optional(types.boolean()),
-  syncIntervalMinutes: types.optional(types.number()),
-  lastSyncedAt: types.optional(types.date()),
-  lastSyncError: z.optional(z.nullable(types.string())),
-  signingKeyType: types.optional(types.string()),
-  githubAppId: z.optional(z.nullable(types.string())),
-  githubAppInstallationId: z.optional(z.nullable(types.string())),
-  hasConflicts: types.optional(types.boolean()),
-  pushMode: types.optional(types.string()),
-  openPrUrl: z.optional(z.nullable(types.string())),
-  openPrNumber: z.optional(z.nullable(types.number())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    remoteUrl: types.optional(types.string()),
+    authType: types.optional(types.string()),
+    defaultBranch: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    syncEnabled: types.optional(types.boolean()),
+    syncIntervalMinutes: types.optional(types.number()),
+    lastSyncedAt: types.optional(types.date()),
+    lastSyncError: z.optional(z.nullable(types.string())),
+    signingKeyType: types.optional(types.string()),
+    githubAppId: z.optional(z.nullable(types.string())),
+    githubAppInstallationId: z.optional(z.nullable(types.string())),
+    hasConflicts: types.optional(types.boolean()),
+    pushMode: types.optional(types.string()),
+    openPrUrl: z.optional(z.nullable(types.string())),
+    openPrNumber: z.optional(z.nullable(types.number())),
+  })
+);
 
 export function textqlRpcPublicPatchesOntologyRemoteFromJSON(
   jsonString: string,

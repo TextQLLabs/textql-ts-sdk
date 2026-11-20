@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -27,10 +28,12 @@ export const TextqlRpcPublicChatCheckHealthRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatCheckHealthRequest$Outbound,
     TextqlRpcPublicChatCheckHealthRequest
-  > = z.object({
-    model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    functional: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      functional: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicChatCheckHealthRequestToJSON(
   textqlRpcPublicChatCheckHealthRequest: TextqlRpcPublicChatCheckHealthRequest,

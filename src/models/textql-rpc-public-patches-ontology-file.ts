@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -123,7 +123,9 @@ export type TextqlRpcPublicPatchesOntologyFile = {
 /** @internal */
 export const TextqlRpcPublicPatchesOntologyFileSizeBytes$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicPatchesOntologyFileSizeBytes, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicPatchesOntologyFileSizeBytesFromJSON(
   jsonString: string,
@@ -145,17 +147,19 @@ export function textqlRpcPublicPatchesOntologyFileSizeBytesFromJSON(
 export const TextqlRpcPublicPatchesOntologyFile$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesOntologyFile,
   unknown
-> = z.object({
-  path: types.optional(types.string()),
-  name: types.optional(types.string()),
-  content: types.optional(types.string()),
-  updatedAt: types.optional(types.date()),
-  canWrite: types.optional(types.boolean()),
-  kind: types.optional(TextqlRpcPublicPatchesOntologyFileKind$inboundSchema),
-  mimeType: types.optional(types.string()),
-  sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
-  binaryContent: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    path: types.optional(types.string()),
+    name: types.optional(types.string()),
+    content: types.optional(types.string()),
+    updatedAt: types.optional(types.date()),
+    canWrite: types.optional(types.boolean()),
+    kind: types.optional(TextqlRpcPublicPatchesOntologyFileKind$inboundSchema),
+    mimeType: types.optional(types.string()),
+    sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
+    binaryContent: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicPatchesOntologyFileFromJSON(
   jsonString: string,

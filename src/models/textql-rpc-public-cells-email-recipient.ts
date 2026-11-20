@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -32,12 +32,14 @@ export type TextqlRpcPublicCellsEmailRecipient = {
 export const TextqlRpcPublicCellsEmailRecipient$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsEmailRecipient,
   unknown
-> = z.object({
-  address: types.optional(types.string()),
-  class: types.optional(types.string()),
-  memberId: z.optional(z.nullable(types.string())),
-  displayName: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    address: types.optional(types.string()),
+    class: types.optional(types.string()),
+    memberId: z.optional(z.nullable(types.string())),
+    displayName: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsEmailRecipientFromJSON(
   jsonString: string,

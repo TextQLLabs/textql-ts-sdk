@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacCreateRolePermissionsUploadUrlRequest = {
   fileName?: string | undefined;
@@ -21,10 +22,12 @@ export const TextqlRpcPublicRbacCreateRolePermissionsUploadUrlRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicRbacCreateRolePermissionsUploadUrlRequest$Outbound,
     TextqlRpcPublicRbacCreateRolePermissionsUploadUrlRequest
-  > = z.object({
-    fileName: z.optional(z.string()),
-    sizeBytes: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      fileName: z.optional(z.string()),
+      sizeBytes: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicRbacCreateRolePermissionsUploadUrlRequestToJSON(
   textqlRpcPublicRbacCreateRolePermissionsUploadUrlRequest:

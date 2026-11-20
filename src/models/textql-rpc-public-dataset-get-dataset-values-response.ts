@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -32,7 +32,9 @@ export const TextqlRpcPublicDatasetGetDatasetValuesResponseNumCols$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDatasetGetDatasetValuesResponseNumCols,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicDatasetGetDatasetValuesResponseNumColsFromJSON(
   jsonString: string,
@@ -55,7 +57,9 @@ export const TextqlRpcPublicDatasetGetDatasetValuesResponseNumRows$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDatasetGetDatasetValuesResponseNumRows,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicDatasetGetDatasetValuesResponseNumRowsFromJSON(
   jsonString: string,
@@ -75,12 +79,14 @@ export function textqlRpcPublicDatasetGetDatasetValuesResponseNumRowsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicDatasetGetDatasetValuesResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDatasetGetDatasetValuesResponse, unknown> = z
-    .object({
-      df: types.optional(TextqlRpcPublicDataframeDataFrame$inboundSchema),
-      numCols: types.optional(smartUnion([types.number(), types.string()])),
-      numRows: types.optional(smartUnion([types.number(), types.string()])),
-    });
+  z.ZodMiniType<TextqlRpcPublicDatasetGetDatasetValuesResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        df: types.optional(TextqlRpcPublicDataframeDataFrame$inboundSchema),
+        numCols: types.optional(smartUnion([types.number(), types.string()])),
+        numRows: types.optional(smartUnion([types.number(), types.string()])),
+      })
+    );
 
 export function textqlRpcPublicDatasetGetDatasetValuesResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicConnectorGetTablePreviewRequest = {
   connectorId?: number | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicConnectorGetTablePreviewRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorGetTablePreviewRequest$Outbound,
     TextqlRpcPublicConnectorGetTablePreviewRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    tableDatabase: z.optional(z.string()),
-    tableSchema: z.optional(z.string()),
-    tableName: z.optional(z.string()),
-    limit: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      tableDatabase: z.optional(z.string()),
+      tableSchema: z.optional(z.string()),
+      tableName: z.optional(z.string()),
+      limit: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicConnectorGetTablePreviewRequestToJSON(
   textqlRpcPublicConnectorGetTablePreviewRequest:

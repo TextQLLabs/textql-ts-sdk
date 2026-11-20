@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Sync slack workspaces
@@ -21,9 +22,11 @@ export const TextqlRpcPublicSlackSyncWorkspaceRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSlackSyncWorkspaceRequest$Outbound,
     TextqlRpcPublicSlackSyncWorkspaceRequest
-  > = z.object({
-    teamId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      teamId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSlackSyncWorkspaceRequestToJSON(
   textqlRpcPublicSlackSyncWorkspaceRequest:

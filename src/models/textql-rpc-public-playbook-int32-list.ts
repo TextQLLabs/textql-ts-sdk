@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPlaybookInt32List = {
   items?: Array<number> | undefined;
@@ -17,9 +18,11 @@ export type TextqlRpcPublicPlaybookInt32List$Outbound = {
 export const TextqlRpcPublicPlaybookInt32List$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicPlaybookInt32List$Outbound,
   TextqlRpcPublicPlaybookInt32List
-> = z.object({
-  items: z.optional(z.array(z.int())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    items: z.optional(z.array(z.int())),
+  })
+);
 
 export function textqlRpcPublicPlaybookInt32ListToJSON(
   textqlRpcPublicPlaybookInt32List: TextqlRpcPublicPlaybookInt32List,

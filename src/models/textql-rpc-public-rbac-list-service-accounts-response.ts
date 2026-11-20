@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,13 +19,15 @@ export type TextqlRpcPublicRbacListServiceAccountsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicRbacListServiceAccountsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacListServiceAccountsResponse, unknown> = z
-    .object({
-      serviceAccounts: types.optional(
-        z.array(TextqlRpcPublicRbacServiceAccount$inboundSchema),
-      ),
-      nextPageToken: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicRbacListServiceAccountsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        serviceAccounts: types.optional(
+          z.array(TextqlRpcPublicRbacServiceAccount$inboundSchema),
+        ),
+        nextPageToken: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicRbacListServiceAccountsResponseFromJSON(
   jsonString: string,

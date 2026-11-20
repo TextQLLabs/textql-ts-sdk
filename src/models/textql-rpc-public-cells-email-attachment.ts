@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -20,10 +20,10 @@ export type TextqlRpcPublicCellsEmailAttachment = {
 };
 
 /** @internal */
-export const Bytes$inboundSchema: z.ZodMiniType<Bytes, unknown> = smartUnion([
-  types.number(),
-  types.string(),
-]);
+export const Bytes$inboundSchema: z.ZodMiniType<Bytes, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function bytesFromJSON(
   jsonString: string,
@@ -39,10 +39,12 @@ export function bytesFromJSON(
 export const TextqlRpcPublicCellsEmailAttachment$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsEmailAttachment,
   unknown
-> = z.object({
-  filename: types.optional(types.string()),
-  bytes: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    filename: types.optional(types.string()),
+    bytes: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 
 export function textqlRpcPublicCellsEmailAttachmentFromJSON(
   jsonString: string,

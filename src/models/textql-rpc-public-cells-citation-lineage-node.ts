@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -34,14 +34,17 @@ export type TextqlRpcPublicCellsCitationLineageNode = {
 
 /** @internal */
 export const TextqlRpcPublicCellsCitationLineageNode$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsCitationLineageNode, unknown> = z.object({
-    cellId: types.optional(types.string()),
-    kind: types.optional(types.string()),
-    dataframeName: z.optional(z.nullable(types.string())),
-    connectorId: z.optional(z.nullable(types.number())),
-    tables: types.optional(z.array(types.string())),
-    inputCellIds: types.optional(z.array(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsCitationLineageNode, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        cellId: types.optional(types.string()),
+        kind: types.optional(types.string()),
+        dataframeName: z.optional(z.nullable(types.string())),
+        connectorId: z.optional(z.nullable(types.number())),
+        tables: types.optional(z.array(types.string())),
+        inputCellIds: types.optional(z.array(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsCitationLineageNodeFromJSON(
   jsonString: string,

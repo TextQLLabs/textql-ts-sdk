@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -36,20 +36,22 @@ export const PlaybookServiceGetActiveSubscribedPlaybooksCountRequest$outboundSch
   z.ZodMiniType<
     PlaybookServiceGetActiveSubscribedPlaybooksCountRequest$Outbound,
     PlaybookServiceGetActiveSubscribedPlaybooksCountRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicPlaybookGetActiveSubscribedPlaybooksCountRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicPlaybookGetActiveSubscribedPlaybooksCountRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function playbookServiceGetActiveSubscribedPlaybooksCountRequestToJSON(
@@ -67,11 +69,13 @@ export const PlaybookServiceGetActiveSubscribedPlaybooksCountResponse$inboundSch
   z.ZodMiniType<
     PlaybookServiceGetActiveSubscribedPlaybooksCountResponse,
     unknown
-  > = smartUnion([
-    models
-      .TextqlRpcPublicPlaybookGetActiveSubscribedPlaybooksCountResponse$inboundSchema,
-    models.ConnectError$inboundSchema,
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      models
+        .TextqlRpcPublicPlaybookGetActiveSubscribedPlaybooksCountResponse$inboundSchema,
+      models.ConnectError$inboundSchema,
+    ])
+  );
 
 export function playbookServiceGetActiveSubscribedPlaybooksCountResponseFromJSON(
   jsonString: string,

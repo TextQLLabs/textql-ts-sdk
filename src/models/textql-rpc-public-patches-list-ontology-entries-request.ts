@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListOntologyEntriesRequest = {
   path?: string | undefined;
@@ -25,11 +26,13 @@ export const TextqlRpcPublicPatchesListOntologyEntriesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListOntologyEntriesRequest$Outbound,
     TextqlRpcPublicPatchesListOntologyEntriesRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    recursive: z.optional(z.nullable(z.boolean())),
-    includeDebugFiles: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      recursive: z.optional(z.nullable(z.boolean())),
+      includeDebugFiles: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesListOntologyEntriesRequestToJSON(
   textqlRpcPublicPatchesListOntologyEntriesRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,19 +23,21 @@ export type TextqlRpcPublicConnectorAzureSynapseMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorAzureSynapseMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorAzureSynapseMetadata, unknown> = z
-    .object({
-      host: types.optional(types.string()),
-      port: types.optional(types.number()),
-      user: types.optional(types.string()),
-      password: types.optional(types.string()),
-      database: types.optional(types.string()),
-      schema: types.optional(types.string()),
-      authType: types.optional(types.string()),
-      clientId: types.optional(types.string()),
-      clientSecret: types.optional(types.string()),
-      tenantId: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorAzureSynapseMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        database: types.optional(types.string()),
+        schema: types.optional(types.string()),
+        authType: types.optional(types.string()),
+        clientId: types.optional(types.string()),
+        clientSecret: types.optional(types.string()),
+        tenantId: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorAzureSynapseMetadata$Outbound = {
   host?: string | undefined;
@@ -55,18 +57,20 @@ export const TextqlRpcPublicConnectorAzureSynapseMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorAzureSynapseMetadata$Outbound,
     TextqlRpcPublicConnectorAzureSynapseMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    schema: z.optional(z.string()),
-    authType: z.optional(z.string()),
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-    tenantId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      schema: z.optional(z.string()),
+      authType: z.optional(z.string()),
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+      tenantId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorAzureSynapseMetadataToJSON(
   textqlRpcPublicConnectorAzureSynapseMetadata:

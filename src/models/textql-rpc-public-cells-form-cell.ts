@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -48,16 +48,18 @@ export type TextqlRpcPublicCellsFormCell = {
 export const TextqlRpcPublicCellsFormCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFormCell,
   unknown
-> = z.object({
-  action: types.optional(types.string()),
-  formId: z.optional(z.nullable(types.string())),
-  formType: z.optional(z.nullable(types.string())),
-  status: z.optional(z.nullable(types.string())),
-  testStatus: z.optional(z.nullable(types.string())),
-  name: z.optional(z.nullable(types.string())),
-  approvalOutcome: z.optional(z.nullable(types.string())),
-  testMessage: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    action: types.optional(types.string()),
+    formId: z.optional(z.nullable(types.string())),
+    formType: z.optional(z.nullable(types.string())),
+    status: z.optional(z.nullable(types.string())),
+    testStatus: z.optional(z.nullable(types.string())),
+    name: z.optional(z.nullable(types.string())),
+    approvalOutcome: z.optional(z.nullable(types.string())),
+    testMessage: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsFormCellFromJSON(
   jsonString: string,

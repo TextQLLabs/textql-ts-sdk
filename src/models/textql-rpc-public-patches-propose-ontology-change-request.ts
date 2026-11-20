@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPatchesProposedOntologyFile,
   TextqlRpcPublicPatchesProposedOntologyFile$Outbound,
@@ -29,13 +30,15 @@ export const TextqlRpcPublicPatchesProposeOntologyChangeRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesProposeOntologyChangeRequest$Outbound,
     TextqlRpcPublicPatchesProposeOntologyChangeRequest
-  > = z.object({
-    title: z.string(),
-    description: z.optional(z.nullable(z.string())),
-    files: z.optional(
-      z.array(TextqlRpcPublicPatchesProposedOntologyFile$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      title: z.string(),
+      description: z.optional(z.nullable(z.string())),
+      files: z.optional(
+        z.array(TextqlRpcPublicPatchesProposedOntologyFile$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicPatchesProposeOntologyChangeRequestToJSON(
   textqlRpcPublicPatchesProposeOntologyChangeRequest:

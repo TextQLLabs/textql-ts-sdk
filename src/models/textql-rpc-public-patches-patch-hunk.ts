@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -44,7 +44,9 @@ export type TextqlRpcPublicPatchesPatchHunk = {
 
 /** @internal */
 export const OldPosition$inboundSchema: z.ZodMiniType<OldPosition, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function oldPositionFromJSON(
   jsonString: string,
@@ -58,7 +60,9 @@ export function oldPositionFromJSON(
 
 /** @internal */
 export const OldLines$inboundSchema: z.ZodMiniType<OldLines, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function oldLinesFromJSON(
   jsonString: string,
@@ -72,7 +76,9 @@ export function oldLinesFromJSON(
 
 /** @internal */
 export const NewPosition$inboundSchema: z.ZodMiniType<NewPosition, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function newPositionFromJSON(
   jsonString: string,
@@ -86,7 +92,9 @@ export function newPositionFromJSON(
 
 /** @internal */
 export const NewLines$inboundSchema: z.ZodMiniType<NewLines, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function newLinesFromJSON(
   jsonString: string,
@@ -100,7 +108,9 @@ export function newLinesFromJSON(
 
 /** @internal */
 export const LinesAdded$inboundSchema: z.ZodMiniType<LinesAdded, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function linesAddedFromJSON(
   jsonString: string,
@@ -114,7 +124,9 @@ export function linesAddedFromJSON(
 
 /** @internal */
 export const LinesDeleted$inboundSchema: z.ZodMiniType<LinesDeleted, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function linesDeletedFromJSON(
   jsonString: string,
@@ -130,7 +142,9 @@ export function linesDeletedFromJSON(
 export const LeadingContext$inboundSchema: z.ZodMiniType<
   LeadingContext,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function leadingContextFromJSON(
   jsonString: string,
@@ -146,7 +160,9 @@ export function leadingContextFromJSON(
 export const TrailingContext$inboundSchema: z.ZodMiniType<
   TrailingContext,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function trailingContextFromJSON(
   jsonString: string,
@@ -162,18 +178,26 @@ export function trailingContextFromJSON(
 export const TextqlRpcPublicPatchesPatchHunk$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesPatchHunk,
   unknown
-> = z.object({
-  comment: types.optional(types.string()),
-  oldPosition: types.optional(smartUnion([types.number(), types.string()])),
-  oldLines: types.optional(smartUnion([types.number(), types.string()])),
-  newPosition: types.optional(smartUnion([types.number(), types.string()])),
-  newLines: types.optional(smartUnion([types.number(), types.string()])),
-  linesAdded: types.optional(smartUnion([types.number(), types.string()])),
-  linesDeleted: types.optional(smartUnion([types.number(), types.string()])),
-  leadingContext: types.optional(smartUnion([types.number(), types.string()])),
-  trailingContext: types.optional(smartUnion([types.number(), types.string()])),
-  lines: types.optional(z.array(TextqlRpcPublicPatchesPatchLine$inboundSchema)),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    comment: types.optional(types.string()),
+    oldPosition: types.optional(smartUnion([types.number(), types.string()])),
+    oldLines: types.optional(smartUnion([types.number(), types.string()])),
+    newPosition: types.optional(smartUnion([types.number(), types.string()])),
+    newLines: types.optional(smartUnion([types.number(), types.string()])),
+    linesAdded: types.optional(smartUnion([types.number(), types.string()])),
+    linesDeleted: types.optional(smartUnion([types.number(), types.string()])),
+    leadingContext: types.optional(
+      smartUnion([types.number(), types.string()]),
+    ),
+    trailingContext: types.optional(
+      smartUnion([types.number(), types.string()]),
+    ),
+    lines: types.optional(
+      z.array(TextqlRpcPublicPatchesPatchLine$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicPatchesPatchHunkFromJSON(
   jsonString: string,

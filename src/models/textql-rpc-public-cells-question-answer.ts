@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -31,12 +31,14 @@ export type TextqlRpcPublicCellsQuestionAnswer = {
 export const TextqlRpcPublicCellsQuestionAnswer$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsQuestionAnswer,
   unknown
-> = z.object({
-  selected: types.optional(z.array(types.string())),
-  custom: z.optional(z.nullable(types.string())),
-  inputs: types.optional(z.array(types.string())),
-  provided: types.optional(z.array(types.boolean())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    selected: types.optional(z.array(types.string())),
+    custom: z.optional(z.nullable(types.string())),
+    inputs: types.optional(z.array(types.string())),
+    provided: types.optional(z.array(types.boolean())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicCellsQuestionAnswer$Outbound = {
   selected?: Array<string> | undefined;
@@ -49,12 +51,14 @@ export type TextqlRpcPublicCellsQuestionAnswer$Outbound = {
 export const TextqlRpcPublicCellsQuestionAnswer$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsQuestionAnswer$Outbound,
   TextqlRpcPublicCellsQuestionAnswer
-> = z.object({
-  selected: z.optional(z.array(z.string())),
-  custom: z.optional(z.nullable(z.string())),
-  inputs: z.optional(z.array(z.string())),
-  provided: z.optional(z.array(z.boolean())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    selected: z.optional(z.array(z.string())),
+    custom: z.optional(z.nullable(z.string())),
+    inputs: z.optional(z.array(z.string())),
+    provided: z.optional(z.array(z.boolean())),
+  })
+);
 
 export function textqlRpcPublicCellsQuestionAnswerToJSON(
   textqlRpcPublicCellsQuestionAnswer: TextqlRpcPublicCellsQuestionAnswer,

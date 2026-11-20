@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcParadigmParamsParadigmParams,
   TextqlRpcParadigmParamsParadigmParams$Outbound,
@@ -336,55 +337,57 @@ export const TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest$Outbound,
     TextqlRpcPublicSettingsUpdateOrganizationSettingsRequest
-  > = z.object({
-    orgId: z.optional(z.string()),
-    secretsEnabled: z.optional(z.boolean()),
-    hideExampleConnectors: z.optional(z.boolean()),
-    paradigmParams: z.optional(
-      TextqlRpcParadigmParamsParadigmParams$outboundSchema,
-    ),
-    defaultParadigmMode: z.optional(
-      TextqlRpcParadigmParamsParadigmType$outboundSchema,
-    ),
-    defaultConnectorIds: z.optional(z.array(z.int())),
-    trainingMode: z.optional(z.boolean()),
-    dashboardsEnabled: z.optional(z.boolean()),
-    methodologyEnabled: z.optional(z.boolean()),
-    feedEnabled: z.optional(z.boolean()),
-    contextV3Enabled: z.optional(z.boolean()),
-    clearEnabledModelIds: z.optional(z.boolean()),
-    clearRestrictedModelIds: z.optional(z.boolean()),
-    enabledModels: z.optional(
-      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
-    ),
-    restrictedModels: z.optional(
-      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
-    ),
-    defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    observabilityEnabled: z.optional(z.boolean()),
-    notificationsEnabled: z.optional(z.boolean()),
-    hideApiConnectors: z.optional(z.boolean()),
-    fastModeEnabled: z.optional(z.boolean()),
-    maxThinkingEnabled: z.optional(z.boolean()),
-    configurableThinkingEnabled: z.optional(z.boolean()),
-    clearDefaultConnectorIds: z.optional(z.boolean()),
-    voiceInputEnabled: z.optional(z.boolean()),
-    harnessesEnabled: z.optional(z.boolean()),
-    defaultDashboardOutput: z.optional(z.boolean()),
-    defaultMethodology: z.optional(
-      TextqlRpcPublicChatMethodology$outboundSchema,
-    ),
-    tracesEnabled: z.optional(z.boolean()),
-    sandboxObservabilityEnabled: z.optional(z.boolean()),
-    dataAppsEnabled: z.optional(z.boolean()),
-    issuesEnabled: z.optional(z.boolean()),
-    spendTransparencyEnabled: z.optional(z.boolean()),
-    sharingDisabled: z.optional(z.boolean()),
-    toolRestrictions: z.optional(
-      TextqlRpcParadigmParamsParadigmParams$outboundSchema,
-    ),
-    subagentsEnabled: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      orgId: z.optional(z.string()),
+      secretsEnabled: z.optional(z.boolean()),
+      hideExampleConnectors: z.optional(z.boolean()),
+      paradigmParams: z.optional(
+        TextqlRpcParadigmParamsParadigmParams$outboundSchema,
+      ),
+      defaultParadigmMode: z.optional(
+        TextqlRpcParadigmParamsParadigmType$outboundSchema,
+      ),
+      defaultConnectorIds: z.optional(z.array(z.int())),
+      trainingMode: z.optional(z.boolean()),
+      dashboardsEnabled: z.optional(z.boolean()),
+      methodologyEnabled: z.optional(z.boolean()),
+      feedEnabled: z.optional(z.boolean()),
+      contextV3Enabled: z.optional(z.boolean()),
+      clearEnabledModelIds: z.optional(z.boolean()),
+      clearRestrictedModelIds: z.optional(z.boolean()),
+      enabledModels: z.optional(
+        z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+      ),
+      restrictedModels: z.optional(
+        z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+      ),
+      defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      observabilityEnabled: z.optional(z.boolean()),
+      notificationsEnabled: z.optional(z.boolean()),
+      hideApiConnectors: z.optional(z.boolean()),
+      fastModeEnabled: z.optional(z.boolean()),
+      maxThinkingEnabled: z.optional(z.boolean()),
+      configurableThinkingEnabled: z.optional(z.boolean()),
+      clearDefaultConnectorIds: z.optional(z.boolean()),
+      voiceInputEnabled: z.optional(z.boolean()),
+      harnessesEnabled: z.optional(z.boolean()),
+      defaultDashboardOutput: z.optional(z.boolean()),
+      defaultMethodology: z.optional(
+        TextqlRpcPublicChatMethodology$outboundSchema,
+      ),
+      tracesEnabled: z.optional(z.boolean()),
+      sandboxObservabilityEnabled: z.optional(z.boolean()),
+      dataAppsEnabled: z.optional(z.boolean()),
+      issuesEnabled: z.optional(z.boolean()),
+      spendTransparencyEnabled: z.optional(z.boolean()),
+      sharingDisabled: z.optional(z.boolean()),
+      toolRestrictions: z.optional(
+        TextqlRpcParadigmParamsParadigmParams$outboundSchema,
+      ),
+      subagentsEnabled: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicSettingsUpdateOrganizationSettingsRequestToJSON(
   textqlRpcPublicSettingsUpdateOrganizationSettingsRequest:

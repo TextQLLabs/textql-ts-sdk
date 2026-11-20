@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,18 +27,20 @@ export type TextqlRpcPublicCellsMetricsCell = {
 export const TextqlRpcPublicCellsMetricsCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsMetricsCell,
   unknown
-> = z.object({
-  query: types.optional(types.string()),
-  dataset: types.optional(types.string()),
-  ontologyId: types.optional(types.number()),
-  dataframe: types.optional(
-    TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
-  ),
-  dataframePreview: types.optional(types.string()),
-  generatedSql: types.optional(types.string()),
-  queryId: types.optional(types.string()),
-  errorMessage: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    query: types.optional(types.string()),
+    dataset: types.optional(types.string()),
+    ontologyId: types.optional(types.number()),
+    dataframe: types.optional(
+      TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
+    ),
+    dataframePreview: types.optional(types.string()),
+    generatedSql: types.optional(types.string()),
+    queryId: types.optional(types.string()),
+    errorMessage: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsMetricsCellFromJSON(
   jsonString: string,

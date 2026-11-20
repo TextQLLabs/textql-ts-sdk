@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -52,26 +52,29 @@ export type TextqlRpcPublicConnectorSnowflakeMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorSnowflakeMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorSnowflakeMetadata, unknown> = z.object({
-    username: types.optional(types.string()),
-    password: types.optional(types.string()),
-    privateKey: types.optional(types.string()),
-    privateKeyPassphrase: types.optional(types.string()),
-    role: types.optional(types.string()),
-    schema: types.optional(types.string()),
-    locator: types.optional(types.string()),
-    database: types.optional(types.string()),
-    warehouse: types.optional(types.string()),
-    oauthAccessToken: types.optional(types.string()),
-    oauthRefreshToken: types.optional(types.string()),
-    oauthClientId: types.optional(types.string()),
-    oauthClientSecret: types.optional(types.string()),
-    enableSsoAuth: types.optional(types.boolean()),
-    tokenExchangeEndpoint: types.optional(types.string()),
-    tokenExchangeAudience: types.optional(types.string()),
-    tokenExchangeScope: types.optional(types.string()),
-    schemas: types.optional(z.array(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorSnowflakeMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        username: types.optional(types.string()),
+        password: types.optional(types.string()),
+        privateKey: types.optional(types.string()),
+        privateKeyPassphrase: types.optional(types.string()),
+        role: types.optional(types.string()),
+        schema: types.optional(types.string()),
+        locator: types.optional(types.string()),
+        database: types.optional(types.string()),
+        warehouse: types.optional(types.string()),
+        oauthAccessToken: types.optional(types.string()),
+        oauthRefreshToken: types.optional(types.string()),
+        oauthClientId: types.optional(types.string()),
+        oauthClientSecret: types.optional(types.string()),
+        enableSsoAuth: types.optional(types.boolean()),
+        tokenExchangeEndpoint: types.optional(types.string()),
+        tokenExchangeAudience: types.optional(types.string()),
+        tokenExchangeScope: types.optional(types.string()),
+        schemas: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorSnowflakeMetadata$Outbound = {
   username?: string | undefined;
@@ -99,26 +102,28 @@ export const TextqlRpcPublicConnectorSnowflakeMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorSnowflakeMetadata$Outbound,
     TextqlRpcPublicConnectorSnowflakeMetadata
-  > = z.object({
-    username: z.optional(z.string()),
-    password: z.optional(z.string()),
-    privateKey: z.optional(z.string()),
-    privateKeyPassphrase: z.optional(z.string()),
-    role: z.optional(z.string()),
-    schema: z.optional(z.string()),
-    locator: z.optional(z.string()),
-    database: z.optional(z.string()),
-    warehouse: z.optional(z.string()),
-    oauthAccessToken: z.optional(z.string()),
-    oauthRefreshToken: z.optional(z.string()),
-    oauthClientId: z.optional(z.string()),
-    oauthClientSecret: z.optional(z.string()),
-    enableSsoAuth: z.optional(z.boolean()),
-    tokenExchangeEndpoint: z.optional(z.string()),
-    tokenExchangeAudience: z.optional(z.string()),
-    tokenExchangeScope: z.optional(z.string()),
-    schemas: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      username: z.optional(z.string()),
+      password: z.optional(z.string()),
+      privateKey: z.optional(z.string()),
+      privateKeyPassphrase: z.optional(z.string()),
+      role: z.optional(z.string()),
+      schema: z.optional(z.string()),
+      locator: z.optional(z.string()),
+      database: z.optional(z.string()),
+      warehouse: z.optional(z.string()),
+      oauthAccessToken: z.optional(z.string()),
+      oauthRefreshToken: z.optional(z.string()),
+      oauthClientId: z.optional(z.string()),
+      oauthClientSecret: z.optional(z.string()),
+      enableSsoAuth: z.optional(z.boolean()),
+      tokenExchangeEndpoint: z.optional(z.string()),
+      tokenExchangeAudience: z.optional(z.string()),
+      tokenExchangeScope: z.optional(z.string()),
+      schemas: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorSnowflakeMetadataToJSON(
   textqlRpcPublicConnectorSnowflakeMetadata:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,9 +18,11 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAcc
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken,
     unknown
-  > = z.object({
-    token: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      token: types.optional(types.string()),
+    })
+  );
 /** @internal */
 export type TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$Outbound =
   {
@@ -32,9 +34,11 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAcc
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$Outbound,
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken
-  > = z.object({
-    token: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      token: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessTokenToJSON(
   textqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken:

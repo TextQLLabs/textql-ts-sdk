@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
@@ -12,7 +12,7 @@ export type TextqlRpcPublicAuditLogDeleteS3ExportConfigResponse = {};
 /** @internal */
 export const TextqlRpcPublicAuditLogDeleteS3ExportConfigResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicAuditLogDeleteS3ExportConfigResponse, unknown> =
-    z.object({});
+    /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicAuditLogDeleteS3ExportConfigResponseFromJSON(
   jsonString: string,

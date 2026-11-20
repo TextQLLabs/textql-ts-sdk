@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -34,10 +34,13 @@ export type TextqlRpcPublicConnectorAthenaMetadataAthenaAuth =
   | IamRole;
 
 /** @internal */
-export const IamRole$inboundSchema: z.ZodMiniType<IamRole, unknown> = z.object({
-  iamRole:
-    TextqlRpcPublicConnectorAthenaMetadataAthenaAuthIAMRoleCredentials$inboundSchema,
-});
+export const IamRole$inboundSchema: z.ZodMiniType<IamRole, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      iamRole:
+        TextqlRpcPublicConnectorAthenaMetadataAthenaAuthIAMRoleCredentials$inboundSchema,
+    })
+  );
 /** @internal */
 export type IamRole$Outbound = {
   iamRole:
@@ -46,10 +49,12 @@ export type IamRole$Outbound = {
 
 /** @internal */
 export const IamRole$outboundSchema: z.ZodMiniType<IamRole$Outbound, IamRole> =
-  z.object({
-    iamRole:
-      TextqlRpcPublicConnectorAthenaMetadataAthenaAuthIAMRoleCredentials$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      iamRole:
+        TextqlRpcPublicConnectorAthenaMetadataAthenaAuthIAMRoleCredentials$outboundSchema,
+    })
+  );
 
 export function iamRoleToJSON(iamRole: IamRole): string {
   return JSON.stringify(IamRole$outboundSchema.parse(iamRole));
@@ -65,11 +70,13 @@ export function iamRoleFromJSON(
 }
 
 /** @internal */
-export const AccessKey$inboundSchema: z.ZodMiniType<AccessKey, unknown> = z
-  .object({
-    accessKey:
-      TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$inboundSchema,
-  });
+export const AccessKey$inboundSchema: z.ZodMiniType<AccessKey, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accessKey:
+        TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$inboundSchema,
+    })
+  );
 /** @internal */
 export type AccessKey$Outbound = {
   accessKey:
@@ -80,10 +87,12 @@ export type AccessKey$Outbound = {
 export const AccessKey$outboundSchema: z.ZodMiniType<
   AccessKey$Outbound,
   AccessKey
-> = z.object({
-  accessKey:
-    TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    accessKey:
+      TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$outboundSchema,
+  })
+);
 
 export function accessKeyToJSON(accessKey: AccessKey): string {
   return JSON.stringify(AccessKey$outboundSchema.parse(accessKey));
@@ -101,10 +110,12 @@ export function accessKeyFromJSON(
 /** @internal */
 export const TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorAthenaMetadataAthenaAuth, unknown> =
-    smartUnion([
-      z.lazy(() => AccessKey$inboundSchema),
-      z.lazy(() => IamRole$inboundSchema),
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        z.lazy(() => AccessKey$inboundSchema),
+        z.lazy(() => IamRole$inboundSchema),
+      ])
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$Outbound =
   | AccessKey$Outbound
@@ -115,10 +126,12 @@ export const TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorAthenaMetadataAthenaAuth$Outbound,
     TextqlRpcPublicConnectorAthenaMetadataAthenaAuth
-  > = smartUnion([
-    z.lazy(() => AccessKey$outboundSchema),
-    z.lazy(() => IamRole$outboundSchema),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => AccessKey$outboundSchema),
+      z.lazy(() => IamRole$outboundSchema),
+    ])
+  );
 
 export function textqlRpcPublicConnectorAthenaMetadataAthenaAuthToJSON(
   textqlRpcPublicConnectorAthenaMetadataAthenaAuth:

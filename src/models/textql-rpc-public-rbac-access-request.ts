@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -220,21 +220,23 @@ export type TextqlRpcPublicRbacAccessRequest = {
 export const TextqlRpcPublicRbacAccessRequest$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacAccessRequest,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  objectType: types.optional(types.string()),
-  objectId: types.optional(types.string()),
-  memberId: types.optional(types.string()),
-  requestedAccessType: types.optional(types.string()),
-  justification: types.optional(types.string()),
-  requestMessage: z.optional(z.nullable(types.string())),
-  status: types.optional(types.string()),
-  reviewedBy: z.optional(z.nullable(types.string())),
-  rejectionReason: z.optional(z.nullable(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    objectType: types.optional(types.string()),
+    objectId: types.optional(types.string()),
+    memberId: types.optional(types.string()),
+    requestedAccessType: types.optional(types.string()),
+    justification: types.optional(types.string()),
+    requestMessage: z.optional(z.nullable(types.string())),
+    status: types.optional(types.string()),
+    reviewedBy: z.optional(z.nullable(types.string())),
+    rejectionReason: z.optional(z.nullable(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicRbacAccessRequestFromJSON(
   jsonString: string,

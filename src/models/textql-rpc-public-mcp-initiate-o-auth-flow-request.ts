@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicMcpInitiateOAuthFlowRequest = {
   serverId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicMcpInitiateOAuthFlowRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicMcpInitiateOAuthFlowRequest$Outbound,
     TextqlRpcPublicMcpInitiateOAuthFlowRequest
-  > = z.object({
-    serverId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      serverId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicMcpInitiateOAuthFlowRequestToJSON(
   textqlRpcPublicMcpInitiateOAuthFlowRequest:

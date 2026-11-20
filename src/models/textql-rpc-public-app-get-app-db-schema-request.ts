@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAppGetAppDBSchemaRequest = {
   appId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicAppGetAppDBSchemaRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppGetAppDBSchemaRequest$Outbound,
     TextqlRpcPublicAppGetAppDBSchemaRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicAppGetAppDBSchemaRequestToJSON(
   textqlRpcPublicAppGetAppDBSchemaRequest:

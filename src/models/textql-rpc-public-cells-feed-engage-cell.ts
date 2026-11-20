@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,16 +26,18 @@ export type TextqlRpcPublicCellsFeedEngageCell = {
 export const TextqlRpcPublicCellsFeedEngageCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedEngageCell,
   unknown
-> = z.object({
-  thingId: types.optional(types.string()),
-  voteType: types.optional(types.string()),
-  upvoteCount: types.optional(types.number()),
-  downvoteCount: types.optional(types.number()),
-  timestamp: types.optional(types.string()),
-  error: types.optional(types.string()),
-  url: types.optional(types.string()),
-  thingTitle: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    thingId: types.optional(types.string()),
+    voteType: types.optional(types.string()),
+    upvoteCount: types.optional(types.number()),
+    downvoteCount: types.optional(types.number()),
+    timestamp: types.optional(types.string()),
+    error: types.optional(types.string()),
+    url: types.optional(types.string()),
+    thingTitle: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsFeedEngageCellFromJSON(
   jsonString: string,

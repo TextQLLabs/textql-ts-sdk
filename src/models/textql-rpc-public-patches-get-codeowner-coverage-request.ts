@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesGetCodeownerCoverageRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicPatchesGetCodeownerCoverageRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetCodeownerCoverageRequest$Outbound,
     TextqlRpcPublicPatchesGetCodeownerCoverageRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPatchesGetCodeownerCoverageRequestToJSON(
   textqlRpcPublicPatchesGetCodeownerCoverageRequest:

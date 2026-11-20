@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -555,42 +555,46 @@ export type TextqlRpcPublicDashboardDashboard = {
 export const TextqlRpcPublicDashboardDashboard$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardDashboard,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  creatorId: types.optional(types.string()),
-  name: types.optional(types.string()),
-  description: z.optional(z.nullable(types.string())),
-  code: types.optional(types.string()),
-  type: types.optional(TextqlRpcPublicDashboardDashboardType$inboundSchema),
-  chatId: z.optional(z.nullable(types.string())),
-  cellId: z.optional(z.nullable(types.string())),
-  isPublic: types.optional(types.boolean()),
-  screenshotUrl: z.optional(z.nullable(types.string())),
-  htmlUrl: z.optional(z.nullable(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  refreshedAt: types.optional(types.date()),
-  creator: types.optional(
-    TextqlRpcPublicDashboardDashboardCreator$inboundSchema,
-  ),
-  streamlitUrl: z.optional(z.nullable(types.string())),
-  status: types.optional(TextqlRpcPublicDashboardDashboardStatus$inboundSchema),
-  publishedCode: z.optional(z.nullable(types.string())),
-  publishedAt: types.optional(types.date()),
-  hasUnpublishedChanges: types.optional(types.boolean()),
-  dataSources: types.optional(
-    z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
-  ),
-  scheduleEnabled: types.optional(types.boolean()),
-  cronString: z.optional(z.nullable(types.string())),
-  latestScheduledRunAt: types.optional(types.date()),
-  folderId: z.optional(z.nullable(types.string())),
-  configSource: types.optional(
-    TextqlRpcPublicConfigSourceConfigSource$inboundSchema,
-  ),
-  isFavorited: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    creatorId: types.optional(types.string()),
+    name: types.optional(types.string()),
+    description: z.optional(z.nullable(types.string())),
+    code: types.optional(types.string()),
+    type: types.optional(TextqlRpcPublicDashboardDashboardType$inboundSchema),
+    chatId: z.optional(z.nullable(types.string())),
+    cellId: z.optional(z.nullable(types.string())),
+    isPublic: types.optional(types.boolean()),
+    screenshotUrl: z.optional(z.nullable(types.string())),
+    htmlUrl: z.optional(z.nullable(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    refreshedAt: types.optional(types.date()),
+    creator: types.optional(
+      TextqlRpcPublicDashboardDashboardCreator$inboundSchema,
+    ),
+    streamlitUrl: z.optional(z.nullable(types.string())),
+    status: types.optional(
+      TextqlRpcPublicDashboardDashboardStatus$inboundSchema,
+    ),
+    publishedCode: z.optional(z.nullable(types.string())),
+    publishedAt: types.optional(types.date()),
+    hasUnpublishedChanges: types.optional(types.boolean()),
+    dataSources: types.optional(
+      z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
+    ),
+    scheduleEnabled: types.optional(types.boolean()),
+    cronString: z.optional(z.nullable(types.string())),
+    latestScheduledRunAt: types.optional(types.date()),
+    folderId: z.optional(z.nullable(types.string())),
+    configSource: types.optional(
+      TextqlRpcPublicConfigSourceConfigSource$inboundSchema,
+    ),
+    isFavorited: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicDashboardDashboardFromJSON(
   jsonString: string,

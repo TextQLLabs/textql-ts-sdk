@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -230,25 +230,26 @@ export type TextqlRpcPublicDashboardDashboardFolder = {
 
 /** @internal */
 export const TextqlRpcPublicDashboardDashboardFolder$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardDashboardFolder, unknown> = z.object({
-    id: types.optional(types.string()),
-    orgId: types.optional(types.string()),
-    parentId: z.optional(z.nullable(types.string())),
-    name: types.optional(types.string()),
-    creatorId: types.optional(types.string()),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    dashboardCount: types.optional(types.number()),
-    totalDashboardCount: types.optional(types.number()),
-    children: types.optional(
-      z.array(
-        z.lazy(() => TextqlRpcPublicDashboardDashboardFolder$inboundSchema),
-      ),
-    ),
-    appCount: types.optional(types.number()),
-    totalAppCount: types.optional(types.number()),
-    isFavorited: types.optional(types.boolean()),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardDashboardFolder, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        orgId: types.optional(types.string()),
+        parentId: z.optional(z.nullable(types.string())),
+        name: types.optional(types.string()),
+        creatorId: types.optional(types.string()),
+        createdAt: types.optional(types.date()),
+        updatedAt: types.optional(types.date()),
+        dashboardCount: types.optional(types.number()),
+        totalDashboardCount: types.optional(types.number()),
+        children: types.optional(z.array(z.lazy(() =>
+          TextqlRpcPublicDashboardDashboardFolder$inboundSchema
+        ))),
+        appCount: types.optional(types.number()),
+        totalAppCount: types.optional(types.number()),
+        isFavorited: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicDashboardDashboardFolderFromJSON(
   jsonString: string,

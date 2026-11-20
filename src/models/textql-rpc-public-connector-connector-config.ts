@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 import {
   TextqlRpcPublicConnectorAthenaMetadata,
@@ -403,15 +404,17 @@ export type Trino$Outbound = {
 };
 
 /** @internal */
-export const Trino$outboundSchema: z.ZodMiniType<Trino$Outbound, Trino> = z
-  .object({
-    trino: TextqlRpcPublicConnectorTrinoMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Trino$outboundSchema: z.ZodMiniType<Trino$Outbound, Trino> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      trino: TextqlRpcPublicConnectorTrinoMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function trinoToJSON(trino: Trino): string {
   return JSON.stringify(Trino$outboundSchema.parse(trino));
@@ -429,14 +432,16 @@ export type Teradata$Outbound = {
 export const Teradata$outboundSchema: z.ZodMiniType<
   Teradata$Outbound,
   Teradata
-> = z.object({
-  teradata: TextqlRpcPublicConnectorTeradataMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    teradata: TextqlRpcPublicConnectorTeradataMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function teradataToJSON(teradata: Teradata): string {
   return JSON.stringify(Teradata$outboundSchema.parse(teradata));
@@ -455,14 +460,16 @@ export const TextqlRpcPublicConnectorConnectorConfigTableau$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorConfigTableau$Outbound,
     TextqlRpcPublicConnectorConnectorConfigTableau
-  > = z.object({
-    tableau: TextqlRpcPublicConnectorTableauMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tableau: TextqlRpcPublicConnectorTableauMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorConnectorConfigTableauToJSON(
   textqlRpcPublicConnectorConnectorConfigTableau:
@@ -487,14 +494,16 @@ export type Supabase$Outbound = {
 export const Supabase$outboundSchema: z.ZodMiniType<
   Supabase$Outbound,
   Supabase
-> = z.object({
-  supabase: TextqlRpcPublicConnectorSupabaseMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    supabase: TextqlRpcPublicConnectorSupabaseMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function supabaseToJSON(supabase: Supabase): string {
   return JSON.stringify(Supabase$outboundSchema.parse(supabase));
@@ -512,14 +521,16 @@ export type SqlServer$Outbound = {
 export const SqlServer$outboundSchema: z.ZodMiniType<
   SqlServer$Outbound,
   SqlServer
-> = z.object({
-  sqlServer: TextqlRpcPublicConnectorSQLServerMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    sqlServer: TextqlRpcPublicConnectorSQLServerMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function sqlServerToJSON(sqlServer: SqlServer): string {
   return JSON.stringify(SqlServer$outboundSchema.parse(sqlServer));
@@ -537,14 +548,16 @@ export type Snowflake$Outbound = {
 export const Snowflake$outboundSchema: z.ZodMiniType<
   Snowflake$Outbound,
   Snowflake
-> = z.object({
-  snowflake: TextqlRpcPublicConnectorSnowflakeMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    snowflake: TextqlRpcPublicConnectorSnowflakeMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function snowflakeToJSON(snowflake: Snowflake): string {
   return JSON.stringify(Snowflake$outboundSchema.parse(snowflake));
@@ -560,14 +573,16 @@ export type SapHana$Outbound = {
 
 /** @internal */
 export const SapHana$outboundSchema: z.ZodMiniType<SapHana$Outbound, SapHana> =
-  z.object({
-    sapHana: TextqlRpcPublicConnectorSAPHanaMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sapHana: TextqlRpcPublicConnectorSAPHanaMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function sapHanaToJSON(sapHana: SapHana): string {
   return JSON.stringify(SapHana$outboundSchema.parse(sapHana));
@@ -585,14 +600,16 @@ export type Redshift$Outbound = {
 export const Redshift$outboundSchema: z.ZodMiniType<
   Redshift$Outbound,
   Redshift
-> = z.object({
-  redshift: TextqlRpcPublicConnectorRedshiftMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    redshift: TextqlRpcPublicConnectorRedshiftMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function redshiftToJSON(redshift: Redshift): string {
   return JSON.stringify(Redshift$outboundSchema.parse(redshift));
@@ -611,14 +628,16 @@ export const TextqlRpcPublicConnectorConnectorConfigPowerbi$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorConfigPowerbi$Outbound,
     TextqlRpcPublicConnectorConnectorConfigPowerbi
-  > = z.object({
-    powerbi: TextqlRpcPublicConnectorPowerBIMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      powerbi: TextqlRpcPublicConnectorPowerBIMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorConnectorConfigPowerbiToJSON(
   textqlRpcPublicConnectorConnectorConfigPowerbi:
@@ -643,14 +662,16 @@ export type Postgres$Outbound = {
 export const Postgres$outboundSchema: z.ZodMiniType<
   Postgres$Outbound,
   Postgres
-> = z.object({
-  postgres: TextqlRpcPublicConnectorPostgresMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    postgres: TextqlRpcPublicConnectorPostgresMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function postgresToJSON(postgres: Postgres): string {
   return JSON.stringify(Postgres$outboundSchema.parse(postgres));
@@ -665,15 +686,17 @@ export type Oracle$Outbound = {
 };
 
 /** @internal */
-export const Oracle$outboundSchema: z.ZodMiniType<Oracle$Outbound, Oracle> = z
-  .object({
-    oracle: TextqlRpcPublicConnectorOracleMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Oracle$outboundSchema: z.ZodMiniType<Oracle$Outbound, Oracle> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      oracle: TextqlRpcPublicConnectorOracleMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function oracleToJSON(oracle: Oracle): string {
   return JSON.stringify(Oracle$outboundSchema.parse(oracle));
@@ -688,15 +711,17 @@ export type Mysql$Outbound = {
 };
 
 /** @internal */
-export const Mysql$outboundSchema: z.ZodMiniType<Mysql$Outbound, Mysql> = z
-  .object({
-    mysql: TextqlRpcPublicConnectorMYSQLMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Mysql$outboundSchema: z.ZodMiniType<Mysql$Outbound, Mysql> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mysql: TextqlRpcPublicConnectorMYSQLMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function mysqlToJSON(mysql: Mysql): string {
   return JSON.stringify(Mysql$outboundSchema.parse(mysql));
@@ -714,14 +739,16 @@ export type Motherduck$Outbound = {
 export const Motherduck$outboundSchema: z.ZodMiniType<
   Motherduck$Outbound,
   Motherduck
-> = z.object({
-  motherduck: TextqlRpcPublicConnectorMotherduckMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    motherduck: TextqlRpcPublicConnectorMotherduckMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function motherduckToJSON(motherduck: Motherduck): string {
   return JSON.stringify(Motherduck$outboundSchema.parse(motherduck));
@@ -737,14 +764,16 @@ export type Mongodb$Outbound = {
 
 /** @internal */
 export const Mongodb$outboundSchema: z.ZodMiniType<Mongodb$Outbound, Mongodb> =
-  z.object({
-    mongodb: TextqlRpcPublicConnectorMongoDBMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mongodb: TextqlRpcPublicConnectorMongoDBMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function mongodbToJSON(mongodb: Mongodb): string {
   return JSON.stringify(Mongodb$outboundSchema.parse(mongodb));
@@ -762,14 +791,16 @@ export type Microsoft365$Outbound = {
 export const Microsoft365$outboundSchema: z.ZodMiniType<
   Microsoft365$Outbound,
   Microsoft365
-> = z.object({
-  microsoft365: TextqlRpcPublicConnectorMicrosoft365Metadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    microsoft365: TextqlRpcPublicConnectorMicrosoft365Metadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function microsoft365ToJSON(microsoft365: Microsoft365): string {
   return JSON.stringify(Microsoft365$outboundSchema.parse(microsoft365));
@@ -784,14 +815,17 @@ export type Kdb$Outbound = {
 };
 
 /** @internal */
-export const Kdb$outboundSchema: z.ZodMiniType<Kdb$Outbound, Kdb> = z.object({
-  kdb: TextqlRpcPublicConnectorKdbMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+export const Kdb$outboundSchema: z.ZodMiniType<Kdb$Outbound, Kdb> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      kdb: TextqlRpcPublicConnectorKdbMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function kdbToJSON(kdb: Kdb): string {
   return JSON.stringify(Kdb$outboundSchema.parse(kdb));
@@ -809,14 +843,16 @@ export type GoogleDrive$Outbound = {
 export const GoogleDrive$outboundSchema: z.ZodMiniType<
   GoogleDrive$Outbound,
   GoogleDrive
-> = z.object({
-  googleDrive: TextqlRpcPublicConnectorGoogleDriveMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleDrive: TextqlRpcPublicConnectorGoogleDriveMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function googleDriveToJSON(googleDrive: GoogleDrive): string {
   return JSON.stringify(GoogleDrive$outboundSchema.parse(googleDrive));
@@ -834,14 +870,17 @@ export type GoogleCalendar$Outbound = {
 export const GoogleCalendar$outboundSchema: z.ZodMiniType<
   GoogleCalendar$Outbound,
   GoogleCalendar
-> = z.object({
-  googleCalendar: TextqlRpcPublicConnectorGoogleCalendarMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleCalendar:
+      TextqlRpcPublicConnectorGoogleCalendarMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function googleCalendarToJSON(googleCalendar: GoogleCalendar): string {
   return JSON.stringify(GoogleCalendar$outboundSchema.parse(googleCalendar));
@@ -856,15 +895,17 @@ export type Google$Outbound = {
 };
 
 /** @internal */
-export const Google$outboundSchema: z.ZodMiniType<Google$Outbound, Google> = z
-  .object({
-    google: TextqlRpcPublicConnectorGoogleMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Google$outboundSchema: z.ZodMiniType<Google$Outbound, Google> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      google: TextqlRpcPublicConnectorGoogleMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function googleToJSON(google: Google): string {
   return JSON.stringify(Google$outboundSchema.parse(google));
@@ -879,15 +920,17 @@ export type Gmail$Outbound = {
 };
 
 /** @internal */
-export const Gmail$outboundSchema: z.ZodMiniType<Gmail$Outbound, Gmail> = z
-  .object({
-    gmail: TextqlRpcPublicConnectorGmailMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Gmail$outboundSchema: z.ZodMiniType<Gmail$Outbound, Gmail> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      gmail: TextqlRpcPublicConnectorGmailMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function gmailToJSON(gmail: Gmail): string {
   return JSON.stringify(Gmail$outboundSchema.parse(gmail));
@@ -905,14 +948,16 @@ export type Firebolt$Outbound = {
 export const Firebolt$outboundSchema: z.ZodMiniType<
   Firebolt$Outbound,
   Firebolt
-> = z.object({
-  firebolt: TextqlRpcPublicConnectorFireboltMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    firebolt: TextqlRpcPublicConnectorFireboltMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function fireboltToJSON(firebolt: Firebolt): string {
   return JSON.stringify(Firebolt$outboundSchema.parse(firebolt));
@@ -927,15 +972,17 @@ export type Exasol$Outbound = {
 };
 
 /** @internal */
-export const Exasol$outboundSchema: z.ZodMiniType<Exasol$Outbound, Exasol> = z
-  .object({
-    exasol: TextqlRpcPublicConnectorExasolMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Exasol$outboundSchema: z.ZodMiniType<Exasol$Outbound, Exasol> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      exasol: TextqlRpcPublicConnectorExasolMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function exasolToJSON(exasol: Exasol): string {
   return JSON.stringify(Exasol$outboundSchema.parse(exasol));
@@ -950,15 +997,17 @@ export type Dremio$Outbound = {
 };
 
 /** @internal */
-export const Dremio$outboundSchema: z.ZodMiniType<Dremio$Outbound, Dremio> = z
-  .object({
-    dremio: TextqlRpcPublicConnectorDremioMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Dremio$outboundSchema: z.ZodMiniType<Dremio$Outbound, Dremio> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dremio: TextqlRpcPublicConnectorDremioMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function dremioToJSON(dremio: Dremio): string {
   return JSON.stringify(Dremio$outboundSchema.parse(dremio));
@@ -976,14 +1025,16 @@ export type Databricks$Outbound = {
 export const Databricks$outboundSchema: z.ZodMiniType<
   Databricks$Outbound,
   Databricks
-> = z.object({
-  databricks: TextqlRpcPublicConnectorDatabricksMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    databricks: TextqlRpcPublicConnectorDatabricksMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function databricksToJSON(databricks: Databricks): string {
   return JSON.stringify(Databricks$outboundSchema.parse(databricks));
@@ -1001,14 +1052,16 @@ export type Clickhouse$Outbound = {
 export const Clickhouse$outboundSchema: z.ZodMiniType<
   Clickhouse$Outbound,
   Clickhouse
-> = z.object({
-  clickhouse: TextqlRpcPublicConnectorClickHouseMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    clickhouse: TextqlRpcPublicConnectorClickHouseMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function clickhouseToJSON(clickhouse: Clickhouse): string {
   return JSON.stringify(Clickhouse$outboundSchema.parse(clickhouse));
@@ -1026,14 +1079,16 @@ export type Bigquery$Outbound = {
 export const Bigquery$outboundSchema: z.ZodMiniType<
   Bigquery$Outbound,
   Bigquery
-> = z.object({
-  bigquery: TextqlRpcPublicConnectorBigQueryMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    bigquery: TextqlRpcPublicConnectorBigQueryMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function bigqueryToJSON(bigquery: Bigquery): string {
   return JSON.stringify(Bigquery$outboundSchema.parse(bigquery));
@@ -1051,14 +1106,16 @@ export type AzureSynapse$Outbound = {
 export const AzureSynapse$outboundSchema: z.ZodMiniType<
   AzureSynapse$Outbound,
   AzureSynapse
-> = z.object({
-  azureSynapse: TextqlRpcPublicConnectorAzureSynapseMetadata$outboundSchema,
-  connectorType: z.optional(
-    TextqlRpcPublicConnectorConnectorType$outboundSchema,
-  ),
-  name: z.optional(z.string()),
-  authStrategy: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    azureSynapse: TextqlRpcPublicConnectorAzureSynapseMetadata$outboundSchema,
+    connectorType: z.optional(
+      TextqlRpcPublicConnectorConnectorType$outboundSchema,
+    ),
+    name: z.optional(z.string()),
+    authStrategy: z.optional(z.string()),
+  })
+);
 
 export function azureSynapseToJSON(azureSynapse: AzureSynapse): string {
   return JSON.stringify(AzureSynapse$outboundSchema.parse(azureSynapse));
@@ -1073,15 +1130,17 @@ export type Aurora$Outbound = {
 };
 
 /** @internal */
-export const Aurora$outboundSchema: z.ZodMiniType<Aurora$Outbound, Aurora> = z
-  .object({
-    aurora: TextqlRpcPublicConnectorAuroraMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Aurora$outboundSchema: z.ZodMiniType<Aurora$Outbound, Aurora> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      aurora: TextqlRpcPublicConnectorAuroraMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function auroraToJSON(aurora: Aurora): string {
   return JSON.stringify(Aurora$outboundSchema.parse(aurora));
@@ -1096,15 +1155,17 @@ export type Athena$Outbound = {
 };
 
 /** @internal */
-export const Athena$outboundSchema: z.ZodMiniType<Athena$Outbound, Athena> = z
-  .object({
-    athena: TextqlRpcPublicConnectorAthenaMetadata$outboundSchema,
-    connectorType: z.optional(
-      TextqlRpcPublicConnectorConnectorType$outboundSchema,
-    ),
-    name: z.optional(z.string()),
-    authStrategy: z.optional(z.string()),
-  });
+export const Athena$outboundSchema: z.ZodMiniType<Athena$Outbound, Athena> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      athena: TextqlRpcPublicConnectorAthenaMetadata$outboundSchema,
+      connectorType: z.optional(
+        TextqlRpcPublicConnectorConnectorType$outboundSchema,
+      ),
+      name: z.optional(z.string()),
+      authStrategy: z.optional(z.string()),
+    })
+  );
 
 export function athenaToJSON(athena: Athena): string {
   return JSON.stringify(Athena$outboundSchema.parse(athena));
@@ -1147,37 +1208,43 @@ export const TextqlRpcPublicConnectorConnectorConfig$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorConfig$Outbound,
     TextqlRpcPublicConnectorConnectorConfig
-  > = smartUnion([
-    z.lazy(() => Athena$outboundSchema),
-    z.lazy(() => Aurora$outboundSchema),
-    z.lazy(() => AzureSynapse$outboundSchema),
-    z.lazy(() => Bigquery$outboundSchema),
-    z.lazy(() => Clickhouse$outboundSchema),
-    z.lazy(() => Databricks$outboundSchema),
-    z.lazy(() => Dremio$outboundSchema),
-    z.lazy(() => Exasol$outboundSchema),
-    z.lazy(() => Firebolt$outboundSchema),
-    z.lazy(() => Gmail$outboundSchema),
-    z.lazy(() => Google$outboundSchema),
-    z.lazy(() => GoogleCalendar$outboundSchema),
-    z.lazy(() => GoogleDrive$outboundSchema),
-    z.lazy(() => Kdb$outboundSchema),
-    z.lazy(() => Microsoft365$outboundSchema),
-    z.lazy(() => Mongodb$outboundSchema),
-    z.lazy(() => Motherduck$outboundSchema),
-    z.lazy(() => Mysql$outboundSchema),
-    z.lazy(() => Oracle$outboundSchema),
-    z.lazy(() => Postgres$outboundSchema),
-    z.lazy(() => TextqlRpcPublicConnectorConnectorConfigPowerbi$outboundSchema),
-    z.lazy(() => Redshift$outboundSchema),
-    z.lazy(() => SapHana$outboundSchema),
-    z.lazy(() => Snowflake$outboundSchema),
-    z.lazy(() => SqlServer$outboundSchema),
-    z.lazy(() => Supabase$outboundSchema),
-    z.lazy(() => TextqlRpcPublicConnectorConnectorConfigTableau$outboundSchema),
-    z.lazy(() => Teradata$outboundSchema),
-    z.lazy(() => Trino$outboundSchema),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => Athena$outboundSchema),
+      z.lazy(() => Aurora$outboundSchema),
+      z.lazy(() => AzureSynapse$outboundSchema),
+      z.lazy(() => Bigquery$outboundSchema),
+      z.lazy(() => Clickhouse$outboundSchema),
+      z.lazy(() => Databricks$outboundSchema),
+      z.lazy(() => Dremio$outboundSchema),
+      z.lazy(() => Exasol$outboundSchema),
+      z.lazy(() => Firebolt$outboundSchema),
+      z.lazy(() => Gmail$outboundSchema),
+      z.lazy(() => Google$outboundSchema),
+      z.lazy(() => GoogleCalendar$outboundSchema),
+      z.lazy(() => GoogleDrive$outboundSchema),
+      z.lazy(() => Kdb$outboundSchema),
+      z.lazy(() => Microsoft365$outboundSchema),
+      z.lazy(() => Mongodb$outboundSchema),
+      z.lazy(() => Motherduck$outboundSchema),
+      z.lazy(() => Mysql$outboundSchema),
+      z.lazy(() => Oracle$outboundSchema),
+      z.lazy(() => Postgres$outboundSchema),
+      z.lazy(() =>
+        TextqlRpcPublicConnectorConnectorConfigPowerbi$outboundSchema
+      ),
+      z.lazy(() => Redshift$outboundSchema),
+      z.lazy(() => SapHana$outboundSchema),
+      z.lazy(() => Snowflake$outboundSchema),
+      z.lazy(() => SqlServer$outboundSchema),
+      z.lazy(() => Supabase$outboundSchema),
+      z.lazy(() =>
+        TextqlRpcPublicConnectorConnectorConfigTableau$outboundSchema
+      ),
+      z.lazy(() => Teradata$outboundSchema),
+      z.lazy(() => Trino$outboundSchema),
+    ])
+  );
 
 export function textqlRpcPublicConnectorConnectorConfigToJSON(
   textqlRpcPublicConnectorConnectorConfig:

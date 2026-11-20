@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,13 +23,15 @@ export const TextqlRpcPublicSandboxExecSandboxDiffOntologyChangesResponse$inboun
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxDiffOntologyChangesResponse,
     unknown
-  > = z.object({
-    hasChanges: types.optional(types.boolean()),
-    diffs: types.optional(
-      z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema),
-    ),
-    rawDiff: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      hasChanges: types.optional(types.boolean()),
+      diffs: types.optional(
+        z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema),
+      ),
+      rawDiff: types.optional(types.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxDiffOntologyChangesResponseFromJSON(
   jsonString: string,

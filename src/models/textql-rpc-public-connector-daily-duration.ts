@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -19,7 +19,9 @@ export type TextqlRpcPublicConnectorDailyDuration = {
 /** @internal */
 export const TextqlRpcPublicConnectorDailyDurationTotalMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorDailyDurationTotalMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicConnectorDailyDurationTotalMsFromJSON(
   jsonString: string,
@@ -41,10 +43,12 @@ export function textqlRpcPublicConnectorDailyDurationTotalMsFromJSON(
 export const TextqlRpcPublicConnectorDailyDuration$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorDailyDuration,
   unknown
-> = z.object({
-  date: types.optional(types.string()),
-  totalMs: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    date: types.optional(types.string()),
+    totalMs: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 
 export function textqlRpcPublicConnectorDailyDurationFromJSON(
   jsonString: string,

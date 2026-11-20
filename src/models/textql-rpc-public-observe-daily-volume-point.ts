@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,14 +22,17 @@ export type TextqlRpcPublicObserveDailyVolumePoint = {
 
 /** @internal */
 export const TextqlRpcPublicObserveDailyVolumePoint$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveDailyVolumePoint, unknown> = z.object({
-    date: types.optional(types.string()),
-    threads: types.optional(types.number()),
-    playbooks: types.optional(types.number()),
-    feedAgents: types.optional(types.number()),
-    slack: types.optional(types.number()),
-    teams: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveDailyVolumePoint, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        date: types.optional(types.string()),
+        threads: types.optional(types.number()),
+        playbooks: types.optional(types.number()),
+        feedAgents: types.optional(types.number()),
+        slack: types.optional(types.number()),
+        teams: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveDailyVolumePointFromJSON(
   jsonString: string,

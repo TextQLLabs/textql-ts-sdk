@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * ValidateConfigRequest validates a filed patch's ref. The proposed sandbox
@@ -24,9 +25,11 @@ export const TextqlRpcPublicPatchesValidateConfigRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesValidateConfigRequest$Outbound,
     TextqlRpcPublicPatchesValidateConfigRequest
-  > = z.object({
-    patchId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      patchId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesValidateConfigRequestToJSON(
   textqlRpcPublicPatchesValidateConfigRequest:

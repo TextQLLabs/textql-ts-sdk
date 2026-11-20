@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Get current member roles and permissions messages
@@ -18,7 +19,7 @@ export const TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest$outbo
   z.ZodMiniType<
     TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest$Outbound,
     TextqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequestToJSON(
   textqlRpcPublicRbacGetCurrentMemberRolesAndPermissionsRequest:

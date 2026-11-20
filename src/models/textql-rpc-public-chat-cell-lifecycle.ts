@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -23,4 +24,6 @@ export type TextqlRpcPublicChatCellLifecycle = OpenEnum<
 export const TextqlRpcPublicChatCellLifecycle$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellLifecycle,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicChatCellLifecycle);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicChatCellLifecycle)
+);

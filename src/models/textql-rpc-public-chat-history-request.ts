@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * order is "most recent first"
@@ -24,11 +25,13 @@ export type TextqlRpcPublicChatHistoryRequest$Outbound = {
 export const TextqlRpcPublicChatHistoryRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatHistoryRequest$Outbound,
   TextqlRpcPublicChatHistoryRequest
-> = z.object({
-  chatId: z.string(),
-  limit: z.optional(z.nullable(z.int())),
-  skip: z.optional(z.nullable(z.int())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    chatId: z.string(),
+    limit: z.optional(z.nullable(z.int())),
+    skip: z.optional(z.nullable(z.int())),
+  })
+);
 
 export function textqlRpcPublicChatHistoryRequestToJSON(
   textqlRpcPublicChatHistoryRequest: TextqlRpcPublicChatHistoryRequest,

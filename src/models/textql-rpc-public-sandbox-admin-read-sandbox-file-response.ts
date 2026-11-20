@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -41,7 +41,9 @@ export const TextqlRpcPublicSandboxAdminReadSandboxFileResponseSizeBytes$inbound
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminReadSandboxFileResponseSizeBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminReadSandboxFileResponseSizeBytesFromJSON(
   jsonString: string,
@@ -60,17 +62,19 @@ export function textqlRpcPublicSandboxAdminReadSandboxFileResponseSizeBytesFromJ
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminReadSandboxFileResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminReadSandboxFileResponse, unknown> = z
-    .object({
-      available: types.optional(types.boolean()),
-      name: types.optional(types.string()),
-      sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
-      mimeType: types.optional(types.string()),
-      content: types.optional(types.string()),
-      binaryContent: types.optional(types.string()),
-      truncated: types.optional(types.boolean()),
-      isBinary: types.optional(types.boolean()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminReadSandboxFileResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        available: types.optional(types.boolean()),
+        name: types.optional(types.string()),
+        sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
+        mimeType: types.optional(types.string()),
+        content: types.optional(types.string()),
+        binaryContent: types.optional(types.string()),
+        truncated: types.optional(types.boolean()),
+        isBinary: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminReadSandboxFileResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,15 +19,17 @@ export type TextqlRpcPublicCellsOntologyMetricSearchMatch = {
 
 /** @internal */
 export const TextqlRpcPublicCellsOntologyMetricSearchMatch$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsOntologyMetricSearchMatch, unknown> = z
-    .object({
-      metricId: types.optional(types.string()),
-      metricName: types.optional(types.string()),
-      metricDescription: types.optional(types.string()),
-      metricAggregation: types.optional(types.string()),
-      objectId: types.optional(types.string()),
-      objectName: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsOntologyMetricSearchMatch, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        metricId: types.optional(types.string()),
+        metricName: types.optional(types.string()),
+        metricDescription: types.optional(types.string()),
+        metricAggregation: types.optional(types.string()),
+        objectId: types.optional(types.string()),
+        objectName: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicCellsOntologyMetricSearchMatchFromJSON(
   jsonString: string,

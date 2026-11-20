@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type ConnectorServiceGetConnectorsRequest$Outbound = {
 export const ConnectorServiceGetConnectorsRequest$outboundSchema: z.ZodMiniType<
   ConnectorServiceGetConnectorsRequest$Outbound,
   ConnectorServiceGetConnectorsRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicConnectorGetConnectorsRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicConnectorGetConnectorsRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function connectorServiceGetConnectorsRequestToJSON(
@@ -62,10 +64,12 @@ export function connectorServiceGetConnectorsRequestToJSON(
 export const ConnectorServiceGetConnectorsResponse$inboundSchema: z.ZodMiniType<
   ConnectorServiceGetConnectorsResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicConnectorGetConnectorsResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicConnectorGetConnectorsResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function connectorServiceGetConnectorsResponseFromJSON(
   jsonString: string,

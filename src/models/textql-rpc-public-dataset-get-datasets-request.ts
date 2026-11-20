@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicDatasetDatasetType,
   TextqlRpcPublicDatasetDatasetType$outboundSchema,
@@ -49,18 +50,20 @@ export const TextqlRpcPublicDatasetGetDatasetsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDatasetGetDatasetsRequest$Outbound,
     TextqlRpcPublicDatasetGetDatasetsRequest
-  > = z.object({
-    types: z.optional(
-      z.array(TextqlRpcPublicDatasetDatasetType$outboundSchema),
-    ),
-    ownerOnly: z.optional(z.boolean()),
-    includeSubfolders: z.optional(z.boolean()),
-    path: z.optional(z.nullable(z.string())),
-    searchParam: z.optional(z.nullable(z.string())),
-    sort: z.optional(TextqlRpcPublicDatasetDatasetsSort$outboundSchema),
-    limit: z.optional(z.nullable(z.int())),
-    cursor: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      types: z.optional(
+        z.array(TextqlRpcPublicDatasetDatasetType$outboundSchema),
+      ),
+      ownerOnly: z.optional(z.boolean()),
+      includeSubfolders: z.optional(z.boolean()),
+      path: z.optional(z.nullable(z.string())),
+      searchParam: z.optional(z.nullable(z.string())),
+      sort: z.optional(TextqlRpcPublicDatasetDatasetsSort$outboundSchema),
+      limit: z.optional(z.nullable(z.int())),
+      cursor: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicDatasetGetDatasetsRequestToJSON(
   textqlRpcPublicDatasetGetDatasetsRequest:

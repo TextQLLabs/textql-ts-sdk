@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,16 +21,19 @@ export type TextqlRpcPublicConnectorSupabaseMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorSupabaseMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorSupabaseMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    database: types.optional(types.string()),
-    schemas: types.optional(z.array(types.string())),
-    dialect: types.optional(types.string()),
-    sslMode: types.optional(types.boolean()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorSupabaseMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        database: types.optional(types.string()),
+        schemas: types.optional(z.array(types.string())),
+        dialect: types.optional(types.string()),
+        sslMode: types.optional(types.boolean()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorSupabaseMetadata$Outbound = {
   host?: string | undefined;
@@ -48,16 +51,18 @@ export const TextqlRpcPublicConnectorSupabaseMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorSupabaseMetadata$Outbound,
     TextqlRpcPublicConnectorSupabaseMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    schemas: z.optional(z.array(z.string())),
-    dialect: z.optional(z.string()),
-    sslMode: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      schemas: z.optional(z.array(z.string())),
+      dialect: z.optional(z.string()),
+      sslMode: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicConnectorSupabaseMetadataToJSON(
   textqlRpcPublicConnectorSupabaseMetadata:

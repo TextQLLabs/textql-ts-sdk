@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -118,14 +118,17 @@ export type TextqlRpcPublicPlaybookChatReportSummary = {
 
 /** @internal */
 export const TextqlRpcPublicPlaybookChatReportSummary$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPlaybookChatReportSummary, unknown> = z.object({
-    id: types.optional(types.string()),
-    chatId: types.optional(types.string()),
-    subject: types.optional(types.string()),
-    summary: types.optional(types.string()),
-    createdAt: types.optional(types.date()),
-    heroImageUrl: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicPlaybookChatReportSummary, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        chatId: types.optional(types.string()),
+        subject: types.optional(types.string()),
+        summary: types.optional(types.string()),
+        createdAt: types.optional(types.date()),
+        heroImageUrl: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicPlaybookChatReportSummaryFromJSON(
   jsonString: string,

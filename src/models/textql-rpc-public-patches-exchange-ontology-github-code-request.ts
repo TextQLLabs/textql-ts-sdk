@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesExchangeOntologyGithubCodeRequest = {
   code?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesExchangeOntologyGithubCodeRequest$outboundSch
   z.ZodMiniType<
     TextqlRpcPublicPatchesExchangeOntologyGithubCodeRequest$Outbound,
     TextqlRpcPublicPatchesExchangeOntologyGithubCodeRequest
-  > = z.object({
-    code: z.optional(z.string()),
-    state: z.optional(z.string()),
-    codeVerifier: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      code: z.optional(z.string()),
+      state: z.optional(z.string()),
+      codeVerifier: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesExchangeOntologyGithubCodeRequestToJSON(
   textqlRpcPublicPatchesExchangeOntologyGithubCodeRequest:

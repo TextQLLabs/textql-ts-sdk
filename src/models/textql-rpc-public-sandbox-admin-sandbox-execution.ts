@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -134,7 +134,9 @@ export const TextqlRpcPublicSandboxAdminSandboxExecutionDurationMs$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxExecutionDurationMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxExecutionDurationMsFromJSON(
   jsonString: string,
@@ -154,17 +156,21 @@ export function textqlRpcPublicSandboxAdminSandboxExecutionDurationMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxExecution$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxExecution, unknown> = z
-    .object({
-      id: types.optional(types.string()),
-      kind: types.optional(types.string()),
-      source: types.optional(types.string()),
-      input: types.optional(types.string()),
-      outputPreview: types.optional(types.string()),
-      error: types.optional(types.string()),
-      durationMs: types.optional(smartUnion([types.number(), types.string()])),
-      createdAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxExecution, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        kind: types.optional(types.string()),
+        source: types.optional(types.string()),
+        input: types.optional(types.string()),
+        outputPreview: types.optional(types.string()),
+        error: types.optional(types.string()),
+        durationMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        createdAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxExecutionFromJSON(
   jsonString: string,

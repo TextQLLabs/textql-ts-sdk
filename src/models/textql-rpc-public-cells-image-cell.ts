@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -25,10 +25,10 @@ export type TextqlRpcPublicCellsImageCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsImageCellSizeBytes$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsImageCellSizeBytes, unknown> = smartUnion([
-    types.number(),
-    types.string(),
-  ]);
+  z.ZodMiniType<TextqlRpcPublicCellsImageCellSizeBytes, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsImageCellSizeBytesFromJSON(
   jsonString: string,
@@ -45,17 +45,19 @@ export function textqlRpcPublicCellsImageCellSizeBytesFromJSON(
 export const TextqlRpcPublicCellsImageCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsImageCell,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  url: types.optional(types.string()),
-  mimeType: types.optional(types.string()),
-  width: types.optional(types.number()),
-  height: types.optional(types.number()),
-  sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
-  datasetSourceId: types.optional(types.string()),
-  altText: types.optional(types.string()),
-  caption: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    url: types.optional(types.string()),
+    mimeType: types.optional(types.string()),
+    width: types.optional(types.number()),
+    height: types.optional(types.number()),
+    sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
+    datasetSourceId: types.optional(types.string()),
+    altText: types.optional(types.string()),
+    caption: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsImageCellFromJSON(
   jsonString: string,

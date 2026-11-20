@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListOntologyHistoryRequest = {
   pageSize?: number | null | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesListOntologyHistoryRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListOntologyHistoryRequest$Outbound,
     TextqlRpcPublicPatchesListOntologyHistoryRequest
-  > = z.object({
-    pageSize: z.optional(z.nullable(z.int())),
-    pageToken: z.optional(z.nullable(z.string())),
-    path: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pageSize: z.optional(z.nullable(z.int())),
+      pageToken: z.optional(z.nullable(z.string())),
+      path: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesListOntologyHistoryRequestToJSON(
   textqlRpcPublicPatchesListOntologyHistoryRequest:

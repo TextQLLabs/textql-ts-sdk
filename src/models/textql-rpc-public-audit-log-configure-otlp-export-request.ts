@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAuditLogConfigureOtlpExportRequest = {
   enabled?: boolean | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicAuditLogConfigureOtlpExportRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAuditLogConfigureOtlpExportRequest$Outbound,
     TextqlRpcPublicAuditLogConfigureOtlpExportRequest
-  > = z.object({
-    enabled: z.optional(z.boolean()),
-    otlpEndpoint: z.optional(z.string()),
-    otlpHeaders: z.optional(z.string()),
-    otlpProtocol: z.optional(z.string()),
-    pushIntervalSeconds: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      enabled: z.optional(z.boolean()),
+      otlpEndpoint: z.optional(z.string()),
+      otlpHeaders: z.optional(z.string()),
+      otlpProtocol: z.optional(z.string()),
+      pushIntervalSeconds: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAuditLogConfigureOtlpExportRequestToJSON(
   textqlRpcPublicAuditLogConfigureOtlpExportRequest:

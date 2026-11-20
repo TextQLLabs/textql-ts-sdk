@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetCustomTopicRequest = {
   topicId?: string | undefined;
@@ -208,11 +209,15 @@ export const TextqlRpcPublicObserveGetCustomTopicRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetCustomTopicRequest$Outbound,
     TextqlRpcPublicObserveGetCustomTopicRequest
-  > = z.object({
-    topicId: z.optional(z.string()),
-    trendStart: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    trendEnd: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      topicId: z.optional(z.string()),
+      trendStart: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      trendEnd: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    })
+  );
 
 export function textqlRpcPublicObserveGetCustomTopicRequestToJSON(
   textqlRpcPublicObserveGetCustomTopicRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesPullOntologyFromRemoteRequest = {
   acknowledgeUnrelatedHistories?: boolean | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesPullOntologyFromRemoteRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesPullOntologyFromRemoteRequest$Outbound,
     TextqlRpcPublicPatchesPullOntologyFromRemoteRequest
-  > = z.object({
-    acknowledgeUnrelatedHistories: z.optional(z.boolean()),
-    expectedLocalHeadHash: z.optional(z.string()),
-    expectedRemoteHeadHash: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      acknowledgeUnrelatedHistories: z.optional(z.boolean()),
+      expectedLocalHeadHash: z.optional(z.string()),
+      expectedRemoteHeadHash: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesPullOntologyFromRemoteRequestToJSON(
   textqlRpcPublicPatchesPullOntologyFromRemoteRequest:

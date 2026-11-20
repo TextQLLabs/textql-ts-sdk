@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -207,14 +207,16 @@ export type TextqlRpcPublicTableauTableauWorkbook = {
 export const TextqlRpcPublicTableauTableauWorkbook$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicTableauTableauWorkbook,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  projectName: types.optional(types.string()),
-  projectId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    projectName: types.optional(types.string()),
+    projectId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicTableauTableauWorkbookFromJSON(
   jsonString: string,

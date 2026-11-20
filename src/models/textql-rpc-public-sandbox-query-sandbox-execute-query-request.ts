@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 import {
   TextqlRpcPublicSandboxQueryAppDBTemplate,
@@ -94,7 +95,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$outbo
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4ToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows4:
@@ -123,15 +124,17 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$outbo
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery
-  > = z.object({
-    sqlQuery: TextqlRpcPublicSandboxQuerySqlQueryTemplate$outboundSchema,
-    sourceName: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-    ),
-    maxRows: z.optional(smartUnion([z.int(), z.string()])),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sqlQuery: TextqlRpcPublicSandboxQuerySqlQueryTemplate$outboundSchema,
+      sourceName: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+      ),
+      maxRows: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQueryToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery:
@@ -153,7 +156,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$outbo
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3ToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows3:
@@ -180,15 +183,17 @@ export type PowerbiDax$Outbound = {
 export const PowerbiDax$outboundSchema: z.ZodMiniType<
   PowerbiDax$Outbound,
   PowerbiDax
-> = z.object({
-  powerbiDax: TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$outboundSchema,
-  sourceName: z.optional(z.string()),
-  connectorId: z.optional(z.int()),
-  parameters: z.optional(
-    z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-  ),
-  maxRows: z.optional(smartUnion([z.int(), z.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    powerbiDax: TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$outboundSchema,
+    sourceName: z.optional(z.string()),
+    connectorId: z.optional(z.int()),
+    parameters: z.optional(
+      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+    ),
+    maxRows: z.optional(smartUnion([z.int(), z.string()])),
+  })
+);
 
 export function powerbiDaxToJSON(powerbiDax: PowerbiDax): string {
   return JSON.stringify(PowerbiDax$outboundSchema.parse(powerbiDax));
@@ -204,7 +209,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$outbo
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2ToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows2:
@@ -233,15 +238,17 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$out
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql
-  > = z.object({
-    libraryTql: TextqlRpcPublicSandboxQueryLibraryTQLTemplate$outboundSchema,
-    sourceName: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-    ),
-    maxRows: z.optional(smartUnion([z.int(), z.string()])),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      libraryTql: TextqlRpcPublicSandboxQueryLibraryTQLTemplate$outboundSchema,
+      sourceName: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+      ),
+      maxRows: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTqlToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql:
@@ -263,7 +270,7 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$outbo
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1ToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestMaxRows1:
@@ -287,16 +294,18 @@ export type AppDb$Outbound = {
 };
 
 /** @internal */
-export const AppDb$outboundSchema: z.ZodMiniType<AppDb$Outbound, AppDb> = z
-  .object({
-    appDb: TextqlRpcPublicSandboxQueryAppDBTemplate$outboundSchema,
-    sourceName: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-    ),
-    maxRows: z.optional(smartUnion([z.int(), z.string()])),
-  });
+export const AppDb$outboundSchema: z.ZodMiniType<AppDb$Outbound, AppDb> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appDb: TextqlRpcPublicSandboxQueryAppDBTemplate$outboundSchema,
+      sourceName: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+      ),
+      maxRows: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function appDbToJSON(appDb: AppDb): string {
   return JSON.stringify(AppDb$outboundSchema.parse(appDb));
@@ -314,16 +323,18 @@ export const TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest$Outbound,
     TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequest
-  > = smartUnion([
-    z.lazy(() => AppDb$outboundSchema),
-    z.lazy(() =>
-      TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$outboundSchema
-    ),
-    z.lazy(() => PowerbiDax$outboundSchema),
-    z.lazy(() =>
-      TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$outboundSchema
-    ),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => AppDb$outboundSchema),
+      z.lazy(() =>
+        TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestLibraryTql$outboundSchema
+      ),
+      z.lazy(() => PowerbiDax$outboundSchema),
+      z.lazy(() =>
+        TextqlRpcPublicSandboxQuerySandboxExecuteQueryRequestSqlQuery$outboundSchema
+      ),
+    ])
+  );
 
 export function textqlRpcPublicSandboxQuerySandboxExecuteQueryRequestToJSON(
   textqlRpcPublicSandboxQuerySandboxExecuteQueryRequest:

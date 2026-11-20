@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -175,17 +175,18 @@ export type TextqlRpcPublicDashboardDataSource =
 
 /** @internal */
 export const TextqlRpcPublicDashboardDataSourceSqlQuery$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceSqlQuery, unknown> = z.object(
-    {
-      sqlQuery: TextqlRpcPublicDashboardSqlQuerySource$inboundSchema,
-      type: types.optional(types.string()),
-      name: types.optional(types.string()),
-      parameters: types.optional(
-        z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
-      ),
-      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceSqlQuery, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        sqlQuery: TextqlRpcPublicDashboardSqlQuerySource$inboundSchema,
+        type: types.optional(types.string()),
+        name: types.optional(types.string()),
+        parameters: types.optional(
+          z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
+        ),
+        grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardDataSourceSqlQuery$Outbound = {
   sqlQuery: TextqlRpcPublicDashboardSqlQuerySource$Outbound;
@@ -202,15 +203,17 @@ export const TextqlRpcPublicDashboardDataSourceSqlQuery$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardDataSourceSqlQuery$Outbound,
     TextqlRpcPublicDashboardDataSourceSqlQuery
-  > = z.object({
-    sqlQuery: TextqlRpcPublicDashboardSqlQuerySource$outboundSchema,
-    type: z.optional(z.string()),
-    name: z.optional(z.string()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
-    ),
-    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sqlQuery: TextqlRpcPublicDashboardSqlQuerySource$outboundSchema,
+      type: z.optional(z.string()),
+      name: z.optional(z.string()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
+      ),
+      grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicDashboardDataSourceSqlQueryToJSON(
   textqlRpcPublicDashboardDataSourceSqlQuery:
@@ -239,16 +242,18 @@ export function textqlRpcPublicDashboardDataSourceSqlQueryFromJSON(
 }
 
 /** @internal */
-export const PythonCode$inboundSchema: z.ZodMiniType<PythonCode, unknown> = z
-  .object({
-    pythonCode: TextqlRpcPublicDashboardPythonCodeSource$inboundSchema,
-    type: types.optional(types.string()),
-    name: types.optional(types.string()),
-    parameters: types.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
-    ),
-    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-  });
+export const PythonCode$inboundSchema: z.ZodMiniType<PythonCode, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pythonCode: TextqlRpcPublicDashboardPythonCodeSource$inboundSchema,
+      type: types.optional(types.string()),
+      name: types.optional(types.string()),
+      parameters: types.optional(
+        z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
+      ),
+      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+    })
+  );
 /** @internal */
 export type PythonCode$Outbound = {
   pythonCode: TextqlRpcPublicDashboardPythonCodeSource$Outbound;
@@ -264,15 +269,17 @@ export type PythonCode$Outbound = {
 export const PythonCode$outboundSchema: z.ZodMiniType<
   PythonCode$Outbound,
   PythonCode
-> = z.object({
-  pythonCode: TextqlRpcPublicDashboardPythonCodeSource$outboundSchema,
-  type: z.optional(z.string()),
-  name: z.optional(z.string()),
-  parameters: z.optional(
-    z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
-  ),
-  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    pythonCode: TextqlRpcPublicDashboardPythonCodeSource$outboundSchema,
+    type: z.optional(z.string()),
+    name: z.optional(z.string()),
+    parameters: z.optional(
+      z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
+    ),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+  })
+);
 
 export function pythonCodeToJSON(pythonCode: PythonCode): string {
   return JSON.stringify(PythonCode$outboundSchema.parse(pythonCode));
@@ -288,16 +295,18 @@ export function pythonCodeFromJSON(
 }
 
 /** @internal */
-export const OntologySql$inboundSchema: z.ZodMiniType<OntologySql, unknown> = z
-  .object({
-    ontologySql: TextqlRpcPublicDashboardOntologySqlSource$inboundSchema,
-    type: types.optional(types.string()),
-    name: types.optional(types.string()),
-    parameters: types.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
-    ),
-    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-  });
+export const OntologySql$inboundSchema: z.ZodMiniType<OntologySql, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ontologySql: TextqlRpcPublicDashboardOntologySqlSource$inboundSchema,
+      type: types.optional(types.string()),
+      name: types.optional(types.string()),
+      parameters: types.optional(
+        z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
+      ),
+      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+    })
+  );
 /** @internal */
 export type OntologySql$Outbound = {
   ontologySql: TextqlRpcPublicDashboardOntologySqlSource$Outbound;
@@ -313,15 +322,17 @@ export type OntologySql$Outbound = {
 export const OntologySql$outboundSchema: z.ZodMiniType<
   OntologySql$Outbound,
   OntologySql
-> = z.object({
-  ontologySql: TextqlRpcPublicDashboardOntologySqlSource$outboundSchema,
-  type: z.optional(z.string()),
-  name: z.optional(z.string()),
-  parameters: z.optional(
-    z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
-  ),
-  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontologySql: TextqlRpcPublicDashboardOntologySqlSource$outboundSchema,
+    type: z.optional(z.string()),
+    name: z.optional(z.string()),
+    parameters: z.optional(
+      z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
+    ),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+  })
+);
 
 export function ontologySqlToJSON(ontologySql: OntologySql): string {
   return JSON.stringify(OntologySql$outboundSchema.parse(ontologySql));
@@ -338,16 +349,18 @@ export function ontologySqlFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicDashboardDataSourceLibraryTql$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceLibraryTql, unknown> = z
-    .object({
-      libraryTql: TextqlRpcPublicDashboardLibraryTQLSource$inboundSchema,
-      type: types.optional(types.string()),
-      name: types.optional(types.string()),
-      parameters: types.optional(
-        z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
-      ),
-      grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-    });
+  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceLibraryTql, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        libraryTql: TextqlRpcPublicDashboardLibraryTQLSource$inboundSchema,
+        type: types.optional(types.string()),
+        name: types.optional(types.string()),
+        parameters: types.optional(
+          z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
+        ),
+        grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardDataSourceLibraryTql$Outbound = {
   libraryTql: TextqlRpcPublicDashboardLibraryTQLSource$Outbound;
@@ -364,15 +377,17 @@ export const TextqlRpcPublicDashboardDataSourceLibraryTql$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardDataSourceLibraryTql$Outbound,
     TextqlRpcPublicDashboardDataSourceLibraryTql
-  > = z.object({
-    libraryTql: TextqlRpcPublicDashboardLibraryTQLSource$outboundSchema,
-    type: z.optional(z.string()),
-    name: z.optional(z.string()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
-    ),
-    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      libraryTql: TextqlRpcPublicDashboardLibraryTQLSource$outboundSchema,
+      type: z.optional(z.string()),
+      name: z.optional(z.string()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
+      ),
+      grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicDashboardDataSourceLibraryTqlToJSON(
   textqlRpcPublicDashboardDataSourceLibraryTql:
@@ -402,15 +417,18 @@ export function textqlRpcPublicDashboardDataSourceLibraryTqlFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicDashboardDataSourceFile$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceFile, unknown> = z.object({
-    file: TextqlRpcPublicDashboardFileSource$inboundSchema,
-    type: types.optional(types.string()),
-    name: types.optional(types.string()),
-    parameters: types.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
-    ),
-    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardDataSourceFile, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        file: TextqlRpcPublicDashboardFileSource$inboundSchema,
+        type: types.optional(types.string()),
+        name: types.optional(types.string()),
+        parameters: types.optional(
+          z.array(TextqlRpcPublicDashboardQueryParameter$inboundSchema),
+        ),
+        grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardDataSourceFile$Outbound = {
   file: TextqlRpcPublicDashboardFileSource$Outbound;
@@ -427,15 +445,17 @@ export const TextqlRpcPublicDashboardDataSourceFile$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardDataSourceFile$Outbound,
     TextqlRpcPublicDashboardDataSourceFile
-  > = z.object({
-    file: TextqlRpcPublicDashboardFileSource$outboundSchema,
-    type: z.optional(z.string()),
-    name: z.optional(z.string()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
-    ),
-    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      file: TextqlRpcPublicDashboardFileSource$outboundSchema,
+      type: z.optional(z.string()),
+      name: z.optional(z.string()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicDashboardQueryParameter$outboundSchema),
+      ),
+      grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicDashboardDataSourceFileToJSON(
   textqlRpcPublicDashboardDataSourceFile:
@@ -462,13 +482,15 @@ export function textqlRpcPublicDashboardDataSourceFileFromJSON(
 export const TextqlRpcPublicDashboardDataSource$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardDataSource,
   unknown
-> = smartUnion([
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceFile$inboundSchema),
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceLibraryTql$inboundSchema),
-  z.lazy(() => OntologySql$inboundSchema),
-  z.lazy(() => PythonCode$inboundSchema),
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceSqlQuery$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceFile$inboundSchema),
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceLibraryTql$inboundSchema),
+    z.lazy(() => OntologySql$inboundSchema),
+    z.lazy(() => PythonCode$inboundSchema),
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceSqlQuery$inboundSchema),
+  ])
+);
 /** @internal */
 export type TextqlRpcPublicDashboardDataSource$Outbound =
   | TextqlRpcPublicDashboardDataSourceFile$Outbound
@@ -481,13 +503,15 @@ export type TextqlRpcPublicDashboardDataSource$Outbound =
 export const TextqlRpcPublicDashboardDataSource$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardDataSource$Outbound,
   TextqlRpcPublicDashboardDataSource
-> = smartUnion([
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceFile$outboundSchema),
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceLibraryTql$outboundSchema),
-  z.lazy(() => OntologySql$outboundSchema),
-  z.lazy(() => PythonCode$outboundSchema),
-  z.lazy(() => TextqlRpcPublicDashboardDataSourceSqlQuery$outboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceFile$outboundSchema),
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceLibraryTql$outboundSchema),
+    z.lazy(() => OntologySql$outboundSchema),
+    z.lazy(() => PythonCode$outboundSchema),
+    z.lazy(() => TextqlRpcPublicDashboardDataSourceSqlQuery$outboundSchema),
+  ])
+);
 
 export function textqlRpcPublicDashboardDataSourceToJSON(
   textqlRpcPublicDashboardDataSource: TextqlRpcPublicDashboardDataSource,

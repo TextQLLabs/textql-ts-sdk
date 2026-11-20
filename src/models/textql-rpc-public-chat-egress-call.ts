@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -142,10 +142,10 @@ export type TextqlRpcPublicChatEgressCall = {
 
 /** @internal */
 export const TextqlRpcPublicChatEgressCallDurationMs$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatEgressCallDurationMs, unknown> = smartUnion([
-    types.number(),
-    types.string(),
-  ]);
+  z.ZodMiniType<TextqlRpcPublicChatEgressCallDurationMs, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatEgressCallDurationMsFromJSON(
   jsonString: string,
@@ -166,7 +166,9 @@ export function textqlRpcPublicChatEgressCallDurationMsFromJSON(
 /** @internal */
 export const TextqlRpcPublicChatEgressCallRequestBytes$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatEgressCallRequestBytes, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatEgressCallRequestBytesFromJSON(
   jsonString: string,
@@ -187,7 +189,9 @@ export function textqlRpcPublicChatEgressCallRequestBytesFromJSON(
 /** @internal */
 export const TextqlRpcPublicChatEgressCallResponseBytes$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatEgressCallResponseBytes, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatEgressCallResponseBytesFromJSON(
   jsonString: string,
@@ -209,22 +213,24 @@ export function textqlRpcPublicChatEgressCallResponseBytesFromJSON(
 export const TextqlRpcPublicChatEgressCall$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatEgressCall,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  method: types.optional(types.string()),
-  scheme: types.optional(types.string()),
-  host: types.optional(types.string()),
-  path: types.optional(types.string()),
-  statusCode: types.optional(types.number()),
-  outcome: types.optional(types.string()),
-  durationMs: types.optional(smartUnion([types.number(), types.string()])),
-  requestBytes: types.optional(smartUnion([types.number(), types.string()])),
-  responseBytes: types.optional(smartUnion([types.number(), types.string()])),
-  apiAccessKeyId: types.optional(types.string()),
-  occurredAt: types.optional(types.date()),
-  cellId: types.optional(types.string()),
-  interpretation: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    method: types.optional(types.string()),
+    scheme: types.optional(types.string()),
+    host: types.optional(types.string()),
+    path: types.optional(types.string()),
+    statusCode: types.optional(types.number()),
+    outcome: types.optional(types.string()),
+    durationMs: types.optional(smartUnion([types.number(), types.string()])),
+    requestBytes: types.optional(smartUnion([types.number(), types.string()])),
+    responseBytes: types.optional(smartUnion([types.number(), types.string()])),
+    apiAccessKeyId: types.optional(types.string()),
+    occurredAt: types.optional(types.date()),
+    cellId: types.optional(types.string()),
+    interpretation: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicChatEgressCallFromJSON(
   jsonString: string,

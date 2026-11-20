@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,15 +21,17 @@ export type TextqlRpcPublicPatchesGetOntologyRemoteResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesGetOntologyRemoteResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesGetOntologyRemoteResponse, unknown> = z
-    .object({
-      remote: types.optional(
-        TextqlRpcPublicPatchesOntologyRemote$inboundSchema,
-      ),
-      hostedGithubAppAvailable: types.optional(types.boolean()),
-      hostedGithubAppSlug: z.optional(z.nullable(types.string())),
-      githubOauthAvailable: types.optional(types.boolean()),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesGetOntologyRemoteResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        remote: types.optional(
+          TextqlRpcPublicPatchesOntologyRemote$inboundSchema,
+        ),
+        hostedGithubAppAvailable: types.optional(types.boolean()),
+        hostedGithubAppSlug: z.optional(z.nullable(types.string())),
+        githubOauthAvailable: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicPatchesGetOntologyRemoteResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,11 +23,14 @@ export type TextqlRpcPublicChatQueryOneShotResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatQueryOneShotResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatQueryOneShotResponse, unknown> = z.object({
-    chatId: types.optional(types.string()),
-    answer: types.optional(types.string()),
-    cells: types.optional(z.array(TextqlRpcPublicChatCell$inboundSchema)),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatQueryOneShotResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        chatId: types.optional(types.string()),
+        answer: types.optional(types.string()),
+        cells: types.optional(z.array(TextqlRpcPublicChatCell$inboundSchema)),
+      })
+    );
 
 export function textqlRpcPublicChatQueryOneShotResponseFromJSON(
   jsonString: string,

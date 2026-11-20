@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -48,18 +49,20 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatDuplicateChatRequest$Outbound,
     TextqlRpcPublicChatDuplicateChatRequest
-  > = z.object({
-    chatId: z.string(),
-    onlyIfDifferentOwner: z.optional(z.nullable(z.boolean())),
-    upToCellId: z.optional(z.nullable(z.string())),
-    paradigmOptions: z.optional(
-      TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
-    ),
-    model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    fastMode: z.optional(z.nullable(z.boolean())),
-    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
-    maxThinking: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatId: z.string(),
+      onlyIfDifferentOwner: z.optional(z.nullable(z.boolean())),
+      upToCellId: z.optional(z.nullable(z.string())),
+      paradigmOptions: z.optional(
+        TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+      ),
+      model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      fastMode: z.optional(z.nullable(z.boolean())),
+      methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
+      maxThinking: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicChatDuplicateChatRequestToJSON(
   textqlRpcPublicChatDuplicateChatRequest:

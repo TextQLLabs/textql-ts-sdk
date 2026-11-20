@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -289,42 +289,44 @@ export type TextqlRpcAuthMember = {
 export const TextqlRpcAuthMember$inboundSchema: z.ZodMiniType<
   TextqlRpcAuthMember,
   unknown
-> = z.object({
-  id: types.optional(types.number()),
-  orgId: types.optional(types.string()),
-  memberId: types.optional(types.string()),
-  role: z.optional(z.nullable(types.string())),
-  preferredFirstName: z.optional(z.nullable(types.string())),
-  preferredLastName: z.optional(z.nullable(types.string())),
-  showCode: z.optional(z.nullable(types.boolean())),
-  profileImageUrl: z.optional(z.nullable(types.string())),
-  emailAddress: types.optional(types.string()),
-  name: z.optional(z.nullable(types.string())),
-  isAdmin: types.optional(types.boolean()),
-  selectedConnectorId: z.optional(z.nullable(types.number())),
-  roles: types.optional(z.array(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  paradigmParams: types.optional(
-    TextqlRpcParadigmParamsParadigmParams$inboundSchema,
-  ),
-  emailVerified: types.optional(types.boolean()),
-  selectedConnectorIds: types.optional(z.array(types.number())),
-  isServiceAccount: types.optional(types.boolean()),
-  isScimManaged: types.optional(types.boolean()),
-  steering: z.optional(z.nullable(types.boolean())),
-  phoneNumber: z.optional(z.nullable(types.string())),
-  phoneVerified: z.optional(z.nullable(types.boolean())),
-  personalAgentId: z.optional(z.nullable(types.string())),
-  agentNumber: z.optional(z.nullable(types.string())),
-  defaultMethodology: z.optional(z.nullable(types.number())),
-  defaultLlmModel: z.optional(z.nullable(types.number())),
-  defaultFastMode: z.optional(z.nullable(types.boolean())),
-  firstName: z.optional(z.nullable(types.string())),
-  lastName: z.optional(z.nullable(types.string())),
-  themeMode: z.optional(z.nullable(types.string())),
-  shareAppBuilderChat: z.optional(z.nullable(types.boolean())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.number()),
+    orgId: types.optional(types.string()),
+    memberId: types.optional(types.string()),
+    role: z.optional(z.nullable(types.string())),
+    preferredFirstName: z.optional(z.nullable(types.string())),
+    preferredLastName: z.optional(z.nullable(types.string())),
+    showCode: z.optional(z.nullable(types.boolean())),
+    profileImageUrl: z.optional(z.nullable(types.string())),
+    emailAddress: types.optional(types.string()),
+    name: z.optional(z.nullable(types.string())),
+    isAdmin: types.optional(types.boolean()),
+    selectedConnectorId: z.optional(z.nullable(types.number())),
+    roles: types.optional(z.array(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    paradigmParams: types.optional(
+      TextqlRpcParadigmParamsParadigmParams$inboundSchema,
+    ),
+    emailVerified: types.optional(types.boolean()),
+    selectedConnectorIds: types.optional(z.array(types.number())),
+    isServiceAccount: types.optional(types.boolean()),
+    isScimManaged: types.optional(types.boolean()),
+    steering: z.optional(z.nullable(types.boolean())),
+    phoneNumber: z.optional(z.nullable(types.string())),
+    phoneVerified: z.optional(z.nullable(types.boolean())),
+    personalAgentId: z.optional(z.nullable(types.string())),
+    agentNumber: z.optional(z.nullable(types.string())),
+    defaultMethodology: z.optional(z.nullable(types.number())),
+    defaultLlmModel: z.optional(z.nullable(types.number())),
+    defaultFastMode: z.optional(z.nullable(types.boolean())),
+    firstName: z.optional(z.nullable(types.string())),
+    lastName: z.optional(z.nullable(types.string())),
+    themeMode: z.optional(z.nullable(types.string())),
+    shareAppBuilderChat: z.optional(z.nullable(types.boolean())),
+  })
+);
 
 export function textqlRpcAuthMemberFromJSON(
   jsonString: string,

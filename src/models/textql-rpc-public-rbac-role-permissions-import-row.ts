@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,11 +18,13 @@ export type TextqlRpcPublicRbacRolePermissionsImportRow = {
 
 /** @internal */
 export const TextqlRpcPublicRbacRolePermissionsImportRow$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacRolePermissionsImportRow, unknown> = z
-    .object({
-      label: types.optional(types.string()),
-      values: types.optional(z.array(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicRbacRolePermissionsImportRow, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        label: types.optional(types.string()),
+        values: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicRbacRolePermissionsImportRow$Outbound = {
   label?: string | undefined;
@@ -34,10 +36,12 @@ export const TextqlRpcPublicRbacRolePermissionsImportRow$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacRolePermissionsImportRow$Outbound,
     TextqlRpcPublicRbacRolePermissionsImportRow
-  > = z.object({
-    label: z.optional(z.string()),
-    values: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      label: z.optional(z.string()),
+      values: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacRolePermissionsImportRowToJSON(
   textqlRpcPublicRbacRolePermissionsImportRow:

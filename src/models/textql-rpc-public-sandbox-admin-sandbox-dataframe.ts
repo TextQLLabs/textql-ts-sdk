@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -38,7 +38,9 @@ export type TextqlRpcPublicSandboxAdminSandboxDataframe = {
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxDataframeNumRows$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxDataframeNumRows, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxDataframeNumRowsFromJSON(
   jsonString: string,
@@ -59,7 +61,9 @@ export function textqlRpcPublicSandboxAdminSandboxDataframeNumRowsFromJSON(
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxDataframeNumCols$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxDataframeNumCols, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxDataframeNumColsFromJSON(
   jsonString: string,
@@ -82,7 +86,9 @@ export const TextqlRpcPublicSandboxAdminSandboxDataframeMemoryUsageBytes$inbound
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxDataframeMemoryUsageBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxDataframeMemoryUsageBytesFromJSON(
   jsonString: string,
@@ -101,15 +107,17 @@ export function textqlRpcPublicSandboxAdminSandboxDataframeMemoryUsageBytesFromJ
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxDataframe$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxDataframe, unknown> = z
-    .object({
-      name: types.optional(types.string()),
-      numRows: types.optional(smartUnion([types.number(), types.string()])),
-      numCols: types.optional(smartUnion([types.number(), types.string()])),
-      memoryUsageBytes: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxDataframe, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        name: types.optional(types.string()),
+        numRows: types.optional(smartUnion([types.number(), types.string()])),
+        numCols: types.optional(smartUnion([types.number(), types.string()])),
+        memoryUsageBytes: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxDataframeFromJSON(
   jsonString: string,

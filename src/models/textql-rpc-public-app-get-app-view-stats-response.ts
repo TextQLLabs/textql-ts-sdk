@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -20,13 +20,16 @@ export type TextqlRpcPublicAppGetAppViewStatsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAppGetAppViewStatsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAppGetAppViewStatsResponse, unknown> = z.object({
-    totalViews: types.optional(types.number()),
-    uniqueViewers: types.optional(types.number()),
-    recentViewers: types.optional(
-      z.array(TextqlRpcPublicAppAppViewerInfo$inboundSchema),
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicAppGetAppViewStatsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        totalViews: types.optional(types.number()),
+        uniqueViewers: types.optional(types.number()),
+        recentViewers: types.optional(
+          z.array(TextqlRpcPublicAppAppViewerInfo$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicAppGetAppViewStatsResponseFromJSON(
   jsonString: string,

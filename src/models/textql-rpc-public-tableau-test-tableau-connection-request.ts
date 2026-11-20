@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicTableauTestTableauConnectionRequest = {
   connectorId?: number | null | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicTableauTestTableauConnectionRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTableauTestTableauConnectionRequest$Outbound,
     TextqlRpcPublicTableauTestTableauConnectionRequest
-  > = z.object({
-    connectorId: z.optional(z.nullable(z.int())),
-    serverUrl: z.optional(z.nullable(z.string())),
-    siteName: z.optional(z.nullable(z.string())),
-    patName: z.optional(z.nullable(z.string())),
-    patSecret: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.nullable(z.int())),
+      serverUrl: z.optional(z.nullable(z.string())),
+      siteName: z.optional(z.nullable(z.string())),
+      patName: z.optional(z.nullable(z.string())),
+      patSecret: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicTableauTestTableauConnectionRequestToJSON(
   textqlRpcPublicTableauTestTableauConnectionRequest:

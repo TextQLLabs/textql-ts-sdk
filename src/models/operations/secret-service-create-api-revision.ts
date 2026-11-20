@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,18 +35,21 @@ export const SecretServiceCreateApiRevisionRequest$outboundSchema:
   z.ZodMiniType<
     SecretServiceCreateApiRevisionRequest$Outbound,
     SecretServiceCreateApiRevisionRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body: models.TextqlRpcPublicSecretCreateApiRevisionRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models.TextqlRpcPublicSecretCreateApiRevisionRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function secretServiceCreateApiRevisionRequestToJSON(
@@ -61,10 +64,13 @@ export function secretServiceCreateApiRevisionRequestToJSON(
 
 /** @internal */
 export const SecretServiceCreateApiRevisionResponse$inboundSchema:
-  z.ZodMiniType<SecretServiceCreateApiRevisionResponse, unknown> = smartUnion([
-    models.TextqlRpcPublicSecretCreateApiRevisionResponse$inboundSchema,
-    models.ConnectError$inboundSchema,
-  ]);
+  z.ZodMiniType<SecretServiceCreateApiRevisionResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicSecretCreateApiRevisionResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function secretServiceCreateApiRevisionResponseFromJSON(
   jsonString: string,

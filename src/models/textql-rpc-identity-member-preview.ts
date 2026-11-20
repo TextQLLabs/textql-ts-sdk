@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,12 +25,14 @@ export type TextqlRpcIdentityMemberPreview = {
 export const TextqlRpcIdentityMemberPreview$inboundSchema: z.ZodMiniType<
   TextqlRpcIdentityMemberPreview,
   unknown
-> = z.object({
-  memberId: types.optional(types.string()),
-  memberEmail: z.optional(z.nullable(types.string())),
-  memberName: z.optional(z.nullable(types.string())),
-  memberPictureUrl: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberId: types.optional(types.string()),
+    memberEmail: z.optional(z.nullable(types.string())),
+    memberName: z.optional(z.nullable(types.string())),
+    memberPictureUrl: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcIdentityMemberPreviewFromJSON(
   jsonString: string,

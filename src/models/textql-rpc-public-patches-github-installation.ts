@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,14 +21,17 @@ export type TextqlRpcPublicPatchesGithubInstallation = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesGithubInstallation$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesGithubInstallation, unknown> = z.object({
-    id: types.optional(types.string()),
-    account: types.optional(types.string()),
-    repos: types.optional(
-      z.array(TextqlRpcPublicPatchesGithubInstallationRepo$inboundSchema),
-    ),
-    reposError: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesGithubInstallation, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        account: types.optional(types.string()),
+        repos: types.optional(
+          z.array(TextqlRpcPublicPatchesGithubInstallationRepo$inboundSchema),
+        ),
+        reposError: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicPatchesGithubInstallationFromJSON(
   jsonString: string,

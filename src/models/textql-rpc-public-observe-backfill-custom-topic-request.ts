@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveBackfillCustomTopicRequest = {
   topicId?: string | undefined;
@@ -208,11 +209,15 @@ export const TextqlRpcPublicObserveBackfillCustomTopicRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveBackfillCustomTopicRequest$Outbound,
     TextqlRpcPublicObserveBackfillCustomTopicRequest
-  > = z.object({
-    topicId: z.optional(z.string()),
-    startDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      topicId: z.optional(z.string()),
+      startDate: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      endDate: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    })
+  );
 
 export function textqlRpcPublicObserveBackfillCustomTopicRequestToJSON(
   textqlRpcPublicObserveBackfillCustomTopicRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 /**
@@ -23,4 +24,6 @@ export type TextqlRpcPublicCommonSortDirection = ClosedEnum<
 /** @internal */
 export const TextqlRpcPublicCommonSortDirection$outboundSchema: z.ZodMiniEnum<
   typeof TextqlRpcPublicCommonSortDirection
-> = z.enum(TextqlRpcPublicCommonSortDirection);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(TextqlRpcPublicCommonSortDirection)
+);

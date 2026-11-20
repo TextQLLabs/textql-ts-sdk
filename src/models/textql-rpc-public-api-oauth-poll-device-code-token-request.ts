@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicSecretApiAccessRef,
   TextqlRpcPublicSecretApiAccessRef$Outbound,
@@ -25,10 +26,12 @@ export const TextqlRpcPublicApiOauthPollDeviceCodeTokenRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicApiOauthPollDeviceCodeTokenRequest$Outbound,
     TextqlRpcPublicApiOauthPollDeviceCodeTokenRequest
-  > = z.object({
-    ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
-    deviceCode: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
+      deviceCode: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicApiOauthPollDeviceCodeTokenRequestToJSON(
   textqlRpcPublicApiOauthPollDeviceCodeTokenRequest:

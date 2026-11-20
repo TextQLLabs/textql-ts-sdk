@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,11 +24,13 @@ export type TextqlRpcPublicDashboardFileSource = {
 export const TextqlRpcPublicDashboardFileSource$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardFileSource,
   unknown
-> = z.object({
-  datasetId: types.optional(types.string()),
-  fileName: types.optional(types.string()),
-  sheetIndex: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    datasetId: types.optional(types.string()),
+    fileName: types.optional(types.string()),
+    sheetIndex: types.optional(types.number()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicDashboardFileSource$Outbound = {
   datasetId?: string | undefined;
@@ -40,11 +42,13 @@ export type TextqlRpcPublicDashboardFileSource$Outbound = {
 export const TextqlRpcPublicDashboardFileSource$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardFileSource$Outbound,
   TextqlRpcPublicDashboardFileSource
-> = z.object({
-  datasetId: z.optional(z.string()),
-  fileName: z.optional(z.string()),
-  sheetIndex: z.optional(z.int()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    datasetId: z.optional(z.string()),
+    fileName: z.optional(z.string()),
+    sheetIndex: z.optional(z.int()),
+  })
+);
 
 export function textqlRpcPublicDashboardFileSourceToJSON(
   textqlRpcPublicDashboardFileSource: TextqlRpcPublicDashboardFileSource,

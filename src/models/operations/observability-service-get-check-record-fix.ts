@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,21 @@ export const ObservabilityServiceGetCheckRecordFixRequest$outboundSchema:
   z.ZodMiniType<
     ObservabilityServiceGetCheckRecordFixRequest$Outbound,
     ObservabilityServiceGetCheckRecordFixRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicObserveGetCheckRecordFixRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models.TextqlRpcPublicObserveGetCheckRecordFixRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function observabilityServiceGetCheckRecordFixRequestToJSON(
@@ -64,10 +66,12 @@ export function observabilityServiceGetCheckRecordFixRequestToJSON(
 /** @internal */
 export const ObservabilityServiceGetCheckRecordFixResponse$inboundSchema:
   z.ZodMiniType<ObservabilityServiceGetCheckRecordFixResponse, unknown> =
-    smartUnion([
-      models.TextqlRpcPublicObserveGetCheckRecordFixResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicObserveGetCheckRecordFixResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function observabilityServiceGetCheckRecordFixResponseFromJSON(
   jsonString: string,

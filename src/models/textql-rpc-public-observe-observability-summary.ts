@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -63,35 +63,36 @@ export type TextqlRpcPublicObserveObservabilitySummary = {
 
 /** @internal */
 export const TextqlRpcPublicObserveObservabilitySummary$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveObservabilitySummary, unknown> = z.object(
-    {
-      totalRuns: types.optional(types.number()),
-      totalThreads: types.optional(types.number()),
-      totalPlaybooks: types.optional(types.number()),
-      totalWarnings: types.optional(types.number()),
-      warnRatePct: types.optional(types.number()),
-      runsDeltaPct: types.optional(types.number()),
-      threadsDeltaPct: types.optional(types.number()),
-      playbooksDeltaPct: types.optional(types.number()),
-      warningsDeltaPct: types.optional(types.number()),
-      runsSparkline: types.optional(z.array(types.number())),
-      threadsSparkline: types.optional(z.array(types.number())),
-      playbooksSparkline: types.optional(z.array(types.number())),
-      warningsSparkline: types.optional(z.array(types.number())),
-      totalFeedAgents: types.optional(types.number()),
-      feedAgentsDeltaPct: types.optional(types.number()),
-      feedAgentsSparkline: types.optional(z.array(types.number())),
-      totalSlack: types.optional(types.number()),
-      slackDeltaPct: types.optional(types.number()),
-      slackSparkline: types.optional(z.array(types.number())),
-      totalTeams: types.optional(types.number()),
-      teamsDeltaPct: types.optional(types.number()),
-      teamsSparkline: types.optional(z.array(types.number())),
-      totalPositive: types.optional(types.number()),
-      positiveDeltaPct: types.optional(types.number()),
-      positiveSparkline: types.optional(z.array(types.number())),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicObserveObservabilitySummary, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        totalRuns: types.optional(types.number()),
+        totalThreads: types.optional(types.number()),
+        totalPlaybooks: types.optional(types.number()),
+        totalWarnings: types.optional(types.number()),
+        warnRatePct: types.optional(types.number()),
+        runsDeltaPct: types.optional(types.number()),
+        threadsDeltaPct: types.optional(types.number()),
+        playbooksDeltaPct: types.optional(types.number()),
+        warningsDeltaPct: types.optional(types.number()),
+        runsSparkline: types.optional(z.array(types.number())),
+        threadsSparkline: types.optional(z.array(types.number())),
+        playbooksSparkline: types.optional(z.array(types.number())),
+        warningsSparkline: types.optional(z.array(types.number())),
+        totalFeedAgents: types.optional(types.number()),
+        feedAgentsDeltaPct: types.optional(types.number()),
+        feedAgentsSparkline: types.optional(z.array(types.number())),
+        totalSlack: types.optional(types.number()),
+        slackDeltaPct: types.optional(types.number()),
+        slackSparkline: types.optional(z.array(types.number())),
+        totalTeams: types.optional(types.number()),
+        teamsDeltaPct: types.optional(types.number()),
+        teamsSparkline: types.optional(z.array(types.number())),
+        totalPositive: types.optional(types.number()),
+        positiveDeltaPct: types.optional(types.number()),
+        positiveSparkline: types.optional(z.array(types.number())),
+      })
+    );
 
 export function textqlRpcPublicObserveObservabilitySummaryFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAgentListAgentsRequest = {
   includeInactive?: boolean | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicAgentListAgentsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentListAgentsRequest$Outbound,
     TextqlRpcPublicAgentListAgentsRequest
-  > = z.object({
-    includeInactive: z.optional(z.boolean()),
-    includeAllOrg: z.optional(z.boolean()),
-    days: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      includeInactive: z.optional(z.boolean()),
+      includeAllOrg: z.optional(z.boolean()),
+      days: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAgentListAgentsRequestToJSON(
   textqlRpcPublicAgentListAgentsRequest: TextqlRpcPublicAgentListAgentsRequest,

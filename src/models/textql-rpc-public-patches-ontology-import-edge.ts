@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,11 +16,14 @@ export type TextqlRpcPublicPatchesOntologyImportEdge = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesOntologyImportEdge$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesOntologyImportEdge, unknown> = z.object({
-    sourcePath: types.optional(types.string()),
-    targetPath: types.optional(types.string()),
-    alias: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesOntologyImportEdge, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        sourcePath: types.optional(types.string()),
+        targetPath: types.optional(types.string()),
+        alias: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicPatchesOntologyImportEdgeFromJSON(
   jsonString: string,

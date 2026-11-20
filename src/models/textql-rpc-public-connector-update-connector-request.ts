@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicConnectorConnectorConfig,
   TextqlRpcPublicConnectorConnectorConfig$Outbound,
@@ -29,12 +30,16 @@ export const TextqlRpcPublicConnectorUpdateConnectorRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorUpdateConnectorRequest$Outbound,
     TextqlRpcPublicConnectorUpdateConnectorRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    config: z.optional(TextqlRpcPublicConnectorConnectorConfig$outboundSchema),
-    allowSqlWriteOperations: z.optional(z.nullable(z.boolean())),
-    includeDbSessionMetadata: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      config: z.optional(
+        TextqlRpcPublicConnectorConnectorConfig$outboundSchema,
+      ),
+      allowSqlWriteOperations: z.optional(z.nullable(z.boolean())),
+      includeDbSessionMetadata: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicConnectorUpdateConnectorRequestToJSON(
   textqlRpcPublicConnectorUpdateConnectorRequest:

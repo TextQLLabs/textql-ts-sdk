@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,12 +18,14 @@ export type TextqlRpcPublicSecretListApiAccessKeysResponse = {
 
 /** @internal */
 export const TextqlRpcPublicSecretListApiAccessKeysResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSecretListApiAccessKeysResponse, unknown> = z
-    .object({
-      apiAccessKeys: types.optional(
-        z.array(TextqlRpcPublicSecretApiAccessKey$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicSecretListApiAccessKeysResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        apiAccessKeys: types.optional(
+          z.array(TextqlRpcPublicSecretApiAccessKey$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicSecretListApiAccessKeysResponseFromJSON(
   jsonString: string,

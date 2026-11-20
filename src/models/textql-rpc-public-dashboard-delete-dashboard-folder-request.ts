@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDashboardDeleteDashboardFolderRequest = {
   folderId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicDashboardDeleteDashboardFolderRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDashboardDeleteDashboardFolderRequest$Outbound,
     TextqlRpcPublicDashboardDeleteDashboardFolderRequest
-  > = z.object({
-    folderId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      folderId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicDashboardDeleteDashboardFolderRequestToJSON(
   textqlRpcPublicDashboardDeleteDashboardFolderRequest:

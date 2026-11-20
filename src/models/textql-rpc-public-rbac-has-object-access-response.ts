@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -14,11 +14,12 @@ export type TextqlRpcPublicRbacHasObjectAccessResponse = {
 
 /** @internal */
 export const TextqlRpcPublicRbacHasObjectAccessResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacHasObjectAccessResponse, unknown> = z.object(
-    {
-      hasAccess: types.optional(types.boolean()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicRbacHasObjectAccessResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        hasAccess: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicRbacHasObjectAccessResponseFromJSON(
   jsonString: string,

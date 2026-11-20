@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -14,10 +14,12 @@ export type TextqlRpcPublicCellsOntologyEditorListFilter = {
 
 /** @internal */
 export const TextqlRpcPublicCellsOntologyEditorListFilter$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorListFilter, unknown> = z
-    .object({
-      objectId: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorListFilter, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        objectId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsOntologyEditorListFilterFromJSON(
   jsonString: string,

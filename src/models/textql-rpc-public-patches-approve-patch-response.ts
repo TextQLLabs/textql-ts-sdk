@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,16 +19,17 @@ export type TextqlRpcPublicPatchesApprovePatchResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesApprovePatchResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesApprovePatchResponse, unknown> = z.object(
-    {
-      merged: types.optional(types.boolean()),
-      approvalCount: types.optional(types.number()),
-      requiredApprovals: types.optional(types.number()),
-      alreadyApproved: types.optional(types.boolean()),
-      awaitingRemoteMerge: types.optional(types.boolean()),
-      remotePrUrl: z.optional(z.nullable(types.string())),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicPatchesApprovePatchResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        merged: types.optional(types.boolean()),
+        approvalCount: types.optional(types.number()),
+        requiredApprovals: types.optional(types.number()),
+        alreadyApproved: types.optional(types.boolean()),
+        awaitingRemoteMerge: types.optional(types.boolean()),
+        remotePrUrl: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicPatchesApprovePatchResponseFromJSON(
   jsonString: string,

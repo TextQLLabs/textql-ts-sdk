@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -218,22 +218,24 @@ export type TextqlRpcPublicApiOauthApiOAuthConfig = {
 export const TextqlRpcPublicApiOauthApiOAuthConfig$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicApiOauthApiOAuthConfig,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  clientId: types.optional(types.string()),
-  authUrl: types.optional(types.string()),
-  tokenUrl: types.optional(types.string()),
-  scopes: types.optional(types.string()),
-  usePkce: types.optional(types.boolean()),
-  tokenAuthMethod: types.optional(types.string()),
-  extraConfig: types.optional(z.record(z.string(), types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  apiAccessKeyId: types.optional(types.string()),
-  authHeader: types.optional(types.string()),
-  authPrefix: types.optional(types.string()),
-  grantType: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    clientId: types.optional(types.string()),
+    authUrl: types.optional(types.string()),
+    tokenUrl: types.optional(types.string()),
+    scopes: types.optional(types.string()),
+    usePkce: types.optional(types.boolean()),
+    tokenAuthMethod: types.optional(types.string()),
+    extraConfig: types.optional(z.record(z.string(), types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    apiAccessKeyId: types.optional(types.string()),
+    authHeader: types.optional(types.string()),
+    authPrefix: types.optional(types.string()),
+    grantType: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicApiOauthApiOAuthConfigFromJSON(
   jsonString: string,

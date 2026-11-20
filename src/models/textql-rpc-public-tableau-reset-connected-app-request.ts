@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicTableauResetConnectedAppRequest = {
   connectorId?: number | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicTableauResetConnectedAppRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTableauResetConnectedAppRequest$Outbound,
     TextqlRpcPublicTableauResetConnectedAppRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicTableauResetConnectedAppRequestToJSON(
   textqlRpcPublicTableauResetConnectedAppRequest:

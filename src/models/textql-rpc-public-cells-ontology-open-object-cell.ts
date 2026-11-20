@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -36,27 +36,30 @@ export type TextqlRpcPublicCellsOntologyOpenObjectCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsOntologyOpenObjectCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsOntologyOpenObjectCell, unknown> = z.object(
-    {
-      requestedObject: types.optional(types.string()),
-      ontologyId: types.optional(types.number()),
-      objectId: types.optional(types.string()),
-      objectName: types.optional(types.string()),
-      objectDescription: z.optional(z.nullable(types.string())),
-      dimensionCount: types.optional(types.number()),
-      dimensionReturnedCount: types.optional(types.number()),
-      metricCount: types.optional(types.number()),
-      metricReturnedCount: types.optional(types.number()),
-      dimensionsTruncated: types.optional(types.boolean()),
-      metricsTruncated: types.optional(types.boolean()),
-      dimensions: types.optional(
-        z.array(TextqlRpcPublicCellsOntologyObjectDimensionLite$inboundSchema),
-      ),
-      metrics: types.optional(
-        z.array(TextqlRpcPublicCellsOntologyObjectMetricLite$inboundSchema),
-      ),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicCellsOntologyOpenObjectCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        requestedObject: types.optional(types.string()),
+        ontologyId: types.optional(types.number()),
+        objectId: types.optional(types.string()),
+        objectName: types.optional(types.string()),
+        objectDescription: z.optional(z.nullable(types.string())),
+        dimensionCount: types.optional(types.number()),
+        dimensionReturnedCount: types.optional(types.number()),
+        metricCount: types.optional(types.number()),
+        metricReturnedCount: types.optional(types.number()),
+        dimensionsTruncated: types.optional(types.boolean()),
+        metricsTruncated: types.optional(types.boolean()),
+        dimensions: types.optional(
+          z.array(
+            TextqlRpcPublicCellsOntologyObjectDimensionLite$inboundSchema,
+          ),
+        ),
+        metrics: types.optional(
+          z.array(TextqlRpcPublicCellsOntologyObjectMetricLite$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicCellsOntologyOpenObjectCellFromJSON(
   jsonString: string,

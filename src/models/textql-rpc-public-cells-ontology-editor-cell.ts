@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -86,75 +86,78 @@ export type TextqlRpcPublicCellsOntologyEditorCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsOntologyEditorCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorCell, unknown> = z.object({
-    action: types.optional(
-      TextqlRpcPublicCellsOntologyEditorAction$inboundSchema,
-    ),
-    listType: types.optional(
-      TextqlRpcPublicCellsOntologyEditorListType$inboundSchema,
-    ),
-    operation: types.optional(
-      TextqlRpcPublicCellsOntologyEditorOperation$inboundSchema,
-    ),
-    status: types.optional(
-      TextqlRpcPublicCellsOntologyEditorStatus$inboundSchema,
-    ),
-    listFilter: types.optional(
-      TextqlRpcPublicCellsOntologyEditorListFilter$inboundSchema,
-    ),
-    listCount: z.optional(z.nullable(types.number())),
-    listObjects: types.optional(
-      z.array(TextqlRpcPublicOntologyOntologyObject$inboundSchema),
-    ),
-    listAttributes: types.optional(
-      z.array(TextqlRpcPublicOntologyOntologyAttribute$inboundSchema),
-    ),
-    listRelations: types.optional(
-      z.array(TextqlRpcPublicOntologyOntologyRelation$inboundSchema),
-    ),
-    listMetrics: types.optional(
-      z.array(TextqlRpcPublicOntologyOntologyMetric$inboundSchema),
-    ),
-    createdObject: types.optional(
-      TextqlRpcPublicOntologyOntologyObject$inboundSchema,
-    ),
-    createdAttributes: types.optional(
-      z.array(TextqlRpcPublicOntologyOntologyAttribute$inboundSchema),
-    ),
-    updatedObject: types.optional(
-      TextqlRpcPublicOntologyOntologyObject$inboundSchema,
-    ),
-    deletedObject: types.optional(
-      TextqlRpcPublicOntologyOntologyObject$inboundSchema,
-    ),
-    createdAttribute: types.optional(
-      TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
-    ),
-    updatedAttribute: types.optional(
-      TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
-    ),
-    deletedAttribute: types.optional(
-      TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
-    ),
-    createdLink: types.optional(
-      TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
-    ),
-    updatedLink: types.optional(
-      TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
-    ),
-    deletedLink: types.optional(
-      TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
-    ),
-    createdMetric: types.optional(
-      TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
-    ),
-    updatedMetric: types.optional(
-      TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
-    ),
-    deletedMetric: types.optional(
-      TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        action: types.optional(
+          TextqlRpcPublicCellsOntologyEditorAction$inboundSchema,
+        ),
+        listType: types.optional(
+          TextqlRpcPublicCellsOntologyEditorListType$inboundSchema,
+        ),
+        operation: types.optional(
+          TextqlRpcPublicCellsOntologyEditorOperation$inboundSchema,
+        ),
+        status: types.optional(
+          TextqlRpcPublicCellsOntologyEditorStatus$inboundSchema,
+        ),
+        listFilter: types.optional(
+          TextqlRpcPublicCellsOntologyEditorListFilter$inboundSchema,
+        ),
+        listCount: z.optional(z.nullable(types.number())),
+        listObjects: types.optional(
+          z.array(TextqlRpcPublicOntologyOntologyObject$inboundSchema),
+        ),
+        listAttributes: types.optional(
+          z.array(TextqlRpcPublicOntologyOntologyAttribute$inboundSchema),
+        ),
+        listRelations: types.optional(
+          z.array(TextqlRpcPublicOntologyOntologyRelation$inboundSchema),
+        ),
+        listMetrics: types.optional(
+          z.array(TextqlRpcPublicOntologyOntologyMetric$inboundSchema),
+        ),
+        createdObject: types.optional(
+          TextqlRpcPublicOntologyOntologyObject$inboundSchema,
+        ),
+        createdAttributes: types.optional(
+          z.array(TextqlRpcPublicOntologyOntologyAttribute$inboundSchema),
+        ),
+        updatedObject: types.optional(
+          TextqlRpcPublicOntologyOntologyObject$inboundSchema,
+        ),
+        deletedObject: types.optional(
+          TextqlRpcPublicOntologyOntologyObject$inboundSchema,
+        ),
+        createdAttribute: types.optional(
+          TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
+        ),
+        updatedAttribute: types.optional(
+          TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
+        ),
+        deletedAttribute: types.optional(
+          TextqlRpcPublicOntologyOntologyAttribute$inboundSchema,
+        ),
+        createdLink: types.optional(
+          TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
+        ),
+        updatedLink: types.optional(
+          TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
+        ),
+        deletedLink: types.optional(
+          TextqlRpcPublicOntologyOntologyRelation$inboundSchema,
+        ),
+        createdMetric: types.optional(
+          TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
+        ),
+        updatedMetric: types.optional(
+          TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
+        ),
+        deletedMetric: types.optional(
+          TextqlRpcPublicOntologyOntologyMetric$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicCellsOntologyEditorCellFromJSON(
   jsonString: string,

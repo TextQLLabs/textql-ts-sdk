@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesConfigureOntologyRemoteRequest = {
   remoteUrl?: string | undefined;
@@ -42,21 +43,23 @@ export const TextqlRpcPublicPatchesConfigureOntologyRemoteRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesConfigureOntologyRemoteRequest$Outbound,
     TextqlRpcPublicPatchesConfigureOntologyRemoteRequest
-  > = z.object({
-    remoteUrl: z.optional(z.string()),
-    authType: z.optional(z.string()),
-    token: z.optional(z.nullable(z.string())),
-    sshPrivateKey: z.optional(z.nullable(z.string())),
-    sshKeyPassword: z.optional(z.nullable(z.string())),
-    defaultBranch: z.optional(z.nullable(z.string())),
-    githubAppId: z.optional(z.nullable(z.string())),
-    githubAppInstallationId: z.optional(z.nullable(z.string())),
-    githubAppPrivateKey: z.optional(z.nullable(z.string())),
-    signingKeyType: z.optional(z.nullable(z.string())),
-    signingKey: z.optional(z.nullable(z.string())),
-    pushMode: z.optional(z.nullable(z.string())),
-    useHostedGithubApp: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      remoteUrl: z.optional(z.string()),
+      authType: z.optional(z.string()),
+      token: z.optional(z.nullable(z.string())),
+      sshPrivateKey: z.optional(z.nullable(z.string())),
+      sshKeyPassword: z.optional(z.nullable(z.string())),
+      defaultBranch: z.optional(z.nullable(z.string())),
+      githubAppId: z.optional(z.nullable(z.string())),
+      githubAppInstallationId: z.optional(z.nullable(z.string())),
+      githubAppPrivateKey: z.optional(z.nullable(z.string())),
+      signingKeyType: z.optional(z.nullable(z.string())),
+      signingKey: z.optional(z.nullable(z.string())),
+      pushMode: z.optional(z.nullable(z.string())),
+      useHostedGithubApp: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesConfigureOntologyRemoteRequestToJSON(
   textqlRpcPublicPatchesConfigureOntologyRemoteRequest:

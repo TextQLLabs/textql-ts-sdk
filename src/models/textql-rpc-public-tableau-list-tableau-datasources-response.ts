@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,11 +19,13 @@ export type TextqlRpcPublicTableauListTableauDatasourcesResponse = {
 /** @internal */
 export const TextqlRpcPublicTableauListTableauDatasourcesResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicTableauListTableauDatasourcesResponse, unknown> =
-    z.object({
-      datasources: types.optional(
-        z.array(TextqlRpcPublicTableauTableauDatasource$inboundSchema),
-      ),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        datasources: types.optional(
+          z.array(TextqlRpcPublicTableauTableauDatasource$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicTableauListTableauDatasourcesResponseFromJSON(
   jsonString: string,

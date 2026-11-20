@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPowerbiListPowerBIReportsRequest = {
   connectorId?: number | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPowerbiListPowerBIReportsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPowerbiListPowerBIReportsRequest$Outbound,
     TextqlRpcPublicPowerbiListPowerBIReportsRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    workspaceId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      workspaceId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPowerbiListPowerBIReportsRequestToJSON(
   textqlRpcPublicPowerbiListPowerBIReportsRequest:

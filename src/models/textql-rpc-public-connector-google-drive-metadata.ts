@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicConnectorGoogleDriveMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorGoogleDriveMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorGoogleDriveMetadata, unknown> = z
-    .object({
-      accessToken: types.optional(types.string()),
-      refreshToken: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorGoogleDriveMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        accessToken: types.optional(types.string()),
+        refreshToken: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorGoogleDriveMetadata$Outbound = {
   accessToken?: string | undefined;
@@ -34,11 +36,13 @@ export const TextqlRpcPublicConnectorGoogleDriveMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorGoogleDriveMetadata$Outbound,
     TextqlRpcPublicConnectorGoogleDriveMetadata
-  > = z.object({
-    accessToken: z.optional(z.string()),
-    refreshToken: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accessToken: z.optional(z.string()),
+      refreshToken: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorGoogleDriveMetadataToJSON(
   textqlRpcPublicConnectorGoogleDriveMetadata:

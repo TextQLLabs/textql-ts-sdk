@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPlaybookGetPlaybookLineageRequest = {
   playbookId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicPlaybookGetPlaybookLineageRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetPlaybookLineageRequest$Outbound,
     TextqlRpcPublicPlaybookGetPlaybookLineageRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookGetPlaybookLineageRequestToJSON(
   textqlRpcPublicPlaybookGetPlaybookLineageRequest:

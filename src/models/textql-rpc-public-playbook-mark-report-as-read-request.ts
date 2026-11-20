@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Report read tracking messages
@@ -24,9 +25,11 @@ export const TextqlRpcPublicPlaybookMarkReportAsReadRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookMarkReportAsReadRequest$Outbound,
     TextqlRpcPublicPlaybookMarkReportAsReadRequest
-  > = z.object({
-    reportId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      reportId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookMarkReportAsReadRequestToJSON(
   textqlRpcPublicPlaybookMarkReportAsReadRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicRbacGetEmbedUserApiKeyResponse = {
 
 /** @internal */
 export const TextqlRpcPublicRbacGetEmbedUserApiKeyResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacGetEmbedUserApiKeyResponse, unknown> = z
-    .object({
-      apiKeyBase64: types.optional(types.string()),
-      apiKeyShort: types.optional(types.string()),
-      serviceAccountEmail: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicRbacGetEmbedUserApiKeyResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        apiKeyBase64: types.optional(types.string()),
+        apiKeyShort: types.optional(types.string()),
+        serviceAccountEmail: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicRbacGetEmbedUserApiKeyResponseFromJSON(
   jsonString: string,

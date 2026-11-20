@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 
 export type MinGeneration = number | string;
@@ -20,7 +21,7 @@ export type MinGeneration$Outbound = number | string;
 export const MinGeneration$outboundSchema: z.ZodMiniType<
   MinGeneration$Outbound,
   MinGeneration
-> = smartUnion([z.int(), z.string()]);
+> = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function minGenerationToJSON(minGeneration: MinGeneration): string {
   return JSON.stringify(MinGeneration$outboundSchema.parse(minGeneration));
@@ -38,11 +39,13 @@ export const TextqlRpcPublicChatPollChatEventsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatPollChatEventsRequest$Outbound,
     TextqlRpcPublicChatPollChatEventsRequest
-  > = z.object({
-    chatId: z.string(),
-    resumeCursor: z.optional(z.nullable(z.string())),
-    minGeneration: z.optional(smartUnion([z.int(), z.string()])),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatId: z.string(),
+      resumeCursor: z.optional(z.nullable(z.string())),
+      minGeneration: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function textqlRpcPublicChatPollChatEventsRequestToJSON(
   textqlRpcPublicChatPollChatEventsRequest:

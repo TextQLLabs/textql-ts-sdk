@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -424,68 +424,70 @@ export type TextqlRpcPublicPlaybookPlaybook = {
 export const TextqlRpcPublicPlaybookPlaybook$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPlaybookPlaybook,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  memberId: z.optional(z.nullable(types.string())),
-  connectorId: z.optional(z.nullable(types.number())),
-  name: types.optional(types.string()),
-  prompt: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  status: types.optional(TextqlRpcPublicPlaybookPlaybookStatus$inboundSchema),
-  triggerType: types.optional(
-    TextqlRpcPublicPlaybookPlaybookTriggerType$inboundSchema,
-  ),
-  cronString: z.optional(z.nullable(types.string())),
-  datasetIds: types.optional(z.array(types.string())),
-  referenceReportId: z.optional(z.nullable(types.string())),
-  latestChatId: z.optional(z.nullable(types.string())),
-  emailAddresses: types.optional(z.array(types.string())),
-  slackChannelId: z.optional(z.nullable(types.string())),
-  taggedSlackUserIds: types.optional(z.array(types.string())),
-  llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  paradigmOptions: types.optional(
-    TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
-  ),
-  paradigmType: types.optional(
-    TextqlRpcParadigmParamsParadigmType$inboundSchema,
-  ),
-  isRunning: z.optional(z.nullable(types.boolean())),
-  owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-  hasWritePermission: z.optional(z.nullable(types.boolean())),
-  isSubscribed: z.optional(z.nullable(types.boolean())),
-  reportOutputStyle: types.optional(
-    TextqlRpcPublicPlaybookPlaybookReportStyle$inboundSchema,
-  ),
-  templateHeaderId: z.optional(z.nullable(types.string())),
-  selectedTemplateDataIds: types.optional(z.array(types.string())),
-  maxConcurrentTemplates: z.optional(z.nullable(types.number())),
-  autoOptimizeConcurrency: z.optional(z.nullable(types.boolean())),
-  connectorIds: types.optional(z.array(types.number())),
-  templateDataFilters: types.optional(
-    z.array(TextqlRpcPublicPlaybookFilterCondition$inboundSchema),
-  ),
-  parentPlaybookId: z.optional(z.nullable(types.string())),
-  originPlaybookId: z.optional(z.nullable(types.string())),
-  duplicatedByMemberId: z.optional(z.nullable(types.string())),
-  duplicatedAt: types.optional(types.date()),
-  chatAccessMode: types.optional(
-    TextqlRpcPublicPlaybookChatAccessMode$inboundSchema,
-  ),
-  chatAccessOverrides: types.optional(
-    z.array(TextqlRpcPublicPlaybookChatAccessOverride$inboundSchema),
-  ),
-  chatIsPublic: types.optional(types.boolean()),
-  dashboardIds: types.optional(z.array(types.string())),
-  recipientEmailColumn: z.optional(z.nullable(types.string())),
-  teamsChannelId: z.optional(z.nullable(types.string())),
-  taggedTeamsUserAadIds: types.optional(z.array(types.string())),
-  configSource: types.optional(
-    TextqlRpcPublicConfigSourceConfigSource$inboundSchema,
-  ),
-  apiAccessKeyIds: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    memberId: z.optional(z.nullable(types.string())),
+    connectorId: z.optional(z.nullable(types.number())),
+    name: types.optional(types.string()),
+    prompt: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    status: types.optional(TextqlRpcPublicPlaybookPlaybookStatus$inboundSchema),
+    triggerType: types.optional(
+      TextqlRpcPublicPlaybookPlaybookTriggerType$inboundSchema,
+    ),
+    cronString: z.optional(z.nullable(types.string())),
+    datasetIds: types.optional(z.array(types.string())),
+    referenceReportId: z.optional(z.nullable(types.string())),
+    latestChatId: z.optional(z.nullable(types.string())),
+    emailAddresses: types.optional(z.array(types.string())),
+    slackChannelId: z.optional(z.nullable(types.string())),
+    taggedSlackUserIds: types.optional(z.array(types.string())),
+    llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    paradigmOptions: types.optional(
+      TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
+    ),
+    paradigmType: types.optional(
+      TextqlRpcParadigmParamsParadigmType$inboundSchema,
+    ),
+    isRunning: z.optional(z.nullable(types.boolean())),
+    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+    hasWritePermission: z.optional(z.nullable(types.boolean())),
+    isSubscribed: z.optional(z.nullable(types.boolean())),
+    reportOutputStyle: types.optional(
+      TextqlRpcPublicPlaybookPlaybookReportStyle$inboundSchema,
+    ),
+    templateHeaderId: z.optional(z.nullable(types.string())),
+    selectedTemplateDataIds: types.optional(z.array(types.string())),
+    maxConcurrentTemplates: z.optional(z.nullable(types.number())),
+    autoOptimizeConcurrency: z.optional(z.nullable(types.boolean())),
+    connectorIds: types.optional(z.array(types.number())),
+    templateDataFilters: types.optional(
+      z.array(TextqlRpcPublicPlaybookFilterCondition$inboundSchema),
+    ),
+    parentPlaybookId: z.optional(z.nullable(types.string())),
+    originPlaybookId: z.optional(z.nullable(types.string())),
+    duplicatedByMemberId: z.optional(z.nullable(types.string())),
+    duplicatedAt: types.optional(types.date()),
+    chatAccessMode: types.optional(
+      TextqlRpcPublicPlaybookChatAccessMode$inboundSchema,
+    ),
+    chatAccessOverrides: types.optional(
+      z.array(TextqlRpcPublicPlaybookChatAccessOverride$inboundSchema),
+    ),
+    chatIsPublic: types.optional(types.boolean()),
+    dashboardIds: types.optional(z.array(types.string())),
+    recipientEmailColumn: z.optional(z.nullable(types.string())),
+    teamsChannelId: z.optional(z.nullable(types.string())),
+    taggedTeamsUserAadIds: types.optional(z.array(types.string())),
+    configSource: types.optional(
+      TextqlRpcPublicConfigSourceConfigSource$inboundSchema,
+    ),
+    apiAccessKeyIds: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicPlaybookPlaybookFromJSON(
   jsonString: string,

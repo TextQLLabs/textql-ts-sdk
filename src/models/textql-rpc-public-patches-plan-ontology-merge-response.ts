@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,16 +22,18 @@ export type TextqlRpcPublicPatchesPlanOntologyMergeResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesPlanOntologyMergeResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesPlanOntologyMergeResponse, unknown> = z
-    .object({
-      outcome: types.optional(
-        TextqlRpcPublicPatchesOntologyMergeOutcome$inboundSchema,
-      ),
-      localHeadHash: types.optional(types.string()),
-      remoteHeadHash: types.optional(types.string()),
-      remoteAdditionPaths: types.optional(z.array(types.string())),
-      conflictPaths: types.optional(z.array(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesPlanOntologyMergeResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        outcome: types.optional(
+          TextqlRpcPublicPatchesOntologyMergeOutcome$inboundSchema,
+        ),
+        localHeadHash: types.optional(types.string()),
+        remoteHeadHash: types.optional(types.string()),
+        remoteAdditionPaths: types.optional(z.array(types.string())),
+        conflictPaths: types.optional(z.array(types.string())),
+      })
+    );
 
 export function textqlRpcPublicPatchesPlanOntologyMergeResponseFromJSON(
   jsonString: string,

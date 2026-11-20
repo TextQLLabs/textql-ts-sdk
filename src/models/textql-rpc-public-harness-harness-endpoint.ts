@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -304,18 +304,20 @@ export type TextqlRpcPublicHarnessHarnessEndpoint = {
 export const TextqlRpcPublicHarnessHarnessEndpoint$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicHarnessHarnessEndpoint,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  url: types.optional(types.string()),
-  hasAuthHeader: types.optional(types.boolean()),
-  createdBy: z.optional(z.nullable(types.string())),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  lastTestedAt: types.optional(types.date()),
-  lastTestOk: z.optional(z.nullable(types.boolean())),
-  lastTestError: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    url: types.optional(types.string()),
+    hasAuthHeader: types.optional(types.boolean()),
+    createdBy: z.optional(z.nullable(types.string())),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    lastTestedAt: types.optional(types.date()),
+    lastTestOk: z.optional(z.nullable(types.boolean())),
+    lastTestError: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicHarnessHarnessEndpointFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxCapabilitySandboxPutAssetRequest = {
   fileName?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicSandboxCapabilitySandboxPutAssetRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxPutAssetRequest$Outbound,
     TextqlRpcPublicSandboxCapabilitySandboxPutAssetRequest
-  > = z.object({
-    fileName: z.optional(z.string()),
-    contentType: z.optional(z.string()),
-    data: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      fileName: z.optional(z.string()),
+      contentType: z.optional(z.string()),
+      data: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxCapabilitySandboxPutAssetRequestToJSON(
   textqlRpcPublicSandboxCapabilitySandboxPutAssetRequest:

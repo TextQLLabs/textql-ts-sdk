@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxQuerySqlQueryTemplate = {
   /**
@@ -21,9 +22,11 @@ export const TextqlRpcPublicSandboxQuerySqlQueryTemplate$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSandboxQuerySqlQueryTemplate$Outbound,
     TextqlRpcPublicSandboxQuerySqlQueryTemplate
-  > = z.object({
-    query: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      query: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxQuerySqlQueryTemplateToJSON(
   textqlRpcPublicSandboxQuerySqlQueryTemplate:

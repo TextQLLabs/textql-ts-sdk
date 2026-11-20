@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicTeamsHandleTeamsOAuthCallbackRequest = {
   code?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicTeamsHandleTeamsOAuthCallbackRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTeamsHandleTeamsOAuthCallbackRequest$Outbound,
     TextqlRpcPublicTeamsHandleTeamsOAuthCallbackRequest
-  > = z.object({
-    code: z.optional(z.string()),
-    state: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      code: z.optional(z.string()),
+      state: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicTeamsHandleTeamsOAuthCallbackRequestToJSON(
   textqlRpcPublicTeamsHandleTeamsOAuthCallbackRequest:

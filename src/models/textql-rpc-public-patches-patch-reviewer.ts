@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,14 +21,16 @@ export type TextqlRpcPublicPatchesPatchReviewer = {
 export const TextqlRpcPublicPatchesPatchReviewer$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesPatchReviewer,
   unknown
-> = z.object({
-  memberId: types.optional(types.string()),
-  name: types.optional(types.string()),
-  email: types.optional(types.string()),
-  profileImageUrl: types.optional(types.string()),
-  isAdmin: types.optional(types.boolean()),
-  isCodeOwner: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberId: types.optional(types.string()),
+    name: types.optional(types.string()),
+    email: types.optional(types.string()),
+    profileImageUrl: types.optional(types.string()),
+    isAdmin: types.optional(types.boolean()),
+    isCodeOwner: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicPatchesPatchReviewerFromJSON(
   jsonString: string,

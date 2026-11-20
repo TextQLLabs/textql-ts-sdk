@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,16 +26,19 @@ export type TextqlRpcPublicCellsListDashboardsCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsListDashboardsCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsListDashboardsCell, unknown> = z.object({
-    searchTerm: types.optional(types.string()),
-    dashboardId: types.optional(types.string()),
-    totalCount: types.optional(types.number()),
-    sandboxAvailable: types.optional(types.boolean()),
-    errorMessage: z.optional(z.nullable(types.string())),
-    dashboards: types.optional(
-      z.array(TextqlRpcPublicCellsDashboardInfo$inboundSchema),
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsListDashboardsCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        searchTerm: types.optional(types.string()),
+        dashboardId: types.optional(types.string()),
+        totalCount: types.optional(types.number()),
+        sandboxAvailable: types.optional(types.boolean()),
+        errorMessage: z.optional(z.nullable(types.string())),
+        dashboards: types.optional(
+          z.array(TextqlRpcPublicCellsDashboardInfo$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicCellsListDashboardsCellFromJSON(
   jsonString: string,

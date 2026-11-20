@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAgentDuplicateAgentRequest = {
   agentId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicAgentDuplicateAgentRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentDuplicateAgentRequest$Outbound,
     TextqlRpcPublicAgentDuplicateAgentRequest
-  > = z.object({
-    agentId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agentId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicAgentDuplicateAgentRequestToJSON(
   textqlRpcPublicAgentDuplicateAgentRequest:

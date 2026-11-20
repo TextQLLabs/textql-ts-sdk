@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSettingsCheckMemberStatusRequest = {
   forceRefresh?: boolean | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicSettingsCheckMemberStatusRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSettingsCheckMemberStatusRequest$Outbound,
     TextqlRpcPublicSettingsCheckMemberStatusRequest
-  > = z.object({
-    forceRefresh: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      forceRefresh: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicSettingsCheckMemberStatusRequestToJSON(
   textqlRpcPublicSettingsCheckMemberStatusRequest:

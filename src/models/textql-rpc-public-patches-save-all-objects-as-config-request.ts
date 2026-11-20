@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * SaveAllObjectsAsConfig is the bulk SaveObjectAsConfig: it renders every
@@ -26,9 +27,11 @@ export const TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest$Outbound,
     TextqlRpcPublicPatchesSaveAllObjectsAsConfigRequest
-  > = z.object({
-    objectType: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      objectType: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesSaveAllObjectsAsConfigRequestToJSON(
   textqlRpcPublicPatchesSaveAllObjectsAsConfigRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -33,14 +33,16 @@ export type TextqlRpcPublicObserveWarningTypeDailyCount = {
 
 /** @internal */
 export const TextqlRpcPublicObserveWarningTypeDailyCount$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveWarningTypeDailyCount, unknown> = z
-    .object({
-      date: types.optional(types.string()),
-      warningType: types.optional(
-        TextqlRpcPublicChatThreadWarningType$inboundSchema,
-      ),
-      total: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveWarningTypeDailyCount, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        date: types.optional(types.string()),
+        warningType: types.optional(
+          TextqlRpcPublicChatThreadWarningType$inboundSchema,
+        ),
+        total: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveWarningTypeDailyCountFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,13 +18,16 @@ export type TextqlRpcPublicConnectorPowerBIMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorPowerBIMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorPowerBIMetadata, unknown> = z.object({
-    tenantId: types.optional(types.string()),
-    clientId: types.optional(types.string()),
-    clientSecret: types.optional(types.string()),
-    objectId: z.optional(z.nullable(types.string())),
-    roles: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorPowerBIMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tenantId: types.optional(types.string()),
+        clientId: types.optional(types.string()),
+        clientSecret: types.optional(types.string()),
+        objectId: z.optional(z.nullable(types.string())),
+        roles: z.optional(z.nullable(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorPowerBIMetadata$Outbound = {
   tenantId?: string | undefined;
@@ -39,13 +42,15 @@ export const TextqlRpcPublicConnectorPowerBIMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorPowerBIMetadata$Outbound,
     TextqlRpcPublicConnectorPowerBIMetadata
-  > = z.object({
-    tenantId: z.optional(z.string()),
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-    objectId: z.optional(z.nullable(z.string())),
-    roles: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tenantId: z.optional(z.string()),
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+      objectId: z.optional(z.nullable(z.string())),
+      roles: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorPowerBIMetadataToJSON(
   textqlRpcPublicConnectorPowerBIMetadata:

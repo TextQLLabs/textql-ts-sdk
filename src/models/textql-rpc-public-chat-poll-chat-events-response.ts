@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -24,7 +24,9 @@ export type TextqlRpcPublicChatPollChatEventsResponse = {
 
 /** @internal */
 export const Generation$inboundSchema: z.ZodMiniType<Generation, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function generationFromJSON(
   jsonString: string,
@@ -38,14 +40,19 @@ export function generationFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatPollChatEventsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatPollChatEventsResponse, unknown> = z.object({
-    events: types.optional(
-      z.array(TextqlRpcPublicChatWatchChatEvent$inboundSchema),
-    ),
-    cursor: types.optional(types.string()),
-    running: types.optional(types.boolean()),
-    generation: types.optional(smartUnion([types.number(), types.string()])),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatPollChatEventsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        events: types.optional(
+          z.array(TextqlRpcPublicChatWatchChatEvent$inboundSchema),
+        ),
+        cursor: types.optional(types.string()),
+        running: types.optional(types.boolean()),
+        generation: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicChatPollChatEventsResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -89,21 +90,23 @@ export type TextqlRpcPublicChatCreateRequest$Outbound = {
 export const TextqlRpcPublicChatCreateRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCreateRequest$Outbound,
   TextqlRpcPublicChatCreateRequest
-> = z.object({
-  paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
-  model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-  message: z.optional(z.nullable(z.string())),
-  playbookId: z.optional(z.nullable(z.string())),
-  research: z.optional(z.nullable(z.boolean())),
-  dashboardMode: z.optional(z.nullable(z.boolean())),
-  methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
-  vllmModelId: z.optional(z.nullable(z.string())),
-  fastMode: z.optional(z.nullable(z.boolean())),
-  maxThinking: z.optional(z.nullable(z.boolean())),
-  modelName: z.optional(z.nullable(z.string())),
-  harness: z.optional(z.nullable(z.string())),
-  harnessEndpointId: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
+    model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+    message: z.optional(z.nullable(z.string())),
+    playbookId: z.optional(z.nullable(z.string())),
+    research: z.optional(z.nullable(z.boolean())),
+    dashboardMode: z.optional(z.nullable(z.boolean())),
+    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
+    vllmModelId: z.optional(z.nullable(z.string())),
+    fastMode: z.optional(z.nullable(z.boolean())),
+    maxThinking: z.optional(z.nullable(z.boolean())),
+    modelName: z.optional(z.nullable(z.string())),
+    harness: z.optional(z.nullable(z.string())),
+    harnessEndpointId: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicChatCreateRequestToJSON(
   textqlRpcPublicChatCreateRequest: TextqlRpcPublicChatCreateRequest,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -30,14 +30,16 @@ export type TextqlRpcPublicCellsFeedExplorerCell = {
 export const TextqlRpcPublicCellsFeedExplorerCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedExplorerCell,
   unknown
-> = z.object({
-  operation: types.optional(types.string()),
-  postId: z.optional(z.nullable(types.string())),
-  filter: z.optional(z.nullable(types.string())),
-  limit: z.optional(z.nullable(types.number())),
-  result: types.optional(types.string()),
-  channelId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    operation: types.optional(types.string()),
+    postId: z.optional(z.nullable(types.string())),
+    filter: z.optional(z.nullable(types.string())),
+    limit: z.optional(z.nullable(types.number())),
+    result: types.optional(types.string()),
+    channelId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsFeedExplorerCellFromJSON(
   jsonString: string,

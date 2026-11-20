@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Object access management messages
@@ -40,14 +41,16 @@ export const TextqlRpcPublicRbacShareObjectRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacShareObjectRequest$Outbound,
     TextqlRpcPublicRbacShareObjectRequest
-  > = z.object({
-    memberEmail: z.optional(z.string()),
-    objectType: z.optional(z.string()),
-    objectId: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-    accessType: z.optional(z.string()),
-    isPublic: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberEmail: z.optional(z.string()),
+      objectType: z.optional(z.string()),
+      objectId: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+      accessType: z.optional(z.string()),
+      isPublic: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicRbacShareObjectRequestToJSON(
   textqlRpcPublicRbacShareObjectRequest: TextqlRpcPublicRbacShareObjectRequest,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -82,11 +82,13 @@ export type TextqlRpcPublicChatWatchChatEvent =
   | RunStarted;
 
 /** @internal */
-export const RunStarted$inboundSchema: z.ZodMiniType<RunStarted, unknown> = z
-  .object({
-    runStarted: TextqlRpcPublicChatWatchRunStartedEvent$inboundSchema,
-    cursor: types.optional(types.string()),
-  });
+export const RunStarted$inboundSchema: z.ZodMiniType<RunStarted, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      runStarted: TextqlRpcPublicChatWatchRunStartedEvent$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function runStartedFromJSON(
   jsonString: string,
@@ -99,11 +101,13 @@ export function runStartedFromJSON(
 }
 
 /** @internal */
-export const RunError$inboundSchema: z.ZodMiniType<RunError, unknown> = z
-  .object({
-    runError: TextqlRpcPublicChatWatchRunErrorEvent$inboundSchema,
-    cursor: types.optional(types.string()),
-  });
+export const RunError$inboundSchema: z.ZodMiniType<RunError, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      runError: TextqlRpcPublicChatWatchRunErrorEvent$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function runErrorFromJSON(
   jsonString: string,
@@ -116,11 +120,13 @@ export function runErrorFromJSON(
 }
 
 /** @internal */
-export const RunComplete$inboundSchema: z.ZodMiniType<RunComplete, unknown> = z
-  .object({
-    runComplete: TextqlRpcPublicChatWatchRunCompleteEvent$inboundSchema,
-    cursor: types.optional(types.string()),
-  });
+export const RunComplete$inboundSchema: z.ZodMiniType<RunComplete, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      runComplete: TextqlRpcPublicChatWatchRunCompleteEvent$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function runCompleteFromJSON(
   jsonString: string,
@@ -133,10 +139,13 @@ export function runCompleteFromJSON(
 }
 
 /** @internal */
-export const Opened$inboundSchema: z.ZodMiniType<Opened, unknown> = z.object({
-  opened: TextqlRpcPublicChatWatchOpenedEvent$inboundSchema,
-  cursor: types.optional(types.string()),
-});
+export const Opened$inboundSchema: z.ZodMiniType<Opened, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      opened: TextqlRpcPublicChatWatchOpenedEvent$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function openedFromJSON(
   jsonString: string,
@@ -149,11 +158,13 @@ export function openedFromJSON(
 }
 
 /** @internal */
-export const Heartbeat$inboundSchema: z.ZodMiniType<Heartbeat, unknown> = z
-  .object({
-    heartbeat: TextqlRpcPublicChatWatchHeartbeatEvent$inboundSchema,
-    cursor: types.optional(types.string()),
-  });
+export const Heartbeat$inboundSchema: z.ZodMiniType<Heartbeat, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      heartbeat: TextqlRpcPublicChatWatchHeartbeatEvent$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function heartbeatFromJSON(
   jsonString: string,
@@ -169,10 +180,12 @@ export function heartbeatFromJSON(
 export const HandoffPending$inboundSchema: z.ZodMiniType<
   HandoffPending,
   unknown
-> = z.object({
-  handoffPending: TextqlRpcPublicChatWatchHandoffPendingEvent$inboundSchema,
-  cursor: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    handoffPending: TextqlRpcPublicChatWatchHandoffPendingEvent$inboundSchema,
+    cursor: types.optional(types.string()),
+  })
+);
 
 export function handoffPendingFromJSON(
   jsonString: string,
@@ -185,10 +198,13 @@ export function handoffPendingFromJSON(
 }
 
 /** @internal */
-export const Cell$inboundSchema: z.ZodMiniType<Cell, unknown> = z.object({
-  cell: TextqlRpcPublicChatCell$inboundSchema,
-  cursor: types.optional(types.string()),
-});
+export const Cell$inboundSchema: z.ZodMiniType<Cell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      cell: TextqlRpcPublicChatCell$inboundSchema,
+      cursor: types.optional(types.string()),
+    })
+  );
 
 export function cellFromJSON(
   jsonString: string,
@@ -204,15 +220,17 @@ export function cellFromJSON(
 export const TextqlRpcPublicChatWatchChatEvent$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatWatchChatEvent,
   unknown
-> = smartUnion([
-  z.lazy(() => Cell$inboundSchema),
-  z.lazy(() => HandoffPending$inboundSchema),
-  z.lazy(() => Heartbeat$inboundSchema),
-  z.lazy(() => Opened$inboundSchema),
-  z.lazy(() => RunComplete$inboundSchema),
-  z.lazy(() => RunError$inboundSchema),
-  z.lazy(() => RunStarted$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Cell$inboundSchema),
+    z.lazy(() => HandoffPending$inboundSchema),
+    z.lazy(() => Heartbeat$inboundSchema),
+    z.lazy(() => Opened$inboundSchema),
+    z.lazy(() => RunComplete$inboundSchema),
+    z.lazy(() => RunError$inboundSchema),
+    z.lazy(() => RunStarted$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicChatWatchChatEventFromJSON(
   jsonString: string,

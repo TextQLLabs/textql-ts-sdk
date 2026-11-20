@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
@@ -11,8 +11,8 @@ export type TextqlRpcPublicPlaybookPreviewSlackReportResponse = {};
 
 /** @internal */
 export const TextqlRpcPublicPlaybookPreviewSlackReportResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPlaybookPreviewSlackReportResponse, unknown> = z
-    .object({});
+  z.ZodMiniType<TextqlRpcPublicPlaybookPreviewSlackReportResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPlaybookPreviewSlackReportResponseFromJSON(
   jsonString: string,

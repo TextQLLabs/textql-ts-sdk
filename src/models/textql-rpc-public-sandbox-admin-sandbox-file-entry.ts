@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -132,7 +132,9 @@ export type TextqlRpcPublicSandboxAdminSandboxFileEntry = {
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxFileEntrySizeBytes$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxFileEntrySizeBytes, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxFileEntrySizeBytesFromJSON(
   jsonString: string,
@@ -152,14 +154,16 @@ export function textqlRpcPublicSandboxAdminSandboxFileEntrySizeBytesFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxFileEntry$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxFileEntry, unknown> = z
-    .object({
-      name: types.optional(types.string()),
-      path: types.optional(types.string()),
-      isDir: types.optional(types.boolean()),
-      sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
-      modifiedAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxFileEntry, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        name: types.optional(types.string()),
+        path: types.optional(types.string()),
+        isDir: types.optional(types.boolean()),
+        sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
+        modifiedAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxFileEntryFromJSON(
   jsonString: string,

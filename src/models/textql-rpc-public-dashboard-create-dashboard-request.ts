@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicDashboardDashboardType,
   TextqlRpcPublicDashboardDashboardType$outboundSchema,
@@ -36,16 +37,18 @@ export const TextqlRpcPublicDashboardCreateDashboardRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardCreateDashboardRequest$Outbound,
     TextqlRpcPublicDashboardCreateDashboardRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    description: z.optional(z.nullable(z.string())),
-    code: z.optional(z.string()),
-    type: z.optional(TextqlRpcPublicDashboardDashboardType$outboundSchema),
-    htmlUrl: z.optional(z.nullable(z.string())),
-    chatId: z.optional(z.nullable(z.string())),
-    cellId: z.optional(z.nullable(z.string())),
-    folderId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      description: z.optional(z.nullable(z.string())),
+      code: z.optional(z.string()),
+      type: z.optional(TextqlRpcPublicDashboardDashboardType$outboundSchema),
+      htmlUrl: z.optional(z.nullable(z.string())),
+      chatId: z.optional(z.nullable(z.string())),
+      cellId: z.optional(z.nullable(z.string())),
+      folderId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicDashboardCreateDashboardRequestToJSON(
   textqlRpcPublicDashboardCreateDashboardRequest:

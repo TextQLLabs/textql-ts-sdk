@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,14 +23,16 @@ export type TextqlRpcPublicCellsTableauSQLCell = {
 export const TextqlRpcPublicCellsTableauSQLCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsTableauSQLCell,
   unknown
-> = z.object({
-  tableauDatasourceLuid: types.optional(types.string()),
-  query: types.optional(types.string()),
-  dataframe: types.optional(
-    TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
-  ),
-  dataframePreview: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tableauDatasourceLuid: types.optional(types.string()),
+    query: types.optional(types.string()),
+    dataframe: types.optional(
+      TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
+    ),
+    dataframePreview: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsTableauSQLCellFromJSON(
   jsonString: string,

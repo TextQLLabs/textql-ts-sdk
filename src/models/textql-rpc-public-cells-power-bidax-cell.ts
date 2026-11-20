@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -29,20 +29,22 @@ export type TextqlRpcPublicCellsPowerBIDAXCell = {
 export const TextqlRpcPublicCellsPowerBIDAXCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsPowerBIDAXCell,
   unknown
-> = z.object({
-  datasetId: types.optional(types.string()),
-  daxQuery: types.optional(types.string()),
-  dataframe: types.optional(
-    TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
-  ),
-  dataframePreview: types.optional(types.string()),
-  authRequired: types.optional(types.boolean()),
-  authConnectorName: types.optional(types.string()),
-  authConnectorId: types.optional(types.number()),
-  authTenantId: types.optional(types.string()),
-  authClientId: types.optional(types.string()),
-  authCompleted: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    datasetId: types.optional(types.string()),
+    daxQuery: types.optional(types.string()),
+    dataframe: types.optional(
+      TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
+    ),
+    dataframePreview: types.optional(types.string()),
+    authRequired: types.optional(types.boolean()),
+    authConnectorName: types.optional(types.string()),
+    authConnectorId: types.optional(types.number()),
+    authTenantId: types.optional(types.string()),
+    authClientId: types.optional(types.string()),
+    authCompleted: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicCellsPowerBIDAXCellFromJSON(
   jsonString: string,

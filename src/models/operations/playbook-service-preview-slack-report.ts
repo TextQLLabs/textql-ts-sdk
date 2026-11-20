@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,22 @@ export const PlaybookServicePreviewSlackReportRequest$outboundSchema:
   z.ZodMiniType<
     PlaybookServicePreviewSlackReportRequest$Outbound,
     PlaybookServicePreviewSlackReportRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicPlaybookPreviewSlackReportRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicPlaybookPreviewSlackReportRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function playbookServicePreviewSlackReportRequestToJSON(
@@ -64,10 +67,12 @@ export function playbookServicePreviewSlackReportRequestToJSON(
 /** @internal */
 export const PlaybookServicePreviewSlackReportResponse$inboundSchema:
   z.ZodMiniType<PlaybookServicePreviewSlackReportResponse, unknown> =
-    smartUnion([
-      models.TextqlRpcPublicPlaybookPreviewSlackReportResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicPlaybookPreviewSlackReportResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function playbookServicePreviewSlackReportResponseFromJSON(
   jsonString: string,

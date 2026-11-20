@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -84,48 +84,51 @@ export type TextqlRpcPublicParadigmUniversalOptions = {
 
 /** @internal */
 export const TextqlRpcPublicParadigmUniversalOptions$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicParadigmUniversalOptions, unknown> = z.object({
-    connectorIds: types.optional(z.array(types.number())),
-    datasetId: z.optional(z.nullable(types.string())),
-    webSearchEnabled: types.optional(types.boolean()),
-    sqlEnabled: types.optional(types.boolean()),
-    ontologyEnabled: types.optional(types.boolean()),
-    ontologyEditingEnabled: types.optional(types.boolean()),
-    pythonEnabled: types.optional(types.boolean()),
-    autoApproveEnabled: types.optional(types.boolean()),
-    googleDriveEnabled: types.optional(types.boolean()),
-    powerbiEnabled: types.optional(types.boolean()),
-    contextEditingEnabled: types.optional(types.boolean()),
-    formEditorEnabled: types.optional(types.boolean()),
-    playbookToolsEnabled: types.optional(types.boolean()),
-    microsoft365Enabled: types.optional(types.boolean()),
-    feedExplorerEnabled: types.optional(types.boolean()),
-    bashEnabled: types.optional(types.boolean()),
-    javascriptEnabled: types.optional(types.boolean()),
-    feedPostEnabled: types.optional(types.boolean()),
-    feedCommentEnabled: types.optional(types.boolean()),
-    feedEngageEnabled: types.optional(types.boolean()),
-    streamlitEnabled: types.optional(types.boolean()),
-    compactionDisabled: types.optional(types.boolean()),
-    gmailEnabled: types.optional(types.boolean()),
-    chatHistorySearchEnabled: types.optional(types.boolean()),
-    googleCalendarEnabled: types.optional(types.boolean()),
-    emailOutputEnabled: types.optional(types.boolean()),
-    powerbiSelections: types.optional(
-      z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
-    ),
-    smsMode: types.optional(types.boolean()),
-    apiAccessKeyIds: types.optional(z.array(types.string())),
-    feedEnabled: z.optional(z.nullable(types.boolean())),
-    fileGenerationDisabled: types.optional(types.boolean()),
-    readFileEnabled: types.optional(types.boolean()),
-    ontologyActionsEnabled: types.optional(types.boolean()),
-    ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
-    feedExplorerSelected: z.optional(z.nullable(types.boolean())),
-    feedPostSelected: z.optional(z.nullable(types.boolean())),
-    feedCommentSelected: z.optional(z.nullable(types.boolean())),
-    feedEngageSelected: z.optional(z.nullable(types.boolean())),
-  });
+  z.ZodMiniType<TextqlRpcPublicParadigmUniversalOptions, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        connectorIds: types.optional(z.array(types.number())),
+        datasetId: z.optional(z.nullable(types.string())),
+        webSearchEnabled: types.optional(types.boolean()),
+        sqlEnabled: types.optional(types.boolean()),
+        ontologyEnabled: types.optional(types.boolean()),
+        ontologyEditingEnabled: types.optional(types.boolean()),
+        pythonEnabled: types.optional(types.boolean()),
+        autoApproveEnabled: types.optional(types.boolean()),
+        googleDriveEnabled: types.optional(types.boolean()),
+        powerbiEnabled: types.optional(types.boolean()),
+        contextEditingEnabled: types.optional(types.boolean()),
+        formEditorEnabled: types.optional(types.boolean()),
+        playbookToolsEnabled: types.optional(types.boolean()),
+        microsoft365Enabled: types.optional(types.boolean()),
+        feedExplorerEnabled: types.optional(types.boolean()),
+        bashEnabled: types.optional(types.boolean()),
+        javascriptEnabled: types.optional(types.boolean()),
+        feedPostEnabled: types.optional(types.boolean()),
+        feedCommentEnabled: types.optional(types.boolean()),
+        feedEngageEnabled: types.optional(types.boolean()),
+        streamlitEnabled: types.optional(types.boolean()),
+        compactionDisabled: types.optional(types.boolean()),
+        gmailEnabled: types.optional(types.boolean()),
+        chatHistorySearchEnabled: types.optional(types.boolean()),
+        googleCalendarEnabled: types.optional(types.boolean()),
+        emailOutputEnabled: types.optional(types.boolean()),
+        powerbiSelections: types.optional(
+          z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
+        ),
+        smsMode: types.optional(types.boolean()),
+        apiAccessKeyIds: types.optional(z.array(types.string())),
+        feedEnabled: z.optional(z.nullable(types.boolean())),
+        fileGenerationDisabled: types.optional(types.boolean()),
+        readFileEnabled: types.optional(types.boolean()),
+        ontologyActionsEnabled: types.optional(types.boolean()),
+        ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
+        feedExplorerSelected: z.optional(z.nullable(types.boolean())),
+        feedPostSelected: z.optional(z.nullable(types.boolean())),
+        feedCommentSelected: z.optional(z.nullable(types.boolean())),
+        feedEngageSelected: z.optional(z.nullable(types.boolean())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicParadigmUniversalOptions$Outbound = {
   connectorIds?: Array<number> | undefined;
@@ -175,48 +178,50 @@ export const TextqlRpcPublicParadigmUniversalOptions$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicParadigmUniversalOptions$Outbound,
     TextqlRpcPublicParadigmUniversalOptions
-  > = z.object({
-    connectorIds: z.optional(z.array(z.int())),
-    datasetId: z.optional(z.nullable(z.string())),
-    webSearchEnabled: z.optional(z.boolean()),
-    sqlEnabled: z.optional(z.boolean()),
-    ontologyEnabled: z.optional(z.boolean()),
-    ontologyEditingEnabled: z.optional(z.boolean()),
-    pythonEnabled: z.optional(z.boolean()),
-    autoApproveEnabled: z.optional(z.boolean()),
-    googleDriveEnabled: z.optional(z.boolean()),
-    powerbiEnabled: z.optional(z.boolean()),
-    contextEditingEnabled: z.optional(z.boolean()),
-    formEditorEnabled: z.optional(z.boolean()),
-    playbookToolsEnabled: z.optional(z.boolean()),
-    microsoft365Enabled: z.optional(z.boolean()),
-    feedExplorerEnabled: z.optional(z.boolean()),
-    bashEnabled: z.optional(z.boolean()),
-    javascriptEnabled: z.optional(z.boolean()),
-    feedPostEnabled: z.optional(z.boolean()),
-    feedCommentEnabled: z.optional(z.boolean()),
-    feedEngageEnabled: z.optional(z.boolean()),
-    streamlitEnabled: z.optional(z.boolean()),
-    compactionDisabled: z.optional(z.boolean()),
-    gmailEnabled: z.optional(z.boolean()),
-    chatHistorySearchEnabled: z.optional(z.boolean()),
-    googleCalendarEnabled: z.optional(z.boolean()),
-    emailOutputEnabled: z.optional(z.boolean()),
-    powerbiSelections: z.optional(
-      z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
-    ),
-    smsMode: z.optional(z.boolean()),
-    apiAccessKeyIds: z.optional(z.array(z.string())),
-    feedEnabled: z.optional(z.nullable(z.boolean())),
-    fileGenerationDisabled: z.optional(z.boolean()),
-    readFileEnabled: z.optional(z.boolean()),
-    ontologyActionsEnabled: z.optional(z.boolean()),
-    ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
-    feedExplorerSelected: z.optional(z.nullable(z.boolean())),
-    feedPostSelected: z.optional(z.nullable(z.boolean())),
-    feedCommentSelected: z.optional(z.nullable(z.boolean())),
-    feedEngageSelected: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorIds: z.optional(z.array(z.int())),
+      datasetId: z.optional(z.nullable(z.string())),
+      webSearchEnabled: z.optional(z.boolean()),
+      sqlEnabled: z.optional(z.boolean()),
+      ontologyEnabled: z.optional(z.boolean()),
+      ontologyEditingEnabled: z.optional(z.boolean()),
+      pythonEnabled: z.optional(z.boolean()),
+      autoApproveEnabled: z.optional(z.boolean()),
+      googleDriveEnabled: z.optional(z.boolean()),
+      powerbiEnabled: z.optional(z.boolean()),
+      contextEditingEnabled: z.optional(z.boolean()),
+      formEditorEnabled: z.optional(z.boolean()),
+      playbookToolsEnabled: z.optional(z.boolean()),
+      microsoft365Enabled: z.optional(z.boolean()),
+      feedExplorerEnabled: z.optional(z.boolean()),
+      bashEnabled: z.optional(z.boolean()),
+      javascriptEnabled: z.optional(z.boolean()),
+      feedPostEnabled: z.optional(z.boolean()),
+      feedCommentEnabled: z.optional(z.boolean()),
+      feedEngageEnabled: z.optional(z.boolean()),
+      streamlitEnabled: z.optional(z.boolean()),
+      compactionDisabled: z.optional(z.boolean()),
+      gmailEnabled: z.optional(z.boolean()),
+      chatHistorySearchEnabled: z.optional(z.boolean()),
+      googleCalendarEnabled: z.optional(z.boolean()),
+      emailOutputEnabled: z.optional(z.boolean()),
+      powerbiSelections: z.optional(
+        z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
+      ),
+      smsMode: z.optional(z.boolean()),
+      apiAccessKeyIds: z.optional(z.array(z.string())),
+      feedEnabled: z.optional(z.nullable(z.boolean())),
+      fileGenerationDisabled: z.optional(z.boolean()),
+      readFileEnabled: z.optional(z.boolean()),
+      ontologyActionsEnabled: z.optional(z.boolean()),
+      ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
+      feedExplorerSelected: z.optional(z.nullable(z.boolean())),
+      feedPostSelected: z.optional(z.nullable(z.boolean())),
+      feedCommentSelected: z.optional(z.nullable(z.boolean())),
+      feedEngageSelected: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicParadigmUniversalOptionsToJSON(
   textqlRpcPublicParadigmUniversalOptions:

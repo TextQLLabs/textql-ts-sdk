@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicAgentSlackAgentTrigger,
   TextqlRpcPublicAgentSlackAgentTrigger$Outbound,
@@ -102,41 +103,43 @@ export const TextqlRpcPublicAgentUpdateAgentRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentUpdateAgentRequest$Outbound,
     TextqlRpcPublicAgentUpdateAgentRequest
-  > = z.object({
-    agentId: z.optional(z.string()),
-    name: z.optional(z.string()),
-    prompt: z.optional(z.string()),
-    isActive: z.optional(z.boolean()),
-    paradigmOptions: z.optional(
-      TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
-    ),
-    slackChannelId: z.optional(z.nullable(z.string())),
-    slackDmUserIds: z.optional(z.array(z.string())),
-    skipOrgDefaultChannel: z.optional(z.boolean()),
-    llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    fastMode: z.optional(z.nullable(z.boolean())),
-    isStateful: z.optional(z.nullable(z.boolean())),
-    postingFrequencyCrons: z.optional(z.array(z.string())),
-    emailRecipientMemberIds: z.optional(z.array(z.string())),
-    updateEmailRecipients: z.optional(z.nullable(z.boolean())),
-    channelIds: z.optional(z.array(z.string())),
-    updateChannelIds: z.optional(z.nullable(z.boolean())),
-    teamsChannelId: z.optional(z.nullable(z.string())),
-    teamsDmUserAadIds: z.optional(z.array(z.string())),
-    slackTrigger: z.optional(
-      TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
-    ),
-    postingFrequencyCadences: z.optional(z.array(z.string())),
-    callableAsSubagent: z.optional(z.nullable(z.boolean())),
-    subagentInvokerMemberIds: z.optional(z.array(z.string())),
-    subagentInvokerRoleIds: z.optional(z.array(z.string())),
-    updateSubagentInvokers: z.optional(z.nullable(z.boolean())),
-    feedEnabled: z.optional(z.nullable(z.boolean())),
-    subagentAgentIds: z.optional(z.array(z.string())),
-    updateSubagents: z.optional(z.nullable(z.boolean())),
-    allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
-    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agentId: z.optional(z.string()),
+      name: z.optional(z.string()),
+      prompt: z.optional(z.string()),
+      isActive: z.optional(z.boolean()),
+      paradigmOptions: z.optional(
+        TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+      ),
+      slackChannelId: z.optional(z.nullable(z.string())),
+      slackDmUserIds: z.optional(z.array(z.string())),
+      skipOrgDefaultChannel: z.optional(z.boolean()),
+      llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      fastMode: z.optional(z.nullable(z.boolean())),
+      isStateful: z.optional(z.nullable(z.boolean())),
+      postingFrequencyCrons: z.optional(z.array(z.string())),
+      emailRecipientMemberIds: z.optional(z.array(z.string())),
+      updateEmailRecipients: z.optional(z.nullable(z.boolean())),
+      channelIds: z.optional(z.array(z.string())),
+      updateChannelIds: z.optional(z.nullable(z.boolean())),
+      teamsChannelId: z.optional(z.nullable(z.string())),
+      teamsDmUserAadIds: z.optional(z.array(z.string())),
+      slackTrigger: z.optional(
+        TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
+      ),
+      postingFrequencyCadences: z.optional(z.array(z.string())),
+      callableAsSubagent: z.optional(z.nullable(z.boolean())),
+      subagentInvokerMemberIds: z.optional(z.array(z.string())),
+      subagentInvokerRoleIds: z.optional(z.array(z.string())),
+      updateSubagentInvokers: z.optional(z.nullable(z.boolean())),
+      feedEnabled: z.optional(z.nullable(z.boolean())),
+      subagentAgentIds: z.optional(z.array(z.string())),
+      updateSubagents: z.optional(z.nullable(z.boolean())),
+      allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
+      methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicAgentUpdateAgentRequestToJSON(
   textqlRpcPublicAgentUpdateAgentRequest:

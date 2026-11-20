@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -29,7 +29,9 @@ export const TextqlRpcPublicCellsLinkedinSearchCellExecutionTimeMs$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicCellsLinkedinSearchCellExecutionTimeMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicCellsLinkedinSearchCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -49,16 +51,19 @@ export function textqlRpcPublicCellsLinkedinSearchCellExecutionTimeMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicCellsLinkedinSearchCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsLinkedinSearchCell, unknown> = z.object({
-    query: types.optional(types.string()),
-    exaResults: types.optional(
-      z.array(TextqlRpcPublicCellsExaSearchResult$inboundSchema),
-    ),
-    costDollars: z.optional(z.nullable(types.number())),
-    executionTimeMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsLinkedinSearchCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        query: types.optional(types.string()),
+        exaResults: types.optional(
+          z.array(TextqlRpcPublicCellsExaSearchResult$inboundSchema),
+        ),
+        costDollars: z.optional(z.nullable(types.number())),
+        executionTimeMs: z.optional(
+          z.nullable(smartUnion([types.number(), types.string()])),
+        ),
+      })
+    );
 
 export function textqlRpcPublicCellsLinkedinSearchCellFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -26,9 +27,13 @@ export type TextqlRpcPublicChatChatSource = OpenEnum<
 export const TextqlRpcPublicChatChatSource$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatChatSource,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicChatChatSource);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicChatChatSource)
+);
 /** @internal */
 export const TextqlRpcPublicChatChatSource$outboundSchema: z.ZodMiniType<
   string,
   TextqlRpcPublicChatChatSource
-> = openEnums.outboundSchema(TextqlRpcPublicChatChatSource);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.outboundSchema(TextqlRpcPublicChatChatSource)
+);

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesDeleteOntologyDirectoryRequest = {
   path?: string | undefined;
@@ -30,11 +31,13 @@ export const TextqlRpcPublicPatchesDeleteOntologyDirectoryRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesDeleteOntologyDirectoryRequest$Outbound,
     TextqlRpcPublicPatchesDeleteOntologyDirectoryRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    commitMessage: z.optional(z.nullable(z.string())),
-    recursive: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      commitMessage: z.optional(z.nullable(z.string())),
+      recursive: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesDeleteOntologyDirectoryRequestToJSON(
   textqlRpcPublicPatchesDeleteOntologyDirectoryRequest:

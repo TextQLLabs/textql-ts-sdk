@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,10 +23,12 @@ export type TextqlRpcPublicAppAppFile = {
 export const TextqlRpcPublicAppAppFile$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppAppFile,
   unknown
-> = z.object({
-  path: types.optional(types.string()),
-  content: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    path: types.optional(types.string()),
+    content: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicAppAppFile$Outbound = {
   path?: string | undefined;
@@ -37,10 +39,12 @@ export type TextqlRpcPublicAppAppFile$Outbound = {
 export const TextqlRpcPublicAppAppFile$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppAppFile$Outbound,
   TextqlRpcPublicAppAppFile
-> = z.object({
-  path: z.optional(z.string()),
-  content: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    path: z.optional(z.string()),
+    content: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicAppAppFileToJSON(
   textqlRpcPublicAppAppFile: TextqlRpcPublicAppAppFile,

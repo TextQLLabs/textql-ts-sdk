@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -14,10 +14,12 @@ export type TextqlRpcPublicOntologyUnlinkedAttributeData = {
 
 /** @internal */
 export const TextqlRpcPublicOntologyUnlinkedAttributeData$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicOntologyUnlinkedAttributeData, unknown> = z
-    .object({
-      columnName: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicOntologyUnlinkedAttributeData, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        columnName: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicOntologyUnlinkedAttributeDataFromJSON(
   jsonString: string,

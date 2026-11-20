@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveFixWarningRequest = {
   warningId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicObserveFixWarningRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveFixWarningRequest$Outbound,
     TextqlRpcPublicObserveFixWarningRequest
-  > = z.object({
-    warningId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      warningId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicObserveFixWarningRequestToJSON(
   textqlRpcPublicObserveFixWarningRequest:

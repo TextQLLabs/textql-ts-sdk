@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,12 +26,14 @@ export const TextqlRpcPublicSettingsUpdateOrganizationModelSettingsResponse$inbo
   z.ZodMiniType<
     TextqlRpcPublicSettingsUpdateOrganizationModelSettingsResponse,
     unknown
-  > = z.object({
-    organization: types.optional(TextqlRpcAuthOrganization$inboundSchema),
-    modelSettings: types.optional(
-      TextqlRpcPublicSettingsOrganizationModelSettings$inboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      organization: types.optional(TextqlRpcAuthOrganization$inboundSchema),
+      modelSettings: types.optional(
+        TextqlRpcPublicSettingsOrganizationModelSettings$inboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicSettingsUpdateOrganizationModelSettingsResponseFromJSON(
   jsonString: string,

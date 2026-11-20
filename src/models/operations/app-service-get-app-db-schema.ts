@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type AppServiceGetAppDBSchemaRequest$Outbound = {
 export const AppServiceGetAppDBSchemaRequest$outboundSchema: z.ZodMiniType<
   AppServiceGetAppDBSchemaRequest$Outbound,
   AppServiceGetAppDBSchemaRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicAppGetAppDBSchemaRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicAppGetAppDBSchemaRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function appServiceGetAppDBSchemaRequestToJSON(
@@ -62,10 +64,12 @@ export function appServiceGetAppDBSchemaRequestToJSON(
 export const AppServiceGetAppDBSchemaResponse$inboundSchema: z.ZodMiniType<
   AppServiceGetAppDBSchemaResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicAppGetAppDBSchemaResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicAppGetAppDBSchemaResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function appServiceGetAppDBSchemaResponseFromJSON(
   jsonString: string,

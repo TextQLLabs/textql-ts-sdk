@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,12 +19,14 @@ export type TextqlRpcPublicAgentSlackAgentTrigger = {
 export const TextqlRpcPublicAgentSlackAgentTrigger$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAgentSlackAgentTrigger,
   unknown
-> = z.object({
-  triggerId: types.optional(types.string()),
-  isActive: types.optional(types.boolean()),
-  teamId: z.optional(z.nullable(types.string())),
-  allowedChannelIds: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    triggerId: types.optional(types.string()),
+    isActive: types.optional(types.boolean()),
+    teamId: z.optional(z.nullable(types.string())),
+    allowedChannelIds: types.optional(z.array(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicAgentSlackAgentTrigger$Outbound = {
   triggerId?: string | undefined;
@@ -38,12 +40,14 @@ export const TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentSlackAgentTrigger$Outbound,
     TextqlRpcPublicAgentSlackAgentTrigger
-  > = z.object({
-    triggerId: z.optional(z.string()),
-    isActive: z.optional(z.boolean()),
-    teamId: z.optional(z.nullable(z.string())),
-    allowedChannelIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      triggerId: z.optional(z.string()),
+      isActive: z.optional(z.boolean()),
+      teamId: z.optional(z.nullable(z.string())),
+      allowedChannelIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicAgentSlackAgentTriggerToJSON(
   textqlRpcPublicAgentSlackAgentTrigger: TextqlRpcPublicAgentSlackAgentTrigger,

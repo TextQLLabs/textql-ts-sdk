@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveExportObservabilityCsvRequest = {
   tab?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicObserveExportObservabilityCsvRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveExportObservabilityCsvRequest$Outbound,
     TextqlRpcPublicObserveExportObservabilityCsvRequest
-  > = z.object({
-    tab: z.optional(z.string()),
-    days: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tab: z.optional(z.string()),
+      days: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicObserveExportObservabilityCsvRequestToJSON(
   textqlRpcPublicObserveExportObservabilityCsvRequest:

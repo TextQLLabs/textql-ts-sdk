@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicCommonSortDirection,
   TextqlRpcPublicCommonSortDirection$outboundSchema,
@@ -67,26 +68,28 @@ export const TextqlRpcPublicDashboardListDashboardsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardListDashboardsRequest$Outbound,
     TextqlRpcPublicDashboardListDashboardsRequest
-  > = z.object({
-    searchTerm: z.optional(z.nullable(z.string())),
-    myDashboardsOnly: z.optional(z.nullable(z.boolean())),
-    sortBy: z.optional(
-      TextqlRpcPublicDashboardDashboardSortField$outboundSchema,
-    ),
-    sortDirection: z.optional(
-      TextqlRpcPublicCommonSortDirection$outboundSchema,
-    ),
-    limit: z.optional(z.int()),
-    offset: z.optional(z.int()),
-    folderId: z.optional(z.nullable(z.string())),
-    uncategorizedOnly: z.optional(z.nullable(z.boolean())),
-    creatorMemberId: z.optional(z.nullable(z.string())),
-    sharedWithMe: z.optional(z.nullable(z.boolean())),
-    creatorMemberIds: z.optional(z.array(z.string())),
-    statusFilter: z.optional(
-      TextqlRpcPublicDashboardDashboardStatus$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      searchTerm: z.optional(z.nullable(z.string())),
+      myDashboardsOnly: z.optional(z.nullable(z.boolean())),
+      sortBy: z.optional(
+        TextqlRpcPublicDashboardDashboardSortField$outboundSchema,
+      ),
+      sortDirection: z.optional(
+        TextqlRpcPublicCommonSortDirection$outboundSchema,
+      ),
+      limit: z.optional(z.int()),
+      offset: z.optional(z.int()),
+      folderId: z.optional(z.nullable(z.string())),
+      uncategorizedOnly: z.optional(z.nullable(z.boolean())),
+      creatorMemberId: z.optional(z.nullable(z.string())),
+      sharedWithMe: z.optional(z.nullable(z.boolean())),
+      creatorMemberIds: z.optional(z.array(z.string())),
+      statusFilter: z.optional(
+        TextqlRpcPublicDashboardDashboardStatus$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicDashboardListDashboardsRequestToJSON(
   textqlRpcPublicDashboardListDashboardsRequest:

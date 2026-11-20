@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDatasetProcessUploadPresignUrlRequest = {
   datasetId?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicDatasetProcessUploadPresignUrlRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDatasetProcessUploadPresignUrlRequest$Outbound,
     TextqlRpcPublicDatasetProcessUploadPresignUrlRequest
-  > = z.object({
-    datasetId: z.optional(z.string()),
-    datasetVersion: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      datasetId: z.optional(z.string()),
+      datasetVersion: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicDatasetProcessUploadPresignUrlRequestToJSON(
   textqlRpcPublicDatasetProcessUploadPresignUrlRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDashboardGetMembersWithDashboardsRequest = {};
 
@@ -15,7 +16,7 @@ export const TextqlRpcPublicDashboardGetMembersWithDashboardsRequest$outboundSch
   z.ZodMiniType<
     TextqlRpcPublicDashboardGetMembersWithDashboardsRequest$Outbound,
     TextqlRpcPublicDashboardGetMembersWithDashboardsRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicDashboardGetMembersWithDashboardsRequestToJSON(
   textqlRpcPublicDashboardGetMembersWithDashboardsRequest:

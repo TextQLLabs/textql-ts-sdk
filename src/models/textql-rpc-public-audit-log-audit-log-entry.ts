@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -141,22 +141,24 @@ export type TextqlRpcPublicAuditLogAuditLogEntry = {
 export const TextqlRpcPublicAuditLogAuditLogEntry$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAuditLogAuditLogEntry,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  actorId: types.optional(types.string()),
-  actorEmail: types.optional(types.string()),
-  action: types.optional(types.string()),
-  category: types.optional(types.string()),
-  resourceType: types.optional(types.string()),
-  resourceId: types.optional(types.string()),
-  details: types.optional(
-    z.record(z.string(), types.nullable(GoogleProtobufValue$inboundSchema)),
-  ),
-  ipAddress: types.optional(types.string()),
-  authMethod: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    actorId: types.optional(types.string()),
+    actorEmail: types.optional(types.string()),
+    action: types.optional(types.string()),
+    category: types.optional(types.string()),
+    resourceType: types.optional(types.string()),
+    resourceId: types.optional(types.string()),
+    details: types.optional(
+      z.record(z.string(), types.nullable(GoogleProtobufValue$inboundSchema)),
+    ),
+    ipAddress: types.optional(types.string()),
+    authMethod: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicAuditLogAuditLogEntryFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest = {
   sandboxId?: string | undefined;
@@ -27,13 +28,15 @@ export const TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest$outb
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest$Outbound,
     TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest
-  > = z.object({
-    sandboxId: z.optional(z.string()),
-    title: z.optional(z.string()),
-    description: z.optional(z.string()),
-    draft: z.optional(z.boolean()),
-    patchNumber: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sandboxId: z.optional(z.string()),
+      title: z.optional(z.string()),
+      description: z.optional(z.string()),
+      draft: z.optional(z.boolean()),
+      patchNumber: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequestToJSON(
   textqlRpcPublicSandboxExecSandboxProposeOntologyChangesRequest:

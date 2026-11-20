@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -57,23 +57,25 @@ export type TextqlRpcPublicConnectorExampleQuery = {
 export const TextqlRpcPublicConnectorExampleQuery$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorExampleQuery,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  label: types.optional(types.string()),
-  message: types.optional(types.string()),
-  isMultiSource: types.optional(types.boolean()),
-  requiredConnectorIds: types.optional(z.array(types.number())),
-  category: types.optional(types.string()),
-  segments: types.optional(
-    z.array(TextqlRpcPublicConnectorMessageSegment$inboundSchema),
-  ),
-  requiredFeatures: types.optional(
-    z.array(TextqlRpcPublicConnectorFeatureType$inboundSchema),
-  ),
-  sourceContext: types.optional(
-    TextqlRpcPublicConnectorConnectorContext$inboundSchema,
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    label: types.optional(types.string()),
+    message: types.optional(types.string()),
+    isMultiSource: types.optional(types.boolean()),
+    requiredConnectorIds: types.optional(z.array(types.number())),
+    category: types.optional(types.string()),
+    segments: types.optional(
+      z.array(TextqlRpcPublicConnectorMessageSegment$inboundSchema),
+    ),
+    requiredFeatures: types.optional(
+      z.array(TextqlRpcPublicConnectorFeatureType$inboundSchema),
+    ),
+    sourceContext: types.optional(
+      TextqlRpcPublicConnectorConnectorContext$inboundSchema,
+    ),
+  })
+);
 
 export function textqlRpcPublicConnectorExampleQueryFromJSON(
   jsonString: string,

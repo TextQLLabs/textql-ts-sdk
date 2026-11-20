@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicConnectorGetConnectorCellDurationsRequest = {
   connectorId?: number | undefined;
@@ -25,12 +26,14 @@ export const TextqlRpcPublicConnectorGetConnectorCellDurationsRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicConnectorGetConnectorCellDurationsRequest$Outbound,
     TextqlRpcPublicConnectorGetConnectorCellDurationsRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    days: z.optional(z.int()),
-    limit: z.optional(z.int()),
-    offset: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      days: z.optional(z.int()),
+      limit: z.optional(z.int()),
+      offset: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicConnectorGetConnectorCellDurationsRequestToJSON(
   textqlRpcPublicConnectorGetConnectorCellDurationsRequest:

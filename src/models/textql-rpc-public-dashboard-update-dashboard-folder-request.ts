@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDashboardUpdateDashboardFolderRequest = {
   folderId?: string | undefined;
@@ -25,11 +26,13 @@ export const TextqlRpcPublicDashboardUpdateDashboardFolderRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDashboardUpdateDashboardFolderRequest$Outbound,
     TextqlRpcPublicDashboardUpdateDashboardFolderRequest
-  > = z.object({
-    folderId: z.optional(z.string()),
-    name: z.optional(z.nullable(z.string())),
-    parentId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      folderId: z.optional(z.string()),
+      name: z.optional(z.nullable(z.string())),
+      parentId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicDashboardUpdateDashboardFolderRequestToJSON(
   textqlRpcPublicDashboardUpdateDashboardFolderRequest:

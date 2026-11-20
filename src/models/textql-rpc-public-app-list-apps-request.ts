@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAppListAppsRequest = {
   searchTerm?: string | null | undefined;
@@ -36,14 +37,16 @@ export type TextqlRpcPublicAppListAppsRequest$Outbound = {
 export const TextqlRpcPublicAppListAppsRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppListAppsRequest$Outbound,
   TextqlRpcPublicAppListAppsRequest
-> = z.object({
-  searchTerm: z.optional(z.nullable(z.string())),
-  limit: z.optional(z.int()),
-  offset: z.optional(z.int()),
-  folderId: z.optional(z.nullable(z.string())),
-  uncategorizedOnly: z.optional(z.nullable(z.boolean())),
-  sharedWithMe: z.optional(z.nullable(z.boolean())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    searchTerm: z.optional(z.nullable(z.string())),
+    limit: z.optional(z.int()),
+    offset: z.optional(z.int()),
+    folderId: z.optional(z.nullable(z.string())),
+    uncategorizedOnly: z.optional(z.nullable(z.boolean())),
+    sharedWithMe: z.optional(z.nullable(z.boolean())),
+  })
+);
 
 export function textqlRpcPublicAppListAppsRequestToJSON(
   textqlRpcPublicAppListAppsRequest: TextqlRpcPublicAppListAppsRequest,

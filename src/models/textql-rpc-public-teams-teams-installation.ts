@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -111,11 +111,13 @@ export type TextqlRpcPublicTeamsTeamsInstallation = {
 export const TextqlRpcPublicTeamsTeamsInstallation$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicTeamsTeamsInstallation,
   unknown
-> = z.object({
-  tenantId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  name: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tenantId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    name: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicTeamsTeamsInstallationFromJSON(
   jsonString: string,

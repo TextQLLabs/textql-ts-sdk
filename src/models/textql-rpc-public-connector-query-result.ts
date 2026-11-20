@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -28,7 +28,9 @@ export type TextqlRpcPublicConnectorQueryResult = {
 /** @internal */
 export const TextqlRpcPublicConnectorQueryResultTotalRows$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorQueryResultTotalRows, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicConnectorQueryResultTotalRowsFromJSON(
   jsonString: string,
@@ -50,10 +52,12 @@ export function textqlRpcPublicConnectorQueryResultTotalRowsFromJSON(
 export const TextqlRpcPublicConnectorQueryResult$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorQueryResult,
   unknown
-> = z.object({
-  arrowData: types.optional(types.string()),
-  totalRows: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    arrowData: types.optional(types.string()),
+    totalRows: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 
 export function textqlRpcPublicConnectorQueryResultFromJSON(
   jsonString: string,

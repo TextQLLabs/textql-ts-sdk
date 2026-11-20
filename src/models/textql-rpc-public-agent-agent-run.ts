@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -334,7 +334,9 @@ export type TextqlRpcPublicAgentAgentRun = {
 /** @internal */
 export const TextqlRpcPublicAgentAgentRunSandboxMountMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicAgentAgentRunSandboxMountMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicAgentAgentRunSandboxMountMsFromJSON(
   jsonString: string,
@@ -356,34 +358,42 @@ export function textqlRpcPublicAgentAgentRunSandboxMountMsFromJSON(
 export const TextqlRpcPublicAgentAgentRun$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAgentAgentRun,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  agentId: types.optional(types.string()),
-  triggerSource: types.optional(types.string()),
-  status: types.optional(types.string()),
-  chatId: types.optional(types.string()),
-  webhookTriggerId: types.optional(types.string()),
-  triggeredByMemberId: types.optional(types.string()),
-  triggeredByAgentId: types.optional(types.string()),
-  errorKind: types.optional(types.string()),
-  errorMessage: types.optional(types.string()),
-  attempt: types.optional(types.number()),
-  toolCallsCount: types.optional(types.number()),
-  lastSummary: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  startedAt: types.optional(types.date()),
-  finishedAt: types.optional(types.date()),
-  triggerMetadata: types.optional(
-    TextqlRpcPublicAgentAgentRunTriggerMetadata$inboundSchema,
-  ),
-  toolsSummary: types.optional(
-    TextqlRpcPublicAgentAgentRunToolsSummary$inboundSchema,
-  ),
-  delivery: types.optional(TextqlRpcPublicAgentAgentRunDelivery$inboundSchema),
-  egressSummary: types.optional(TextqlRpcPublicChatEgressSummary$inboundSchema),
-  connectorIds: types.optional(z.array(types.number())),
-  sandboxMountMs: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    agentId: types.optional(types.string()),
+    triggerSource: types.optional(types.string()),
+    status: types.optional(types.string()),
+    chatId: types.optional(types.string()),
+    webhookTriggerId: types.optional(types.string()),
+    triggeredByMemberId: types.optional(types.string()),
+    triggeredByAgentId: types.optional(types.string()),
+    errorKind: types.optional(types.string()),
+    errorMessage: types.optional(types.string()),
+    attempt: types.optional(types.number()),
+    toolCallsCount: types.optional(types.number()),
+    lastSummary: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    startedAt: types.optional(types.date()),
+    finishedAt: types.optional(types.date()),
+    triggerMetadata: types.optional(
+      TextqlRpcPublicAgentAgentRunTriggerMetadata$inboundSchema,
+    ),
+    toolsSummary: types.optional(
+      TextqlRpcPublicAgentAgentRunToolsSummary$inboundSchema,
+    ),
+    delivery: types.optional(
+      TextqlRpcPublicAgentAgentRunDelivery$inboundSchema,
+    ),
+    egressSummary: types.optional(
+      TextqlRpcPublicChatEgressSummary$inboundSchema,
+    ),
+    connectorIds: types.optional(z.array(types.number())),
+    sandboxMountMs: types.optional(
+      smartUnion([types.number(), types.string()]),
+    ),
+  })
+);
 
 export function textqlRpcPublicAgentAgentRunFromJSON(
   jsonString: string,

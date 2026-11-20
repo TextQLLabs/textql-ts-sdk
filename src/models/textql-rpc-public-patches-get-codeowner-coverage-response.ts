@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,13 +17,15 @@ export type TextqlRpcPublicPatchesGetCodeownerCoverageResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesGetCodeownerCoverageResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesGetCodeownerCoverageResponse, unknown> = z
-    .object({
-      totalFiles: types.optional(types.number()),
-      coveredFiles: types.optional(types.number()),
-      coveragePct: types.optional(types.number()),
-      uncoveredFiles: types.optional(z.array(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesGetCodeownerCoverageResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        totalFiles: types.optional(types.number()),
+        coveredFiles: types.optional(types.number()),
+        coveragePct: types.optional(types.number()),
+        uncoveredFiles: types.optional(z.array(types.string())),
+      })
+    );
 
 export function textqlRpcPublicPatchesGetCodeownerCoverageResponseFromJSON(
   jsonString: string,

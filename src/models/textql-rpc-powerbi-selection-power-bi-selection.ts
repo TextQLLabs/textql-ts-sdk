@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,13 +27,16 @@ export type TextqlRpcPowerbiSelectionPowerBISelection = {
 
 /** @internal */
 export const TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema:
-  z.ZodMiniType<TextqlRpcPowerbiSelectionPowerBISelection, unknown> = z.object({
-    workspaceId: types.optional(types.string()),
-    reportIds: types.optional(z.array(types.string())),
-    datasetIds: types.optional(z.array(types.string())),
-    workspaceName: types.optional(types.string()),
-    connectorId: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPowerbiSelectionPowerBISelection, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        workspaceId: types.optional(types.string()),
+        reportIds: types.optional(z.array(types.string())),
+        datasetIds: types.optional(z.array(types.string())),
+        workspaceName: types.optional(types.string()),
+        connectorId: types.optional(types.number()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPowerbiSelectionPowerBISelection$Outbound = {
   workspaceId?: string | undefined;
@@ -48,13 +51,15 @@ export const TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPowerbiSelectionPowerBISelection$Outbound,
     TextqlRpcPowerbiSelectionPowerBISelection
-  > = z.object({
-    workspaceId: z.optional(z.string()),
-    reportIds: z.optional(z.array(z.string())),
-    datasetIds: z.optional(z.array(z.string())),
-    workspaceName: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      workspaceId: z.optional(z.string()),
+      reportIds: z.optional(z.array(z.string())),
+      datasetIds: z.optional(z.array(z.string())),
+      workspaceName: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPowerbiSelectionPowerBISelectionToJSON(
   textqlRpcPowerbiSelectionPowerBISelection:

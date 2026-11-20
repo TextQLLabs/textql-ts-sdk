@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -19,5 +20,7 @@ export type TextqlRpcPublicCellsOntologyEditorListType = OpenEnum<
 
 /** @internal */
 export const TextqlRpcPublicCellsOntologyEditorListType$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorListType, unknown> = openEnums
-    .inboundSchema(TextqlRpcPublicCellsOntologyEditorListType);
+  z.ZodMiniType<TextqlRpcPublicCellsOntologyEditorListType, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.inboundSchema(TextqlRpcPublicCellsOntologyEditorListType)
+    );

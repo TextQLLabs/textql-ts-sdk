@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
@@ -11,9 +11,8 @@ export type TextqlRpcPublicChatWatchRunStartedEvent = {};
 
 /** @internal */
 export const TextqlRpcPublicChatWatchRunStartedEvent$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatWatchRunStartedEvent, unknown> = z.object(
-    {},
-  );
+  z.ZodMiniType<TextqlRpcPublicChatWatchRunStartedEvent, unknown> =
+    /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicChatWatchRunStartedEventFromJSON(
   jsonString: string,

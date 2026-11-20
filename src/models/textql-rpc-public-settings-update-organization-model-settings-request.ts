@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -35,19 +36,21 @@ export const TextqlRpcPublicSettingsUpdateOrganizationModelSettingsRequest$outbo
   z.ZodMiniType<
     TextqlRpcPublicSettingsUpdateOrganizationModelSettingsRequest$Outbound,
     TextqlRpcPublicSettingsUpdateOrganizationModelSettingsRequest
-  > = z.object({
-    defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    enabledModels: z.optional(
-      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
-    ),
-    clearEnabledModels: z.optional(z.boolean()),
-    restrictedModels: z.optional(
-      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
-    ),
-    clearRestrictedModels: z.optional(z.boolean()),
-    restrictedFamilies: z.optional(z.array(z.string())),
-    clearRestrictedFamilies: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      enabledModels: z.optional(
+        z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+      ),
+      clearEnabledModels: z.optional(z.boolean()),
+      restrictedModels: z.optional(
+        z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+      ),
+      clearRestrictedModels: z.optional(z.boolean()),
+      restrictedFamilies: z.optional(z.array(z.string())),
+      clearRestrictedFamilies: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicSettingsUpdateOrganizationModelSettingsRequestToJSON(
   textqlRpcPublicSettingsUpdateOrganizationModelSettingsRequest:

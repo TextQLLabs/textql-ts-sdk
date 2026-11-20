@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -37,18 +37,20 @@ export type TextqlRpcPublicCellsFeedCreateCell = {
 export const TextqlRpcPublicCellsFeedCreateCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedCreateCell,
   unknown
-> = z.object({
-  action: types.optional(TextqlRpcPublicCellsFeedAgentAction$inboundSchema),
-  agent: types.optional(TextqlRpcPublicCellsFeedAgentInfo$inboundSchema),
-  errorMessage: z.optional(z.nullable(types.string())),
-  updatedFields: types.optional(z.array(types.string())),
-  fieldChanges: types.optional(
-    z.array(TextqlRpcPublicCellsFieldChange$inboundSchema),
-  ),
-  connectors: types.optional(
-    z.array(TextqlRpcPublicCellsConnectorRef$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    action: types.optional(TextqlRpcPublicCellsFeedAgentAction$inboundSchema),
+    agent: types.optional(TextqlRpcPublicCellsFeedAgentInfo$inboundSchema),
+    errorMessage: z.optional(z.nullable(types.string())),
+    updatedFields: types.optional(z.array(types.string())),
+    fieldChanges: types.optional(
+      z.array(TextqlRpcPublicCellsFieldChange$inboundSchema),
+    ),
+    connectors: types.optional(
+      z.array(TextqlRpcPublicCellsConnectorRef$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsFeedCreateCellFromJSON(
   jsonString: string,

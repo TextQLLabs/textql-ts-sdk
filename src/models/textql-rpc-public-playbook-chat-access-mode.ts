@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -18,8 +19,12 @@ export type TextqlRpcPublicPlaybookChatAccessMode = OpenEnum<
 export const TextqlRpcPublicPlaybookChatAccessMode$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPlaybookChatAccessMode,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicPlaybookChatAccessMode);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicPlaybookChatAccessMode)
+);
 /** @internal */
 export const TextqlRpcPublicPlaybookChatAccessMode$outboundSchema:
-  z.ZodMiniType<string, TextqlRpcPublicPlaybookChatAccessMode> = openEnums
-    .outboundSchema(TextqlRpcPublicPlaybookChatAccessMode);
+  z.ZodMiniType<string, TextqlRpcPublicPlaybookChatAccessMode> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.outboundSchema(TextqlRpcPublicPlaybookChatAccessMode)
+    );

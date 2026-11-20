@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesGetFileUsageTimelineRequest = {
   /**
@@ -85,10 +86,12 @@ export const TextqlRpcPublicPatchesGetFileUsageTimelineRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetFileUsageTimelineRequest$Outbound,
     TextqlRpcPublicPatchesGetFileUsageTimelineRequest
-  > = z.object({
-    pathPrefix: z.optional(z.nullable(z.string())),
-    observationPeriod: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pathPrefix: z.optional(z.nullable(z.string())),
+      observationPeriod: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetFileUsageTimelineRequestToJSON(
   textqlRpcPublicPatchesGetFileUsageTimelineRequest:

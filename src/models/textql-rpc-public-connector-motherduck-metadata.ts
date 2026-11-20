@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -14,11 +14,12 @@ export type TextqlRpcPublicConnectorMotherduckMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorMotherduckMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorMotherduckMetadata, unknown> = z.object(
-    {
-      token: types.optional(types.string()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorMotherduckMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        token: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorMotherduckMetadata$Outbound = {
   token?: string | undefined;
@@ -29,9 +30,11 @@ export const TextqlRpcPublicConnectorMotherduckMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorMotherduckMetadata$Outbound,
     TextqlRpcPublicConnectorMotherduckMetadata
-  > = z.object({
-    token: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      token: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorMotherduckMetadataToJSON(
   textqlRpcPublicConnectorMotherduckMetadata:

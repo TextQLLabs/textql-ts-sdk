@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDatasetCreateFolderRequest = {
   /**
@@ -23,10 +24,12 @@ export const TextqlRpcPublicDatasetCreateFolderRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDatasetCreateFolderRequest$Outbound,
     TextqlRpcPublicDatasetCreateFolderRequest
-  > = z.object({
-    parentPath: z.optional(z.array(z.string())),
-    name: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      parentPath: z.optional(z.array(z.string())),
+      name: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicDatasetCreateFolderRequestToJSON(
   textqlRpcPublicDatasetCreateFolderRequest:

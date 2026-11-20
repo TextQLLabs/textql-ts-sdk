@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -251,7 +251,9 @@ export type TextqlRpcPublicObserveCustomTopic = {
 
 /** @internal */
 export const TagCount$inboundSchema: z.ZodMiniType<TagCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function tagCountFromJSON(
   jsonString: string,
@@ -265,7 +267,9 @@ export function tagCountFromJSON(
 
 /** @internal */
 export const PeopleCount$inboundSchema: z.ZodMiniType<PeopleCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function peopleCountFromJSON(
   jsonString: string,
@@ -281,24 +285,26 @@ export function peopleCountFromJSON(
 export const TextqlRpcPublicObserveCustomTopic$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicObserveCustomTopic,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  userPrompt: types.optional(types.string()),
-  covers: types.optional(types.string()),
-  excludes: types.optional(types.string()),
-  status: types.optional(types.string()),
-  createdByMemberId: types.optional(types.string()),
-  backfillChatId: z.optional(z.nullable(types.string())),
-  backfillStatus: z.optional(z.nullable(types.string())),
-  backfillError: z.optional(z.nullable(types.string())),
-  createdAt: types.optional(types.date()),
-  tagCount: types.optional(smartUnion([types.number(), types.string()])),
-  updatedAt: types.optional(types.date()),
-  createdByEmail: types.optional(types.string()),
-  dailyTagCounts: types.optional(z.array(types.number())),
-  peopleCount: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    userPrompt: types.optional(types.string()),
+    covers: types.optional(types.string()),
+    excludes: types.optional(types.string()),
+    status: types.optional(types.string()),
+    createdByMemberId: types.optional(types.string()),
+    backfillChatId: z.optional(z.nullable(types.string())),
+    backfillStatus: z.optional(z.nullable(types.string())),
+    backfillError: z.optional(z.nullable(types.string())),
+    createdAt: types.optional(types.date()),
+    tagCount: types.optional(smartUnion([types.number(), types.string()])),
+    updatedAt: types.optional(types.date()),
+    createdByEmail: types.optional(types.string()),
+    dailyTagCounts: types.optional(z.array(types.number())),
+    peopleCount: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 
 export function textqlRpcPublicObserveCustomTopicFromJSON(
   jsonString: string,

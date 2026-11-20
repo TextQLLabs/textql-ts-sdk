@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetBackfillStatusRequest = {
   orgId?: string | null | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicObserveGetBackfillStatusRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetBackfillStatusRequest$Outbound,
     TextqlRpcPublicObserveGetBackfillStatusRequest
-  > = z.object({
-    orgId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      orgId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicObserveGetBackfillStatusRequestToJSON(
   textqlRpcPublicObserveGetBackfillStatusRequest:

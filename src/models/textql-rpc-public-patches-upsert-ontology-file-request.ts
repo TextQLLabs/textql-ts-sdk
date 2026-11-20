@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesUpsertOntologyFileRequest = {
   path?: string | undefined;
@@ -24,12 +25,14 @@ export const TextqlRpcPublicPatchesUpsertOntologyFileRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesUpsertOntologyFileRequest$Outbound,
     TextqlRpcPublicPatchesUpsertOntologyFileRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    content: z.optional(z.string()),
-    commitMessage: z.optional(z.nullable(z.string())),
-    baseContentHash: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      content: z.optional(z.string()),
+      commitMessage: z.optional(z.nullable(z.string())),
+      baseContentHash: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesUpsertOntologyFileRequestToJSON(
   textqlRpcPublicPatchesUpsertOntologyFileRequest:

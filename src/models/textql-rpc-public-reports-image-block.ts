@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,11 +23,13 @@ export type TextqlRpcPublicReportsImageBlock = {
 export const TextqlRpcPublicReportsImageBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsImageBlock,
   unknown
-> = z.object({
-  imageUrl: types.optional(types.string()),
-  imageAlt: z.optional(z.nullable(types.string())),
-  variant: types.optional(TextqlRpcPublicReportsImageVariant$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: types.optional(types.string()),
+    imageAlt: z.optional(z.nullable(types.string())),
+    variant: types.optional(TextqlRpcPublicReportsImageVariant$inboundSchema),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsImageBlock$Outbound = {
   imageUrl?: string | undefined;
@@ -39,11 +41,13 @@ export type TextqlRpcPublicReportsImageBlock$Outbound = {
 export const TextqlRpcPublicReportsImageBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsImageBlock$Outbound,
   TextqlRpcPublicReportsImageBlock
-> = z.object({
-  imageUrl: z.optional(z.string()),
-  imageAlt: z.optional(z.nullable(z.string())),
-  variant: z.optional(TextqlRpcPublicReportsImageVariant$outboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: z.optional(z.string()),
+    imageAlt: z.optional(z.nullable(z.string())),
+    variant: z.optional(TextqlRpcPublicReportsImageVariant$outboundSchema),
+  })
+);
 
 export function textqlRpcPublicReportsImageBlockToJSON(
   textqlRpcPublicReportsImageBlock: TextqlRpcPublicReportsImageBlock,

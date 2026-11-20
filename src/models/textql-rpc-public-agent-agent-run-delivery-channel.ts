@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,12 +25,14 @@ export type TextqlRpcPublicAgentAgentRunDeliveryChannel = {
 
 /** @internal */
 export const TextqlRpcPublicAgentAgentRunDeliveryChannel$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAgentAgentRunDeliveryChannel, unknown> = z
-    .object({
-      type: types.optional(types.string()),
-      id: types.optional(types.string()),
-      label: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicAgentAgentRunDeliveryChannel, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        type: types.optional(types.string()),
+        id: types.optional(types.string()),
+        label: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicAgentAgentRunDeliveryChannelFromJSON(
   jsonString: string,

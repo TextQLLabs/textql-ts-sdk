@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxCapabilitySandboxPollAskRequest = {
   name?: string | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicSandboxCapabilitySandboxPollAskRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxPollAskRequest$Outbound,
     TextqlRpcPublicSandboxCapabilitySandboxPollAskRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    agentId: z.optional(z.string()),
-    askId: z.optional(z.string()),
-    cursor: z.optional(z.string()),
-    appDb: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      agentId: z.optional(z.string()),
+      askId: z.optional(z.string()),
+      cursor: z.optional(z.string()),
+      appDb: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxCapabilitySandboxPollAskRequestToJSON(
   textqlRpcPublicSandboxCapabilitySandboxPollAskRequest:

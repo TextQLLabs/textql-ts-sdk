@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Favorite report messages
@@ -29,10 +30,12 @@ export const TextqlRpcPublicPlaybookFavoriteReportRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookFavoriteReportRequest$Outbound,
     TextqlRpcPublicPlaybookFavoriteReportRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-    reportId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+      reportId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookFavoriteReportRequestToJSON(
   textqlRpcPublicPlaybookFavoriteReportRequest:

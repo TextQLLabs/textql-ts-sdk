@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -26,7 +26,9 @@ export type TextqlRpcPublicObserveCustomTopicPerson = {
 
 /** @internal */
 export const ThreadCount$inboundSchema: z.ZodMiniType<ThreadCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function threadCountFromJSON(
   jsonString: string,
@@ -40,12 +42,17 @@ export function threadCountFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicObserveCustomTopicPerson$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveCustomTopicPerson, unknown> = z.object({
-    memberId: types.optional(types.string()),
-    name: types.optional(types.string()),
-    email: types.optional(types.string()),
-    threadCount: types.optional(smartUnion([types.number(), types.string()])),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveCustomTopicPerson, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        memberId: types.optional(types.string()),
+        name: types.optional(types.string()),
+        email: types.optional(types.string()),
+        threadCount: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicObserveCustomTopicPersonFromJSON(
   jsonString: string,

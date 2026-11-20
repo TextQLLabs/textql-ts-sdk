@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -133,27 +133,29 @@ export type TextqlRpcPublicCellsFeedAgentInfo = {
 export const TextqlRpcPublicCellsFeedAgentInfo$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedAgentInfo,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  prompt: types.optional(types.string()),
-  isActive: types.optional(types.boolean()),
-  createdAt: types.optional(types.date()),
-  paradigmOptions: types.optional(
-    TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
-  ),
-  connectorIds: types.optional(z.array(types.number())),
-  llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  fastMode: z.optional(z.nullable(types.boolean())),
-  postingFrequencyCrons: types.optional(z.array(types.string())),
-  feedEnabled: types.optional(types.boolean()),
-  isStateful: types.optional(types.boolean()),
-  callableAsSubagent: types.optional(types.boolean()),
-  slackChannel: z.optional(z.nullable(types.string())),
-  teamsChannel: z.optional(z.nullable(types.string())),
-  emailRecipientCount: types.optional(types.number()),
-  emailRecipients: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    prompt: types.optional(types.string()),
+    isActive: types.optional(types.boolean()),
+    createdAt: types.optional(types.date()),
+    paradigmOptions: types.optional(
+      TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
+    ),
+    connectorIds: types.optional(z.array(types.number())),
+    llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    fastMode: z.optional(z.nullable(types.boolean())),
+    postingFrequencyCrons: types.optional(z.array(types.string())),
+    feedEnabled: types.optional(types.boolean()),
+    isStateful: types.optional(types.boolean()),
+    callableAsSubagent: types.optional(types.boolean()),
+    slackChannel: z.optional(z.nullable(types.string())),
+    teamsChannel: z.optional(z.nullable(types.string())),
+    emailRecipientCount: types.optional(types.number()),
+    emailRecipients: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsFeedAgentInfoFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -33,25 +33,28 @@ export type TextqlRpcPublicConnectorPostgresMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorPostgresMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorPostgresMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    database: types.optional(types.string()),
-    schemas: types.optional(z.array(types.string())),
-    dialect: types.optional(types.string()),
-    sslMode: types.optional(types.boolean()),
-    sshTunnelEnabled: types.optional(types.boolean()),
-    sshHost: types.optional(types.string()),
-    sshPort: types.optional(types.number()),
-    sshUser: types.optional(types.string()),
-    sshPrivateKey: types.optional(types.string()),
-    sshHostPublicKey: types.optional(types.string()),
-    secretsManagerSecretArn: types.optional(types.string()),
-    secretsManagerRoleArn: types.optional(types.string()),
-    secretsManagerExternalId: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorPostgresMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        database: types.optional(types.string()),
+        schemas: types.optional(z.array(types.string())),
+        dialect: types.optional(types.string()),
+        sslMode: types.optional(types.boolean()),
+        sshTunnelEnabled: types.optional(types.boolean()),
+        sshHost: types.optional(types.string()),
+        sshPort: types.optional(types.number()),
+        sshUser: types.optional(types.string()),
+        sshPrivateKey: types.optional(types.string()),
+        sshHostPublicKey: types.optional(types.string()),
+        secretsManagerSecretArn: types.optional(types.string()),
+        secretsManagerRoleArn: types.optional(types.string()),
+        secretsManagerExternalId: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorPostgresMetadata$Outbound = {
   host?: string | undefined;
@@ -78,25 +81,27 @@ export const TextqlRpcPublicConnectorPostgresMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorPostgresMetadata$Outbound,
     TextqlRpcPublicConnectorPostgresMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    schemas: z.optional(z.array(z.string())),
-    dialect: z.optional(z.string()),
-    sslMode: z.optional(z.boolean()),
-    sshTunnelEnabled: z.optional(z.boolean()),
-    sshHost: z.optional(z.string()),
-    sshPort: z.optional(z.int()),
-    sshUser: z.optional(z.string()),
-    sshPrivateKey: z.optional(z.string()),
-    sshHostPublicKey: z.optional(z.string()),
-    secretsManagerSecretArn: z.optional(z.string()),
-    secretsManagerRoleArn: z.optional(z.string()),
-    secretsManagerExternalId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      schemas: z.optional(z.array(z.string())),
+      dialect: z.optional(z.string()),
+      sslMode: z.optional(z.boolean()),
+      sshTunnelEnabled: z.optional(z.boolean()),
+      sshHost: z.optional(z.string()),
+      sshPort: z.optional(z.int()),
+      sshUser: z.optional(z.string()),
+      sshPrivateKey: z.optional(z.string()),
+      sshHostPublicKey: z.optional(z.string()),
+      secretsManagerSecretArn: z.optional(z.string()),
+      secretsManagerRoleArn: z.optional(z.string()),
+      secretsManagerExternalId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorPostgresMetadataToJSON(
   textqlRpcPublicConnectorPostgresMetadata:

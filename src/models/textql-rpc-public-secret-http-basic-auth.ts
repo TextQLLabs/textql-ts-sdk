@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,10 +17,12 @@ export type TextqlRpcPublicSecretHttpBasicAuth = {
 export const TextqlRpcPublicSecretHttpBasicAuth$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretHttpBasicAuth,
   unknown
-> = z.object({
-  username: types.optional(types.string()),
-  password: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    username: types.optional(types.string()),
+    password: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicSecretHttpBasicAuth$Outbound = {
   username?: string | undefined;
@@ -31,10 +33,12 @@ export type TextqlRpcPublicSecretHttpBasicAuth$Outbound = {
 export const TextqlRpcPublicSecretHttpBasicAuth$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretHttpBasicAuth$Outbound,
   TextqlRpcPublicSecretHttpBasicAuth
-> = z.object({
-  username: z.optional(z.string()),
-  password: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    username: z.optional(z.string()),
+    password: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicSecretHttpBasicAuthToJSON(
   textqlRpcPublicSecretHttpBasicAuth: TextqlRpcPublicSecretHttpBasicAuth,

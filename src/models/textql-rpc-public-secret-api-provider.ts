@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -41,32 +41,34 @@ export type TextqlRpcPublicSecretApiProvider = {
 export const TextqlRpcPublicSecretApiProvider$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretApiProvider,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  iconUrl: types.optional(types.string()),
-  authType: types.optional(types.string()),
-  description: types.optional(types.string()),
-  docsUrl: types.optional(types.string()),
-  defaultHosts: types.optional(z.array(types.string())),
-  tokenLabel: types.optional(types.string()),
-  authHeader: types.optional(types.string()),
-  authPrefix: types.optional(types.string()),
-  oauthSupported: types.optional(types.boolean()),
-  oauthConfigured: types.optional(types.boolean()),
-  memberAuthenticated: types.optional(types.boolean()),
-  memberAuthDisplayName: types.optional(types.string()),
-  envVarFields: types.optional(
-    z.array(TextqlRpcPublicSecretEnvVarField$inboundSchema),
-  ),
-  oauthHasDefaultUrls: types.optional(types.boolean()),
-  oauthAuthUrl: types.optional(types.string()),
-  oauthTokenUrl: types.optional(types.string()),
-  oauthScopes: types.optional(types.string()),
-  oauthUsePkce: types.optional(types.boolean()),
-  oauthTokenAuthMethod: types.optional(types.string()),
-  testUrl: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    iconUrl: types.optional(types.string()),
+    authType: types.optional(types.string()),
+    description: types.optional(types.string()),
+    docsUrl: types.optional(types.string()),
+    defaultHosts: types.optional(z.array(types.string())),
+    tokenLabel: types.optional(types.string()),
+    authHeader: types.optional(types.string()),
+    authPrefix: types.optional(types.string()),
+    oauthSupported: types.optional(types.boolean()),
+    oauthConfigured: types.optional(types.boolean()),
+    memberAuthenticated: types.optional(types.boolean()),
+    memberAuthDisplayName: types.optional(types.string()),
+    envVarFields: types.optional(
+      z.array(TextqlRpcPublicSecretEnvVarField$inboundSchema),
+    ),
+    oauthHasDefaultUrls: types.optional(types.boolean()),
+    oauthAuthUrl: types.optional(types.string()),
+    oauthTokenUrl: types.optional(types.string()),
+    oauthScopes: types.optional(types.string()),
+    oauthUsePkce: types.optional(types.boolean()),
+    oauthTokenAuthMethod: types.optional(types.string()),
+    testUrl: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicSecretApiProviderFromJSON(
   jsonString: string,

@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -36,20 +36,22 @@ export const SandboxExecServiceLoadConnectorDataRequest$outboundSchema:
   z.ZodMiniType<
     SandboxExecServiceLoadConnectorDataRequest$Outbound,
     SandboxExecServiceLoadConnectorDataRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function sandboxExecServiceLoadConnectorDataRequestToJSON(
@@ -66,11 +68,13 @@ export function sandboxExecServiceLoadConnectorDataRequestToJSON(
 /** @internal */
 export const SandboxExecServiceLoadConnectorDataResponse$inboundSchema:
   z.ZodMiniType<SandboxExecServiceLoadConnectorDataResponse, unknown> =
-    smartUnion([
-      models
-        .TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models
+          .TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function sandboxExecServiceLoadConnectorDataResponseFromJSON(
   jsonString: string,

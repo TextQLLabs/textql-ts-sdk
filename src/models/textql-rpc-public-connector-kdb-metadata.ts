@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -35,19 +35,21 @@ export type TextqlRpcPublicConnectorKdbMetadata = {
 export const TextqlRpcPublicConnectorKdbMetadata$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorKdbMetadata,
   unknown
-> = z.object({
-  host: types.optional(types.string()),
-  port: types.optional(types.number()),
-  user: types.optional(types.string()),
-  password: types.optional(types.string()),
-  tls: types.optional(types.boolean()),
-  sshTunnelEnabled: types.optional(types.boolean()),
-  sshHost: types.optional(types.string()),
-  sshPort: types.optional(types.number()),
-  sshUser: types.optional(types.string()),
-  sshPrivateKey: types.optional(types.string()),
-  sshHostPublicKey: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    host: types.optional(types.string()),
+    port: types.optional(types.number()),
+    user: types.optional(types.string()),
+    password: types.optional(types.string()),
+    tls: types.optional(types.boolean()),
+    sshTunnelEnabled: types.optional(types.boolean()),
+    sshHost: types.optional(types.string()),
+    sshPort: types.optional(types.number()),
+    sshUser: types.optional(types.string()),
+    sshPrivateKey: types.optional(types.string()),
+    sshHostPublicKey: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicConnectorKdbMetadata$Outbound = {
   host?: string | undefined;
@@ -67,19 +69,21 @@ export type TextqlRpcPublicConnectorKdbMetadata$Outbound = {
 export const TextqlRpcPublicConnectorKdbMetadata$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorKdbMetadata$Outbound,
   TextqlRpcPublicConnectorKdbMetadata
-> = z.object({
-  host: z.optional(z.string()),
-  port: z.optional(z.int()),
-  user: z.optional(z.string()),
-  password: z.optional(z.string()),
-  tls: z.optional(z.boolean()),
-  sshTunnelEnabled: z.optional(z.boolean()),
-  sshHost: z.optional(z.string()),
-  sshPort: z.optional(z.int()),
-  sshUser: z.optional(z.string()),
-  sshPrivateKey: z.optional(z.string()),
-  sshHostPublicKey: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    host: z.optional(z.string()),
+    port: z.optional(z.int()),
+    user: z.optional(z.string()),
+    password: z.optional(z.string()),
+    tls: z.optional(z.boolean()),
+    sshTunnelEnabled: z.optional(z.boolean()),
+    sshHost: z.optional(z.string()),
+    sshPort: z.optional(z.int()),
+    sshUser: z.optional(z.string()),
+    sshPrivateKey: z.optional(z.string()),
+    sshHostPublicKey: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicConnectorKdbMetadataToJSON(
   textqlRpcPublicConnectorKdbMetadata: TextqlRpcPublicConnectorKdbMetadata,

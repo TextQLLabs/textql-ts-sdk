@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicAppAppFile,
   TextqlRpcPublicAppAppFile$Outbound,
@@ -78,32 +79,34 @@ export type TextqlRpcPublicAppUpdateAppRequest$Outbound = {
 export const TextqlRpcPublicAppUpdateAppRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppUpdateAppRequest$Outbound,
   TextqlRpcPublicAppUpdateAppRequest
-> = z.object({
-  appId: z.optional(z.string()),
-  name: z.optional(z.nullable(z.string())),
-  description: z.optional(z.nullable(z.string())),
-  code: z.optional(z.nullable(z.string())),
-  dataSources: z.optional(
-    z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
-  ),
-  replaceDataSources: z.optional(z.nullable(z.boolean())),
-  publish: z.optional(z.nullable(z.boolean())),
-  stalenessWindowSeconds: z.optional(z.nullable(z.int())),
-  computeFunctions: z.optional(
-    z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
-  ),
-  replaceComputeFunctions: z.optional(z.nullable(z.boolean())),
-  files: z.optional(z.array(TextqlRpcPublicAppAppFile$outboundSchema)),
-  replaceFiles: z.optional(z.nullable(z.boolean())),
-  scheduleEnabled: z.optional(z.nullable(z.boolean())),
-  cronString: z.optional(z.nullable(z.string())),
-  capabilities: z.optional(
-    z.array(TextqlRpcPublicAppCapability$outboundSchema),
-  ),
-  replaceCapabilities: z.optional(z.nullable(z.boolean())),
-  appDbSetup: z.optional(z.array(z.string())),
-  replaceAppDbSetup: z.optional(z.nullable(z.boolean())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    appId: z.optional(z.string()),
+    name: z.optional(z.nullable(z.string())),
+    description: z.optional(z.nullable(z.string())),
+    code: z.optional(z.nullable(z.string())),
+    dataSources: z.optional(
+      z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
+    ),
+    replaceDataSources: z.optional(z.nullable(z.boolean())),
+    publish: z.optional(z.nullable(z.boolean())),
+    stalenessWindowSeconds: z.optional(z.nullable(z.int())),
+    computeFunctions: z.optional(
+      z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
+    ),
+    replaceComputeFunctions: z.optional(z.nullable(z.boolean())),
+    files: z.optional(z.array(TextqlRpcPublicAppAppFile$outboundSchema)),
+    replaceFiles: z.optional(z.nullable(z.boolean())),
+    scheduleEnabled: z.optional(z.nullable(z.boolean())),
+    cronString: z.optional(z.nullable(z.string())),
+    capabilities: z.optional(
+      z.array(TextqlRpcPublicAppCapability$outboundSchema),
+    ),
+    replaceCapabilities: z.optional(z.nullable(z.boolean())),
+    appDbSetup: z.optional(z.array(z.string())),
+    replaceAppDbSetup: z.optional(z.nullable(z.boolean())),
+  })
+);
 
 export function textqlRpcPublicAppUpdateAppRequestToJSON(
   textqlRpcPublicAppUpdateAppRequest: TextqlRpcPublicAppUpdateAppRequest,

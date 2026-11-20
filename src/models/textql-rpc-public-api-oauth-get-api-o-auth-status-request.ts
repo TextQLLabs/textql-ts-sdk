@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicApiOauthGetApiOAuthStatusRequest = {
   apiAccessKeyId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicApiOauthGetApiOAuthStatusRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicApiOauthGetApiOAuthStatusRequest$Outbound,
     TextqlRpcPublicApiOauthGetApiOAuthStatusRequest
-  > = z.object({
-    apiAccessKeyId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      apiAccessKeyId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicApiOauthGetApiOAuthStatusRequestToJSON(
   textqlRpcPublicApiOauthGetApiOAuthStatusRequest:

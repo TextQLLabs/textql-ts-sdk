@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesGetOntologyOwnersRequest = {
   path?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicPatchesGetOntologyOwnersRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyOwnersRequest$Outbound,
     TextqlRpcPublicPatchesGetOntologyOwnersRequest
-  > = z.object({
-    path: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyOwnersRequestToJSON(
   textqlRpcPublicPatchesGetOntologyOwnersRequest:

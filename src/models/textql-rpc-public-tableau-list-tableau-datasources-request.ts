@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 
 export type WorkbookId = {
@@ -29,10 +30,12 @@ export type WorkbookId$Outbound = {
 export const WorkbookId$outboundSchema: z.ZodMiniType<
   WorkbookId$Outbound,
   WorkbookId
-> = z.object({
-  workbookId: z.string(),
-  connectorId: z.optional(z.int()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    workbookId: z.string(),
+    connectorId: z.optional(z.int()),
+  })
+);
 
 export function workbookIdToJSON(workbookId: WorkbookId): string {
   return JSON.stringify(WorkbookId$outboundSchema.parse(workbookId));
@@ -48,10 +51,12 @@ export type ProjectId$Outbound = {
 export const ProjectId$outboundSchema: z.ZodMiniType<
   ProjectId$Outbound,
   ProjectId
-> = z.object({
-  projectId: z.string(),
-  connectorId: z.optional(z.int()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    projectId: z.string(),
+    connectorId: z.optional(z.int()),
+  })
+);
 
 export function projectIdToJSON(projectId: ProjectId): string {
   return JSON.stringify(ProjectId$outboundSchema.parse(projectId));
@@ -67,10 +72,12 @@ export const TextqlRpcPublicTableauListTableauDatasourcesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTableauListTableauDatasourcesRequest$Outbound,
     TextqlRpcPublicTableauListTableauDatasourcesRequest
-  > = smartUnion([
-    z.lazy(() => ProjectId$outboundSchema),
-    z.lazy(() => WorkbookId$outboundSchema),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => ProjectId$outboundSchema),
+      z.lazy(() => WorkbookId$outboundSchema),
+    ])
+  );
 
 export function textqlRpcPublicTableauListTableauDatasourcesRequestToJSON(
   textqlRpcPublicTableauListTableauDatasourcesRequest:

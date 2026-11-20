@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacDeleteRoleRequest = {
   /**
@@ -28,10 +29,12 @@ export type TextqlRpcPublicRbacDeleteRoleRequest$Outbound = {
 export const TextqlRpcPublicRbacDeleteRoleRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacDeleteRoleRequest$Outbound,
   TextqlRpcPublicRbacDeleteRoleRequest
-> = z.object({
-  roleName: z.optional(z.string()),
-  roleId: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    roleName: z.optional(z.string()),
+    roleId: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicRbacDeleteRoleRequestToJSON(
   textqlRpcPublicRbacDeleteRoleRequest: TextqlRpcPublicRbacDeleteRoleRequest,

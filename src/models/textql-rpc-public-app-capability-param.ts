@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,11 +18,13 @@ export type TextqlRpcPublicAppCapabilityParam = {
 export const TextqlRpcPublicAppCapabilityParam$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppCapabilityParam,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  type: z.optional(z.nullable(types.string())),
-  description: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    type: z.optional(z.nullable(types.string())),
+    description: z.optional(z.nullable(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicAppCapabilityParam$Outbound = {
   name?: string | undefined;
@@ -34,11 +36,13 @@ export type TextqlRpcPublicAppCapabilityParam$Outbound = {
 export const TextqlRpcPublicAppCapabilityParam$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppCapabilityParam$Outbound,
   TextqlRpcPublicAppCapabilityParam
-> = z.object({
-  name: z.optional(z.string()),
-  type: z.optional(z.nullable(z.string())),
-  description: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: z.optional(z.string()),
+    type: z.optional(z.nullable(z.string())),
+    description: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicAppCapabilityParamToJSON(
   textqlRpcPublicAppCapabilityParam: TextqlRpcPublicAppCapabilityParam,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -31,15 +31,17 @@ export type TextqlRpcPublicChatCheckStreamlitHealthResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatCheckStreamlitHealthResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatCheckStreamlitHealthResponse, unknown> = z
-    .object({
-      status: types.optional(
-        TextqlRpcPublicChatStreamlitHealthStatus$inboundSchema,
-      ),
-      cell: types.optional(TextqlRpcPublicChatCell$inboundSchema),
-      embedUrl: z.optional(z.nullable(types.string())),
-      streamlitUrl: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicChatCheckStreamlitHealthResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        status: types.optional(
+          TextqlRpcPublicChatStreamlitHealthStatus$inboundSchema,
+        ),
+        cell: types.optional(TextqlRpcPublicChatCell$inboundSchema),
+        embedUrl: z.optional(z.nullable(types.string())),
+        streamlitUrl: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicChatCheckStreamlitHealthResponseFromJSON(
   jsonString: string,

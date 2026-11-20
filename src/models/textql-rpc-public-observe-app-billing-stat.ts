@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -123,20 +123,22 @@ export type TextqlRpcPublicObserveAppBillingStat = {
 export const TextqlRpcPublicObserveAppBillingStat$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicObserveAppBillingStat,
   unknown
-> = z.object({
-  appId: types.optional(types.string()),
-  appName: types.optional(types.string()),
-  ownerId: types.optional(types.string()),
-  ownerName: types.optional(types.string()),
-  computeAcu: types.optional(types.number()),
-  refreshCount: types.optional(types.number()),
-  viewCount: types.optional(types.number()),
-  lastViewedAt: types.optional(types.date()),
-  dailyViewCounts: types.optional(z.array(types.number())),
-  isPublished: types.optional(types.boolean()),
-  llmAcu: types.optional(types.number()),
-  totalAcu: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    appId: types.optional(types.string()),
+    appName: types.optional(types.string()),
+    ownerId: types.optional(types.string()),
+    ownerName: types.optional(types.string()),
+    computeAcu: types.optional(types.number()),
+    refreshCount: types.optional(types.number()),
+    viewCount: types.optional(types.number()),
+    lastViewedAt: types.optional(types.date()),
+    dailyViewCounts: types.optional(z.array(types.number())),
+    isPublished: types.optional(types.boolean()),
+    llmAcu: types.optional(types.number()),
+    totalAcu: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicObserveAppBillingStatFromJSON(
   jsonString: string,

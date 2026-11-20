@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -115,7 +115,9 @@ export type TextqlRpcPublicAppAppMemberActivityRow = {
 /** @internal */
 export const TextqlRpcPublicAppAppMemberActivityRowSeq$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicAppAppMemberActivityRowSeq, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicAppAppMemberActivityRowSeqFromJSON(
   jsonString: string,
@@ -135,13 +137,16 @@ export function textqlRpcPublicAppAppMemberActivityRowSeqFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicAppAppMemberActivityRow$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAppAppMemberActivityRow, unknown> = z.object({
-    seq: types.optional(smartUnion([types.number(), types.string()])),
-    type: types.optional(types.string()),
-    scope: z.optional(z.nullable(types.string())),
-    payloadJson: z.optional(z.nullable(types.string())),
-    createdAt: types.optional(types.date()),
-  });
+  z.ZodMiniType<TextqlRpcPublicAppAppMemberActivityRow, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        seq: types.optional(smartUnion([types.number(), types.string()])),
+        type: types.optional(types.string()),
+        scope: z.optional(z.nullable(types.string())),
+        payloadJson: z.optional(z.nullable(types.string())),
+        createdAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicAppAppMemberActivityRowFromJSON(
   jsonString: string,

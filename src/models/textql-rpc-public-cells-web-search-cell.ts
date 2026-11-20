@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -36,7 +36,9 @@ export type TextqlRpcPublicCellsWebSearchCell = {
 /** @internal */
 export const TextqlRpcPublicCellsWebSearchCellExecutionTimeMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicCellsWebSearchCellExecutionTimeMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsWebSearchCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -58,19 +60,21 @@ export function textqlRpcPublicCellsWebSearchCellExecutionTimeMsFromJSON(
 export const TextqlRpcPublicCellsWebSearchCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsWebSearchCell,
   unknown
-> = z.object({
-  query: types.optional(types.string()),
-  searchType: types.optional(TextqlRpcPublicCellsWebSearchType$inboundSchema),
-  dateRange: types.optional(TextqlRpcPublicCellsDateRange$inboundSchema),
-  answer: z.optional(z.nullable(types.string())),
-  exaResults: types.optional(
-    z.array(TextqlRpcPublicCellsExaSearchResult$inboundSchema),
-  ),
-  costDollars: z.optional(z.nullable(types.number())),
-  executionTimeMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    query: types.optional(types.string()),
+    searchType: types.optional(TextqlRpcPublicCellsWebSearchType$inboundSchema),
+    dateRange: types.optional(TextqlRpcPublicCellsDateRange$inboundSchema),
+    answer: z.optional(z.nullable(types.string())),
+    exaResults: types.optional(
+      z.array(TextqlRpcPublicCellsExaSearchResult$inboundSchema),
+    ),
+    costDollars: z.optional(z.nullable(types.number())),
+    executionTimeMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsWebSearchCellFromJSON(
   jsonString: string,

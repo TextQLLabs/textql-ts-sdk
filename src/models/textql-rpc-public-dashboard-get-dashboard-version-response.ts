@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,11 +22,13 @@ export type TextqlRpcPublicDashboardGetDashboardVersionResponse = {
 /** @internal */
 export const TextqlRpcPublicDashboardGetDashboardVersionResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDashboardGetDashboardVersionResponse, unknown> =
-    z.object({
-      version: types.optional(
-        TextqlRpcPublicDashboardDashboardVersion$inboundSchema,
-      ),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        version: types.optional(
+          TextqlRpcPublicDashboardDashboardVersion$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicDashboardGetDashboardVersionResponseFromJSON(
   jsonString: string,

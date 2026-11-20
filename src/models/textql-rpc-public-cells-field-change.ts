@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,11 +24,13 @@ export type TextqlRpcPublicCellsFieldChange = {
 export const TextqlRpcPublicCellsFieldChange$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFieldChange,
   unknown
-> = z.object({
-  fieldName: types.optional(types.string()),
-  oldValue: types.optional(types.string()),
-  newValue: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    fieldName: types.optional(types.string()),
+    oldValue: types.optional(types.string()),
+    newValue: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsFieldChangeFromJSON(
   jsonString: string,

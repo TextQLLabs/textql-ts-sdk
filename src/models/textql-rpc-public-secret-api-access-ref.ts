@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -18,7 +18,9 @@ export type TextqlRpcPublicSecretApiAccessRef = {
 
 /** @internal */
 export const Revision$inboundSchema: z.ZodMiniType<Revision, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 /** @internal */
 export type Revision$Outbound = number | string;
 
@@ -26,7 +28,7 @@ export type Revision$Outbound = number | string;
 export const Revision$outboundSchema: z.ZodMiniType<
   Revision$Outbound,
   Revision
-> = smartUnion([z.int(), z.string()]);
+> = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function revisionToJSON(revision: Revision): string {
   return JSON.stringify(Revision$outboundSchema.parse(revision));
@@ -45,10 +47,12 @@ export function revisionFromJSON(
 export const TextqlRpcPublicSecretApiAccessRef$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretApiAccessRef,
   unknown
-> = z.object({
-  apiAccessKeyId: types.optional(types.string()),
-  revision: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    apiAccessKeyId: types.optional(types.string()),
+    revision: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicSecretApiAccessRef$Outbound = {
   apiAccessKeyId?: string | undefined;
@@ -59,10 +63,12 @@ export type TextqlRpcPublicSecretApiAccessRef$Outbound = {
 export const TextqlRpcPublicSecretApiAccessRef$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretApiAccessRef$Outbound,
   TextqlRpcPublicSecretApiAccessRef
-> = z.object({
-  apiAccessKeyId: z.optional(z.string()),
-  revision: z.optional(smartUnion([z.int(), z.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    apiAccessKeyId: z.optional(z.string()),
+    revision: z.optional(smartUnion([z.int(), z.string()])),
+  })
+);
 
 export function textqlRpcPublicSecretApiAccessRefToJSON(
   textqlRpcPublicSecretApiAccessRef: TextqlRpcPublicSecretApiAccessRef,
