@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -221,23 +221,25 @@ export type TextqlRpcPublicRbacRole = {
 export const TextqlRpcPublicRbacRole$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacRole,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  description: types.optional(types.string()),
-  id: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  isSystem: types.optional(types.boolean()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  allowedModels: types.optional(
-    z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
-  ),
-  defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  allowModelChoice: z.optional(z.nullable(types.boolean())),
-  isScimManaged: types.optional(types.boolean()),
-  color: types.optional(types.string()),
-  icon: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    description: types.optional(types.string()),
+    id: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    isSystem: types.optional(types.boolean()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    allowedModels: types.optional(
+      z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
+    ),
+    defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    allowModelChoice: z.optional(z.nullable(types.boolean())),
+    isScimManaged: types.optional(types.boolean()),
+    color: types.optional(types.string()),
+    icon: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicRbacRoleFromJSON(
   jsonString: string,

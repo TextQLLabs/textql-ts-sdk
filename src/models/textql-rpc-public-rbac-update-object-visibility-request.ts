@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacUpdateObjectVisibilityRequest = {
   objectType?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicRbacUpdateObjectVisibilityRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacUpdateObjectVisibilityRequest$Outbound,
     TextqlRpcPublicRbacUpdateObjectVisibilityRequest
-  > = z.object({
-    objectType: z.optional(z.string()),
-    objectId: z.optional(z.string()),
-    isPublic: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      objectType: z.optional(z.string()),
+      objectId: z.optional(z.string()),
+      isPublic: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicRbacUpdateObjectVisibilityRequestToJSON(
   textqlRpcPublicRbacUpdateObjectVisibilityRequest:

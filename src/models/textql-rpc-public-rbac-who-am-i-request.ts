@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * WhoAmI messages
@@ -16,7 +17,7 @@ export type TextqlRpcPublicRbacWhoAmIRequest$Outbound = {};
 export const TextqlRpcPublicRbacWhoAmIRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacWhoAmIRequest$Outbound,
   TextqlRpcPublicRbacWhoAmIRequest
-> = z.object({});
+> = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicRbacWhoAmIRequestToJSON(
   textqlRpcPublicRbacWhoAmIRequest: TextqlRpcPublicRbacWhoAmIRequest,

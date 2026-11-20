@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -119,13 +119,15 @@ export type TextqlRpcPublicObserveMemberActivity = {
 export const TextqlRpcPublicObserveMemberActivity$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicObserveMemberActivity,
   unknown
-> = z.object({
-  memberId: types.optional(types.string()),
-  dailyActivity: types.optional(z.array(types.number())),
-  eventCount: types.optional(types.number()),
-  threadCount: types.optional(types.number()),
-  lastActive: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberId: types.optional(types.string()),
+    dailyActivity: types.optional(z.array(types.number())),
+    eventCount: types.optional(types.number()),
+    threadCount: types.optional(types.number()),
+    lastActive: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicObserveMemberActivityFromJSON(
   jsonString: string,

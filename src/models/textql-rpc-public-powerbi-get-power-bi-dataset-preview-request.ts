@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequest = {
   connectorId?: number | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequest$Outbound,
     TextqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    workspaceId: z.optional(z.string()),
-    datasetId: z.optional(z.string()),
-    datasetName: z.optional(z.string()),
-    limit: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      workspaceId: z.optional(z.string()),
+      datasetId: z.optional(z.string()),
+      datasetName: z.optional(z.string()),
+      limit: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequestToJSON(
   textqlRpcPublicPowerbiGetPowerBIDatasetPreviewRequest:

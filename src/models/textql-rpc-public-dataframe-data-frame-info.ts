@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -32,7 +32,9 @@ export type TextqlRpcPublicDataframeDataFrameInfo = {
 /** @internal */
 export const TextqlRpcPublicDataframeDataFrameInfoNumRows$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDataframeDataFrameInfoNumRows, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicDataframeDataFrameInfoNumRowsFromJSON(
   jsonString: string,
@@ -53,7 +55,9 @@ export function textqlRpcPublicDataframeDataFrameInfoNumRowsFromJSON(
 /** @internal */
 export const TextqlRpcPublicDataframeDataFrameInfoNumCols$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicDataframeDataFrameInfoNumCols, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicDataframeDataFrameInfoNumColsFromJSON(
   jsonString: string,
@@ -73,7 +77,9 @@ export function textqlRpcPublicDataframeDataFrameInfoNumColsFromJSON(
 
 /** @internal */
 export const MemoryUsage$inboundSchema: z.ZodMiniType<MemoryUsage, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function memoryUsageFromJSON(
   jsonString: string,
@@ -89,13 +95,15 @@ export function memoryUsageFromJSON(
 export const TextqlRpcPublicDataframeDataFrameInfo$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDataframeDataFrameInfo,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  external: types.optional(types.boolean()),
-  numRows: types.optional(smartUnion([types.number(), types.string()])),
-  numCols: types.optional(smartUnion([types.number(), types.string()])),
-  memoryUsage: types.optional(smartUnion([types.number(), types.string()])),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    external: types.optional(types.boolean()),
+    numRows: types.optional(smartUnion([types.number(), types.string()])),
+    numCols: types.optional(smartUnion([types.number(), types.string()])),
+    memoryUsage: types.optional(smartUnion([types.number(), types.string()])),
+  })
+);
 
 export function textqlRpcPublicDataframeDataFrameInfoFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -50,23 +50,27 @@ export type TextqlRpcPublicRbacWhoAmIResponse = {
 export const TextqlRpcPublicRbacWhoAmIResponse$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacWhoAmIResponse,
   unknown
-> = z.object({
-  memberId: types.optional(types.string()),
-  orgId: types.optional(types.string()),
-  email: z.optional(z.nullable(types.string())),
-  credential: types.optional(TextqlRpcPublicRbacCallerCredential$inboundSchema),
-  roles: types.optional(z.array(TextqlRpcPublicRbacRole$inboundSchema)),
-  permissions: types.optional(
-    z.array(TextqlRpcPublicRbacPermission$inboundSchema),
-  ),
-  modelAccess: types.optional(
-    TextqlRpcPublicRbacCallerModelAccess$inboundSchema,
-  ),
-  sharedAccess: types.optional(
-    z.array(TextqlRpcPublicRbacSharedObject$inboundSchema),
-  ),
-  sharedAccessTruncated: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberId: types.optional(types.string()),
+    orgId: types.optional(types.string()),
+    email: z.optional(z.nullable(types.string())),
+    credential: types.optional(
+      TextqlRpcPublicRbacCallerCredential$inboundSchema,
+    ),
+    roles: types.optional(z.array(TextqlRpcPublicRbacRole$inboundSchema)),
+    permissions: types.optional(
+      z.array(TextqlRpcPublicRbacPermission$inboundSchema),
+    ),
+    modelAccess: types.optional(
+      TextqlRpcPublicRbacCallerModelAccess$inboundSchema,
+    ),
+    sharedAccess: types.optional(
+      z.array(TextqlRpcPublicRbacSharedObject$inboundSchema),
+    ),
+    sharedAccessTruncated: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicRbacWhoAmIResponseFromJSON(
   jsonString: string,

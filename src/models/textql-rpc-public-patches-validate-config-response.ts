@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,13 +25,15 @@ export type TextqlRpcPublicPatchesValidateConfigResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesValidateConfigResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesValidateConfigResponse, unknown> = z
-    .object({
-      ok: types.optional(types.boolean()),
-      diagnostics: types.optional(
-        z.array(TextqlRpcPublicPatchesConfigDiagnostic$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesValidateConfigResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        ok: types.optional(types.boolean()),
+        diagnostics: types.optional(
+          z.array(TextqlRpcPublicPatchesConfigDiagnostic$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicPatchesValidateConfigResponseFromJSON(
   jsonString: string,

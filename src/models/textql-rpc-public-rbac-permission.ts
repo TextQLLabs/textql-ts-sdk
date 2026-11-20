@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -120,13 +120,15 @@ export type TextqlRpcPublicRbacPermission = {
 export const TextqlRpcPublicRbacPermission$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacPermission,
   unknown
-> = z.object({
-  spec: types.optional(TextqlRpcPublicRbacPermissionSpec$inboundSchema),
-  resource: types.optional(types.string()),
-  action: types.optional(types.string()),
-  description: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    spec: types.optional(TextqlRpcPublicRbacPermissionSpec$inboundSchema),
+    resource: types.optional(types.string()),
+    action: types.optional(types.string()),
+    description: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicRbacPermissionFromJSON(
   jsonString: string,

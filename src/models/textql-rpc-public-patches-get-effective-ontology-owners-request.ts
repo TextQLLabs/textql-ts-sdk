@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Returns the *effective* owners for a directory after walking ancestor
@@ -28,9 +29,11 @@ export const TextqlRpcPublicPatchesGetEffectiveOntologyOwnersRequest$outboundSch
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetEffectiveOntologyOwnersRequest$Outbound,
     TextqlRpcPublicPatchesGetEffectiveOntologyOwnersRequest
-  > = z.object({
-    path: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetEffectiveOntologyOwnersRequestToJSON(
   textqlRpcPublicPatchesGetEffectiveOntologyOwnersRequest:

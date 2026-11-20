@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,20 +28,22 @@ export type TextqlRpcPublicCellsContextPromptEditorCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsContextPromptEditorCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsContextPromptEditorCell, unknown> = z
-    .object({
-      action: types.optional(
-        TextqlRpcPublicCellsContextPromptEditorAction$inboundSchema,
-      ),
-      currentContext: z.optional(z.nullable(types.string())),
-      proposedContext: z.optional(z.nullable(types.string())),
-      diff: z.optional(z.nullable(types.string())),
-      status: types.optional(
-        TextqlRpcPublicCellsContextPromptChangeStatus$inboundSchema,
-      ),
-      errorMessage: z.optional(z.nullable(types.string())),
-      contextId: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsContextPromptEditorCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        action: types.optional(
+          TextqlRpcPublicCellsContextPromptEditorAction$inboundSchema,
+        ),
+        currentContext: z.optional(z.nullable(types.string())),
+        proposedContext: z.optional(z.nullable(types.string())),
+        diff: z.optional(z.nullable(types.string())),
+        status: types.optional(
+          TextqlRpcPublicCellsContextPromptChangeStatus$inboundSchema,
+        ),
+        errorMessage: z.optional(z.nullable(types.string())),
+        contextId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsContextPromptEditorCellFromJSON(
   jsonString: string,

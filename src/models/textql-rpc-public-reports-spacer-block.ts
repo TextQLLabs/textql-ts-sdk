@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,9 +16,11 @@ export type TextqlRpcPublicReportsSpacerBlock = {
 export const TextqlRpcPublicReportsSpacerBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsSpacerBlock,
   unknown
-> = z.object({
-  height: z.optional(z.nullable(types.number())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    height: z.optional(z.nullable(types.number())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsSpacerBlock$Outbound = {
   height?: number | null | undefined;
@@ -28,9 +30,11 @@ export type TextqlRpcPublicReportsSpacerBlock$Outbound = {
 export const TextqlRpcPublicReportsSpacerBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsSpacerBlock$Outbound,
   TextqlRpcPublicReportsSpacerBlock
-> = z.object({
-  height: z.optional(z.nullable(z.int())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    height: z.optional(z.nullable(z.int())),
+  })
+);
 
 export function textqlRpcPublicReportsSpacerBlockToJSON(
   textqlRpcPublicReportsSpacerBlock: TextqlRpcPublicReportsSpacerBlock,

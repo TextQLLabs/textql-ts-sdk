@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacApproveAccessRequestRequest = {
   requestId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicRbacApproveAccessRequestRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacApproveAccessRequestRequest$Outbound,
     TextqlRpcPublicRbacApproveAccessRequestRequest
-  > = z.object({
-    requestId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      requestId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicRbacApproveAccessRequestRequestToJSON(
   textqlRpcPublicRbacApproveAccessRequestRequest:

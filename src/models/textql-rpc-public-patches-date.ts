@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -40,11 +40,13 @@ export type TextqlRpcPublicPatchesDate = {
 export const TextqlRpcPublicPatchesDate$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesDate,
   unknown
-> = z.object({
-  year: types.optional(types.number()),
-  month: types.optional(types.number()),
-  day: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    year: types.optional(types.number()),
+    month: types.optional(types.number()),
+    day: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicPatchesDateFromJSON(
   jsonString: string,

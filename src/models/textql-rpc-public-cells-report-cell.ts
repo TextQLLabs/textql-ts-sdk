@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,16 +27,18 @@ export type TextqlRpcPublicCellsReportCell = {
 export const TextqlRpcPublicCellsReportCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsReportCell,
   unknown
-> = z.object({
-  subject: types.optional(types.string()),
-  summary: types.optional(types.string()),
-  blocks: types.optional(
-    z.array(TextqlRpcPublicReportsReportBlock$inboundSchema),
-  ),
-  htmlPreview: types.optional(types.string()),
-  chatId: types.optional(types.string()),
-  reportId: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    subject: types.optional(types.string()),
+    summary: types.optional(types.string()),
+    blocks: types.optional(
+      z.array(TextqlRpcPublicReportsReportBlock$inboundSchema),
+    ),
+    htmlPreview: types.optional(types.string()),
+    chatId: types.optional(types.string()),
+    reportId: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicCellsReportCell$Outbound = {
   subject?: string | undefined;
@@ -51,14 +53,18 @@ export type TextqlRpcPublicCellsReportCell$Outbound = {
 export const TextqlRpcPublicCellsReportCell$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsReportCell$Outbound,
   TextqlRpcPublicCellsReportCell
-> = z.object({
-  subject: z.optional(z.string()),
-  summary: z.optional(z.string()),
-  blocks: z.optional(z.array(TextqlRpcPublicReportsReportBlock$outboundSchema)),
-  htmlPreview: z.optional(z.string()),
-  chatId: z.optional(z.string()),
-  reportId: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    subject: z.optional(z.string()),
+    summary: z.optional(z.string()),
+    blocks: z.optional(
+      z.array(TextqlRpcPublicReportsReportBlock$outboundSchema),
+    ),
+    htmlPreview: z.optional(z.string()),
+    chatId: z.optional(z.string()),
+    reportId: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicCellsReportCellToJSON(
   textqlRpcPublicCellsReportCell: TextqlRpcPublicCellsReportCell,

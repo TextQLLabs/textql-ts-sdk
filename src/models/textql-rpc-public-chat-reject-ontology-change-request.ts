@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicChatRejectOntologyChangeRequest = {
   /**
@@ -21,9 +22,11 @@ export const TextqlRpcPublicChatRejectOntologyChangeRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatRejectOntologyChangeRequest$Outbound,
     TextqlRpcPublicChatRejectOntologyChangeRequest
-  > = z.object({
-    cellId: z.string(),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      cellId: z.string(),
+    })
+  );
 
 export function textqlRpcPublicChatRejectOntologyChangeRequestToJSON(
   textqlRpcPublicChatRejectOntologyChangeRequest:

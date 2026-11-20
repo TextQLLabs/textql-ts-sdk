@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPlaybookGetMembersWithPlaybooksRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicPlaybookGetMembersWithPlaybooksRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetMembersWithPlaybooksRequest$Outbound,
     TextqlRpcPublicPlaybookGetMembersWithPlaybooksRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPlaybookGetMembersWithPlaybooksRequestToJSON(
   textqlRpcPublicPlaybookGetMembersWithPlaybooksRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest = {
   state?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest$Outbound,
     TextqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest
-  > = z.object({
-    state: z.optional(z.string()),
-    codeChallenge: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      state: z.optional(z.string()),
+      codeChallenge: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyGithubOAuthURLRequestToJSON(
   textqlRpcPublicPatchesGetOntologyGithubOAuthURLRequest:

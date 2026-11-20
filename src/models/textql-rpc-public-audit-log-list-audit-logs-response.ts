@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,16 +26,18 @@ export type TextqlRpcPublicAuditLogListAuditLogsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAuditLogListAuditLogsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAuditLogListAuditLogsResponse, unknown> = z
-    .object({
-      entries: types.optional(
-        z.array(TextqlRpcPublicAuditLogAuditLogEntry$inboundSchema),
-      ),
-      nextCursor: z.optional(z.nullable(types.string())),
-      actionOptions: types.optional(
-        z.array(TextqlRpcPublicAuditLogAuditLogActionOption$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicAuditLogListAuditLogsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        entries: types.optional(
+          z.array(TextqlRpcPublicAuditLogAuditLogEntry$inboundSchema),
+        ),
+        nextCursor: z.optional(z.nullable(types.string())),
+        actionOptions: types.optional(
+          z.array(TextqlRpcPublicAuditLogAuditLogActionOption$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicAuditLogListAuditLogsResponseFromJSON(
   jsonString: string,

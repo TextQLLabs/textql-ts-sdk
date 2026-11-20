@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,13 +17,15 @@ export type TextqlRpcPublicConnectorGoogleCalendarMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorGoogleCalendarMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorGoogleCalendarMetadata, unknown> = z
-    .object({
-      accessToken: types.optional(types.string()),
-      refreshToken: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-      metadataOnly: types.optional(types.boolean()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorGoogleCalendarMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        accessToken: types.optional(types.string()),
+        refreshToken: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        metadataOnly: types.optional(types.boolean()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorGoogleCalendarMetadata$Outbound = {
   accessToken?: string | undefined;
@@ -37,12 +39,14 @@ export const TextqlRpcPublicConnectorGoogleCalendarMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorGoogleCalendarMetadata$Outbound,
     TextqlRpcPublicConnectorGoogleCalendarMetadata
-  > = z.object({
-    accessToken: z.optional(z.string()),
-    refreshToken: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-    metadataOnly: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accessToken: z.optional(z.string()),
+      refreshToken: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+      metadataOnly: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicConnectorGoogleCalendarMetadataToJSON(
   textqlRpcPublicConnectorGoogleCalendarMetadata:

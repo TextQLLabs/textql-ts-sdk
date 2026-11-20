@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -33,7 +33,9 @@ export const TextqlRpcPublicAgentGetAgentDBSchemaResponseChangeLogBytes$inboundS
   z.ZodMiniType<
     TextqlRpcPublicAgentGetAgentDBSchemaResponseChangeLogBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicAgentGetAgentDBSchemaResponseChangeLogBytesFromJSON(
   jsonString: string,
@@ -52,15 +54,17 @@ export function textqlRpcPublicAgentGetAgentDBSchemaResponseChangeLogBytesFromJS
 
 /** @internal */
 export const TextqlRpcPublicAgentGetAgentDBSchemaResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAgentGetAgentDBSchemaResponse, unknown> = z
-    .object({
-      tables: types.optional(
-        z.array(TextqlRpcPublicAgentAgentDBTable$inboundSchema),
-      ),
-      changeLogBytes: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicAgentGetAgentDBSchemaResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tables: types.optional(
+          z.array(TextqlRpcPublicAgentAgentDBTable$inboundSchema),
+        ),
+        changeLogBytes: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicAgentGetAgentDBSchemaResponseFromJSON(
   jsonString: string,

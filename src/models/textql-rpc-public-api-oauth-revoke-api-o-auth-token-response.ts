@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
@@ -11,8 +11,8 @@ export type TextqlRpcPublicApiOauthRevokeApiOAuthTokenResponse = {};
 
 /** @internal */
 export const TextqlRpcPublicApiOauthRevokeApiOAuthTokenResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicApiOauthRevokeApiOAuthTokenResponse, unknown> = z
-    .object({});
+  z.ZodMiniType<TextqlRpcPublicApiOauthRevokeApiOAuthTokenResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicApiOauthRevokeApiOAuthTokenResponseFromJSON(
   jsonString: string,

@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,20 +35,22 @@ export const PowerBIServiceExportPowerBIReportImageRequest$outboundSchema:
   z.ZodMiniType<
     PowerBIServiceExportPowerBIReportImageRequest$Outbound,
     PowerBIServiceExportPowerBIReportImageRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicPowerbiExportPowerBIReportImageRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicPowerbiExportPowerBIReportImageRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function powerBIServiceExportPowerBIReportImageRequestToJSON(
@@ -65,11 +67,13 @@ export function powerBIServiceExportPowerBIReportImageRequestToJSON(
 /** @internal */
 export const PowerBIServiceExportPowerBIReportImageResponse$inboundSchema:
   z.ZodMiniType<PowerBIServiceExportPowerBIReportImageResponse, unknown> =
-    smartUnion([
-      models
-        .TextqlRpcPublicPowerbiExportPowerBIReportImageResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models
+          .TextqlRpcPublicPowerbiExportPowerBIReportImageResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function powerBIServiceExportPowerBIReportImageResponseFromJSON(
   jsonString: string,

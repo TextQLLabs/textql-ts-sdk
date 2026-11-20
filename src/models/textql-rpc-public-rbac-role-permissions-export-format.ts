@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicRbacRolePermissionsExportFormat = {
@@ -17,6 +18,7 @@ export type TextqlRpcPublicRbacRolePermissionsExportFormat = ClosedEnum<
 
 /** @internal */
 export const TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema:
-  z.ZodMiniEnum<typeof TextqlRpcPublicRbacRolePermissionsExportFormat> = z.enum(
-    TextqlRpcPublicRbacRolePermissionsExportFormat,
-  );
+  z.ZodMiniEnum<typeof TextqlRpcPublicRbacRolePermissionsExportFormat> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.enum(TextqlRpcPublicRbacRolePermissionsExportFormat)
+    );

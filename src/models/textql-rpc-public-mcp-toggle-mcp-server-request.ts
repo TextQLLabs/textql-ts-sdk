@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicMCPToggleMCPServerRequest = {
   id?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicMCPToggleMCPServerRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicMCPToggleMCPServerRequest$Outbound,
     TextqlRpcPublicMCPToggleMCPServerRequest
-  > = z.object({
-    id: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      id: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicMCPToggleMCPServerRequestToJSON(
   textqlRpcPublicMCPToggleMCPServerRequest:

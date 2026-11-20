@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -36,7 +36,9 @@ export type TextqlRpcPublicConnectorConnectorChatStats = {
 export const ChatsThisWeek$inboundSchema: z.ZodMiniType<
   ChatsThisWeek,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function chatsThisWeekFromJSON(
   jsonString: string,
@@ -52,7 +54,9 @@ export function chatsThisWeekFromJSON(
 export const ChatsLastWeek$inboundSchema: z.ZodMiniType<
   ChatsLastWeek,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function chatsLastWeekFromJSON(
   jsonString: string,
@@ -69,7 +73,9 @@ export const TextqlRpcPublicConnectorConnectorChatStatsActiveUsers$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorChatStatsActiveUsers,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicConnectorConnectorChatStatsActiveUsersFromJSON(
   jsonString: string,
@@ -92,7 +98,9 @@ export const TextqlRpcPublicConnectorConnectorChatStatsActiveUsersLastWeek$inbou
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorChatStatsActiveUsersLastWeek,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicConnectorConnectorChatStatsActiveUsersLastWeekFromJSON(
   jsonString: string,
@@ -111,7 +119,9 @@ export function textqlRpcPublicConnectorConnectorChatStatsActiveUsersLastWeekFro
 
 /** @internal */
 export const TotalChats$inboundSchema: z.ZodMiniType<TotalChats, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function totalChatsFromJSON(
   jsonString: string,
@@ -125,22 +135,27 @@ export function totalChatsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorChatStats$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorChatStats, unknown> = z.object(
-    {
-      chatsThisWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      chatsLastWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      activeUsers: types.optional(smartUnion([types.number(), types.string()])),
-      activeUsersLastWeek: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      avgQueriesPerChat: types.optional(types.number()),
-      totalChats: types.optional(smartUnion([types.number(), types.string()])),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorChatStats, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        chatsThisWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        chatsLastWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        activeUsers: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        activeUsersLastWeek: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        avgQueriesPerChat: types.optional(types.number()),
+        totalChats: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorChatStatsFromJSON(
   jsonString: string,

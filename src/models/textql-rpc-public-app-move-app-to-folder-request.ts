@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAppMoveAppToFolderRequest = {
   appId?: string | undefined;
@@ -23,10 +24,12 @@ export const TextqlRpcPublicAppMoveAppToFolderRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppMoveAppToFolderRequest$Outbound,
     TextqlRpcPublicAppMoveAppToFolderRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-    folderId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+      folderId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicAppMoveAppToFolderRequestToJSON(
   textqlRpcPublicAppMoveAppToFolderRequest:

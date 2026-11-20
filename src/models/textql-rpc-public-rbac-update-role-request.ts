@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -67,20 +68,22 @@ export type TextqlRpcPublicRbacUpdateRoleRequest$Outbound = {
 export const TextqlRpcPublicRbacUpdateRoleRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacUpdateRoleRequest$Outbound,
   TextqlRpcPublicRbacUpdateRoleRequest
-> = z.object({
-  roleName: z.optional(z.string()),
-  name: z.optional(z.string()),
-  description: z.optional(z.string()),
-  allowedModels: z.optional(
-    z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
-  ),
-  defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-  allowModelChoice: z.optional(z.boolean()),
-  clearAllowedModelIds: z.optional(z.boolean()),
-  color: z.optional(z.nullable(z.string())),
-  icon: z.optional(z.nullable(z.string())),
-  roleId: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    roleName: z.optional(z.string()),
+    name: z.optional(z.string()),
+    description: z.optional(z.string()),
+    allowedModels: z.optional(
+      z.array(TextqlRpcPublicChatLlmModel$outboundSchema),
+    ),
+    defaultModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+    allowModelChoice: z.optional(z.boolean()),
+    clearAllowedModelIds: z.optional(z.boolean()),
+    color: z.optional(z.nullable(z.string())),
+    icon: z.optional(z.nullable(z.string())),
+    roleId: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicRbacUpdateRoleRequestToJSON(
   textqlRpcPublicRbacUpdateRoleRequest: TextqlRpcPublicRbacUpdateRoleRequest,

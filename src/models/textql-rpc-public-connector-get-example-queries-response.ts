@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,12 +18,14 @@ export type TextqlRpcPublicConnectorGetExampleQueriesResponse = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorGetExampleQueriesResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorGetExampleQueriesResponse, unknown> = z
-    .object({
-      examples: types.optional(
-        z.array(TextqlRpcPublicConnectorExampleQuery$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorGetExampleQueriesResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        examples: types.optional(
+          z.array(TextqlRpcPublicConnectorExampleQuery$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicConnectorGetExampleQueriesResponseFromJSON(
   jsonString: string,

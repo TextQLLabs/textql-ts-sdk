@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicSecretApiAccessRef,
   TextqlRpcPublicSecretApiAccessRef$Outbound,
@@ -37,11 +38,13 @@ export const TextqlRpcPublicApiOauthGetApiOAuthURLRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicApiOauthGetApiOAuthURLRequest$Outbound,
     TextqlRpcPublicApiOauthGetApiOAuthURLRequest
-  > = z.object({
-    ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
-    state: z.optional(z.string()),
-    redirectUri: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
+      state: z.optional(z.string()),
+      redirectUri: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicApiOauthGetApiOAuthURLRequestToJSON(
   textqlRpcPublicApiOauthGetApiOAuthURLRequest:

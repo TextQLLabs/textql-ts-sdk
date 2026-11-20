@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,11 +19,13 @@ export const TextqlRpcPublicPatchesGetOntologyGithubOAuthURLResponse$inboundSche
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyGithubOAuthURLResponse,
     unknown
-  > = z.object({
-    authorizeUrl: types.optional(types.string()),
-    installUrl: types.optional(types.string()),
-    available: types.optional(types.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      authorizeUrl: types.optional(types.string()),
+      installUrl: types.optional(types.string()),
+      available: types.optional(types.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyGithubOAuthURLResponseFromJSON(
   jsonString: string,

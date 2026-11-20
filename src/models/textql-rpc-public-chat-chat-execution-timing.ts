@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -30,7 +30,9 @@ export type TextqlRpcPublicChatChatExecutionTiming = {
 
 /** @internal */
 export const CellCount$inboundSchema: z.ZodMiniType<CellCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function cellCountFromJSON(
   jsonString: string,
@@ -45,7 +47,9 @@ export function cellCountFromJSON(
 /** @internal */
 export const TextqlRpcPublicChatChatExecutionTimingTotalMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatChatExecutionTimingTotalMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatChatExecutionTimingTotalMsFromJSON(
   jsonString: string,
@@ -66,7 +70,9 @@ export function textqlRpcPublicChatChatExecutionTimingTotalMsFromJSON(
 /** @internal */
 export const TextqlRpcPublicChatChatExecutionTimingWarehouseMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatChatExecutionTimingWarehouseMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatChatExecutionTimingWarehouseMsFromJSON(
   jsonString: string,
@@ -86,7 +92,9 @@ export function textqlRpcPublicChatChatExecutionTimingWarehouseMsFromJSON(
 
 /** @internal */
 export const EgressMs$inboundSchema: z.ZodMiniType<EgressMs, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function egressMsFromJSON(
   jsonString: string,
@@ -100,7 +108,9 @@ export function egressMsFromJSON(
 
 /** @internal */
 export const OverheadMs$inboundSchema: z.ZodMiniType<OverheadMs, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function overheadMsFromJSON(
   jsonString: string,
@@ -114,14 +124,21 @@ export function overheadMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatChatExecutionTiming$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatChatExecutionTiming, unknown> = z.object({
-    cellType: types.optional(types.string()),
-    cellCount: types.optional(smartUnion([types.number(), types.string()])),
-    totalMs: types.optional(smartUnion([types.number(), types.string()])),
-    warehouseMs: types.optional(smartUnion([types.number(), types.string()])),
-    egressMs: types.optional(smartUnion([types.number(), types.string()])),
-    overheadMs: types.optional(smartUnion([types.number(), types.string()])),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatChatExecutionTiming, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        cellType: types.optional(types.string()),
+        cellCount: types.optional(smartUnion([types.number(), types.string()])),
+        totalMs: types.optional(smartUnion([types.number(), types.string()])),
+        warehouseMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        egressMs: types.optional(smartUnion([types.number(), types.string()])),
+        overheadMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicChatChatExecutionTimingFromJSON(
   jsonString: string,

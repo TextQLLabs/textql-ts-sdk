@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -215,20 +215,22 @@ export type TextqlRpcPublicPatchesOntologySyncRun = {
 export const TextqlRpcPublicPatchesOntologySyncRun$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesOntologySyncRun,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  remoteId: z.optional(z.nullable(types.string())),
-  remoteUrl: z.optional(z.nullable(types.string())),
-  defaultBranch: z.optional(z.nullable(types.string())),
-  source: types.optional(types.string()),
-  status: types.optional(
-    TextqlRpcPublicPatchesOntologySyncRunStatus$inboundSchema,
-  ),
-  startedAt: types.optional(types.date()),
-  completedAt: types.optional(types.date()),
-  errorMessage: z.optional(z.nullable(types.string())),
-  conflictCount: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    remoteId: z.optional(z.nullable(types.string())),
+    remoteUrl: z.optional(z.nullable(types.string())),
+    defaultBranch: z.optional(z.nullable(types.string())),
+    source: types.optional(types.string()),
+    status: types.optional(
+      TextqlRpcPublicPatchesOntologySyncRunStatus$inboundSchema,
+    ),
+    startedAt: types.optional(types.date()),
+    completedAt: types.optional(types.date()),
+    errorMessage: z.optional(z.nullable(types.string())),
+    conflictCount: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicPatchesOntologySyncRunFromJSON(
   jsonString: string,

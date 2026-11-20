@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -1549,23 +1549,25 @@ export type TextqlRpcPublicDatasetDataset =
   | TabularFile;
 
 /** @internal */
-export const TabularFile$inboundSchema: z.ZodMiniType<TabularFile, unknown> = z
-  .object({
-    tabularFile: TextqlRpcPublicDatasetTabularFile$inboundSchema,
-    id: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
-    name: types.optional(types.string()),
-    version: types.optional(types.number()),
-    path: types.optional(types.string()),
-    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-    userPermissions: types.optional(
-      TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
-    ),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    expiresAt: types.optional(types.date()),
-    ephemeral: types.optional(types.boolean()),
-  });
+export const TabularFile$inboundSchema: z.ZodMiniType<TabularFile, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tabularFile: TextqlRpcPublicDatasetTabularFile$inboundSchema,
+      id: types.optional(types.string()),
+      type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
+      name: types.optional(types.string()),
+      version: types.optional(types.number()),
+      path: types.optional(types.string()),
+      owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+      userPermissions: types.optional(
+        TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
+      ),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      expiresAt: types.optional(types.date()),
+      ephemeral: types.optional(types.boolean()),
+    })
+  );
 
 export function tabularFileFromJSON(
   jsonString: string,
@@ -1578,23 +1580,25 @@ export function tabularFileFromJSON(
 }
 
 /** @internal */
-export const TableauData$inboundSchema: z.ZodMiniType<TableauData, unknown> = z
-  .object({
-    tableauData: TextqlRpcPublicDatasetTableauData$inboundSchema,
-    id: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
-    name: types.optional(types.string()),
-    version: types.optional(types.number()),
-    path: types.optional(types.string()),
-    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-    userPermissions: types.optional(
-      TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
-    ),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    expiresAt: types.optional(types.date()),
-    ephemeral: types.optional(types.boolean()),
-  });
+export const TableauData$inboundSchema: z.ZodMiniType<TableauData, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tableauData: TextqlRpcPublicDatasetTableauData$inboundSchema,
+      id: types.optional(types.string()),
+      type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
+      name: types.optional(types.string()),
+      version: types.optional(types.number()),
+      path: types.optional(types.string()),
+      owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+      userPermissions: types.optional(
+        TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
+      ),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      expiresAt: types.optional(types.date()),
+      ephemeral: types.optional(types.boolean()),
+    })
+  );
 
 export function tableauDataFromJSON(
   jsonString: string,
@@ -1607,23 +1611,25 @@ export function tableauDataFromJSON(
 }
 
 /** @internal */
-export const PowerbiData$inboundSchema: z.ZodMiniType<PowerbiData, unknown> = z
-  .object({
-    powerbiData: TextqlRpcPublicDatasetPowerBIData$inboundSchema,
-    id: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
-    name: types.optional(types.string()),
-    version: types.optional(types.number()),
-    path: types.optional(types.string()),
-    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-    userPermissions: types.optional(
-      TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
-    ),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    expiresAt: types.optional(types.date()),
-    ephemeral: types.optional(types.boolean()),
-  });
+export const PowerbiData$inboundSchema: z.ZodMiniType<PowerbiData, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      powerbiData: TextqlRpcPublicDatasetPowerBIData$inboundSchema,
+      id: types.optional(types.string()),
+      type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
+      name: types.optional(types.string()),
+      version: types.optional(types.number()),
+      path: types.optional(types.string()),
+      owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+      userPermissions: types.optional(
+        TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
+      ),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      expiresAt: types.optional(types.date()),
+      ephemeral: types.optional(types.boolean()),
+    })
+  );
 
 export function powerbiDataFromJSON(
   jsonString: string,
@@ -1636,23 +1642,25 @@ export function powerbiDataFromJSON(
 }
 
 /** @internal */
-export const Document$inboundSchema: z.ZodMiniType<Document, unknown> = z
-  .object({
-    document: TextqlRpcPublicDatasetDocument$inboundSchema,
-    id: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
-    name: types.optional(types.string()),
-    version: types.optional(types.number()),
-    path: types.optional(types.string()),
-    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-    userPermissions: types.optional(
-      TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
-    ),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    expiresAt: types.optional(types.date()),
-    ephemeral: types.optional(types.boolean()),
-  });
+export const Document$inboundSchema: z.ZodMiniType<Document, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      document: TextqlRpcPublicDatasetDocument$inboundSchema,
+      id: types.optional(types.string()),
+      type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
+      name: types.optional(types.string()),
+      version: types.optional(types.number()),
+      path: types.optional(types.string()),
+      owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+      userPermissions: types.optional(
+        TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
+      ),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      expiresAt: types.optional(types.date()),
+      ephemeral: types.optional(types.boolean()),
+    })
+  );
 
 export function documentFromJSON(
   jsonString: string,
@@ -1665,23 +1673,25 @@ export function documentFromJSON(
 }
 
 /** @internal */
-export const Dataframe$inboundSchema: z.ZodMiniType<Dataframe, unknown> = z
-  .object({
-    dataframe: TextqlRpcPublicDatasetSandboxDataFrame$inboundSchema,
-    id: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
-    name: types.optional(types.string()),
-    version: types.optional(types.number()),
-    path: types.optional(types.string()),
-    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-    userPermissions: types.optional(
-      TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
-    ),
-    createdAt: types.optional(types.date()),
-    updatedAt: types.optional(types.date()),
-    expiresAt: types.optional(types.date()),
-    ephemeral: types.optional(types.boolean()),
-  });
+export const Dataframe$inboundSchema: z.ZodMiniType<Dataframe, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dataframe: TextqlRpcPublicDatasetSandboxDataFrame$inboundSchema,
+      id: types.optional(types.string()),
+      type: types.optional(TextqlRpcPublicDatasetDatasetType$inboundSchema),
+      name: types.optional(types.string()),
+      version: types.optional(types.number()),
+      path: types.optional(types.string()),
+      owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+      userPermissions: types.optional(
+        TextqlRpcPublicDatasetDatasetPermission$inboundSchema,
+      ),
+      createdAt: types.optional(types.date()),
+      updatedAt: types.optional(types.date()),
+      expiresAt: types.optional(types.date()),
+      ephemeral: types.optional(types.boolean()),
+    })
+  );
 
 export function dataframeFromJSON(
   jsonString: string,
@@ -1697,13 +1707,15 @@ export function dataframeFromJSON(
 export const TextqlRpcPublicDatasetDataset$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDatasetDataset,
   unknown
-> = smartUnion([
-  z.lazy(() => Dataframe$inboundSchema),
-  z.lazy(() => Document$inboundSchema),
-  z.lazy(() => PowerbiData$inboundSchema),
-  z.lazy(() => TableauData$inboundSchema),
-  z.lazy(() => TabularFile$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Dataframe$inboundSchema),
+    z.lazy(() => Document$inboundSchema),
+    z.lazy(() => PowerbiData$inboundSchema),
+    z.lazy(() => TableauData$inboundSchema),
+    z.lazy(() => TabularFile$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicDatasetDatasetFromJSON(
   jsonString: string,

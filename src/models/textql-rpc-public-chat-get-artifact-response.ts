@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -59,12 +59,14 @@ export type TextqlRpcPublicChatGetArtifactResponse =
   | Streamlit;
 
 /** @internal */
-export const Streamlit$inboundSchema: z.ZodMiniType<Streamlit, unknown> = z
-  .object({
-    streamlit: TextqlRpcPublicChatStreamlitArtifactData$inboundSchema,
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-  });
+export const Streamlit$inboundSchema: z.ZodMiniType<Streamlit, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      streamlit: TextqlRpcPublicChatStreamlitArtifactData$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+    })
+  );
 
 export function streamlitFromJSON(
   jsonString: string,
@@ -77,11 +79,14 @@ export function streamlitFromJSON(
 }
 
 /** @internal */
-export const Form$inboundSchema: z.ZodMiniType<Form, unknown> = z.object({
-  form: TextqlRpcPublicChatFormArtifactData$inboundSchema,
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-});
+export const Form$inboundSchema: z.ZodMiniType<Form, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      form: TextqlRpcPublicChatFormArtifactData$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+    })
+  );
 
 export function formFromJSON(
   jsonString: string,
@@ -95,13 +100,14 @@ export function formFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatGetArtifactResponseFile$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponseFile, unknown> = z.object(
-    {
-      file: TextqlRpcPublicChatFileArtifactData$inboundSchema,
-      id: types.optional(types.string()),
-      name: types.optional(types.string()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponseFile, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        file: TextqlRpcPublicChatFileArtifactData$inboundSchema,
+        id: types.optional(types.string()),
+        name: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicChatGetArtifactResponseFileFromJSON(
   jsonString: string,
@@ -121,12 +127,14 @@ export function textqlRpcPublicChatGetArtifactResponseFileFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponseDashboard, unknown> = z
-    .object({
-      dashboard: TextqlRpcPublicChatDashboardArtifactData$inboundSchema,
-      id: types.optional(types.string()),
-      name: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponseDashboard, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dashboard: TextqlRpcPublicChatDashboardArtifactData$inboundSchema,
+        id: types.optional(types.string()),
+        name: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicChatGetArtifactResponseDashboardFromJSON(
   jsonString: string,
@@ -146,12 +154,17 @@ export function textqlRpcPublicChatGetArtifactResponseDashboardFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatGetArtifactResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponse, unknown> = smartUnion([
-    z.lazy(() => TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema),
-    z.lazy(() => TextqlRpcPublicChatGetArtifactResponseFile$inboundSchema),
-    z.lazy(() => Form$inboundSchema),
-    z.lazy(() => Streamlit$inboundSchema),
-  ]);
+  z.ZodMiniType<TextqlRpcPublicChatGetArtifactResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        z.lazy(() =>
+          TextqlRpcPublicChatGetArtifactResponseDashboard$inboundSchema
+        ),
+        z.lazy(() => TextqlRpcPublicChatGetArtifactResponseFile$inboundSchema),
+        z.lazy(() => Form$inboundSchema),
+        z.lazy(() => Streamlit$inboundSchema),
+      ])
+    );
 
 export function textqlRpcPublicChatGetArtifactResponseFromJSON(
   jsonString: string,

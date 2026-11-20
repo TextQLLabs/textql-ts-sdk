@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -23,7 +23,9 @@ export type TextqlRpcPublicPowerbiPowerBITablePreview = {
 /** @internal */
 export const TextqlRpcPublicPowerbiPowerBITablePreviewTotalRows$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicPowerbiPowerBITablePreviewTotalRows, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicPowerbiPowerBITablePreviewTotalRowsFromJSON(
   jsonString: string,
@@ -43,12 +45,15 @@ export function textqlRpcPublicPowerbiPowerBITablePreviewTotalRowsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicPowerbiPowerBITablePreview$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPowerbiPowerBITablePreview, unknown> = z.object({
-    tableName: types.optional(types.string()),
-    arrowData: types.optional(types.string()),
-    totalRows: types.optional(smartUnion([types.number(), types.string()])),
-    error: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicPowerbiPowerBITablePreview, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tableName: types.optional(types.string()),
+        arrowData: types.optional(types.string()),
+        totalRows: types.optional(smartUnion([types.number(), types.string()])),
+        error: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicPowerbiPowerBITablePreviewFromJSON(
   jsonString: string,

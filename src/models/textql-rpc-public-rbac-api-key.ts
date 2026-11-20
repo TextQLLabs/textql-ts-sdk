@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -328,22 +328,24 @@ export type TextqlRpcPublicRbacApiKey = {
 export const TextqlRpcPublicRbacApiKey$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacApiKey,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  memberId: types.optional(types.string()),
-  clientId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  apiKeyShort: z.optional(z.nullable(types.string())),
-  assumedRoleNames: types.optional(z.array(types.string())),
-  assumedRoles: types.optional(z.array(types.string())),
-  name: z.optional(z.nullable(types.string())),
-  expiresAt: types.optional(types.date()),
-  revokedAt: types.optional(types.date()),
-  status: types.optional(TextqlRpcPublicRbacApiKeyStatus$inboundSchema),
-  ownerDisplayName: z.optional(z.nullable(types.string())),
-  ownerEmail: z.optional(z.nullable(types.string())),
-  suppressSuperadmin: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    memberId: types.optional(types.string()),
+    clientId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    apiKeyShort: z.optional(z.nullable(types.string())),
+    assumedRoleNames: types.optional(z.array(types.string())),
+    assumedRoles: types.optional(z.array(types.string())),
+    name: z.optional(z.nullable(types.string())),
+    expiresAt: types.optional(types.date()),
+    revokedAt: types.optional(types.date()),
+    status: types.optional(TextqlRpcPublicRbacApiKeyStatus$inboundSchema),
+    ownerDisplayName: z.optional(z.nullable(types.string())),
+    ownerEmail: z.optional(z.nullable(types.string())),
+    suppressSuperadmin: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicRbacApiKeyFromJSON(
   jsonString: string,

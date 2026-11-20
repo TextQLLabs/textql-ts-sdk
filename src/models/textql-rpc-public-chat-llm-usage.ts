@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -121,7 +121,9 @@ export type TextqlRpcPublicChatLlmUsage = {
 
 /** @internal */
 export const InputTokens$inboundSchema: z.ZodMiniType<InputTokens, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function inputTokensFromJSON(
   jsonString: string,
@@ -137,7 +139,9 @@ export function inputTokensFromJSON(
 export const CacheCreationInputTokens$inboundSchema: z.ZodMiniType<
   CacheCreationInputTokens,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function cacheCreationInputTokensFromJSON(
   jsonString: string,
@@ -153,7 +157,9 @@ export function cacheCreationInputTokensFromJSON(
 export const CacheReadInputTokens$inboundSchema: z.ZodMiniType<
   CacheReadInputTokens,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function cacheReadInputTokensFromJSON(
   jsonString: string,
@@ -167,7 +173,9 @@ export function cacheReadInputTokensFromJSON(
 
 /** @internal */
 export const OutputTokens$inboundSchema: z.ZodMiniType<OutputTokens, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function outputTokensFromJSON(
   jsonString: string,
@@ -183,18 +191,20 @@ export function outputTokensFromJSON(
 export const TextqlRpcPublicChatLlmUsage$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatLlmUsage,
   unknown
-> = z.object({
-  inputTokens: types.optional(smartUnion([types.number(), types.string()])),
-  cacheCreationInputTokens: types.optional(
-    smartUnion([types.number(), types.string()]),
-  ),
-  cacheReadInputTokens: types.optional(
-    smartUnion([types.number(), types.string()]),
-  ),
-  outputTokens: types.optional(smartUnion([types.number(), types.string()])),
-  modelName: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    inputTokens: types.optional(smartUnion([types.number(), types.string()])),
+    cacheCreationInputTokens: types.optional(
+      smartUnion([types.number(), types.string()]),
+    ),
+    cacheReadInputTokens: types.optional(
+      smartUnion([types.number(), types.string()]),
+    ),
+    outputTokens: types.optional(smartUnion([types.number(), types.string()])),
+    modelName: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicChatLlmUsageFromJSON(
   jsonString: string,

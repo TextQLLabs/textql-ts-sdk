@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,16 +21,18 @@ export type TextqlRpcPublicObserveGetThreadWarningsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveGetThreadWarningsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveGetThreadWarningsResponse, unknown> = z
-    .object({
-      warningsByChat: types.optional(
-        z.record(
-          z.string(),
-          TextqlRpcPublicObserveThreadWarningList$inboundSchema,
+  z.ZodMiniType<TextqlRpcPublicObserveGetThreadWarningsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        warningsByChat: types.optional(
+          z.record(
+            z.string(),
+            TextqlRpcPublicObserveThreadWarningList$inboundSchema,
+          ),
         ),
-      ),
-      analyzedChatIds: types.optional(z.array(types.string())),
-    });
+        analyzedChatIds: types.optional(z.array(types.string())),
+      })
+    );
 
 export function textqlRpcPublicObserveGetThreadWarningsResponseFromJSON(
   jsonString: string,

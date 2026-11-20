@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListOntologySyncRunsRequest = {
   pageSize?: number | null | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPatchesListOntologySyncRunsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListOntologySyncRunsRequest$Outbound,
     TextqlRpcPublicPatchesListOntologySyncRunsRequest
-  > = z.object({
-    pageSize: z.optional(z.nullable(z.int())),
-    pageToken: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pageSize: z.optional(z.nullable(z.int())),
+      pageToken: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesListOntologySyncRunsRequestToJSON(
   textqlRpcPublicPatchesListOntologySyncRunsRequest:

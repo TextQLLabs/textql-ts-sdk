@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,10 +18,12 @@ export type TextqlRpcPublicChatAttachAgentToChatResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatAttachAgentToChatResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatAttachAgentToChatResponse, unknown> = z
-    .object({
-      chat: types.optional(TextqlRpcPublicChatChat$inboundSchema),
-    });
+  z.ZodMiniType<TextqlRpcPublicChatAttachAgentToChatResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        chat: types.optional(TextqlRpcPublicChatChat$inboundSchema),
+      })
+    );
 
 export function textqlRpcPublicChatAttachAgentToChatResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacRevokeObjectAccessRequest = {
   /**
@@ -43,14 +44,16 @@ export const TextqlRpcPublicRbacRevokeObjectAccessRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacRevokeObjectAccessRequest$Outbound,
     TextqlRpcPublicRbacRevokeObjectAccessRequest
-  > = z.object({
-    memberEmail: z.optional(z.nullable(z.string())),
-    roleName: z.optional(z.nullable(z.string())),
-    objectType: z.optional(z.string()),
-    objectId: z.optional(z.string()),
-    memberId: z.optional(z.nullable(z.string())),
-    roleId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberEmail: z.optional(z.nullable(z.string())),
+      roleName: z.optional(z.nullable(z.string())),
+      objectType: z.optional(z.string()),
+      objectId: z.optional(z.string()),
+      memberId: z.optional(z.nullable(z.string())),
+      roleId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacRevokeObjectAccessRequestToJSON(
   textqlRpcPublicRbacRevokeObjectAccessRequest:

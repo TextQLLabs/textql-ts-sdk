@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -24,7 +24,9 @@ export type TextqlRpcPublicCellsTextCell = {
 export const TextqlRpcPublicCellsTextCellSizeBytes$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsTextCellSizeBytes,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicCellsTextCellSizeBytesFromJSON(
   jsonString: string,
@@ -41,14 +43,16 @@ export function textqlRpcPublicCellsTextCellSizeBytesFromJSON(
 export const TextqlRpcPublicCellsTextCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsTextCell,
   unknown
-> = z.object({
-  fileName: types.optional(types.string()),
-  content: types.optional(types.string()),
-  mimeType: types.optional(types.string()),
-  sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
-  datasetSourceId: types.optional(types.string()),
-  lineCount: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    fileName: types.optional(types.string()),
+    content: types.optional(types.string()),
+    mimeType: types.optional(types.string()),
+    sizeBytes: types.optional(smartUnion([types.number(), types.string()])),
+    datasetSourceId: types.optional(types.string()),
+    lineCount: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicCellsTextCellFromJSON(
   jsonString: string,

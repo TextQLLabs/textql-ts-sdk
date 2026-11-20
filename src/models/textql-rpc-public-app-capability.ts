@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -37,20 +37,22 @@ export type TextqlRpcPublicAppCapability = {
 export const TextqlRpcPublicAppCapability$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppCapability,
   unknown
-> = z.object({
-  type: types.optional(types.string()),
-  name: z.optional(z.nullable(types.string())),
-  connectorId: z.optional(z.nullable(types.number())),
-  statement: z.optional(z.nullable(types.string())),
-  scope: z.optional(z.nullable(types.string())),
-  subject: z.optional(z.nullable(types.string())),
-  body: z.optional(z.nullable(types.string())),
-  parameters: types.optional(
-    z.array(TextqlRpcPublicAppCapabilityParam$inboundSchema),
-  ),
-  agentId: z.optional(z.nullable(types.string())),
-  appDb: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: types.optional(types.string()),
+    name: z.optional(z.nullable(types.string())),
+    connectorId: z.optional(z.nullable(types.number())),
+    statement: z.optional(z.nullable(types.string())),
+    scope: z.optional(z.nullable(types.string())),
+    subject: z.optional(z.nullable(types.string())),
+    body: z.optional(z.nullable(types.string())),
+    parameters: types.optional(
+      z.array(TextqlRpcPublicAppCapabilityParam$inboundSchema),
+    ),
+    agentId: z.optional(z.nullable(types.string())),
+    appDb: z.optional(z.nullable(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicAppCapability$Outbound = {
   type?: string | undefined;
@@ -69,20 +71,22 @@ export type TextqlRpcPublicAppCapability$Outbound = {
 export const TextqlRpcPublicAppCapability$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppCapability$Outbound,
   TextqlRpcPublicAppCapability
-> = z.object({
-  type: z.optional(z.string()),
-  name: z.optional(z.nullable(z.string())),
-  connectorId: z.optional(z.nullable(z.int())),
-  statement: z.optional(z.nullable(z.string())),
-  scope: z.optional(z.nullable(z.string())),
-  subject: z.optional(z.nullable(z.string())),
-  body: z.optional(z.nullable(z.string())),
-  parameters: z.optional(
-    z.array(TextqlRpcPublicAppCapabilityParam$outboundSchema),
-  ),
-  agentId: z.optional(z.nullable(z.string())),
-  appDb: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: z.optional(z.string()),
+    name: z.optional(z.nullable(z.string())),
+    connectorId: z.optional(z.nullable(z.int())),
+    statement: z.optional(z.nullable(z.string())),
+    scope: z.optional(z.nullable(z.string())),
+    subject: z.optional(z.nullable(z.string())),
+    body: z.optional(z.nullable(z.string())),
+    parameters: z.optional(
+      z.array(TextqlRpcPublicAppCapabilityParam$outboundSchema),
+    ),
+    agentId: z.optional(z.nullable(z.string())),
+    appDb: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicAppCapabilityToJSON(
   textqlRpcPublicAppCapability: TextqlRpcPublicAppCapability,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -20,12 +20,14 @@ export type TextqlRpcPublicObserveGetEngagementSpectrumResponse = {
 /** @internal */
 export const TextqlRpcPublicObserveGetEngagementSpectrumResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicObserveGetEngagementSpectrumResponse, unknown> =
-    z.object({
-      tiers: types.optional(
-        z.array(TextqlRpcPublicObserveEngagementTierCount$inboundSchema),
-      ),
-      totalPeople: types.optional(types.number()),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tiers: types.optional(
+          z.array(TextqlRpcPublicObserveEngagementTierCount$inboundSchema),
+        ),
+        totalPeople: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveGetEngagementSpectrumResponseFromJSON(
   jsonString: string,

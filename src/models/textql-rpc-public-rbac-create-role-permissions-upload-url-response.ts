@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,12 +23,14 @@ export const TextqlRpcPublicRbacCreateRolePermissionsUploadUrlResponse$inboundSc
   z.ZodMiniType<
     TextqlRpcPublicRbacCreateRolePermissionsUploadUrlResponse,
     unknown
-  > = z.object({
-    uploadUrl: types.optional(types.string()),
-    fileUrl: types.optional(types.string()),
-    contentType: types.optional(types.string()),
-    fileKey: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      uploadUrl: types.optional(types.string()),
+      fileUrl: types.optional(types.string()),
+      contentType: types.optional(types.string()),
+      fileKey: types.optional(types.string()),
+    })
+  );
 
 export function textqlRpcPublicRbacCreateRolePermissionsUploadUrlResponseFromJSON(
   jsonString: string,

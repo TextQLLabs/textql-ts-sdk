@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,19 +28,21 @@ export type TextqlRpcPublicCellsCitation = {
 export const TextqlRpcPublicCellsCitation$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsCitation,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  claim: types.optional(types.string()),
-  sourceCellId: z.optional(z.nullable(types.string())),
-  sourceRef: z.optional(z.nullable(types.string())),
-  sourceLocator: z.optional(z.nullable(types.string())),
-  anchor: types.optional(types.string()),
-  quotedText: z.optional(z.nullable(types.string())),
-  rationale: z.optional(z.nullable(types.string())),
-  lineage: types.optional(
-    z.array(TextqlRpcPublicCellsCitationLineageNode$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    claim: types.optional(types.string()),
+    sourceCellId: z.optional(z.nullable(types.string())),
+    sourceRef: z.optional(z.nullable(types.string())),
+    sourceLocator: z.optional(z.nullable(types.string())),
+    anchor: types.optional(types.string()),
+    quotedText: z.optional(z.nullable(types.string())),
+    rationale: z.optional(z.nullable(types.string())),
+    lineage: types.optional(
+      z.array(TextqlRpcPublicCellsCitationLineageNode$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsCitationFromJSON(
   jsonString: string,

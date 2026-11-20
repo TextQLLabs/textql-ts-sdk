@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -47,17 +47,21 @@ export type TextqlRpcPublicCellsEditableForm = {
 export const TextqlRpcPublicCellsEditableForm$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsEditableForm,
   unknown
-> = z.object({
-  formName: types.optional(types.string()),
-  fields: types.optional(
-    z.record(z.string(), types.nullable(GoogleProtobufValue$inboundSchema)),
-  ),
-  status: types.optional(TextqlRpcPublicCellsEditableFormStatus$inboundSchema),
-  id: types.optional(types.string()),
-  submitError: z.optional(z.nullable(types.string())),
-  submitResult: z.optional(z.nullable(types.string())),
-  validationError: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    formName: types.optional(types.string()),
+    fields: types.optional(
+      z.record(z.string(), types.nullable(GoogleProtobufValue$inboundSchema)),
+    ),
+    status: types.optional(
+      TextqlRpcPublicCellsEditableFormStatus$inboundSchema,
+    ),
+    id: types.optional(types.string()),
+    submitError: z.optional(z.nullable(types.string())),
+    submitResult: z.optional(z.nullable(types.string())),
+    validationError: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsEditableFormFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -32,14 +32,16 @@ export type TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse = {
 /** @internal */
 export const TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicPatchesSaveAllObjectsAsConfigResponse, unknown> =
-    z.object({
-      patch: types.optional(TextqlRpcPublicPatchesPatch$inboundSchema),
-      filePaths: types.optional(z.array(types.string())),
-      skipped: types.optional(
-        z.array(TextqlRpcPublicPatchesSkippedConfigExport$inboundSchema),
-      ),
-      alreadyManagedCount: types.optional(types.number()),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        patch: types.optional(TextqlRpcPublicPatchesPatch$inboundSchema),
+        filePaths: types.optional(z.array(types.string())),
+        skipped: types.optional(
+          z.array(TextqlRpcPublicPatchesSkippedConfigExport$inboundSchema),
+        ),
+        alreadyManagedCount: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicPatchesSaveAllObjectsAsConfigResponseFromJSON(
   jsonString: string,

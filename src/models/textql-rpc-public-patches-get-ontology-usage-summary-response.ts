@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -62,7 +62,9 @@ export type TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse = {
 export const ReclaimableTokens$inboundSchema: z.ZodMiniType<
   ReclaimableTokens,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function reclaimableTokensFromJSON(
   jsonString: string,
@@ -79,20 +81,22 @@ export const TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyUsageSummaryResponse,
     unknown
-  > = z.object({
-    totalFiles: types.optional(types.number()),
-    pulledFiles: types.optional(types.number()),
-    deadFiles: types.optional(types.number()),
-    avgHitRate: types.optional(types.number()),
-    errorFiles: types.optional(types.number()),
-    reclaimableTokens: types.optional(
-      smartUnion([types.number(), types.string()]),
-    ),
-    tqlPulledFiles: types.optional(types.number()),
-    avgDocCitedRate: types.optional(types.number()),
-    docPulledFiles: types.optional(types.number()),
-    docCitationsEnabled: types.optional(types.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      totalFiles: types.optional(types.number()),
+      pulledFiles: types.optional(types.number()),
+      deadFiles: types.optional(types.number()),
+      avgHitRate: types.optional(types.number()),
+      errorFiles: types.optional(types.number()),
+      reclaimableTokens: types.optional(
+        smartUnion([types.number(), types.string()]),
+      ),
+      tqlPulledFiles: types.optional(types.number()),
+      avgDocCitedRate: types.optional(types.number()),
+      docPulledFiles: types.optional(types.number()),
+      docCitationsEnabled: types.optional(types.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyUsageSummaryResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -28,7 +28,9 @@ export type TextqlRpcPublicCellsMCPToolCell = {
 /** @internal */
 export const TextqlRpcPublicCellsMCPToolCellExecutionTimeMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicCellsMCPToolCellExecutionTimeMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsMCPToolCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -50,21 +52,23 @@ export function textqlRpcPublicCellsMCPToolCellExecutionTimeMsFromJSON(
 export const TextqlRpcPublicCellsMCPToolCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsMCPToolCell,
   unknown
-> = z.object({
-  serverName: types.optional(types.string()),
-  toolName: types.optional(types.string()),
-  argumentsJson: types.optional(types.string()),
-  contentJson: z.optional(z.nullable(types.string())),
-  isError: z.optional(z.nullable(types.boolean())),
-  errorMessage: z.optional(z.nullable(types.string())),
-  executionTimeMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-  authRequired: z.optional(z.nullable(types.boolean())),
-  authCompleted: z.optional(z.nullable(types.boolean())),
-  authServerId: z.optional(z.nullable(types.string())),
-  authServerName: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    serverName: types.optional(types.string()),
+    toolName: types.optional(types.string()),
+    argumentsJson: types.optional(types.string()),
+    contentJson: z.optional(z.nullable(types.string())),
+    isError: z.optional(z.nullable(types.boolean())),
+    errorMessage: z.optional(z.nullable(types.string())),
+    executionTimeMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+    authRequired: z.optional(z.nullable(types.boolean())),
+    authCompleted: z.optional(z.nullable(types.boolean())),
+    authServerId: z.optional(z.nullable(types.string())),
+    authServerName: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsMCPToolCellFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveRefineTopicDraftRequest = {
   prompt?: string | undefined;
@@ -28,11 +29,13 @@ export const TextqlRpcPublicObserveRefineTopicDraftRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveRefineTopicDraftRequest$Outbound,
     TextqlRpcPublicObserveRefineTopicDraftRequest
-  > = z.object({
-    prompt: z.optional(z.string()),
-    examples: z.optional(z.array(z.string())),
-    exclusions: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      prompt: z.optional(z.string()),
+      examples: z.optional(z.array(z.string())),
+      exclusions: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicObserveRefineTopicDraftRequestToJSON(
   textqlRpcPublicObserveRefineTopicDraftRequest:

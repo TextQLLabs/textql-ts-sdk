@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacGetMemberRolesRequest = {
   /**
@@ -26,10 +27,12 @@ export const TextqlRpcPublicRbacGetMemberRolesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacGetMemberRolesRequest$Outbound,
     TextqlRpcPublicRbacGetMemberRolesRequest
-  > = z.object({
-    memberEmails: z.optional(z.array(z.string())),
-    memberIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberEmails: z.optional(z.array(z.string())),
+      memberIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacGetMemberRolesRequestToJSON(
   textqlRpcPublicRbacGetMemberRolesRequest:

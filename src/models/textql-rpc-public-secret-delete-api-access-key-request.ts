@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSecretDeleteApiAccessKeyRequest = {
   id?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicSecretDeleteApiAccessKeyRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSecretDeleteApiAccessKeyRequest$Outbound,
     TextqlRpcPublicSecretDeleteApiAccessKeyRequest
-  > = z.object({
-    id: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      id: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSecretDeleteApiAccessKeyRequestToJSON(
   textqlRpcPublicSecretDeleteApiAccessKeyRequest:

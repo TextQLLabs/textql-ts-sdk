@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,11 +22,13 @@ export type TextqlRpcPublicSandboxAdminListSandboxEgressResponse = {
 /** @internal */
 export const TextqlRpcPublicSandboxAdminListSandboxEgressResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicSandboxAdminListSandboxEgressResponse, unknown> =
-    z.object({
-      calls: types.optional(
-        z.array(TextqlRpcPublicSandboxAdminSandboxEgressCall$inboundSchema),
-      ),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        calls: types.optional(
+          z.array(TextqlRpcPublicSandboxAdminSandboxEgressCall$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminListSandboxEgressResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -46,10 +46,13 @@ export type TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth =
   | Pat;
 
 /** @internal */
-export const Pat$inboundSchema: z.ZodMiniType<Pat, unknown> = z.object({
-  pat:
-    TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$inboundSchema,
-});
+export const Pat$inboundSchema: z.ZodMiniType<Pat, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pat:
+        TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$inboundSchema,
+    })
+  );
 /** @internal */
 export type Pat$Outbound = {
   pat:
@@ -57,10 +60,13 @@ export type Pat$Outbound = {
 };
 
 /** @internal */
-export const Pat$outboundSchema: z.ZodMiniType<Pat$Outbound, Pat> = z.object({
-  pat:
-    TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$outboundSchema,
-});
+export const Pat$outboundSchema: z.ZodMiniType<Pat$Outbound, Pat> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pat:
+        TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthPersonalAccessToken$outboundSchema,
+    })
+  );
 
 export function patToJSON(pat: Pat): string {
   return JSON.stringify(Pat$outboundSchema.parse(pat));
@@ -76,11 +82,13 @@ export function patFromJSON(
 }
 
 /** @internal */
-export const OauthU2m$inboundSchema: z.ZodMiniType<OauthU2m, unknown> = z
-  .object({
-    oauthU2m:
-      TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthOAuthU2M$inboundSchema,
-  });
+export const OauthU2m$inboundSchema: z.ZodMiniType<OauthU2m, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      oauthU2m:
+        TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthOAuthU2M$inboundSchema,
+    })
+  );
 /** @internal */
 export type OauthU2m$Outbound = {
   oauthU2m:
@@ -91,10 +99,12 @@ export type OauthU2m$Outbound = {
 export const OauthU2m$outboundSchema: z.ZodMiniType<
   OauthU2m$Outbound,
   OauthU2m
-> = z.object({
-  oauthU2m:
-    TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthOAuthU2M$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    oauthU2m:
+      TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthOAuthU2M$outboundSchema,
+  })
+);
 
 export function oauthU2mToJSON(oauthU2m: OauthU2m): string {
   return JSON.stringify(OauthU2m$outboundSchema.parse(oauthU2m));
@@ -113,10 +123,12 @@ export function oauthU2mFromJSON(
 export const ClientCredentials$inboundSchema: z.ZodMiniType<
   ClientCredentials,
   unknown
-> = z.object({
-  clientCredentials:
-    TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$inboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    clientCredentials:
+      TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$inboundSchema,
+  })
+);
 /** @internal */
 export type ClientCredentials$Outbound = {
   clientCredentials:
@@ -127,10 +139,12 @@ export type ClientCredentials$Outbound = {
 export const ClientCredentials$outboundSchema: z.ZodMiniType<
   ClientCredentials$Outbound,
   ClientCredentials
-> = z.object({
-  clientCredentials:
-    TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    clientCredentials:
+      TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$outboundSchema,
+  })
+);
 
 export function clientCredentialsToJSON(
   clientCredentials: ClientCredentials,
@@ -154,11 +168,13 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$inboundSch
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth,
     unknown
-  > = smartUnion([
-    z.lazy(() => ClientCredentials$inboundSchema),
-    z.lazy(() => OauthU2m$inboundSchema),
-    z.lazy(() => Pat$inboundSchema),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => ClientCredentials$inboundSchema),
+      z.lazy(() => OauthU2m$inboundSchema),
+      z.lazy(() => Pat$inboundSchema),
+    ])
+  );
 /** @internal */
 export type TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$Outbound =
   | ClientCredentials$Outbound
@@ -170,11 +186,13 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$Outbound,
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth
-  > = smartUnion([
-    z.lazy(() => ClientCredentials$outboundSchema),
-    z.lazy(() => OauthU2m$outboundSchema),
-    z.lazy(() => Pat$outboundSchema),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() => ClientCredentials$outboundSchema),
+      z.lazy(() => OauthU2m$outboundSchema),
+      z.lazy(() => Pat$outboundSchema),
+    ])
+  );
 
 export function textqlRpcPublicConnectorDatabricksMetadataDatabricksAuthToJSON(
   textqlRpcPublicConnectorDatabricksMetadataDatabricksAuth:

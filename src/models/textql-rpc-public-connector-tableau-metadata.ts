@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,15 +23,18 @@ export type TextqlRpcPublicConnectorTableauMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorTableauMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorTableauMetadata, unknown> = z.object({
-    serverUrl: types.optional(types.string()),
-    siteName: types.optional(types.string()),
-    patName: types.optional(types.string()),
-    patSecret: types.optional(types.string()),
-    connectedAppClientId: z.optional(z.nullable(types.string())),
-    connectedAppSecretId: z.optional(z.nullable(types.string())),
-    connectedAppSecretValue: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorTableauMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        serverUrl: types.optional(types.string()),
+        siteName: types.optional(types.string()),
+        patName: types.optional(types.string()),
+        patSecret: types.optional(types.string()),
+        connectedAppClientId: z.optional(z.nullable(types.string())),
+        connectedAppSecretId: z.optional(z.nullable(types.string())),
+        connectedAppSecretValue: z.optional(z.nullable(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorTableauMetadata$Outbound = {
   serverUrl?: string | undefined;
@@ -48,15 +51,17 @@ export const TextqlRpcPublicConnectorTableauMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorTableauMetadata$Outbound,
     TextqlRpcPublicConnectorTableauMetadata
-  > = z.object({
-    serverUrl: z.optional(z.string()),
-    siteName: z.optional(z.string()),
-    patName: z.optional(z.string()),
-    patSecret: z.optional(z.string()),
-    connectedAppClientId: z.optional(z.nullable(z.string())),
-    connectedAppSecretId: z.optional(z.nullable(z.string())),
-    connectedAppSecretValue: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      serverUrl: z.optional(z.string()),
+      siteName: z.optional(z.string()),
+      patName: z.optional(z.string()),
+      patSecret: z.optional(z.string()),
+      connectedAppClientId: z.optional(z.nullable(z.string())),
+      connectedAppSecretId: z.optional(z.nullable(z.string())),
+      connectedAppSecretValue: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorTableauMetadataToJSON(
   textqlRpcPublicConnectorTableauMetadata:

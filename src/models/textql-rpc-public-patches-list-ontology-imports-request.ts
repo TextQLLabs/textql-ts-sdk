@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListOntologyImportsRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicPatchesListOntologyImportsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListOntologyImportsRequest$Outbound,
     TextqlRpcPublicPatchesListOntologyImportsRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPatchesListOntologyImportsRequestToJSON(
   textqlRpcPublicPatchesListOntologyImportsRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,14 +21,16 @@ export type TextqlRpcPublicSecretEnvVarField = {
 export const TextqlRpcPublicSecretEnvVarField$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretEnvVarField,
   unknown
-> = z.object({
-  envVar: types.optional(types.string()),
-  label: types.optional(types.string()),
-  required: types.optional(types.boolean()),
-  secret: types.optional(types.boolean()),
-  defaultValue: types.optional(types.string()),
-  placeholder: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    envVar: types.optional(types.string()),
+    label: types.optional(types.string()),
+    required: types.optional(types.boolean()),
+    secret: types.optional(types.boolean()),
+    defaultValue: types.optional(types.string()),
+    placeholder: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicSecretEnvVarFieldFromJSON(
   jsonString: string,

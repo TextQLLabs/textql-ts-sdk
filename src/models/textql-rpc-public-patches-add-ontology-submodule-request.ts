@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesAddOntologySubmoduleRequest = {
   url?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesAddOntologySubmoduleRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesAddOntologySubmoduleRequest$Outbound,
     TextqlRpcPublicPatchesAddOntologySubmoduleRequest
-  > = z.object({
-    url: z.optional(z.string()),
-    path: z.optional(z.string()),
-    branch: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      url: z.optional(z.string()),
+      path: z.optional(z.string()),
+      branch: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesAddOntologySubmoduleRequestToJSON(
   textqlRpcPublicPatchesAddOntologySubmoduleRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -27,13 +27,15 @@ export type GoogleProtobufValue = number | string | boolean | Array<any> | {
 export const GoogleProtobufValue$inboundSchema: z.ZodMiniType<
   GoogleProtobufValue,
   unknown
-> = smartUnion([
-  types.number(),
-  types.string(),
-  types.boolean(),
-  z.array(z.any()),
-  z.record(z.string(), z.any()),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    types.number(),
+    types.string(),
+    types.boolean(),
+    z.array(z.any()),
+    z.record(z.string(), z.any()),
+  ])
+);
 /** @internal */
 export type GoogleProtobufValue$Outbound =
   | number
@@ -46,13 +48,15 @@ export type GoogleProtobufValue$Outbound =
 export const GoogleProtobufValue$outboundSchema: z.ZodMiniType<
   GoogleProtobufValue$Outbound,
   GoogleProtobufValue
-> = smartUnion([
-  z.number(),
-  z.string(),
-  z.boolean(),
-  z.array(z.any()),
-  z.record(z.string(), z.any()),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.number(),
+    z.string(),
+    z.boolean(),
+    z.array(z.any()),
+    z.record(z.string(), z.any()),
+  ])
+);
 
 export function googleProtobufValueToJSON(
   googleProtobufValue: GoogleProtobufValue,

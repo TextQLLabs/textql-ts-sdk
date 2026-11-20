@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicDatasetUpdateDatasetRequest = {
   datasetId?: string | undefined;
@@ -23,10 +24,12 @@ export const TextqlRpcPublicDatasetUpdateDatasetRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDatasetUpdateDatasetRequest$Outbound,
     TextqlRpcPublicDatasetUpdateDatasetRequest
-  > = z.object({
-    datasetId: z.optional(z.string()),
-    name: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      datasetId: z.optional(z.string()),
+      name: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicDatasetUpdateDatasetRequestToJSON(
   textqlRpcPublicDatasetUpdateDatasetRequest:

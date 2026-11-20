@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,17 +23,19 @@ export type TextqlRpcPublicObserveRefineTopicDraftResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveRefineTopicDraftResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveRefineTopicDraftResponse, unknown> = z
-    .object({
-      name: types.optional(types.string()),
-      covers: types.optional(types.string()),
-      excludes: types.optional(types.string()),
-      vague: types.optional(types.boolean()),
-      qualityHint: types.optional(types.string()),
-      similarTopics: types.optional(
-        z.array(TextqlRpcPublicObserveSimilarTopic$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveRefineTopicDraftResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        name: types.optional(types.string()),
+        covers: types.optional(types.string()),
+        excludes: types.optional(types.string()),
+        vague: types.optional(types.boolean()),
+        qualityHint: types.optional(types.string()),
+        similarTopics: types.optional(
+          z.array(TextqlRpcPublicObserveSimilarTopic$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicObserveRefineTopicDraftResponseFromJSON(
   jsonString: string,

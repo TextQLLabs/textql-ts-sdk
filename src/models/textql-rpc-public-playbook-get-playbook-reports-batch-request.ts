@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Batch request to get reports for multiple template data IDs efficiently
@@ -39,12 +40,14 @@ export const TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest$Outbound,
     TextqlRpcPublicPlaybookGetPlaybookReportsBatchRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-    templateDataIds: z.optional(z.array(z.string())),
-    limitPerTemplate: z.optional(z.int()),
-    batchRunId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+      templateDataIds: z.optional(z.array(z.string())),
+      limitPerTemplate: z.optional(z.int()),
+      batchRunId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPlaybookGetPlaybookReportsBatchRequestToJSON(
   textqlRpcPublicPlaybookGetPlaybookReportsBatchRequest:

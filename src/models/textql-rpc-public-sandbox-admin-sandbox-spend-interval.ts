@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -223,7 +223,9 @@ export const TextqlRpcPublicSandboxAdminSandboxSpendIntervalDurationMs$inboundSc
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminSandboxSpendIntervalDurationMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminSandboxSpendIntervalDurationMsFromJSON(
   jsonString: string,
@@ -242,14 +244,18 @@ export function textqlRpcPublicSandboxAdminSandboxSpendIntervalDurationMsFromJSO
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxSpendInterval$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxSpendInterval, unknown> = z
-    .object({
-      startedAt: types.optional(types.date()),
-      endedAt: types.optional(types.date()),
-      durationMs: types.optional(smartUnion([types.number(), types.string()])),
-      acus: types.optional(types.number()),
-      active: types.optional(types.boolean()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxSpendInterval, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        startedAt: types.optional(types.date()),
+        endedAt: types.optional(types.date()),
+        durationMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        acus: types.optional(types.number()),
+        active: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxSpendIntervalFromJSON(
   jsonString: string,

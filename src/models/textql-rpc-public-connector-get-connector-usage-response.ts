@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -32,7 +32,9 @@ export type TextqlRpcPublicConnectorGetConnectorUsageResponse = {
 
 /** @internal */
 export const TotalQueries$inboundSchema: z.ZodMiniType<TotalQueries, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function totalQueriesFromJSON(
   jsonString: string,
@@ -46,21 +48,23 @@ export function totalQueriesFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorGetConnectorUsageResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorGetConnectorUsageResponse, unknown> = z
-    .object({
-      dailyVolume: types.optional(
-        z.array(TextqlRpcPublicConnectorDailyQueryCount$inboundSchema),
-      ),
-      topUsers: types.optional(
-        z.array(TextqlRpcPublicConnectorTopUser$inboundSchema),
-      ),
-      totalQueries: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      dailyExecutionMs: types.optional(
-        z.array(TextqlRpcPublicConnectorDailyDuration$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorGetConnectorUsageResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dailyVolume: types.optional(
+          z.array(TextqlRpcPublicConnectorDailyQueryCount$inboundSchema),
+        ),
+        topUsers: types.optional(
+          z.array(TextqlRpcPublicConnectorTopUser$inboundSchema),
+        ),
+        totalQueries: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        dailyExecutionMs: types.optional(
+          z.array(TextqlRpcPublicConnectorDailyDuration$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicConnectorGetConnectorUsageResponseFromJSON(
   jsonString: string,

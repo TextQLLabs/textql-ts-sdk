@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -115,11 +115,13 @@ export type TextqlRpcPublicDatasetDatasetFolder = {
 export const TextqlRpcPublicDatasetDatasetFolder$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDatasetDatasetFolder,
   unknown
-> = z.object({
-  path: types.optional(types.string()),
-  owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
-  createdAt: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    path: types.optional(types.string()),
+    owner: types.optional(TextqlRpcIdentityMemberPreview$inboundSchema),
+    createdAt: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicDatasetDatasetFolderFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -371,20 +371,22 @@ export type TextqlRpcPublicPatchesFileUsage = {
 export const TextqlRpcPublicPatchesFileUsage$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesFileUsage,
   unknown
-> = z.object({
-  filePath: types.optional(types.string()),
-  averageTokens: types.optional(types.number()),
-  averageQueryTime: types.optional(types.string()),
-  hitRate: types.optional(types.number()),
-  numErrors: types.optional(types.number()),
-  numEmpties: types.optional(types.number()),
-  chatsPulled: types.optional(types.number()),
-  chatsUsed: types.optional(types.number()),
-  lastPulled: types.optional(types.date()),
-  lastRun: types.optional(types.date()),
-  lastUsed: types.optional(types.date()),
-  chatsCited: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    filePath: types.optional(types.string()),
+    averageTokens: types.optional(types.number()),
+    averageQueryTime: types.optional(types.string()),
+    hitRate: types.optional(types.number()),
+    numErrors: types.optional(types.number()),
+    numEmpties: types.optional(types.number()),
+    chatsPulled: types.optional(types.number()),
+    chatsUsed: types.optional(types.number()),
+    lastPulled: types.optional(types.date()),
+    lastRun: types.optional(types.date()),
+    lastUsed: types.optional(types.date()),
+    chatsCited: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicPatchesFileUsageFromJSON(
   jsonString: string,

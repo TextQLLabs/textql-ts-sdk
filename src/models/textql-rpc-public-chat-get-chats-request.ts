@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatChatSortDirection,
   TextqlRpcPublicChatChatSortDirection$outboundSchema,
@@ -292,35 +293,39 @@ export type TextqlRpcPublicChatGetChatsRequest$Outbound = {
 export const TextqlRpcPublicChatGetChatsRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatGetChatsRequest$Outbound,
   TextqlRpcPublicChatGetChatsRequest
-> = z.object({
-  memberOnly: z.optional(z.boolean()),
-  searchTerm: z.optional(z.nullable(z.string())),
-  limit: z.optional(z.nullable(z.int())),
-  offset: z.optional(z.nullable(z.int())),
-  creatorMemberId: z.optional(z.nullable(z.string())),
-  sortBy: z.optional(TextqlRpcPublicChatChatSortField$outboundSchema),
-  sortDirection: z.optional(
-    TextqlRpcPublicChatChatSortDirection$outboundSchema,
-  ),
-  bookmarkedOnly: z.optional(z.nullable(z.boolean())),
-  createdAfter: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  createdBefore: z.optional(
-    z.pipe(z.date(), z.transform(v => v.toISOString())),
-  ),
-  excludeBatchRuns: z.optional(z.nullable(z.boolean())),
-  excludeUnusedPlaybooks: z.optional(z.nullable(z.boolean())),
-  source: z.optional(TextqlRpcPublicChatChatSource$outboundSchema),
-  hasThreadWarning: z.optional(z.nullable(z.boolean())),
-  creatorMemberIds: z.optional(z.array(z.string())),
-  sharedWithMe: z.optional(z.nullable(z.boolean())),
-  excludeFeed: z.optional(z.nullable(z.boolean())),
-  sources: z.optional(z.array(TextqlRpcPublicChatChatSource$outboundSchema)),
-  threadWarningTypes: z.optional(
-    z.array(TextqlRpcPublicChatThreadWarningType$outboundSchema),
-  ),
-  topicIds: z.optional(z.array(z.string())),
-  connectorIds: z.optional(z.array(z.int())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberOnly: z.optional(z.boolean()),
+    searchTerm: z.optional(z.nullable(z.string())),
+    limit: z.optional(z.nullable(z.int())),
+    offset: z.optional(z.nullable(z.int())),
+    creatorMemberId: z.optional(z.nullable(z.string())),
+    sortBy: z.optional(TextqlRpcPublicChatChatSortField$outboundSchema),
+    sortDirection: z.optional(
+      TextqlRpcPublicChatChatSortDirection$outboundSchema,
+    ),
+    bookmarkedOnly: z.optional(z.nullable(z.boolean())),
+    createdAfter: z.optional(
+      z.pipe(z.date(), z.transform(v => v.toISOString())),
+    ),
+    createdBefore: z.optional(
+      z.pipe(z.date(), z.transform(v => v.toISOString())),
+    ),
+    excludeBatchRuns: z.optional(z.nullable(z.boolean())),
+    excludeUnusedPlaybooks: z.optional(z.nullable(z.boolean())),
+    source: z.optional(TextqlRpcPublicChatChatSource$outboundSchema),
+    hasThreadWarning: z.optional(z.nullable(z.boolean())),
+    creatorMemberIds: z.optional(z.array(z.string())),
+    sharedWithMe: z.optional(z.nullable(z.boolean())),
+    excludeFeed: z.optional(z.nullable(z.boolean())),
+    sources: z.optional(z.array(TextqlRpcPublicChatChatSource$outboundSchema)),
+    threadWarningTypes: z.optional(
+      z.array(TextqlRpcPublicChatThreadWarningType$outboundSchema),
+    ),
+    topicIds: z.optional(z.array(z.string())),
+    connectorIds: z.optional(z.array(z.int())),
+  })
+);
 
 export function textqlRpcPublicChatGetChatsRequestToJSON(
   textqlRpcPublicChatGetChatsRequest: TextqlRpcPublicChatGetChatsRequest,

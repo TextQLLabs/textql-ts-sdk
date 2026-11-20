@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,11 +19,14 @@ export type TextqlRpcPublicPlaybookChatAccessOverride = {
 
 /** @internal */
 export const TextqlRpcPublicPlaybookChatAccessOverride$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPlaybookChatAccessOverride, unknown> = z.object({
-    memberId: z.optional(z.nullable(types.string())),
-    roleId: z.optional(z.nullable(types.string())),
-    accessType: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicPlaybookChatAccessOverride, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        memberId: z.optional(z.nullable(types.string())),
+        roleId: z.optional(z.nullable(types.string())),
+        accessType: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicPlaybookChatAccessOverride$Outbound = {
   memberId?: string | null | undefined;
@@ -36,11 +39,13 @@ export const TextqlRpcPublicPlaybookChatAccessOverride$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookChatAccessOverride$Outbound,
     TextqlRpcPublicPlaybookChatAccessOverride
-  > = z.object({
-    memberId: z.optional(z.nullable(z.string())),
-    roleId: z.optional(z.nullable(z.string())),
-    accessType: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberId: z.optional(z.nullable(z.string())),
+      roleId: z.optional(z.nullable(z.string())),
+      accessType: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookChatAccessOverrideToJSON(
   textqlRpcPublicPlaybookChatAccessOverride:

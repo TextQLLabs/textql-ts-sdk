@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,10 +19,12 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCrede
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials,
     unknown
-  > = z.object({
-    clientId: types.optional(types.string()),
-    clientSecret: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      clientId: types.optional(types.string()),
+      clientSecret: types.optional(types.string()),
+    })
+  );
 /** @internal */
 export type TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$Outbound =
   {
@@ -35,10 +37,12 @@ export const TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCrede
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials$Outbound,
     TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials
-  > = z.object({
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentialsToJSON(
   textqlRpcPublicConnectorDatabricksMetadataDatabricksAuthClientCredentials:

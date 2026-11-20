@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,11 +28,14 @@ export type TextqlRpcPublicObserveUsageHeatmapPoint = {
 
 /** @internal */
 export const TextqlRpcPublicObserveUsageHeatmapPoint$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveUsageHeatmapPoint, unknown> = z.object({
-    dow: types.optional(types.number()),
-    hour: types.optional(types.number()),
-    total: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveUsageHeatmapPoint, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dow: types.optional(types.number()),
+        hour: types.optional(types.number()),
+        total: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveUsageHeatmapPointFromJSON(
   jsonString: string,

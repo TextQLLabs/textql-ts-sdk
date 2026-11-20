@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,9 +24,12 @@ export type TextqlRpcPublicAppGetAppVersionResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAppGetAppVersionResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAppGetAppVersionResponse, unknown> = z.object({
-    version: types.optional(TextqlRpcPublicAppAppVersion$inboundSchema),
-  });
+  z.ZodMiniType<TextqlRpcPublicAppGetAppVersionResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        version: types.optional(TextqlRpcPublicAppAppVersion$inboundSchema),
+      })
+    );
 
 export function textqlRpcPublicAppGetAppVersionResponseFromJSON(
   jsonString: string,

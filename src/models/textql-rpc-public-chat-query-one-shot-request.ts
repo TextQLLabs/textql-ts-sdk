@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicChatLlmModel,
   TextqlRpcPublicChatLlmModel$outboundSchema,
@@ -39,12 +40,14 @@ export const TextqlRpcPublicChatQueryOneShotRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatQueryOneShotRequest$Outbound,
     TextqlRpcPublicChatQueryOneShotRequest
-  > = z.object({
-    question: z.string(),
-    paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
-    model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    chatId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      question: z.string(),
+      paradigm: TextqlRpcPublicParadigmParadigm$outboundSchema,
+      model: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      chatId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicChatQueryOneShotRequestToJSON(
   textqlRpcPublicChatQueryOneShotRequest:

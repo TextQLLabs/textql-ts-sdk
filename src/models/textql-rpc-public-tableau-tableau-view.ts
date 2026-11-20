@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -209,16 +209,18 @@ export type TextqlRpcPublicTableauTableauView = {
 export const TextqlRpcPublicTableauTableauView$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicTableauTableauView,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  contentUrl: types.optional(types.string()),
-  workbookId: types.optional(types.string()),
-  workbookName: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  embedUrl: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    contentUrl: types.optional(types.string()),
+    workbookId: types.optional(types.string()),
+    workbookName: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    embedUrl: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicTableauTableauView$Outbound = {
   id?: string | undefined;
@@ -235,16 +237,18 @@ export type TextqlRpcPublicTableauTableauView$Outbound = {
 export const TextqlRpcPublicTableauTableauView$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicTableauTableauView$Outbound,
   TextqlRpcPublicTableauTableauView
-> = z.object({
-  id: z.optional(z.string()),
-  name: z.optional(z.string()),
-  contentUrl: z.optional(z.string()),
-  workbookId: z.optional(z.string()),
-  workbookName: z.optional(z.string()),
-  createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  embedUrl: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: z.optional(z.string()),
+    name: z.optional(z.string()),
+    contentUrl: z.optional(z.string()),
+    workbookId: z.optional(z.string()),
+    workbookName: z.optional(z.string()),
+    createdAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    updatedAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    embedUrl: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicTableauTableauViewToJSON(
   textqlRpcPublicTableauTableauView: TextqlRpcPublicTableauTableauView,

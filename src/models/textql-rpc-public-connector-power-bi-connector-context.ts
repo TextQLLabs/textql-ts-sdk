@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,12 +25,14 @@ export type TextqlRpcPublicConnectorPowerBIConnectorContext = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorPowerBIConnectorContext$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorPowerBIConnectorContext, unknown> = z
-    .object({
-      reportIds: types.optional(z.array(types.string())),
-      datasetIds: types.optional(z.array(types.string())),
-      collectionIds: types.optional(z.array(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorPowerBIConnectorContext, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        reportIds: types.optional(z.array(types.string())),
+        datasetIds: types.optional(z.array(types.string())),
+        collectionIds: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorPowerBIConnectorContext$Outbound = {
   reportIds?: Array<string> | undefined;
@@ -43,11 +45,13 @@ export const TextqlRpcPublicConnectorPowerBIConnectorContext$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorPowerBIConnectorContext$Outbound,
     TextqlRpcPublicConnectorPowerBIConnectorContext
-  > = z.object({
-    reportIds: z.optional(z.array(z.string())),
-    datasetIds: z.optional(z.array(z.string())),
-    collectionIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      reportIds: z.optional(z.array(z.string())),
+      datasetIds: z.optional(z.array(z.string())),
+      collectionIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorPowerBIConnectorContextToJSON(
   textqlRpcPublicConnectorPowerBIConnectorContext:

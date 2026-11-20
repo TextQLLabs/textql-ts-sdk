@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPatchesAutoAttachEntry,
   TextqlRpcPublicPatchesAutoAttachEntry$Outbound,
@@ -36,16 +37,18 @@ export const TextqlRpcPublicPatchesUpsertOntologyAnaConfigRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesUpsertOntologyAnaConfigRequest$Outbound,
     TextqlRpcPublicPatchesUpsertOntologyAnaConfigRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    autoAttach: z.optional(
-      z.array(TextqlRpcPublicPatchesAutoAttachEntry$outboundSchema),
-    ),
-    commitMessage: z.optional(z.nullable(z.string())),
-    codeowners: z.optional(
-      z.array(TextqlRpcPublicPatchesCodeownerEntry$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      autoAttach: z.optional(
+        z.array(TextqlRpcPublicPatchesAutoAttachEntry$outboundSchema),
+      ),
+      commitMessage: z.optional(z.nullable(z.string())),
+      codeowners: z.optional(
+        z.array(TextqlRpcPublicPatchesCodeownerEntry$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicPatchesUpsertOntologyAnaConfigRequestToJSON(
   textqlRpcPublicPatchesUpsertOntologyAnaConfigRequest:

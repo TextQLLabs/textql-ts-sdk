@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,11 +16,14 @@ export type TextqlRpcPublicOntologyIntermediateJoin = {
 
 /** @internal */
 export const TextqlRpcPublicOntologyIntermediateJoin$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicOntologyIntermediateJoin, unknown> = z.object({
-    tableName: types.optional(types.string()),
-    leftColumn: types.optional(types.string()),
-    rightColumn: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicOntologyIntermediateJoin, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tableName: types.optional(types.string()),
+        leftColumn: types.optional(types.string()),
+        rightColumn: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicOntologyIntermediateJoinFromJSON(
   jsonString: string,

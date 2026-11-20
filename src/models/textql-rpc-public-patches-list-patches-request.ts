@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPatchesPatchStatus,
   TextqlRpcPublicPatchesPatchStatus$outboundSchema,
@@ -28,14 +29,16 @@ export const TextqlRpcPublicPatchesListPatchesRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListPatchesRequest$Outbound,
     TextqlRpcPublicPatchesListPatchesRequest
-  > = z.object({
-    pageSize: z.optional(z.nullable(z.int())),
-    pageToken: z.optional(z.nullable(z.string())),
-    statuses: z.optional(
-      z.array(TextqlRpcPublicPatchesPatchStatus$outboundSchema),
-    ),
-    includeAutoApproved: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pageSize: z.optional(z.nullable(z.int())),
+      pageToken: z.optional(z.nullable(z.string())),
+      statuses: z.optional(
+        z.array(TextqlRpcPublicPatchesPatchStatus$outboundSchema),
+      ),
+      includeAutoApproved: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicPatchesListPatchesRequestToJSON(
   textqlRpcPublicPatchesListPatchesRequest:

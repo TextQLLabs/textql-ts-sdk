@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSettingsDeleteOrganizationMemberRequest = {
   orgId?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicSettingsDeleteOrganizationMemberRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicSettingsDeleteOrganizationMemberRequest$Outbound,
     TextqlRpcPublicSettingsDeleteOrganizationMemberRequest
-  > = z.object({
-    orgId: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-    hardDelete: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      orgId: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+      hardDelete: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicSettingsDeleteOrganizationMemberRequestToJSON(
   textqlRpcPublicSettingsDeleteOrganizationMemberRequest:

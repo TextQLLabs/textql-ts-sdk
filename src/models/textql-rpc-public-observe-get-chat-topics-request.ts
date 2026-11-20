@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Chat → topics decoration (which live topics tag each chat), mirroring the
@@ -24,9 +25,11 @@ export const TextqlRpcPublicObserveGetChatTopicsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetChatTopicsRequest$Outbound,
     TextqlRpcPublicObserveGetChatTopicsRequest
-  > = z.object({
-    chatIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicObserveGetChatTopicsRequestToJSON(
   textqlRpcPublicObserveGetChatTopicsRequest:

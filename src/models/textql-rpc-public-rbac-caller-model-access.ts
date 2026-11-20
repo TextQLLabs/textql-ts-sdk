@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,13 +25,15 @@ export type TextqlRpcPublicRbacCallerModelAccess = {
 export const TextqlRpcPublicRbacCallerModelAccess$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacCallerModelAccess,
   unknown
-> = z.object({
-  allowedModels: types.optional(
-    z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
-  ),
-  defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  restricted: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    allowedModels: types.optional(
+      z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
+    ),
+    defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    restricted: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicRbacCallerModelAccessFromJSON(
   jsonString: string,

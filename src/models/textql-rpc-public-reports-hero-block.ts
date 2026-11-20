@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,10 +17,12 @@ export type TextqlRpcPublicReportsHeroBlock = {
 export const TextqlRpcPublicReportsHeroBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsHeroBlock,
   unknown
-> = z.object({
-  imageUrl: types.optional(types.string()),
-  imageAlt: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: types.optional(types.string()),
+    imageAlt: z.optional(z.nullable(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsHeroBlock$Outbound = {
   imageUrl?: string | undefined;
@@ -31,10 +33,12 @@ export type TextqlRpcPublicReportsHeroBlock$Outbound = {
 export const TextqlRpcPublicReportsHeroBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsHeroBlock$Outbound,
   TextqlRpcPublicReportsHeroBlock
-> = z.object({
-  imageUrl: z.optional(z.string()),
-  imageAlt: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageUrl: z.optional(z.string()),
+    imageAlt: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicReportsHeroBlockToJSON(
   textqlRpcPublicReportsHeroBlock: TextqlRpcPublicReportsHeroBlock,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -217,14 +217,17 @@ export type TextqlRpcPublicSandboxAdminSandboxSummary = {
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminSandboxSummary$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxSummary, unknown> = z.object({
-    sandboxId: types.optional(types.string()),
-    status: types.optional(types.string()),
-    memberId: types.optional(types.string()),
-    chatId: types.optional(types.string()),
-    startedAt: types.optional(types.date()),
-    releasedAt: types.optional(types.date()),
-  });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminSandboxSummary, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        sandboxId: types.optional(types.string()),
+        status: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        chatId: types.optional(types.string()),
+        startedAt: types.optional(types.date()),
+        releasedAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminSandboxSummaryFromJSON(
   jsonString: string,

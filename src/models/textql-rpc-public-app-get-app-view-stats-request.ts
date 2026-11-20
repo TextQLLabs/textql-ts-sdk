@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * View analytics
@@ -21,9 +22,11 @@ export const TextqlRpcPublicAppGetAppViewStatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppGetAppViewStatsRequest$Outbound,
     TextqlRpcPublicAppGetAppViewStatsRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicAppGetAppViewStatsRequestToJSON(
   textqlRpcPublicAppGetAppViewStatsRequest:

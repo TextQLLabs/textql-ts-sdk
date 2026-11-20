@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -39,20 +39,27 @@ export type TextqlRpcPublicOntologyOntologyRelation = {
 
 /** @internal */
 export const TextqlRpcPublicOntologyOntologyRelation$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicOntologyOntologyRelation, unknown> = z.object({
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-    description: types.optional(types.string()),
-    type: types.optional(TextqlRpcPublicOntologyRelationType$inboundSchema),
-    objectA: types.optional(TextqlRpcPublicOntologyObjectRef$inboundSchema),
-    objectB: types.optional(TextqlRpcPublicOntologyObjectRef$inboundSchema),
-    joinKeyA: types.optional(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-    joinKeyB: types.optional(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-    intermediateJoin: types.optional(
-      TextqlRpcPublicOntologyIntermediateJoin$inboundSchema,
-    ),
-    joinFormula: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicOntologyOntologyRelation, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        name: types.optional(types.string()),
+        description: types.optional(types.string()),
+        type: types.optional(TextqlRpcPublicOntologyRelationType$inboundSchema),
+        objectA: types.optional(TextqlRpcPublicOntologyObjectRef$inboundSchema),
+        objectB: types.optional(TextqlRpcPublicOntologyObjectRef$inboundSchema),
+        joinKeyA: types.optional(
+          TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+        ),
+        joinKeyB: types.optional(
+          TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+        ),
+        intermediateJoin: types.optional(
+          TextqlRpcPublicOntologyIntermediateJoin$inboundSchema,
+        ),
+        joinFormula: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicOntologyOntologyRelationFromJSON(
   jsonString: string,

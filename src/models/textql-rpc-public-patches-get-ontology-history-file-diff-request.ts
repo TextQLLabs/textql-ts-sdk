@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesGetOntologyHistoryFileDiffRequest = {
   commitId?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPatchesGetOntologyHistoryFileDiffRequest$outboundSch
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyHistoryFileDiffRequest$Outbound,
     TextqlRpcPublicPatchesGetOntologyHistoryFileDiffRequest
-  > = z.object({
-    commitId: z.optional(z.string()),
-    path: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      commitId: z.optional(z.string()),
+      path: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyHistoryFileDiffRequestToJSON(
   textqlRpcPublicPatchesGetOntologyHistoryFileDiffRequest:

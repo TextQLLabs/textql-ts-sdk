@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -301,18 +301,20 @@ export type TextqlRpcPublicMetricsExportMetricsExportConfig = {
 
 /** @internal */
 export const TextqlRpcPublicMetricsExportMetricsExportConfig$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicMetricsExportMetricsExportConfig, unknown> = z
-    .object({
-      prometheusEnabled: types.optional(types.boolean()),
-      otlpEnabled: types.optional(types.boolean()),
-      otlpEndpoint: types.optional(types.string()),
-      otlpHeaders: types.optional(types.string()),
-      otlpProtocol: types.optional(types.string()),
-      pushIntervalSeconds: types.optional(types.number()),
-      lastPushedAt: types.optional(types.date()),
-      createdAt: types.optional(types.date()),
-      updatedAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicMetricsExportMetricsExportConfig, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        prometheusEnabled: types.optional(types.boolean()),
+        otlpEnabled: types.optional(types.boolean()),
+        otlpEndpoint: types.optional(types.string()),
+        otlpHeaders: types.optional(types.string()),
+        otlpProtocol: types.optional(types.string()),
+        pushIntervalSeconds: types.optional(types.number()),
+        lastPushedAt: types.optional(types.date()),
+        createdAt: types.optional(types.date()),
+        updatedAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicMetricsExportMetricsExportConfigFromJSON(
   jsonString: string,

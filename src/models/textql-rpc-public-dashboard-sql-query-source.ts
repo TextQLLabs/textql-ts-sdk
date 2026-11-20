@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,11 +19,14 @@ export type TextqlRpcPublicDashboardSqlQuerySource = {
 
 /** @internal */
 export const TextqlRpcPublicDashboardSqlQuerySource$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardSqlQuerySource, unknown> = z.object({
-    query: types.optional(types.string()),
-    connectorId: types.optional(types.number()),
-    predicate: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardSqlQuerySource, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        query: types.optional(types.string()),
+        connectorId: types.optional(types.number()),
+        predicate: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardSqlQuerySource$Outbound = {
   query?: string | undefined;
@@ -36,11 +39,13 @@ export const TextqlRpcPublicDashboardSqlQuerySource$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardSqlQuerySource$Outbound,
     TextqlRpcPublicDashboardSqlQuerySource
-  > = z.object({
-    query: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    predicate: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      query: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      predicate: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicDashboardSqlQuerySourceToJSON(
   textqlRpcPublicDashboardSqlQuerySource:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput = {
   directoryPath?: string | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput$Outbound,
     TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput
-  > = z.object({
-    directoryPath: z.optional(z.string()),
-    alwaysAutoApprove: z.optional(z.boolean()),
-    roleIds: z.optional(z.array(z.string())),
-    agentIds: z.optional(z.array(z.string())),
-    enabled: z.optional(z.nullable(z.boolean())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      directoryPath: z.optional(z.string()),
+      alwaysAutoApprove: z.optional(z.boolean()),
+      roleIds: z.optional(z.array(z.string())),
+      agentIds: z.optional(z.array(z.string())),
+      enabled: z.optional(z.nullable(z.boolean())),
+    })
+  );
 
 export function textqlRpcPublicPatchesContextPatchAutoApproveRuleInputToJSON(
   textqlRpcPublicPatchesContextPatchAutoApproveRuleInput:

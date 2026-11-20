@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetActivePeopleStatsRequest = {
   days?: number | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicObserveGetActivePeopleStatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetActivePeopleStatsRequest$Outbound,
     TextqlRpcPublicObserveGetActivePeopleStatsRequest
-  > = z.object({
-    days: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      days: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicObserveGetActivePeopleStatsRequestToJSON(
   textqlRpcPublicObserveGetActivePeopleStatsRequest:

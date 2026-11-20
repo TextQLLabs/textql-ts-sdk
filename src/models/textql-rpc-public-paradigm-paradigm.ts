@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -32,11 +32,15 @@ export type TextqlRpcPublicParadigmParadigm = {
 export const TextqlRpcPublicParadigmParadigm$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicParadigmParadigm,
   unknown
-> = z.object({
-  type: types.optional(TextqlRpcParadigmParamsParadigmType$inboundSchema),
-  version: types.optional(types.number()),
-  options: types.optional(TextqlRpcPublicParadigmParadigmOptions$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: types.optional(TextqlRpcParadigmParamsParadigmType$inboundSchema),
+    version: types.optional(types.number()),
+    options: types.optional(
+      TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
+    ),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicParadigmParadigm$Outbound = {
   type?: string | undefined;
@@ -48,11 +52,13 @@ export type TextqlRpcPublicParadigmParadigm$Outbound = {
 export const TextqlRpcPublicParadigmParadigm$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicParadigmParadigm$Outbound,
   TextqlRpcPublicParadigmParadigm
-> = z.object({
-  type: z.optional(TextqlRpcParadigmParamsParadigmType$outboundSchema),
-  version: z.optional(z.int()),
-  options: z.optional(TextqlRpcPublicParadigmParadigmOptions$outboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    type: z.optional(TextqlRpcParadigmParamsParadigmType$outboundSchema),
+    version: z.optional(z.int()),
+    options: z.optional(TextqlRpcPublicParadigmParadigmOptions$outboundSchema),
+  })
+);
 
 export function textqlRpcPublicParadigmParadigmToJSON(
   textqlRpcPublicParadigmParadigm: TextqlRpcPublicParadigmParadigm,

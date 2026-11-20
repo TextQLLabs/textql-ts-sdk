@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicChatGetCompletionParametersRequest = {
   chatId: string;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicChatGetCompletionParametersRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatGetCompletionParametersRequest$Outbound,
     TextqlRpcPublicChatGetCompletionParametersRequest
-  > = z.object({
-    chatId: z.string(),
-    cellId: z.string(),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatId: z.string(),
+      cellId: z.string(),
+    })
+  );
 
 export function textqlRpcPublicChatGetCompletionParametersRequestToJSON(
   textqlRpcPublicChatGetCompletionParametersRequest:

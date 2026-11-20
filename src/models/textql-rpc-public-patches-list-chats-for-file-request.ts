@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListChatsForFileRequest = {
   filePath?: string | undefined;
@@ -87,11 +88,13 @@ export const TextqlRpcPublicPatchesListChatsForFileRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListChatsForFileRequest$Outbound,
     TextqlRpcPublicPatchesListChatsForFileRequest
-  > = z.object({
-    filePath: z.optional(z.string()),
-    observationPeriod: z.optional(z.string()),
-    limit: z.optional(z.nullable(z.int())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      filePath: z.optional(z.string()),
+      observationPeriod: z.optional(z.string()),
+      limit: z.optional(z.nullable(z.int())),
+    })
+  );
 
 export function textqlRpcPublicPatchesListChatsForFileRequestToJSON(
   textqlRpcPublicPatchesListChatsForFileRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -36,22 +36,24 @@ export const TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesResponse$inb
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxProposeOntologyChangesResponse,
     unknown
-  > = z.object({
-    patchId: types.optional(types.string()),
-    patchNumber: types.optional(types.number()),
-    status: types.optional(TextqlRpcPublicPatchesPatchStatus$inboundSchema),
-    outcome: types.optional(types.string()),
-    autoApproved: types.optional(types.boolean()),
-    gitRef: types.optional(types.string()),
-    remotePrUrl: types.optional(types.string()),
-    reason: types.optional(types.string()),
-    hasConflicts: types.optional(types.boolean()),
-    conflicts: types.optional(types.string()),
-    diffs: types.optional(
-      z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema),
-    ),
-    rawDiff: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      patchId: types.optional(types.string()),
+      patchNumber: types.optional(types.number()),
+      status: types.optional(TextqlRpcPublicPatchesPatchStatus$inboundSchema),
+      outcome: types.optional(types.string()),
+      autoApproved: types.optional(types.boolean()),
+      gitRef: types.optional(types.string()),
+      remotePrUrl: types.optional(types.string()),
+      reason: types.optional(types.string()),
+      hasConflicts: types.optional(types.boolean()),
+      conflicts: types.optional(types.string()),
+      diffs: types.optional(
+        z.array(TextqlRpcPublicPatchesPatchDiff$inboundSchema),
+      ),
+      rawDiff: types.optional(types.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxProposeOntologyChangesResponseFromJSON(
   jsonString: string,

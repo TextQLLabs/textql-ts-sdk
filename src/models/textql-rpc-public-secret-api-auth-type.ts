@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -39,9 +40,13 @@ export type TextqlRpcPublicSecretApiAuthType = OpenEnum<
 export const TextqlRpcPublicSecretApiAuthType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicSecretApiAuthType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicSecretApiAuthType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicSecretApiAuthType)
+);
 /** @internal */
 export const TextqlRpcPublicSecretApiAuthType$outboundSchema: z.ZodMiniType<
   string,
   TextqlRpcPublicSecretApiAuthType
-> = openEnums.outboundSchema(TextqlRpcPublicSecretApiAuthType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.outboundSchema(TextqlRpcPublicSecretApiAuthType)
+);

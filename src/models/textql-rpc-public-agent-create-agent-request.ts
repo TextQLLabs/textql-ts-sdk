@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicAgentSlackAgentTrigger,
   TextqlRpcPublicAgentSlackAgentTrigger$Outbound,
@@ -95,36 +96,38 @@ export const TextqlRpcPublicAgentCreateAgentRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentCreateAgentRequest$Outbound,
     TextqlRpcPublicAgentCreateAgentRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    prompt: z.optional(z.string()),
-    paradigmOptions: z.optional(
-      TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
-    ),
-    sourceSuggestionId: z.optional(z.string()),
-    slackChannelId: z.optional(z.nullable(z.string())),
-    slackDmUserIds: z.optional(z.array(z.string())),
-    skipOrgDefaultChannel: z.optional(z.boolean()),
-    llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    fastMode: z.optional(z.nullable(z.boolean())),
-    isStateful: z.optional(z.nullable(z.boolean())),
-    postingFrequencyCrons: z.optional(z.array(z.string())),
-    emailRecipientMemberIds: z.optional(z.array(z.string())),
-    channelIds: z.optional(z.array(z.string())),
-    teamsChannelId: z.optional(z.nullable(z.string())),
-    teamsDmUserAadIds: z.optional(z.array(z.string())),
-    slackTrigger: z.optional(
-      TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
-    ),
-    postingFrequencyCadences: z.optional(z.array(z.string())),
-    callableAsSubagent: z.optional(z.nullable(z.boolean())),
-    subagentInvokerMemberIds: z.optional(z.array(z.string())),
-    subagentInvokerRoleIds: z.optional(z.array(z.string())),
-    feedEnabled: z.optional(z.nullable(z.boolean())),
-    subagentAgentIds: z.optional(z.array(z.string())),
-    allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
-    methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      prompt: z.optional(z.string()),
+      paradigmOptions: z.optional(
+        TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+      ),
+      sourceSuggestionId: z.optional(z.string()),
+      slackChannelId: z.optional(z.nullable(z.string())),
+      slackDmUserIds: z.optional(z.array(z.string())),
+      skipOrgDefaultChannel: z.optional(z.boolean()),
+      llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      fastMode: z.optional(z.nullable(z.boolean())),
+      isStateful: z.optional(z.nullable(z.boolean())),
+      postingFrequencyCrons: z.optional(z.array(z.string())),
+      emailRecipientMemberIds: z.optional(z.array(z.string())),
+      channelIds: z.optional(z.array(z.string())),
+      teamsChannelId: z.optional(z.nullable(z.string())),
+      teamsDmUserAadIds: z.optional(z.array(z.string())),
+      slackTrigger: z.optional(
+        TextqlRpcPublicAgentSlackAgentTrigger$outboundSchema,
+      ),
+      postingFrequencyCadences: z.optional(z.array(z.string())),
+      callableAsSubagent: z.optional(z.nullable(z.boolean())),
+      subagentInvokerMemberIds: z.optional(z.array(z.string())),
+      subagentInvokerRoleIds: z.optional(z.array(z.string())),
+      feedEnabled: z.optional(z.nullable(z.boolean())),
+      subagentAgentIds: z.optional(z.array(z.string())),
+      allowAdHocSubagents: z.optional(z.nullable(z.boolean())),
+      methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicAgentCreateAgentRequestToJSON(
   textqlRpcPublicAgentCreateAgentRequest:

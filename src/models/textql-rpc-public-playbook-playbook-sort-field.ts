@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicPlaybookPlaybookSortField = {
@@ -18,6 +19,7 @@ export type TextqlRpcPublicPlaybookPlaybookSortField = ClosedEnum<
 
 /** @internal */
 export const TextqlRpcPublicPlaybookPlaybookSortField$outboundSchema:
-  z.ZodMiniEnum<typeof TextqlRpcPublicPlaybookPlaybookSortField> = z.enum(
-    TextqlRpcPublicPlaybookPlaybookSortField,
-  );
+  z.ZodMiniEnum<typeof TextqlRpcPublicPlaybookPlaybookSortField> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.enum(TextqlRpcPublicPlaybookPlaybookSortField)
+    );

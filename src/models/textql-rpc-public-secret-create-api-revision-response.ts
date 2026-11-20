@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,13 +23,15 @@ export type TextqlRpcPublicSecretCreateApiRevisionResponse = {
 
 /** @internal */
 export const TextqlRpcPublicSecretCreateApiRevisionResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSecretCreateApiRevisionResponse, unknown> = z
-    .object({
-      ref: types.optional(TextqlRpcPublicSecretApiAccessRef$inboundSchema),
-      apiAccessKey: types.optional(
-        TextqlRpcPublicSecretApiAccessKey$inboundSchema,
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicSecretCreateApiRevisionResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        ref: types.optional(TextqlRpcPublicSecretApiAccessRef$inboundSchema),
+        apiAccessKey: types.optional(
+          TextqlRpcPublicSecretApiAccessKey$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicSecretCreateApiRevisionResponseFromJSON(
   jsonString: string,

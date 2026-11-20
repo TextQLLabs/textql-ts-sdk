@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { smartUnion } from "../types/smart-union.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -99,20 +99,24 @@ export type Card1 = {
 };
 
 /** @internal */
-export const Text$inboundSchema: z.ZodMiniType<Text, unknown> = z.object({
-  text: TextqlRpcPublicReportsTextBlock$inboundSchema,
-});
+export const Text$inboundSchema: z.ZodMiniType<Text, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      text: TextqlRpcPublicReportsTextBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type Text$Outbound = {
   text: TextqlRpcPublicReportsTextBlock$Outbound;
 };
 
 /** @internal */
-export const Text$outboundSchema: z.ZodMiniType<Text$Outbound, Text> = z.object(
-  {
-    text: TextqlRpcPublicReportsTextBlock$outboundSchema,
-  },
-);
+export const Text$outboundSchema: z.ZodMiniType<Text$Outbound, Text> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      text: TextqlRpcPublicReportsTextBlock$outboundSchema,
+    })
+  );
 
 export function textToJSON(text: Text): string {
   return JSON.stringify(Text$outboundSchema.parse(text));
@@ -128,19 +132,24 @@ export function textFromJSON(
 }
 
 /** @internal */
-export const Spacer$inboundSchema: z.ZodMiniType<Spacer, unknown> = z.object({
-  spacer: TextqlRpcPublicReportsSpacerBlock$inboundSchema,
-});
+export const Spacer$inboundSchema: z.ZodMiniType<Spacer, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      spacer: TextqlRpcPublicReportsSpacerBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type Spacer$Outbound = {
   spacer: TextqlRpcPublicReportsSpacerBlock$Outbound;
 };
 
 /** @internal */
-export const Spacer$outboundSchema: z.ZodMiniType<Spacer$Outbound, Spacer> = z
-  .object({
-    spacer: TextqlRpcPublicReportsSpacerBlock$outboundSchema,
-  });
+export const Spacer$outboundSchema: z.ZodMiniType<Spacer$Outbound, Spacer> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      spacer: TextqlRpcPublicReportsSpacerBlock$outboundSchema,
+    })
+  );
 
 export function spacerToJSON(spacer: Spacer): string {
   return JSON.stringify(Spacer$outboundSchema.parse(spacer));
@@ -156,20 +165,24 @@ export function spacerFromJSON(
 }
 
 /** @internal */
-export const List$inboundSchema: z.ZodMiniType<List, unknown> = z.object({
-  list: TextqlRpcPublicReportsListBlock$inboundSchema,
-});
+export const List$inboundSchema: z.ZodMiniType<List, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      list: TextqlRpcPublicReportsListBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type List$Outbound = {
   list: TextqlRpcPublicReportsListBlock$Outbound;
 };
 
 /** @internal */
-export const List$outboundSchema: z.ZodMiniType<List$Outbound, List> = z.object(
-  {
-    list: TextqlRpcPublicReportsListBlock$outboundSchema,
-  },
-);
+export const List$outboundSchema: z.ZodMiniType<List$Outbound, List> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      list: TextqlRpcPublicReportsListBlock$outboundSchema,
+    })
+  );
 
 export function listToJSON(list: List): string {
   return JSON.stringify(List$outboundSchema.parse(list));
@@ -185,10 +198,12 @@ export function listFromJSON(
 }
 
 /** @internal */
-export const ImageText$inboundSchema: z.ZodMiniType<ImageText, unknown> = z
-  .object({
-    imageText: TextqlRpcPublicReportsImageTextBlock$inboundSchema,
-  });
+export const ImageText$inboundSchema: z.ZodMiniType<ImageText, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      imageText: TextqlRpcPublicReportsImageTextBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type ImageText$Outbound = {
   imageText: TextqlRpcPublicReportsImageTextBlock$Outbound;
@@ -198,9 +213,11 @@ export type ImageText$Outbound = {
 export const ImageText$outboundSchema: z.ZodMiniType<
   ImageText$Outbound,
   ImageText
-> = z.object({
-  imageText: TextqlRpcPublicReportsImageTextBlock$outboundSchema,
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    imageText: TextqlRpcPublicReportsImageTextBlock$outboundSchema,
+  })
+);
 
 export function imageTextToJSON(imageText: ImageText): string {
   return JSON.stringify(ImageText$outboundSchema.parse(imageText));
@@ -216,19 +233,24 @@ export function imageTextFromJSON(
 }
 
 /** @internal */
-export const Image$inboundSchema: z.ZodMiniType<Image, unknown> = z.object({
-  image: TextqlRpcPublicReportsImageBlock$inboundSchema,
-});
+export const Image$inboundSchema: z.ZodMiniType<Image, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      image: TextqlRpcPublicReportsImageBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type Image$Outbound = {
   image: TextqlRpcPublicReportsImageBlock$Outbound;
 };
 
 /** @internal */
-export const Image$outboundSchema: z.ZodMiniType<Image$Outbound, Image> = z
-  .object({
-    image: TextqlRpcPublicReportsImageBlock$outboundSchema,
-  });
+export const Image$outboundSchema: z.ZodMiniType<Image$Outbound, Image> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      image: TextqlRpcPublicReportsImageBlock$outboundSchema,
+    })
+  );
 
 export function imageToJSON(image: Image): string {
   return JSON.stringify(Image$outboundSchema.parse(image));
@@ -244,20 +266,24 @@ export function imageFromJSON(
 }
 
 /** @internal */
-export const Hero$inboundSchema: z.ZodMiniType<Hero, unknown> = z.object({
-  hero: TextqlRpcPublicReportsHeroBlock$inboundSchema,
-});
+export const Hero$inboundSchema: z.ZodMiniType<Hero, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      hero: TextqlRpcPublicReportsHeroBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type Hero$Outbound = {
   hero: TextqlRpcPublicReportsHeroBlock$Outbound;
 };
 
 /** @internal */
-export const Hero$outboundSchema: z.ZodMiniType<Hero$Outbound, Hero> = z.object(
-  {
-    hero: TextqlRpcPublicReportsHeroBlock$outboundSchema,
-  },
-);
+export const Hero$outboundSchema: z.ZodMiniType<Hero$Outbound, Hero> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      hero: TextqlRpcPublicReportsHeroBlock$outboundSchema,
+    })
+  );
 
 export function heroToJSON(hero: Hero): string {
   return JSON.stringify(Hero$outboundSchema.parse(hero));
@@ -273,9 +299,12 @@ export function heroFromJSON(
 }
 
 /** @internal */
-export const Divider$inboundSchema: z.ZodMiniType<Divider, unknown> = z.object({
-  divider: TextqlRpcPublicReportsDividerBlock$inboundSchema,
-});
+export const Divider$inboundSchema: z.ZodMiniType<Divider, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      divider: TextqlRpcPublicReportsDividerBlock$inboundSchema,
+    })
+  );
 /** @internal */
 export type Divider$Outbound = {
   divider: TextqlRpcPublicReportsDividerBlock$Outbound;
@@ -283,9 +312,11 @@ export type Divider$Outbound = {
 
 /** @internal */
 export const Divider$outboundSchema: z.ZodMiniType<Divider$Outbound, Divider> =
-  z.object({
-    divider: TextqlRpcPublicReportsDividerBlock$outboundSchema,
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      divider: TextqlRpcPublicReportsDividerBlock$outboundSchema,
+    })
+  );
 
 export function dividerToJSON(divider: Divider): string {
   return JSON.stringify(Divider$outboundSchema.parse(divider));
@@ -304,16 +335,18 @@ export function dividerFromJSON(
 export const TextqlRpcPublicReportsReportBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsReportBlock,
   unknown
-> = smartUnion([
-  z.lazy(() => Card1$inboundSchema),
-  z.lazy(() => Divider$inboundSchema),
-  z.lazy(() => Hero$inboundSchema),
-  z.lazy(() => Image$inboundSchema),
-  z.lazy(() => ImageText$inboundSchema),
-  z.lazy(() => List$inboundSchema),
-  z.lazy(() => Spacer$inboundSchema),
-  z.lazy(() => Text$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Card1$inboundSchema),
+    z.lazy(() => Divider$inboundSchema),
+    z.lazy(() => Hero$inboundSchema),
+    z.lazy(() => Image$inboundSchema),
+    z.lazy(() => ImageText$inboundSchema),
+    z.lazy(() => List$inboundSchema),
+    z.lazy(() => Spacer$inboundSchema),
+    z.lazy(() => Text$inboundSchema),
+  ])
+);
 /** @internal */
 export type TextqlRpcPublicReportsReportBlock$Outbound =
   | Card1$Outbound
@@ -329,16 +362,18 @@ export type TextqlRpcPublicReportsReportBlock$Outbound =
 export const TextqlRpcPublicReportsReportBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsReportBlock$Outbound,
   TextqlRpcPublicReportsReportBlock
-> = smartUnion([
-  z.lazy(() => Card1$outboundSchema),
-  z.lazy(() => Divider$outboundSchema),
-  z.lazy(() => Hero$outboundSchema),
-  z.lazy(() => Image$outboundSchema),
-  z.lazy(() => ImageText$outboundSchema),
-  z.lazy(() => List$outboundSchema),
-  z.lazy(() => Spacer$outboundSchema),
-  z.lazy(() => Text$outboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => Card1$outboundSchema),
+    z.lazy(() => Divider$outboundSchema),
+    z.lazy(() => Hero$outboundSchema),
+    z.lazy(() => Image$outboundSchema),
+    z.lazy(() => ImageText$outboundSchema),
+    z.lazy(() => List$outboundSchema),
+    z.lazy(() => Spacer$outboundSchema),
+    z.lazy(() => Text$outboundSchema),
+  ])
+);
 
 export function textqlRpcPublicReportsReportBlockToJSON(
   textqlRpcPublicReportsReportBlock: TextqlRpcPublicReportsReportBlock,
@@ -360,19 +395,24 @@ export function textqlRpcPublicReportsReportBlockFromJSON(
 }
 
 /** @internal */
-export const Card1$inboundSchema: z.ZodMiniType<Card1, unknown> = z.object({
-  card: z.lazy(() => TextqlRpcPublicReportsCardBlock1$inboundSchema),
-});
+export const Card1$inboundSchema: z.ZodMiniType<Card1, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      card: z.lazy(() => TextqlRpcPublicReportsCardBlock1$inboundSchema),
+    })
+  );
 /** @internal */
 export type Card1$Outbound = {
   card: TextqlRpcPublicReportsCardBlock1$Outbound;
 };
 
 /** @internal */
-export const Card1$outboundSchema: z.ZodMiniType<Card1$Outbound, Card1> = z
-  .object({
-    card: z.lazy(() => TextqlRpcPublicReportsCardBlock1$outboundSchema),
-  });
+export const Card1$outboundSchema: z.ZodMiniType<Card1$Outbound, Card1> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      card: z.lazy(() => TextqlRpcPublicReportsCardBlock1$outboundSchema),
+    })
+  );
 
 export function card1ToJSON(card1: Card1): string {
   return JSON.stringify(Card1$outboundSchema.parse(card1));

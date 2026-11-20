@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -30,9 +31,13 @@ export type TextqlRpcPublicDatasetDatasetType = OpenEnum<
 export const TextqlRpcPublicDatasetDatasetType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDatasetDatasetType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicDatasetDatasetType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicDatasetDatasetType)
+);
 /** @internal */
 export const TextqlRpcPublicDatasetDatasetType$outboundSchema: z.ZodMiniType<
   string,
   TextqlRpcPublicDatasetDatasetType
-> = openEnums.outboundSchema(TextqlRpcPublicDatasetDatasetType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.outboundSchema(TextqlRpcPublicDatasetDatasetType)
+);

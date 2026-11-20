@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -133,24 +133,29 @@ export type TextqlRpcPublicDashboardDashboardVersion = {
 
 /** @internal */
 export const TextqlRpcPublicDashboardDashboardVersion$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardDashboardVersion, unknown> = z.object({
-    id: types.optional(types.string()),
-    dashboardId: types.optional(types.string()),
-    versionNumber: types.optional(types.number()),
-    code: types.optional(types.string()),
-    dataSources: types.optional(
-      z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
-    ),
-    name: types.optional(types.string()),
-    description: z.optional(z.nullable(types.string())),
-    type: types.optional(TextqlRpcPublicDashboardDashboardType$inboundSchema),
-    publishedBy: types.optional(types.string()),
-    label: z.optional(z.nullable(types.string())),
-    publishedAt: types.optional(types.date()),
-    publisher: types.optional(
-      TextqlRpcPublicDashboardDashboardCreator$inboundSchema,
-    ),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardDashboardVersion, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        dashboardId: types.optional(types.string()),
+        versionNumber: types.optional(types.number()),
+        code: types.optional(types.string()),
+        dataSources: types.optional(
+          z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
+        ),
+        name: types.optional(types.string()),
+        description: z.optional(z.nullable(types.string())),
+        type: types.optional(
+          TextqlRpcPublicDashboardDashboardType$inboundSchema,
+        ),
+        publishedBy: types.optional(types.string()),
+        label: z.optional(z.nullable(types.string())),
+        publishedAt: types.optional(types.date()),
+        publisher: types.optional(
+          TextqlRpcPublicDashboardDashboardCreator$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicDashboardDashboardVersionFromJSON(
   jsonString: string,

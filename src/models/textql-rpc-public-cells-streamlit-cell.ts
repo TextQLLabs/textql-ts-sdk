@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -22,7 +22,9 @@ export type TextqlRpcPublicCellsStreamlitCell = {
 /** @internal */
 export const TextqlRpcPublicCellsStreamlitCellExecutionTimeMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicCellsStreamlitCellExecutionTimeMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsStreamlitCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -44,15 +46,17 @@ export function textqlRpcPublicCellsStreamlitCellExecutionTimeMsFromJSON(
 export const TextqlRpcPublicCellsStreamlitCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsStreamlitCell,
   unknown
-> = z.object({
-  code: types.optional(types.string()),
-  url: z.optional(z.nullable(types.string())),
-  errorMessage: z.optional(z.nullable(types.string())),
-  screenshotUrl: z.optional(z.nullable(types.string())),
-  executionTimeMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    code: types.optional(types.string()),
+    url: z.optional(z.nullable(types.string())),
+    errorMessage: z.optional(z.nullable(types.string())),
+    screenshotUrl: z.optional(z.nullable(types.string())),
+    executionTimeMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsStreamlitCellFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicTableauGenerateEmbedTokenRequest = {
   connectorId?: number | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicTableauGenerateEmbedTokenRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTableauGenerateEmbedTokenRequest$Outbound,
     TextqlRpcPublicTableauGenerateEmbedTokenRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    viewId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      viewId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicTableauGenerateEmbedTokenRequestToJSON(
   textqlRpcPublicTableauGenerateEmbedTokenRequest:

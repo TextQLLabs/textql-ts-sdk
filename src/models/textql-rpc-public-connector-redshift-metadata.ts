@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -31,23 +31,26 @@ export type TextqlRpcPublicConnectorRedshiftMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorRedshiftMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorRedshiftMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    database: types.optional(types.string()),
-    schemas: types.optional(z.array(types.string())),
-    dialect: types.optional(types.string()),
-    sslMode: types.optional(types.boolean()),
-    authType: types.optional(types.string()),
-    roleArn: types.optional(types.string()),
-    region: types.optional(types.string()),
-    clusterId: types.optional(types.string()),
-    groupFederation: types.optional(types.boolean()),
-    awsAccessKeyId: types.optional(types.string()),
-    awsSecretAccessKey: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorRedshiftMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        database: types.optional(types.string()),
+        schemas: types.optional(z.array(types.string())),
+        dialect: types.optional(types.string()),
+        sslMode: types.optional(types.boolean()),
+        authType: types.optional(types.string()),
+        roleArn: types.optional(types.string()),
+        region: types.optional(types.string()),
+        clusterId: types.optional(types.string()),
+        groupFederation: types.optional(types.boolean()),
+        awsAccessKeyId: types.optional(types.string()),
+        awsSecretAccessKey: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorRedshiftMetadata$Outbound = {
   host?: string | undefined;
@@ -72,23 +75,25 @@ export const TextqlRpcPublicConnectorRedshiftMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorRedshiftMetadata$Outbound,
     TextqlRpcPublicConnectorRedshiftMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    schemas: z.optional(z.array(z.string())),
-    dialect: z.optional(z.string()),
-    sslMode: z.optional(z.boolean()),
-    authType: z.optional(z.string()),
-    roleArn: z.optional(z.string()),
-    region: z.optional(z.string()),
-    clusterId: z.optional(z.string()),
-    groupFederation: z.optional(z.boolean()),
-    awsAccessKeyId: z.optional(z.string()),
-    awsSecretAccessKey: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      schemas: z.optional(z.array(z.string())),
+      dialect: z.optional(z.string()),
+      sslMode: z.optional(z.boolean()),
+      authType: z.optional(z.string()),
+      roleArn: z.optional(z.string()),
+      region: z.optional(z.string()),
+      clusterId: z.optional(z.string()),
+      groupFederation: z.optional(z.boolean()),
+      awsAccessKeyId: z.optional(z.string()),
+      awsSecretAccessKey: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorRedshiftMetadataToJSON(
   textqlRpcPublicConnectorRedshiftMetadata:

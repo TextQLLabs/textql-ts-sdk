@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,12 +18,14 @@ export type TextqlRpcPublicAuditLogGetS3ExportConfigResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAuditLogGetS3ExportConfigResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAuditLogGetS3ExportConfigResponse, unknown> = z
-    .object({
-      config: types.optional(
-        TextqlRpcPublicAuditLogS3ExportConfig$inboundSchema,
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicAuditLogGetS3ExportConfigResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        config: types.optional(
+          TextqlRpcPublicAuditLogS3ExportConfig$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicAuditLogGetS3ExportConfigResponseFromJSON(
   jsonString: string,

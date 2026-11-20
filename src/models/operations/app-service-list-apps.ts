@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type AppServiceListAppsRequest$Outbound = {
 export const AppServiceListAppsRequest$outboundSchema: z.ZodMiniType<
   AppServiceListAppsRequest$Outbound,
   AppServiceListAppsRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicAppListAppsRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicAppListAppsRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function appServiceListAppsRequestToJSON(
@@ -60,10 +62,12 @@ export function appServiceListAppsRequestToJSON(
 export const AppServiceListAppsResponse$inboundSchema: z.ZodMiniType<
   AppServiceListAppsResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicAppListAppsResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicAppListAppsResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function appServiceListAppsResponseFromJSON(
   jsonString: string,

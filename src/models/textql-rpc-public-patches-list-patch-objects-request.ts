@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * ListPatchObjectsRequest inspects the config objects at a patch's git ref.
@@ -24,9 +25,11 @@ export const TextqlRpcPublicPatchesListPatchObjectsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListPatchObjectsRequest$Outbound,
     TextqlRpcPublicPatchesListPatchObjectsRequest
-  > = z.object({
-    patchRef: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      patchRef: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesListPatchObjectsRequestToJSON(
   textqlRpcPublicPatchesListPatchObjectsRequest:

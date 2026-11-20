@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,20 +27,22 @@ export type TextqlRpcPublicCellsFeedPostCell = {
 export const TextqlRpcPublicCellsFeedPostCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFeedPostCell,
   unknown
-> = z.object({
-  title: types.optional(types.string()),
-  content: types.optional(types.string()),
-  imageUrls: types.optional(z.array(types.string())),
-  dashboardIds: types.optional(z.array(types.string())),
-  reportIds: types.optional(z.array(types.string())),
-  chatIds: types.optional(z.array(types.string())),
-  postId: types.optional(types.string()),
-  postUrl: types.optional(types.string()),
-  timestamp: types.optional(types.string()),
-  error: types.optional(types.string()),
-  mentionedMemberIds: types.optional(z.array(types.string())),
-  mentionedAgentIds: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    title: types.optional(types.string()),
+    content: types.optional(types.string()),
+    imageUrls: types.optional(z.array(types.string())),
+    dashboardIds: types.optional(z.array(types.string())),
+    reportIds: types.optional(z.array(types.string())),
+    chatIds: types.optional(z.array(types.string())),
+    postId: types.optional(types.string()),
+    postUrl: types.optional(types.string()),
+    timestamp: types.optional(types.string()),
+    error: types.optional(types.string()),
+    mentionedMemberIds: types.optional(z.array(types.string())),
+    mentionedAgentIds: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsFeedPostCellFromJSON(
   jsonString: string,

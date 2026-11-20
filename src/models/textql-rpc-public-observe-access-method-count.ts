@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -15,10 +15,13 @@ export type TextqlRpcPublicObserveAccessMethodCount = {
 
 /** @internal */
 export const TextqlRpcPublicObserveAccessMethodCount$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveAccessMethodCount, unknown> = z.object({
-    method: types.optional(types.string()),
-    total: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveAccessMethodCount, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        method: types.optional(types.string()),
+        total: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveAccessMethodCountFromJSON(
   jsonString: string,

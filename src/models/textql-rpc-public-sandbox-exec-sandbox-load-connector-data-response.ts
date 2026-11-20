@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -29,7 +29,9 @@ export const TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumRows$i
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumRows,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumRowsFromJSON(
   jsonString: string,
@@ -51,7 +53,9 @@ export const TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumCols$i
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumCols,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseNumColsFromJSON(
   jsonString: string,
@@ -73,12 +77,14 @@ export const TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponse$inboundS
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxLoadConnectorDataResponse,
     unknown
-  > = z.object({
-    dataframeName: types.optional(types.string()),
-    numRows: types.optional(smartUnion([types.number(), types.string()])),
-    numCols: types.optional(smartUnion([types.number(), types.string()])),
-    preview: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dataframeName: types.optional(types.string()),
+      numRows: types.optional(smartUnion([types.number(), types.string()])),
+      numCols: types.optional(smartUnion([types.number(), types.string()])),
+      preview: types.optional(types.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxLoadConnectorDataResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicAuditLogS3AuthMode,
   TextqlRpcPublicAuditLogS3AuthMode$outboundSchema,
@@ -40,18 +41,20 @@ export const TextqlRpcPublicAuditLogConfigureS3ExportRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAuditLogConfigureS3ExportRequest$Outbound,
     TextqlRpcPublicAuditLogConfigureS3ExportRequest
-  > = z.object({
-    bucket: z.optional(z.string()),
-    region: z.optional(z.string()),
-    prefix: z.optional(z.string()),
-    awsAccessKeyId: z.optional(z.string()),
-    awsSecretAccessKey: z.optional(z.string()),
-    enabled: z.optional(z.boolean()),
-    authMode: z.optional(TextqlRpcPublicAuditLogS3AuthMode$outboundSchema),
-    roleArn: z.optional(z.string()),
-    externalId: z.optional(z.string()),
-    exportIntervalSeconds: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      bucket: z.optional(z.string()),
+      region: z.optional(z.string()),
+      prefix: z.optional(z.string()),
+      awsAccessKeyId: z.optional(z.string()),
+      awsSecretAccessKey: z.optional(z.string()),
+      enabled: z.optional(z.boolean()),
+      authMode: z.optional(TextqlRpcPublicAuditLogS3AuthMode$outboundSchema),
+      roleArn: z.optional(z.string()),
+      externalId: z.optional(z.string()),
+      exportIntervalSeconds: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAuditLogConfigureS3ExportRequestToJSON(
   textqlRpcPublicAuditLogConfigureS3ExportRequest:

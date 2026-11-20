@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -52,7 +52,9 @@ export type TextqlRpcPublicCellsPythonCell = {
 /** @internal */
 export const TextqlRpcPublicCellsPythonCellExecutionTimeMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicCellsPythonCellExecutionTimeMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicCellsPythonCellExecutionTimeMsFromJSON(
   jsonString: string,
@@ -74,36 +76,38 @@ export function textqlRpcPublicCellsPythonCellExecutionTimeMsFromJSON(
 export const TextqlRpcPublicCellsPythonCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsPythonCell,
   unknown
-> = z.object({
-  code: types.optional(types.string()),
-  output: types.optional(z.array(types.string())),
-  dataframeInfo: types.optional(
-    z.array(TextqlRpcPublicDataframeDataFrameInfo$inboundSchema),
-  ),
-  dataframePreview: types.optional(z.array(types.string())),
-  images: types.optional(
-    z.array(TextqlRpcPublicCellsImageReference$inboundSchema),
-  ),
-  files: types.optional(
-    z.array(TextqlRpcPublicCellsFileReference$inboundSchema),
-  ),
-  htmlScreenshots: types.optional(
-    z.array(TextqlRpcPublicCellsImageReference$inboundSchema),
-  ),
-  charts: types.optional(
-    z.array(TextqlRpcPublicCellsChartReference$inboundSchema),
-  ),
-  authRequired: types.optional(types.boolean()),
-  authApiAccessKeyId: types.optional(types.string()),
-  authProviderName: types.optional(types.string()),
-  authCompleted: types.optional(types.boolean()),
-  authMember: types.optional(types.string()),
-  authPermissionRequired: types.optional(types.boolean()),
-  authGrantType: types.optional(types.string()),
-  executionTimeMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    code: types.optional(types.string()),
+    output: types.optional(z.array(types.string())),
+    dataframeInfo: types.optional(
+      z.array(TextqlRpcPublicDataframeDataFrameInfo$inboundSchema),
+    ),
+    dataframePreview: types.optional(z.array(types.string())),
+    images: types.optional(
+      z.array(TextqlRpcPublicCellsImageReference$inboundSchema),
+    ),
+    files: types.optional(
+      z.array(TextqlRpcPublicCellsFileReference$inboundSchema),
+    ),
+    htmlScreenshots: types.optional(
+      z.array(TextqlRpcPublicCellsImageReference$inboundSchema),
+    ),
+    charts: types.optional(
+      z.array(TextqlRpcPublicCellsChartReference$inboundSchema),
+    ),
+    authRequired: types.optional(types.boolean()),
+    authApiAccessKeyId: types.optional(types.string()),
+    authProviderName: types.optional(types.string()),
+    authCompleted: types.optional(types.boolean()),
+    authMember: types.optional(types.string()),
+    authPermissionRequired: types.optional(types.boolean()),
+    authGrantType: types.optional(types.string()),
+    executionTimeMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsPythonCellFromJSON(
   jsonString: string,

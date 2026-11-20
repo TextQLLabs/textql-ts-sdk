@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,15 +23,17 @@ export type TextqlRpcPublicObserveGetChatSourceStatsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveGetChatSourceStatsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveGetChatSourceStatsResponse, unknown> = z
-    .object({
-      orgBySource: types.optional(
-        z.array(TextqlRpcPublicObserveChatSourceCount$inboundSchema),
-      ),
-      memberStats: types.optional(
-        z.array(TextqlRpcPublicObserveMemberChatSourceStat$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveGetChatSourceStatsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        orgBySource: types.optional(
+          z.array(TextqlRpcPublicObserveChatSourceCount$inboundSchema),
+        ),
+        memberStats: types.optional(
+          z.array(TextqlRpcPublicObserveMemberChatSourceStat$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicObserveGetChatSourceStatsResponseFromJSON(
   jsonString: string,

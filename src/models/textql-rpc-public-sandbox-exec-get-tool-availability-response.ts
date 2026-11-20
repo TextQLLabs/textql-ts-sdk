@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,11 +21,13 @@ export const TextqlRpcPublicSandboxExecGetToolAvailabilityResponse$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecGetToolAvailabilityResponse,
     unknown
-  > = z.object({
-    tools: types.optional(
-      z.array(TextqlRpcPublicSandboxExecToolAvailability$inboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tools: types.optional(
+        z.array(TextqlRpcPublicSandboxExecToolAvailability$inboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecGetToolAvailabilityResponseFromJSON(
   jsonString: string,

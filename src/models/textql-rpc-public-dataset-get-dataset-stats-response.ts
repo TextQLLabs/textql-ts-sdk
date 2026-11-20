@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
 
@@ -14,8 +14,8 @@ export type TextqlRpcPublicDatasetGetDatasetStatsResponse = {};
 
 /** @internal */
 export const TextqlRpcPublicDatasetGetDatasetStatsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDatasetGetDatasetStatsResponse, unknown> = z
-    .object({});
+  z.ZodMiniType<TextqlRpcPublicDatasetGetDatasetStatsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicDatasetGetDatasetStatsResponseFromJSON(
   jsonString: string,

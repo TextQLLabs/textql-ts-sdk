@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -180,48 +180,50 @@ export type TextqlRpcPublicAgentAgent = {
 export const TextqlRpcPublicAgentAgent$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAgentAgent,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  prompt: types.optional(types.string()),
-  isActive: types.optional(types.boolean()),
-  lastPostAt: types.optional(types.date()),
-  paradigmOptions: types.optional(
-    TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
-  ),
-  postCount: types.optional(types.number()),
-  commentCount: types.optional(types.number()),
-  voteCount: types.optional(types.number()),
-  memberId: types.optional(types.string()),
-  memberName: types.optional(types.string()),
-  lastChatId: types.optional(types.string()),
-  hasWritePermission: z.optional(z.nullable(types.boolean())),
-  slackChannelId: z.optional(z.nullable(types.string())),
-  slackDmUserIds: types.optional(z.array(types.string())),
-  skipOrgDefaultChannel: types.optional(types.boolean()),
-  llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  fastMode: z.optional(z.nullable(types.boolean())),
-  isStateful: z.optional(z.nullable(types.boolean())),
-  postingFrequencyCrons: types.optional(z.array(types.string())),
-  emailOutputEnabled: types.optional(types.boolean()),
-  emailRecipientMemberIds: types.optional(z.array(types.string())),
-  webhookTriggerId: types.optional(types.string()),
-  channelIds: types.optional(z.array(types.string())),
-  teamsChannelId: z.optional(z.nullable(types.string())),
-  teamsDmUserAadIds: types.optional(z.array(types.string())),
-  slackTrigger: types.optional(
-    TextqlRpcPublicAgentSlackAgentTrigger$inboundSchema,
-  ),
-  profileImageUrl: types.optional(types.string()),
-  postingFrequencyCadences: types.optional(z.array(types.string())),
-  callableAsSubagent: types.optional(types.boolean()),
-  subagentInvokerMemberIds: types.optional(z.array(types.string())),
-  subagentInvokerRoleIds: types.optional(z.array(types.string())),
-  feedEnabled: types.optional(types.boolean()),
-  subagentAgentIds: types.optional(z.array(types.string())),
-  allowAdHocSubagents: types.optional(types.boolean()),
-  methodology: types.optional(TextqlRpcPublicChatMethodology$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    prompt: types.optional(types.string()),
+    isActive: types.optional(types.boolean()),
+    lastPostAt: types.optional(types.date()),
+    paradigmOptions: types.optional(
+      TextqlRpcPublicParadigmParadigmOptions$inboundSchema,
+    ),
+    postCount: types.optional(types.number()),
+    commentCount: types.optional(types.number()),
+    voteCount: types.optional(types.number()),
+    memberId: types.optional(types.string()),
+    memberName: types.optional(types.string()),
+    lastChatId: types.optional(types.string()),
+    hasWritePermission: z.optional(z.nullable(types.boolean())),
+    slackChannelId: z.optional(z.nullable(types.string())),
+    slackDmUserIds: types.optional(z.array(types.string())),
+    skipOrgDefaultChannel: types.optional(types.boolean()),
+    llmModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    fastMode: z.optional(z.nullable(types.boolean())),
+    isStateful: z.optional(z.nullable(types.boolean())),
+    postingFrequencyCrons: types.optional(z.array(types.string())),
+    emailOutputEnabled: types.optional(types.boolean()),
+    emailRecipientMemberIds: types.optional(z.array(types.string())),
+    webhookTriggerId: types.optional(types.string()),
+    channelIds: types.optional(z.array(types.string())),
+    teamsChannelId: z.optional(z.nullable(types.string())),
+    teamsDmUserAadIds: types.optional(z.array(types.string())),
+    slackTrigger: types.optional(
+      TextqlRpcPublicAgentSlackAgentTrigger$inboundSchema,
+    ),
+    profileImageUrl: types.optional(types.string()),
+    postingFrequencyCadences: types.optional(z.array(types.string())),
+    callableAsSubagent: types.optional(types.boolean()),
+    subagentInvokerMemberIds: types.optional(z.array(types.string())),
+    subagentInvokerRoleIds: types.optional(z.array(types.string())),
+    feedEnabled: types.optional(types.boolean()),
+    subagentAgentIds: types.optional(z.array(types.string())),
+    allowAdHocSubagents: types.optional(types.boolean()),
+    methodology: types.optional(TextqlRpcPublicChatMethodology$inboundSchema),
+  })
+);
 
 export function textqlRpcPublicAgentAgentFromJSON(
   jsonString: string,

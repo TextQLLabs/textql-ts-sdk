@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,17 +27,19 @@ export const TextqlRpcPublicPatchesGetOntologyHistoryFileDiffResponse$inboundSch
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetOntologyHistoryFileDiffResponse,
     unknown
-  > = z.object({
-    commitId: types.optional(types.string()),
-    path: types.optional(types.string()),
-    previousPath: z.optional(z.nullable(types.string())),
-    changeType: types.optional(
-      TextqlRpcPublicPatchesOntologyHistoryChangeType$inboundSchema,
-    ),
-    beforeContent: types.optional(types.string()),
-    afterContent: types.optional(types.string()),
-    isBinary: types.optional(types.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      commitId: types.optional(types.string()),
+      path: types.optional(types.string()),
+      previousPath: z.optional(z.nullable(types.string())),
+      changeType: types.optional(
+        TextqlRpcPublicPatchesOntologyHistoryChangeType$inboundSchema,
+      ),
+      beforeContent: types.optional(types.string()),
+      afterContent: types.optional(types.string()),
+      isBinary: types.optional(types.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesGetOntologyHistoryFileDiffResponseFromJSON(
   jsonString: string,

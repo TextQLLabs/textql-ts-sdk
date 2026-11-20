@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -25,15 +25,17 @@ export type TextqlRpcPublicRbacSharedObject = {
 export const TextqlRpcPublicRbacSharedObject$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicRbacSharedObject,
   unknown
-> = z.object({
-  objectType: types.optional(types.string()),
-  objectId: types.optional(types.string()),
-  accessType: types.optional(types.string()),
-  grantedVia: types.optional(types.string()),
-  roleName: z.optional(z.nullable(types.string())),
-  roleId: z.optional(z.nullable(types.string())),
-  groupId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    objectType: types.optional(types.string()),
+    objectId: types.optional(types.string()),
+    accessType: types.optional(types.string()),
+    grantedVia: types.optional(types.string()),
+    roleName: z.optional(z.nullable(types.string())),
+    roleId: z.optional(z.nullable(types.string())),
+    groupId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicRbacSharedObjectFromJSON(
   jsonString: string,

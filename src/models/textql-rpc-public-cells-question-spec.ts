@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -42,18 +42,20 @@ export type TextqlRpcPublicCellsQuestionSpec = {
 export const TextqlRpcPublicCellsQuestionSpec$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsQuestionSpec,
   unknown
-> = z.object({
-  question: types.optional(types.string()),
-  explanation: z.optional(z.nullable(types.string())),
-  kind: types.optional(TextqlRpcPublicCellsQuestionKind$inboundSchema),
-  options: types.optional(
-    z.array(TextqlRpcPublicCellsQuestionOption$inboundSchema),
-  ),
-  allowCustom: types.optional(types.boolean()),
-  inputs: types.optional(
-    z.array(TextqlRpcPublicCellsQuestionInput$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    question: types.optional(types.string()),
+    explanation: z.optional(z.nullable(types.string())),
+    kind: types.optional(TextqlRpcPublicCellsQuestionKind$inboundSchema),
+    options: types.optional(
+      z.array(TextqlRpcPublicCellsQuestionOption$inboundSchema),
+    ),
+    allowCustom: types.optional(types.boolean()),
+    inputs: types.optional(
+      z.array(TextqlRpcPublicCellsQuestionInput$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsQuestionSpecFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -21,4 +22,6 @@ export type TextqlRpcPublicOntologyRelationType = OpenEnum<
 export const TextqlRpcPublicOntologyRelationType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicOntologyRelationType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicOntologyRelationType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicOntologyRelationType)
+);

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcParadigmParamsParadigmType,
   TextqlRpcParadigmParamsParadigmType$outboundSchema,
@@ -140,62 +141,66 @@ export const TextqlRpcPublicPlaybookUpdatePlaybookRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookUpdatePlaybookRequest$Outbound,
     TextqlRpcPublicPlaybookUpdatePlaybookRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-    name: z.optional(z.nullable(z.string())),
-    prompt: z.optional(z.nullable(z.string())),
-    status: z.optional(TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema),
-    triggerType: z.optional(
-      TextqlRpcPublicPlaybookPlaybookTriggerType$outboundSchema,
-    ),
-    cronString: z.optional(z.nullable(z.string())),
-    datasetIds: z.optional(TextqlRpcPublicPlaybookStringList$outboundSchema),
-    connectorId: z.optional(z.nullable(z.int())),
-    referenceReportId: z.optional(z.nullable(z.string())),
-    paradigmOptions: z.optional(
-      TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
-    ),
-    paradigmType: z.optional(
-      TextqlRpcParadigmParamsParadigmType$outboundSchema,
-    ),
-    emailAddresses: z.optional(
-      TextqlRpcPublicPlaybookStringList$outboundSchema,
-    ),
-    slackChannelId: z.optional(z.nullable(z.string())),
-    taggedSlackUserIds: z.optional(
-      TextqlRpcPublicPlaybookStringList$outboundSchema,
-    ),
-    reportOutputStyle: z.optional(
-      TextqlRpcPublicPlaybookPlaybookReportStyle$outboundSchema,
-    ),
-    templateHeaderId: z.optional(z.nullable(z.string())),
-    selectedTemplateDataIds: z.optional(
-      TextqlRpcPublicPlaybookStringList$outboundSchema,
-    ),
-    maxConcurrentTemplates: z.optional(z.nullable(z.int())),
-    autoOptimizeConcurrency: z.optional(z.nullable(z.boolean())),
-    connectorIds: z.optional(TextqlRpcPublicPlaybookInt32List$outboundSchema),
-    templateDataFilters: z.optional(
-      TextqlRpcPublicPlaybookFilterConditionList$outboundSchema,
-    ),
-    llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
-    chatAccessMode: z.optional(
-      TextqlRpcPublicPlaybookChatAccessMode$outboundSchema,
-    ),
-    chatAccessOverrides: z.optional(
-      TextqlRpcPublicPlaybookChatAccessOverrideList$outboundSchema,
-    ),
-    chatIsPublic: z.optional(z.nullable(z.boolean())),
-    dashboardIds: z.optional(TextqlRpcPublicPlaybookStringList$outboundSchema),
-    recipientEmailColumn: z.optional(z.nullable(z.string())),
-    teamsChannelId: z.optional(z.nullable(z.string())),
-    taggedTeamsUserAadIds: z.optional(
-      TextqlRpcPublicPlaybookStringList$outboundSchema,
-    ),
-    apiAccessKeyIds: z.optional(
-      TextqlRpcPublicPlaybookStringList$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+      name: z.optional(z.nullable(z.string())),
+      prompt: z.optional(z.nullable(z.string())),
+      status: z.optional(TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema),
+      triggerType: z.optional(
+        TextqlRpcPublicPlaybookPlaybookTriggerType$outboundSchema,
+      ),
+      cronString: z.optional(z.nullable(z.string())),
+      datasetIds: z.optional(TextqlRpcPublicPlaybookStringList$outboundSchema),
+      connectorId: z.optional(z.nullable(z.int())),
+      referenceReportId: z.optional(z.nullable(z.string())),
+      paradigmOptions: z.optional(
+        TextqlRpcPublicParadigmParadigmOptions$outboundSchema,
+      ),
+      paradigmType: z.optional(
+        TextqlRpcParadigmParamsParadigmType$outboundSchema,
+      ),
+      emailAddresses: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+      slackChannelId: z.optional(z.nullable(z.string())),
+      taggedSlackUserIds: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+      reportOutputStyle: z.optional(
+        TextqlRpcPublicPlaybookPlaybookReportStyle$outboundSchema,
+      ),
+      templateHeaderId: z.optional(z.nullable(z.string())),
+      selectedTemplateDataIds: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+      maxConcurrentTemplates: z.optional(z.nullable(z.int())),
+      autoOptimizeConcurrency: z.optional(z.nullable(z.boolean())),
+      connectorIds: z.optional(TextqlRpcPublicPlaybookInt32List$outboundSchema),
+      templateDataFilters: z.optional(
+        TextqlRpcPublicPlaybookFilterConditionList$outboundSchema,
+      ),
+      llmModel: z.optional(TextqlRpcPublicChatLlmModel$outboundSchema),
+      chatAccessMode: z.optional(
+        TextqlRpcPublicPlaybookChatAccessMode$outboundSchema,
+      ),
+      chatAccessOverrides: z.optional(
+        TextqlRpcPublicPlaybookChatAccessOverrideList$outboundSchema,
+      ),
+      chatIsPublic: z.optional(z.nullable(z.boolean())),
+      dashboardIds: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+      recipientEmailColumn: z.optional(z.nullable(z.string())),
+      teamsChannelId: z.optional(z.nullable(z.string())),
+      taggedTeamsUserAadIds: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+      apiAccessKeyIds: z.optional(
+        TextqlRpcPublicPlaybookStringList$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicPlaybookUpdatePlaybookRequestToJSON(
   textqlRpcPublicPlaybookUpdatePlaybookRequest:

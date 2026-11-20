@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicRbacApiKeySortField = {
@@ -18,4 +19,6 @@ export type TextqlRpcPublicRbacApiKeySortField = ClosedEnum<
 /** @internal */
 export const TextqlRpcPublicRbacApiKeySortField$outboundSchema: z.ZodMiniEnum<
   typeof TextqlRpcPublicRbacApiKeySortField
-> = z.enum(TextqlRpcPublicRbacApiKeySortField);
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.enum(TextqlRpcPublicRbacApiKeySortField)
+);

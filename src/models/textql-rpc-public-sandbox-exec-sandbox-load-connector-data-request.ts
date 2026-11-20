@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   GoogleProtobufValue,
   GoogleProtobufValue$Outbound,
@@ -53,17 +54,19 @@ export const TextqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest$outboundS
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest$Outbound,
     TextqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest
-  > = z.object({
-    sandboxId: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    query: z.optional(z.string()),
-    tqlPath: z.optional(z.string()),
-    params: z.optional(
-      z.record(z.string(), z.nullable(GoogleProtobufValue$outboundSchema)),
-    ),
-    maxRows: z.optional(z.int()),
-    dataframeName: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sandboxId: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      query: z.optional(z.string()),
+      tqlPath: z.optional(z.string()),
+      params: z.optional(
+        z.record(z.string(), z.nullable(GoogleProtobufValue$outboundSchema)),
+      ),
+      maxRows: z.optional(z.int()),
+      dataframeName: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxLoadConnectorDataRequestToJSON(
   textqlRpcPublicSandboxExecSandboxLoadConnectorDataRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -32,11 +32,14 @@ export type TextqlRpcPublicDashboardLibraryTQLSource = {
 
 /** @internal */
 export const TextqlRpcPublicDashboardLibraryTQLSource$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardLibraryTQLSource, unknown> = z.object({
-    tqlPath: types.optional(types.string()),
-    connectorId: types.optional(types.number()),
-    paramsJson: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardLibraryTQLSource, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tqlPath: types.optional(types.string()),
+        connectorId: types.optional(types.number()),
+        paramsJson: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardLibraryTQLSource$Outbound = {
   tqlPath?: string | undefined;
@@ -49,11 +52,13 @@ export const TextqlRpcPublicDashboardLibraryTQLSource$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardLibraryTQLSource$Outbound,
     TextqlRpcPublicDashboardLibraryTQLSource
-  > = z.object({
-    tqlPath: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    paramsJson: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tqlPath: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      paramsJson: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicDashboardLibraryTQLSourceToJSON(
   textqlRpcPublicDashboardLibraryTQLSource:

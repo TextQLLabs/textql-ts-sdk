@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacCreateServiceAccountRequest = {
   /**
@@ -43,14 +44,16 @@ export const TextqlRpcPublicRbacCreateServiceAccountRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacCreateServiceAccountRequest$Outbound,
     TextqlRpcPublicRbacCreateServiceAccountRequest
-  > = z.object({
-    ownerMemberEmail: z.optional(z.nullable(z.string())),
-    name: z.optional(z.string()),
-    description: z.optional(z.nullable(z.string())),
-    ownerMemberId: z.optional(z.nullable(z.string())),
-    roleNames: z.optional(z.array(z.string())),
-    roleIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ownerMemberEmail: z.optional(z.nullable(z.string())),
+      name: z.optional(z.string()),
+      description: z.optional(z.nullable(z.string())),
+      ownerMemberId: z.optional(z.nullable(z.string())),
+      roleNames: z.optional(z.array(z.string())),
+      roleIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacCreateServiceAccountRequestToJSON(
   textqlRpcPublicRbacCreateServiceAccountRequest:

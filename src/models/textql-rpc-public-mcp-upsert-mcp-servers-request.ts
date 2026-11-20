@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicMCPMCPServer,
   TextqlRpcPublicMCPMCPServer$Outbound,
@@ -23,9 +24,13 @@ export const TextqlRpcPublicMCPUpsertMCPServersRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicMCPUpsertMCPServersRequest$Outbound,
     TextqlRpcPublicMCPUpsertMCPServersRequest
-  > = z.object({
-    mcpServers: z.optional(z.array(TextqlRpcPublicMCPMCPServer$outboundSchema)),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mcpServers: z.optional(
+        z.array(TextqlRpcPublicMCPMCPServer$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicMCPUpsertMCPServersRequestToJSON(
   textqlRpcPublicMCPUpsertMCPServersRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -61,37 +61,39 @@ export type TextqlRpcPublicObserveGetBillingStatsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveGetBillingStatsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveGetBillingStatsResponse, unknown> = z
-    .object({
-      memberStats: types.optional(
-        z.array(TextqlRpcPublicObserveMemberBillingStat$inboundSchema),
-      ),
-      agentStats: types.optional(
-        z.array(TextqlRpcPublicObserveAgentBillingStat$inboundSchema),
-      ),
-      totalFeedAcu: types.optional(types.number()),
-      playbookStats: types.optional(
-        z.array(TextqlRpcPublicObservePlaybookBillingStat$inboundSchema),
-      ),
-      dashboardStats: types.optional(
-        z.array(TextqlRpcPublicObserveDashboardBillingStat$inboundSchema),
-      ),
-      totalPlaybookAcu: types.optional(types.number()),
-      totalDashboardAcu: types.optional(types.number()),
-      unattributedFeedAcu: types.optional(types.number()),
-      unattributedDashboardAcu: types.optional(types.number()),
-      totalDashboardCount: types.optional(types.number()),
-      totalPlaybookCount: types.optional(types.number()),
-      unattributedPlaybookAcu: types.optional(types.number()),
-      appStats: types.optional(
-        z.array(TextqlRpcPublicObserveAppBillingStat$inboundSchema),
-      ),
-      totalAppAcu: types.optional(types.number()),
-      unattributedAppAcu: types.optional(types.number()),
-      totalAppCount: types.optional(types.number()),
-      acuRatePer1000Usd: types.optional(types.number()),
-      unattributedAppLlmAcu: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveGetBillingStatsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        memberStats: types.optional(
+          z.array(TextqlRpcPublicObserveMemberBillingStat$inboundSchema),
+        ),
+        agentStats: types.optional(
+          z.array(TextqlRpcPublicObserveAgentBillingStat$inboundSchema),
+        ),
+        totalFeedAcu: types.optional(types.number()),
+        playbookStats: types.optional(
+          z.array(TextqlRpcPublicObservePlaybookBillingStat$inboundSchema),
+        ),
+        dashboardStats: types.optional(
+          z.array(TextqlRpcPublicObserveDashboardBillingStat$inboundSchema),
+        ),
+        totalPlaybookAcu: types.optional(types.number()),
+        totalDashboardAcu: types.optional(types.number()),
+        unattributedFeedAcu: types.optional(types.number()),
+        unattributedDashboardAcu: types.optional(types.number()),
+        totalDashboardCount: types.optional(types.number()),
+        totalPlaybookCount: types.optional(types.number()),
+        unattributedPlaybookAcu: types.optional(types.number()),
+        appStats: types.optional(
+          z.array(TextqlRpcPublicObserveAppBillingStat$inboundSchema),
+        ),
+        totalAppAcu: types.optional(types.number()),
+        unattributedAppAcu: types.optional(types.number()),
+        totalAppCount: types.optional(types.number()),
+        acuRatePer1000Usd: types.optional(types.number()),
+        unattributedAppLlmAcu: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveGetBillingStatsResponseFromJSON(
   jsonString: string,

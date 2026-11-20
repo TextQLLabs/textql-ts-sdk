@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,15 +22,17 @@ export type TextqlRpcPublicConnectorMYSQLMetadata = {
 export const TextqlRpcPublicConnectorMYSQLMetadata$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorMYSQLMetadata,
   unknown
-> = z.object({
-  host: types.optional(types.string()),
-  port: types.optional(types.number()),
-  user: types.optional(types.string()),
-  password: types.optional(types.string()),
-  database: types.optional(types.string()),
-  schema: types.optional(types.string()),
-  sslMode: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    host: types.optional(types.string()),
+    port: types.optional(types.number()),
+    user: types.optional(types.string()),
+    password: types.optional(types.string()),
+    database: types.optional(types.string()),
+    schema: types.optional(types.string()),
+    sslMode: types.optional(types.boolean()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicConnectorMYSQLMetadata$Outbound = {
   host?: string | undefined;
@@ -47,15 +49,17 @@ export const TextqlRpcPublicConnectorMYSQLMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorMYSQLMetadata$Outbound,
     TextqlRpcPublicConnectorMYSQLMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    schema: z.optional(z.string()),
-    sslMode: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      schema: z.optional(z.string()),
+      sslMode: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicConnectorMYSQLMetadataToJSON(
   textqlRpcPublicConnectorMYSQLMetadata: TextqlRpcPublicConnectorMYSQLMetadata,

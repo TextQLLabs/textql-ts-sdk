@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -207,17 +207,19 @@ export type TextqlRpcPublicPatchesContextPatchAutoApproveRule = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesContextPatchAutoApproveRule$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesContextPatchAutoApproveRule, unknown> = z
-    .object({
-      id: types.optional(types.string()),
-      directoryPath: types.optional(types.string()),
-      alwaysAutoApprove: types.optional(types.boolean()),
-      roleIds: types.optional(z.array(types.string())),
-      agentIds: types.optional(z.array(types.string())),
-      enabled: types.optional(types.boolean()),
-      createdAt: types.optional(types.date()),
-      updatedAt: types.optional(types.date()),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesContextPatchAutoApproveRule, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        directoryPath: types.optional(types.string()),
+        alwaysAutoApprove: types.optional(types.boolean()),
+        roleIds: types.optional(z.array(types.string())),
+        agentIds: types.optional(z.array(types.string())),
+        enabled: types.optional(types.boolean()),
+        createdAt: types.optional(types.date()),
+        updatedAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicPatchesContextPatchAutoApproveRuleFromJSON(
   jsonString: string,

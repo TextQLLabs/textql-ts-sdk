@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicConnectorAuroraMetadataAuroraAuth = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorAuroraMetadataAuroraAuth$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorAuroraMetadataAuroraAuth, unknown> = z
-    .object({
-      iamAuth: types.optional(types.boolean()),
-      clusterId: types.optional(types.string()),
-      region: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorAuroraMetadataAuroraAuth, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        iamAuth: types.optional(types.boolean()),
+        clusterId: types.optional(types.string()),
+        region: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorAuroraMetadataAuroraAuth$Outbound = {
   iamAuth?: boolean | undefined;
@@ -34,11 +36,13 @@ export const TextqlRpcPublicConnectorAuroraMetadataAuroraAuth$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorAuroraMetadataAuroraAuth$Outbound,
     TextqlRpcPublicConnectorAuroraMetadataAuroraAuth
-  > = z.object({
-    iamAuth: z.optional(z.boolean()),
-    clusterId: z.optional(z.string()),
-    region: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      iamAuth: z.optional(z.boolean()),
+      clusterId: z.optional(z.string()),
+      region: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorAuroraMetadataAuroraAuthToJSON(
   textqlRpcPublicConnectorAuroraMetadataAuroraAuth:

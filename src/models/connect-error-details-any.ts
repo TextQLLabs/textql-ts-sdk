@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import * as b64$ from "../lib/base64.js";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -34,10 +34,8 @@ export type ConnectErrorDetailsAny = {
 };
 
 /** @internal */
-export const Debug$inboundSchema: z.ZodMiniType<Debug, unknown> = z.record(
-  z.string(),
-  z.any(),
-);
+export const Debug$inboundSchema: z.ZodMiniType<Debug, unknown> =
+  /* @__PURE__ */ lazySchema$(() => z.record(z.string(), z.any()));
 
 export function debugFromJSON(
   jsonString: string,
@@ -53,13 +51,15 @@ export function debugFromJSON(
 export const ConnectErrorDetailsAny$inboundSchema: z.ZodMiniType<
   ConnectErrorDetailsAny,
   unknown
-> = z.catchall(
-  z.object({
-    type: types.optional(types.string()),
-    value: types.optional(b64$.zodInbound),
-    debug: types.optional(z.record(z.string(), z.any())),
-  }),
-  z.any(),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.catchall(
+    z.object({
+      type: types.optional(types.string()),
+      value: types.optional(b64$.zodInbound),
+      debug: types.optional(z.record(z.string(), z.any())),
+    }),
+    z.any(),
+  )
 );
 
 export function connectErrorDetailsAnyFromJSON(

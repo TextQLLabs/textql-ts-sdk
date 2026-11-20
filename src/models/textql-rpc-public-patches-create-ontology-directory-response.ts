@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,9 +21,11 @@ export const TextqlRpcPublicPatchesCreateOntologyDirectoryResponse$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesCreateOntologyDirectoryResponse,
     unknown
-  > = z.object({
-    entry: types.optional(TextqlRpcPublicPatchesOntologyEntry$inboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      entry: types.optional(TextqlRpcPublicPatchesOntologyEntry$inboundSchema),
+    })
+  );
 
 export function textqlRpcPublicPatchesCreateOntologyDirectoryResponseFromJSON(
   jsonString: string,

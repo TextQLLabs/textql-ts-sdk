@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -115,15 +115,17 @@ export type TextqlRpcPublicAppAppUploadItem = {
 export const TextqlRpcPublicAppAppUploadItem$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppAppUploadItem,
   unknown
-> = z.object({
-  datasetId: types.optional(types.string()),
-  version: types.optional(types.number()),
-  name: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  libraryPath: types.optional(types.string()),
-  tableCount: types.optional(types.number()),
-  rawOnly: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    datasetId: types.optional(types.string()),
+    version: types.optional(types.number()),
+    name: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    libraryPath: types.optional(types.string()),
+    tableCount: types.optional(types.number()),
+    rawOnly: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicAppAppUploadItemFromJSON(
   jsonString: string,

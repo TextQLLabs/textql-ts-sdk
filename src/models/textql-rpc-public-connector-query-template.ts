@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -219,7 +219,9 @@ export type TextqlRpcPublicConnectorQueryTemplate = {
 
 /** @internal */
 export const EventCount$inboundSchema: z.ZodMiniType<EventCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function eventCountFromJSON(
   jsonString: string,
@@ -235,21 +237,23 @@ export function eventCountFromJSON(
 export const TextqlRpcPublicConnectorQueryTemplate$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorQueryTemplate,
   unknown
-> = z.object({
-  templateId: types.optional(types.string()),
-  normalizedSql: types.optional(types.string()),
-  tables: types.optional(z.array(types.string())),
-  joins: types.optional(
-    z.array(TextqlRpcPublicConnectorQueryJoinInfo$inboundSchema),
-  ),
-  eventCount: types.optional(smartUnion([types.number(), types.string()])),
-  firstSeen: types.optional(types.date()),
-  lastSeen: types.optional(types.date()),
-  cteRefs: types.optional(
-    z.array(TextqlRpcPublicConnectorQueryTemplateCteRef$inboundSchema),
-  ),
-  avgRuntimeMs: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    templateId: types.optional(types.string()),
+    normalizedSql: types.optional(types.string()),
+    tables: types.optional(z.array(types.string())),
+    joins: types.optional(
+      z.array(TextqlRpcPublicConnectorQueryJoinInfo$inboundSchema),
+    ),
+    eventCount: types.optional(smartUnion([types.number(), types.string()])),
+    firstSeen: types.optional(types.date()),
+    lastSeen: types.optional(types.date()),
+    cteRefs: types.optional(
+      z.array(TextqlRpcPublicConnectorQueryTemplateCteRef$inboundSchema),
+    ),
+    avgRuntimeMs: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicConnectorQueryTemplateFromJSON(
   jsonString: string,

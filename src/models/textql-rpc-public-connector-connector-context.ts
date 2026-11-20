@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -37,11 +37,13 @@ export type TextqlRpcPublicConnectorConnectorContext =
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorContextTableau$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContextTableau, unknown> = z
-    .object({
-      tableau: TextqlRpcPublicConnectorTableauConnectorContext$inboundSchema,
-      connectorId: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContextTableau, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tableau: TextqlRpcPublicConnectorTableauConnectorContext$inboundSchema,
+        connectorId: types.optional(types.number()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorConnectorContextTableau$Outbound = {
   tableau: TextqlRpcPublicConnectorTableauConnectorContext$Outbound;
@@ -53,10 +55,12 @@ export const TextqlRpcPublicConnectorConnectorContextTableau$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorContextTableau$Outbound,
     TextqlRpcPublicConnectorConnectorContextTableau
-  > = z.object({
-    tableau: TextqlRpcPublicConnectorTableauConnectorContext$outboundSchema,
-    connectorId: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tableau: TextqlRpcPublicConnectorTableauConnectorContext$outboundSchema,
+      connectorId: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicConnectorConnectorContextTableauToJSON(
   textqlRpcPublicConnectorConnectorContextTableau:
@@ -86,11 +90,13 @@ export function textqlRpcPublicConnectorConnectorContextTableauFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorContextPowerbi$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContextPowerbi, unknown> = z
-    .object({
-      powerbi: TextqlRpcPublicConnectorPowerBIConnectorContext$inboundSchema,
-      connectorId: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContextPowerbi, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        powerbi: TextqlRpcPublicConnectorPowerBIConnectorContext$inboundSchema,
+        connectorId: types.optional(types.number()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorConnectorContextPowerbi$Outbound = {
   powerbi: TextqlRpcPublicConnectorPowerBIConnectorContext$Outbound;
@@ -102,10 +108,12 @@ export const TextqlRpcPublicConnectorConnectorContextPowerbi$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorContextPowerbi$Outbound,
     TextqlRpcPublicConnectorConnectorContextPowerbi
-  > = z.object({
-    powerbi: TextqlRpcPublicConnectorPowerBIConnectorContext$outboundSchema,
-    connectorId: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      powerbi: TextqlRpcPublicConnectorPowerBIConnectorContext$outboundSchema,
+      connectorId: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicConnectorConnectorContextPowerbiToJSON(
   textqlRpcPublicConnectorConnectorContextPowerbi:
@@ -135,16 +143,17 @@ export function textqlRpcPublicConnectorConnectorContextPowerbiFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorContext$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContext, unknown> = smartUnion(
-    [
-      z.lazy(() =>
-        TextqlRpcPublicConnectorConnectorContextPowerbi$inboundSchema
-      ),
-      z.lazy(() =>
-        TextqlRpcPublicConnectorConnectorContextTableau$inboundSchema
-      ),
-    ],
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorContext, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        z.lazy(() =>
+          TextqlRpcPublicConnectorConnectorContextPowerbi$inboundSchema
+        ),
+        z.lazy(() =>
+          TextqlRpcPublicConnectorConnectorContextTableau$inboundSchema
+        ),
+      ])
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorConnectorContext$Outbound =
   | TextqlRpcPublicConnectorConnectorContextPowerbi$Outbound
@@ -155,14 +164,16 @@ export const TextqlRpcPublicConnectorConnectorContext$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorContext$Outbound,
     TextqlRpcPublicConnectorConnectorContext
-  > = smartUnion([
-    z.lazy(() =>
-      TextqlRpcPublicConnectorConnectorContextPowerbi$outboundSchema
-    ),
-    z.lazy(() =>
-      TextqlRpcPublicConnectorConnectorContextTableau$outboundSchema
-    ),
-  ]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([
+      z.lazy(() =>
+        TextqlRpcPublicConnectorConnectorContextPowerbi$outboundSchema
+      ),
+      z.lazy(() =>
+        TextqlRpcPublicConnectorConnectorContextTableau$outboundSchema
+      ),
+    ])
+  );
 
 export function textqlRpcPublicConnectorConnectorContextToJSON(
   textqlRpcPublicConnectorConnectorContext:

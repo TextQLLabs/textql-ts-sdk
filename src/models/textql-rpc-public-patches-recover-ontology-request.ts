@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPatchesRecoverOntologyLevel,
   TextqlRpcPublicPatchesRecoverOntologyLevel$outboundSchema,
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesRecoverOntologyRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesRecoverOntologyRequest$Outbound,
     TextqlRpcPublicPatchesRecoverOntologyRequest
-  > = z.object({
-    level: z.optional(
-      TextqlRpcPublicPatchesRecoverOntologyLevel$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      level: z.optional(
+        TextqlRpcPublicPatchesRecoverOntologyLevel$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicPatchesRecoverOntologyRequestToJSON(
   textqlRpcPublicPatchesRecoverOntologyRequest:

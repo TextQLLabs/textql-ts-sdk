@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -3534,502 +3534,9 @@ export type TextqlRpcPublicConnectorConnector =
 export const TrinoMetadata$inboundSchema: z.ZodMiniType<
   TrinoMetadata,
   unknown
-> = z.object({
-  trinoMetadata: TextqlRpcPublicConnectorTrinoMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function trinoMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<TrinoMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => TrinoMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TrinoMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const TeradataMetadata$inboundSchema: z.ZodMiniType<
-  TeradataMetadata,
-  unknown
-> = z.object({
-  teradataMetadata: TextqlRpcPublicConnectorTeradataMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function teradataMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<TeradataMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => TeradataMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TeradataMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const TableauMetadata$inboundSchema: z.ZodMiniType<
-  TableauMetadata,
-  unknown
-> = z.object({
-  tableauMetadata: TextqlRpcPublicConnectorTableauMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function tableauMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<TableauMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => TableauMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'TableauMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const SupabaseMetadata$inboundSchema: z.ZodMiniType<
-  SupabaseMetadata,
-  unknown
-> = z.object({
-  supabaseMetadata: TextqlRpcPublicConnectorSupabaseMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function supabaseMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<SupabaseMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => SupabaseMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'SupabaseMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const SqlServerMetadata$inboundSchema: z.ZodMiniType<
-  SqlServerMetadata,
-  unknown
-> = z.object({
-  sqlServerMetadata: TextqlRpcPublicConnectorSQLServerMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function sqlServerMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<SqlServerMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => SqlServerMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'SqlServerMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const SnowflakeMetadata$inboundSchema: z.ZodMiniType<
-  SnowflakeMetadata,
-  unknown
-> = z.object({
-  snowflakeMetadata: TextqlRpcPublicConnectorSnowflakeMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function snowflakeMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<SnowflakeMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => SnowflakeMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'SnowflakeMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const SapHanaMetadata$inboundSchema: z.ZodMiniType<
-  SapHanaMetadata,
-  unknown
-> = z.object({
-  sapHanaMetadata: TextqlRpcPublicConnectorSAPHanaMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function sapHanaMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<SapHanaMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => SapHanaMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'SapHanaMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const RedshiftMetadata$inboundSchema: z.ZodMiniType<
-  RedshiftMetadata,
-  unknown
-> = z.object({
-  redshiftMetadata: TextqlRpcPublicConnectorRedshiftMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function redshiftMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<RedshiftMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => RedshiftMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'RedshiftMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const PowerbiMetadata$inboundSchema: z.ZodMiniType<
-  PowerbiMetadata,
-  unknown
-> = z.object({
-  powerbiMetadata: TextqlRpcPublicConnectorPowerBIMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function powerbiMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<PowerbiMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => PowerbiMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'PowerbiMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const PostgresMetadata$inboundSchema: z.ZodMiniType<
-  PostgresMetadata,
-  unknown
-> = z.object({
-  postgresMetadata: TextqlRpcPublicConnectorPostgresMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function postgresMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<PostgresMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => PostgresMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'PostgresMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const OracleMetadata$inboundSchema: z.ZodMiniType<
-  OracleMetadata,
-  unknown
-> = z.object({
-  oracleMetadata: TextqlRpcPublicConnectorOracleMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function oracleMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<OracleMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => OracleMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'OracleMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const MysqlMetadata$inboundSchema: z.ZodMiniType<
-  MysqlMetadata,
-  unknown
-> = z.object({
-  mysqlMetadata: TextqlRpcPublicConnectorMYSQLMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function mysqlMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<MysqlMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => MysqlMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'MysqlMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const MotherduckMetadata$inboundSchema: z.ZodMiniType<
-  MotherduckMetadata,
-  unknown
-> = z.object({
-  motherduckMetadata: TextqlRpcPublicConnectorMotherduckMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function motherduckMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<MotherduckMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => MotherduckMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'MotherduckMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const MongodbMetadata$inboundSchema: z.ZodMiniType<
-  MongodbMetadata,
-  unknown
-> = z.object({
-  mongodbMetadata: TextqlRpcPublicConnectorMongoDBMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function mongodbMetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<MongodbMetadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => MongodbMetadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'MongodbMetadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const Microsoft365Metadata$inboundSchema: z.ZodMiniType<
-  Microsoft365Metadata,
-  unknown
-> = z.object({
-  microsoft365Metadata:
-    TextqlRpcPublicConnectorMicrosoft365Metadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
-
-export function microsoft365MetadataFromJSON(
-  jsonString: string,
-): SafeParseResult<Microsoft365Metadata, SDKValidationError> {
-  return safeParse(
-    jsonString,
-    (x) => Microsoft365Metadata$inboundSchema.parse(JSON.parse(x)),
-    `Failed to parse 'Microsoft365Metadata' from JSON`,
-  );
-}
-
-/** @internal */
-export const KdbMetadata$inboundSchema: z.ZodMiniType<KdbMetadata, unknown> = z
-  .object({
-    kdbMetadata: TextqlRpcPublicConnectorKdbMetadata$inboundSchema,
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    trinoMetadata: TextqlRpcPublicConnectorTrinoMetadata$inboundSchema,
     id: types.optional(types.number()),
     name: types.optional(types.string()),
     connectorType: types.optional(
@@ -4045,7 +3552,533 @@ export const KdbMetadata$inboundSchema: z.ZodMiniType<KdbMetadata, unknown> = z
     memberAuthUsername: z.optional(z.nullable(types.string())),
     includeDbSessionMetadata: types.optional(types.boolean()),
     isPublic: types.optional(types.boolean()),
-  });
+  })
+);
+
+export function trinoMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<TrinoMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TrinoMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TrinoMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const TeradataMetadata$inboundSchema: z.ZodMiniType<
+  TeradataMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    teradataMetadata: TextqlRpcPublicConnectorTeradataMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function teradataMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<TeradataMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TeradataMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TeradataMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const TableauMetadata$inboundSchema: z.ZodMiniType<
+  TableauMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tableauMetadata: TextqlRpcPublicConnectorTableauMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function tableauMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<TableauMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => TableauMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'TableauMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const SupabaseMetadata$inboundSchema: z.ZodMiniType<
+  SupabaseMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    supabaseMetadata: TextqlRpcPublicConnectorSupabaseMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function supabaseMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<SupabaseMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SupabaseMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SupabaseMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const SqlServerMetadata$inboundSchema: z.ZodMiniType<
+  SqlServerMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    sqlServerMetadata: TextqlRpcPublicConnectorSQLServerMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function sqlServerMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<SqlServerMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SqlServerMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SqlServerMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const SnowflakeMetadata$inboundSchema: z.ZodMiniType<
+  SnowflakeMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    snowflakeMetadata: TextqlRpcPublicConnectorSnowflakeMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function snowflakeMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<SnowflakeMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SnowflakeMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SnowflakeMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const SapHanaMetadata$inboundSchema: z.ZodMiniType<
+  SapHanaMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    sapHanaMetadata: TextqlRpcPublicConnectorSAPHanaMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function sapHanaMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<SapHanaMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => SapHanaMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'SapHanaMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const RedshiftMetadata$inboundSchema: z.ZodMiniType<
+  RedshiftMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    redshiftMetadata: TextqlRpcPublicConnectorRedshiftMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function redshiftMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<RedshiftMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => RedshiftMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'RedshiftMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const PowerbiMetadata$inboundSchema: z.ZodMiniType<
+  PowerbiMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    powerbiMetadata: TextqlRpcPublicConnectorPowerBIMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function powerbiMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<PowerbiMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => PowerbiMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'PowerbiMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const PostgresMetadata$inboundSchema: z.ZodMiniType<
+  PostgresMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    postgresMetadata: TextqlRpcPublicConnectorPostgresMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function postgresMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<PostgresMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => PostgresMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'PostgresMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const OracleMetadata$inboundSchema: z.ZodMiniType<
+  OracleMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    oracleMetadata: TextqlRpcPublicConnectorOracleMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function oracleMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<OracleMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => OracleMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'OracleMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const MysqlMetadata$inboundSchema: z.ZodMiniType<
+  MysqlMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    mysqlMetadata: TextqlRpcPublicConnectorMYSQLMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function mysqlMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<MysqlMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => MysqlMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'MysqlMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const MotherduckMetadata$inboundSchema: z.ZodMiniType<
+  MotherduckMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    motherduckMetadata:
+      TextqlRpcPublicConnectorMotherduckMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function motherduckMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<MotherduckMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => MotherduckMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'MotherduckMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const MongodbMetadata$inboundSchema: z.ZodMiniType<
+  MongodbMetadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    mongodbMetadata: TextqlRpcPublicConnectorMongoDBMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function mongodbMetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<MongodbMetadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => MongodbMetadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'MongodbMetadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const Microsoft365Metadata$inboundSchema: z.ZodMiniType<
+  Microsoft365Metadata,
+  unknown
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    microsoft365Metadata:
+      TextqlRpcPublicConnectorMicrosoft365Metadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
+
+export function microsoft365MetadataFromJSON(
+  jsonString: string,
+): SafeParseResult<Microsoft365Metadata, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => Microsoft365Metadata$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'Microsoft365Metadata' from JSON`,
+  );
+}
+
+/** @internal */
+export const KdbMetadata$inboundSchema: z.ZodMiniType<KdbMetadata, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      kdbMetadata: TextqlRpcPublicConnectorKdbMetadata$inboundSchema,
+      id: types.optional(types.number()),
+      name: types.optional(types.string()),
+      connectorType: types.optional(
+        TextqlRpcPublicConnectorConnectorType$inboundSchema,
+      ),
+      memberId: types.optional(types.string()),
+      createdAt: types.optional(types.date()),
+      isExample: types.optional(types.boolean()),
+      allowSqlWriteOperations: types.optional(types.boolean()),
+      authStrategy: types.optional(types.string()),
+      authenticatedByMemberId: types.optional(types.string()),
+      memberAuthenticated: z.optional(z.nullable(types.boolean())),
+      memberAuthUsername: z.optional(z.nullable(types.string())),
+      includeDbSessionMetadata: types.optional(types.boolean()),
+      isPublic: types.optional(types.boolean()),
+    })
+  );
 
 export function kdbMetadataFromJSON(
   jsonString: string,
@@ -4061,24 +4094,26 @@ export function kdbMetadataFromJSON(
 export const GoogleMetadata$inboundSchema: z.ZodMiniType<
   GoogleMetadata,
   unknown
-> = z.object({
-  googleMetadata: TextqlRpcPublicConnectorGoogleMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleMetadata: TextqlRpcPublicConnectorGoogleMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function googleMetadataFromJSON(
   jsonString: string,
@@ -4094,25 +4129,27 @@ export function googleMetadataFromJSON(
 export const GoogleDriveMetadata$inboundSchema: z.ZodMiniType<
   GoogleDriveMetadata,
   unknown
-> = z.object({
-  googleDriveMetadata:
-    TextqlRpcPublicConnectorGoogleDriveMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleDriveMetadata:
+      TextqlRpcPublicConnectorGoogleDriveMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function googleDriveMetadataFromJSON(
   jsonString: string,
@@ -4128,25 +4165,27 @@ export function googleDriveMetadataFromJSON(
 export const GoogleCalendarMetadata$inboundSchema: z.ZodMiniType<
   GoogleCalendarMetadata,
   unknown
-> = z.object({
-  googleCalendarMetadata:
-    TextqlRpcPublicConnectorGoogleCalendarMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleCalendarMetadata:
+      TextqlRpcPublicConnectorGoogleCalendarMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function googleCalendarMetadataFromJSON(
   jsonString: string,
@@ -4162,24 +4201,26 @@ export function googleCalendarMetadataFromJSON(
 export const GmailMetadata$inboundSchema: z.ZodMiniType<
   GmailMetadata,
   unknown
-> = z.object({
-  gmailMetadata: TextqlRpcPublicConnectorGmailMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    gmailMetadata: TextqlRpcPublicConnectorGmailMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function gmailMetadataFromJSON(
   jsonString: string,
@@ -4195,24 +4236,26 @@ export function gmailMetadataFromJSON(
 export const FireboltMetadata$inboundSchema: z.ZodMiniType<
   FireboltMetadata,
   unknown
-> = z.object({
-  fireboltMetadata: TextqlRpcPublicConnectorFireboltMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    fireboltMetadata: TextqlRpcPublicConnectorFireboltMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function fireboltMetadataFromJSON(
   jsonString: string,
@@ -4228,24 +4271,26 @@ export function fireboltMetadataFromJSON(
 export const ExasolMetadata$inboundSchema: z.ZodMiniType<
   ExasolMetadata,
   unknown
-> = z.object({
-  exasolMetadata: TextqlRpcPublicConnectorExasolMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    exasolMetadata: TextqlRpcPublicConnectorExasolMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function exasolMetadataFromJSON(
   jsonString: string,
@@ -4261,24 +4306,26 @@ export function exasolMetadataFromJSON(
 export const DremioMetadata$inboundSchema: z.ZodMiniType<
   DremioMetadata,
   unknown
-> = z.object({
-  dremioMetadata: TextqlRpcPublicConnectorDremioMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    dremioMetadata: TextqlRpcPublicConnectorDremioMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function dremioMetadataFromJSON(
   jsonString: string,
@@ -4294,24 +4341,27 @@ export function dremioMetadataFromJSON(
 export const DatabricksMetadata$inboundSchema: z.ZodMiniType<
   DatabricksMetadata,
   unknown
-> = z.object({
-  databricksMetadata: TextqlRpcPublicConnectorDatabricksMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    databricksMetadata:
+      TextqlRpcPublicConnectorDatabricksMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function databricksMetadataFromJSON(
   jsonString: string,
@@ -4327,24 +4377,27 @@ export function databricksMetadataFromJSON(
 export const ClickhouseMetadata$inboundSchema: z.ZodMiniType<
   ClickhouseMetadata,
   unknown
-> = z.object({
-  clickhouseMetadata: TextqlRpcPublicConnectorClickHouseMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    clickhouseMetadata:
+      TextqlRpcPublicConnectorClickHouseMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function clickhouseMetadataFromJSON(
   jsonString: string,
@@ -4360,24 +4413,26 @@ export function clickhouseMetadataFromJSON(
 export const BigqueryMetadata$inboundSchema: z.ZodMiniType<
   BigqueryMetadata,
   unknown
-> = z.object({
-  bigqueryMetadata: TextqlRpcPublicConnectorBigQueryMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    bigqueryMetadata: TextqlRpcPublicConnectorBigQueryMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function bigqueryMetadataFromJSON(
   jsonString: string,
@@ -4393,25 +4448,27 @@ export function bigqueryMetadataFromJSON(
 export const AzureSynapseMetadata$inboundSchema: z.ZodMiniType<
   AzureSynapseMetadata,
   unknown
-> = z.object({
-  azureSynapseMetadata:
-    TextqlRpcPublicConnectorAzureSynapseMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    azureSynapseMetadata:
+      TextqlRpcPublicConnectorAzureSynapseMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function azureSynapseMetadataFromJSON(
   jsonString: string,
@@ -4427,24 +4484,26 @@ export function azureSynapseMetadataFromJSON(
 export const AuroraMetadata$inboundSchema: z.ZodMiniType<
   AuroraMetadata,
   unknown
-> = z.object({
-  auroraMetadata: TextqlRpcPublicConnectorAuroraMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    auroraMetadata: TextqlRpcPublicConnectorAuroraMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function auroraMetadataFromJSON(
   jsonString: string,
@@ -4460,24 +4519,26 @@ export function auroraMetadataFromJSON(
 export const AthenaMetadata$inboundSchema: z.ZodMiniType<
   AthenaMetadata,
   unknown
-> = z.object({
-  athenaMetadata: TextqlRpcPublicConnectorAthenaMetadata$inboundSchema,
-  id: types.optional(types.number()),
-  name: types.optional(types.string()),
-  connectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  memberId: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  isExample: types.optional(types.boolean()),
-  allowSqlWriteOperations: types.optional(types.boolean()),
-  authStrategy: types.optional(types.string()),
-  authenticatedByMemberId: types.optional(types.string()),
-  memberAuthenticated: z.optional(z.nullable(types.boolean())),
-  memberAuthUsername: z.optional(z.nullable(types.string())),
-  includeDbSessionMetadata: types.optional(types.boolean()),
-  isPublic: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    athenaMetadata: TextqlRpcPublicConnectorAthenaMetadata$inboundSchema,
+    id: types.optional(types.number()),
+    name: types.optional(types.string()),
+    connectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    memberId: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    isExample: types.optional(types.boolean()),
+    allowSqlWriteOperations: types.optional(types.boolean()),
+    authStrategy: types.optional(types.string()),
+    authenticatedByMemberId: types.optional(types.string()),
+    memberAuthenticated: z.optional(z.nullable(types.boolean())),
+    memberAuthUsername: z.optional(z.nullable(types.string())),
+    includeDbSessionMetadata: types.optional(types.boolean()),
+    isPublic: types.optional(types.boolean()),
+  })
+);
 
 export function athenaMetadataFromJSON(
   jsonString: string,
@@ -4493,37 +4554,39 @@ export function athenaMetadataFromJSON(
 export const TextqlRpcPublicConnectorConnector$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorConnector,
   unknown
-> = smartUnion([
-  z.lazy(() => AthenaMetadata$inboundSchema),
-  z.lazy(() => AuroraMetadata$inboundSchema),
-  z.lazy(() => AzureSynapseMetadata$inboundSchema),
-  z.lazy(() => BigqueryMetadata$inboundSchema),
-  z.lazy(() => ClickhouseMetadata$inboundSchema),
-  z.lazy(() => DatabricksMetadata$inboundSchema),
-  z.lazy(() => DremioMetadata$inboundSchema),
-  z.lazy(() => ExasolMetadata$inboundSchema),
-  z.lazy(() => FireboltMetadata$inboundSchema),
-  z.lazy(() => GmailMetadata$inboundSchema),
-  z.lazy(() => GoogleCalendarMetadata$inboundSchema),
-  z.lazy(() => GoogleDriveMetadata$inboundSchema),
-  z.lazy(() => GoogleMetadata$inboundSchema),
-  z.lazy(() => KdbMetadata$inboundSchema),
-  z.lazy(() => Microsoft365Metadata$inboundSchema),
-  z.lazy(() => MongodbMetadata$inboundSchema),
-  z.lazy(() => MotherduckMetadata$inboundSchema),
-  z.lazy(() => MysqlMetadata$inboundSchema),
-  z.lazy(() => OracleMetadata$inboundSchema),
-  z.lazy(() => PostgresMetadata$inboundSchema),
-  z.lazy(() => PowerbiMetadata$inboundSchema),
-  z.lazy(() => RedshiftMetadata$inboundSchema),
-  z.lazy(() => SapHanaMetadata$inboundSchema),
-  z.lazy(() => SnowflakeMetadata$inboundSchema),
-  z.lazy(() => SqlServerMetadata$inboundSchema),
-  z.lazy(() => SupabaseMetadata$inboundSchema),
-  z.lazy(() => TableauMetadata$inboundSchema),
-  z.lazy(() => TeradataMetadata$inboundSchema),
-  z.lazy(() => TrinoMetadata$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => AthenaMetadata$inboundSchema),
+    z.lazy(() => AuroraMetadata$inboundSchema),
+    z.lazy(() => AzureSynapseMetadata$inboundSchema),
+    z.lazy(() => BigqueryMetadata$inboundSchema),
+    z.lazy(() => ClickhouseMetadata$inboundSchema),
+    z.lazy(() => DatabricksMetadata$inboundSchema),
+    z.lazy(() => DremioMetadata$inboundSchema),
+    z.lazy(() => ExasolMetadata$inboundSchema),
+    z.lazy(() => FireboltMetadata$inboundSchema),
+    z.lazy(() => GmailMetadata$inboundSchema),
+    z.lazy(() => GoogleCalendarMetadata$inboundSchema),
+    z.lazy(() => GoogleDriveMetadata$inboundSchema),
+    z.lazy(() => GoogleMetadata$inboundSchema),
+    z.lazy(() => KdbMetadata$inboundSchema),
+    z.lazy(() => Microsoft365Metadata$inboundSchema),
+    z.lazy(() => MongodbMetadata$inboundSchema),
+    z.lazy(() => MotherduckMetadata$inboundSchema),
+    z.lazy(() => MysqlMetadata$inboundSchema),
+    z.lazy(() => OracleMetadata$inboundSchema),
+    z.lazy(() => PostgresMetadata$inboundSchema),
+    z.lazy(() => PowerbiMetadata$inboundSchema),
+    z.lazy(() => RedshiftMetadata$inboundSchema),
+    z.lazy(() => SapHanaMetadata$inboundSchema),
+    z.lazy(() => SnowflakeMetadata$inboundSchema),
+    z.lazy(() => SqlServerMetadata$inboundSchema),
+    z.lazy(() => SupabaseMetadata$inboundSchema),
+    z.lazy(() => TableauMetadata$inboundSchema),
+    z.lazy(() => TeradataMetadata$inboundSchema),
+    z.lazy(() => TrinoMetadata$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicConnectorConnectorFromJSON(
   jsonString: string,

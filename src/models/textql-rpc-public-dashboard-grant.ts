@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -30,10 +30,12 @@ export type TextqlRpcPublicDashboardGrant = {
 export const TextqlRpcPublicDashboardGrant$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardGrant,
   unknown
-> = z.object({
-  roles: types.optional(z.array(types.string())),
-  members: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    roles: types.optional(z.array(types.string())),
+    members: types.optional(z.array(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicDashboardGrant$Outbound = {
   roles?: Array<string> | undefined;
@@ -44,10 +46,12 @@ export type TextqlRpcPublicDashboardGrant$Outbound = {
 export const TextqlRpcPublicDashboardGrant$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardGrant$Outbound,
   TextqlRpcPublicDashboardGrant
-> = z.object({
-  roles: z.optional(z.array(z.string())),
-  members: z.optional(z.array(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    roles: z.optional(z.array(z.string())),
+    members: z.optional(z.array(z.string())),
+  })
+);
 
 export function textqlRpcPublicDashboardGrantToJSON(
   textqlRpcPublicDashboardGrant: TextqlRpcPublicDashboardGrant,

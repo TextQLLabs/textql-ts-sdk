@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveSetTopicTagFeedbackRequest = {
   topicId?: string | undefined;
@@ -30,12 +31,14 @@ export const TextqlRpcPublicObserveSetTopicTagFeedbackRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveSetTopicTagFeedbackRequest$Outbound,
     TextqlRpcPublicObserveSetTopicTagFeedbackRequest
-  > = z.object({
-    topicId: z.optional(z.string()),
-    chatId: z.optional(z.string()),
-    excluded: z.optional(z.boolean()),
-    reason: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      topicId: z.optional(z.string()),
+      chatId: z.optional(z.string()),
+      excluded: z.optional(z.boolean()),
+      reason: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicObserveSetTopicTagFeedbackRequestToJSON(
   textqlRpcPublicObserveSetTopicTagFeedbackRequest:

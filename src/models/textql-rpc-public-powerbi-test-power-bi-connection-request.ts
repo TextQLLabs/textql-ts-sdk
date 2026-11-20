@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPowerbiTestPowerBIConnectionRequest = {
   connectorId?: number | null | undefined;
@@ -24,12 +25,14 @@ export const TextqlRpcPublicPowerbiTestPowerBIConnectionRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPowerbiTestPowerBIConnectionRequest$Outbound,
     TextqlRpcPublicPowerbiTestPowerBIConnectionRequest
-  > = z.object({
-    connectorId: z.optional(z.nullable(z.int())),
-    tenantId: z.optional(z.nullable(z.string())),
-    clientId: z.optional(z.nullable(z.string())),
-    clientSecret: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.nullable(z.int())),
+      tenantId: z.optional(z.nullable(z.string())),
+      clientId: z.optional(z.nullable(z.string())),
+      clientSecret: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPowerbiTestPowerBIConnectionRequestToJSON(
   textqlRpcPublicPowerbiTestPowerBIConnectionRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -56,31 +56,33 @@ export type TextqlRpcPublicCellsOntologyQueryCell = {
 export const TextqlRpcPublicCellsOntologyQueryCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsOntologyQueryCell,
   unknown
-> = z.object({
-  action: types.optional(types.string()),
-  path: types.optional(types.string()),
-  paramsJson: types.optional(types.string()),
-  connectorId: z.optional(z.nullable(types.number())),
-  declaredParams: types.optional(
-    z.array(TextqlRpcPublicCellsOntologyQueryParam$inboundSchema),
-  ),
-  sql: types.optional(types.string()),
-  usedConnectorId: z.optional(z.nullable(types.number())),
-  dataframe: types.optional(
-    TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
-  ),
-  dataframePreview: types.optional(types.string()),
-  authRequired: types.optional(types.boolean()),
-  authConnectorName: types.optional(types.string()),
-  authLocator: types.optional(types.string()),
-  authClientId: types.optional(types.string()),
-  authRole: types.optional(types.string()),
-  authCompleted: types.optional(types.boolean()),
-  authConnectorType: types.optional(
-    TextqlRpcPublicConnectorConnectorType$inboundSchema,
-  ),
-  authWorkspaceUrl: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    action: types.optional(types.string()),
+    path: types.optional(types.string()),
+    paramsJson: types.optional(types.string()),
+    connectorId: z.optional(z.nullable(types.number())),
+    declaredParams: types.optional(
+      z.array(TextqlRpcPublicCellsOntologyQueryParam$inboundSchema),
+    ),
+    sql: types.optional(types.string()),
+    usedConnectorId: z.optional(z.nullable(types.number())),
+    dataframe: types.optional(
+      TextqlRpcPublicDataframeDataFrameWithInfo$inboundSchema,
+    ),
+    dataframePreview: types.optional(types.string()),
+    authRequired: types.optional(types.boolean()),
+    authConnectorName: types.optional(types.string()),
+    authLocator: types.optional(types.string()),
+    authClientId: types.optional(types.string()),
+    authRole: types.optional(types.string()),
+    authCompleted: types.optional(types.boolean()),
+    authConnectorType: types.optional(
+      TextqlRpcPublicConnectorConnectorType$inboundSchema,
+    ),
+    authWorkspaceUrl: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsOntologyQueryCellFromJSON(
   jsonString: string,

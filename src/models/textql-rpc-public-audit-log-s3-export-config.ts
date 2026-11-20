@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -311,21 +311,23 @@ export type TextqlRpcPublicAuditLogS3ExportConfig = {
 export const TextqlRpcPublicAuditLogS3ExportConfig$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAuditLogS3ExportConfig,
   unknown
-> = z.object({
-  bucket: types.optional(types.string()),
-  region: types.optional(types.string()),
-  prefix: types.optional(types.string()),
-  awsAccessKeyId: types.optional(types.string()),
-  awsSecretAccessKey: types.optional(types.string()),
-  enabled: types.optional(types.boolean()),
-  lastExportedAt: types.optional(types.date()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  authMode: types.optional(TextqlRpcPublicAuditLogS3AuthMode$inboundSchema),
-  roleArn: types.optional(types.string()),
-  externalId: types.optional(types.string()),
-  exportIntervalSeconds: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    bucket: types.optional(types.string()),
+    region: types.optional(types.string()),
+    prefix: types.optional(types.string()),
+    awsAccessKeyId: types.optional(types.string()),
+    awsSecretAccessKey: types.optional(types.string()),
+    enabled: types.optional(types.boolean()),
+    lastExportedAt: types.optional(types.date()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    authMode: types.optional(TextqlRpcPublicAuditLogS3AuthMode$inboundSchema),
+    roleArn: types.optional(types.string()),
+    externalId: types.optional(types.string()),
+    exportIntervalSeconds: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicAuditLogS3ExportConfigFromJSON(
   jsonString: string,

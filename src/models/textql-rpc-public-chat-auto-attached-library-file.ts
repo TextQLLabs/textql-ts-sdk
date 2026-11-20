@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -209,14 +209,15 @@ export type TextqlRpcPublicChatAutoAttachedLibraryFile = {
 
 /** @internal */
 export const TextqlRpcPublicChatAutoAttachedLibraryFile$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatAutoAttachedLibraryFile, unknown> = z.object(
-    {
-      path: types.optional(types.string()),
-      pullCount: types.optional(types.number()),
-      firstPulledAt: types.optional(types.date()),
-      lastPulledAt: types.optional(types.date()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicChatAutoAttachedLibraryFile, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        path: types.optional(types.string()),
+        pullCount: types.optional(types.number()),
+        firstPulledAt: types.optional(types.date()),
+        lastPulledAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicChatAutoAttachedLibraryFileFromJSON(
   jsonString: string,

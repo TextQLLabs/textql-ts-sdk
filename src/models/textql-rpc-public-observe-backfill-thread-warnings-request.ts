@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveBackfillThreadWarningsRequest = {
   days?: number | undefined;
@@ -24,12 +25,14 @@ export const TextqlRpcPublicObserveBackfillThreadWarningsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveBackfillThreadWarningsRequest$Outbound,
     TextqlRpcPublicObserveBackfillThreadWarningsRequest
-  > = z.object({
-    days: z.optional(z.int()),
-    concurrency: z.optional(z.int()),
-    orgId: z.optional(z.nullable(z.string())),
-    redoAllThreads: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      days: z.optional(z.int()),
+      concurrency: z.optional(z.int()),
+      orgId: z.optional(z.nullable(z.string())),
+      redoAllThreads: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicObserveBackfillThreadWarningsRequestToJSON(
   textqlRpcPublicObserveBackfillThreadWarningsRequest:

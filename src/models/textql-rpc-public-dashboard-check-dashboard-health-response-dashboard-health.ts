@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -249,28 +249,30 @@ export const TextqlRpcPublicDashboardCheckDashboardHealthResponseDashboardHealth
   z.ZodMiniType<
     TextqlRpcPublicDashboardCheckDashboardHealthResponseDashboardHealth,
     unknown
-  > = z.object({
-    dashboardId: types.optional(types.string()),
-    status: types.optional(
-      TextqlRpcPublicDashboardCheckDashboardHealthResponseHealthStatus$inboundSchema,
-    ),
-    errorMessage: z.optional(z.nullable(types.string())),
-    streamlitUrl: z.optional(z.nullable(types.string())),
-    embedUrl: z.optional(z.nullable(types.string())),
-    refreshedAt: types.optional(types.date()),
-    code: z.optional(z.nullable(types.string())),
-    dataSources: types.optional(
-      z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
-    ),
-    dashboardStatus: types.optional(
-      TextqlRpcPublicDashboardDashboardStatus$inboundSchema,
-    ),
-    publishedCode: z.optional(z.nullable(types.string())),
-    publishedAt: types.optional(types.date()),
-    scheduleEnabled: types.optional(types.boolean()),
-    cronString: z.optional(z.nullable(types.string())),
-    warnings: types.optional(z.array(types.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dashboardId: types.optional(types.string()),
+      status: types.optional(
+        TextqlRpcPublicDashboardCheckDashboardHealthResponseHealthStatus$inboundSchema,
+      ),
+      errorMessage: z.optional(z.nullable(types.string())),
+      streamlitUrl: z.optional(z.nullable(types.string())),
+      embedUrl: z.optional(z.nullable(types.string())),
+      refreshedAt: types.optional(types.date()),
+      code: z.optional(z.nullable(types.string())),
+      dataSources: types.optional(
+        z.array(TextqlRpcPublicDashboardDataSource$inboundSchema),
+      ),
+      dashboardStatus: types.optional(
+        TextqlRpcPublicDashboardDashboardStatus$inboundSchema,
+      ),
+      publishedCode: z.optional(z.nullable(types.string())),
+      publishedAt: types.optional(types.date()),
+      scheduleEnabled: types.optional(types.boolean()),
+      cronString: z.optional(z.nullable(types.string())),
+      warnings: types.optional(z.array(types.string())),
+    })
+  );
 
 export function textqlRpcPublicDashboardCheckDashboardHealthResponseDashboardHealthFromJSON(
   jsonString: string,

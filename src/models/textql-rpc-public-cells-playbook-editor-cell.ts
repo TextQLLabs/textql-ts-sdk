@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -65,39 +65,42 @@ export type TextqlRpcPublicCellsPlaybookEditorCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsPlaybookEditorCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsPlaybookEditorCell, unknown> = z.object({
-    action: types.optional(
-      TextqlRpcPublicCellsPlaybookEditorAction$inboundSchema,
-    ),
-    playbooks: types.optional(
-      z.array(TextqlRpcPublicCellsPlaybookInfo$inboundSchema),
-    ),
-    errorMessage: z.optional(z.nullable(types.string())),
-    totalCount: types.optional(types.number()),
-    slackChannels: types.optional(
-      z.array(TextqlRpcPublicCellsSlackChannelRef$inboundSchema),
-    ),
-    slackUsers: types.optional(
-      z.array(TextqlRpcPublicCellsSlackUserRef$inboundSchema),
-    ),
-    connectors: types.optional(
-      z.array(TextqlRpcPublicCellsConnectorRef$inboundSchema),
-    ),
-    orgMembers: types.optional(
-      z.array(TextqlRpcPublicCellsOrgMemberRef$inboundSchema),
-    ),
-    hasSlack: types.optional(types.boolean()),
-    fieldChanges: types.optional(
-      z.array(TextqlRpcPublicCellsFieldChange$inboundSchema),
-    ),
-    teamsChannels: types.optional(
-      z.array(TextqlRpcPublicCellsTeamsChannelRef$inboundSchema),
-    ),
-    teamsUsers: types.optional(
-      z.array(TextqlRpcPublicCellsTeamsUserRef$inboundSchema),
-    ),
-    hasTeams: types.optional(types.boolean()),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsPlaybookEditorCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        action: types.optional(
+          TextqlRpcPublicCellsPlaybookEditorAction$inboundSchema,
+        ),
+        playbooks: types.optional(
+          z.array(TextqlRpcPublicCellsPlaybookInfo$inboundSchema),
+        ),
+        errorMessage: z.optional(z.nullable(types.string())),
+        totalCount: types.optional(types.number()),
+        slackChannels: types.optional(
+          z.array(TextqlRpcPublicCellsSlackChannelRef$inboundSchema),
+        ),
+        slackUsers: types.optional(
+          z.array(TextqlRpcPublicCellsSlackUserRef$inboundSchema),
+        ),
+        connectors: types.optional(
+          z.array(TextqlRpcPublicCellsConnectorRef$inboundSchema),
+        ),
+        orgMembers: types.optional(
+          z.array(TextqlRpcPublicCellsOrgMemberRef$inboundSchema),
+        ),
+        hasSlack: types.optional(types.boolean()),
+        fieldChanges: types.optional(
+          z.array(TextqlRpcPublicCellsFieldChange$inboundSchema),
+        ),
+        teamsChannels: types.optional(
+          z.array(TextqlRpcPublicCellsTeamsChannelRef$inboundSchema),
+        ),
+        teamsUsers: types.optional(
+          z.array(TextqlRpcPublicCellsTeamsUserRef$inboundSchema),
+        ),
+        hasTeams: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicCellsPlaybookEditorCellFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicConnectorConnectorConfig,
   TextqlRpcPublicConnectorConnectorConfig$Outbound,
@@ -26,10 +27,14 @@ export const TextqlRpcPublicConnectorUpdateConnectorGroupSettingsRequest$outboun
   z.ZodMiniType<
     TextqlRpcPublicConnectorUpdateConnectorGroupSettingsRequest$Outbound,
     TextqlRpcPublicConnectorUpdateConnectorGroupSettingsRequest
-  > = z.object({
-    groupId: z.optional(z.string()),
-    config: z.optional(TextqlRpcPublicConnectorConnectorConfig$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      groupId: z.optional(z.string()),
+      config: z.optional(
+        TextqlRpcPublicConnectorConnectorConfig$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicConnectorUpdateConnectorGroupSettingsRequestToJSON(
   textqlRpcPublicConnectorUpdateConnectorGroupSettingsRequest:

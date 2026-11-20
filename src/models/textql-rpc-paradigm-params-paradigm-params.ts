@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -72,41 +72,43 @@ export type TextqlRpcParadigmParamsParadigmParams = {
 export const TextqlRpcParadigmParamsParadigmParams$inboundSchema: z.ZodMiniType<
   TextqlRpcParadigmParamsParadigmParams,
   unknown
-> = z.object({
-  webSearchEnabled: types.optional(types.boolean()),
-  sqlEnabled: types.optional(types.boolean()),
-  ontologyEnabled: types.optional(types.boolean()),
-  pythonEnabled: types.optional(types.boolean()),
-  powerbiEnabled: types.optional(types.boolean()),
-  googleDriveEnabled: types.optional(types.boolean()),
-  formEditorEnabled: types.optional(types.boolean()),
-  tableauEnabled: types.optional(types.boolean()),
-  fileUploadEnabled: types.optional(types.boolean()),
-  multipleConnectorMode: types.optional(types.boolean()),
-  playbookToolsEnabled: types.optional(types.boolean()),
-  microsoft365Enabled: types.optional(types.boolean()),
-  bashEnabled: types.optional(types.boolean()),
-  javascriptEnabled: types.optional(types.boolean()),
-  modelSwitchingEnabled: types.optional(types.boolean()),
-  feedExplorerEnabled: types.optional(types.boolean()),
-  feedPostEnabled: types.optional(types.boolean()),
-  feedCommentEnabled: types.optional(types.boolean()),
-  feedEngageEnabled: types.optional(types.boolean()),
-  compactionDisabled: types.optional(types.boolean()),
-  gmailEnabled: types.optional(types.boolean()),
-  chatHistorySearchEnabled: types.optional(types.boolean()),
-  googleCalendarEnabled: types.optional(types.boolean()),
-  parallelToolsEnabled: types.optional(types.boolean()),
-  emailOutputEnabled: types.optional(types.boolean()),
-  questionsToolEnabled: types.optional(types.boolean()),
-  powerbiSelections: types.optional(
-    z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
-  ),
-  datasetId: z.optional(z.nullable(types.string())),
-  ontologyActionsEnabled: types.optional(types.boolean()),
-  ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
-  decideEnabled: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    webSearchEnabled: types.optional(types.boolean()),
+    sqlEnabled: types.optional(types.boolean()),
+    ontologyEnabled: types.optional(types.boolean()),
+    pythonEnabled: types.optional(types.boolean()),
+    powerbiEnabled: types.optional(types.boolean()),
+    googleDriveEnabled: types.optional(types.boolean()),
+    formEditorEnabled: types.optional(types.boolean()),
+    tableauEnabled: types.optional(types.boolean()),
+    fileUploadEnabled: types.optional(types.boolean()),
+    multipleConnectorMode: types.optional(types.boolean()),
+    playbookToolsEnabled: types.optional(types.boolean()),
+    microsoft365Enabled: types.optional(types.boolean()),
+    bashEnabled: types.optional(types.boolean()),
+    javascriptEnabled: types.optional(types.boolean()),
+    modelSwitchingEnabled: types.optional(types.boolean()),
+    feedExplorerEnabled: types.optional(types.boolean()),
+    feedPostEnabled: types.optional(types.boolean()),
+    feedCommentEnabled: types.optional(types.boolean()),
+    feedEngageEnabled: types.optional(types.boolean()),
+    compactionDisabled: types.optional(types.boolean()),
+    gmailEnabled: types.optional(types.boolean()),
+    chatHistorySearchEnabled: types.optional(types.boolean()),
+    googleCalendarEnabled: types.optional(types.boolean()),
+    parallelToolsEnabled: types.optional(types.boolean()),
+    emailOutputEnabled: types.optional(types.boolean()),
+    questionsToolEnabled: types.optional(types.boolean()),
+    powerbiSelections: types.optional(
+      z.array(TextqlRpcPowerbiSelectionPowerBISelection$inboundSchema),
+    ),
+    datasetId: z.optional(z.nullable(types.string())),
+    ontologyActionsEnabled: types.optional(types.boolean()),
+    ontologyActionsAutoApproveEnabled: types.optional(types.boolean()),
+    decideEnabled: types.optional(types.boolean()),
+  })
+);
 /** @internal */
 export type TextqlRpcParadigmParamsParadigmParams$Outbound = {
   webSearchEnabled?: boolean | undefined;
@@ -149,41 +151,43 @@ export const TextqlRpcParadigmParamsParadigmParams$outboundSchema:
   z.ZodMiniType<
     TextqlRpcParadigmParamsParadigmParams$Outbound,
     TextqlRpcParadigmParamsParadigmParams
-  > = z.object({
-    webSearchEnabled: z.optional(z.boolean()),
-    sqlEnabled: z.optional(z.boolean()),
-    ontologyEnabled: z.optional(z.boolean()),
-    pythonEnabled: z.optional(z.boolean()),
-    powerbiEnabled: z.optional(z.boolean()),
-    googleDriveEnabled: z.optional(z.boolean()),
-    formEditorEnabled: z.optional(z.boolean()),
-    tableauEnabled: z.optional(z.boolean()),
-    fileUploadEnabled: z.optional(z.boolean()),
-    multipleConnectorMode: z.optional(z.boolean()),
-    playbookToolsEnabled: z.optional(z.boolean()),
-    microsoft365Enabled: z.optional(z.boolean()),
-    bashEnabled: z.optional(z.boolean()),
-    javascriptEnabled: z.optional(z.boolean()),
-    modelSwitchingEnabled: z.optional(z.boolean()),
-    feedExplorerEnabled: z.optional(z.boolean()),
-    feedPostEnabled: z.optional(z.boolean()),
-    feedCommentEnabled: z.optional(z.boolean()),
-    feedEngageEnabled: z.optional(z.boolean()),
-    compactionDisabled: z.optional(z.boolean()),
-    gmailEnabled: z.optional(z.boolean()),
-    chatHistorySearchEnabled: z.optional(z.boolean()),
-    googleCalendarEnabled: z.optional(z.boolean()),
-    parallelToolsEnabled: z.optional(z.boolean()),
-    emailOutputEnabled: z.optional(z.boolean()),
-    questionsToolEnabled: z.optional(z.boolean()),
-    powerbiSelections: z.optional(
-      z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
-    ),
-    datasetId: z.optional(z.nullable(z.string())),
-    ontologyActionsEnabled: z.optional(z.boolean()),
-    ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
-    decideEnabled: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      webSearchEnabled: z.optional(z.boolean()),
+      sqlEnabled: z.optional(z.boolean()),
+      ontologyEnabled: z.optional(z.boolean()),
+      pythonEnabled: z.optional(z.boolean()),
+      powerbiEnabled: z.optional(z.boolean()),
+      googleDriveEnabled: z.optional(z.boolean()),
+      formEditorEnabled: z.optional(z.boolean()),
+      tableauEnabled: z.optional(z.boolean()),
+      fileUploadEnabled: z.optional(z.boolean()),
+      multipleConnectorMode: z.optional(z.boolean()),
+      playbookToolsEnabled: z.optional(z.boolean()),
+      microsoft365Enabled: z.optional(z.boolean()),
+      bashEnabled: z.optional(z.boolean()),
+      javascriptEnabled: z.optional(z.boolean()),
+      modelSwitchingEnabled: z.optional(z.boolean()),
+      feedExplorerEnabled: z.optional(z.boolean()),
+      feedPostEnabled: z.optional(z.boolean()),
+      feedCommentEnabled: z.optional(z.boolean()),
+      feedEngageEnabled: z.optional(z.boolean()),
+      compactionDisabled: z.optional(z.boolean()),
+      gmailEnabled: z.optional(z.boolean()),
+      chatHistorySearchEnabled: z.optional(z.boolean()),
+      googleCalendarEnabled: z.optional(z.boolean()),
+      parallelToolsEnabled: z.optional(z.boolean()),
+      emailOutputEnabled: z.optional(z.boolean()),
+      questionsToolEnabled: z.optional(z.boolean()),
+      powerbiSelections: z.optional(
+        z.array(TextqlRpcPowerbiSelectionPowerBISelection$outboundSchema),
+      ),
+      datasetId: z.optional(z.nullable(z.string())),
+      ontologyActionsEnabled: z.optional(z.boolean()),
+      ontologyActionsAutoApproveEnabled: z.optional(z.boolean()),
+      decideEnabled: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcParadigmParamsParadigmParamsToJSON(
   textqlRpcParadigmParamsParadigmParams: TextqlRpcParadigmParamsParadigmParams,

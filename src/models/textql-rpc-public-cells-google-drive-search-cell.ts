@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,14 +21,17 @@ export type TextqlRpcPublicCellsGoogleDriveSearchCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsGoogleDriveSearchCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsGoogleDriveSearchCell, unknown> = z.object({
-    files: types.optional(
-      z.array(TextqlRpcPublicCellsGoogleDriveFile$inboundSchema),
-    ),
-    dataframePreview: z.optional(z.nullable(types.string())),
-    errorMessage: z.optional(z.nullable(types.string())),
-    fileCount: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicCellsGoogleDriveSearchCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        files: types.optional(
+          z.array(TextqlRpcPublicCellsGoogleDriveFile$inboundSchema),
+        ),
+        dataframePreview: z.optional(z.nullable(types.string())),
+        errorMessage: z.optional(z.nullable(types.string())),
+        fileCount: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicCellsGoogleDriveSearchCellFromJSON(
   jsonString: string,

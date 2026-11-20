@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Folder management messages
@@ -23,10 +24,12 @@ export const TextqlRpcPublicDashboardCreateDashboardFolderRequest$outboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDashboardCreateDashboardFolderRequest$Outbound,
     TextqlRpcPublicDashboardCreateDashboardFolderRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    parentId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      parentId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicDashboardCreateDashboardFolderRequestToJSON(
   textqlRpcPublicDashboardCreateDashboardFolderRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicSecretApiAccessRef,
   TextqlRpcPublicSecretApiAccessRef$Outbound,
@@ -176,30 +177,34 @@ export const TextqlRpcPublicSecretUpsertApiAccessKeyRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSecretUpsertApiAccessKeyRequest$Outbound,
     TextqlRpcPublicSecretUpsertApiAccessKeyRequest
-  > = z.object({
-    ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
-    persistToDb: z.optional(z.boolean()),
-    hosts: z.optional(z.array(z.string())),
-    headers: z.optional(z.record(z.string(), z.string())),
-    queryParams: z.optional(z.record(z.string(), z.string())),
-    description: z.optional(z.string()),
-    expiresAt: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    provider: z.optional(z.string()),
-    authValue: z.optional(z.string()),
-    authValueExtra: z.optional(z.string()),
-    authType: z.optional(z.string()),
-    httpBasicAuth: z.optional(
-      TextqlRpcPublicSecretHttpBasicAuth$outboundSchema,
-    ),
-    body: z.optional(z.record(z.string(), z.string())),
-    contentType: z.optional(
-      TextqlRpcPublicSecretBodyContentType$outboundSchema,
-    ),
-    testUrl: z.optional(z.string()),
-    name: z.optional(z.string()),
-    testMethod: z.optional(z.string()),
-    authTypeEnum: z.optional(TextqlRpcPublicSecretApiAuthType$outboundSchema),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
+      persistToDb: z.optional(z.boolean()),
+      hosts: z.optional(z.array(z.string())),
+      headers: z.optional(z.record(z.string(), z.string())),
+      queryParams: z.optional(z.record(z.string(), z.string())),
+      description: z.optional(z.string()),
+      expiresAt: z.optional(
+        z.pipe(z.date(), z.transform(v => v.toISOString())),
+      ),
+      provider: z.optional(z.string()),
+      authValue: z.optional(z.string()),
+      authValueExtra: z.optional(z.string()),
+      authType: z.optional(z.string()),
+      httpBasicAuth: z.optional(
+        TextqlRpcPublicSecretHttpBasicAuth$outboundSchema,
+      ),
+      body: z.optional(z.record(z.string(), z.string())),
+      contentType: z.optional(
+        TextqlRpcPublicSecretBodyContentType$outboundSchema,
+      ),
+      testUrl: z.optional(z.string()),
+      name: z.optional(z.string()),
+      testMethod: z.optional(z.string()),
+      authTypeEnum: z.optional(TextqlRpcPublicSecretApiAuthType$outboundSchema),
+    })
+  );
 
 export function textqlRpcPublicSecretUpsertApiAccessKeyRequestToJSON(
   textqlRpcPublicSecretUpsertApiAccessKeyRequest:

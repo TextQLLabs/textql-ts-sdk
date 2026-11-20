@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,11 +16,14 @@ export type TextqlRpcPublicDashboardOntologySqlSource = {
 
 /** @internal */
 export const TextqlRpcPublicDashboardOntologySqlSource$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDashboardOntologySqlSource, unknown> = z.object({
-    query: types.optional(types.string()),
-    dataset: types.optional(types.string()),
-    ontologyId: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicDashboardOntologySqlSource, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        query: types.optional(types.string()),
+        dataset: types.optional(types.string()),
+        ontologyId: types.optional(types.number()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicDashboardOntologySqlSource$Outbound = {
   query?: string | undefined;
@@ -33,11 +36,13 @@ export const TextqlRpcPublicDashboardOntologySqlSource$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDashboardOntologySqlSource$Outbound,
     TextqlRpcPublicDashboardOntologySqlSource
-  > = z.object({
-    query: z.optional(z.string()),
-    dataset: z.optional(z.string()),
-    ontologyId: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      query: z.optional(z.string()),
+      dataset: z.optional(z.string()),
+      ontologyId: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicDashboardOntologySqlSourceToJSON(
   textqlRpcPublicDashboardOntologySqlSource:

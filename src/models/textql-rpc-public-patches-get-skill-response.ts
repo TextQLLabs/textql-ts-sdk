@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,11 +27,14 @@ export type TextqlRpcPublicPatchesGetSkillResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesGetSkillResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesGetSkillResponse, unknown> = z.object({
-    skill: types.optional(TextqlRpcPublicPatchesSkill$inboundSchema),
-    body: types.optional(types.string()),
-    builtin: types.optional(types.boolean()),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesGetSkillResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        skill: types.optional(TextqlRpcPublicPatchesSkill$inboundSchema),
+        body: types.optional(types.string()),
+        builtin: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicPatchesGetSkillResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Bookmark management
@@ -21,9 +22,11 @@ export const TextqlRpcPublicChatBookmarkChatRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatBookmarkChatRequest$Outbound,
     TextqlRpcPublicChatBookmarkChatRequest
-  > = z.object({
-    chatId: z.string(),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatId: z.string(),
+    })
+  );
 
 export function textqlRpcPublicChatBookmarkChatRequestToJSON(
   textqlRpcPublicChatBookmarkChatRequest:

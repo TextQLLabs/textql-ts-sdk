@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,10 +17,12 @@ export type TextqlRpcPublicSlackCreateSlackUuidResponse = {
 
 /** @internal */
 export const TextqlRpcPublicSlackCreateSlackUuidResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSlackCreateSlackUuidResponse, unknown> = z
-    .object({
-      uuid: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSlackCreateSlackUuidResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        uuid: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicSlackCreateSlackUuidResponseFromJSON(
   jsonString: string,

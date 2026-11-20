@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -32,21 +32,24 @@ export type TextqlRpcPublicConnectorOracleMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorOracleMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorOracleMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    serviceName: types.optional(types.string()),
-    dialect: types.optional(types.string()),
-    sslMode: types.optional(types.boolean()),
-    connectionType: types.optional(types.string()),
-    sid: types.optional(types.string()),
-    connectString: types.optional(types.string()),
-    walletZip: types.optional(types.string()),
-    walletPassword: types.optional(types.string()),
-    tnsAlias: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorOracleMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        serviceName: types.optional(types.string()),
+        dialect: types.optional(types.string()),
+        sslMode: types.optional(types.boolean()),
+        connectionType: types.optional(types.string()),
+        sid: types.optional(types.string()),
+        connectString: types.optional(types.string()),
+        walletZip: types.optional(types.string()),
+        walletPassword: types.optional(types.string()),
+        tnsAlias: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorOracleMetadata$Outbound = {
   host?: string | undefined;
@@ -69,21 +72,23 @@ export const TextqlRpcPublicConnectorOracleMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorOracleMetadata$Outbound,
     TextqlRpcPublicConnectorOracleMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    serviceName: z.optional(z.string()),
-    dialect: z.optional(z.string()),
-    sslMode: z.optional(z.boolean()),
-    connectionType: z.optional(z.string()),
-    sid: z.optional(z.string()),
-    connectString: z.optional(z.string()),
-    walletZip: z.optional(z.string()),
-    walletPassword: z.optional(z.string()),
-    tnsAlias: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      serviceName: z.optional(z.string()),
+      dialect: z.optional(z.string()),
+      sslMode: z.optional(z.boolean()),
+      connectionType: z.optional(z.string()),
+      sid: z.optional(z.string()),
+      connectString: z.optional(z.string()),
+      walletZip: z.optional(z.string()),
+      walletPassword: z.optional(z.string()),
+      tnsAlias: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorOracleMetadataToJSON(
   textqlRpcPublicConnectorOracleMetadata:

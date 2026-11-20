@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesRenameOntologyFileRequest = {
   oldPath?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesRenameOntologyFileRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesRenameOntologyFileRequest$Outbound,
     TextqlRpcPublicPatchesRenameOntologyFileRequest
-  > = z.object({
-    oldPath: z.optional(z.string()),
-    newPath: z.optional(z.string()),
-    commitMessage: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      oldPath: z.optional(z.string()),
+      newPath: z.optional(z.string()),
+      commitMessage: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesRenameOntologyFileRequestToJSON(
   textqlRpcPublicPatchesRenameOntologyFileRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,18 +28,20 @@ export type TextqlRpcPublicConnectorMicrosoft365Metadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorMicrosoft365Metadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorMicrosoft365Metadata, unknown> = z
-    .object({
-      tenantId: types.optional(types.string()),
-      clientId: types.optional(types.string()),
-      clientSecret: types.optional(types.string()),
-      accessToken: types.optional(types.string()),
-      refreshToken: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-      tokenExpiry: types.optional(types.string()),
-      metadataOnly: types.optional(types.boolean()),
-      scopes: types.optional(z.array(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicConnectorMicrosoft365Metadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tenantId: types.optional(types.string()),
+        clientId: types.optional(types.string()),
+        clientSecret: types.optional(types.string()),
+        accessToken: types.optional(types.string()),
+        refreshToken: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        tokenExpiry: types.optional(types.string()),
+        metadataOnly: types.optional(types.boolean()),
+        scopes: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorMicrosoft365Metadata$Outbound = {
   tenantId?: string | undefined;
@@ -58,17 +60,19 @@ export const TextqlRpcPublicConnectorMicrosoft365Metadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorMicrosoft365Metadata$Outbound,
     TextqlRpcPublicConnectorMicrosoft365Metadata
-  > = z.object({
-    tenantId: z.optional(z.string()),
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-    accessToken: z.optional(z.string()),
-    refreshToken: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-    tokenExpiry: z.optional(z.string()),
-    metadataOnly: z.optional(z.boolean()),
-    scopes: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tenantId: z.optional(z.string()),
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+      accessToken: z.optional(z.string()),
+      refreshToken: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+      tokenExpiry: z.optional(z.string()),
+      metadataOnly: z.optional(z.boolean()),
+      scopes: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorMicrosoft365MetadataToJSON(
   textqlRpcPublicConnectorMicrosoft365Metadata:

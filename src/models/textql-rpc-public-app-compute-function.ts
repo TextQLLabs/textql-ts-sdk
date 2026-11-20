@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -51,18 +51,20 @@ export type TextqlRpcPublicAppComputeFunction = {
 export const TextqlRpcPublicAppComputeFunction$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppComputeFunction,
   unknown
-> = z.object({
-  name: types.optional(types.string()),
-  description: types.optional(types.string()),
-  params: types.optional(
-    z.array(TextqlRpcPublicAppComputeFunctionParam$inboundSchema),
-  ),
-  returns: z.optional(z.nullable(types.string())),
-  code: types.optional(types.string()),
-  tqlPath: z.optional(z.nullable(types.string())),
-  tql: z.optional(z.nullable(types.string())),
-  grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: types.optional(types.string()),
+    description: types.optional(types.string()),
+    params: types.optional(
+      z.array(TextqlRpcPublicAppComputeFunctionParam$inboundSchema),
+    ),
+    returns: z.optional(z.nullable(types.string())),
+    code: types.optional(types.string()),
+    tqlPath: z.optional(z.nullable(types.string())),
+    tql: z.optional(z.nullable(types.string())),
+    grant: types.optional(TextqlRpcPublicDashboardGrant$inboundSchema),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicAppComputeFunction$Outbound = {
   name?: string | undefined;
@@ -79,18 +81,20 @@ export type TextqlRpcPublicAppComputeFunction$Outbound = {
 export const TextqlRpcPublicAppComputeFunction$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppComputeFunction$Outbound,
   TextqlRpcPublicAppComputeFunction
-> = z.object({
-  name: z.optional(z.string()),
-  description: z.optional(z.string()),
-  params: z.optional(
-    z.array(TextqlRpcPublicAppComputeFunctionParam$outboundSchema),
-  ),
-  returns: z.optional(z.nullable(z.string())),
-  code: z.optional(z.string()),
-  tqlPath: z.optional(z.nullable(z.string())),
-  tql: z.optional(z.nullable(z.string())),
-  grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: z.optional(z.string()),
+    description: z.optional(z.string()),
+    params: z.optional(
+      z.array(TextqlRpcPublicAppComputeFunctionParam$outboundSchema),
+    ),
+    returns: z.optional(z.nullable(z.string())),
+    code: z.optional(z.string()),
+    tqlPath: z.optional(z.nullable(z.string())),
+    tql: z.optional(z.nullable(z.string())),
+    grant: z.optional(TextqlRpcPublicDashboardGrant$outboundSchema),
+  })
+);
 
 export function textqlRpcPublicAppComputeFunctionToJSON(
   textqlRpcPublicAppComputeFunction: TextqlRpcPublicAppComputeFunction,

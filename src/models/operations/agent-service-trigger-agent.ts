@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type AgentServiceTriggerAgentRequest$Outbound = {
 export const AgentServiceTriggerAgentRequest$outboundSchema: z.ZodMiniType<
   AgentServiceTriggerAgentRequest$Outbound,
   AgentServiceTriggerAgentRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicAgentTriggerAgentRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicAgentTriggerAgentRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function agentServiceTriggerAgentRequestToJSON(
@@ -62,10 +64,12 @@ export function agentServiceTriggerAgentRequestToJSON(
 export const AgentServiceTriggerAgentResponse$inboundSchema: z.ZodMiniType<
   AgentServiceTriggerAgentResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicAgentTriggerAgentResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicAgentTriggerAgentResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function agentServiceTriggerAgentResponseFromJSON(
   jsonString: string,

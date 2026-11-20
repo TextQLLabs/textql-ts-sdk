@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,22 @@ export const AppServiceInvokeAppComputeFunctionRequest$outboundSchema:
   z.ZodMiniType<
     AppServiceInvokeAppComputeFunctionRequest$Outbound,
     AppServiceInvokeAppComputeFunctionRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicAppInvokeAppComputeFunctionRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicAppInvokeAppComputeFunctionRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function appServiceInvokeAppComputeFunctionRequestToJSON(
@@ -64,10 +67,12 @@ export function appServiceInvokeAppComputeFunctionRequestToJSON(
 /** @internal */
 export const AppServiceInvokeAppComputeFunctionResponse$inboundSchema:
   z.ZodMiniType<AppServiceInvokeAppComputeFunctionResponse, unknown> =
-    smartUnion([
-      models.TextqlRpcPublicAppInvokeAppComputeFunctionResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicAppInvokeAppComputeFunctionResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function appServiceInvokeAppComputeFunctionResponseFromJSON(
   jsonString: string,

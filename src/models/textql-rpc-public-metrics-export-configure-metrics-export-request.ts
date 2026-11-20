@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicMetricsExportConfigureMetricsExportRequest = {
   prometheusEnabled?: boolean | undefined;
@@ -29,14 +30,16 @@ export const TextqlRpcPublicMetricsExportConfigureMetricsExportRequest$outboundS
   z.ZodMiniType<
     TextqlRpcPublicMetricsExportConfigureMetricsExportRequest$Outbound,
     TextqlRpcPublicMetricsExportConfigureMetricsExportRequest
-  > = z.object({
-    prometheusEnabled: z.optional(z.boolean()),
-    otlpEnabled: z.optional(z.boolean()),
-    otlpEndpoint: z.optional(z.string()),
-    otlpHeaders: z.optional(z.string()),
-    otlpProtocol: z.optional(z.string()),
-    pushIntervalSeconds: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      prometheusEnabled: z.optional(z.boolean()),
+      otlpEnabled: z.optional(z.boolean()),
+      otlpEndpoint: z.optional(z.string()),
+      otlpHeaders: z.optional(z.string()),
+      otlpProtocol: z.optional(z.string()),
+      pushIntervalSeconds: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicMetricsExportConfigureMetricsExportRequestToJSON(
   textqlRpcPublicMetricsExportConfigureMetricsExportRequest:

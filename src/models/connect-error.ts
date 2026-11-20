@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 import { Result as SafeParseResult } from "../types/fp.js";
@@ -60,18 +60,20 @@ export type ConnectError = {
 };
 
 /** @internal */
-export const Code$inboundSchema: z.ZodMiniType<Code, unknown> = openEnums
-  .inboundSchema(Code);
+export const Code$inboundSchema: z.ZodMiniType<Code, unknown> =
+  /* @__PURE__ */ lazySchema$(() => openEnums.inboundSchema(Code));
 
 /** @internal */
 export const ConnectError$inboundSchema: z.ZodMiniType<ConnectError, unknown> =
-  z.catchall(
-    z.object({
-      code: types.optional(Code$inboundSchema),
-      message: types.optional(types.string()),
-      details: types.optional(z.array(ConnectErrorDetailsAny$inboundSchema)),
-    }),
-    z.any(),
+  /* @__PURE__ */ lazySchema$(() =>
+    z.catchall(
+      z.object({
+        code: types.optional(Code$inboundSchema),
+        message: types.optional(types.string()),
+        details: types.optional(z.array(ConnectErrorDetailsAny$inboundSchema)),
+      }),
+      z.any(),
+    )
   );
 
 export function connectErrorFromJSON(

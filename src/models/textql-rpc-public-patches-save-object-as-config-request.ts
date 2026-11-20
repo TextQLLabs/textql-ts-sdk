@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * SaveObjectAsConfig renders an existing DB object (object_type keyed like
@@ -29,10 +30,12 @@ export const TextqlRpcPublicPatchesSaveObjectAsConfigRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesSaveObjectAsConfigRequest$Outbound,
     TextqlRpcPublicPatchesSaveObjectAsConfigRequest
-  > = z.object({
-    objectType: z.optional(z.string()),
-    objectId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      objectType: z.optional(z.string()),
+      objectId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesSaveObjectAsConfigRequestToJSON(
   textqlRpcPublicPatchesSaveObjectAsConfigRequest:

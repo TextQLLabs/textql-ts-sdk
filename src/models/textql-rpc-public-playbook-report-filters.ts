@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicCommonSortDirection,
   TextqlRpcPublicCommonSortDirection$outboundSchema,
@@ -232,20 +233,24 @@ export type TextqlRpcPublicPlaybookReportFilters$Outbound = {
 export const TextqlRpcPublicPlaybookReportFilters$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicPlaybookReportFilters$Outbound,
   TextqlRpcPublicPlaybookReportFilters
-> = z.object({
-  playbookIds: z.optional(z.array(z.string())),
-  searchTerm: z.optional(z.nullable(z.string())),
-  startTime: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  endTime: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-  sortBy: z.optional(z.string()),
-  sortDirection: z.optional(TextqlRpcPublicCommonSortDirection$outboundSchema),
-  limit: z.optional(z.nullable(z.int())),
-  offset: z.optional(z.nullable(z.int())),
-  onlySubscribed: z.optional(z.nullable(z.boolean())),
-  includeHeader: z.optional(z.nullable(z.boolean())),
-  includeWithHeader: z.optional(z.nullable(z.boolean())),
-  chatId: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    playbookIds: z.optional(z.array(z.string())),
+    searchTerm: z.optional(z.nullable(z.string())),
+    startTime: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    endTime: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+    sortBy: z.optional(z.string()),
+    sortDirection: z.optional(
+      TextqlRpcPublicCommonSortDirection$outboundSchema,
+    ),
+    limit: z.optional(z.nullable(z.int())),
+    offset: z.optional(z.nullable(z.int())),
+    onlySubscribed: z.optional(z.nullable(z.boolean())),
+    includeHeader: z.optional(z.nullable(z.boolean())),
+    includeWithHeader: z.optional(z.nullable(z.boolean())),
+    chatId: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicPlaybookReportFiltersToJSON(
   textqlRpcPublicPlaybookReportFilters: TextqlRpcPublicPlaybookReportFilters,

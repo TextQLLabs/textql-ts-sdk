@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Permission management requests/responses
@@ -17,7 +18,7 @@ export const TextqlRpcPublicRbacListPermissionsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacListPermissionsRequest$Outbound,
     TextqlRpcPublicRbacListPermissionsRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicRbacListPermissionsRequestToJSON(
   textqlRpcPublicRbacListPermissionsRequest:

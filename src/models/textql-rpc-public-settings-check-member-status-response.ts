@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,18 +22,20 @@ export type TextqlRpcPublicSettingsCheckMemberStatusResponse = {
 
 /** @internal */
 export const TextqlRpcPublicSettingsCheckMemberStatusResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSettingsCheckMemberStatusResponse, unknown> = z
-    .object({
-      isSuspended: types.optional(types.boolean()),
-      consoleAccess: types.optional(types.boolean()),
-      isSuspendedManual: types.optional(types.boolean()),
-      isSuspendedOverage: types.optional(types.boolean()),
-      isSuspendedUsage: types.optional(types.boolean()),
-      isSuspendedMemberUsage: types.optional(types.boolean()),
-      suspensionMessage: types.optional(types.string()),
-      suspendedCostCenters: types.optional(z.array(types.string())),
-      isSuspendedOrgLimit: types.optional(types.boolean()),
-    });
+  z.ZodMiniType<TextqlRpcPublicSettingsCheckMemberStatusResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        isSuspended: types.optional(types.boolean()),
+        consoleAccess: types.optional(types.boolean()),
+        isSuspendedManual: types.optional(types.boolean()),
+        isSuspendedOverage: types.optional(types.boolean()),
+        isSuspendedUsage: types.optional(types.boolean()),
+        isSuspendedMemberUsage: types.optional(types.boolean()),
+        suspensionMessage: types.optional(types.string()),
+        suspendedCostCenters: types.optional(z.array(types.string())),
+        isSuspendedOrgLimit: types.optional(types.boolean()),
+      })
+    );
 
 export function textqlRpcPublicSettingsCheckMemberStatusResponseFromJSON(
   jsonString: string,

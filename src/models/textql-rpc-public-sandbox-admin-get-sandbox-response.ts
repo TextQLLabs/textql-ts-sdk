@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -33,7 +33,9 @@ export const TextqlRpcPublicSandboxAdminGetSandboxResponseMemoryUsageBytes$inbou
   z.ZodMiniType<
     TextqlRpcPublicSandboxAdminGetSandboxResponseMemoryUsageBytes,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicSandboxAdminGetSandboxResponseMemoryUsageBytesFromJSON(
   jsonString: string,
@@ -52,19 +54,21 @@ export function textqlRpcPublicSandboxAdminGetSandboxResponseMemoryUsageBytesFro
 
 /** @internal */
 export const TextqlRpcPublicSandboxAdminGetSandboxResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSandboxAdminGetSandboxResponse, unknown> = z
-    .object({
-      sandbox: types.optional(
-        TextqlRpcPublicSandboxAdminSandboxSummary$inboundSchema,
-      ),
-      liveAvailable: types.optional(types.boolean()),
-      memoryUsageBytes: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      dataframes: types.optional(
-        z.array(TextqlRpcPublicSandboxAdminSandboxDataframe$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicSandboxAdminGetSandboxResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        sandbox: types.optional(
+          TextqlRpcPublicSandboxAdminSandboxSummary$inboundSchema,
+        ),
+        liveAvailable: types.optional(types.boolean()),
+        memoryUsageBytes: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        dataframes: types.optional(
+          z.array(TextqlRpcPublicSandboxAdminSandboxDataframe$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicSandboxAdminGetSandboxResponseFromJSON(
   jsonString: string,

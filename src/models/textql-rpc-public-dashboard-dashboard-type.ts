@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -20,8 +21,12 @@ export type TextqlRpcPublicDashboardDashboardType = OpenEnum<
 export const TextqlRpcPublicDashboardDashboardType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDashboardDashboardType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicDashboardDashboardType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicDashboardDashboardType)
+);
 /** @internal */
 export const TextqlRpcPublicDashboardDashboardType$outboundSchema:
-  z.ZodMiniType<string, TextqlRpcPublicDashboardDashboardType> = openEnums
-    .outboundSchema(TextqlRpcPublicDashboardDashboardType);
+  z.ZodMiniType<string, TextqlRpcPublicDashboardDashboardType> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.outboundSchema(TextqlRpcPublicDashboardDashboardType)
+    );

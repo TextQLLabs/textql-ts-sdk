@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -22,7 +22,9 @@ export type TextqlRpcPublicChatCellExecutionTiming = {
 /** @internal */
 export const TextqlRpcPublicChatCellExecutionTimingTotalMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatCellExecutionTimingTotalMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatCellExecutionTimingTotalMsFromJSON(
   jsonString: string,
@@ -43,7 +45,9 @@ export function textqlRpcPublicChatCellExecutionTimingTotalMsFromJSON(
 /** @internal */
 export const TextqlRpcPublicChatCellExecutionTimingWarehouseMs$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicChatCellExecutionTimingWarehouseMs, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicChatCellExecutionTimingWarehouseMsFromJSON(
   jsonString: string,
@@ -63,11 +67,16 @@ export function textqlRpcPublicChatCellExecutionTimingWarehouseMsFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatCellExecutionTiming$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatCellExecutionTiming, unknown> = z.object({
-    cellId: types.optional(types.string()),
-    totalMs: types.optional(smartUnion([types.number(), types.string()])),
-    warehouseMs: types.optional(smartUnion([types.number(), types.string()])),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatCellExecutionTiming, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        cellId: types.optional(types.string()),
+        totalMs: types.optional(smartUnion([types.number(), types.string()])),
+        warehouseMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicChatCellExecutionTimingFromJSON(
   jsonString: string,

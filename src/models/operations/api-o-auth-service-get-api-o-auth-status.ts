@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,21 @@ export const ApiOAuthServiceGetApiOAuthStatusRequest$outboundSchema:
   z.ZodMiniType<
     ApiOAuthServiceGetApiOAuthStatusRequest$Outbound,
     ApiOAuthServiceGetApiOAuthStatusRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicApiOauthGetApiOAuthStatusRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models.TextqlRpcPublicApiOauthGetApiOAuthStatusRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function apiOAuthServiceGetApiOAuthStatusRequestToJSON(
@@ -63,12 +65,13 @@ export function apiOAuthServiceGetApiOAuthStatusRequestToJSON(
 
 /** @internal */
 export const ApiOAuthServiceGetApiOAuthStatusResponse$inboundSchema:
-  z.ZodMiniType<ApiOAuthServiceGetApiOAuthStatusResponse, unknown> = smartUnion(
-    [
-      models.TextqlRpcPublicApiOauthGetApiOAuthStatusResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ],
-  );
+  z.ZodMiniType<ApiOAuthServiceGetApiOAuthStatusResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicApiOauthGetApiOAuthStatusResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function apiOAuthServiceGetApiOAuthStatusResponseFromJSON(
   jsonString: string,

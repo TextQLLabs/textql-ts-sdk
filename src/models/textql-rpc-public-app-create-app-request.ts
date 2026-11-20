@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicAppAppFile,
   TextqlRpcPublicAppAppFile$Outbound,
@@ -53,22 +54,24 @@ export type TextqlRpcPublicAppCreateAppRequest$Outbound = {
 export const TextqlRpcPublicAppCreateAppRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppCreateAppRequest$Outbound,
   TextqlRpcPublicAppCreateAppRequest
-> = z.object({
-  name: z.optional(z.string()),
-  description: z.optional(z.nullable(z.string())),
-  code: z.optional(z.string()),
-  dataSources: z.optional(
-    z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
-  ),
-  computeFunctions: z.optional(
-    z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
-  ),
-  files: z.optional(z.array(TextqlRpcPublicAppAppFile$outboundSchema)),
-  capabilities: z.optional(
-    z.array(TextqlRpcPublicAppCapability$outboundSchema),
-  ),
-  appDbSetup: z.optional(z.array(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    name: z.optional(z.string()),
+    description: z.optional(z.nullable(z.string())),
+    code: z.optional(z.string()),
+    dataSources: z.optional(
+      z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
+    ),
+    computeFunctions: z.optional(
+      z.array(TextqlRpcPublicAppComputeFunction$outboundSchema),
+    ),
+    files: z.optional(z.array(TextqlRpcPublicAppAppFile$outboundSchema)),
+    capabilities: z.optional(
+      z.array(TextqlRpcPublicAppCapability$outboundSchema),
+    ),
+    appDbSetup: z.optional(z.array(z.string())),
+  })
+);
 
 export function textqlRpcPublicAppCreateAppRequestToJSON(
   textqlRpcPublicAppCreateAppRequest: TextqlRpcPublicAppCreateAppRequest,

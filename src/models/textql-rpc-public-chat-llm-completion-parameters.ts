@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -220,7 +220,9 @@ export type TextqlRpcPublicChatLlmCompletionParameters = {
 
 /** @internal */
 export const MaxTokens$inboundSchema: z.ZodMiniType<MaxTokens, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function maxTokensFromJSON(
   jsonString: string,
@@ -234,27 +236,28 @@ export function maxTokensFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicChatLlmCompletionParameters$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatLlmCompletionParameters, unknown> = z.object(
-    {
-      startedAt: types.optional(types.date()),
-      completedAt: types.optional(types.date()),
-      memberId: types.optional(types.string()),
-      llmModel: types.optional(types.string()),
-      llmProvider: types.optional(types.string()),
-      systemMessages: types.optional(z.array(types.string())),
-      messages: types.optional(z.array(types.string())),
-      tools: types.optional(z.array(types.string())),
-      toolChoice: z.optional(z.nullable(types.string())),
-      thinking: z.optional(z.nullable(types.string())),
-      maxTokens: z.optional(
-        z.nullable(smartUnion([types.number(), types.string()])),
-      ),
-      temperature: z.optional(z.nullable(types.number())),
-      stopSequences: types.optional(z.array(types.string())),
-      serviceTier: z.optional(z.nullable(types.string())),
-      customSettings: z.optional(z.nullable(types.string())),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicChatLlmCompletionParameters, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        startedAt: types.optional(types.date()),
+        completedAt: types.optional(types.date()),
+        memberId: types.optional(types.string()),
+        llmModel: types.optional(types.string()),
+        llmProvider: types.optional(types.string()),
+        systemMessages: types.optional(z.array(types.string())),
+        messages: types.optional(z.array(types.string())),
+        tools: types.optional(z.array(types.string())),
+        toolChoice: z.optional(z.nullable(types.string())),
+        thinking: z.optional(z.nullable(types.string())),
+        maxTokens: z.optional(
+          z.nullable(smartUnion([types.number(), types.string()])),
+        ),
+        temperature: z.optional(z.nullable(types.number())),
+        stopSequences: types.optional(z.array(types.string())),
+        serviceTier: z.optional(z.nullable(types.string())),
+        customSettings: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicChatLlmCompletionParametersFromJSON(
   jsonString: string,

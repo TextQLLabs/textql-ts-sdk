@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicSecretApiAccessRef,
   TextqlRpcPublicSecretApiAccessRef$Outbound,
@@ -48,20 +49,22 @@ export const TextqlRpcPublicApiOauthUpsertApiOAuthConfigRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicApiOauthUpsertApiOAuthConfigRequest$Outbound,
     TextqlRpcPublicApiOauthUpsertApiOAuthConfigRequest
-  > = z.object({
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-    authUrl: z.optional(z.string()),
-    tokenUrl: z.optional(z.string()),
-    scopes: z.optional(z.string()),
-    usePkce: z.optional(z.boolean()),
-    tokenAuthMethod: z.optional(z.string()),
-    extraConfig: z.optional(z.record(z.string(), z.string())),
-    ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
-    authHeader: z.optional(z.string()),
-    authPrefix: z.optional(z.string()),
-    grantType: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+      authUrl: z.optional(z.string()),
+      tokenUrl: z.optional(z.string()),
+      scopes: z.optional(z.string()),
+      usePkce: z.optional(z.boolean()),
+      tokenAuthMethod: z.optional(z.string()),
+      extraConfig: z.optional(z.record(z.string(), z.string())),
+      ref: z.optional(TextqlRpcPublicSecretApiAccessRef$outboundSchema),
+      authHeader: z.optional(z.string()),
+      authPrefix: z.optional(z.string()),
+      grantType: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicApiOauthUpsertApiOAuthConfigRequestToJSON(
   textqlRpcPublicApiOauthUpsertApiOAuthConfigRequest:

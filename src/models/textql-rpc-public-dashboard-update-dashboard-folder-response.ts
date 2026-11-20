@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,11 +24,13 @@ export const TextqlRpcPublicDashboardUpdateDashboardFolderResponse$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicDashboardUpdateDashboardFolderResponse,
     unknown
-  > = z.object({
-    folder: types.optional(
-      TextqlRpcPublicDashboardDashboardFolder$inboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      folder: types.optional(
+        TextqlRpcPublicDashboardDashboardFolder$inboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicDashboardUpdateDashboardFolderResponseFromJSON(
   jsonString: string,

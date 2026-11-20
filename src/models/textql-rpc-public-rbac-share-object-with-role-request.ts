@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacShareObjectWithRoleRequest = {
   /**
@@ -40,14 +41,16 @@ export const TextqlRpcPublicRbacShareObjectWithRoleRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacShareObjectWithRoleRequest$Outbound,
     TextqlRpcPublicRbacShareObjectWithRoleRequest
-  > = z.object({
-    roleName: z.optional(z.string()),
-    objectType: z.optional(z.string()),
-    objectId: z.optional(z.string()),
-    roleId: z.optional(z.string()),
-    accessType: z.optional(z.string()),
-    isPublic: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      roleName: z.optional(z.string()),
+      objectType: z.optional(z.string()),
+      objectId: z.optional(z.string()),
+      roleId: z.optional(z.string()),
+      accessType: z.optional(z.string()),
+      isPublic: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicRbacShareObjectWithRoleRequestToJSON(
   textqlRpcPublicRbacShareObjectWithRoleRequest:

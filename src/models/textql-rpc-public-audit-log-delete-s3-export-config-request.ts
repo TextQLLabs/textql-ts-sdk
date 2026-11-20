@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAuditLogDeleteS3ExportConfigRequest = {};
 
@@ -14,7 +15,7 @@ export const TextqlRpcPublicAuditLogDeleteS3ExportConfigRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAuditLogDeleteS3ExportConfigRequest$Outbound,
     TextqlRpcPublicAuditLogDeleteS3ExportConfigRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicAuditLogDeleteS3ExportConfigRequestToJSON(
   textqlRpcPublicAuditLogDeleteS3ExportConfigRequest:

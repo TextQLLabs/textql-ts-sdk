@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxExecSandboxExecRequest = {
   sandboxId?: string | undefined;
@@ -27,12 +28,14 @@ export const TextqlRpcPublicSandboxExecSandboxExecRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSandboxExecSandboxExecRequest$Outbound,
     TextqlRpcPublicSandboxExecSandboxExecRequest
-  > = z.object({
-    sandboxId: z.optional(z.string()),
-    command: z.optional(z.string()),
-    kind: z.optional(z.string()),
-    env: z.optional(z.record(z.string(), z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sandboxId: z.optional(z.string()),
+      command: z.optional(z.string()),
+      kind: z.optional(z.string()),
+      env: z.optional(z.record(z.string(), z.string())),
+    })
+  );
 
 export function textqlRpcPublicSandboxExecSandboxExecRequestToJSON(
   textqlRpcPublicSandboxExecSandboxExecRequest:

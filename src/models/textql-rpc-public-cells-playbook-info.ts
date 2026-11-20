@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -256,34 +256,38 @@ export type TextqlRpcPublicCellsPlaybookInfo = {
 export const TextqlRpcPublicCellsPlaybookInfo$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsPlaybookInfo,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  prompt: types.optional(types.string()),
-  ownerId: types.optional(types.string()),
-  ownerEmail: types.optional(types.string()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  cronString: types.optional(types.string()),
-  datasets: types.optional(
-    z.array(TextqlRpcPublicDatasetDataset$inboundSchema),
-  ),
-  emailAddresses: types.optional(z.array(types.string())),
-  slackChannelId: z.optional(z.nullable(types.string())),
-  taggedSlackUserIds: types.optional(z.array(types.string())),
-  status: types.optional(TextqlRpcPublicCellsPlaybookStatusLight$inboundSchema),
-  connectorId: z.optional(z.nullable(types.number())),
-  paradigmType: types.optional(
-    TextqlRpcParadigmParamsParadigmType$inboundSchema,
-  ),
-  reportOutputStyle: types.optional(
-    TextqlRpcPublicCellsPlaybookReportStyleLight$inboundSchema,
-  ),
-  isSubscribed: types.optional(types.boolean()),
-  connectorIds: types.optional(z.array(types.number())),
-  teamsChannelId: z.optional(z.nullable(types.string())),
-  taggedTeamsUserAadIds: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    prompt: types.optional(types.string()),
+    ownerId: types.optional(types.string()),
+    ownerEmail: types.optional(types.string()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    cronString: types.optional(types.string()),
+    datasets: types.optional(
+      z.array(TextqlRpcPublicDatasetDataset$inboundSchema),
+    ),
+    emailAddresses: types.optional(z.array(types.string())),
+    slackChannelId: z.optional(z.nullable(types.string())),
+    taggedSlackUserIds: types.optional(z.array(types.string())),
+    status: types.optional(
+      TextqlRpcPublicCellsPlaybookStatusLight$inboundSchema,
+    ),
+    connectorId: z.optional(z.nullable(types.number())),
+    paradigmType: types.optional(
+      TextqlRpcParadigmParamsParadigmType$inboundSchema,
+    ),
+    reportOutputStyle: types.optional(
+      TextqlRpcPublicCellsPlaybookReportStyleLight$inboundSchema,
+    ),
+    isSubscribed: types.optional(types.boolean()),
+    connectorIds: types.optional(z.array(types.number())),
+    teamsChannelId: z.optional(z.nullable(types.string())),
+    taggedTeamsUserAadIds: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsPlaybookInfoFromJSON(
   jsonString: string,

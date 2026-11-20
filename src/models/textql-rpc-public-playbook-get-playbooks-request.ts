@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicCommonSortDirection,
   TextqlRpcPublicCommonSortDirection$outboundSchema,
@@ -65,28 +66,32 @@ export const TextqlRpcPublicPlaybookGetPlaybooksRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetPlaybooksRequest$Outbound,
     TextqlRpcPublicPlaybookGetPlaybooksRequest
-  > = z.object({
-    memberOnly: z.optional(z.boolean()),
-    limit: z.optional(z.int()),
-    offset: z.optional(z.int()),
-    searchTerm: z.optional(z.nullable(z.string())),
-    statusFilter: z.optional(
-      TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema,
-    ),
-    creatorMemberId: z.optional(z.nullable(z.string())),
-    sortBy: z.optional(TextqlRpcPublicPlaybookPlaybookSortField$outboundSchema),
-    sortDirection: z.optional(
-      TextqlRpcPublicCommonSortDirection$outboundSchema,
-    ),
-    subscribedFirst: z.optional(z.nullable(z.boolean())),
-    onlySubscribed: z.optional(z.nullable(z.boolean())),
-    sharedWithMe: z.optional(z.nullable(z.boolean())),
-    includeSharedDrafts: z.optional(z.nullable(z.boolean())),
-    statuses: z.optional(
-      z.array(TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema),
-    ),
-    creatorMemberIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberOnly: z.optional(z.boolean()),
+      limit: z.optional(z.int()),
+      offset: z.optional(z.int()),
+      searchTerm: z.optional(z.nullable(z.string())),
+      statusFilter: z.optional(
+        TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema,
+      ),
+      creatorMemberId: z.optional(z.nullable(z.string())),
+      sortBy: z.optional(
+        TextqlRpcPublicPlaybookPlaybookSortField$outboundSchema,
+      ),
+      sortDirection: z.optional(
+        TextqlRpcPublicCommonSortDirection$outboundSchema,
+      ),
+      subscribedFirst: z.optional(z.nullable(z.boolean())),
+      onlySubscribed: z.optional(z.nullable(z.boolean())),
+      sharedWithMe: z.optional(z.nullable(z.boolean())),
+      includeSharedDrafts: z.optional(z.nullable(z.boolean())),
+      statuses: z.optional(
+        z.array(TextqlRpcPublicPlaybookPlaybookStatus$outboundSchema),
+      ),
+      creatorMemberIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPlaybookGetPlaybooksRequestToJSON(
   textqlRpcPublicPlaybookGetPlaybooksRequest:

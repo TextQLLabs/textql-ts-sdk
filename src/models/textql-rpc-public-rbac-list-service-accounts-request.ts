@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacListServiceAccountsRequest = {
   searchTerm?: string | null | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicRbacListServiceAccountsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacListServiceAccountsRequest$Outbound,
     TextqlRpcPublicRbacListServiceAccountsRequest
-  > = z.object({
-    searchTerm: z.optional(z.nullable(z.string())),
-    pageSize: z.optional(z.nullable(z.int())),
-    pageToken: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      searchTerm: z.optional(z.nullable(z.string())),
+      pageSize: z.optional(z.nullable(z.int())),
+      pageToken: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacListServiceAccountsRequestToJSON(
   textqlRpcPublicRbacListServiceAccountsRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -50,14 +50,19 @@ export type TextqlRpcPublicChatGetLlmUsageResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatGetLlmUsageResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatGetLlmUsageResponse, unknown> = z.object({
-    usage: types.optional(z.array(TextqlRpcPublicChatLlmUsage$inboundSchema)),
-    contextWindowUsed: types.optional(types.number()),
-    estimatedCost: z.optional(z.nullable(types.number())),
-    estimatedComputeCost: z.optional(z.nullable(types.number())),
-    sandboxId: z.optional(z.nullable(types.string())),
-    estimatedComputeAcus: z.optional(z.nullable(types.number())),
-  });
+  z.ZodMiniType<TextqlRpcPublicChatGetLlmUsageResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        usage: types.optional(
+          z.array(TextqlRpcPublicChatLlmUsage$inboundSchema),
+        ),
+        contextWindowUsed: types.optional(types.number()),
+        estimatedCost: z.optional(z.nullable(types.number())),
+        estimatedComputeCost: z.optional(z.nullable(types.number())),
+        sandboxId: z.optional(z.nullable(types.string())),
+        estimatedComputeAcus: z.optional(z.nullable(types.number())),
+      })
+    );
 
 export function textqlRpcPublicChatGetLlmUsageResponseFromJSON(
   jsonString: string,

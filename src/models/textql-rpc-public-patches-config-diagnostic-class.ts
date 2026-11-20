@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -31,4 +32,6 @@ export type TextqlRpcPublicPatchesConfigDiagnosticClass = OpenEnum<
 /** @internal */
 export const TextqlRpcPublicPatchesConfigDiagnosticClass$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicPatchesConfigDiagnosticClass, unknown> =
-    openEnums.inboundSchema(TextqlRpcPublicPatchesConfigDiagnosticClass);
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.inboundSchema(TextqlRpcPublicPatchesConfigDiagnosticClass)
+    );

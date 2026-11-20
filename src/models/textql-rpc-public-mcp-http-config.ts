@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,12 +19,14 @@ export type TextqlRpcPublicMcpHttpConfig = {
 export const TextqlRpcPublicMcpHttpConfig$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicMcpHttpConfig,
   unknown
-> = z.object({
-  url: types.optional(types.string()),
-  headers: types.optional(z.record(z.string(), types.string())),
-  oauthClientId: z.optional(z.nullable(types.string())),
-  oauthClientSecret: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    url: types.optional(types.string()),
+    headers: types.optional(z.record(z.string(), types.string())),
+    oauthClientId: z.optional(z.nullable(types.string())),
+    oauthClientSecret: z.optional(z.nullable(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicMcpHttpConfig$Outbound = {
   url?: string | undefined;
@@ -37,12 +39,14 @@ export type TextqlRpcPublicMcpHttpConfig$Outbound = {
 export const TextqlRpcPublicMcpHttpConfig$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicMcpHttpConfig$Outbound,
   TextqlRpcPublicMcpHttpConfig
-> = z.object({
-  url: z.optional(z.string()),
-  headers: z.optional(z.record(z.string(), z.string())),
-  oauthClientId: z.optional(z.nullable(z.string())),
-  oauthClientSecret: z.optional(z.nullable(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    url: z.optional(z.string()),
+    headers: z.optional(z.record(z.string(), z.string())),
+    oauthClientId: z.optional(z.nullable(z.string())),
+    oauthClientSecret: z.optional(z.nullable(z.string())),
+  })
+);
 
 export function textqlRpcPublicMcpHttpConfigToJSON(
   textqlRpcPublicMcpHttpConfig: TextqlRpcPublicMcpHttpConfig,

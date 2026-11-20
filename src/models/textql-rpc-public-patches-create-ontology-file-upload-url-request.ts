@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 
 export type TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes =
@@ -25,7 +26,7 @@ export const TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes$o
   z.ZodMiniType<
     TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes$Outbound,
     TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytesToJSON(
   textqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestSizeBytes:
@@ -50,11 +51,13 @@ export const TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequest$Outbound,
     TextqlRpcPublicPatchesCreateOntologyFileUploadUrlRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    mimeType: z.optional(z.string()),
-    sizeBytes: z.optional(smartUnion([z.int(), z.string()])),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      mimeType: z.optional(z.string()),
+      sizeBytes: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function textqlRpcPublicPatchesCreateOntologyFileUploadUrlRequestToJSON(
   textqlRpcPublicPatchesCreateOntologyFileUploadUrlRequest:

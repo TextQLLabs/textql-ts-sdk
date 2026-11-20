@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -29,18 +29,20 @@ export type TextqlRpcPublicHarnessHarnessInfo = {
 export const TextqlRpcPublicHarnessHarnessInfo$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicHarnessHarnessInfo,
   unknown
-> = z.object({
-  key: types.optional(types.string()),
-  kind: types.optional(types.string()),
-  displayName: types.optional(types.string()),
-  vendor: types.optional(types.string()),
-  modelFamily: types.optional(types.string()),
-  models: types.optional(z.array(TextqlRpcPublicChatLlmModel$inboundSchema)),
-  enabled: types.optional(types.boolean()),
-  defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-  orgDefault: types.optional(types.boolean()),
-  endpointId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    key: types.optional(types.string()),
+    kind: types.optional(types.string()),
+    displayName: types.optional(types.string()),
+    vendor: types.optional(types.string()),
+    modelFamily: types.optional(types.string()),
+    models: types.optional(z.array(TextqlRpcPublicChatLlmModel$inboundSchema)),
+    enabled: types.optional(types.boolean()),
+    defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+    orgDefault: types.optional(types.boolean()),
+    endpointId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicHarnessHarnessInfoFromJSON(
   jsonString: string,

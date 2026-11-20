@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput,
   TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput$Outbound,
@@ -26,11 +27,13 @@ export const TextqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequest$outb
   z.ZodMiniType<
     TextqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequest$Outbound,
     TextqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequest
-  > = z.object({
-    rule: z.optional(
-      TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      rule: z.optional(
+        TextqlRpcPublicPatchesContextPatchAutoApproveRuleInput$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequestToJSON(
   textqlRpcPublicPatchesCreateContextPatchAutoApproveRuleRequest:

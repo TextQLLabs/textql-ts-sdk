@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicConnectorConnectorAccessGrant = {
   memberId?: string | undefined;
@@ -24,12 +25,14 @@ export const TextqlRpcPublicConnectorConnectorAccessGrant$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorConnectorAccessGrant$Outbound,
     TextqlRpcPublicConnectorConnectorAccessGrant
-  > = z.object({
-    memberId: z.optional(z.string()),
-    roleId: z.optional(z.string()),
-    groupId: z.optional(z.string()),
-    accessType: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberId: z.optional(z.string()),
+      roleId: z.optional(z.string()),
+      groupId: z.optional(z.string()),
+      accessType: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorConnectorAccessGrantToJSON(
   textqlRpcPublicConnectorConnectorAccessGrant:

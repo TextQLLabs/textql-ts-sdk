@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicObserveGetBackfillPreviewResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveGetBackfillPreviewResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveGetBackfillPreviewResponse, unknown> = z
-    .object({
-      unanalyzedCount: types.optional(types.number()),
-      orgName: types.optional(types.string()),
-      eligibleThreadCount: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveGetBackfillPreviewResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        unanalyzedCount: types.optional(types.number()),
+        orgName: types.optional(types.string()),
+        eligibleThreadCount: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveGetBackfillPreviewResponseFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -20,13 +20,16 @@ export type TextqlRpcPublicOntologyGraphProperties = {
 
 /** @internal */
 export const TextqlRpcPublicOntologyGraphProperties$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicOntologyGraphProperties, unknown> = z.object({
-    position: types.optional(
-      TextqlRpcPublicOntologyGraphPosition$inboundSchema,
-    ),
-    icon: types.optional(types.string()),
-    color: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicOntologyGraphProperties, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        position: types.optional(
+          TextqlRpcPublicOntologyGraphPosition$inboundSchema,
+        ),
+        icon: types.optional(types.string()),
+        color: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicOntologyGraphPropertiesFromJSON(
   jsonString: string,

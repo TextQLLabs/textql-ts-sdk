@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,11 +16,14 @@ export type TextqlRpcPublicDataframeDataFrameField = {
 
 /** @internal */
 export const TextqlRpcPublicDataframeDataFrameField$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameField, unknown> = z.object({
-    columnName: types.optional(types.string()),
-    columnType: types.optional(types.string()),
-    columnIndex: types.optional(types.number()),
-  });
+  z.ZodMiniType<TextqlRpcPublicDataframeDataFrameField, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        columnName: types.optional(types.string()),
+        columnType: types.optional(types.string()),
+        columnIndex: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicDataframeDataFrameFieldFromJSON(
   jsonString: string,

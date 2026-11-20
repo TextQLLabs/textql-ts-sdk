@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,9 +23,11 @@ export const TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse$inboundSc
   z.ZodMiniType<
     TextqlRpcPublicPatchesTriggerConfigDriftReconcileResponse,
     unknown
-  > = z.object({
-    drifted: types.optional(types.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      drifted: types.optional(types.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesTriggerConfigDriftReconcileResponseFromJSON(
   jsonString: string,

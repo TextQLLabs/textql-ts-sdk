@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacRevokeApiKeyRequest = {
   apiKeyId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicRbacRevokeApiKeyRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacRevokeApiKeyRequest$Outbound,
     TextqlRpcPublicRbacRevokeApiKeyRequest
-  > = z.object({
-    apiKeyId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      apiKeyId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicRbacRevokeApiKeyRequestToJSON(
   textqlRpcPublicRbacRevokeApiKeyRequest:

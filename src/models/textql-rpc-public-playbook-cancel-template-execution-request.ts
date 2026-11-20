@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Request to cancel template execution
@@ -23,10 +24,12 @@ export const TextqlRpcPublicPlaybookCancelTemplateExecutionRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPlaybookCancelTemplateExecutionRequest$Outbound,
     TextqlRpcPublicPlaybookCancelTemplateExecutionRequest
-  > = z.object({
-    templateHeaderId: z.optional(z.string()),
-    playbookId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      templateHeaderId: z.optional(z.string()),
+      playbookId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookCancelTemplateExecutionRequestToJSON(
   textqlRpcPublicPlaybookCancelTemplateExecutionRequest:

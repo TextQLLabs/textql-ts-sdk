@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -23,5 +24,7 @@ export type TextqlRpcPublicPatchesOntologyMergeOutcome = OpenEnum<
 
 /** @internal */
 export const TextqlRpcPublicPatchesOntologyMergeOutcome$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesOntologyMergeOutcome, unknown> = openEnums
-    .inboundSchema(TextqlRpcPublicPatchesOntologyMergeOutcome);
+  z.ZodMiniType<TextqlRpcPublicPatchesOntologyMergeOutcome, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.inboundSchema(TextqlRpcPublicPatchesOntologyMergeOutcome)
+    );

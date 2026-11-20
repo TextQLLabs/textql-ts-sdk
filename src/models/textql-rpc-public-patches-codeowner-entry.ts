@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,11 +18,13 @@ export type TextqlRpcPublicPatchesCodeownerEntry = {
 export const TextqlRpcPublicPatchesCodeownerEntry$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesCodeownerEntry,
   unknown
-> = z.object({
-  pattern: types.optional(types.string()),
-  ownerMemberIds: types.optional(z.array(types.string())),
-  area: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    pattern: types.optional(types.string()),
+    ownerMemberIds: types.optional(z.array(types.string())),
+    area: types.optional(types.string()),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicPatchesCodeownerEntry$Outbound = {
   pattern?: string | undefined;
@@ -34,11 +36,13 @@ export type TextqlRpcPublicPatchesCodeownerEntry$Outbound = {
 export const TextqlRpcPublicPatchesCodeownerEntry$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesCodeownerEntry$Outbound,
   TextqlRpcPublicPatchesCodeownerEntry
-> = z.object({
-  pattern: z.optional(z.string()),
-  ownerMemberIds: z.optional(z.array(z.string())),
-  area: z.optional(z.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    pattern: z.optional(z.string()),
+    ownerMemberIds: z.optional(z.array(z.string())),
+    area: z.optional(z.string()),
+  })
+);
 
 export function textqlRpcPublicPatchesCodeownerEntryToJSON(
   textqlRpcPublicPatchesCodeownerEntry: TextqlRpcPublicPatchesCodeownerEntry,

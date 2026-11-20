@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -115,15 +115,17 @@ export type TextqlRpcPublicPowerbiPowerBIReport = {
 export const TextqlRpcPublicPowerbiPowerBIReport$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPowerbiPowerBIReport,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  webUrl: types.optional(types.string()),
-  embedUrl: types.optional(types.string()),
-  datasetId: types.optional(types.string()),
-  createdBy: types.optional(types.string()),
-  createdDate: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    webUrl: types.optional(types.string()),
+    embedUrl: types.optional(types.string()),
+    datasetId: types.optional(types.string()),
+    createdBy: types.optional(types.string()),
+    createdDate: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicPowerbiPowerBIReportFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSandboxQueryPowerBIDaxTemplate = {
   workspaceId?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSandboxQueryPowerBIDaxTemplate$Outbound,
     TextqlRpcPublicSandboxQueryPowerBIDaxTemplate
-  > = z.object({
-    workspaceId: z.optional(z.string()),
-    datasetId: z.optional(z.string()),
-    daxQuery: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      workspaceId: z.optional(z.string()),
+      datasetId: z.optional(z.string()),
+      daxQuery: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSandboxQueryPowerBIDaxTemplateToJSON(
   textqlRpcPublicSandboxQueryPowerBIDaxTemplate:

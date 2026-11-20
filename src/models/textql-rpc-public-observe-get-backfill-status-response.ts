@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,13 +17,15 @@ export type TextqlRpcPublicObserveGetBackfillStatusResponse = {
 
 /** @internal */
 export const TextqlRpcPublicObserveGetBackfillStatusResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveGetBackfillStatusResponse, unknown> = z
-    .object({
-      running: types.optional(types.boolean()),
-      total: types.optional(types.number()),
-      processed: types.optional(types.number()),
-      failed: types.optional(types.number()),
-    });
+  z.ZodMiniType<TextqlRpcPublicObserveGetBackfillStatusResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        running: types.optional(types.boolean()),
+        total: types.optional(types.number()),
+        processed: types.optional(types.number()),
+        failed: types.optional(types.number()),
+      })
+    );
 
 export function textqlRpcPublicObserveGetBackfillStatusResponseFromJSON(
   jsonString: string,

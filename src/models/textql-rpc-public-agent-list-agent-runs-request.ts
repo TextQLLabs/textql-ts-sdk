@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAgentListAgentRunsRequest = {
   agentId?: string | undefined;
@@ -26,13 +27,15 @@ export const TextqlRpcPublicAgentListAgentRunsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAgentListAgentRunsRequest$Outbound,
     TextqlRpcPublicAgentListAgentRunsRequest
-  > = z.object({
-    agentId: z.optional(z.string()),
-    triggerSource: z.optional(z.nullable(z.string())),
-    status: z.optional(z.nullable(z.string())),
-    limit: z.optional(z.int()),
-    offset: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      agentId: z.optional(z.string()),
+      triggerSource: z.optional(z.nullable(z.string())),
+      status: z.optional(z.nullable(z.string())),
+      limit: z.optional(z.int()),
+      offset: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAgentListAgentRunsRequestToJSON(
   textqlRpcPublicAgentListAgentRunsRequest:

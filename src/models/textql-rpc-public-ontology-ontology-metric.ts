@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -127,25 +127,29 @@ export type TextqlRpcPublicOntologyOntologyMetric = {
 export const TextqlRpcPublicOntologyOntologyMetric$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicOntologyOntologyMetric,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  description: types.optional(types.string()),
-  objectId: types.optional(types.string()),
-  attribute: types.optional(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-  formula: types.optional(types.string()),
-  timeDimension: types.optional(
-    TextqlRpcPublicOntologyAttributeRef$inboundSchema,
-  ),
-  breakdowns: types.optional(
-    z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-  ),
-  aggregation: types.optional(
-    TextqlRpcPublicOntologyMetricAggregation$inboundSchema,
-  ),
-  lod: types.optional(z.array(types.string())),
-  accessTime: types.optional(types.date()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    description: types.optional(types.string()),
+    objectId: types.optional(types.string()),
+    attribute: types.optional(
+      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+    ),
+    formula: types.optional(types.string()),
+    timeDimension: types.optional(
+      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+    ),
+    breakdowns: types.optional(
+      z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
+    ),
+    aggregation: types.optional(
+      TextqlRpcPublicOntologyMetricAggregation$inboundSchema,
+    ),
+    lod: types.optional(z.array(types.string())),
+    accessTime: types.optional(types.date()),
+  })
+);
 
 export function textqlRpcPublicOntologyOntologyMetricFromJSON(
   jsonString: string,

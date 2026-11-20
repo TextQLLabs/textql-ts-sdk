@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,12 +16,14 @@ export type TextqlRpcPublicPatchesAddOntologySubmoduleResponse = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesAddOntologySubmoduleResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesAddOntologySubmoduleResponse, unknown> = z
-    .object({
-      path: types.optional(types.string()),
-      url: types.optional(types.string()),
-      branch: types.optional(types.string()),
-    });
+  z.ZodMiniType<TextqlRpcPublicPatchesAddOntologySubmoduleResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        path: types.optional(types.string()),
+        url: types.optional(types.string()),
+        branch: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicPatchesAddOntologySubmoduleResponseFromJSON(
   jsonString: string,

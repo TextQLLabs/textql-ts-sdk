@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Handle Slack OAuth callback
@@ -29,10 +30,12 @@ export const TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest$Outbound,
     TextqlRpcPublicSlackHandleSlackOAuthCallbackRequest
-  > = z.object({
-    code: z.optional(z.string()),
-    state: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      code: z.optional(z.string()),
+      state: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSlackHandleSlackOAuthCallbackRequestToJSON(
   textqlRpcPublicSlackHandleSlackOAuthCallbackRequest:

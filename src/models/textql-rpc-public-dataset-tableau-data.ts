@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,17 +28,19 @@ export type TextqlRpcPublicDatasetTableauData = {
 export const TextqlRpcPublicDatasetTableauData$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicDatasetTableauData,
   unknown
-> = z.object({
-  connectorId: types.optional(types.number()),
-  projectId: types.optional(types.string()),
-  projectName: types.optional(types.string()),
-  views: types.optional(
-    z.array(TextqlRpcPublicTableauTableauView$inboundSchema),
-  ),
-  datasources: types.optional(
-    z.array(TextqlRpcPublicTableauTableauDatasource$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    connectorId: types.optional(types.number()),
+    projectId: types.optional(types.string()),
+    projectName: types.optional(types.string()),
+    views: types.optional(
+      z.array(TextqlRpcPublicTableauTableauView$inboundSchema),
+    ),
+    datasources: types.optional(
+      z.array(TextqlRpcPublicTableauTableauDatasource$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicDatasetTableauDataFromJSON(
   jsonString: string,

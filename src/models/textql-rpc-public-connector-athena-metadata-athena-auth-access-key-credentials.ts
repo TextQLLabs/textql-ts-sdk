@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,10 +19,12 @@ export const TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredential
   z.ZodMiniType<
     TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials,
     unknown
-  > = z.object({
-    accessKeyId: types.optional(types.string()),
-    secretAccessKey: types.optional(types.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accessKeyId: types.optional(types.string()),
+      secretAccessKey: types.optional(types.string()),
+    })
+  );
 /** @internal */
 export type TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$Outbound =
   {
@@ -35,10 +37,12 @@ export const TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredential
   z.ZodMiniType<
     TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials$Outbound,
     TextqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials
-  > = z.object({
-    accessKeyId: z.optional(z.string()),
-    secretAccessKey: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accessKeyId: z.optional(z.string()),
+      secretAccessKey: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentialsToJSON(
   textqlRpcPublicConnectorAthenaMetadataAthenaAuthAccessKeyCredentials:

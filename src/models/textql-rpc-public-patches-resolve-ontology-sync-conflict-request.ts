@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesResolveOntologySyncConflictRequest = {
   conflictId?: string | undefined;
@@ -21,10 +22,12 @@ export const TextqlRpcPublicPatchesResolveOntologySyncConflictRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicPatchesResolveOntologySyncConflictRequest$Outbound,
     TextqlRpcPublicPatchesResolveOntologySyncConflictRequest
-  > = z.object({
-    conflictId: z.optional(z.string()),
-    resolvedContent: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      conflictId: z.optional(z.string()),
+      resolvedContent: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesResolveOntologySyncConflictRequestToJSON(
   textqlRpcPublicPatchesResolveOntologySyncConflictRequest:

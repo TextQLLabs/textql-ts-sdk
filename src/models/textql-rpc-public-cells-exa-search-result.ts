@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,19 +26,21 @@ export type TextqlRpcPublicCellsExaSearchResult = {
 export const TextqlRpcPublicCellsExaSearchResult$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsExaSearchResult,
   unknown
-> = z.object({
-  title: types.optional(types.string()),
-  url: types.optional(types.string()),
-  text: types.optional(types.string()),
-  author: types.optional(types.string()),
-  publishedDate: types.optional(types.string()),
-  favicon: types.optional(types.string()),
-  image: types.optional(types.string()),
-  score: types.optional(types.number()),
-  highlights: types.optional(z.array(types.string())),
-  highlightScores: types.optional(z.array(types.number())),
-  summary: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    title: types.optional(types.string()),
+    url: types.optional(types.string()),
+    text: types.optional(types.string()),
+    author: types.optional(types.string()),
+    publishedDate: types.optional(types.string()),
+    favicon: types.optional(types.string()),
+    image: types.optional(types.string()),
+    score: types.optional(types.number()),
+    highlights: types.optional(z.array(types.string())),
+    highlightScores: types.optional(z.array(types.number())),
+    summary: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicCellsExaSearchResultFromJSON(
   jsonString: string,

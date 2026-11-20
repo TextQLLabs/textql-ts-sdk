@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,14 +19,17 @@ export type TextqlRpcPublicConnectorFireboltMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorFireboltMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorFireboltMetadata, unknown> = z.object({
-    accountName: types.optional(types.string()),
-    database: types.optional(types.string()),
-    engineName: types.optional(types.string()),
-    clientId: types.optional(types.string()),
-    clientSecret: types.optional(types.string()),
-    schemas: types.optional(z.array(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorFireboltMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        accountName: types.optional(types.string()),
+        database: types.optional(types.string()),
+        engineName: types.optional(types.string()),
+        clientId: types.optional(types.string()),
+        clientSecret: types.optional(types.string()),
+        schemas: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorFireboltMetadata$Outbound = {
   accountName?: string | undefined;
@@ -42,14 +45,16 @@ export const TextqlRpcPublicConnectorFireboltMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorFireboltMetadata$Outbound,
     TextqlRpcPublicConnectorFireboltMetadata
-  > = z.object({
-    accountName: z.optional(z.string()),
-    database: z.optional(z.string()),
-    engineName: z.optional(z.string()),
-    clientId: z.optional(z.string()),
-    clientSecret: z.optional(z.string()),
-    schemas: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      accountName: z.optional(z.string()),
+      database: z.optional(z.string()),
+      engineName: z.optional(z.string()),
+      clientId: z.optional(z.string()),
+      clientSecret: z.optional(z.string()),
+      schemas: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorFireboltMetadataToJSON(
   textqlRpcPublicConnectorFireboltMetadata:

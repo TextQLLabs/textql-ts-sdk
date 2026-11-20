@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,19 +35,22 @@ export const DashboardServiceDuplicateDashboardRequest$outboundSchema:
   z.ZodMiniType<
     DashboardServiceDuplicateDashboardRequest$Outbound,
     DashboardServiceDuplicateDashboardRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models.TextqlRpcPublicDashboardDuplicateDashboardRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicDashboardDuplicateDashboardRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function dashboardServiceDuplicateDashboardRequestToJSON(
@@ -64,10 +67,12 @@ export function dashboardServiceDuplicateDashboardRequestToJSON(
 /** @internal */
 export const DashboardServiceDuplicateDashboardResponse$inboundSchema:
   z.ZodMiniType<DashboardServiceDuplicateDashboardResponse, unknown> =
-    smartUnion([
-      models.TextqlRpcPublicDashboardDuplicateDashboardResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models.TextqlRpcPublicDashboardDuplicateDashboardResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function dashboardServiceDuplicateDashboardResponseFromJSON(
   jsonString: string,

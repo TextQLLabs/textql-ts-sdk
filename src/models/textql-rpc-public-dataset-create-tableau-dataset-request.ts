@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicTableauTableauDatasource,
   TextqlRpcPublicTableauTableauDatasource$Outbound,
@@ -42,19 +43,21 @@ export const TextqlRpcPublicDatasetCreateTableauDatasetRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicDatasetCreateTableauDatasetRequest$Outbound,
     TextqlRpcPublicDatasetCreateTableauDatasetRequest
-  > = z.object({
-    connectorId: z.optional(z.int()),
-    name: z.optional(z.string()),
-    folderPath: z.optional(z.array(z.string())),
-    projectId: z.optional(z.string()),
-    projectName: z.optional(z.string()),
-    views: z.optional(
-      z.array(TextqlRpcPublicTableauTableauView$outboundSchema),
-    ),
-    datasources: z.optional(
-      z.array(TextqlRpcPublicTableauTableauDatasource$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      connectorId: z.optional(z.int()),
+      name: z.optional(z.string()),
+      folderPath: z.optional(z.array(z.string())),
+      projectId: z.optional(z.string()),
+      projectName: z.optional(z.string()),
+      views: z.optional(
+        z.array(TextqlRpcPublicTableauTableauView$outboundSchema),
+      ),
+      datasources: z.optional(
+        z.array(TextqlRpcPublicTableauTableauDatasource$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicDatasetCreateTableauDatasetRequestToJSON(
   textqlRpcPublicDatasetCreateTableauDatasetRequest:

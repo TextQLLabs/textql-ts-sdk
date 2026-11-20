@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAppGetAppDBTablePreviewRequest = {
   appId?: string | undefined;
@@ -25,11 +26,13 @@ export const TextqlRpcPublicAppGetAppDBTablePreviewRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppGetAppDBTablePreviewRequest$Outbound,
     TextqlRpcPublicAppGetAppDBTablePreviewRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-    tableName: z.optional(z.string()),
-    limit: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+      tableName: z.optional(z.string()),
+      limit: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAppGetAppDBTablePreviewRequestToJSON(
   textqlRpcPublicAppGetAppDBTablePreviewRequest:

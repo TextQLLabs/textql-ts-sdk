@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicPatchesRecoverOntologyLevel = {
@@ -17,6 +18,7 @@ export type TextqlRpcPublicPatchesRecoverOntologyLevel = ClosedEnum<
 
 /** @internal */
 export const TextqlRpcPublicPatchesRecoverOntologyLevel$outboundSchema:
-  z.ZodMiniEnum<typeof TextqlRpcPublicPatchesRecoverOntologyLevel> = z.enum(
-    TextqlRpcPublicPatchesRecoverOntologyLevel,
-  );
+  z.ZodMiniEnum<typeof TextqlRpcPublicPatchesRecoverOntologyLevel> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.enum(TextqlRpcPublicPatchesRecoverOntologyLevel)
+    );

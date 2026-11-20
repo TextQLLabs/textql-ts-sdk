@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicTeamsTeamsDeleteInstallationRequest = {
   tenantId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicTeamsTeamsDeleteInstallationRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicTeamsTeamsDeleteInstallationRequest$Outbound,
     TextqlRpcPublicTeamsTeamsDeleteInstallationRequest
-  > = z.object({
-    tenantId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tenantId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicTeamsTeamsDeleteInstallationRequestToJSON(
   textqlRpcPublicTeamsTeamsDeleteInstallationRequest:

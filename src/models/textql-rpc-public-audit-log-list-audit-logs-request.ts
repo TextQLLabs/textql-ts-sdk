@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAuditLogListAuditLogsRequest = {
   category?: string | null | undefined;
@@ -129,18 +130,20 @@ export const TextqlRpcPublicAuditLogListAuditLogsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAuditLogListAuditLogsRequest$Outbound,
     TextqlRpcPublicAuditLogListAuditLogsRequest
-  > = z.object({
-    category: z.optional(z.nullable(z.string())),
-    actorId: z.optional(z.nullable(z.string())),
-    action: z.optional(z.nullable(z.string())),
-    resourceType: z.optional(z.nullable(z.string())),
-    cursor: z.optional(z.nullable(z.string())),
-    pageSize: z.optional(z.nullable(z.int())),
-    searchTerm: z.optional(z.nullable(z.string())),
-    after: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
-    actions: z.optional(z.array(z.string())),
-    includeActionOptions: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      category: z.optional(z.nullable(z.string())),
+      actorId: z.optional(z.nullable(z.string())),
+      action: z.optional(z.nullable(z.string())),
+      resourceType: z.optional(z.nullable(z.string())),
+      cursor: z.optional(z.nullable(z.string())),
+      pageSize: z.optional(z.nullable(z.int())),
+      searchTerm: z.optional(z.nullable(z.string())),
+      after: z.optional(z.pipe(z.date(), z.transform(v => v.toISOString()))),
+      actions: z.optional(z.array(z.string())),
+      includeActionOptions: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicAuditLogListAuditLogsRequestToJSON(
   textqlRpcPublicAuditLogListAuditLogsRequest:

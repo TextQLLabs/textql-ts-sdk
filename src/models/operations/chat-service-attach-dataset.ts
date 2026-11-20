@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -34,18 +34,20 @@ export type ChatServiceAttachDatasetRequest$Outbound = {
 export const ChatServiceAttachDatasetRequest$outboundSchema: z.ZodMiniType<
   ChatServiceAttachDatasetRequest$Outbound,
   ChatServiceAttachDatasetRequest
-> = z.pipe(
-  z.object({
-    connectProtocolVersion: z._default(z.literal("1"), "1"),
-    connectTimeoutMs: z.optional(z.number()),
-    body: models.TextqlRpcPublicChatAttachDatasetRequest$outboundSchema,
-  }),
-  z.transform((v) => {
-    return remap$(v, {
-      connectProtocolVersion: "Connect-Protocol-Version",
-      connectTimeoutMs: "Connect-Timeout-Ms",
-    });
-  }),
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.pipe(
+    z.object({
+      connectProtocolVersion: z._default(z.literal("1"), "1"),
+      connectTimeoutMs: z.optional(z.number()),
+      body: models.TextqlRpcPublicChatAttachDatasetRequest$outboundSchema,
+    }),
+    z.transform((v) => {
+      return remap$(v, {
+        connectProtocolVersion: "Connect-Protocol-Version",
+        connectTimeoutMs: "Connect-Timeout-Ms",
+      });
+    }),
+  )
 );
 
 export function chatServiceAttachDatasetRequestToJSON(
@@ -62,10 +64,12 @@ export function chatServiceAttachDatasetRequestToJSON(
 export const ChatServiceAttachDatasetResponse$inboundSchema: z.ZodMiniType<
   ChatServiceAttachDatasetResponse,
   unknown
-> = smartUnion([
-  models.TextqlRpcPublicChatAttachDatasetResponse$inboundSchema,
-  models.ConnectError$inboundSchema,
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    models.TextqlRpcPublicChatAttachDatasetResponse$inboundSchema,
+    models.ConnectError$inboundSchema,
+  ])
+);
 
 export function chatServiceAttachDatasetResponseFromJSON(
   jsonString: string,

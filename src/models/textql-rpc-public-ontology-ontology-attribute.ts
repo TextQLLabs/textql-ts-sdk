@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -124,20 +124,25 @@ export type TextqlRpcPublicOntologyOntologyAttribute = {
 
 /** @internal */
 export const TextqlRpcPublicOntologyOntologyAttribute$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicOntologyOntologyAttribute, unknown> = z.object({
-    id: types.optional(types.string()),
-    objectId: types.optional(types.string()),
-    name: types.optional(types.string()),
-    description: types.optional(types.string()),
-    type: types.optional(
-      TextqlRpcPublicOntologyOntologyAttributeType$inboundSchema,
-    ),
-    isInherent: types.optional(types.boolean()),
-    isMeasure: types.optional(types.boolean()),
-    isDimension: types.optional(types.boolean()),
-    data: types.optional(TextqlRpcPublicOntologyAttributeData$inboundSchema),
-    accessTime: types.optional(types.date()),
-  });
+  z.ZodMiniType<TextqlRpcPublicOntologyOntologyAttribute, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        objectId: types.optional(types.string()),
+        name: types.optional(types.string()),
+        description: types.optional(types.string()),
+        type: types.optional(
+          TextqlRpcPublicOntologyOntologyAttributeType$inboundSchema,
+        ),
+        isInherent: types.optional(types.boolean()),
+        isMeasure: types.optional(types.boolean()),
+        isDimension: types.optional(types.boolean()),
+        data: types.optional(
+          TextqlRpcPublicOntologyAttributeData$inboundSchema,
+        ),
+        accessTime: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicOntologyOntologyAttributeFromJSON(
   jsonString: string,

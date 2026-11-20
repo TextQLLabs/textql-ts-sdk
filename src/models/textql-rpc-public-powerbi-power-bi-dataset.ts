@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -118,18 +118,20 @@ export type TextqlRpcPublicPowerbiPowerBIDataset = {
 export const TextqlRpcPublicPowerbiPowerBIDataset$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPowerbiPowerBIDataset,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  addRowsApiEnabled: types.optional(types.boolean()),
-  configuredBy: types.optional(types.string()),
-  isRefreshable: types.optional(types.boolean()),
-  isEffectiveIdentityRequired: types.optional(types.boolean()),
-  isEffectiveIdentityRolesRequired: types.optional(types.boolean()),
-  isOnPremGatewayRequired: types.optional(types.boolean()),
-  createdDate: types.optional(types.date()),
-  tableNames: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    addRowsApiEnabled: types.optional(types.boolean()),
+    configuredBy: types.optional(types.string()),
+    isRefreshable: types.optional(types.boolean()),
+    isEffectiveIdentityRequired: types.optional(types.boolean()),
+    isEffectiveIdentityRolesRequired: types.optional(types.boolean()),
+    isOnPremGatewayRequired: types.optional(types.boolean()),
+    createdDate: types.optional(types.date()),
+    tableNames: types.optional(z.array(types.string())),
+  })
+);
 
 export function textqlRpcPublicPowerbiPowerBIDatasetFromJSON(
   jsonString: string,

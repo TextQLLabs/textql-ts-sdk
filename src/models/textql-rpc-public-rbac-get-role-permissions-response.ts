@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,12 +18,14 @@ export type TextqlRpcPublicRbacGetRolePermissionsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicRbacGetRolePermissionsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicRbacGetRolePermissionsResponse, unknown> = z
-    .object({
-      permissions: types.optional(
-        z.array(TextqlRpcPublicRbacPermission$inboundSchema),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicRbacGetRolePermissionsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        permissions: types.optional(
+          z.array(TextqlRpcPublicRbacPermission$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicRbacGetRolePermissionsResponseFromJSON(
   jsonString: string,

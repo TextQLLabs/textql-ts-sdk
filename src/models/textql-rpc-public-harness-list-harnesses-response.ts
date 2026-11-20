@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -29,17 +29,21 @@ export type TextqlRpcPublicHarnessListHarnessesResponse = {
 
 /** @internal */
 export const TextqlRpcPublicHarnessListHarnessesResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicHarnessListHarnessesResponse, unknown> = z
-    .object({
-      enabled: types.optional(types.boolean()),
-      endpoints: types.optional(
-        z.array(TextqlRpcPublicHarnessHarnessEndpoint$inboundSchema),
-      ),
-      harnesses: types.optional(
-        z.array(TextqlRpcPublicHarnessHarnessInfo$inboundSchema),
-      ),
-      viewer: types.optional(TextqlRpcPublicHarnessHarnessViewer$inboundSchema),
-    });
+  z.ZodMiniType<TextqlRpcPublicHarnessListHarnessesResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        enabled: types.optional(types.boolean()),
+        endpoints: types.optional(
+          z.array(TextqlRpcPublicHarnessHarnessEndpoint$inboundSchema),
+        ),
+        harnesses: types.optional(
+          z.array(TextqlRpcPublicHarnessHarnessInfo$inboundSchema),
+        ),
+        viewer: types.optional(
+          TextqlRpcPublicHarnessHarnessViewer$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicHarnessListHarnessesResponseFromJSON(
   jsonString: string,

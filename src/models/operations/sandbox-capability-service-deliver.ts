@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -35,20 +35,22 @@ export const SandboxCapabilityServiceDeliverRequest$outboundSchema:
   z.ZodMiniType<
     SandboxCapabilityServiceDeliverRequest$Outbound,
     SandboxCapabilityServiceDeliverRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicSandboxCapabilitySandboxDeliverRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicSandboxCapabilitySandboxDeliverRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function sandboxCapabilityServiceDeliverRequestToJSON(
@@ -64,10 +66,14 @@ export function sandboxCapabilityServiceDeliverRequestToJSON(
 
 /** @internal */
 export const SandboxCapabilityServiceDeliverResponse$inboundSchema:
-  z.ZodMiniType<SandboxCapabilityServiceDeliverResponse, unknown> = smartUnion([
-    models.TextqlRpcPublicSandboxCapabilitySandboxDeliverResponse$inboundSchema,
-    models.ConnectError$inboundSchema,
-  ]);
+  z.ZodMiniType<SandboxCapabilityServiceDeliverResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models
+          .TextqlRpcPublicSandboxCapabilitySandboxDeliverResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function sandboxCapabilityServiceDeliverResponseFromJSON(
   jsonString: string,

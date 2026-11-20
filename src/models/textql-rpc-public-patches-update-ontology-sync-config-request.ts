@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest = {
   syncEnabled?: boolean | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest$Outbound,
     TextqlRpcPublicPatchesUpdateOntologySyncConfigRequest
-  > = z.object({
-    syncEnabled: z.optional(z.boolean()),
-    syncIntervalMinutes: z.optional(z.int()),
-    pushMode: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      syncEnabled: z.optional(z.boolean()),
+      syncIntervalMinutes: z.optional(z.int()),
+      pushMode: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesUpdateOntologySyncConfigRequestToJSON(
   textqlRpcPublicPatchesUpdateOntologySyncConfigRequest:

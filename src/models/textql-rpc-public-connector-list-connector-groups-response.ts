@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -20,12 +20,14 @@ export type TextqlRpcPublicConnectorListConnectorGroupsResponse = {
 /** @internal */
 export const TextqlRpcPublicConnectorListConnectorGroupsResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorListConnectorGroupsResponse, unknown> =
-    z.object({
-      groups: types.optional(
-        z.array(TextqlRpcPublicConnectorConnectorGroup$inboundSchema),
-      ),
-      addableConnectorIds: types.optional(z.array(types.number())),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        groups: types.optional(
+          z.array(TextqlRpcPublicConnectorConnectorGroup$inboundSchema),
+        ),
+        addableConnectorIds: types.optional(z.array(types.number())),
+      })
+    );
 
 export function textqlRpcPublicConnectorListConnectorGroupsResponseFromJSON(
   jsonString: string,

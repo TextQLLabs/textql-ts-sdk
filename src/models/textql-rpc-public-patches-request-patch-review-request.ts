@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesRequestPatchReviewRequest = {
   patchId?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPatchesRequestPatchReviewRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesRequestPatchReviewRequest$Outbound,
     TextqlRpcPublicPatchesRequestPatchReviewRequest
-  > = z.object({
-    patchId: z.optional(z.string()),
-    reviewerMemberId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      patchId: z.optional(z.string()),
+      reviewerMemberId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPatchesRequestPatchReviewRequestToJSON(
   textqlRpcPublicPatchesRequestPatchReviewRequest:

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Request to get a specific batch run
@@ -24,9 +25,11 @@ export const TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest$Outbound,
     TextqlRpcPublicPlaybookGetPlaybookBatchRunRequest
-  > = z.object({
-    batchRunId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      batchRunId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookGetPlaybookBatchRunRequestToJSON(
   textqlRpcPublicPlaybookGetPlaybookBatchRunRequest:

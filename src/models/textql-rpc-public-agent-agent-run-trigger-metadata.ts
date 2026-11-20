@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -24,16 +24,20 @@ export type TextqlRpcPublicAgentAgentRunTriggerMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicAgentAgentRunTriggerMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAgentAgentRunTriggerMetadata, unknown> = z
-    .object({
-      authMethod: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-      apiKeyId: types.optional(types.string()),
-      clientId: types.optional(types.string()),
-      userAgent: types.optional(types.string()),
-      ip: types.optional(types.string()),
-      geo: types.optional(TextqlRpcPublicAgentAgentRunTriggerGeo$inboundSchema),
-    });
+  z.ZodMiniType<TextqlRpcPublicAgentAgentRunTriggerMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        authMethod: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        apiKeyId: types.optional(types.string()),
+        clientId: types.optional(types.string()),
+        userAgent: types.optional(types.string()),
+        ip: types.optional(types.string()),
+        geo: types.optional(
+          TextqlRpcPublicAgentAgentRunTriggerGeo$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicAgentAgentRunTriggerMetadataFromJSON(
   jsonString: string,

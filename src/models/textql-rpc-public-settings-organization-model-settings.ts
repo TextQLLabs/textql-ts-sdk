@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,19 +21,21 @@ export type TextqlRpcPublicSettingsOrganizationModelSettings = {
 
 /** @internal */
 export const TextqlRpcPublicSettingsOrganizationModelSettings$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicSettingsOrganizationModelSettings, unknown> = z
-    .object({
-      defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
-      enabledModels: types.optional(
-        z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
-      ),
-      restrictedModels: types.optional(
-        z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
-      ),
-      systemDefaultModel: types.optional(
-        TextqlRpcPublicChatLlmModel$inboundSchema,
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicSettingsOrganizationModelSettings, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        defaultModel: types.optional(TextqlRpcPublicChatLlmModel$inboundSchema),
+        enabledModels: types.optional(
+          z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
+        ),
+        restrictedModels: types.optional(
+          z.array(TextqlRpcPublicChatLlmModel$inboundSchema),
+        ),
+        systemDefaultModel: types.optional(
+          TextqlRpcPublicChatLlmModel$inboundSchema,
+        ),
+      })
+    );
 
 export function textqlRpcPublicSettingsOrganizationModelSettingsFromJSON(
   jsonString: string,

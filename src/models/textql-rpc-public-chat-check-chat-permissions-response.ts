@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -29,15 +29,17 @@ export type TextqlRpcPublicChatCheckChatPermissionsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicChatCheckChatPermissionsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatCheckChatPermissionsResponse, unknown> = z
-    .object({
-      hasWritePermission: types.optional(types.boolean()),
-      hasReadPermission: types.optional(types.boolean()),
-      connectorId: z.optional(z.nullable(types.number())),
-      ontologyId: z.optional(z.nullable(types.number())),
-      connectorIds: types.optional(z.array(types.number())),
-      ontologyIds: types.optional(z.array(types.number())),
-    });
+  z.ZodMiniType<TextqlRpcPublicChatCheckChatPermissionsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        hasWritePermission: types.optional(types.boolean()),
+        hasReadPermission: types.optional(types.boolean()),
+        connectorId: z.optional(z.nullable(types.number())),
+        ontologyId: z.optional(z.nullable(types.number())),
+        connectorIds: types.optional(z.array(types.number())),
+        ontologyIds: types.optional(z.array(types.number())),
+      })
+    );
 
 export function textqlRpcPublicChatCheckChatPermissionsResponseFromJSON(
   jsonString: string,

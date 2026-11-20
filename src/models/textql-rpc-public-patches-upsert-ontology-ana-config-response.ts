@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,11 +21,13 @@ export const TextqlRpcPublicPatchesUpsertOntologyAnaConfigResponse$inboundSchema
   z.ZodMiniType<
     TextqlRpcPublicPatchesUpsertOntologyAnaConfigResponse,
     unknown
-  > = z.object({
-    config: types.optional(
-      TextqlRpcPublicPatchesOntologyAnaConfig$inboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      config: types.optional(
+        TextqlRpcPublicPatchesOntologyAnaConfig$inboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicPatchesUpsertOntologyAnaConfigResponseFromJSON(
   jsonString: string,

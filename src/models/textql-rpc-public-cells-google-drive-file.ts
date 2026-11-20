@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -21,10 +21,10 @@ export type TextqlRpcPublicCellsGoogleDriveFile = {
 };
 
 /** @internal */
-export const Size$inboundSchema: z.ZodMiniType<Size, unknown> = smartUnion([
-  types.number(),
-  types.string(),
-]);
+export const Size$inboundSchema: z.ZodMiniType<Size, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function sizeFromJSON(
   jsonString: string,
@@ -40,14 +40,16 @@ export function sizeFromJSON(
 export const TextqlRpcPublicCellsGoogleDriveFile$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsGoogleDriveFile,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  name: types.optional(types.string()),
-  mimeType: types.optional(types.string()),
-  size: z.optional(z.nullable(smartUnion([types.number(), types.string()]))),
-  modifiedTime: z.optional(z.nullable(types.string())),
-  webViewLink: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    name: types.optional(types.string()),
+    mimeType: types.optional(types.string()),
+    size: z.optional(z.nullable(smartUnion([types.number(), types.string()]))),
+    modifiedTime: z.optional(z.nullable(types.string())),
+    webViewLink: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsGoogleDriveFileFromJSON(
   jsonString: string,

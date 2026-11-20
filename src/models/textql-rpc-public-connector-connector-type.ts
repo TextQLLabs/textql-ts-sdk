@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -48,8 +49,12 @@ export type TextqlRpcPublicConnectorConnectorType = OpenEnum<
 export const TextqlRpcPublicConnectorConnectorType$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorConnectorType,
   unknown
-> = openEnums.inboundSchema(TextqlRpcPublicConnectorConnectorType);
+> = /* @__PURE__ */ lazySchema$(() =>
+  openEnums.inboundSchema(TextqlRpcPublicConnectorConnectorType)
+);
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorType$outboundSchema:
-  z.ZodMiniType<string, TextqlRpcPublicConnectorConnectorType> = openEnums
-    .outboundSchema(TextqlRpcPublicConnectorConnectorType);
+  z.ZodMiniType<string, TextqlRpcPublicConnectorConnectorType> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.outboundSchema(TextqlRpcPublicConnectorConnectorType)
+    );

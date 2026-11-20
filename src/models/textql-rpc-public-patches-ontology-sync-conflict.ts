@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -112,16 +112,17 @@ export type TextqlRpcPublicPatchesOntologySyncConflict = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesOntologySyncConflict$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesOntologySyncConflict, unknown> = z.object(
-    {
-      id: types.optional(types.string()),
-      filePath: types.optional(types.string()),
-      oursContent: types.optional(types.string()),
-      theirsContent: types.optional(types.string()),
-      baseContent: types.optional(types.string()),
-      createdAt: types.optional(types.date()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicPatchesOntologySyncConflict, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        id: types.optional(types.string()),
+        filePath: types.optional(types.string()),
+        oursContent: types.optional(types.string()),
+        theirsContent: types.optional(types.string()),
+        baseContent: types.optional(types.string()),
+        createdAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicPatchesOntologySyncConflictFromJSON(
   jsonString: string,

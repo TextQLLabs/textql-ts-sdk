@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -61,26 +61,28 @@ export type TextqlRpcPublicObserveGetObservabilityStatsResponse = {
 /** @internal */
 export const TextqlRpcPublicObserveGetObservabilityStatsResponse$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicObserveGetObservabilityStatsResponse, unknown> =
-    z.object({
-      summary: types.optional(
-        TextqlRpcPublicObserveObservabilitySummary$inboundSchema,
-      ),
-      dailyVolume: types.optional(
-        z.array(TextqlRpcPublicObserveDailyVolumePoint$inboundSchema),
-      ),
-      warningDistribution: types.optional(
-        z.array(TextqlRpcPublicObserveWarningTypeCount$inboundSchema),
-      ),
-      warningCatalog: types.optional(
-        z.array(TextqlRpcPublicObserveWarningTypeMeta$inboundSchema),
-      ),
-      warningDailyDistribution: types.optional(
-        z.array(TextqlRpcPublicObserveWarningTypeDailyCount$inboundSchema),
-      ),
-      usageHeatmap: types.optional(
-        z.array(TextqlRpcPublicObserveUsageHeatmapPoint$inboundSchema),
-      ),
-    });
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        summary: types.optional(
+          TextqlRpcPublicObserveObservabilitySummary$inboundSchema,
+        ),
+        dailyVolume: types.optional(
+          z.array(TextqlRpcPublicObserveDailyVolumePoint$inboundSchema),
+        ),
+        warningDistribution: types.optional(
+          z.array(TextqlRpcPublicObserveWarningTypeCount$inboundSchema),
+        ),
+        warningCatalog: types.optional(
+          z.array(TextqlRpcPublicObserveWarningTypeMeta$inboundSchema),
+        ),
+        warningDailyDistribution: types.optional(
+          z.array(TextqlRpcPublicObserveWarningTypeDailyCount$inboundSchema),
+        ),
+        usageHeatmap: types.optional(
+          z.array(TextqlRpcPublicObserveUsageHeatmapPoint$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicObserveGetObservabilityStatsResponseFromJSON(
   jsonString: string,

@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * GetConfigExportCapabilities tells the UI whether to offer "Save as config":
@@ -24,7 +25,7 @@ export const TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest$outboundSc
   z.ZodMiniType<
     TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest$Outbound,
     TextqlRpcPublicPatchesGetConfigExportCapabilitiesRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicPatchesGetConfigExportCapabilitiesRequestToJSON(
   textqlRpcPublicPatchesGetConfigExportCapabilitiesRequest:

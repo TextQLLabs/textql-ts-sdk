@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -36,14 +36,17 @@ export type TextqlRpcPublicConfigSourceConfigSource = {
 
 /** @internal */
 export const TextqlRpcPublicConfigSourceConfigSource$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConfigSourceConfigSource, unknown> = z.object({
-    filePath: types.optional(types.string()),
-    syncStatus: types.optional(
-      TextqlRpcPublicConfigSourceConfigSyncStatus$inboundSchema,
-    ),
-    syncError: z.optional(z.nullable(types.string())),
-    breakingPatchId: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConfigSourceConfigSource, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        filePath: types.optional(types.string()),
+        syncStatus: types.optional(
+          TextqlRpcPublicConfigSourceConfigSyncStatus$inboundSchema,
+        ),
+        syncError: z.optional(z.nullable(types.string())),
+        breakingPatchId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicConfigSourceConfigSourceFromJSON(
   jsonString: string,

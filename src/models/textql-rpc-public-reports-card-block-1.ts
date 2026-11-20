@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -22,11 +22,13 @@ export type TextqlRpcPublicReportsCardBlock1 = {
 export const TextqlRpcPublicReportsCardBlock1$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsCardBlock1,
   unknown
-> = z.object({
-  blocks: types.optional(
-    z.array(z.lazy(() => TextqlRpcPublicReportsReportBlock$inboundSchema)),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    blocks: types.optional(
+      z.array(z.lazy(() => TextqlRpcPublicReportsReportBlock$inboundSchema)),
+    ),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsCardBlock1$Outbound = {
   blocks?: Array<TextqlRpcPublicReportsReportBlock$Outbound> | undefined;
@@ -36,11 +38,13 @@ export type TextqlRpcPublicReportsCardBlock1$Outbound = {
 export const TextqlRpcPublicReportsCardBlock1$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsCardBlock1$Outbound,
   TextqlRpcPublicReportsCardBlock1
-> = z.object({
-  blocks: z.optional(
-    z.array(z.lazy(() => TextqlRpcPublicReportsReportBlock$outboundSchema)),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    blocks: z.optional(
+      z.array(z.lazy(() => TextqlRpcPublicReportsReportBlock$outboundSchema)),
+    ),
+  })
+);
 
 export function textqlRpcPublicReportsCardBlock1ToJSON(
   textqlRpcPublicReportsCardBlock1: TextqlRpcPublicReportsCardBlock1,

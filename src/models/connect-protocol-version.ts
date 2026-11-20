@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 /**
@@ -19,4 +20,4 @@ export type ConnectProtocolVersion = ClosedEnum<typeof ConnectProtocolVersion>;
 /** @internal */
 export const ConnectProtocolVersion$outboundSchema: z.ZodMiniEnum<
   typeof ConnectProtocolVersion
-> = z.enum(ConnectProtocolVersion);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(ConnectProtocolVersion));

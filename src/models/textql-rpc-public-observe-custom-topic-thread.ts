@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -114,13 +114,16 @@ export type TextqlRpcPublicObserveCustomTopicThread = {
 
 /** @internal */
 export const TextqlRpcPublicObserveCustomTopicThread$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicObserveCustomTopicThread, unknown> = z.object({
-    chatId: types.optional(types.string()),
-    title: types.optional(types.string()),
-    memberId: types.optional(types.string()),
-    taggedBy: types.optional(types.string()),
-    taggedAt: types.optional(types.date()),
-  });
+  z.ZodMiniType<TextqlRpcPublicObserveCustomTopicThread, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        chatId: types.optional(types.string()),
+        title: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        taggedBy: types.optional(types.string()),
+        taggedAt: types.optional(types.date()),
+      })
+    );
 
 export function textqlRpcPublicObserveCustomTopicThreadFromJSON(
   jsonString: string,

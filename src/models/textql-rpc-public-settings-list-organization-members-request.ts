@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicSettingsListOrganizationMembersRequest = {
   orgId?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicSettingsListOrganizationMembersRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSettingsListOrganizationMembersRequest$Outbound,
     TextqlRpcPublicSettingsListOrganizationMembersRequest
-  > = z.object({
-    orgId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      orgId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicSettingsListOrganizationMembersRequestToJSON(
   textqlRpcPublicSettingsListOrganizationMembersRequest:

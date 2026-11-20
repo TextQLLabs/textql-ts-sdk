@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAuditLogTestOtlpExportConnectionRequest = {
   otlpEndpoint?: string | undefined;
@@ -22,11 +23,13 @@ export const TextqlRpcPublicAuditLogTestOtlpExportConnectionRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicAuditLogTestOtlpExportConnectionRequest$Outbound,
     TextqlRpcPublicAuditLogTestOtlpExportConnectionRequest
-  > = z.object({
-    otlpEndpoint: z.optional(z.string()),
-    otlpHeaders: z.optional(z.string()),
-    otlpProtocol: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      otlpEndpoint: z.optional(z.string()),
+      otlpHeaders: z.optional(z.string()),
+      otlpProtocol: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicAuditLogTestOtlpExportConnectionRequestToJSON(
   textqlRpcPublicAuditLogTestOtlpExportConnectionRequest:

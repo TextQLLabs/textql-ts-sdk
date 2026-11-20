@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -7807,7 +7807,9 @@ export type TextqlRpcPublicChatCell =
 export const TextqlRpcPublicChatCellDurationMs60$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs60,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs60FromJSON(
   jsonString: string,
@@ -7821,21 +7823,24 @@ export function textqlRpcPublicChatCellDurationMs60FromJSON(
 }
 
 /** @internal */
-export const WsCell$inboundSchema: z.ZodMiniType<WsCell, unknown> = z.object({
-  wsCell: TextqlRpcPublicCellsWebSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const WsCell$inboundSchema: z.ZodMiniType<WsCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      wsCell: TextqlRpcPublicCellsWebSearchCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function wsCellFromJSON(
   jsonString: string,
@@ -7851,7 +7856,9 @@ export function wsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs59$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs59,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs59FromJSON(
   jsonString: string,
@@ -7866,21 +7873,23 @@ export function textqlRpcPublicChatCellDurationMs59FromJSON(
 
 /** @internal */
 export const UseSkillCell$inboundSchema: z.ZodMiniType<UseSkillCell, unknown> =
-  z.object({
-    useSkillCell: TextqlRpcPublicCellsUseSkillCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      useSkillCell: TextqlRpcPublicCellsUseSkillCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function useSkillCellFromJSON(
   jsonString: string,
@@ -7896,7 +7905,9 @@ export function useSkillCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs58$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs58,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs58FromJSON(
   jsonString: string,
@@ -7911,21 +7922,23 @@ export function textqlRpcPublicChatCellDurationMs58FromJSON(
 
 /** @internal */
 export const ThinkingCell$inboundSchema: z.ZodMiniType<ThinkingCell, unknown> =
-  z.object({
-    thinkingCell: TextqlRpcPublicCellsThinkingCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      thinkingCell: TextqlRpcPublicCellsThinkingCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function thinkingCellFromJSON(
   jsonString: string,
@@ -7941,7 +7954,9 @@ export function thinkingCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs57$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs57,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs57FromJSON(
   jsonString: string,
@@ -7955,22 +7970,24 @@ export function textqlRpcPublicChatCellDurationMs57FromJSON(
 }
 
 /** @internal */
-export const TextCell$inboundSchema: z.ZodMiniType<TextCell, unknown> = z
-  .object({
-    textCell: TextqlRpcPublicCellsTextCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const TextCell$inboundSchema: z.ZodMiniType<TextCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      textCell: TextqlRpcPublicCellsTextCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function textCellFromJSON(
   jsonString: string,
@@ -7986,7 +8003,9 @@ export function textCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs56$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs56,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs56FromJSON(
   jsonString: string,
@@ -8003,21 +8022,23 @@ export function textqlRpcPublicChatCellDurationMs56FromJSON(
 export const TabularFileCell$inboundSchema: z.ZodMiniType<
   TabularFileCell,
   unknown
-> = z.object({
-  tabularFileCell: TextqlRpcPublicCellsTabularFileCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tabularFileCell: TextqlRpcPublicCellsTabularFileCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function tabularFileCellFromJSON(
   jsonString: string,
@@ -8033,7 +8054,9 @@ export function tabularFileCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs55$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs55,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs55FromJSON(
   jsonString: string,
@@ -8050,21 +8073,23 @@ export function textqlRpcPublicChatCellDurationMs55FromJSON(
 export const TableauSqlCell$inboundSchema: z.ZodMiniType<
   TableauSqlCell,
   unknown
-> = z.object({
-  tableauSqlCell: TextqlRpcPublicCellsTableauSQLCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tableauSqlCell: TextqlRpcPublicCellsTableauSQLCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function tableauSqlCellFromJSON(
   jsonString: string,
@@ -8080,7 +8105,9 @@ export function tableauSqlCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs54$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs54,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs54FromJSON(
   jsonString: string,
@@ -8097,22 +8124,24 @@ export function textqlRpcPublicChatCellDurationMs54FromJSON(
 export const TableauSearchFieldsCell$inboundSchema: z.ZodMiniType<
   TableauSearchFieldsCell,
   unknown
-> = z.object({
-  tableauSearchFieldsCell:
-    TextqlRpcPublicCellsTableauSearchFieldsCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tableauSearchFieldsCell:
+      TextqlRpcPublicCellsTableauSearchFieldsCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function tableauSearchFieldsCellFromJSON(
   jsonString: string,
@@ -8128,7 +8157,9 @@ export function tableauSearchFieldsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs53$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs53,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs53FromJSON(
   jsonString: string,
@@ -8145,21 +8176,23 @@ export function textqlRpcPublicChatCellDurationMs53FromJSON(
 export const TableauMetadataCell$inboundSchema: z.ZodMiniType<
   TableauMetadataCell,
   unknown
-> = z.object({
-  tableauMetadataCell: TextqlRpcPublicCellsTableauMetadataCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    tableauMetadataCell: TextqlRpcPublicCellsTableauMetadataCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function tableauMetadataCellFromJSON(
   jsonString: string,
@@ -8175,7 +8208,9 @@ export function tableauMetadataCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs52$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs52,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs52FromJSON(
   jsonString: string,
@@ -8189,22 +8224,24 @@ export function textqlRpcPublicChatCellDurationMs52FromJSON(
 }
 
 /** @internal */
-export const TableauCell$inboundSchema: z.ZodMiniType<TableauCell, unknown> = z
-  .object({
-    tableauCell: TextqlRpcPublicCellsTableauCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const TableauCell$inboundSchema: z.ZodMiniType<TableauCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      tableauCell: TextqlRpcPublicCellsTableauCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function tableauCellFromJSON(
   jsonString: string,
@@ -8220,7 +8257,9 @@ export function tableauCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs51$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs51,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs51FromJSON(
   jsonString: string,
@@ -8234,22 +8273,24 @@ export function textqlRpcPublicChatCellDurationMs51FromJSON(
 }
 
 /** @internal */
-export const SummaryCell$inboundSchema: z.ZodMiniType<SummaryCell, unknown> = z
-  .object({
-    summaryCell: TextqlRpcPublicCellsSummaryCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const SummaryCell$inboundSchema: z.ZodMiniType<SummaryCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      summaryCell: TextqlRpcPublicCellsSummaryCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function summaryCellFromJSON(
   jsonString: string,
@@ -8265,7 +8306,9 @@ export function summaryCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs50$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs50,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs50FromJSON(
   jsonString: string,
@@ -8280,21 +8323,23 @@ export function textqlRpcPublicChatCellDurationMs50FromJSON(
 
 /** @internal */
 export const SubagentCell$inboundSchema: z.ZodMiniType<SubagentCell, unknown> =
-  z.object({
-    subagentCell: TextqlRpcPublicCellsSubagentCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      subagentCell: TextqlRpcPublicCellsSubagentCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function subagentCellFromJSON(
   jsonString: string,
@@ -8310,7 +8355,9 @@ export function subagentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs49$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs49,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs49FromJSON(
   jsonString: string,
@@ -8327,21 +8374,23 @@ export function textqlRpcPublicChatCellDurationMs49FromJSON(
 export const StreamlitCell$inboundSchema: z.ZodMiniType<
   StreamlitCell,
   unknown
-> = z.object({
-  streamlitCell: TextqlRpcPublicCellsStreamlitCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    streamlitCell: TextqlRpcPublicCellsStreamlitCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function streamlitCellFromJSON(
   jsonString: string,
@@ -8357,7 +8406,9 @@ export function streamlitCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs48$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs48,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs48FromJSON(
   jsonString: string,
@@ -8371,22 +8422,24 @@ export function textqlRpcPublicChatCellDurationMs48FromJSON(
 }
 
 /** @internal */
-export const StatusCell$inboundSchema: z.ZodMiniType<StatusCell, unknown> = z
-  .object({
-    statusCell: TextqlRpcPublicCellsStatusCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const StatusCell$inboundSchema: z.ZodMiniType<StatusCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      statusCell: TextqlRpcPublicCellsStatusCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function statusCellFromJSON(
   jsonString: string,
@@ -8402,7 +8455,9 @@ export function statusCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs47$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs47,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs47FromJSON(
   jsonString: string,
@@ -8416,21 +8471,24 @@ export function textqlRpcPublicChatCellDurationMs47FromJSON(
 }
 
 /** @internal */
-export const SqlCell$inboundSchema: z.ZodMiniType<SqlCell, unknown> = z.object({
-  sqlCell: TextqlRpcPublicCellsSQLCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const SqlCell$inboundSchema: z.ZodMiniType<SqlCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      sqlCell: TextqlRpcPublicCellsSQLCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function sqlCellFromJSON(
   jsonString: string,
@@ -8446,7 +8504,9 @@ export function sqlCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs46$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs46,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs46FromJSON(
   jsonString: string,
@@ -8463,21 +8523,23 @@ export function textqlRpcPublicChatCellDurationMs46FromJSON(
 export const ReportHistoryCell$inboundSchema: z.ZodMiniType<
   ReportHistoryCell,
   unknown
-> = z.object({
-  reportHistoryCell: TextqlRpcPublicCellsReportHistoryCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    reportHistoryCell: TextqlRpcPublicCellsReportHistoryCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function reportHistoryCellFromJSON(
   jsonString: string,
@@ -8493,7 +8555,9 @@ export function reportHistoryCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs45$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs45,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs45FromJSON(
   jsonString: string,
@@ -8507,22 +8571,24 @@ export function textqlRpcPublicChatCellDurationMs45FromJSON(
 }
 
 /** @internal */
-export const ReportCell$inboundSchema: z.ZodMiniType<ReportCell, unknown> = z
-  .object({
-    reportCell: TextqlRpcPublicCellsReportCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const ReportCell$inboundSchema: z.ZodMiniType<ReportCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      reportCell: TextqlRpcPublicCellsReportCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function reportCellFromJSON(
   jsonString: string,
@@ -8538,7 +8604,9 @@ export function reportCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs44$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs44,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs44FromJSON(
   jsonString: string,
@@ -8555,21 +8623,23 @@ export function textqlRpcPublicChatCellDurationMs44FromJSON(
 export const QuestionsCell$inboundSchema: z.ZodMiniType<
   QuestionsCell,
   unknown
-> = z.object({
-  questionsCell: TextqlRpcPublicCellsQuestionsCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    questionsCell: TextqlRpcPublicCellsQuestionsCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function questionsCellFromJSON(
   jsonString: string,
@@ -8585,7 +8655,9 @@ export function questionsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs43$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs43,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs43FromJSON(
   jsonString: string,
@@ -8599,21 +8671,24 @@ export function textqlRpcPublicChatCellDurationMs43FromJSON(
 }
 
 /** @internal */
-export const PyCell$inboundSchema: z.ZodMiniType<PyCell, unknown> = z.object({
-  pyCell: TextqlRpcPublicCellsPythonCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const PyCell$inboundSchema: z.ZodMiniType<PyCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      pyCell: TextqlRpcPublicCellsPythonCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function pyCellFromJSON(
   jsonString: string,
@@ -8629,7 +8704,9 @@ export function pyCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs42$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs42,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs42FromJSON(
   jsonString: string,
@@ -8643,22 +8720,24 @@ export function textqlRpcPublicChatCellDurationMs42FromJSON(
 }
 
 /** @internal */
-export const PreviewCell$inboundSchema: z.ZodMiniType<PreviewCell, unknown> = z
-  .object({
-    previewCell: TextqlRpcPublicCellsPreviewCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const PreviewCell$inboundSchema: z.ZodMiniType<PreviewCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      previewCell: TextqlRpcPublicCellsPreviewCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function previewCellFromJSON(
   jsonString: string,
@@ -8674,7 +8753,9 @@ export function previewCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs41$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs41,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs41FromJSON(
   jsonString: string,
@@ -8691,21 +8772,23 @@ export function textqlRpcPublicChatCellDurationMs41FromJSON(
 export const PowerbiDaxCell$inboundSchema: z.ZodMiniType<
   PowerbiDaxCell,
   unknown
-> = z.object({
-  powerbiDaxCell: TextqlRpcPublicCellsPowerBIDAXCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    powerbiDaxCell: TextqlRpcPublicCellsPowerBIDAXCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function powerbiDaxCellFromJSON(
   jsonString: string,
@@ -8721,7 +8804,9 @@ export function powerbiDaxCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs40$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs40,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs40FromJSON(
   jsonString: string,
@@ -8735,22 +8820,24 @@ export function textqlRpcPublicChatCellDurationMs40FromJSON(
 }
 
 /** @internal */
-export const PowerbiCell$inboundSchema: z.ZodMiniType<PowerbiCell, unknown> = z
-  .object({
-    powerbiCell: TextqlRpcPublicCellsPowerBICell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const PowerbiCell$inboundSchema: z.ZodMiniType<PowerbiCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      powerbiCell: TextqlRpcPublicCellsPowerBICell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function powerbiCellFromJSON(
   jsonString: string,
@@ -8766,7 +8853,9 @@ export function powerbiCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs39$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs39,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs39FromJSON(
   jsonString: string,
@@ -8783,21 +8872,23 @@ export function textqlRpcPublicChatCellDurationMs39FromJSON(
 export const PlaybookEditorCell$inboundSchema: z.ZodMiniType<
   PlaybookEditorCell,
   unknown
-> = z.object({
-  playbookEditorCell: TextqlRpcPublicCellsPlaybookEditorCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    playbookEditorCell: TextqlRpcPublicCellsPlaybookEditorCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function playbookEditorCellFromJSON(
   jsonString: string,
@@ -8813,7 +8904,9 @@ export function playbookEditorCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs38$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs38,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs38FromJSON(
   jsonString: string,
@@ -8827,22 +8920,24 @@ export function textqlRpcPublicChatCellDurationMs38FromJSON(
 }
 
 /** @internal */
-export const PatchCell$inboundSchema: z.ZodMiniType<PatchCell, unknown> = z
-  .object({
-    patchCell: TextqlRpcPublicCellsPatchCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const PatchCell$inboundSchema: z.ZodMiniType<PatchCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      patchCell: TextqlRpcPublicCellsPatchCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function patchCellFromJSON(
   jsonString: string,
@@ -8858,7 +8953,9 @@ export function patchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs37$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs37,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs37FromJSON(
   jsonString: string,
@@ -8875,22 +8972,24 @@ export function textqlRpcPublicChatCellDurationMs37FromJSON(
 export const OntologySearchMetricsCell$inboundSchema: z.ZodMiniType<
   OntologySearchMetricsCell,
   unknown
-> = z.object({
-  ontologySearchMetricsCell:
-    TextqlRpcPublicCellsOntologySearchMetricsCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontologySearchMetricsCell:
+      TextqlRpcPublicCellsOntologySearchMetricsCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function ontologySearchMetricsCellFromJSON(
   jsonString: string,
@@ -8906,7 +9005,9 @@ export function ontologySearchMetricsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs36$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs36,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs36FromJSON(
   jsonString: string,
@@ -8923,21 +9024,23 @@ export function textqlRpcPublicChatCellDurationMs36FromJSON(
 export const OntologyQueryCell$inboundSchema: z.ZodMiniType<
   OntologyQueryCell,
   unknown
-> = z.object({
-  ontologyQueryCell: TextqlRpcPublicCellsOntologyQueryCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontologyQueryCell: TextqlRpcPublicCellsOntologyQueryCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function ontologyQueryCellFromJSON(
   jsonString: string,
@@ -8953,7 +9056,9 @@ export function ontologyQueryCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs35$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs35,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs35FromJSON(
   jsonString: string,
@@ -8970,22 +9075,24 @@ export function textqlRpcPublicChatCellDurationMs35FromJSON(
 export const OntologyOpenObjectCell$inboundSchema: z.ZodMiniType<
   OntologyOpenObjectCell,
   unknown
-> = z.object({
-  ontologyOpenObjectCell:
-    TextqlRpcPublicCellsOntologyOpenObjectCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontologyOpenObjectCell:
+      TextqlRpcPublicCellsOntologyOpenObjectCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function ontologyOpenObjectCellFromJSON(
   jsonString: string,
@@ -9001,7 +9108,9 @@ export function ontologyOpenObjectCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs34$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs34,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs34FromJSON(
   jsonString: string,
@@ -9018,21 +9127,23 @@ export function textqlRpcPublicChatCellDurationMs34FromJSON(
 export const OntologyEditorCell$inboundSchema: z.ZodMiniType<
   OntologyEditorCell,
   unknown
-> = z.object({
-  ontologyEditorCell: TextqlRpcPublicCellsOntologyEditorCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    ontologyEditorCell: TextqlRpcPublicCellsOntologyEditorCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function ontologyEditorCellFromJSON(
   jsonString: string,
@@ -9048,7 +9159,9 @@ export function ontologyEditorCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs33$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs33,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs33FromJSON(
   jsonString: string,
@@ -9065,22 +9178,24 @@ export function textqlRpcPublicChatCellDurationMs33FromJSON(
 export const Microsoft365EmailSearchCell$inboundSchema: z.ZodMiniType<
   Microsoft365EmailSearchCell,
   unknown
-> = z.object({
-  microsoft365EmailSearchCell:
-    TextqlRpcPublicCellsMicrosoft365EmailSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    microsoft365EmailSearchCell:
+      TextqlRpcPublicCellsMicrosoft365EmailSearchCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function microsoft365EmailSearchCellFromJSON(
   jsonString: string,
@@ -9096,7 +9211,9 @@ export function microsoft365EmailSearchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs32$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs32,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs32FromJSON(
   jsonString: string,
@@ -9113,22 +9230,24 @@ export function textqlRpcPublicChatCellDurationMs32FromJSON(
 export const Microsoft365EmailContentCell$inboundSchema: z.ZodMiniType<
   Microsoft365EmailContentCell,
   unknown
-> = z.object({
-  microsoft365EmailContentCell:
-    TextqlRpcPublicCellsMicrosoft365EmailContentCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    microsoft365EmailContentCell:
+      TextqlRpcPublicCellsMicrosoft365EmailContentCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function microsoft365EmailContentCellFromJSON(
   jsonString: string,
@@ -9144,7 +9263,9 @@ export function microsoft365EmailContentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs31$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs31,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs31FromJSON(
   jsonString: string,
@@ -9161,22 +9282,24 @@ export function textqlRpcPublicChatCellDurationMs31FromJSON(
 export const Microsoft365CalendarCell$inboundSchema: z.ZodMiniType<
   Microsoft365CalendarCell,
   unknown
-> = z.object({
-  microsoft365CalendarCell:
-    TextqlRpcPublicCellsMicrosoft365CalendarCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    microsoft365CalendarCell:
+      TextqlRpcPublicCellsMicrosoft365CalendarCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function microsoft365CalendarCellFromJSON(
   jsonString: string,
@@ -9192,7 +9315,9 @@ export function microsoft365CalendarCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs30$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs30,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs30FromJSON(
   jsonString: string,
@@ -9206,22 +9331,24 @@ export function textqlRpcPublicChatCellDurationMs30FromJSON(
 }
 
 /** @internal */
-export const MetricsCell$inboundSchema: z.ZodMiniType<MetricsCell, unknown> = z
-  .object({
-    metricsCell: TextqlRpcPublicCellsMetricsCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const MetricsCell$inboundSchema: z.ZodMiniType<MetricsCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      metricsCell: TextqlRpcPublicCellsMetricsCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function metricsCellFromJSON(
   jsonString: string,
@@ -9237,7 +9364,9 @@ export function metricsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs29$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs29,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs29FromJSON(
   jsonString: string,
@@ -9251,21 +9380,24 @@ export function textqlRpcPublicChatCellDurationMs29FromJSON(
 }
 
 /** @internal */
-export const MdCell$inboundSchema: z.ZodMiniType<MdCell, unknown> = z.object({
-  mdCell: TextqlRpcPublicCellsMarkdownCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const MdCell$inboundSchema: z.ZodMiniType<MdCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mdCell: TextqlRpcPublicCellsMarkdownCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function mdCellFromJSON(
   jsonString: string,
@@ -9281,7 +9413,9 @@ export function mdCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs28$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs28,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs28FromJSON(
   jsonString: string,
@@ -9295,22 +9429,24 @@ export function textqlRpcPublicChatCellDurationMs28FromJSON(
 }
 
 /** @internal */
-export const McpToolCell$inboundSchema: z.ZodMiniType<McpToolCell, unknown> = z
-  .object({
-    mcpToolCell: TextqlRpcPublicCellsMCPToolCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const McpToolCell$inboundSchema: z.ZodMiniType<McpToolCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      mcpToolCell: TextqlRpcPublicCellsMCPToolCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function mcpToolCellFromJSON(
   jsonString: string,
@@ -9326,7 +9462,9 @@ export function mcpToolCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs27$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs27,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs27FromJSON(
   jsonString: string,
@@ -9343,21 +9481,23 @@ export function textqlRpcPublicChatCellDurationMs27FromJSON(
 export const ListUsersCell$inboundSchema: z.ZodMiniType<
   ListUsersCell,
   unknown
-> = z.object({
-  listUsersCell: TextqlRpcPublicCellsListUsersCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    listUsersCell: TextqlRpcPublicCellsListUsersCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function listUsersCellFromJSON(
   jsonString: string,
@@ -9373,7 +9513,9 @@ export function listUsersCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs26$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs26,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs26FromJSON(
   jsonString: string,
@@ -9390,21 +9532,23 @@ export function textqlRpcPublicChatCellDurationMs26FromJSON(
 export const ListDashboardsCell$inboundSchema: z.ZodMiniType<
   ListDashboardsCell,
   unknown
-> = z.object({
-  listDashboardsCell: TextqlRpcPublicCellsListDashboardsCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    listDashboardsCell: TextqlRpcPublicCellsListDashboardsCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function listDashboardsCellFromJSON(
   jsonString: string,
@@ -9420,7 +9564,9 @@ export function listDashboardsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs25$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs25,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs25FromJSON(
   jsonString: string,
@@ -9435,21 +9581,23 @@ export function textqlRpcPublicChatCellDurationMs25FromJSON(
 
 /** @internal */
 export const ListAppsCell$inboundSchema: z.ZodMiniType<ListAppsCell, unknown> =
-  z.object({
-    listAppsCell: TextqlRpcPublicCellsListAppsCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      listAppsCell: TextqlRpcPublicCellsListAppsCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function listAppsCellFromJSON(
   jsonString: string,
@@ -9465,7 +9613,9 @@ export function listAppsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs24$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs24,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs24FromJSON(
   jsonString: string,
@@ -9482,21 +9632,23 @@ export function textqlRpcPublicChatCellDurationMs24FromJSON(
 export const LinkedinSearchCell$inboundSchema: z.ZodMiniType<
   LinkedinSearchCell,
   unknown
-> = z.object({
-  linkedinSearchCell: TextqlRpcPublicCellsLinkedinSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    linkedinSearchCell: TextqlRpcPublicCellsLinkedinSearchCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function linkedinSearchCellFromJSON(
   jsonString: string,
@@ -9512,7 +9664,9 @@ export function linkedinSearchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs23$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs23,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs23FromJSON(
   jsonString: string,
@@ -9529,21 +9683,23 @@ export function textqlRpcPublicChatCellDurationMs23FromJSON(
 export const JavascriptCell$inboundSchema: z.ZodMiniType<
   JavascriptCell,
   unknown
-> = z.object({
-  javascriptCell: TextqlRpcPublicCellsJavaScriptCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    javascriptCell: TextqlRpcPublicCellsJavaScriptCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function javascriptCellFromJSON(
   jsonString: string,
@@ -9559,7 +9715,9 @@ export function javascriptCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs22$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs22,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs22FromJSON(
   jsonString: string,
@@ -9573,22 +9731,24 @@ export function textqlRpcPublicChatCellDurationMs22FromJSON(
 }
 
 /** @internal */
-export const ImageCell$inboundSchema: z.ZodMiniType<ImageCell, unknown> = z
-  .object({
-    imageCell: TextqlRpcPublicCellsImageCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const ImageCell$inboundSchema: z.ZodMiniType<ImageCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      imageCell: TextqlRpcPublicCellsImageCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function imageCellFromJSON(
   jsonString: string,
@@ -9604,7 +9764,9 @@ export function imageCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs21$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs21,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs21FromJSON(
   jsonString: string,
@@ -9621,22 +9783,24 @@ export function textqlRpcPublicChatCellDurationMs21FromJSON(
 export const GoogleDriveSearchCell$inboundSchema: z.ZodMiniType<
   GoogleDriveSearchCell,
   unknown
-> = z.object({
-  googleDriveSearchCell:
-    TextqlRpcPublicCellsGoogleDriveSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleDriveSearchCell:
+      TextqlRpcPublicCellsGoogleDriveSearchCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function googleDriveSearchCellFromJSON(
   jsonString: string,
@@ -9652,7 +9816,9 @@ export function googleDriveSearchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs20$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs20,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs20FromJSON(
   jsonString: string,
@@ -9669,22 +9835,24 @@ export function textqlRpcPublicChatCellDurationMs20FromJSON(
 export const GoogleDriveContentCell$inboundSchema: z.ZodMiniType<
   GoogleDriveContentCell,
   unknown
-> = z.object({
-  googleDriveContentCell:
-    TextqlRpcPublicCellsGoogleDriveContentCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleDriveContentCell:
+      TextqlRpcPublicCellsGoogleDriveContentCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function googleDriveContentCellFromJSON(
   jsonString: string,
@@ -9700,7 +9868,9 @@ export function googleDriveContentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs19$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs19,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs19FromJSON(
   jsonString: string,
@@ -9717,22 +9887,24 @@ export function textqlRpcPublicChatCellDurationMs19FromJSON(
 export const GoogleCalendarSearchCell$inboundSchema: z.ZodMiniType<
   GoogleCalendarSearchCell,
   unknown
-> = z.object({
-  googleCalendarSearchCell:
-    TextqlRpcPublicCellsGoogleCalendarSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    googleCalendarSearchCell:
+      TextqlRpcPublicCellsGoogleCalendarSearchCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function googleCalendarSearchCellFromJSON(
   jsonString: string,
@@ -9748,7 +9920,9 @@ export function googleCalendarSearchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs18$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs18,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs18FromJSON(
   jsonString: string,
@@ -9765,21 +9939,24 @@ export function textqlRpcPublicChatCellDurationMs18FromJSON(
 export const GmailEmailSearchCell$inboundSchema: z.ZodMiniType<
   GmailEmailSearchCell,
   unknown
-> = z.object({
-  gmailEmailSearchCell: TextqlRpcPublicCellsGmailEmailSearchCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    gmailEmailSearchCell:
+      TextqlRpcPublicCellsGmailEmailSearchCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function gmailEmailSearchCellFromJSON(
   jsonString: string,
@@ -9795,7 +9972,9 @@ export function gmailEmailSearchCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs17$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs17,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs17FromJSON(
   jsonString: string,
@@ -9812,22 +9991,24 @@ export function textqlRpcPublicChatCellDurationMs17FromJSON(
 export const GmailEmailContentCell$inboundSchema: z.ZodMiniType<
   GmailEmailContentCell,
   unknown
-> = z.object({
-  gmailEmailContentCell:
-    TextqlRpcPublicCellsGmailEmailContentCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    gmailEmailContentCell:
+      TextqlRpcPublicCellsGmailEmailContentCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function gmailEmailContentCellFromJSON(
   jsonString: string,
@@ -9843,7 +10024,9 @@ export function gmailEmailContentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs16$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs16,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs16FromJSON(
   jsonString: string,
@@ -9860,21 +10043,23 @@ export function textqlRpcPublicChatCellDurationMs16FromJSON(
 export const FormEditorCell$inboundSchema: z.ZodMiniType<
   FormEditorCell,
   unknown
-> = z.object({
-  formEditorCell: TextqlRpcPublicCellsFormEditorCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    formEditorCell: TextqlRpcPublicCellsFormEditorCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function formEditorCellFromJSON(
   jsonString: string,
@@ -9890,7 +10075,9 @@ export function formEditorCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs15$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs15,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs15FromJSON(
   jsonString: string,
@@ -9904,22 +10091,24 @@ export function textqlRpcPublicChatCellDurationMs15FromJSON(
 }
 
 /** @internal */
-export const FormCell$inboundSchema: z.ZodMiniType<FormCell, unknown> = z
-  .object({
-    formCell: TextqlRpcPublicCellsFormCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const FormCell$inboundSchema: z.ZodMiniType<FormCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      formCell: TextqlRpcPublicCellsFormCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function formCellFromJSON(
   jsonString: string,
@@ -9935,7 +10124,9 @@ export function formCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs14$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs14,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs14FromJSON(
   jsonString: string,
@@ -9950,21 +10141,23 @@ export function textqlRpcPublicChatCellDurationMs14FromJSON(
 
 /** @internal */
 export const FeedPostCell$inboundSchema: z.ZodMiniType<FeedPostCell, unknown> =
-  z.object({
-    feedPostCell: TextqlRpcPublicCellsFeedPostCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      feedPostCell: TextqlRpcPublicCellsFeedPostCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function feedPostCellFromJSON(
   jsonString: string,
@@ -9980,7 +10173,9 @@ export function feedPostCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs13$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs13,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs13FromJSON(
   jsonString: string,
@@ -9997,21 +10192,23 @@ export function textqlRpcPublicChatCellDurationMs13FromJSON(
 export const FeedExplorerCell$inboundSchema: z.ZodMiniType<
   FeedExplorerCell,
   unknown
-> = z.object({
-  feedExplorerCell: TextqlRpcPublicCellsFeedExplorerCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    feedExplorerCell: TextqlRpcPublicCellsFeedExplorerCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function feedExplorerCellFromJSON(
   jsonString: string,
@@ -10027,7 +10224,9 @@ export function feedExplorerCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs12$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs12,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs12FromJSON(
   jsonString: string,
@@ -10044,21 +10243,23 @@ export function textqlRpcPublicChatCellDurationMs12FromJSON(
 export const FeedEngageCell$inboundSchema: z.ZodMiniType<
   FeedEngageCell,
   unknown
-> = z.object({
-  feedEngageCell: TextqlRpcPublicCellsFeedEngageCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    feedEngageCell: TextqlRpcPublicCellsFeedEngageCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function feedEngageCellFromJSON(
   jsonString: string,
@@ -10074,7 +10275,9 @@ export function feedEngageCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs11$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs11,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs11FromJSON(
   jsonString: string,
@@ -10091,21 +10294,23 @@ export function textqlRpcPublicChatCellDurationMs11FromJSON(
 export const FeedCreateCell$inboundSchema: z.ZodMiniType<
   FeedCreateCell,
   unknown
-> = z.object({
-  feedCreateCell: TextqlRpcPublicCellsFeedCreateCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    feedCreateCell: TextqlRpcPublicCellsFeedCreateCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function feedCreateCellFromJSON(
   jsonString: string,
@@ -10121,7 +10326,9 @@ export function feedCreateCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs10$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs10,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs10FromJSON(
   jsonString: string,
@@ -10138,21 +10345,23 @@ export function textqlRpcPublicChatCellDurationMs10FromJSON(
 export const FeedCommentCell$inboundSchema: z.ZodMiniType<
   FeedCommentCell,
   unknown
-> = z.object({
-  feedCommentCell: TextqlRpcPublicCellsFeedCommentCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    feedCommentCell: TextqlRpcPublicCellsFeedCommentCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function feedCommentCellFromJSON(
   jsonString: string,
@@ -10168,7 +10377,9 @@ export function feedCommentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs9$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs9,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs9FromJSON(
   jsonString: string,
@@ -10182,22 +10393,24 @@ export function textqlRpcPublicChatCellDurationMs9FromJSON(
 }
 
 /** @internal */
-export const EmailCell$inboundSchema: z.ZodMiniType<EmailCell, unknown> = z
-  .object({
-    emailCell: TextqlRpcPublicCellsEmailCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const EmailCell$inboundSchema: z.ZodMiniType<EmailCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      emailCell: TextqlRpcPublicCellsEmailCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function emailCellFromJSON(
   jsonString: string,
@@ -10213,7 +10426,9 @@ export function emailCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs8$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs8,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs8FromJSON(
   jsonString: string,
@@ -10228,21 +10443,23 @@ export function textqlRpcPublicChatCellDurationMs8FromJSON(
 
 /** @internal */
 export const DocumentCell$inboundSchema: z.ZodMiniType<DocumentCell, unknown> =
-  z.object({
-    documentCell: TextqlRpcPublicCellsDocumentCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      documentCell: TextqlRpcPublicCellsDocumentCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function documentCellFromJSON(
   jsonString: string,
@@ -10258,7 +10475,9 @@ export function documentCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs7$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs7,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs7FromJSON(
   jsonString: string,
@@ -10275,21 +10494,23 @@ export function textqlRpcPublicChatCellDurationMs7FromJSON(
 export const DashboardCell$inboundSchema: z.ZodMiniType<
   DashboardCell,
   unknown
-> = z.object({
-  dashboardCell: TextqlRpcPublicCellsDashboardCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    dashboardCell: TextqlRpcPublicCellsDashboardCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function dashboardCellFromJSON(
   jsonString: string,
@@ -10305,7 +10526,9 @@ export function dashboardCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs6$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs6,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs6FromJSON(
   jsonString: string,
@@ -10322,22 +10545,24 @@ export function textqlRpcPublicChatCellDurationMs6FromJSON(
 export const ContextPromptEditorCell$inboundSchema: z.ZodMiniType<
   ContextPromptEditorCell,
   unknown
-> = z.object({
-  contextPromptEditorCell:
-    TextqlRpcPublicCellsContextPromptEditorCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    contextPromptEditorCell:
+      TextqlRpcPublicCellsContextPromptEditorCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function contextPromptEditorCellFromJSON(
   jsonString: string,
@@ -10353,7 +10578,9 @@ export function contextPromptEditorCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs5$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs5,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs5FromJSON(
   jsonString: string,
@@ -10370,21 +10597,23 @@ export function textqlRpcPublicChatCellDurationMs5FromJSON(
 export const ConnectorsCell$inboundSchema: z.ZodMiniType<
   ConnectorsCell,
   unknown
-> = z.object({
-  connectorsCell: TextqlRpcPublicCellsConnectorsCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    connectorsCell: TextqlRpcPublicCellsConnectorsCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function connectorsCellFromJSON(
   jsonString: string,
@@ -10400,7 +10629,9 @@ export function connectorsCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs4$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs4,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs4FromJSON(
   jsonString: string,
@@ -10417,21 +10648,23 @@ export function textqlRpcPublicChatCellDurationMs4FromJSON(
 export const CompactionCell$inboundSchema: z.ZodMiniType<
   CompactionCell,
   unknown
-> = z.object({
-  compactionCell: TextqlRpcPublicCellsCompactionCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    compactionCell: TextqlRpcPublicCellsCompactionCell$inboundSchema,
+    id: types.optional(types.string()),
+    timestamp: types.optional(types.date()),
+    complete: types.optional(types.boolean()),
+    generated: types.optional(types.boolean()),
+    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+    toolCallId: z.optional(z.nullable(types.string())),
+    execError: z.optional(z.nullable(types.string())),
+    senderMemberId: z.optional(z.nullable(types.string())),
+    toolSummary: z.optional(z.nullable(types.string())),
+    durationMs: z.optional(
+      z.nullable(smartUnion([types.number(), types.string()])),
+    ),
+  })
+);
 
 export function compactionCellFromJSON(
   jsonString: string,
@@ -10447,7 +10680,9 @@ export function compactionCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs3$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs3,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs3FromJSON(
   jsonString: string,
@@ -10461,22 +10696,24 @@ export function textqlRpcPublicChatCellDurationMs3FromJSON(
 }
 
 /** @internal */
-export const BashCell$inboundSchema: z.ZodMiniType<BashCell, unknown> = z
-  .object({
-    bashCell: TextqlRpcPublicCellsBashCell$inboundSchema,
-    id: types.optional(types.string()),
-    timestamp: types.optional(types.date()),
-    complete: types.optional(types.boolean()),
-    generated: types.optional(types.boolean()),
-    lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-    toolCallId: z.optional(z.nullable(types.string())),
-    execError: z.optional(z.nullable(types.string())),
-    senderMemberId: z.optional(z.nullable(types.string())),
-    toolSummary: z.optional(z.nullable(types.string())),
-    durationMs: z.optional(
-      z.nullable(smartUnion([types.number(), types.string()])),
-    ),
-  });
+export const BashCell$inboundSchema: z.ZodMiniType<BashCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      bashCell: TextqlRpcPublicCellsBashCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function bashCellFromJSON(
   jsonString: string,
@@ -10492,7 +10729,9 @@ export function bashCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs2$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs2,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs2FromJSON(
   jsonString: string,
@@ -10506,21 +10745,24 @@ export function textqlRpcPublicChatCellDurationMs2FromJSON(
 }
 
 /** @internal */
-export const AppCell$inboundSchema: z.ZodMiniType<AppCell, unknown> = z.object({
-  appCell: TextqlRpcPublicCellsAppCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const AppCell$inboundSchema: z.ZodMiniType<AppCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appCell: TextqlRpcPublicCellsAppCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function appCellFromJSON(
   jsonString: string,
@@ -10536,7 +10778,9 @@ export function appCellFromJSON(
 export const TextqlRpcPublicChatCellDurationMs1$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCellDurationMs1,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function textqlRpcPublicChatCellDurationMs1FromJSON(
   jsonString: string,
@@ -10550,21 +10794,24 @@ export function textqlRpcPublicChatCellDurationMs1FromJSON(
 }
 
 /** @internal */
-export const AnsCell$inboundSchema: z.ZodMiniType<AnsCell, unknown> = z.object({
-  ansCell: TextqlRpcPublicCellsAnswerCell$inboundSchema,
-  id: types.optional(types.string()),
-  timestamp: types.optional(types.date()),
-  complete: types.optional(types.boolean()),
-  generated: types.optional(types.boolean()),
-  lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
-  toolCallId: z.optional(z.nullable(types.string())),
-  execError: z.optional(z.nullable(types.string())),
-  senderMemberId: z.optional(z.nullable(types.string())),
-  toolSummary: z.optional(z.nullable(types.string())),
-  durationMs: z.optional(
-    z.nullable(smartUnion([types.number(), types.string()])),
-  ),
-});
+export const AnsCell$inboundSchema: z.ZodMiniType<AnsCell, unknown> =
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      ansCell: TextqlRpcPublicCellsAnswerCell$inboundSchema,
+      id: types.optional(types.string()),
+      timestamp: types.optional(types.date()),
+      complete: types.optional(types.boolean()),
+      generated: types.optional(types.boolean()),
+      lifecycle: types.optional(TextqlRpcPublicChatCellLifecycle$inboundSchema),
+      toolCallId: z.optional(z.nullable(types.string())),
+      execError: z.optional(z.nullable(types.string())),
+      senderMemberId: z.optional(z.nullable(types.string())),
+      toolSummary: z.optional(z.nullable(types.string())),
+      durationMs: z.optional(
+        z.nullable(smartUnion([types.number(), types.string()])),
+      ),
+    })
+  );
 
 export function ansCellFromJSON(
   jsonString: string,
@@ -10580,68 +10827,70 @@ export function ansCellFromJSON(
 export const TextqlRpcPublicChatCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicChatCell,
   unknown
-> = smartUnion([
-  z.lazy(() => AnsCell$inboundSchema),
-  z.lazy(() => AppCell$inboundSchema),
-  z.lazy(() => BashCell$inboundSchema),
-  z.lazy(() => CompactionCell$inboundSchema),
-  z.lazy(() => ConnectorsCell$inboundSchema),
-  z.lazy(() => ContextPromptEditorCell$inboundSchema),
-  z.lazy(() => DashboardCell$inboundSchema),
-  z.lazy(() => DocumentCell$inboundSchema),
-  z.lazy(() => EmailCell$inboundSchema),
-  z.lazy(() => FeedCommentCell$inboundSchema),
-  z.lazy(() => FeedCreateCell$inboundSchema),
-  z.lazy(() => FeedEngageCell$inboundSchema),
-  z.lazy(() => FeedExplorerCell$inboundSchema),
-  z.lazy(() => FeedPostCell$inboundSchema),
-  z.lazy(() => FormCell$inboundSchema),
-  z.lazy(() => FormEditorCell$inboundSchema),
-  z.lazy(() => GmailEmailContentCell$inboundSchema),
-  z.lazy(() => GmailEmailSearchCell$inboundSchema),
-  z.lazy(() => GoogleCalendarSearchCell$inboundSchema),
-  z.lazy(() => GoogleDriveContentCell$inboundSchema),
-  z.lazy(() => GoogleDriveSearchCell$inboundSchema),
-  z.lazy(() => ImageCell$inboundSchema),
-  z.lazy(() => JavascriptCell$inboundSchema),
-  z.lazy(() => LinkedinSearchCell$inboundSchema),
-  z.lazy(() => ListAppsCell$inboundSchema),
-  z.lazy(() => ListDashboardsCell$inboundSchema),
-  z.lazy(() => ListUsersCell$inboundSchema),
-  z.lazy(() => McpToolCell$inboundSchema),
-  z.lazy(() => MdCell$inboundSchema),
-  z.lazy(() => MetricsCell$inboundSchema),
-  z.lazy(() => Microsoft365CalendarCell$inboundSchema),
-  z.lazy(() => Microsoft365EmailContentCell$inboundSchema),
-  z.lazy(() => Microsoft365EmailSearchCell$inboundSchema),
-  z.lazy(() => OntologyEditorCell$inboundSchema),
-  z.lazy(() => OntologyOpenObjectCell$inboundSchema),
-  z.lazy(() => OntologyQueryCell$inboundSchema),
-  z.lazy(() => OntologySearchMetricsCell$inboundSchema),
-  z.lazy(() => PatchCell$inboundSchema),
-  z.lazy(() => PlaybookEditorCell$inboundSchema),
-  z.lazy(() => PowerbiCell$inboundSchema),
-  z.lazy(() => PowerbiDaxCell$inboundSchema),
-  z.lazy(() => PreviewCell$inboundSchema),
-  z.lazy(() => PyCell$inboundSchema),
-  z.lazy(() => QuestionsCell$inboundSchema),
-  z.lazy(() => ReportCell$inboundSchema),
-  z.lazy(() => ReportHistoryCell$inboundSchema),
-  z.lazy(() => SqlCell$inboundSchema),
-  z.lazy(() => StatusCell$inboundSchema),
-  z.lazy(() => StreamlitCell$inboundSchema),
-  z.lazy(() => SubagentCell$inboundSchema),
-  z.lazy(() => SummaryCell$inboundSchema),
-  z.lazy(() => TableauCell$inboundSchema),
-  z.lazy(() => TableauMetadataCell$inboundSchema),
-  z.lazy(() => TableauSearchFieldsCell$inboundSchema),
-  z.lazy(() => TableauSqlCell$inboundSchema),
-  z.lazy(() => TabularFileCell$inboundSchema),
-  z.lazy(() => TextCell$inboundSchema),
-  z.lazy(() => ThinkingCell$inboundSchema),
-  z.lazy(() => UseSkillCell$inboundSchema),
-  z.lazy(() => WsCell$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => AnsCell$inboundSchema),
+    z.lazy(() => AppCell$inboundSchema),
+    z.lazy(() => BashCell$inboundSchema),
+    z.lazy(() => CompactionCell$inboundSchema),
+    z.lazy(() => ConnectorsCell$inboundSchema),
+    z.lazy(() => ContextPromptEditorCell$inboundSchema),
+    z.lazy(() => DashboardCell$inboundSchema),
+    z.lazy(() => DocumentCell$inboundSchema),
+    z.lazy(() => EmailCell$inboundSchema),
+    z.lazy(() => FeedCommentCell$inboundSchema),
+    z.lazy(() => FeedCreateCell$inboundSchema),
+    z.lazy(() => FeedEngageCell$inboundSchema),
+    z.lazy(() => FeedExplorerCell$inboundSchema),
+    z.lazy(() => FeedPostCell$inboundSchema),
+    z.lazy(() => FormCell$inboundSchema),
+    z.lazy(() => FormEditorCell$inboundSchema),
+    z.lazy(() => GmailEmailContentCell$inboundSchema),
+    z.lazy(() => GmailEmailSearchCell$inboundSchema),
+    z.lazy(() => GoogleCalendarSearchCell$inboundSchema),
+    z.lazy(() => GoogleDriveContentCell$inboundSchema),
+    z.lazy(() => GoogleDriveSearchCell$inboundSchema),
+    z.lazy(() => ImageCell$inboundSchema),
+    z.lazy(() => JavascriptCell$inboundSchema),
+    z.lazy(() => LinkedinSearchCell$inboundSchema),
+    z.lazy(() => ListAppsCell$inboundSchema),
+    z.lazy(() => ListDashboardsCell$inboundSchema),
+    z.lazy(() => ListUsersCell$inboundSchema),
+    z.lazy(() => McpToolCell$inboundSchema),
+    z.lazy(() => MdCell$inboundSchema),
+    z.lazy(() => MetricsCell$inboundSchema),
+    z.lazy(() => Microsoft365CalendarCell$inboundSchema),
+    z.lazy(() => Microsoft365EmailContentCell$inboundSchema),
+    z.lazy(() => Microsoft365EmailSearchCell$inboundSchema),
+    z.lazy(() => OntologyEditorCell$inboundSchema),
+    z.lazy(() => OntologyOpenObjectCell$inboundSchema),
+    z.lazy(() => OntologyQueryCell$inboundSchema),
+    z.lazy(() => OntologySearchMetricsCell$inboundSchema),
+    z.lazy(() => PatchCell$inboundSchema),
+    z.lazy(() => PlaybookEditorCell$inboundSchema),
+    z.lazy(() => PowerbiCell$inboundSchema),
+    z.lazy(() => PowerbiDaxCell$inboundSchema),
+    z.lazy(() => PreviewCell$inboundSchema),
+    z.lazy(() => PyCell$inboundSchema),
+    z.lazy(() => QuestionsCell$inboundSchema),
+    z.lazy(() => ReportCell$inboundSchema),
+    z.lazy(() => ReportHistoryCell$inboundSchema),
+    z.lazy(() => SqlCell$inboundSchema),
+    z.lazy(() => StatusCell$inboundSchema),
+    z.lazy(() => StreamlitCell$inboundSchema),
+    z.lazy(() => SubagentCell$inboundSchema),
+    z.lazy(() => SummaryCell$inboundSchema),
+    z.lazy(() => TableauCell$inboundSchema),
+    z.lazy(() => TableauMetadataCell$inboundSchema),
+    z.lazy(() => TableauSearchFieldsCell$inboundSchema),
+    z.lazy(() => TableauSqlCell$inboundSchema),
+    z.lazy(() => TabularFileCell$inboundSchema),
+    z.lazy(() => TextCell$inboundSchema),
+    z.lazy(() => ThinkingCell$inboundSchema),
+    z.lazy(() => UseSkillCell$inboundSchema),
+    z.lazy(() => WsCell$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicChatCellFromJSON(
   jsonString: string,

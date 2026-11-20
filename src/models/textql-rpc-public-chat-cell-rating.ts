@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { ClosedEnum } from "../types/enums.js";
 
 export const TextqlRpcPublicChatCellRating = {
@@ -18,4 +19,4 @@ export type TextqlRpcPublicChatCellRating = ClosedEnum<
 /** @internal */
 export const TextqlRpcPublicChatCellRating$outboundSchema: z.ZodMiniEnum<
   typeof TextqlRpcPublicChatCellRating
-> = z.enum(TextqlRpcPublicChatCellRating);
+> = /* @__PURE__ */ lazySchema$(() => z.enum(TextqlRpcPublicChatCellRating));

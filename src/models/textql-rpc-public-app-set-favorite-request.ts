@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicAppSetFavoriteRequest = {
   /**
@@ -27,11 +28,13 @@ export type TextqlRpcPublicAppSetFavoriteRequest$Outbound = {
 export const TextqlRpcPublicAppSetFavoriteRequest$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicAppSetFavoriteRequest$Outbound,
   TextqlRpcPublicAppSetFavoriteRequest
-> = z.object({
-  primitiveType: z.optional(z.string()),
-  primitiveId: z.optional(z.string()),
-  favorited: z.optional(z.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    primitiveType: z.optional(z.string()),
+    primitiveId: z.optional(z.string()),
+    favorited: z.optional(z.boolean()),
+  })
+);
 
 export function textqlRpcPublicAppSetFavoriteRequestToJSON(
   textqlRpcPublicAppSetFavoriteRequest: TextqlRpcPublicAppSetFavoriteRequest,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,9 +18,14 @@ export type TextqlRpcPublicScimListScimTokensResponse = {
 
 /** @internal */
 export const TextqlRpcPublicScimListScimTokensResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicScimListScimTokensResponse, unknown> = z.object({
-    tokens: types.optional(z.array(TextqlRpcPublicScimScimToken$inboundSchema)),
-  });
+  z.ZodMiniType<TextqlRpcPublicScimListScimTokensResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        tokens: types.optional(
+          z.array(TextqlRpcPublicScimScimToken$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicScimListScimTokensResponseFromJSON(
   jsonString: string,

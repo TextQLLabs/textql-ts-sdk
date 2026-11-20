@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 /**
  * Member role management messages
@@ -42,12 +43,14 @@ export const TextqlRpcPublicRbacAssignRoleToMemberRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacAssignRoleToMemberRequest$Outbound,
     TextqlRpcPublicRbacAssignRoleToMemberRequest
-  > = z.object({
-    memberEmail: z.optional(z.string()),
-    roleName: z.optional(z.string()),
-    memberId: z.optional(z.string()),
-    roleId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      memberEmail: z.optional(z.string()),
+      roleName: z.optional(z.string()),
+      memberId: z.optional(z.string()),
+      roleId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicRbacAssignRoleToMemberRequestToJSON(
   textqlRpcPublicRbacAssignRoleToMemberRequest:

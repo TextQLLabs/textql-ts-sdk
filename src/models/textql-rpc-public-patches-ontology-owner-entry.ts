@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -21,13 +21,16 @@ export type TextqlRpcPublicPatchesOntologyOwnerEntry = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesOntologyOwnerEntry$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesOntologyOwnerEntry, unknown> = z.object({
-    roleId: types.optional(types.string()),
-    permission: types.optional(
-      TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
-    ),
-    memberId: z.optional(z.nullable(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesOntologyOwnerEntry, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        roleId: types.optional(types.string()),
+        permission: types.optional(
+          TextqlRpcPublicPatchesOntologyPermission$inboundSchema,
+        ),
+        memberId: z.optional(z.nullable(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicPatchesOntologyOwnerEntry$Outbound = {
   roleId?: string | undefined;
@@ -40,13 +43,15 @@ export const TextqlRpcPublicPatchesOntologyOwnerEntry$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesOntologyOwnerEntry$Outbound,
     TextqlRpcPublicPatchesOntologyOwnerEntry
-  > = z.object({
-    roleId: z.optional(z.string()),
-    permission: z.optional(
-      TextqlRpcPublicPatchesOntologyPermission$outboundSchema,
-    ),
-    memberId: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      roleId: z.optional(z.string()),
+      permission: z.optional(
+        TextqlRpcPublicPatchesOntologyPermission$outboundSchema,
+      ),
+      memberId: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicPatchesOntologyOwnerEntryToJSON(
   textqlRpcPublicPatchesOntologyOwnerEntry:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,13 +17,15 @@ export type TextqlRpcPublicCellsMicrosoft365EmailContentCell = {
 
 /** @internal */
 export const TextqlRpcPublicCellsMicrosoft365EmailContentCell$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicCellsMicrosoft365EmailContentCell, unknown> = z
-    .object({
-      emailId: z.optional(z.nullable(types.string())),
-      subject: z.optional(z.nullable(types.string())),
-      sender: z.optional(z.nullable(types.string())),
-      syntheticToolUseId: z.optional(z.nullable(types.string())),
-    });
+  z.ZodMiniType<TextqlRpcPublicCellsMicrosoft365EmailContentCell, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        emailId: z.optional(z.nullable(types.string())),
+        subject: z.optional(z.nullable(types.string())),
+        sender: z.optional(z.nullable(types.string())),
+        syntheticToolUseId: z.optional(z.nullable(types.string())),
+      })
+    );
 
 export function textqlRpcPublicCellsMicrosoft365EmailContentCellFromJSON(
   jsonString: string,

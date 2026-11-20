@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicDashboardDataSource,
   TextqlRpcPublicDashboardDataSource$Outbound,
@@ -29,14 +30,16 @@ export const TextqlRpcPublicDashboardUpdateDashboardScheduleRequest$outboundSche
   z.ZodMiniType<
     TextqlRpcPublicDashboardUpdateDashboardScheduleRequest$Outbound,
     TextqlRpcPublicDashboardUpdateDashboardScheduleRequest
-  > = z.object({
-    dashboardId: z.optional(z.string()),
-    scheduleEnabled: z.optional(z.boolean()),
-    cronString: z.optional(z.nullable(z.string())),
-    dataSources: z.optional(
-      z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      dashboardId: z.optional(z.string()),
+      scheduleEnabled: z.optional(z.boolean()),
+      cronString: z.optional(z.nullable(z.string())),
+      dataSources: z.optional(
+        z.array(TextqlRpcPublicDashboardDataSource$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicDashboardUpdateDashboardScheduleRequestToJSON(
   textqlRpcPublicDashboardUpdateDashboardScheduleRequest:

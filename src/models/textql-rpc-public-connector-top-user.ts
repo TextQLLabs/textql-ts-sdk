@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -25,7 +25,9 @@ export type TextqlRpcPublicConnectorTopUser = {
 /** @internal */
 export const TextqlRpcPublicConnectorTopUserQueryCount$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorTopUserQueryCount, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicConnectorTopUserQueryCountFromJSON(
   jsonString: string,
@@ -45,7 +47,9 @@ export function textqlRpcPublicConnectorTopUserQueryCountFromJSON(
 
 /** @internal */
 export const ChatCount$inboundSchema: z.ZodMiniType<ChatCount, unknown> =
-  smartUnion([types.number(), types.string()]);
+  /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function chatCountFromJSON(
   jsonString: string,
@@ -61,14 +65,16 @@ export function chatCountFromJSON(
 export const TextqlRpcPublicConnectorTopUser$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicConnectorTopUser,
   unknown
-> = z.object({
-  memberId: types.optional(types.string()),
-  displayName: types.optional(types.string()),
-  email: types.optional(types.string()),
-  queryCount: types.optional(smartUnion([types.number(), types.string()])),
-  chatCount: types.optional(smartUnion([types.number(), types.string()])),
-  pictureUrl: types.optional(types.string()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    memberId: types.optional(types.string()),
+    displayName: types.optional(types.string()),
+    email: types.optional(types.string()),
+    queryCount: types.optional(smartUnion([types.number(), types.string()])),
+    chatCount: types.optional(smartUnion([types.number(), types.string()])),
+    pictureUrl: types.optional(types.string()),
+  })
+);
 
 export function textqlRpcPublicConnectorTopUserFromJSON(
   jsonString: string,

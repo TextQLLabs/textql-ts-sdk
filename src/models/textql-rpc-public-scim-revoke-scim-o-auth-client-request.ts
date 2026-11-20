@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicScimRevokeScimOAuthClientRequest = {
   id?: string | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicScimRevokeScimOAuthClientRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicScimRevokeScimOAuthClientRequest$Outbound,
     TextqlRpcPublicScimRevokeScimOAuthClientRequest
-  > = z.object({
-    id: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      id: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicScimRevokeScimOAuthClientRequestToJSON(
   textqlRpcPublicScimRevokeScimOAuthClientRequest:

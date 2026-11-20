@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicRbacRolePermissionsExportFormat,
   TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema,
@@ -22,11 +23,13 @@ export const TextqlRpcPublicRbacExportRolePermissionsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacExportRolePermissionsRequest$Outbound,
     TextqlRpcPublicRbacExportRolePermissionsRequest
-  > = z.object({
-    format: z.optional(
-      TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema,
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      format: z.optional(
+        TextqlRpcPublicRbacRolePermissionsExportFormat$outboundSchema,
+      ),
+    })
+  );
 
 export function textqlRpcPublicRbacExportRolePermissionsRequestToJSON(
   textqlRpcPublicRbacExportRolePermissionsRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -75,24 +75,26 @@ export type TextqlRpcPublicCellsEmailCell = {
 export const TextqlRpcPublicCellsEmailCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsEmailCell,
   unknown
-> = z.object({
-  to: types.optional(z.array(types.string())),
-  subject: types.optional(types.string()),
-  body: types.optional(types.string()),
-  recipients: types.optional(
-    z.array(TextqlRpcPublicCellsEmailRecipient$inboundSchema),
-  ),
-  status: types.optional(types.string()),
-  sentAt: z.optional(z.nullable(types.string())),
-  messageId: z.optional(z.nullable(types.string())),
-  errorMessage: z.optional(z.nullable(types.string())),
-  errorClass: z.optional(z.nullable(types.string())),
-  sentCount: types.optional(types.number()),
-  renderedBodyHtml: z.optional(z.nullable(types.string())),
-  attachments: types.optional(
-    z.array(TextqlRpcPublicCellsEmailAttachment$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    to: types.optional(z.array(types.string())),
+    subject: types.optional(types.string()),
+    body: types.optional(types.string()),
+    recipients: types.optional(
+      z.array(TextqlRpcPublicCellsEmailRecipient$inboundSchema),
+    ),
+    status: types.optional(types.string()),
+    sentAt: z.optional(z.nullable(types.string())),
+    messageId: z.optional(z.nullable(types.string())),
+    errorMessage: z.optional(z.nullable(types.string())),
+    errorClass: z.optional(z.nullable(types.string())),
+    sentCount: types.optional(types.number()),
+    renderedBodyHtml: z.optional(z.nullable(types.string())),
+    attachments: types.optional(
+      z.array(TextqlRpcPublicCellsEmailAttachment$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicCellsEmailCellFromJSON(
   jsonString: string,

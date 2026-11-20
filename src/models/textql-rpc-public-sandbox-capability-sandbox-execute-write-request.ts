@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 import {
   TextqlRpcPublicSandboxQuerySandboxQueryParam,
@@ -32,7 +33,7 @@ export const TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRows$o
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRows$Outbound,
     TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRows
-  > = smartUnion([z.int(), z.string()]);
+  > = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function textqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRowsToJSON(
   textqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestMaxRows:
@@ -61,15 +62,17 @@ export const TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest$outbound
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest$Outbound,
     TextqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    connectorId: z.optional(z.int()),
-    statement: z.optional(z.string()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-    ),
-    maxRows: z.optional(smartUnion([z.int(), z.string()])),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      connectorId: z.optional(z.int()),
+      statement: z.optional(z.string()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+      ),
+      maxRows: z.optional(smartUnion([z.int(), z.string()])),
+    })
+  );
 
 export function textqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequestToJSON(
   textqlRpcPublicSandboxCapabilitySandboxExecuteWriteRequest:

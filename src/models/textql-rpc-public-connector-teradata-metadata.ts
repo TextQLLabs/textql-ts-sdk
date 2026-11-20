@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -19,14 +19,17 @@ export type TextqlRpcPublicConnectorTeradataMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorTeradataMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorTeradataMetadata, unknown> = z.object({
-    host: types.optional(types.string()),
-    port: types.optional(types.number()),
-    user: types.optional(types.string()),
-    password: types.optional(types.string()),
-    logmech: types.optional(types.string()),
-    databases: types.optional(z.array(types.string())),
-  });
+  z.ZodMiniType<TextqlRpcPublicConnectorTeradataMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        logmech: types.optional(types.string()),
+        databases: types.optional(z.array(types.string())),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorTeradataMetadata$Outbound = {
   host?: string | undefined;
@@ -42,14 +45,16 @@ export const TextqlRpcPublicConnectorTeradataMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorTeradataMetadata$Outbound,
     TextqlRpcPublicConnectorTeradataMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    logmech: z.optional(z.string()),
-    databases: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      logmech: z.optional(z.string()),
+      databases: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicConnectorTeradataMetadataToJSON(
   textqlRpcPublicConnectorTeradataMetadata:

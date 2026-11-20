@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,19 +26,21 @@ export type TextqlRpcAuthTheme = {
 export const TextqlRpcAuthTheme$inboundSchema: z.ZodMiniType<
   TextqlRpcAuthTheme,
   unknown
-> = z.object({
-  bg: types.optional(types.string()),
-  headerBg: types.optional(types.string()),
-  cardBg: types.optional(types.string()),
-  primaryAccent: types.optional(types.string()),
-  cardAccent: types.optional(types.string()),
-  heading: types.optional(types.string()),
-  text: types.optional(types.string()),
-  cardHeading: types.optional(types.string()),
-  cardText: types.optional(types.string()),
-  logoUrl: z.optional(z.nullable(types.string())),
-  docsUrl: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    bg: types.optional(types.string()),
+    headerBg: types.optional(types.string()),
+    cardBg: types.optional(types.string()),
+    primaryAccent: types.optional(types.string()),
+    cardAccent: types.optional(types.string()),
+    heading: types.optional(types.string()),
+    text: types.optional(types.string()),
+    cardHeading: types.optional(types.string()),
+    cardText: types.optional(types.string()),
+    logoUrl: z.optional(z.nullable(types.string())),
+    docsUrl: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcAuthThemeFromJSON(
   jsonString: string,

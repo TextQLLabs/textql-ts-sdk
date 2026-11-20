@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -16,11 +16,14 @@ export type TextqlRpcPublicPatchesSkippedConfigExport = {
 
 /** @internal */
 export const TextqlRpcPublicPatchesSkippedConfigExport$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicPatchesSkippedConfigExport, unknown> = z.object({
-    objectId: types.optional(types.string()),
-    objectName: types.optional(types.string()),
-    reason: types.optional(types.string()),
-  });
+  z.ZodMiniType<TextqlRpcPublicPatchesSkippedConfigExport, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        objectId: types.optional(types.string()),
+        objectName: types.optional(types.string()),
+        reason: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicPatchesSkippedConfigExportFromJSON(
   jsonString: string,

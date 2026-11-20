@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest = {
   playbookId?: string | undefined;
@@ -20,10 +21,12 @@ export const TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest$Outbound,
     TextqlRpcPublicPlaybookPlaybookRemoveDatasetRequest
-  > = z.object({
-    playbookId: z.optional(z.string()),
-    datasetId: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.optional(z.string()),
+      datasetId: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicPlaybookPlaybookRemoveDatasetRequestToJSON(
   textqlRpcPublicPlaybookPlaybookRemoveDatasetRequest:

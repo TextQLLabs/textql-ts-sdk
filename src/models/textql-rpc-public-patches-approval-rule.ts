@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -209,16 +209,18 @@ export type TextqlRpcPublicPatchesApprovalRule = {
 export const TextqlRpcPublicPatchesApprovalRule$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicPatchesApprovalRule,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  directoryPath: types.optional(types.string()),
-  requiredApprovals: types.optional(types.number()),
-  roleIds: types.optional(z.array(types.string())),
-  enabled: types.optional(types.boolean()),
-  createdAt: types.optional(types.date()),
-  updatedAt: types.optional(types.date()),
-  version: types.optional(types.number()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    directoryPath: types.optional(types.string()),
+    requiredApprovals: types.optional(types.number()),
+    roleIds: types.optional(z.array(types.string())),
+    enabled: types.optional(types.boolean()),
+    createdAt: types.optional(types.date()),
+    updatedAt: types.optional(types.date()),
+    version: types.optional(types.number()),
+  })
+);
 
 export function textqlRpcPublicPatchesApprovalRuleFromJSON(
   jsonString: string,

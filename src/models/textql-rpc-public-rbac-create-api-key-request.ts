@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacCreateApiKeyRequest = {
   /**
@@ -94,18 +95,20 @@ export const TextqlRpcPublicRbacCreateApiKeyRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacCreateApiKeyRequest$Outbound,
     TextqlRpcPublicRbacCreateApiKeyRequest
-  > = z.object({
-    targetMemberEmail: z.optional(z.nullable(z.string())),
-    assumedRoleNames: z.optional(z.array(z.string())),
-    expirySeconds: z.optional(z.nullable(z.int())),
-    assumedRoles: z.optional(z.array(z.string())),
-    inheritAllRoles: z.optional(z.nullable(z.boolean())),
-    name: z.optional(z.nullable(z.string())),
-    targetMemberId: z.optional(z.nullable(z.string())),
-    clientId: z.optional(z.nullable(z.string())),
-    suppressSuperadmin: z.optional(z.boolean()),
-    fullMemberAccess: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      targetMemberEmail: z.optional(z.nullable(z.string())),
+      assumedRoleNames: z.optional(z.array(z.string())),
+      expirySeconds: z.optional(z.nullable(z.int())),
+      assumedRoles: z.optional(z.array(z.string())),
+      inheritAllRoles: z.optional(z.nullable(z.boolean())),
+      name: z.optional(z.nullable(z.string())),
+      targetMemberId: z.optional(z.nullable(z.string())),
+      clientId: z.optional(z.nullable(z.string())),
+      suppressSuperadmin: z.optional(z.boolean()),
+      fullMemberAccess: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicRbacCreateApiKeyRequestToJSON(
   textqlRpcPublicRbacCreateApiKeyRequest:

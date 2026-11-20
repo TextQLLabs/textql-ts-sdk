@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import { smartUnion } from "../types/smart-union.js";
 
 export type AfterSeq = number | string;
@@ -24,7 +25,7 @@ export type AfterSeq$Outbound = number | string;
 export const AfterSeq$outboundSchema: z.ZodMiniType<
   AfterSeq$Outbound,
   AfterSeq
-> = smartUnion([z.int(), z.string()]);
+> = /* @__PURE__ */ lazySchema$(() => smartUnion([z.int(), z.string()]));
 
 export function afterSeqToJSON(afterSeq: AfterSeq): string {
   return JSON.stringify(AfterSeq$outboundSchema.parse(afterSeq));
@@ -43,12 +44,14 @@ export const TextqlRpcPublicAppListAppActivitySinceRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicAppListAppActivitySinceRequest$Outbound,
     TextqlRpcPublicAppListAppActivitySinceRequest
-  > = z.object({
-    appId: z.optional(z.string()),
-    scope: z.optional(z.nullable(z.string())),
-    afterSeq: z.optional(smartUnion([z.int(), z.string()])),
-    limit: z.optional(z.int()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      appId: z.optional(z.string()),
+      scope: z.optional(z.nullable(z.string())),
+      afterSeq: z.optional(smartUnion([z.int(), z.string()])),
+      limit: z.optional(z.int()),
+    })
+  );
 
 export function textqlRpcPublicAppListAppActivitySinceRequestToJSON(
   textqlRpcPublicAppListAppActivitySinceRequest:

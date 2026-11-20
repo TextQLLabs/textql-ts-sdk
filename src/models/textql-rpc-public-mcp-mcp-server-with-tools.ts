@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -30,11 +30,13 @@ export type TextqlRpcPublicMCPMCPServerWithTools = {
 export const TextqlRpcPublicMCPMCPServerWithTools$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicMCPMCPServerWithTools,
   unknown
-> = z.object({
-  mcpServer: types.optional(TextqlRpcPublicMCPMCPServer$inboundSchema),
-  tools: types.optional(z.array(TextqlRpcPublicMCPMCPTool$inboundSchema)),
-  error: types.optional(TextqlRpcPublicMCPMCPError$inboundSchema),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    mcpServer: types.optional(TextqlRpcPublicMCPMCPServer$inboundSchema),
+    tools: types.optional(z.array(TextqlRpcPublicMCPMCPTool$inboundSchema)),
+    error: types.optional(TextqlRpcPublicMCPMCPError$inboundSchema),
+  })
+);
 
 export function textqlRpcPublicMCPMCPServerWithToolsFromJSON(
   jsonString: string,

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -26,17 +26,19 @@ export type TextqlRpcPublicAgentAgentRunDelivery = {
 export const TextqlRpcPublicAgentAgentRunDelivery$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicAgentAgentRunDelivery,
   unknown
-> = z.object({
-  slackChannelId: z.optional(z.nullable(types.string())),
-  teamsChannelId: z.optional(z.nullable(types.string())),
-  slackDmUserIds: types.optional(z.array(types.string())),
-  teamsDmUserAadIds: types.optional(z.array(types.string())),
-  emailRecipientMemberIds: types.optional(z.array(types.string())),
-  feedChannelIds: types.optional(z.array(types.string())),
-  channels: types.optional(
-    z.array(TextqlRpcPublicAgentAgentRunDeliveryChannel$inboundSchema),
-  ),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    slackChannelId: z.optional(z.nullable(types.string())),
+    teamsChannelId: z.optional(z.nullable(types.string())),
+    slackDmUserIds: types.optional(z.array(types.string())),
+    teamsDmUserAadIds: types.optional(z.array(types.string())),
+    emailRecipientMemberIds: types.optional(z.array(types.string())),
+    feedChannelIds: types.optional(z.array(types.string())),
+    channels: types.optional(
+      z.array(TextqlRpcPublicAgentAgentRunDeliveryChannel$inboundSchema),
+    ),
+  })
+);
 
 export function textqlRpcPublicAgentAgentRunDeliveryFromJSON(
   jsonString: string,

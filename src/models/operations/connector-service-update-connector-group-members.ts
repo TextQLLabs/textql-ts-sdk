@@ -4,7 +4,7 @@
 
 import * as z from "zod/v4-mini";
 import { remap as remap$ } from "../../lib/primitives.js";
-import { safeParse } from "../../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../../lib/schemas.js";
 import { Result as SafeParseResult } from "../../types/fp.js";
 import { smartUnion } from "../../types/smart-union.js";
 import { SDKValidationError } from "../errors/sdk-validation-error.js";
@@ -36,20 +36,22 @@ export const ConnectorServiceUpdateConnectorGroupMembersRequest$outboundSchema:
   z.ZodMiniType<
     ConnectorServiceUpdateConnectorGroupMembersRequest$Outbound,
     ConnectorServiceUpdateConnectorGroupMembersRequest
-  > = z.pipe(
-    z.object({
-      connectProtocolVersion: z._default(z.literal("1"), "1"),
-      connectTimeoutMs: z.optional(z.number()),
-      body:
-        models
-          .TextqlRpcPublicConnectorUpdateConnectorGroupMembersRequest$outboundSchema,
-    }),
-    z.transform((v) => {
-      return remap$(v, {
-        connectProtocolVersion: "Connect-Protocol-Version",
-        connectTimeoutMs: "Connect-Timeout-Ms",
-      });
-    }),
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.pipe(
+      z.object({
+        connectProtocolVersion: z._default(z.literal("1"), "1"),
+        connectTimeoutMs: z.optional(z.number()),
+        body:
+          models
+            .TextqlRpcPublicConnectorUpdateConnectorGroupMembersRequest$outboundSchema,
+      }),
+      z.transform((v) => {
+        return remap$(v, {
+          connectProtocolVersion: "Connect-Protocol-Version",
+          connectTimeoutMs: "Connect-Timeout-Ms",
+        });
+      }),
+    )
   );
 
 export function connectorServiceUpdateConnectorGroupMembersRequestToJSON(
@@ -66,11 +68,13 @@ export function connectorServiceUpdateConnectorGroupMembersRequestToJSON(
 /** @internal */
 export const ConnectorServiceUpdateConnectorGroupMembersResponse$inboundSchema:
   z.ZodMiniType<ConnectorServiceUpdateConnectorGroupMembersResponse, unknown> =
-    smartUnion([
-      models
-        .TextqlRpcPublicConnectorUpdateConnectorGroupMembersResponse$inboundSchema,
-      models.ConnectError$inboundSchema,
-    ]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([
+        models
+          .TextqlRpcPublicConnectorUpdateConnectorGroupMembersResponse$inboundSchema,
+        models.ConnectError$inboundSchema,
+      ])
+    );
 
 export function connectorServiceUpdateConnectorGroupMembersResponseFromJSON(
   jsonString: string,

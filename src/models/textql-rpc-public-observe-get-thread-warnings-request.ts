@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicObserveGetThreadWarningsRequest = {
   chatIds?: Array<string> | undefined;
@@ -18,9 +19,11 @@ export const TextqlRpcPublicObserveGetThreadWarningsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicObserveGetThreadWarningsRequest$Outbound,
     TextqlRpcPublicObserveGetThreadWarningsRequest
-  > = z.object({
-    chatIds: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      chatIds: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicObserveGetThreadWarningsRequestToJSON(
   textqlRpcPublicObserveGetThreadWarningsRequest:

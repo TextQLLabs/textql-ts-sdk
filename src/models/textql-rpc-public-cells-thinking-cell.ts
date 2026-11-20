@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,10 +23,12 @@ export type TextqlRpcPublicCellsThinkingCell = {
 export const TextqlRpcPublicCellsThinkingCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsThinkingCell,
   unknown
-> = z.object({
-  content: types.optional(types.string()),
-  redacted: types.optional(types.boolean()),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    content: types.optional(types.string()),
+    redacted: types.optional(types.boolean()),
+  })
+);
 
 export function textqlRpcPublicCellsThinkingCellFromJSON(
   jsonString: string,

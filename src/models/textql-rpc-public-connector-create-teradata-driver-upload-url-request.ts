@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequest = {};
 
@@ -15,7 +16,7 @@ export const TextqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequest$outbou
   z.ZodMiniType<
     TextqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequest$Outbound,
     TextqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequest
-  > = z.object({});
+  > = /* @__PURE__ */ lazySchema$(() => z.object({}));
 
 export function textqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequestToJSON(
   textqlRpcPublicConnectorCreateTeradataDriverUploadUrlRequest:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -17,10 +17,12 @@ export type TextqlRpcPublicReportsListBlock = {
 export const TextqlRpcPublicReportsListBlock$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsListBlock,
   unknown
-> = z.object({
-  heading: z.optional(z.nullable(types.string())),
-  items: types.optional(z.array(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    heading: z.optional(z.nullable(types.string())),
+    items: types.optional(z.array(types.string())),
+  })
+);
 /** @internal */
 export type TextqlRpcPublicReportsListBlock$Outbound = {
   heading?: string | null | undefined;
@@ -31,10 +33,12 @@ export type TextqlRpcPublicReportsListBlock$Outbound = {
 export const TextqlRpcPublicReportsListBlock$outboundSchema: z.ZodMiniType<
   TextqlRpcPublicReportsListBlock$Outbound,
   TextqlRpcPublicReportsListBlock
-> = z.object({
-  heading: z.optional(z.nullable(z.string())),
-  items: z.optional(z.array(z.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    heading: z.optional(z.nullable(z.string())),
+    items: z.optional(z.array(z.string())),
+  })
+);
 
 export function textqlRpcPublicReportsListBlockToJSON(
   textqlRpcPublicReportsListBlock: TextqlRpcPublicReportsListBlock,

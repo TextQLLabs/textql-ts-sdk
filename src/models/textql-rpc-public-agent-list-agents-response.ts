@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,9 +18,14 @@ export type TextqlRpcPublicAgentListAgentsResponse = {
 
 /** @internal */
 export const TextqlRpcPublicAgentListAgentsResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicAgentListAgentsResponse, unknown> = z.object({
-    agents: types.optional(z.array(TextqlRpcPublicAgentAgent$inboundSchema)),
-  });
+  z.ZodMiniType<TextqlRpcPublicAgentListAgentsResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        agents: types.optional(
+          z.array(TextqlRpcPublicAgentAgent$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicAgentListAgentsResponseFromJSON(
   jsonString: string,

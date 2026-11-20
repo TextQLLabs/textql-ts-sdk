@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -23,17 +23,18 @@ export type TextqlRpcPublicConnectorClickHouseMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorClickHouseMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorClickHouseMetadata, unknown> = z.object(
-    {
-      host: types.optional(types.string()),
-      port: types.optional(types.number()),
-      user: types.optional(types.string()),
-      password: types.optional(types.string()),
-      database: types.optional(types.string()),
-      useSsl: types.optional(types.boolean()),
-      protocol: types.optional(types.string()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorClickHouseMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        port: types.optional(types.number()),
+        user: types.optional(types.string()),
+        password: types.optional(types.string()),
+        database: types.optional(types.string()),
+        useSsl: types.optional(types.boolean()),
+        protocol: types.optional(types.string()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorClickHouseMetadata$Outbound = {
   host?: string | undefined;
@@ -50,15 +51,17 @@ export const TextqlRpcPublicConnectorClickHouseMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorClickHouseMetadata$Outbound,
     TextqlRpcPublicConnectorClickHouseMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    port: z.optional(z.int()),
-    user: z.optional(z.string()),
-    password: z.optional(z.string()),
-    database: z.optional(z.string()),
-    useSsl: z.optional(z.boolean()),
-    protocol: z.optional(z.string()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      port: z.optional(z.int()),
+      user: z.optional(z.string()),
+      password: z.optional(z.string()),
+      database: z.optional(z.string()),
+      useSsl: z.optional(z.boolean()),
+      protocol: z.optional(z.string()),
+    })
+  );
 
 export function textqlRpcPublicConnectorClickHouseMetadataToJSON(
   textqlRpcPublicConnectorClickHouseMetadata:

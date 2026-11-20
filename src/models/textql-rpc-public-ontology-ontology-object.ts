@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -245,25 +245,27 @@ export type TextqlRpcPublicOntologyOntologyObject = BackingQuery | BackingTable;
 
 /** @internal */
 export const BackingTable$inboundSchema: z.ZodMiniType<BackingTable, unknown> =
-  z.object({
-    backingTable: TextqlRpcPublicOntologyTableName$inboundSchema,
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-    description: types.optional(types.string()),
-    primaryKeyAttribute: types.optional(
-      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
-    ),
-    titleAttribute: types.optional(
-      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
-    ),
-    interestingAttributes: types.optional(
-      z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-    ),
-    graphProperties: types.optional(
-      TextqlRpcPublicOntologyGraphProperties$inboundSchema,
-    ),
-    accessTime: types.optional(types.date()),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      backingTable: TextqlRpcPublicOntologyTableName$inboundSchema,
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      description: types.optional(types.string()),
+      primaryKeyAttribute: types.optional(
+        TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+      ),
+      titleAttribute: types.optional(
+        TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+      ),
+      interestingAttributes: types.optional(
+        z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
+      ),
+      graphProperties: types.optional(
+        TextqlRpcPublicOntologyGraphProperties$inboundSchema,
+      ),
+      accessTime: types.optional(types.date()),
+    })
+  );
 
 export function backingTableFromJSON(
   jsonString: string,
@@ -277,25 +279,27 @@ export function backingTableFromJSON(
 
 /** @internal */
 export const BackingQuery$inboundSchema: z.ZodMiniType<BackingQuery, unknown> =
-  z.object({
-    backingQuery: types.string(),
-    id: types.optional(types.string()),
-    name: types.optional(types.string()),
-    description: types.optional(types.string()),
-    primaryKeyAttribute: types.optional(
-      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
-    ),
-    titleAttribute: types.optional(
-      TextqlRpcPublicOntologyAttributeRef$inboundSchema,
-    ),
-    interestingAttributes: types.optional(
-      z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
-    ),
-    graphProperties: types.optional(
-      TextqlRpcPublicOntologyGraphProperties$inboundSchema,
-    ),
-    accessTime: types.optional(types.date()),
-  });
+  /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      backingQuery: types.string(),
+      id: types.optional(types.string()),
+      name: types.optional(types.string()),
+      description: types.optional(types.string()),
+      primaryKeyAttribute: types.optional(
+        TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+      ),
+      titleAttribute: types.optional(
+        TextqlRpcPublicOntologyAttributeRef$inboundSchema,
+      ),
+      interestingAttributes: types.optional(
+        z.array(TextqlRpcPublicOntologyAttributeRef$inboundSchema),
+      ),
+      graphProperties: types.optional(
+        TextqlRpcPublicOntologyGraphProperties$inboundSchema,
+      ),
+      accessTime: types.optional(types.date()),
+    })
+  );
 
 export function backingQueryFromJSON(
   jsonString: string,
@@ -311,10 +315,12 @@ export function backingQueryFromJSON(
 export const TextqlRpcPublicOntologyOntologyObject$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicOntologyOntologyObject,
   unknown
-> = smartUnion([
-  z.lazy(() => BackingQuery$inboundSchema),
-  z.lazy(() => BackingTable$inboundSchema),
-]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([
+    z.lazy(() => BackingQuery$inboundSchema),
+    z.lazy(() => BackingTable$inboundSchema),
+  ])
+);
 
 export function textqlRpcPublicOntologyOntologyObjectFromJSON(
   jsonString: string,

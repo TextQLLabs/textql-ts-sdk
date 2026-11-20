@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -121,7 +121,9 @@ export type TextqlRpcPublicConnectorConnectorDashboard = {
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorDashboardQueryCount$inboundSchema:
   z.ZodMiniType<TextqlRpcPublicConnectorConnectorDashboardQueryCount, unknown> =
-    smartUnion([types.number(), types.string()]);
+    /* @__PURE__ */ lazySchema$(() =>
+      smartUnion([types.number(), types.string()])
+    );
 
 export function textqlRpcPublicConnectorConnectorDashboardQueryCountFromJSON(
   jsonString: string,
@@ -141,19 +143,22 @@ export function textqlRpcPublicConnectorConnectorDashboardQueryCountFromJSON(
 
 /** @internal */
 export const TextqlRpcPublicConnectorConnectorDashboard$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorConnectorDashboard, unknown> = z.object(
-    {
-      dashboardId: types.optional(types.string()),
-      name: types.optional(types.string()),
-      memberId: types.optional(types.string()),
-      displayName: types.optional(types.string()),
-      email: types.optional(types.string()),
-      queryCount: types.optional(smartUnion([types.number(), types.string()])),
-      lastActivity: types.optional(types.date()),
-      tables: types.optional(z.array(types.string())),
-      pictureUrl: types.optional(types.string()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorConnectorDashboard, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        dashboardId: types.optional(types.string()),
+        name: types.optional(types.string()),
+        memberId: types.optional(types.string()),
+        displayName: types.optional(types.string()),
+        email: types.optional(types.string()),
+        queryCount: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        lastActivity: types.optional(types.date()),
+        tables: types.optional(z.array(types.string())),
+        pictureUrl: types.optional(types.string()),
+      })
+    );
 
 export function textqlRpcPublicConnectorConnectorDashboardFromJSON(
   jsonString: string,

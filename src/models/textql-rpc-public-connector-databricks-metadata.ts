@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -28,19 +28,20 @@ export type TextqlRpcPublicConnectorDatabricksMetadata = {
 
 /** @internal */
 export const TextqlRpcPublicConnectorDatabricksMetadata$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicConnectorDatabricksMetadata, unknown> = z.object(
-    {
-      host: types.optional(types.string()),
-      httpPath: types.optional(types.string()),
-      port: types.optional(types.number()),
-      databricksAuth: types.optional(
-        TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$inboundSchema,
-      ),
-      catalog: types.optional(types.string()),
-      schema: types.optional(types.string()),
-      enableTokenExchange: types.optional(types.boolean()),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicConnectorDatabricksMetadata, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        host: types.optional(types.string()),
+        httpPath: types.optional(types.string()),
+        port: types.optional(types.number()),
+        databricksAuth: types.optional(
+          TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$inboundSchema,
+        ),
+        catalog: types.optional(types.string()),
+        schema: types.optional(types.string()),
+        enableTokenExchange: types.optional(types.boolean()),
+      })
+    );
 /** @internal */
 export type TextqlRpcPublicConnectorDatabricksMetadata$Outbound = {
   host?: string | undefined;
@@ -59,17 +60,19 @@ export const TextqlRpcPublicConnectorDatabricksMetadata$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicConnectorDatabricksMetadata$Outbound,
     TextqlRpcPublicConnectorDatabricksMetadata
-  > = z.object({
-    host: z.optional(z.string()),
-    httpPath: z.optional(z.string()),
-    port: z.optional(z.int()),
-    databricksAuth: z.optional(
-      TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$outboundSchema,
-    ),
-    catalog: z.optional(z.string()),
-    schema: z.optional(z.string()),
-    enableTokenExchange: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      host: z.optional(z.string()),
+      httpPath: z.optional(z.string()),
+      port: z.optional(z.int()),
+      databricksAuth: z.optional(
+        TextqlRpcPublicConnectorDatabricksMetadataDatabricksAuth$outboundSchema,
+      ),
+      catalog: z.optional(z.string()),
+      schema: z.optional(z.string()),
+      enableTokenExchange: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicConnectorDatabricksMetadataToJSON(
   textqlRpcPublicConnectorDatabricksMetadata:

@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -18,13 +18,14 @@ export type TextqlRpcPublicMCPUpsertMCPServersResponse = {
 
 /** @internal */
 export const TextqlRpcPublicMCPUpsertMCPServersResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicMCPUpsertMCPServersResponse, unknown> = z.object(
-    {
-      mcpServers: types.optional(
-        z.array(TextqlRpcPublicMCPMCPServerWithTools$inboundSchema),
-      ),
-    },
-  );
+  z.ZodMiniType<TextqlRpcPublicMCPUpsertMCPServersResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        mcpServers: types.optional(
+          z.array(TextqlRpcPublicMCPMCPServerWithTools$inboundSchema),
+        ),
+      })
+    );
 
 export function textqlRpcPublicMCPUpsertMCPServersResponseFromJSON(
   jsonString: string,

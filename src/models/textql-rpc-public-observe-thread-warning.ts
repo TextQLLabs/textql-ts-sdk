@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -35,19 +35,21 @@ export type TextqlRpcPublicObserveThreadWarning = {
 export const TextqlRpcPublicObserveThreadWarning$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicObserveThreadWarning,
   unknown
-> = z.object({
-  id: types.optional(types.string()),
-  chatId: types.optional(types.string()),
-  warningType: types.optional(
-    TextqlRpcPublicChatThreadWarningType$inboundSchema,
-  ),
-  severity: types.optional(types.string()),
-  detail: types.optional(types.string()),
-  fixChatId: z.optional(z.nullable(types.string())),
-  fixPatchCell: types.optional(TextqlRpcPublicChatCell$inboundSchema),
-  fixRunActive: types.optional(types.boolean()),
-  fixStatus: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    id: types.optional(types.string()),
+    chatId: types.optional(types.string()),
+    warningType: types.optional(
+      TextqlRpcPublicChatThreadWarningType$inboundSchema,
+    ),
+    severity: types.optional(types.string()),
+    detail: types.optional(types.string()),
+    fixChatId: z.optional(z.nullable(types.string())),
+    fixPatchCell: types.optional(TextqlRpcPublicChatCell$inboundSchema),
+    fixRunActive: types.optional(types.boolean()),
+    fixStatus: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicObserveThreadWarningFromJSON(
   jsonString: string,

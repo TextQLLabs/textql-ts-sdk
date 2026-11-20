@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { smartUnion } from "../types/smart-union.js";
@@ -43,7 +43,9 @@ export type TextqlRpcPublicChatGetChatExecutionTimingResponse = {
 export const TotalExecutionMs$inboundSchema: z.ZodMiniType<
   TotalExecutionMs,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function totalExecutionMsFromJSON(
   jsonString: string,
@@ -59,7 +61,9 @@ export function totalExecutionMsFromJSON(
 export const TotalWarehouseMs$inboundSchema: z.ZodMiniType<
   TotalWarehouseMs,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function totalWarehouseMsFromJSON(
   jsonString: string,
@@ -75,7 +79,9 @@ export function totalWarehouseMsFromJSON(
 export const TotalEgressMs$inboundSchema: z.ZodMiniType<
   TotalEgressMs,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function totalEgressMsFromJSON(
   jsonString: string,
@@ -91,7 +97,9 @@ export function totalEgressMsFromJSON(
 export const TotalOverheadMs$inboundSchema: z.ZodMiniType<
   TotalOverheadMs,
   unknown
-> = smartUnion([types.number(), types.string()]);
+> = /* @__PURE__ */ lazySchema$(() =>
+  smartUnion([types.number(), types.string()])
+);
 
 export function totalOverheadMsFromJSON(
   jsonString: string,
@@ -108,7 +116,9 @@ export const TextqlRpcPublicChatGetChatExecutionTimingResponseSandboxMountMs$inb
   z.ZodMiniType<
     TextqlRpcPublicChatGetChatExecutionTimingResponseSandboxMountMs,
     unknown
-  > = smartUnion([types.number(), types.string()]);
+  > = /* @__PURE__ */ lazySchema$(() =>
+    smartUnion([types.number(), types.string()])
+  );
 
 export function textqlRpcPublicChatGetChatExecutionTimingResponseSandboxMountMsFromJSON(
   jsonString: string,
@@ -127,30 +137,32 @@ export function textqlRpcPublicChatGetChatExecutionTimingResponseSandboxMountMsF
 
 /** @internal */
 export const TextqlRpcPublicChatGetChatExecutionTimingResponse$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatGetChatExecutionTimingResponse, unknown> = z
-    .object({
-      byType: types.optional(
-        z.array(TextqlRpcPublicChatChatExecutionTiming$inboundSchema),
-      ),
-      totalExecutionMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      totalWarehouseMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      totalEgressMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      totalOverheadMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-      byCell: types.optional(
-        z.array(TextqlRpcPublicChatCellExecutionTiming$inboundSchema),
-      ),
-      sandboxMountMs: types.optional(
-        smartUnion([types.number(), types.string()]),
-      ),
-    });
+  z.ZodMiniType<TextqlRpcPublicChatGetChatExecutionTimingResponse, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      z.object({
+        byType: types.optional(
+          z.array(TextqlRpcPublicChatChatExecutionTiming$inboundSchema),
+        ),
+        totalExecutionMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        totalWarehouseMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        totalEgressMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        totalOverheadMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+        byCell: types.optional(
+          z.array(TextqlRpcPublicChatCellExecutionTiming$inboundSchema),
+        ),
+        sandboxMountMs: types.optional(
+          smartUnion([types.number(), types.string()]),
+        ),
+      })
+    );
 
 export function textqlRpcPublicChatGetChatExecutionTimingResponseFromJSON(
   jsonString: string,

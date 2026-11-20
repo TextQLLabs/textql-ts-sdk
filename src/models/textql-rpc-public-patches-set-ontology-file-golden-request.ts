@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesSetOntologyFileGoldenRequest = {
   path?: string | undefined;
@@ -23,10 +24,12 @@ export const TextqlRpcPublicPatchesSetOntologyFileGoldenRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesSetOntologyFileGoldenRequest$Outbound,
     TextqlRpcPublicPatchesSetOntologyFileGoldenRequest
-  > = z.object({
-    path: z.optional(z.string()),
-    golden: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      path: z.optional(z.string()),
+      golden: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesSetOntologyFileGoldenRequestToJSON(
   textqlRpcPublicPatchesSetOntologyFileGoldenRequest:

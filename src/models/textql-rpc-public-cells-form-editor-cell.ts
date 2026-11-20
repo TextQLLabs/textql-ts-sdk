@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -27,12 +27,16 @@ export type TextqlRpcPublicCellsFormEditorCell = {
 export const TextqlRpcPublicCellsFormEditorCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsFormEditorCell,
   unknown
-> = z.object({
-  action: types.optional(TextqlRpcPublicCellsFormEditorAction$inboundSchema),
-  formSnapshot: types.optional(TextqlRpcPublicCellsEditableForm$inboundSchema),
-  form: types.optional(TextqlRpcPublicCellsEditableForm$inboundSchema),
-  formId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    action: types.optional(TextqlRpcPublicCellsFormEditorAction$inboundSchema),
+    formSnapshot: types.optional(
+      TextqlRpcPublicCellsEditableForm$inboundSchema,
+    ),
+    form: types.optional(TextqlRpcPublicCellsEditableForm$inboundSchema),
+    formId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsFormEditorCellFromJSON(
   jsonString: string,

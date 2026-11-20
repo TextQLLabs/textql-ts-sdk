@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicPlaybookChatAccessOverride,
   TextqlRpcPublicPlaybookChatAccessOverride$Outbound,
@@ -23,11 +24,13 @@ export const TextqlRpcPublicPlaybookChatAccessOverrideList$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPlaybookChatAccessOverrideList$Outbound,
     TextqlRpcPublicPlaybookChatAccessOverrideList
-  > = z.object({
-    items: z.optional(
-      z.array(TextqlRpcPublicPlaybookChatAccessOverride$outboundSchema),
-    ),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      items: z.optional(
+        z.array(TextqlRpcPublicPlaybookChatAccessOverride$outboundSchema),
+      ),
+    })
+  );
 
 export function textqlRpcPublicPlaybookChatAccessOverrideListToJSON(
   textqlRpcPublicPlaybookChatAccessOverrideList:

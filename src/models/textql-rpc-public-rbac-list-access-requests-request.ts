@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicRbacListAccessRequestsRequest = {
   objectType?: string | null | undefined;
@@ -25,11 +26,13 @@ export const TextqlRpcPublicRbacListAccessRequestsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicRbacListAccessRequestsRequest$Outbound,
     TextqlRpcPublicRbacListAccessRequestsRequest
-  > = z.object({
-    objectType: z.optional(z.nullable(z.string())),
-    objectId: z.optional(z.nullable(z.string())),
-    status: z.optional(z.nullable(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      objectType: z.optional(z.nullable(z.string())),
+      objectId: z.optional(z.nullable(z.string())),
+      status: z.optional(z.nullable(z.string())),
+    })
+  );
 
 export function textqlRpcPublicRbacListAccessRequestsRequestToJSON(
   textqlRpcPublicRbacListAccessRequestsRequest:

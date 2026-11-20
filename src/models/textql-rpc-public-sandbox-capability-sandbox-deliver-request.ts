@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import {
   TextqlRpcPublicSandboxQuerySandboxQueryParam,
   TextqlRpcPublicSandboxQuerySandboxQueryParam$Outbound,
@@ -37,17 +38,19 @@ export const TextqlRpcPublicSandboxCapabilitySandboxDeliverRequest$outboundSchem
   z.ZodMiniType<
     TextqlRpcPublicSandboxCapabilitySandboxDeliverRequest$Outbound,
     TextqlRpcPublicSandboxCapabilitySandboxDeliverRequest
-  > = z.object({
-    name: z.optional(z.string()),
-    subject: z.optional(z.string()),
-    body: z.optional(z.string()),
-    routingJson: z.optional(z.string()),
-    parameters: z.optional(
-      z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
-    ),
-    attachmentUrls: z.optional(z.array(z.string())),
-    recipientEmails: z.optional(z.array(z.string())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      name: z.optional(z.string()),
+      subject: z.optional(z.string()),
+      body: z.optional(z.string()),
+      routingJson: z.optional(z.string()),
+      parameters: z.optional(
+        z.array(TextqlRpcPublicSandboxQuerySandboxQueryParam$outboundSchema),
+      ),
+      attachmentUrls: z.optional(z.array(z.string())),
+      recipientEmails: z.optional(z.array(z.string())),
+    })
+  );
 
 export function textqlRpcPublicSandboxCapabilitySandboxDeliverRequestToJSON(
   textqlRpcPublicSandboxCapabilitySandboxDeliverRequest:

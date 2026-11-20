@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicChatGetPlaybookChatsRequest = {
   /**
@@ -25,11 +26,13 @@ export const TextqlRpcPublicChatGetPlaybookChatsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicChatGetPlaybookChatsRequest$Outbound,
     TextqlRpcPublicChatGetPlaybookChatsRequest
-  > = z.object({
-    playbookId: z.string(),
-    limit: z.optional(z.nullable(z.int())),
-    skip: z.optional(z.nullable(z.int())),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      playbookId: z.string(),
+      limit: z.optional(z.nullable(z.int())),
+      skip: z.optional(z.nullable(z.int())),
+    })
+  );
 
 export function textqlRpcPublicChatGetPlaybookChatsRequestToJSON(
   textqlRpcPublicChatGetPlaybookChatsRequest:

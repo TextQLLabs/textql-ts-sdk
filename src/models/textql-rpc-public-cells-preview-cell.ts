@@ -3,7 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
-import { safeParse } from "../lib/schemas.js";
+import { lazySchema as lazySchema$, safeParse } from "../lib/schemas.js";
 import { Result as SafeParseResult } from "../types/fp.js";
 import * as types from "../types/primitives.js";
 import { SDKValidationError } from "./errors/sdk-validation-error.js";
@@ -31,15 +31,17 @@ export type TextqlRpcPublicCellsPreviewCell = {
 export const TextqlRpcPublicCellsPreviewCell$inboundSchema: z.ZodMiniType<
   TextqlRpcPublicCellsPreviewCell,
   unknown
-> = z.object({
-  target: types.optional(types.string()),
-  previewType: types.optional(types.string()),
-  name: types.optional(types.string()),
-  url: z.optional(z.nullable(types.string())),
-  content: z.optional(z.nullable(types.string())),
-  error: z.optional(z.nullable(types.string())),
-  artifactId: z.optional(z.nullable(types.string())),
-});
+> = /* @__PURE__ */ lazySchema$(() =>
+  z.object({
+    target: types.optional(types.string()),
+    previewType: types.optional(types.string()),
+    name: types.optional(types.string()),
+    url: z.optional(z.nullable(types.string())),
+    content: z.optional(z.nullable(types.string())),
+    error: z.optional(z.nullable(types.string())),
+    artifactId: z.optional(z.nullable(types.string())),
+  })
+);
 
 export function textqlRpcPublicCellsPreviewCellFromJSON(
   jsonString: string,

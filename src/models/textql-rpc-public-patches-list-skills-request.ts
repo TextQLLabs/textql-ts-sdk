@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 
 export type TextqlRpcPublicPatchesListSkillsRequest = {
   /**
@@ -21,9 +22,11 @@ export const TextqlRpcPublicPatchesListSkillsRequest$outboundSchema:
   z.ZodMiniType<
     TextqlRpcPublicPatchesListSkillsRequest$Outbound,
     TextqlRpcPublicPatchesListSkillsRequest
-  > = z.object({
-    includeUnlisted: z.optional(z.boolean()),
-  });
+  > = /* @__PURE__ */ lazySchema$(() =>
+    z.object({
+      includeUnlisted: z.optional(z.boolean()),
+    })
+  );
 
 export function textqlRpcPublicPatchesListSkillsRequestToJSON(
   textqlRpcPublicPatchesListSkillsRequest:

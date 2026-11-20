@@ -3,6 +3,7 @@
  */
 
 import * as z from "zod/v4-mini";
+import { lazySchema as lazySchema$ } from "../lib/schemas.js";
 import * as openEnums from "../types/enums.js";
 import { OpenEnum } from "../types/enums.js";
 
@@ -19,5 +20,7 @@ export type TextqlRpcPublicChatStreamlitHealthStatus = OpenEnum<
 
 /** @internal */
 export const TextqlRpcPublicChatStreamlitHealthStatus$inboundSchema:
-  z.ZodMiniType<TextqlRpcPublicChatStreamlitHealthStatus, unknown> = openEnums
-    .inboundSchema(TextqlRpcPublicChatStreamlitHealthStatus);
+  z.ZodMiniType<TextqlRpcPublicChatStreamlitHealthStatus, unknown> =
+    /* @__PURE__ */ lazySchema$(() =>
+      openEnums.inboundSchema(TextqlRpcPublicChatStreamlitHealthStatus)
+    );
