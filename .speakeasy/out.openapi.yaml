@@ -23014,6 +23014,7 @@ components:
         - QUESTIONS_STATUS_PENDING
         - QUESTIONS_STATUS_ANSWERED
         - QUESTIONS_STATUS_DISMISSED
+        - QUESTIONS_STATUS_TIMED_OUT
     textql.rpc.public.cells.ReportCell:
       type: object
       properties:
@@ -24415,7 +24416,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Fable 5.2, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
              Thinking tokens bill as output tokens.
           nullable: true
           deprecated: true
@@ -24696,7 +24697,7 @@ components:
           title: max_thinking
           description: |-
             max_thinking runs extended thinking at max effort with visible reasoning.
-             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
+             Supported on Sonnet 5, Sonnet 5.5, Fable 5, Fable 5.1, Fable 5.2, Opus 4.8, Opus 5, Opus 5.5, GPT 5.6 Sol/Terra/Luna, GPT-6 Astra/Sol/Luna, and GPT-6.1 Sol/Terra.
           nullable: true
           deprecated: true
         modelName:
@@ -24804,6 +24805,15 @@ components:
           title: max_thinking
           nullable: true
           deprecated: true
+        harness:
+          type: string
+          title: harness
+          description: Omit to keep the source harness. Use "ana" to select the native harness.
+          nullable: true
+        harnessEndpointId:
+          type: string
+          title: harness_endpoint_id
+          nullable: true
       title: DuplicateChatRequest
       required:
         - chatId
@@ -25551,6 +25561,7 @@ components:
         - MODEL_OPUS_5_5
         - MODEL_SONNET_5_5
         - MODEL_HAIKU_5_5
+        - MODEL_FABLE_5_2
         - MODEL_GPT_5_6_SOL
         - MODEL_GEMINI_3_FLASH
         - MODEL_GEMINI_3_PRO
@@ -25564,6 +25575,8 @@ components:
         - MODEL_GPT_6_LUNA
         - MODEL_GPT_6_1_SOL
         - MODEL_GPT_6_1_TERRA
+        - MODEL_GPT_6_2_ASTRA
+        - MODEL_GPT_6_2_SOL
         - MODEL_DEEPSEEK_3_2
         - MODEL_GLM_5
         - MODEL_VLLM
@@ -25577,6 +25590,7 @@ components:
         - MODEL_DEEPSEEK_V4P1_FLASH
         - MODEL_MUSE_SPARK_1_1
         - MODEL_MUSE_SPARK_1_2
+        - MODEL_GEMINI_4_NEON
     textql.rpc.public.chat.LlmUsage:
       type: object
       properties:

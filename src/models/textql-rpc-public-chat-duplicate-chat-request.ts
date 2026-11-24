@@ -30,6 +30,11 @@ export type TextqlRpcPublicChatDuplicateChatRequest = {
    * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
    */
   maxThinking?: boolean | null | undefined;
+  /**
+   * Omit to keep the source harness. Use "ana" to select the native harness.
+   */
+  harness?: string | null | undefined;
+  harnessEndpointId?: string | null | undefined;
 };
 
 /** @internal */
@@ -42,6 +47,8 @@ export type TextqlRpcPublicChatDuplicateChatRequest$Outbound = {
   fastMode?: boolean | null | undefined;
   methodology?: string | undefined;
   maxThinking?: boolean | null | undefined;
+  harness?: string | null | undefined;
+  harnessEndpointId?: string | null | undefined;
 };
 
 /** @internal */
@@ -61,6 +68,8 @@ export const TextqlRpcPublicChatDuplicateChatRequest$outboundSchema:
       fastMode: z.optional(z.nullable(z.boolean())),
       methodology: z.optional(TextqlRpcPublicChatMethodology$outboundSchema),
       maxThinking: z.optional(z.nullable(z.boolean())),
+      harness: z.optional(z.nullable(z.string())),
+      harnessEndpointId: z.optional(z.nullable(z.string())),
     })
   );
 

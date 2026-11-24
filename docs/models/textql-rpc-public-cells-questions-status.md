@@ -5,7 +5,7 @@
 ```typescript
 import { TextqlRpcPublicCellsQuestionsStatus } from "@textql/sdk/models";
 
-let value: TextqlRpcPublicCellsQuestionsStatus = "QUESTIONS_STATUS_ANSWERED";
+let value: TextqlRpcPublicCellsQuestionsStatus = "QUESTIONS_STATUS_DISMISSED";
 
 // Open enum: unrecognized values are captured as Unrecognized<string>
 ```
@@ -13,5 +13,5 @@ let value: TextqlRpcPublicCellsQuestionsStatus = "QUESTIONS_STATUS_ANSWERED";
 ## Values
 
 ```typescript
-"QUESTIONS_STATUS_UNKNOWN" | "QUESTIONS_STATUS_PENDING" | "QUESTIONS_STATUS_ANSWERED" | "QUESTIONS_STATUS_DISMISSED" | Unrecognized<string>
+"QUESTIONS_STATUS_UNKNOWN" | "QUESTIONS_STATUS_PENDING" | "QUESTIONS_STATUS_ANSWERED" | "QUESTIONS_STATUS_DISMISSED" | "QUESTIONS_STATUS_TIMED_OUT" | Unrecognized<string>
 ```

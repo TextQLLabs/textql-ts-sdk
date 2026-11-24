@@ -20,6 +20,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelOpus55: "MODEL_OPUS_5_5",
   ModelSonnet55: "MODEL_SONNET_5_5",
   ModelHaiku55: "MODEL_HAIKU_5_5",
+  ModelFable52: "MODEL_FABLE_5_2",
   ModelGpt56Sol: "MODEL_GPT_5_6_SOL",
   ModelGemini3Flash: "MODEL_GEMINI_3_FLASH",
   ModelGemini3Pro: "MODEL_GEMINI_3_PRO",
@@ -33,6 +34,8 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelGpt6Luna: "MODEL_GPT_6_LUNA",
   ModelGpt61Sol: "MODEL_GPT_6_1_SOL",
   ModelGpt61Terra: "MODEL_GPT_6_1_TERRA",
+  ModelGpt62Astra: "MODEL_GPT_6_2_ASTRA",
+  ModelGpt62Sol: "MODEL_GPT_6_2_SOL",
   ModelDeepseek32: "MODEL_DEEPSEEK_3_2",
   ModelGlm5: "MODEL_GLM_5",
   ModelVllm: "MODEL_VLLM",
@@ -46,6 +49,7 @@ export const TextqlRpcPublicChatLlmModel = {
   ModelDeepseekV4P1Flash: "MODEL_DEEPSEEK_V4P1_FLASH",
   ModelMuseSpark11: "MODEL_MUSE_SPARK_1_1",
   ModelMuseSpark12: "MODEL_MUSE_SPARK_1_2",
+  ModelGemini4Neon: "MODEL_GEMINI_4_NEON",
 } as const;
 export type TextqlRpcPublicChatLlmModel = OpenEnum<
   typeof TextqlRpcPublicChatLlmModel
