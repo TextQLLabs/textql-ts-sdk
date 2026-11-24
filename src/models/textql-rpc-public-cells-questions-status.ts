@@ -12,6 +12,7 @@ export const TextqlRpcPublicCellsQuestionsStatus = {
   QuestionsStatusPending: "QUESTIONS_STATUS_PENDING",
   QuestionsStatusAnswered: "QUESTIONS_STATUS_ANSWERED",
   QuestionsStatusDismissed: "QUESTIONS_STATUS_DISMISSED",
+  QuestionsStatusTimedOut: "QUESTIONS_STATUS_TIMED_OUT",
 } as const;
 export type TextqlRpcPublicCellsQuestionsStatus = OpenEnum<
   typeof TextqlRpcPublicCellsQuestionsStatus

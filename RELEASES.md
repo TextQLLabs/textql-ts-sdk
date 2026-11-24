@@ -807,3 +807,11 @@ Based on:
 - Speakeasy CLI 1.811.0 (2.968.1) https://github.com/speakeasy-api/speakeasy
 ### Generated
 - [typescript v1.4.78] .
+
+## 2026-11-24 20:20:43
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.811.0 (2.968.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [typescript v1.4.79] .
